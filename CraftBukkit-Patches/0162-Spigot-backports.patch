@@ -1,0 +1,26 @@
+From 627eeb155f7451103f83fe687f807648016ae1fb Mon Sep 17 00:00:00 2001
+From: Thinkofdeath <thinkofdeath@spigotmc.org>
+Date: Thu, 16 Apr 2015 22:59:03 +0100
+Subject: [PATCH] Spigot backports
+
+
+diff --git a/src/main/java/net/minecraft/server/NBTTagList.java b/src/main/java/net/minecraft/server/NBTTagList.java
+index 6e59849..78661a6 100644
+--- a/src/main/java/net/minecraft/server/NBTTagList.java
++++ b/src/main/java/net/minecraft/server/NBTTagList.java
+@@ -27,11 +27,11 @@ public class NBTTagList extends NBTBase {
+         try { // CraftBukkit
+         dataoutput.writeByte(this.type);
+         dataoutput.writeInt(this.list.size());
+-        } catch (Throwable t) { sneakyThrow(t); } // CraftBukkit
+ 
+         for (int i = 0; i < this.list.size(); ++i) {
+             ((NBTBase) this.list.get(i)).write(dataoutput);
+         }
++        } catch (Throwable t) { sneakyThrow(t); } // CraftBukkit
+ 
+     }
+ 
+-- 
+2.1.0
+
