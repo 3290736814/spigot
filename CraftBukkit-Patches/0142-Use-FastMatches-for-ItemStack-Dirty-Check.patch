@@ -1,4 +1,4 @@
-From 26db98024cc859fced8580668b483410732d6dc8 Mon Sep 17 00:00:00 2001
+From 8c845db40db78a99a9d1a125a1aaa7ad0f4ef8a0 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 22 Feb 2015 12:27:40 +1100
 Subject: [PATCH] Use FastMatches for ItemStack Dirty Check
@@ -35,10 +35,10 @@ index 1d6ec51..000b4db 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 4a43208..d9d61ef 100644
+index 77f4ac8..8ad10f8 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -451,6 +451,18 @@ public final class ItemStack {
+@@ -456,6 +456,18 @@ public final class ItemStack {
          return itemstack == null && itemstack1 == null ? true : (itemstack != null && itemstack1 != null ? (itemstack.tag == null && itemstack1.tag != null ? false : itemstack.tag == null || itemstack.tag.equals(itemstack1.tag)) : false);
      }
  

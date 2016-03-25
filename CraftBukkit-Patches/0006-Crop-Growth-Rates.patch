@@ -1,4 +1,4 @@
-From bf9a9c1ba24bbc4cc668647b5e123717ba9defa9 Mon Sep 17 00:00:00 2001
+From 1879bfdedea961e0a31d8b1ec0c1460f4b270f78 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -27,7 +27,7 @@ index 57f3981..12589d6 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/net/minecraft/server/BlockCactus.java b/src/main/java/net/minecraft/server/BlockCactus.java
-index f4b90e1..c00d874 100644
+index f4b90e1..6f0af4e 100644
 --- a/src/main/java/net/minecraft/server/BlockCactus.java
 +++ b/src/main/java/net/minecraft/server/BlockCactus.java
 @@ -31,7 +31,7 @@ public class BlockCactus extends Block {
@@ -35,12 +35,12 @@ index f4b90e1..c00d874 100644
                  int j = ((Integer) iblockdata.get(BlockCactus.AGE)).intValue();
  
 -                if (j == 15) {
-+                if (j >= (byte) range(3, ((100 / world.spigotConfig.cactusModifier) * 15) + 0.5F, 15)) { // Spigot
++                if (j >= (byte) range(3, ((100.0F / world.spigotConfig.cactusModifier) * 15) + 0.5F, 15)) { // Spigot
                      // world.setTypeUpdate(blockposition1, this.getBlockData()); // CraftBukkit
                      IBlockData iblockdata1 = iblockdata.set(BlockCactus.AGE, Integer.valueOf(0));
  
 diff --git a/src/main/java/net/minecraft/server/BlockCrops.java b/src/main/java/net/minecraft/server/BlockCrops.java
-index 062f769..7c909d8 100644
+index 062f769..5f8bffe 100644
 --- a/src/main/java/net/minecraft/server/BlockCrops.java
 +++ b/src/main/java/net/minecraft/server/BlockCrops.java
 @@ -54,7 +54,7 @@ public class BlockCrops extends BlockPlant implements IBlockFragilePlantElement
@@ -48,12 +48,12 @@ index 062f769..7c909d8 100644
                  float f = a((Block) this, world, blockposition);
  
 -                if (random.nextInt((int) (25.0F / f) + 1) == 0) {
-+                if (random.nextInt((int) ((100 / world.spigotConfig.wheatModifier) * (25.0F / f)) + 1) == 0) { // Spigot
++                if (random.nextInt((int) ((100.0F / world.spigotConfig.wheatModifier) * (25.0F / f)) + 1) == 0) { // Spigot
                      // CraftBukkit start
                      IBlockData data = this.setAge(i + 1);
                      CraftEventFactory.handleBlockGrowEvent(world, blockposition.getX(), blockposition.getY(), blockposition.getZ(), this, toLegacyData(data));
 diff --git a/src/main/java/net/minecraft/server/BlockMushroom.java b/src/main/java/net/minecraft/server/BlockMushroom.java
-index fa7919e..6148691 100644
+index fa7919e..7d61eaa 100644
 --- a/src/main/java/net/minecraft/server/BlockMushroom.java
 +++ b/src/main/java/net/minecraft/server/BlockMushroom.java
 @@ -23,7 +23,7 @@ public class BlockMushroom extends BlockPlant implements IBlockFragilePlantEleme
@@ -61,12 +61,12 @@ index fa7919e..6148691 100644
      public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
          final int sourceX = blockposition.getX(), sourceY = blockposition.getY(), sourceZ = blockposition.getZ(); // CraftBukkit
 -        if (random.nextInt(25) == 0) {
-+        if (random.nextInt(Math.max(1, (int) (100 / world.spigotConfig.mushroomModifier) * 25)) == 0) { // Spigot
++        if (random.nextInt(Math.max(1, (int) (100.0F / world.spigotConfig.mushroomModifier) * 25)) == 0) { // Spigot
              int i = 5;
              boolean flag = true;
              Iterator iterator = BlockPosition.b(blockposition.a(-4, -1, -4), blockposition.a(4, 1, 4)).iterator();
 diff --git a/src/main/java/net/minecraft/server/BlockNetherWart.java b/src/main/java/net/minecraft/server/BlockNetherWart.java
-index b2ca55f..ff485b0 100644
+index b2ca55f..c34f338 100644
 --- a/src/main/java/net/minecraft/server/BlockNetherWart.java
 +++ b/src/main/java/net/minecraft/server/BlockNetherWart.java
 @@ -29,7 +29,7 @@ public class BlockNetherWart extends BlockPlant {
@@ -74,12 +74,12 @@ index b2ca55f..ff485b0 100644
          int i = ((Integer) iblockdata.get(BlockNetherWart.AGE)).intValue();
  
 -        if (i < 3 && random.nextInt(10) == 0) {
-+        if (i < 3 && random.nextInt(Math.max(1, (int) (100 / world.spigotConfig.wartModifier) * 10)) == 0) { // Spigot
++        if (i < 3 && random.nextInt(Math.max(1, (int) (100.0F / world.spigotConfig.wartModifier) * 10)) == 0) { // Spigot
              iblockdata = iblockdata.set(BlockNetherWart.AGE, Integer.valueOf(i + 1));
              // world.setTypeAndData(blockposition, iblockdata, 2); // CraftBukkit
              org.bukkit.craftbukkit.event.CraftEventFactory.handleBlockGrowEvent(world, blockposition.getX(), blockposition.getY(), blockposition.getZ(), this, toLegacyData(iblockdata)); // CraftBukkit
 diff --git a/src/main/java/net/minecraft/server/BlockReed.java b/src/main/java/net/minecraft/server/BlockReed.java
-index f507b83..fb19f19 100644
+index f507b83..4a79cf4 100644
 --- a/src/main/java/net/minecraft/server/BlockReed.java
 +++ b/src/main/java/net/minecraft/server/BlockReed.java
 @@ -30,7 +30,7 @@ public class BlockReed extends Block {
@@ -87,12 +87,12 @@ index f507b83..fb19f19 100644
                      int j = ((Integer) iblockdata.get(BlockReed.AGE)).intValue();
  
 -                    if (j == 15) {
-+                    if (j >= (byte) range(3, ((100 / world.spigotConfig.caneModifier) * 15) + 0.5F, 15)) { // Spigot
++                    if (j >= (byte) range(3, ((100.0F / world.spigotConfig.caneModifier) * 15) + 0.5F, 15)) { // Spigot
                          // CraftBukkit start
                          // world.setTypeUpdate(blockposition.up(), this.getBlockData()); // CraftBukkit
                          BlockPosition upPos = blockposition.up();
 diff --git a/src/main/java/net/minecraft/server/BlockSapling.java b/src/main/java/net/minecraft/server/BlockSapling.java
-index a2691a5..8b34250 100644
+index a2691a5..76b13a3 100644
 --- a/src/main/java/net/minecraft/server/BlockSapling.java
 +++ b/src/main/java/net/minecraft/server/BlockSapling.java
 @@ -34,7 +34,7 @@ public class BlockSapling extends BlockPlant implements IBlockFragilePlantElemen
@@ -100,12 +100,12 @@ index a2691a5..8b34250 100644
          if (!world.isClientSide) {
              super.b(world, blockposition, iblockdata, random);
 -            if (world.getLightLevel(blockposition.up()) >= 9 && random.nextInt(7) == 0) {
-+            if (world.getLightLevel(blockposition.up()) >= 9 && random.nextInt(Math.max(2, (int) (((100 / world.spigotConfig.saplingModifier) * 7) + 0.5F))) == 0) { // Spigot
++            if (world.getLightLevel(blockposition.up()) >= 9 && random.nextInt(Math.max(2, (int) (((100.0F / world.spigotConfig.saplingModifier) * 7) + 0.5F))) == 0) { // Spigot
                  // CraftBukkit start
                  world.captureTreeGeneration = true;
                  // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/BlockStem.java b/src/main/java/net/minecraft/server/BlockStem.java
-index 41200fa..097d11e 100644
+index 41200fa..73e68d8 100644
 --- a/src/main/java/net/minecraft/server/BlockStem.java
 +++ b/src/main/java/net/minecraft/server/BlockStem.java
 @@ -50,7 +50,7 @@ public class BlockStem extends BlockPlant implements IBlockFragilePlantElement {
@@ -113,7 +113,7 @@ index 41200fa..097d11e 100644
              float f = BlockCrops.a((Block) this, world, blockposition);
  
 -            if (random.nextInt((int) (25.0F / f) + 1) == 0) {
-+            if (random.nextInt((int) ((100 / (this == Blocks.PUMPKIN_STEM ? world.spigotConfig.pumpkinModifier : world.spigotConfig.melonModifier)) * (25.0F / f)) + 1) == 0) { // Spigot
++            if (random.nextInt((int) ((100.0F / (this == Blocks.PUMPKIN_STEM ? world.spigotConfig.pumpkinModifier : world.spigotConfig.melonModifier)) * (25.0F / f)) + 1) == 0) { // Spigot
                  int i = ((Integer) iblockdata.get(BlockStem.AGE)).intValue();
  
                  if (i < 7) {

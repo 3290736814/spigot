@@ -1,14 +1,14 @@
-From 61c54a8a1c06464bdb8bd07b5a0936157ab39813 Mon Sep 17 00:00:00 2001
+From 9d7106694840a411c6febe8ff767200f2e098716 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 10 Jan 2014 15:15:50 +1100
 Subject: [PATCH] Fix ItemStack Unbreakable Code
 
 
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 782ca57..4a43208 100644
+index ed9fc5c..77f4ac8 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -286,7 +286,13 @@ public final class ItemStack {
+@@ -292,7 +292,13 @@ public final class ItemStack {
      }
  
      public boolean e() {
