@@ -1,4 +1,4 @@
-From dbab11711c1dc9c2c50e9bdae2bf3f1b948ea006 Mon Sep 17 00:00:00 2001
+From ccd010c5174ed6ddfcff7e5d5b99969c11535f0b Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -64,10 +64,10 @@ index dca8520..bf48e6e 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 5572ac1..73161c1 100644
+index 83f9131..fe3ff16 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -570,4 +570,15 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -580,4 +580,15 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          }
          return perm;
      }
@@ -104,10 +104,10 @@ index 64e346d..243e8e5 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 303da2d..01ba89f 100644
+index cf307e5..e8728aa 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1402,4 +1402,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1401,4 +1401,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          getHandle().playerConnection.sendPacket(packetplayoutworldparticles);
  
      }
