@@ -1,4 +1,4 @@
-From 5de73dd3d1df8ba2273c6b4192833ce7ffe5f0de Mon Sep 17 00:00:00 2001
+From 61c81c0e50c29e0bd817bc2e33a08c86a9b1835a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -26,7 +26,7 @@ index 12589d6..1d2f580 100644
      public int a(Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 7004b58..6e3bcd7 100644
+index 3dab8fa..2e8b57b 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -620,6 +620,7 @@ public abstract class EntityLiving extends Entity {
@@ -78,7 +78,7 @@ index 8b38bd2..f8570a8 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index e548d00..c73f0ef 100644
+index 2422ce7..caaa962 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -897,6 +897,7 @@ public abstract class World implements IBlockAccess {
@@ -97,7 +97,7 @@ index e548d00..c73f0ef 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2446,6 +2448,7 @@ public abstract class World implements IBlockAccess {
+@@ -2452,6 +2454,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void a(Collection<Entity> collection) {
@@ -106,7 +106,7 @@ index e548d00..c73f0ef 100644
          // this.entityList.addAll(collection);
          Iterator iterator = collection.iterator();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 0dcdeab..dfe58c6 100644
+index a73d184..8ac2b74 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -169,6 +169,7 @@ public class CraftWorld implements World {

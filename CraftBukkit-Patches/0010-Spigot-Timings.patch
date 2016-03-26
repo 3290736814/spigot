@@ -1,4 +1,4 @@
-From bb377d35a2ce39ec624b3e9c3761c28c46fc9367 Mon Sep 17 00:00:00 2001
+From 04820c28b83f53da5909525a5535c9f88b5728b4 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -124,7 +124,7 @@ index 9c17951..db78855 100644
  
      public boolean aa() {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 6c81511..c1d4fb4 100644
+index ef59000..0d432df 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -24,6 +24,7 @@ import org.bukkit.block.BlockFace;
@@ -160,7 +160,7 @@ index 6c81511..c1d4fb4 100644
  
      public void recalcPosition() {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 6e3bcd7..ff20c9b 100644
+index 2e8b57b..c9651a9 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -24,6 +24,8 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
@@ -230,7 +230,7 @@ index 6e3bcd7..ff20c9b 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index c226e01..d754d0d 100644
+index fe65407..4dc1140 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -45,6 +45,7 @@ import org.bukkit.craftbukkit.CraftServer;
@@ -407,7 +407,7 @@ index baf1d73..8bbdc11 100644
      private static Map<String, Class<? extends TileEntity>> f = Maps.newHashMap();
      private static Map<Class<? extends TileEntity>, String> g = Maps.newHashMap();
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index c73f0ef..d6d4c5b 100644
+index caaa962..0f41bb6 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -18,6 +18,7 @@ import com.google.common.collect.Maps;
@@ -490,7 +490,7 @@ index c73f0ef..d6d4c5b 100644
          this.M = false;
          /* CraftBukkit start - Moved up
          if (!this.tileEntityListUnload.isEmpty()) {
-@@ -1449,6 +1465,7 @@ public abstract class World implements IBlockAccess {
+@@ -1455,6 +1471,7 @@ public abstract class World implements IBlockAccess {
              this.b.clear();
          }
  
@@ -498,7 +498,7 @@ index c73f0ef..d6d4c5b 100644
          this.methodProfiler.b();
          this.methodProfiler.b();
      }
-@@ -1492,6 +1509,7 @@ public abstract class World implements IBlockAccess {
+@@ -1498,6 +1515,7 @@ public abstract class World implements IBlockAccess {
          // CraftBukkit start - Use neighbor cache instead of looking up
          Chunk startingChunk = this.getChunkIfLoaded(i >> 4, j >> 4);
          if (!flag || (startingChunk != null && startingChunk.areNeighborsLoaded(2)) /* this.isAreaLoaded(i - b0, 0, j - b0, i + b0, 0, j + b0) */) {
@@ -506,7 +506,7 @@ index c73f0ef..d6d4c5b 100644
              // CraftBukkit end
              entity.M = entity.locX;
              entity.N = entity.locY;
-@@ -1559,6 +1577,7 @@ public abstract class World implements IBlockAccess {
+@@ -1565,6 +1583,7 @@ public abstract class World implements IBlockAccess {
                  }
              }
  
@@ -586,7 +586,7 @@ index 91965c0..261b423 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index dfe58c6..e0e469d 100644
+index 8ac2b74..ad224bf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -274,7 +274,9 @@ public class CraftWorld implements World {

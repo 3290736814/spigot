@@ -1,9 +1,47 @@
-From 56f43f705bf61748a904e04db6e560eb0281038e Mon Sep 17 00:00:00 2001
+From e514ce79248348349836a7c4a6e4f7cc97d9ac28 Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Fri, 4 Jul 2014 23:03:13 +0200
 Subject: [PATCH] Make "moved wrongly" limit configurable
 
 
+diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
+index f354985..f2963ca 100644
+--- a/src/main/java/net/minecraft/server/PlayerConnection.java
++++ b/src/main/java/net/minecraft/server/PlayerConnection.java
+@@ -338,13 +338,13 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+                 d10 = d6 * d6 + d7 * d7 + d8 * d8;
+                 boolean flag1 = false;
+ 
+-                if (d10 > 0.0625D) {
++                if (d10 > org.spigotmc.SpigotConfig.movedWronglyThreshold) { // Spigot
+                     flag1 = true;
+                     PlayerConnection.LOGGER.warn(entity.getName() + " moved wrongly!");
+                 }
+ 
+                 entity.setLocation(d3, d4, d5, f, f1);
+-                boolean flag2 = worldserver.getCubes(entity, entity.getBoundingBox().shrink(0.0625D)).isEmpty();
++                boolean flag2 = worldserver.getCubes(entity, entity.getBoundingBox().shrink(org.spigotmc.SpigotConfig.movedWronglyThreshold)).isEmpty(); // Spigot
+ 
+                 if (flag && (flag1 || !flag2)) {
+                     entity.setLocation(d0, d1, d2, f, f1);
+@@ -553,7 +553,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+                         d11 = d7 * d7 + d8 * d8 + d9 * d9;
+                         boolean flag1 = false;
+ 
+-                        if (!this.player.K() && d11 > 0.0625D && !this.player.isSleeping() && !this.player.playerInteractManager.isCreative() && this.player.playerInteractManager.getGameMode() != WorldSettings.EnumGamemode.SPECTATOR) {
++                        if (!this.player.K() && d11 > org.spigotmc.SpigotConfig.movedWronglyThreshold && !this.player.isSleeping() && !this.player.playerInteractManager.isCreative() && this.player.playerInteractManager.getGameMode() != WorldSettings.EnumGamemode.SPECTATOR) { // Spigot
+                             flag1 = true;
+                             PlayerConnection.LOGGER.warn(this.player.getName() + " moved wrongly!");
+                         }
+@@ -561,7 +561,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+                         this.player.setLocation(d4, d5, d6, f, f1);
+                         this.player.checkMovement(this.player.locX - d0, this.player.locY - d1, this.player.locZ - d2);
+                         if (!this.player.noclip && !this.player.isSleeping()) {
+-                            boolean flag2 = worldserver.getCubes(this.player, this.player.getBoundingBox().shrink(0.0625D)).isEmpty();
++                            boolean flag2 = worldserver.getCubes(this.player, this.player.getBoundingBox().shrink(org.spigotmc.SpigotConfig.movedWronglyThreshold)).isEmpty(); // Spigot
+ 
+                             if (flag && (flag1 || !flag2)) {
+                                 this.a(d0, d1, d2, f, f1);
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
 index 921d7d5..7e774f2 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
