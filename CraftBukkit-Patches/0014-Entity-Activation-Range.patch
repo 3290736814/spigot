@@ -1,4 +1,4 @@
-From 6396fdf9595514b9190466e781e9572bd1671486 Mon Sep 17 00:00:00 2001
+From 71934eecd46af5a6fc6d4f5ec0a6cac4affd63be Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -168,12 +168,12 @@ index eb0f8eb..39af5d5 100644
          // Spigot start
          double radius = world.spigotConfig.itemMerge;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index c9651a9..e70aa57 100644
+index afd91b0..dff2933 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -104,6 +104,13 @@ public abstract class EntityLiving extends Entity {
-     ArrayList<org.bukkit.inventory.ItemStack> drops = new ArrayList<org.bukkit.inventory.ItemStack>();
+@@ -105,6 +105,13 @@ public abstract class EntityLiving extends Entity {
      public org.bukkit.craftbukkit.attribute.CraftAttributeMap craftAttributes;
+     public boolean collides = true;
      // CraftBukkit end
 +    // Spigot start
 +    public void inactiveTick()

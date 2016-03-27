@@ -1,4 +1,4 @@
-From 7418a7d9226888d4c0098a35ad309c39f54484ff Mon Sep 17 00:00:00 2001
+From ea7e5f8f1fa92b7de6f8177a33e91ed541f7b6af Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 31 Jan 2014 11:18:34 -0500
 Subject: [PATCH] Cap Entity Collisions
@@ -19,20 +19,20 @@ index 97821bf..5fe7b07 100644
  
      public Entity(World world) {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 464788e..5755e44 100644
+index dff2933..bc8d1cc 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -1976,7 +1976,8 @@ public abstract class EntityLiving extends Entity {
+@@ -1977,7 +1977,8 @@ public abstract class EntityLiving extends Entity {
          List list = this.world.a((Entity) this, this.getBoundingBox(), IEntitySelector.a(this));
  
-         if (this.isInteractable() && !list.isEmpty()) { // Spigot: Add isInteractable() condition
+         if (!list.isEmpty()) {
 -            for (int i = 0; i < list.size(); ++i) {
 +                numCollisions = Math.max(0, numCollisions - world.spigotConfig.maxCollisionsPerEntity); // Spigot
 +                for (int i = 0; i < list.size() && numCollisions < world.spigotConfig.maxCollisionsPerEntity; ++i) {
                  Entity entity = (Entity) list.get(i);
                  // TODO better check now?
                  // CraftBukkit start - Only handle mob (non-player) collisions every other tick
-@@ -1985,7 +1986,8 @@ public abstract class EntityLiving extends Entity {
+@@ -1986,7 +1987,8 @@ public abstract class EntityLiving extends Entity {
                  }
                  // CraftBukkit end
  
