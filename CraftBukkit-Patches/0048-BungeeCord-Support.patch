@@ -1,4 +1,4 @@
-From 291fe5e6420ef78db156d8ccbc826e2f1cf73884 Mon Sep 17 00:00:00 2001
+From f81d4081ba8217859f1107c2336291c7c8a5a204 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -6,7 +6,7 @@ Subject: [PATCH] BungeeCord Support
 Provides support for IP forwarding via BungeeCord.
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index e24c49b..a13d64f 100644
+index c8271e3..5f8d853 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -7,6 +7,7 @@ import java.util.HashMap;
@@ -104,15 +104,15 @@ index 5ed2c96..c3ff6c2 100644
 +    // Spigot End
  }
 diff --git a/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java b/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java
-index 86f1be7..e6ab607 100644
+index 1cb9d60..aececa3 100644
 --- a/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java
 +++ b/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java
 @@ -13,7 +13,7 @@ public class PacketHandshakingInSetProtocol implements Packet<PacketHandshakingI
  
      public void a(PacketDataSerializer packetdataserializer) throws IOException {
          this.a = packetdataserializer.g();
--        this.hostname = packetdataserializer.c(255);
-+        this.hostname = packetdataserializer.c(Short.MAX_VALUE); // Spigot
+-        this.hostname = packetdataserializer.e(255);
++        this.hostname = packetdataserializer.e(Short.MAX_VALUE); // Spigot
          this.port = packetdataserializer.readUnsignedShort();
          this.d = EnumProtocol.a(packetdataserializer.g());
      }

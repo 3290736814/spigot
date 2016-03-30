@@ -1,4 +1,4 @@
-From 1575a94a517784cfbab3ed6d8f0a0248e76faf17 Mon Sep 17 00:00:00 2001
+From 17d0d3fb6d82e8226e9409708eca24245ce181b4 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -46,7 +46,7 @@ index 22c17db..162613b 100644
  
          return chunk;
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index 003aee0..53b5296 100644
+index f6f356d..5d77c92 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -44,7 +44,9 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
@@ -96,7 +96,7 @@ index 003aee0..53b5296 100644
          // return chunk; // CraftBukkit
      }
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 9c17951..db78855 100644
+index c78665d..9423fa0 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -22,6 +22,7 @@ import java.io.PrintStream;
@@ -124,7 +124,7 @@ index 9c17951..db78855 100644
  
      public boolean aa() {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index ef59000..0d432df 100644
+index a19b6cd..f5957ad 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -24,6 +24,7 @@ import org.bukkit.block.BlockFace;
@@ -160,7 +160,7 @@ index ef59000..0d432df 100644
  
      public void recalcPosition() {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 78c88f6..d22002e 100644
+index 203b190..01301c6 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -24,6 +24,8 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
@@ -172,7 +172,7 @@ index 78c88f6..d22002e 100644
  public abstract class EntityLiving extends Entity {
  
      private static final UUID a = UUID.fromString("662A6B8D-DA3E-4C1C-8813-96EA6097278D");
-@@ -1682,6 +1684,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1688,6 +1690,7 @@ public abstract class EntityLiving extends Entity {
      }
  
      public void m() {
@@ -180,7 +180,7 @@ index 78c88f6..d22002e 100644
          super.m();
          this.cu();
          if (!this.world.isClientSide) {
-@@ -1754,7 +1757,9 @@ public abstract class EntityLiving extends Entity {
+@@ -1760,7 +1763,9 @@ public abstract class EntityLiving extends Entity {
              }
          }
  
@@ -190,7 +190,7 @@ index 78c88f6..d22002e 100644
          double d0 = this.locX - this.lastX;
          double d1 = this.locZ - this.lastZ;
          float f = (float) (d0 * d0 + d1 * d1);
-@@ -1824,6 +1829,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1830,6 +1835,7 @@ public abstract class EntityLiving extends Entity {
              this.bo = 0;
          }
  
@@ -198,7 +198,7 @@ index 78c88f6..d22002e 100644
      }
  
      protected float h(float f, float f1) {
-@@ -1888,6 +1894,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1894,6 +1900,7 @@ public abstract class EntityLiving extends Entity {
          }
  
          this.world.methodProfiler.a("ai");
@@ -206,7 +206,7 @@ index 78c88f6..d22002e 100644
          if (this.cf()) {
              this.bc = false;
              this.bd = 0.0F;
-@@ -1898,6 +1905,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1904,6 +1911,7 @@ public abstract class EntityLiving extends Entity {
              this.doTick();
              this.world.methodProfiler.b();
          }
@@ -214,7 +214,7 @@ index 78c88f6..d22002e 100644
  
          this.world.methodProfiler.b();
          this.world.methodProfiler.a("jump");
-@@ -1920,10 +1928,14 @@ public abstract class EntityLiving extends Entity {
+@@ -1926,10 +1934,14 @@ public abstract class EntityLiving extends Entity {
          this.be *= 0.98F;
          this.bf *= 0.9F;
          this.r();
@@ -230,7 +230,7 @@ index 78c88f6..d22002e 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index fe65407..4dc1140 100644
+index 4e8e58d..28a28af 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -45,6 +45,7 @@ import org.bukkit.craftbukkit.CraftServer;
@@ -355,7 +355,7 @@ index fe65407..4dc1140 100644
          this.methodProfiler.b();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 969840c..76cbb21 100644
+index 2292e7c..0a40f5a 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -1282,6 +1282,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
@@ -515,10 +515,10 @@ index 1ab1e04..4ae8d1b 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 2c95e76..9abcc8d 100644
+index 1b4a739..11db4ae 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -219,10 +219,13 @@ public class WorldServer extends World implements IAsyncTaskHandler {
+@@ -222,10 +222,13 @@ public class WorldServer extends World implements IAsyncTaskHandler {
          // CraftBukkit start - Only call spawner if we have players online and the world allows for mobs or animals
          long time = this.worldData.getTime();
          if (this.getGameRules().getBoolean("doMobSpawning") && this.worldData.getType() != WorldType.DEBUG_ALL_BLOCK_STATES && (this.allowMonsters || this.allowAnimals) && (this instanceof WorldServer && this.players.size() > 0)) {
@@ -532,7 +532,7 @@ index 2c95e76..9abcc8d 100644
          this.methodProfiler.c("chunkSource");
          this.chunkProvider.unloadChunks();
          int j = this.a(1.0F);
-@@ -236,21 +239,36 @@ public class WorldServer extends World implements IAsyncTaskHandler {
+@@ -239,21 +242,36 @@ public class WorldServer extends World implements IAsyncTaskHandler {
              this.worldData.setDayTime(this.worldData.getDayTime() + 1L);
          }
  

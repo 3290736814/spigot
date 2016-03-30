@@ -1,24 +1,24 @@
-From eb366e1e61cc8fcf6fe2ef1eae5591cb026dd1d4 Mon Sep 17 00:00:00 2001
+From 7952fbac4328eab14b0ae6cb850f830b0bee68cf Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
 
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 8292d7d..aecdac6 100644
+index 459fc78..c8271e3 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -63,11 +63,11 @@ public class HandshakeListener implements PacketHandshakingInListener {
              // CraftBukkit end
  
              if (packethandshakinginsetprotocol.b() > 109) {
--                chatcomponenttext = new ChatComponentText("Outdated server! I\'m still on 1.9");
-+                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.9" ) ); // Spigot
+-                chatcomponenttext = new ChatComponentText("Outdated server! I\'m still on 1.9.2");
++                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.9.2" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatcomponenttext));
                  this.b.close(chatcomponenttext);
              } else if (packethandshakinginsetprotocol.b() < 107) {
--                chatcomponenttext = new ChatComponentText("Outdated client! Please use 1.9");
-+                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), "1.9" ) ); // Spigot
+-                chatcomponenttext = new ChatComponentText("Outdated client! Please use 1.9.2");
++                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), "1.9.2" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatcomponenttext));
                  this.b.close(chatcomponenttext);
              } else {

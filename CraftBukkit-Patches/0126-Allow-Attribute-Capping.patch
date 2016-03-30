@@ -1,4 +1,4 @@
-From b56778b7f699c543454c808aaa0f8a03fa2e370f Mon Sep 17 00:00:00 2001
+From a2cc60b83c064942f18d6954875b65667a4e7327 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 28 Jul 2014 16:55:51 +1000
 Subject: [PATCH] Allow Attribute Capping.
@@ -19,13 +19,13 @@ index 13602f0..838daed 100644
  
      public AttributeRanged(IAttribute iattribute, String s, double d0, double d1, double d2) {
 diff --git a/src/main/java/net/minecraft/server/GenericAttributes.java b/src/main/java/net/minecraft/server/GenericAttributes.java
-index 16aaf1a..f43aa57 100644
+index 61cb504..501c91d 100644
 --- a/src/main/java/net/minecraft/server/GenericAttributes.java
 +++ b/src/main/java/net/minecraft/server/GenericAttributes.java
-@@ -9,14 +9,16 @@ import org.apache.logging.log4j.Logger;
+@@ -9,15 +9,17 @@ import org.apache.logging.log4j.Logger;
  public class GenericAttributes {
  
-     private static final Logger i = LogManager.getLogger();
+     private static final Logger j = LogManager.getLogger();
 -    public static final IAttribute maxHealth = (new AttributeRanged((IAttribute) null, "generic.maxHealth", 20.0D, 0.0D, 1024.0D)).a("Max Health").a(true);
 +    // Spigot start
 +    public static final IAttribute maxHealth = (new AttributeRanged((IAttribute) null, "generic.maxHealth", 20.0D, 0.0D, org.spigotmc.SpigotConfig.maxHealth)).a("Max Health").a(true);
@@ -37,7 +37,8 @@ index 16aaf1a..f43aa57 100644
 +    public static final IAttribute ATTACK_DAMAGE = new AttributeRanged((IAttribute) null, "generic.attackDamage", 2.0D, 0.0D, org.spigotmc.SpigotConfig.attackDamage);
      public static final IAttribute f = (new AttributeRanged((IAttribute) null, "generic.attackSpeed", 4.0D, 0.0D, 1024.0D)).a(true);
      public static final IAttribute g = (new AttributeRanged((IAttribute) null, "generic.armor", 0.0D, 0.0D, 30.0D)).a(true);
-     public static final IAttribute h = (new AttributeRanged((IAttribute) null, "generic.luck", 0.0D, -1024.0D, 1024.0D)).a(true);
+     public static final IAttribute h = (new AttributeRanged((IAttribute) null, "generic.armorToughness", 0.0D, 0.0D, 20.0D)).a(true);
+     public static final IAttribute i = (new AttributeRanged((IAttribute) null, "generic.luck", 0.0D, -1024.0D, 1024.0D)).a(true);
 +    // Spigot end
  
      public static NBTTagList a(AttributeMapBase attributemapbase) {
@@ -74,5 +75,5 @@ index f67aadb..fc814b4 100644
 +    }
  }
 -- 
-2.5.0
+1.9.1
 
