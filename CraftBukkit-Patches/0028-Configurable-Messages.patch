@@ -1,17 +1,17 @@
-From 6302462c71bdee03a1a430eb8342dc968b77a267 Mon Sep 17 00:00:00 2001
+From eb366e1e61cc8fcf6fe2ef1eae5591cb026dd1d4 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
 
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index a888d97..e24c49b 100644
+index 8292d7d..aecdac6 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -63,11 +63,11 @@ public class HandshakeListener implements PacketHandshakingInListener {
              // CraftBukkit end
  
-             if (packethandshakinginsetprotocol.b() > 108) {
+             if (packethandshakinginsetprotocol.b() > 109) {
 -                chatcomponenttext = new ChatComponentText("Outdated server! I\'m still on 1.9");
 +                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.9" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatcomponenttext));
