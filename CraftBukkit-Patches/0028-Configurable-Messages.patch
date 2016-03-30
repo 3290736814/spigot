@@ -1,17 +1,17 @@
-From 0988b9fd0a9e454f00ff512887f0030433d98cc9 Mon Sep 17 00:00:00 2001
+From 6302462c71bdee03a1a430eb8342dc968b77a267 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
 
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 37c13c5..ee987b9 100644
+index a888d97..e24c49b 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
-@@ -62,11 +62,11 @@ public class HandshakeListener implements PacketHandshakingInListener {
+@@ -63,11 +63,11 @@ public class HandshakeListener implements PacketHandshakingInListener {
              // CraftBukkit end
  
-             if (packethandshakinginsetprotocol.b() > 107) {
+             if (packethandshakinginsetprotocol.b() > 108) {
 -                chatcomponenttext = new ChatComponentText("Outdated server! I\'m still on 1.9");
 +                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.9" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatcomponenttext));
@@ -23,7 +23,7 @@ index 37c13c5..ee987b9 100644
                  this.b.close(chatcomponenttext);
              } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 2095242..b21a5b7 100644
+index 8e5c5b0..51acabc 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -466,7 +466,7 @@ public abstract class PlayerList {
@@ -45,7 +45,7 @@ index 2095242..b21a5b7 100644
          }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index fa21527..7cdba38 100644
+index 91aa0ec..9aaf5ac 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -627,11 +627,7 @@ public final class CraftServer implements Server {
@@ -103,5 +103,5 @@ index ca001e9..3726ea5 100644
 +    }
  }
 -- 
-2.5.0
+1.9.1
 

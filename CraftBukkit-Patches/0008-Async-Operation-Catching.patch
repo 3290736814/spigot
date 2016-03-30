@@ -1,4 +1,4 @@
-From 7ec982a24b56a13a72e9dcc2bb04100e14616886 Mon Sep 17 00:00:00 2001
+From 4ed2f200d38e65d1f74f2928894ff993c315439a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -26,7 +26,7 @@ index 12589d6..1d2f580 100644
      public int a(Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 52bff07..f1346b6 100644
+index 93e86f1..78c88f6 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -621,6 +621,7 @@ public abstract class EntityLiving extends Entity {
@@ -78,7 +78,7 @@ index 8b38bd2..f8570a8 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 2422ce7..caaa962 100644
+index 8b6d2a3..1ab1e04 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -897,6 +897,7 @@ public abstract class World implements IBlockAccess {
@@ -89,7 +89,7 @@ index 2422ce7..caaa962 100644
          if (entity == null) return false;
          // CraftBukkit end
          int i = MathHelper.floor(entity.locX / 16.0D);
-@@ -1003,6 +1004,7 @@ public abstract class World implements IBlockAccess {
+@@ -1004,6 +1005,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void removeEntity(Entity entity) {
@@ -97,7 +97,7 @@ index 2422ce7..caaa962 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2452,6 +2454,7 @@ public abstract class World implements IBlockAccess {
+@@ -2453,6 +2455,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void a(Collection<Entity> collection) {
@@ -181,5 +181,5 @@ index 0000000..4b3aa85
 +    }
 +}
 -- 
-2.5.0
+1.9.1
 

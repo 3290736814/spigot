@@ -1,4 +1,4 @@
-From df4f9e3673bce2b6ce409ac9a969834e4c17b5d5 Mon Sep 17 00:00:00 2001
+From 1575a94a517784cfbab3ed6d8f0a0248e76faf17 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -160,7 +160,7 @@ index ef59000..0d432df 100644
  
      public void recalcPosition() {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index f1346b6..afd91b0 100644
+index 78c88f6..d22002e 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -24,6 +24,8 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
@@ -407,7 +407,7 @@ index baf1d73..8bbdc11 100644
      private static Map<String, Class<? extends TileEntity>> f = Maps.newHashMap();
      private static Map<Class<? extends TileEntity>, String> g = Maps.newHashMap();
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index caaa962..0f41bb6 100644
+index 1ab1e04..4ae8d1b 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -18,6 +18,7 @@ import com.google.common.collect.Maps;
@@ -435,7 +435,7 @@ index caaa962..0f41bb6 100644
      }
  
      public World b() {
-@@ -1332,6 +1336,7 @@ public abstract class World implements IBlockAccess {
+@@ -1333,6 +1337,7 @@ public abstract class World implements IBlockAccess {
          CrashReportSystemDetails crashreportsystemdetails1;
          CrashReport crashreport1;
  
@@ -443,7 +443,7 @@ index caaa962..0f41bb6 100644
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
              entity = (Entity) this.entityList.get(this.tickPosition);
-@@ -1349,7 +1354,9 @@ public abstract class World implements IBlockAccess {
+@@ -1350,7 +1355,9 @@ public abstract class World implements IBlockAccess {
              this.methodProfiler.a("tick");
              if (!entity.dead && !(entity instanceof EntityPlayer)) {
                  try {
@@ -453,7 +453,7 @@ index caaa962..0f41bb6 100644
                  } catch (Throwable throwable1) {
                      crashreport1 = CrashReport.a(throwable1, "Ticking entity");
                      crashreportsystemdetails1 = crashreport1.a("Entity being ticked");
-@@ -1375,6 +1382,7 @@ public abstract class World implements IBlockAccess {
+@@ -1376,6 +1383,7 @@ public abstract class World implements IBlockAccess {
              this.methodProfiler.b();
          }
  
@@ -461,7 +461,7 @@ index caaa962..0f41bb6 100644
          this.methodProfiler.c("blockEntities");
          this.M = true;
          // CraftBukkit start - From below, clean up tile entities before ticking them
-@@ -1395,6 +1403,7 @@ public abstract class World implements IBlockAccess {
+@@ -1396,6 +1404,7 @@ public abstract class World implements IBlockAccess {
                  if (this.isLoaded(blockposition) && this.N.a(blockposition)) {
                      try {
                          this.methodProfiler.a(""/*tileentity.getClass().getSimpleName()*/); // CraftBukkit: SPIGOT-1900
@@ -469,7 +469,7 @@ index caaa962..0f41bb6 100644
                          ((ITickable) tileentity).c();
                          this.methodProfiler.b();
                      } catch (Throwable throwable2) {
-@@ -1403,6 +1412,11 @@ public abstract class World implements IBlockAccess {
+@@ -1404,6 +1413,11 @@ public abstract class World implements IBlockAccess {
                          tileentity.a(crashreportsystemdetails1);
                          throw new ReportedException(crashreport1);
                      }
@@ -481,7 +481,7 @@ index caaa962..0f41bb6 100644
                  }
              }
  
-@@ -1415,6 +1429,8 @@ public abstract class World implements IBlockAccess {
+@@ -1416,6 +1430,8 @@ public abstract class World implements IBlockAccess {
              }
          }
  
@@ -490,7 +490,7 @@ index caaa962..0f41bb6 100644
          this.M = false;
          /* CraftBukkit start - Moved up
          if (!this.tileEntityListUnload.isEmpty()) {
-@@ -1455,6 +1471,7 @@ public abstract class World implements IBlockAccess {
+@@ -1456,6 +1472,7 @@ public abstract class World implements IBlockAccess {
              this.b.clear();
          }
  
@@ -498,7 +498,7 @@ index caaa962..0f41bb6 100644
          this.methodProfiler.b();
          this.methodProfiler.b();
      }
-@@ -1498,6 +1515,7 @@ public abstract class World implements IBlockAccess {
+@@ -1499,6 +1516,7 @@ public abstract class World implements IBlockAccess {
          // CraftBukkit start - Use neighbor cache instead of looking up
          Chunk startingChunk = this.getChunkIfLoaded(i >> 4, j >> 4);
          if (!flag || (startingChunk != null && startingChunk.areNeighborsLoaded(2)) /* this.isAreaLoaded(i - b0, 0, j - b0, i + b0, 0, j + b0) */) {
@@ -506,7 +506,7 @@ index caaa962..0f41bb6 100644
              // CraftBukkit end
              entity.M = entity.locX;
              entity.N = entity.locY;
-@@ -1565,6 +1583,7 @@ public abstract class World implements IBlockAccess {
+@@ -1566,6 +1584,7 @@ public abstract class World implements IBlockAccess {
                  }
              }
  
@@ -570,10 +570,10 @@ index 2c95e76..9abcc8d 100644
  
      public BiomeBase.BiomeMeta a(EnumCreatureType enumcreaturetype, BlockPosition blockposition) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 91965c0..261b423 100644
+index d681258..80f31cf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1663,6 +1663,11 @@ public final class CraftServer implements Server {
+@@ -1667,6 +1667,11 @@ public final class CraftServer implements Server {
      private final Spigot spigot = new Spigot()
      {
  
@@ -873,5 +873,5 @@ index 55db3ff..220e39a 100644
 +    // Spigot end
  }
 -- 
-2.5.0
+1.9.1
 

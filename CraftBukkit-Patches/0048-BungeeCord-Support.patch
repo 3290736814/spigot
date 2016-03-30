@@ -1,4 +1,4 @@
-From d1ce5d595bb852a44ae7bb17867fa17f07ee42fa Mon Sep 17 00:00:00 2001
+From 291fe5e6420ef78db156d8ccbc826e2f1cf73884 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -6,7 +6,7 @@ Subject: [PATCH] BungeeCord Support
 Provides support for IP forwarding via BungeeCord.
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index ee987b9..ed20034 100644
+index e24c49b..a13d64f 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -7,6 +7,7 @@ import java.util.HashMap;
@@ -17,7 +17,7 @@ index ee987b9..ed20034 100644
      // CraftBukkit start - add fields
      private static final HashMap<InetAddress, Long> throttleTracker = new HashMap<InetAddress, Long>();
      private static int throttleCounter = 0;
-@@ -71,6 +72,26 @@ public class HandshakeListener implements PacketHandshakingInListener {
+@@ -72,6 +73,26 @@ public class HandshakeListener implements PacketHandshakingInListener {
                  this.b.close(chatcomponenttext);
              } else {
                  this.b.setPacketListener(new LoginListener(this.a, this.b));
@@ -130,7 +130,7 @@ index eea4ae1..200ed13 100644
  
          if (getProfileBans().isBanned(gameprofile) && !getProfileBans().get(gameprofile).hasExpired()) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 72e1e2f..1a5f14d 100644
+index 70cd974..3f2e988 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -560,7 +560,13 @@ public final class CraftServer implements Server {
@@ -185,5 +185,5 @@ index 34def7b..824ba7a 100644
 +    }
  }
 -- 
-2.5.0
+1.9.1
 

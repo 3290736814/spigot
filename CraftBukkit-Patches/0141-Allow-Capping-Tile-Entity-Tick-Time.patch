@@ -1,4 +1,4 @@
-From 48d0b867419f0e56e63caa672b460fcffcba4761 Mon Sep 17 00:00:00 2001
+From 8460ac8955d5cf238cf7ea2787b151d6366b3a75 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -10,7 +10,7 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 This feature was commisioned by Chunkr.
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 8ad0aa2..b5fa1a2 100644
+index 4aeb114..4e2233f 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -129,6 +129,9 @@ public abstract class World implements IBlockAccess {
@@ -32,7 +32,7 @@ index 8ad0aa2..b5fa1a2 100644
      }
  
      public World b() {
-@@ -1390,7 +1395,12 @@ public abstract class World implements IBlockAccess {
+@@ -1391,7 +1396,12 @@ public abstract class World implements IBlockAccess {
          timings.entityTick.startTiming(); // Spigot
          guardEntityList = true; // Spigot
          // CraftBukkit start - Use field for loop variable
@@ -46,7 +46,7 @@ index 8ad0aa2..b5fa1a2 100644
              entity = (Entity) this.entityList.get(this.tickPosition);
              // CraftBukkit end
              Entity entity1 = entity.by();
-@@ -1447,14 +1457,20 @@ public abstract class World implements IBlockAccess {
+@@ -1448,14 +1458,20 @@ public abstract class World implements IBlockAccess {
              this.tileEntityListUnload.clear();
          }
          // CraftBukkit end
@@ -71,7 +71,7 @@ index 8ad0aa2..b5fa1a2 100644
                  continue;
              }
              // Spigot end
-@@ -1483,7 +1499,8 @@ public abstract class World implements IBlockAccess {
+@@ -1484,7 +1500,8 @@ public abstract class World implements IBlockAccess {
              }
  
              if (tileentity.x()) {
@@ -126,5 +126,5 @@ index 0000000..23a3938
 +    }
 +}
 -- 
-2.5.0
+1.9.1
 
