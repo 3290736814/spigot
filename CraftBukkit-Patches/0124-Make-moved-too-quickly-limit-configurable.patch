@@ -1,19 +1,19 @@
-From f40535eb209e75d699757ccd644bcf3e5e5731f9 Mon Sep 17 00:00:00 2001
+From cc350c3b05b5f69852fd5e3c75fa1e84db68ae82 Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Tue, 22 Jul 2014 15:59:01 +0200
 Subject: [PATCH] Make "moved too quickly" limit configurable
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index f2963ca..0767d87 100644
+index cbd49ec..8c82c09 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -313,7 +313,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
                  }
                  speed *= 2f; // TODO: Get the speed of the vehicle instead of the player
  
--                if (d10 - d9 > Math.pow((double) (10.0F * (float) i * speed), 2) && (!this.minecraftServer.R() || !this.minecraftServer.Q().equals(entity.getName()))) {
-+                if (d10 - d9 > Math.pow((double) (org.spigotmc.SpigotConfig.movedTooQuicklyMultiplier * (float) i * speed), 2) && (!this.minecraftServer.R() || !this.minecraftServer.Q().equals(entity.getName()))) { // Spigot
+-                if (d10 - d9 > Math.max(100, Math.pow((double) (10.0F * (float) i * speed), 2)) && (!this.minecraftServer.R() || !this.minecraftServer.Q().equals(entity.getName()))) {
++                if (d10 - d9 > Math.max(100, Math.pow((double) (org.spigotmc.SpigotConfig.movedTooQuicklyMultiplier * (float) i * speed), 2)) && (!this.minecraftServer.R() || !this.minecraftServer.Q().equals(entity.getName()))) { // Spigot
                  // CraftBukkit end
                      PlayerConnection.LOGGER.warn(entity.getName() + " (vehicle of " + this.player.getName() + ") moved too quickly! " + d6 + "," + d7 + "," + d8);
                      this.networkManager.sendPacket(new PacketPlayOutVehicleMove(entity));
@@ -21,8 +21,8 @@ index f2963ca..0767d87 100644
                          if (!this.player.K() && (!this.player.x().getGameRules().getBoolean("disableElytraMovementCheck") || !this.player.cB())) {
                              float f2 = this.player.cB() ? 300.0F : 100.0F;
  
--                            if (d11 - d10 > Math.pow((double) (10.0F * (float) i * speed), 2) && (!this.minecraftServer.R() || !this.minecraftServer.Q().equals(this.player.getName()))) {
-+                            if (d11 - d10 > Math.pow((double) (org.spigotmc.SpigotConfig.movedTooQuicklyMultiplier * (float) i * speed), 2) && (!this.minecraftServer.R() || !this.minecraftServer.Q().equals(this.player.getName()))) { // Spigot
+-                            if (d11 - d10 > Math.max(100, Math.pow((double) (10.0F * (float) i * speed), 2)) && (!this.minecraftServer.R() || !this.minecraftServer.Q().equals(this.player.getName()))) {
++                            if (d11 - d10 > Math.max(100, Math.pow((double) (org.spigotmc.SpigotConfig.movedTooQuicklyMultiplier * (float) i * speed), 2)) && (!this.minecraftServer.R() || !this.minecraftServer.Q().equals(this.player.getName()))) { // Spigot
                          // CraftBukkit end
                                  PlayerConnection.LOGGER.warn(this.player.getName() + " moved too quickly! " + d7 + "," + d8 + "," + d9);
                                  this.a(this.player.locX, this.player.locY, this.player.locZ, this.player.yaw, this.player.pitch);
@@ -42,5 +42,5 @@ index 7e774f2..f67aadb 100644
 +    }
  }
 -- 
-2.5.0
+1.9.1
 
