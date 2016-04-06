@@ -1,4 +1,4 @@
-From d18a11e4b063b57f3cbcb86080f9c083e56cf2bd Mon Sep 17 00:00:00 2001
+From b99ac1b82820f04af72a31783ccba90d34b215ed Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -106,7 +106,7 @@ index 8b6d2a3..1ab1e04 100644
          // this.entityList.addAll(collection);
          Iterator iterator = collection.iterator();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index a73d184..8ac2b74 100644
+index 32a0366..e50e542 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -169,6 +169,7 @@ public class CraftWorld implements World {
@@ -125,7 +125,7 @@ index a73d184..8ac2b74 100644
          if (isChunkInUse(x, z)) {
              return false;
          }
-@@ -261,6 +263,7 @@ public class CraftWorld implements World {
+@@ -265,6 +267,7 @@ public class CraftWorld implements World {
      }
  
      public boolean loadChunk(int x, int z, boolean generate) {
@@ -181,5 +181,5 @@ index 0000000..4b3aa85
 +    }
 +}
 -- 
-1.9.1
+2.5.0
 

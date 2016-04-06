@@ -1,14 +1,14 @@
-From 9f4a4c352e1cbf0fa520bd4c69f8cd16c1ba2abc Mon Sep 17 00:00:00 2001
+From 4aab5209a8a0bfd5fed183b975871829d110cdd9 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Fri, 20 Dec 2013 21:36:06 +0000
 Subject: [PATCH] Particle API
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftEffect.java b/src/main/java/org/bukkit/craftbukkit/CraftEffect.java
-index 7de0de5..13f9e9d 100644
+index 1672183..352ff3a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftEffect.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftEffect.java
-@@ -55,6 +55,9 @@ public class CraftEffect {
+@@ -58,6 +58,9 @@ public class CraftEffect {
              Validate.isTrue(((Material) data).isBlock(), "Material is not a block!");
              datavalue = ((Material) data).getId();
              break;
@@ -19,10 +19,10 @@ index 7de0de5..13f9e9d 100644
              datavalue = 0;
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index ad224bf..c8568c0 100644
+index fba75a8..7f199f9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -869,28 +869,18 @@ public class CraftWorld implements World {
+@@ -873,28 +873,18 @@ public class CraftWorld implements World {
              Validate.isTrue(effect.getData() == null, "Wrong kind of data for this effect!");
          }
  
@@ -60,7 +60,7 @@ index ad224bf..c8568c0 100644
      }
  
      public <T extends Entity> T spawn(Location location, Class<T> clazz) throws IllegalArgumentException {
-@@ -1521,6 +1511,70 @@ public class CraftWorld implements World {
+@@ -1525,6 +1515,70 @@ public class CraftWorld implements World {
      // Spigot start
      private final Spigot spigot = new Spigot()
      {

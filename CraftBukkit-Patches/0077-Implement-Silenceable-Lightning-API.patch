@@ -1,11 +1,11 @@
-From a1ffb1768bb535f45ff1b7db66f54816ea97b2ed Mon Sep 17 00:00:00 2001
+From 01ca2855b21aadadc987a40031944df0b2e3c15b Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sun, 23 Feb 2014 16:16:59 -0400
 Subject: [PATCH] Implement Silenceable Lightning API
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityLightning.java b/src/main/java/net/minecraft/server/EntityLightning.java
-index 35a0bdc..e507302 100644
+index 5a32218..2b1b1e1 100644
 --- a/src/main/java/net/minecraft/server/EntityLightning.java
 +++ b/src/main/java/net/minecraft/server/EntityLightning.java
 @@ -11,6 +11,7 @@ public class EntityLightning extends EntityWeather {
@@ -40,10 +40,10 @@ index 35a0bdc..e507302 100644
              // this.world.a((EntityHuman) null, this.locX, this.locY, this.locZ, SoundEffects.dc, SoundCategory.d, 10000.0F, 0.8F + this.random.nextFloat() * 0.2F);
              float pitch = 0.8F + this.random.nextFloat() * 0.2F;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 03f88f3..5ea07c3 100644
+index 250b8e9..df3a5cd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1580,6 +1580,22 @@ public class CraftWorld implements World {
+@@ -1584,6 +1584,22 @@ public class CraftWorld implements World {
          {
              CraftWorld.this.playEffect( location, effect, 0 );
          }
