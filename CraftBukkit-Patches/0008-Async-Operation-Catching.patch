@@ -1,4 +1,4 @@
-From b99ac1b82820f04af72a31783ccba90d34b215ed Mon Sep 17 00:00:00 2001
+From 6af581abe9ef7a8cc56bc785e779c4aa1980e828 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -26,10 +26,10 @@ index 12589d6..1d2f580 100644
      public int a(Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 5630c36..203b190 100644
+index 1a0b927..dc816f2 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -626,6 +626,7 @@ public abstract class EntityLiving extends Entity {
+@@ -627,6 +627,7 @@ public abstract class EntityLiving extends Entity {
      }
  
      public void addEffect(MobEffect mobeffect) {

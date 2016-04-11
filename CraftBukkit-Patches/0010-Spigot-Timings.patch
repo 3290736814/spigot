@@ -1,4 +1,4 @@
-From 978093117751e2310fdccf89a679b864c7c73858 Mon Sep 17 00:00:00 2001
+From 432e346c04f911051b4302cab0ee7bf949bdcf49 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -160,10 +160,10 @@ index a19b6cd..f5957ad 100644
  
      public void recalcPosition() {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 203b190..01301c6 100644
+index dc816f2..48e51b8 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -24,6 +24,8 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
+@@ -25,6 +25,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
  import org.bukkit.event.player.PlayerItemConsumeEvent;
  // CraftBukkit end
  
@@ -172,7 +172,7 @@ index 203b190..01301c6 100644
  public abstract class EntityLiving extends Entity {
  
      private static final UUID a = UUID.fromString("662A6B8D-DA3E-4C1C-8813-96EA6097278D");
-@@ -1688,6 +1690,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1689,6 +1691,7 @@ public abstract class EntityLiving extends Entity {
      }
  
      public void m() {
@@ -180,7 +180,7 @@ index 203b190..01301c6 100644
          super.m();
          this.cu();
          if (!this.world.isClientSide) {
-@@ -1760,7 +1763,9 @@ public abstract class EntityLiving extends Entity {
+@@ -1761,7 +1764,9 @@ public abstract class EntityLiving extends Entity {
              }
          }
  
@@ -190,7 +190,7 @@ index 203b190..01301c6 100644
          double d0 = this.locX - this.lastX;
          double d1 = this.locZ - this.lastZ;
          float f = (float) (d0 * d0 + d1 * d1);
-@@ -1830,6 +1835,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1831,6 +1836,7 @@ public abstract class EntityLiving extends Entity {
              this.bo = 0;
          }
  
@@ -198,7 +198,7 @@ index 203b190..01301c6 100644
      }
  
      protected float h(float f, float f1) {
-@@ -1894,6 +1900,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1895,6 +1901,7 @@ public abstract class EntityLiving extends Entity {
          }
  
          this.world.methodProfiler.a("ai");
@@ -206,7 +206,7 @@ index 203b190..01301c6 100644
          if (this.cf()) {
              this.bc = false;
              this.bd = 0.0F;
-@@ -1904,6 +1911,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1905,6 +1912,7 @@ public abstract class EntityLiving extends Entity {
              this.doTick();
              this.world.methodProfiler.b();
          }
@@ -214,7 +214,7 @@ index 203b190..01301c6 100644
  
          this.world.methodProfiler.b();
          this.world.methodProfiler.a("jump");
-@@ -1926,10 +1934,14 @@ public abstract class EntityLiving extends Entity {
+@@ -1927,10 +1935,14 @@ public abstract class EntityLiving extends Entity {
          this.be *= 0.98F;
          this.bf *= 0.9F;
          this.r();
