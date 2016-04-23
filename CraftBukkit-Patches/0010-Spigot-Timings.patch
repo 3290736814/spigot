@@ -1,4 +1,4 @@
-From 432e346c04f911051b4302cab0ee7bf949bdcf49 Mon Sep 17 00:00:00 2001
+From b3941a9d390278e6f1287ba5797b789cb2fcbf76 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -26,10 +26,10 @@ index 582e684..7980e80 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 22c17db..162613b 100644
+index 99e350a..326441d 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -154,6 +154,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -158,6 +158,7 @@ public class ChunkProviderServer implements IChunkProvider {
          // CraftBukkit end
  
          if (chunk == null) {
@@ -37,7 +37,7 @@ index 22c17db..162613b 100644
              long k = ChunkCoordIntPair.a(i, j);
  
              chunk = this.loadChunk(i, j);
-@@ -202,6 +203,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -206,6 +207,7 @@ public class ChunkProviderServer implements IChunkProvider {
              }
              // CraftBukkit end
              chunk.loadNearby(this, this.chunkGenerator);
@@ -160,7 +160,7 @@ index a19b6cd..f5957ad 100644
  
      public void recalcPosition() {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index dc816f2..48e51b8 100644
+index f997f43..324caff 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -25,6 +25,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
@@ -515,7 +515,7 @@ index 1ab1e04..4ae8d1b 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 1b4a739..11db4ae 100644
+index 3eafbdc..5ddcde4 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -222,10 +222,13 @@ public class WorldServer extends World implements IAsyncTaskHandler {
@@ -873,5 +873,5 @@ index 55db3ff..220e39a 100644
 +    // Spigot end
  }
 -- 
-2.5.0
+2.8.1.windows.1
 
