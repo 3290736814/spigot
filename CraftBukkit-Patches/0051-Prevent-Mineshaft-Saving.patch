@@ -1,15 +1,15 @@
-From 27435da7261f44e7b09a250d0f30068eb7d7ea37 Mon Sep 17 00:00:00 2001
+From 0371bc0ab602553efdf2eba156eeb56e35db1c39 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 13 Dec 2013 15:21:02 +1100
 Subject: [PATCH] Prevent Mineshaft Saving
 
 
 diff --git a/src/main/java/net/minecraft/server/StructureGenerator.java b/src/main/java/net/minecraft/server/StructureGenerator.java
-index 4a4d2af..22d96e9 100644
+index b2802c8..75d616c 100644
 --- a/src/main/java/net/minecraft/server/StructureGenerator.java
 +++ b/src/main/java/net/minecraft/server/StructureGenerator.java
 @@ -198,7 +198,7 @@ public abstract class StructureGenerator extends WorldGenBase {
-     protected void a(World world) {
+     protected synchronized void a(World world) { // CraftBukkit - synchronized
          if (this.a == null) {
              // Spigot Start
 -            if (world.spigotConfig.saveStructureInfo) {
@@ -18,5 +18,5 @@ index 4a4d2af..22d96e9 100644
              } else {
                  this.a = new PersistentStructure(this.a());
 -- 
-2.5.0
+2.7.4
 

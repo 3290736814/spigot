@@ -1,16 +1,16 @@
-From 338d1a0473ae949f6236f6eee08a016391f8d976 Mon Sep 17 00:00:00 2001
+From b0c2d26277073a253d83bbca5ccbf0d51ac2fd5a Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 21 Sep 2013 12:33:09 +1000
 Subject: [PATCH] Allow Disabling of 1.6.3 Structure Saving
 
 
 diff --git a/src/main/java/net/minecraft/server/StructureGenerator.java b/src/main/java/net/minecraft/server/StructureGenerator.java
-index dacba33..4a4d2af 100644
+index 0aa6caa..b2802c8 100644
 --- a/src/main/java/net/minecraft/server/StructureGenerator.java
 +++ b/src/main/java/net/minecraft/server/StructureGenerator.java
 @@ -197,7 +197,13 @@ public abstract class StructureGenerator extends WorldGenBase {
  
-     protected void a(World world) {
+     protected synchronized void a(World world) { // CraftBukkit - synchronized
          if (this.a == null) {
 -            this.a = (PersistentStructure) world.a(PersistentStructure.class, this.a());
 +            // Spigot Start
@@ -45,5 +45,5 @@ index c2452d6..89f9bc3 100644
 +    }
  }
 -- 
-2.5.0
+2.7.4
 
