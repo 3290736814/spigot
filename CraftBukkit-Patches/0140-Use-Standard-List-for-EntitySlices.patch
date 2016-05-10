@@ -1,26 +1,26 @@
-From 77134a53b8c718b84e50cb28cf1c24f5621763bf Mon Sep 17 00:00:00 2001
+From e938979a09fa5df53997f1005c34029cdabbed2d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:33:36 +1100
 Subject: [PATCH] Use Standard List for EntitySlices.
 
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 277a6ad..f2bb134 100644
+index 4c2f344..00fb20d 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -32,7 +32,7 @@ public class Chunk {
      public final int locZ;
-     private boolean l;
+     private boolean m;
      public final Map<BlockPosition, TileEntity> tileEntities;
 -    public final EntitySlice<Entity>[] entitySlices;
 +    public final List<Entity>[] entitySlices; // Spigot
      private boolean done;
      private boolean lit;
-     private boolean q;
-@@ -81,14 +81,14 @@ public class Chunk {
+     private boolean r;
+@@ -82,14 +82,14 @@ public class Chunk {
          this.tileEntities = Maps.newHashMap();
-         this.w = 4096;
-         this.x = Queues.newConcurrentLinkedQueue();
+         this.x = 4096;
+         this.y = Queues.newConcurrentLinkedQueue();
 -        this.entitySlices = (EntitySlice[]) (new EntitySlice[16]);
 +        this.entitySlices = (List[]) (new List[16]); // Spigot
          this.world = world;
@@ -33,8 +33,8 @@ index 277a6ad..f2bb134 100644
 +            this.entitySlices[k] = new org.bukkit.craftbukkit.util.UnsafeList(); // Spigot
          }
  
-         Arrays.fill(this.g, -999);
-@@ -857,12 +857,12 @@ public class Chunk {
+         Arrays.fill(this.h, -999);
+@@ -861,12 +861,12 @@ public class Chunk {
          j = MathHelper.clamp(j, 0, this.entitySlices.length - 1);
  
          for (int k = i; k <= j; ++k) {
@@ -49,7 +49,7 @@ index 277a6ad..f2bb134 100644
                      list.add((T) entity); // Fix decompile error
                  }
              }
-@@ -1260,7 +1260,7 @@ public class Chunk {
+@@ -1264,7 +1264,7 @@ public class Chunk {
          return this.tileEntities;
      }
  
@@ -59,7 +59,7 @@ index 277a6ad..f2bb134 100644
      }
  
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index 70d8ab1..d88f1b1 100644
+index c4364cd..e53092c 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -1,5 +1,6 @@
@@ -82,5 +82,5 @@ index 70d8ab1..d88f1b1 100644
                  if ( MinecraftServer.currentTick > entity.activatedTick )
                  {
 -- 
-2.5.0
+2.7.4
 

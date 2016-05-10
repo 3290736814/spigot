@@ -1,4 +1,4 @@
-From 2555db939bb86e82c207d09a3fcd185fa599d28c Mon Sep 17 00:00:00 2001
+From da1bbfe8b8ed3af5d40b80162a6d025db3d7051a Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,10 +6,10 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances, and view distances below 3. Be wary of the issues selecting a view distance of 1 or 2 may cause!
 
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 13d47d7..8ef7eb2 100644
+index 737d510..b0249ff 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -49,9 +49,9 @@ public class PlayerChunkMap {
+@@ -52,9 +52,9 @@ public class PlayerChunkMap {
      private boolean m = true;
      private boolean wasNotEmpty; // CraftBukkit - add field
  
@@ -22,10 +22,10 @@ index 13d47d7..8ef7eb2 100644
  
      public WorldServer getWorld() {
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 6fa82ee..1b4a739 100644
+index 11560a2..1e3e00d 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -60,7 +60,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
+@@ -61,7 +61,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
          // CraftBukkit end
          this.server = minecraftserver;
          this.tracker = new EntityTracker(this);
@@ -51,5 +51,5 @@ index d4fb83c..86300d6 100644
 +    }
  }
 -- 
-1.9.1
+2.7.4
 

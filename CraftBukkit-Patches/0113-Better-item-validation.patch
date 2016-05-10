@@ -1,14 +1,14 @@
-From 68ea92e45d061fbbb47ec9c2d8c4757bc627ef6a Mon Sep 17 00:00:00 2001
+From 389cc272af69631ad6ec6167cc71d149275480ea Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
 
 
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index 9cbcafd..8a2778f 100644
+index 3caf1e4..313375f 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-@@ -234,6 +234,10 @@ public class PacketDataSerializer extends ByteBuf {
+@@ -235,6 +235,10 @@ public class PacketDataSerializer extends ByteBuf {
              NBTTagCompound nbttagcompound = null;
  
              if (itemstack.getItem().usesDurability() || itemstack.getItem().p()) {
@@ -111,5 +111,5 @@ index 0000000..58a9534
 +    }
 +}
 -- 
-1.9.1
+2.7.4
 

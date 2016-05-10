@@ -1,14 +1,14 @@
-From 22c7cd0acdb288ecbb27abb027204d70c1f9d53d Mon Sep 17 00:00:00 2001
+From b4af2e040b8ca2e297a16327b135f4926b6ebb1d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 2 Feb 2014 16:55:46 +0000
 Subject: [PATCH] Add Option to Nerf Mobs from Spawner's
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 7734beb..d7f3beb 100644
+index 4217572..27dccb1 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -145,6 +145,7 @@ public abstract class Entity implements ICommandListener {
+@@ -146,6 +146,7 @@ public abstract class Entity implements ICommandListener {
      public final byte activationType = org.spigotmc.ActivationRange.initializeEntityActivationType(this);
      public final boolean defaultActivationState;
      public long activatedTick = Integer.MIN_VALUE;
@@ -17,10 +17,10 @@ index 7734beb..d7f3beb 100644
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/server/EntityInsentient.java b/src/main/java/net/minecraft/server/EntityInsentient.java
-index 3426b24..b3f637f 100644
+index ccd9d67..ea77a33 100644
 --- a/src/main/java/net/minecraft/server/EntityInsentient.java
 +++ b/src/main/java/net/minecraft/server/EntityInsentient.java
-@@ -620,6 +620,12 @@ public abstract class EntityInsentient extends EntityLiving {
+@@ -628,6 +628,12 @@ public abstract class EntityInsentient extends EntityLiving {
          this.world.methodProfiler.a("checkDespawn");
          this.L();
          this.world.methodProfiler.b();
@@ -31,10 +31,10 @@ index 3426b24..b3f637f 100644
 +        }
 +        // Spigot End
          this.world.methodProfiler.a("sensing");
-         this.bu.a();
+         this.bv.a();
          this.world.methodProfiler.b();
 diff --git a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
-index 01cbd71..efe792b 100644
+index 065dadd..0f3d09d 100644
 --- a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 +++ b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 @@ -94,7 +94,12 @@ public abstract class MobSpawnerAbstract {
@@ -68,5 +68,5 @@ index 6df2186..3854195 100644
 +    }
  }
 -- 
-2.8.1.windows.1
+2.7.4
 

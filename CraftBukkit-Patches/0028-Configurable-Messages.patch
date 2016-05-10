@@ -1,32 +1,32 @@
-From 7952fbac4328eab14b0ae6cb850f830b0bee68cf Mon Sep 17 00:00:00 2001
+From b64bc34673642e30d510de4b9d546c0af7624eec Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
 
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 459fc78..c8271e3 100644
+index da163af..e32851a 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
-@@ -63,11 +63,11 @@ public class HandshakeListener implements PacketHandshakingInListener {
+@@ -62,11 +62,11 @@ public class HandshakeListener implements PacketHandshakingInListener {
              // CraftBukkit end
  
-             if (packethandshakinginsetprotocol.b() > 109) {
--                chatcomponenttext = new ChatComponentText("Outdated server! I\'m still on 1.9.2");
-+                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.9.2" ) ); // Spigot
+             if (packethandshakinginsetprotocol.b() > 110) {
+-                chatcomponenttext = new ChatComponentText("Outdated server! I\'m still on 1.9.4");
++                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.9.4" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatcomponenttext));
                  this.b.close(chatcomponenttext);
-             } else if (packethandshakinginsetprotocol.b() < 107) {
--                chatcomponenttext = new ChatComponentText("Outdated client! Please use 1.9.2");
-+                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), "1.9.2" ) ); // Spigot
+             } else if (packethandshakinginsetprotocol.b() < 110) {
+-                chatcomponenttext = new ChatComponentText("Outdated client! Please use 1.9.4");
++                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), "1.9.4" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatcomponenttext));
                  this.b.close(chatcomponenttext);
              } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 8e5c5b0..51acabc 100644
+index 969241a..6861afc 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -466,7 +466,7 @@ public abstract class PlayerList {
+@@ -467,7 +467,7 @@ public abstract class PlayerList {
              event.disallow(PlayerLoginEvent.Result.KICK_BANNED, s);
          } else if (!this.isWhitelisted(gameprofile)) {
              // return "You are not white-listed on this server!";
@@ -35,7 +35,7 @@ index 8e5c5b0..51acabc 100644
          } else if (getIPBans().isBanned(socketaddress) && !getIPBans().get(socketaddress).hasExpired()) {
              IpBanEntry ipbanentry = this.l.get(socketaddress);
  
-@@ -480,7 +480,7 @@ public abstract class PlayerList {
+@@ -481,7 +481,7 @@ public abstract class PlayerList {
          } else {
              // return this.players.size() >= this.maxPlayers && !this.f(gameprofile) ? "The server is full!" : null;
              if (this.players.size() >= this.maxPlayers && !this.f(gameprofile)) {
@@ -103,5 +103,5 @@ index ca001e9..3726ea5 100644
 +    }
  }
 -- 
-1.9.1
+2.7.4
 

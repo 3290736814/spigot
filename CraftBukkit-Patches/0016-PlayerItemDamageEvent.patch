@@ -1,14 +1,14 @@
-From 2aaff68b1c446c53cd3bc39f99e45dcefd5050df Mon Sep 17 00:00:00 2001
+From ebd99fd871b226e2a42845568a7bdb243a052c2d Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Mon, 4 Mar 2013 18:45:52 +1100
 Subject: [PATCH] PlayerItemDamageEvent
 
 
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index ee9d512..ed9fc5c 100644
+index b1f5637..1996f3a 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -343,6 +343,11 @@ public final class ItemStack {
+@@ -345,6 +345,11 @@ public final class ItemStack {
      }
  
      public boolean isDamaged(int i, Random random) {
@@ -20,7 +20,7 @@ index ee9d512..ed9fc5c 100644
          if (!this.e()) {
              return false;
          } else {
-@@ -357,7 +362,16 @@ public final class ItemStack {
+@@ -359,7 +364,16 @@ public final class ItemStack {
                  }
  
                  i -= k;
@@ -38,7 +38,7 @@ index ee9d512..ed9fc5c 100644
                      return false;
                  }
              }
-@@ -370,7 +384,7 @@ public final class ItemStack {
+@@ -372,7 +386,7 @@ public final class ItemStack {
      public void damage(int i, EntityLiving entityliving) {
          if (!(entityliving instanceof EntityHuman) || !((EntityHuman) entityliving).abilities.canInstantlyBuild) {
              if (this.e()) {
@@ -48,5 +48,5 @@ index ee9d512..ed9fc5c 100644
                      --this.count;
                      if (entityliving instanceof EntityHuman) {
 -- 
-2.5.0
+2.7.4
 

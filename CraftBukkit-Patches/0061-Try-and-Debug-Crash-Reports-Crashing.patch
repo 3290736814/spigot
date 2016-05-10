@@ -1,14 +1,14 @@
-From 91ccf3dfcb0fe90e0fdd2392b0f6951f8bee8f1a Mon Sep 17 00:00:00 2001
+From 57c25e4a72a67754ab8c133437abe2a4c395e16f Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 20:56:41 +1100
 Subject: [PATCH] Try and Debug Crash Reports Crashing
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 05a63cb..dfe3305 100644
+index 78a63d7..1f7d8fa 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -748,7 +748,13 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -753,7 +753,13 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
                      worldserver.doTick();
                      worldserver.timings.doTick.stopTiming(); // Spigot
                  } catch (Throwable throwable) {
@@ -22,7 +22,7 @@ index 05a63cb..dfe3305 100644
                      worldserver.a(crashreport);
                      throw new ReportedException(crashreport);
                  }
-@@ -758,7 +764,13 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -763,7 +769,13 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
                      worldserver.tickEntities();
                      worldserver.timings.tickEntities.stopTiming(); // Spigot
                  } catch (Throwable throwable1) {
@@ -37,5 +37,5 @@ index 05a63cb..dfe3305 100644
                      throw new ReportedException(crashreport);
                  }
 -- 
-2.5.0
+2.7.4
 

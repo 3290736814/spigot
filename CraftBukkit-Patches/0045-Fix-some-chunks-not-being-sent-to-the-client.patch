@@ -1,18 +1,18 @@
-From a192d0fe60f91c9924690fc9a9566390b91c591c Mon Sep 17 00:00:00 2001
+From bac32b7b6d1ee97b0352525e880559fd5bcbd2b5 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Mon, 2 Dec 2013 23:42:09 +0000
 Subject: [PATCH] Fix some chunks not being sent to the client
 
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index f68abb4..47ef0db 100644
+index 0d9c30e..7dc6597 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -1009,7 +1009,15 @@ public class Chunk {
+@@ -1013,7 +1013,15 @@ public class Chunk {
      }
  
      public boolean isReady() {
--        return this.q && this.done && this.lit;
+-        return this.r && this.done && this.lit;
 +        // Spigot Start
 +        /*
 +         * As of 1.7, Mojang added a check to make sure that only chunks which have been lit are sent to the client.
@@ -26,5 +26,5 @@ index f68abb4..47ef0db 100644
  
      public boolean j() {
 -- 
-2.5.0
+2.7.4
 

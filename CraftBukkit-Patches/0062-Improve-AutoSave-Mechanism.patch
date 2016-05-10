@@ -1,4 +1,4 @@
-From 5ee3ab97caa1e86563f790f6c59368bab9271ad0 Mon Sep 17 00:00:00 2001
+From 4d897f8a870561ec685d3477abd4689c433782ed Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 21:07:18 +1100
 Subject: [PATCH] Improve AutoSave Mechanism
@@ -11,23 +11,23 @@ Instead we will mimic the save-all command in its behaviour, which is both safe 
 Also, only save modified chunks, or chunks with entities after 4 auto save passes
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index a7006b8..a4bf29a 100644
+index 7dc6597..4c2f344 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -875,7 +875,7 @@ public class Chunk {
-             if (this.s && this.world.getTime() != this.lastSaved || this.r) {
+@@ -879,7 +879,7 @@ public class Chunk {
+             if (this.t && this.world.getTime() != this.lastSaved || this.s) {
                  return true;
              }
--        } else if (this.s && this.world.getTime() >= this.lastSaved + 600L) {
-+        } else if (this.s && this.world.getTime() >= this.lastSaved + MinecraftServer.getServer().autosavePeriod * 4) { // Spigot - Only save if we've passed 2 auto save intervals without modification
+-        } else if (this.t && this.world.getTime() >= this.lastSaved + 600L) {
++        } else if (this.t && this.world.getTime() >= this.lastSaved + MinecraftServer.getServer().autosavePeriod * 4) { // Spigot - Only save if we've passed 2 auto save intervals without modification
              return true;
          }
  
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 326441d..7d3adde 100644
+index b252bb6..6c2a3e8 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -267,7 +267,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -254,7 +254,7 @@ public class ChunkProviderServer implements IChunkProvider {
                  this.saveChunk(chunk);
                  chunk.f(false);
                  ++i;
@@ -37,10 +37,10 @@ index 326441d..7d3adde 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 66eb75c..075fa13 100644
+index 1f7d8fa..4992664 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -660,7 +660,17 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -665,7 +665,17 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
              SpigotTimings.worldSaveTimer.startTiming(); // Spigot
              this.methodProfiler.a("save");
              this.v.savePlayers();
@@ -60,10 +60,10 @@ index 66eb75c..075fa13 100644
              SpigotTimings.worldSaveTimer.stopTiming(); // Spigot
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 7f199f9..250b8e9 100644
+index 40960ba..d9247ae 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -777,12 +777,17 @@ public class CraftWorld implements World {
+@@ -781,12 +781,17 @@ public class CraftWorld implements World {
      }
  
      public void save() {
@@ -83,5 +83,5 @@ index 7f199f9..250b8e9 100644
              world.savingDisabled = oldSave;
          } catch (ExceptionWorldConflict ex) {
 -- 
-2.8.1.windows.1
+2.7.4
 

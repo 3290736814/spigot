@@ -1,14 +1,14 @@
-From 008f12d9e81e85fd92bc864b7d3bacffac6d20c2 Mon Sep 17 00:00:00 2001
+From bed89a8f0b489f8586cc86e5b77fcb5fa075708c Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 25 Jan 2014 14:08:35 +1100
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 075fa13..52068d0 100644
+index 29f8bd0..c2248f9 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -114,6 +114,12 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -119,6 +119,12 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
      public java.util.Queue<Runnable> processQueue = new java.util.concurrent.ConcurrentLinkedQueue<Runnable>();
      public int autosavePeriod;
      // CraftBukkit end
@@ -21,7 +21,7 @@ index 075fa13..52068d0 100644
  
      public MinecraftServer(OptionSet options, Proxy proxy, DataConverterManager dataconvertermanager, YggdrasilAuthenticationService yggdrasilauthenticationservice, MinecraftSessionService minecraftsessionservice, GameProfileRepository gameprofilerepository, UserCache usercache) {
          this.e = proxy;
-@@ -502,6 +508,13 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -507,6 +513,13 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
          this.isRunning = false;
      }
  
@@ -35,8 +35,8 @@ index 075fa13..52068d0 100644
      public void run() {
          try {
              if (this.init()) {
-@@ -512,38 +525,34 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
-                 this.q.setServerInfo(new ServerPing.ServerData("1.9.2", 109));
+@@ -517,38 +530,34 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+                 this.q.setServerInfo(new ServerPing.ServerData("1.9.4", 110));
                  this.a(this.q);
  
 +                // Spigot start
@@ -161,5 +161,5 @@ index 0000000..be2e31d
 +    }
 +}
 -- 
-1.9.1
+2.7.4
 

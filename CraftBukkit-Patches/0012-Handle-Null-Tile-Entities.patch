@@ -1,14 +1,14 @@
-From f8da82c0b8787fb17ec677b5efd4757602709f03 Mon Sep 17 00:00:00 2001
+From 6f16991eedf8ab200dc68520acfd7e18dbd23ead Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 3 Feb 2013 09:20:19 +1100
 Subject: [PATCH] Handle Null Tile Entities
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 4ae8d1b..cb5a61e 100644
+index ba338f3..fc8c6e0 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1397,6 +1397,13 @@ public abstract class World implements IBlockAccess {
+@@ -1402,6 +1402,13 @@ public abstract class World implements IBlockAccess {
  
          while (iterator.hasNext()) {
              TileEntity tileentity = (TileEntity) iterator.next();
@@ -23,5 +23,5 @@ index 4ae8d1b..cb5a61e 100644
              if (!tileentity.x() && tileentity.t()) {
                  BlockPosition blockposition = tileentity.getPosition();
 -- 
-1.9.1
+2.7.4
 

@@ -1,11 +1,11 @@
-From bcc01c9b44c796ef04203f34f2bcbe0e4f5c29ce Mon Sep 17 00:00:00 2001
+From b710ffbca3613c86c9ad359046ccb452b2c0e81f Mon Sep 17 00:00:00 2001
 From: David <dmck2b@gmail.com>
 Date: Mon, 21 Apr 2014 12:43:08 +0100
 Subject: [PATCH] Prevent NoClassDefError crash and notify on crash
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 7765812..2257f0f 100644
+index 7fea1c7..7cbd2e7 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -127,6 +127,8 @@ public abstract class World implements IBlockAccess {
@@ -17,10 +17,10 @@ index 7765812..2257f0f 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -536,6 +538,9 @@ public abstract class World implements IBlockAccess {
+@@ -541,6 +543,9 @@ public abstract class World implements IBlockAccess {
                  }
                  // CraftBukkit end
-                 iblockdata.getBlock().doPhysics(this, blockposition, iblockdata, block);
+                 iblockdata.doPhysics(this, blockposition, block);
 +            } catch (StackOverflowError stackoverflowerror) { // Spigot Start
 +                haveWeSilencedAPhysicsCrash = true;
 +                blockLocation = blockposition.getX() + ", " + blockposition.getY() + ", " + blockposition.getZ(); // Spigot End
@@ -46,5 +46,5 @@ index de08ad6..94a3d42 100644
                  log.log( Level.SEVERE, "Server thread dump (Look for plugins here before reporting to Spigot!):" );
                  dumpThread( ManagementFactory.getThreadMXBean().getThreadInfo( MinecraftServer.getServer().primaryThread.getId(), Integer.MAX_VALUE ), log );
 -- 
-2.5.0
+2.7.4
 

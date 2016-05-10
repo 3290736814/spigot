@@ -1,4 +1,4 @@
-From 1440b4a8c3469ba7d6f0360235d92b39f8e2b144 Mon Sep 17 00:00:00 2001
+From 73d3ec9d24ea7f1267dcd18afba25231802d4717 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Sun, 20 Apr 2014 13:18:55 +0100
 Subject: [PATCH] Convert player skulls async
@@ -34,12 +34,12 @@ index 40338ae..2a8c5f0 100644
          } else {
              return false;
 diff --git a/src/main/java/net/minecraft/server/TileEntitySkull.java b/src/main/java/net/minecraft/server/TileEntitySkull.java
-index 244a424..7eecc6c 100644
+index 0303ac9..8aafd36 100644
 --- a/src/main/java/net/minecraft/server/TileEntitySkull.java
 +++ b/src/main/java/net/minecraft/server/TileEntitySkull.java
-@@ -6,6 +6,20 @@ import com.mojang.authlib.minecraft.MinecraftSessionService;
- import com.mojang.authlib.properties.Property;
+@@ -7,6 +7,20 @@ import com.mojang.authlib.properties.Property;
  import java.util.UUID;
+ import javax.annotation.Nullable;
  
 +// Spigot start
 +import com.google.common.base.Predicate;
@@ -58,7 +58,7 @@ index 244a424..7eecc6c 100644
  public class TileEntitySkull extends TileEntity implements ITickable {
  
      private int a;
-@@ -15,6 +29,58 @@ public class TileEntitySkull extends TileEntity implements ITickable {
+@@ -16,6 +30,58 @@ public class TileEntitySkull extends TileEntity implements ITickable {
      private boolean i;
      private static UserCache j;
      private static MinecraftSessionService k;
@@ -117,10 +117,10 @@ index 244a424..7eecc6c 100644
  
      public TileEntitySkull() {}
  
-@@ -93,35 +159,60 @@ public class TileEntitySkull extends TileEntity implements ITickable {
+@@ -98,35 +164,60 @@ public class TileEntitySkull extends TileEntity implements ITickable {
      }
  
-     private void g() {
+     private void h() {
 -        this.g = b(this.g);
 -        this.update();
 +        // Spigot start
@@ -232,5 +232,5 @@ index 8a11b87..2abca0c 100644
      }
  
 -- 
-2.5.0
+2.7.4
 

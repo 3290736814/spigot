@@ -1,17 +1,17 @@
-From 833a65221a2d1c60819b0771834ba21e522f3875 Mon Sep 17 00:00:00 2001
+From 2aa38c6461126c55f5adb17aa362107c1723effb Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sat, 29 Mar 2014 13:44:25 -0400
 Subject: [PATCH] Configurable dragon death and wither spawn sounds
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityEnderDragon.java b/src/main/java/net/minecraft/server/EntityEnderDragon.java
-index 737e463..b733df6 100644
+index d4ba089..be898c2 100644
 --- a/src/main/java/net/minecraft/server/EntityEnderDragon.java
 +++ b/src/main/java/net/minecraft/server/EntityEnderDragon.java
-@@ -552,7 +552,24 @@ public class EntityEnderDragon extends EntityInsentient implements IComplex, IMo
+@@ -553,7 +553,24 @@ public class EntityEnderDragon extends EntityInsentient implements IComplex, IMo
              }
  
-             if (this.bF == 1) {
+             if (this.bG == 1) {
 -                this.world.a(1028, new BlockPosition(this), 0);
 +                // CraftBukkit start - Use relative location for far away sounds
 +                // this.world.a(1028, new BlockPosition(this), 0);
@@ -35,10 +35,10 @@ index 737e463..b733df6 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/EntityWither.java b/src/main/java/net/minecraft/server/EntityWither.java
-index 76b6718..6b4dbb8 100644
+index 023c1a9..d8c366b 100644
 --- a/src/main/java/net/minecraft/server/EntityWither.java
 +++ b/src/main/java/net/minecraft/server/EntityWither.java
-@@ -202,6 +202,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
+@@ -203,6 +203,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
                      double deltaX = this.locX - player.locX;
                      double deltaZ = this.locZ - player.locZ;
                      double distanceSquared = deltaX * deltaX + deltaZ * deltaZ;
@@ -68,5 +68,5 @@ index 19525eb..79a3124 100644
 +    }
  }
 -- 
-2.5.0
+2.7.4
 

@@ -1,4 +1,4 @@
-From 6a6f6dd1e01b57ef61f4c90abc1d2c2ecfae00db Mon Sep 17 00:00:00 2001
+From d5d596fbafdd80cb869e38895ec57139cb42281c Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Fri, 25 Apr 2014 23:46:46 +0200
 Subject: [PATCH] Fix race condition that could kill connections before they
@@ -12,10 +12,10 @@ initialized. The ServerConnection does not remove NetworkManagers with
 this flag.
 
 diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
-index c6f9955..4c6dfb1 100644
+index 1cfb8d3..35e9b9f 100644
 --- a/src/main/java/net/minecraft/server/NetworkManager.java
 +++ b/src/main/java/net/minecraft/server/NetworkManager.java
-@@ -68,6 +68,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
+@@ -69,6 +69,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
      public SocketAddress l;
      public java.util.UUID spoofedUUID;
      public com.mojang.authlib.properties.Property[] spoofedProfile;
@@ -23,7 +23,7 @@ index c6f9955..4c6dfb1 100644
      // Spigot End
      private PacketListener m;
      private IChatBaseComponent n;
-@@ -82,6 +83,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
+@@ -83,6 +84,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
          super.channelActive(channelhandlercontext);
          this.channel = channelhandlercontext.channel();
          this.l = this.channel.remoteAddress();
@@ -33,7 +33,7 @@ index c6f9955..4c6dfb1 100644
  
          try {
              this.setProtocol(EnumProtocol.HANDSHAKING);
-@@ -236,6 +240,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
+@@ -237,6 +241,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
      }
  
      public void close(IChatBaseComponent ichatbasecomponent) {
@@ -44,10 +44,10 @@ index c6f9955..4c6dfb1 100644
              this.channel.close(); // We can't wait as this may be called from an event loop.
              this.n = ichatbasecomponent;
 diff --git a/src/main/java/net/minecraft/server/ServerConnection.java b/src/main/java/net/minecraft/server/ServerConnection.java
-index 827bfaf..7797575 100644
+index 4339534..4ab28e6 100644
 --- a/src/main/java/net/minecraft/server/ServerConnection.java
 +++ b/src/main/java/net/minecraft/server/ServerConnection.java
-@@ -167,6 +167,10 @@ public class ServerConnection {
+@@ -166,6 +166,10 @@ public class ServerConnection {
                              networkmanager.stopReading();
                          }
                      } else {
@@ -59,5 +59,5 @@ index 827bfaf..7797575 100644
                          networkmanager.handleDisconnection();
                      }
 -- 
-2.5.0
+2.7.4
 

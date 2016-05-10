@@ -1,24 +1,24 @@
-From 03a8eac0cd5436419fcda4b2fef8d221549eefd5 Mon Sep 17 00:00:00 2001
+From 3233da047f00f786c8f77586872205bc8f134295 Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index c6319ba..e1bb5c5 100644
+index 527c844..6a8f499 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
-@@ -1143,7 +1143,7 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1146,7 +1146,7 @@ public abstract class EntityHuman extends EntityLiving {
                              }
                          }
  
 -                        this.applyExhaustion(0.3F);
 +                        this.applyExhaustion(world.spigotConfig.combatExhaustion); // Spigot - Change to use configurable value
                      } else {
-                         this.world.a((EntityHuman) null, this.locX, this.locY, this.locZ, SoundEffects.dZ, this.bz(), 1.0F, 1.0F);
+                         this.world.a((EntityHuman) null, this.locX, this.locY, this.locZ, SoundEffects.dZ, this.bA(), 1.0F, 1.0F);
                          if (flag4) {
-@@ -1410,9 +1410,9 @@ public abstract class EntityHuman extends EntityLiving {
-         super.ch();
+@@ -1414,9 +1414,9 @@ public abstract class EntityHuman extends EntityLiving {
+         super.ci();
          this.b(StatisticList.w);
          if (this.isSprinting()) {
 -            this.applyExhaustion(0.8F);
@@ -30,7 +30,7 @@ index c6319ba..e1bb5c5 100644
  
      }
 diff --git a/src/main/java/net/minecraft/server/FoodMetaData.java b/src/main/java/net/minecraft/server/FoodMetaData.java
-index 6974045..1a24336 100644
+index a346fef..df5fbeb 100644
 --- a/src/main/java/net/minecraft/server/FoodMetaData.java
 +++ b/src/main/java/net/minecraft/server/FoodMetaData.java
 @@ -73,7 +73,7 @@ public class FoodMetaData {
@@ -64,5 +64,5 @@ index 7cf8f2d..4cbcd14 100644
 +    }
  }
 -- 
-1.9.1
+2.7.4
 

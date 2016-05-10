@@ -1,4 +1,4 @@
-From 81669fdb7dd4c2e840bb0007caca901252909d19 Mon Sep 17 00:00:00 2001
+From 01e650c3b362529fa8d45b20315cd1e5ed4b3ee1 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 8 Jul 2014 09:01:50 +1000
 Subject: [PATCH] Disable ResourceLeakDetector
@@ -6,10 +6,10 @@ Subject: [PATCH] Disable ResourceLeakDetector
 Hopefully no plugins are somehow leaking buffers, but disabling the ResourceLeakDetector is a good thing for performance of the Netty IO subsytem (it's been disabled in BungeeCord for a while now).
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index bf0b825..32290a0 100644
+index 228db06..065dbab 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -122,6 +122,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -127,6 +127,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
      // Spigot end
  
      public MinecraftServer(OptionSet options, Proxy proxy, DataConverterManager dataconvertermanager, YggdrasilAuthenticationService yggdrasilauthenticationservice, MinecraftSessionService minecraftsessionservice, GameProfileRepository gameprofilerepository, UserCache usercache) {
@@ -18,5 +18,5 @@ index bf0b825..32290a0 100644
          this.U = yggdrasilauthenticationservice;
          this.V = minecraftsessionservice;
 -- 
-2.5.0
+2.7.4
 

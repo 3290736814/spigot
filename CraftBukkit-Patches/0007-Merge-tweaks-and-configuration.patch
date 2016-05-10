@@ -1,4 +1,4 @@
-From e96dfe4a2034662ef8c10920a9e2bfec4466bf8c Mon Sep 17 00:00:00 2001
+From 0ff178dd2d5b51a1bac8ef762845d9ec56af38d8 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:46:33 +1100
 Subject: [PATCH] Merge tweaks and configuration
@@ -6,10 +6,10 @@ Subject: [PATCH] Merge tweaks and configuration
 This allows the merging of Experience orbs, as well as the configuration of the merge radius of items. Additionally it refactors the merge algorithm to be a better experience for players.
 
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 6009cac..7ea1150 100644
+index c44acf0..b4f738b 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
-@@ -123,7 +123,10 @@ public class EntityItem extends Entity {
+@@ -124,7 +124,10 @@ public class EntityItem extends Entity {
      }
  
      private void x() {
@@ -21,7 +21,7 @@ index 6009cac..7ea1150 100644
  
          while (iterator.hasNext()) {
              EntityItem entityitem = (EntityItem) iterator.next();
-@@ -157,12 +160,14 @@ public class EntityItem extends Entity {
+@@ -158,12 +161,14 @@ public class EntityItem extends Entity {
                      } else if (itemstack1.count + itemstack.count > itemstack1.getMaxStackSize()) {
                          return false;
                      } else {
@@ -43,10 +43,10 @@ index 6009cac..7ea1150 100644
                      }
                  } else {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index c94fbb6..1ee65dd 100644
+index ae250b3..442a131 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -927,6 +927,23 @@ public abstract class World implements IBlockAccess {
+@@ -936,6 +936,23 @@ public abstract class World implements IBlockAccess {
              // Not all projectiles extend EntityProjectile, so check for Bukkit interface instead
              event = CraftEventFactory.callProjectileLaunchEvent(entity);
          }
@@ -94,5 +94,5 @@ index 8860a96..d4fb83c 100644
 +    }
  }
 -- 
-2.5.0
+2.7.4
 

@@ -1,4 +1,4 @@
-From dce78d1261c864f14894a4ec275a67524266a299 Mon Sep 17 00:00:00 2001
+From ac8ea239f9fd48c41bdd4e18f46dfb716849e579 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,18 +8,18 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 8345e87..e4725b0 100644
+index 852c236..735fb29 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -43,6 +43,7 @@ public class Chunk {
-     private long v;
-     private int w;
-     private ConcurrentLinkedQueue<BlockPosition> x;
+@@ -44,6 +44,7 @@ public class Chunk {
+     private int x;
+     private ConcurrentLinkedQueue<BlockPosition> y;
+     public boolean d;
 +    protected gnu.trove.map.hash.TObjectIntHashMap<Class> entityCount = new gnu.trove.map.hash.TObjectIntHashMap<Class>(); // Spigot
  
      // CraftBukkit start - Neighbor loaded cache for chunk lighting and entity ticking
      private int neighbors = 0x1 << 12;
-@@ -606,6 +607,22 @@ public class Chunk {
+@@ -608,6 +609,22 @@ public class Chunk {
          entity.ac = k;
          entity.ad = this.locZ;
          this.entitySlices[k].add(entity);
@@ -42,7 +42,7 @@ index 8345e87..e4725b0 100644
      }
  
      public void b(Entity entity) {
-@@ -622,6 +639,22 @@ public class Chunk {
+@@ -624,6 +641,22 @@ public class Chunk {
          }
  
          this.entitySlices[i].remove(entity);
@@ -66,7 +66,7 @@ index 8345e87..e4725b0 100644
  
      public boolean c(BlockPosition blockposition) {
 diff --git a/src/main/java/net/minecraft/server/SpawnerCreature.java b/src/main/java/net/minecraft/server/SpawnerCreature.java
-index b3cb8bb..9e19dfd 100644
+index be02945..4eedd41 100644
 --- a/src/main/java/net/minecraft/server/SpawnerCreature.java
 +++ b/src/main/java/net/minecraft/server/SpawnerCreature.java
 @@ -17,6 +17,25 @@ public final class SpawnerCreature {
@@ -134,7 +134,7 @@ index b3cb8bb..9e19dfd 100644
                                                                  entityinsentient.die();
                                                              }
  
--                                                            if (l2 >= entityinsentient.cJ()) {
+-                                                            if (l2 >= entityinsentient.cK()) {
 +                                                            // Spigot start
 +                                                            if ( --moblimit <= 0 ) {
 +                                                                // If we're past limit, stop spawn
@@ -159,5 +159,5 @@ index 86300d6..cacb8fc 100644
 +    }
  }
 -- 
-2.5.0
+2.7.4
 

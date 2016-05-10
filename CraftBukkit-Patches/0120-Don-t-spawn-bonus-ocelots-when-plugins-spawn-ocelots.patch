@@ -1,24 +1,24 @@
-From 7f448c9d55cbbe18e07d266b676015f7a0ff9677 Mon Sep 17 00:00:00 2001
+From b158aa8b93affb82946ebc61ca851864cb8415d4 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Sat, 19 Jul 2014 12:49:48 +0100
 Subject: [PATCH] Don't spawn bonus ocelots when plugins spawn ocelots
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityOcelot.java b/src/main/java/net/minecraft/server/EntityOcelot.java
-index 982b981..d2b3701 100644
+index 2fd3d96..0935951 100644
 --- a/src/main/java/net/minecraft/server/EntityOcelot.java
 +++ b/src/main/java/net/minecraft/server/EntityOcelot.java
-@@ -7,6 +7,7 @@ public class EntityOcelot extends EntityTameableAnimal {
-     private static final DataWatcherObject<Integer> bz = DataWatcher.a(EntityOcelot.class, DataWatcherRegistry.b);
-     private PathfinderGoalAvoidTarget<EntityHuman> bA;
-     private PathfinderGoalTempt bB;
+@@ -8,6 +8,7 @@ public class EntityOcelot extends EntityTameableAnimal {
+     private static final DataWatcherObject<Integer> bA = DataWatcher.a(EntityOcelot.class, DataWatcherRegistry.b);
+     private PathfinderGoalAvoidTarget<EntityHuman> bB;
+     private PathfinderGoalTempt bC;
 +    public boolean spawnBonus = true; // Spigot
  
      public EntityOcelot(World world) {
          super(world);
-@@ -229,7 +230,7 @@ public class EntityOcelot extends EntityTameableAnimal {
- 
-     public GroupDataEntity prepare(DifficultyDamageScaler difficultydamagescaler, GroupDataEntity groupdataentity) {
+@@ -233,7 +234,7 @@ public class EntityOcelot extends EntityTameableAnimal {
+     @Nullable
+     public GroupDataEntity prepare(DifficultyDamageScaler difficultydamagescaler, @Nullable GroupDataEntity groupdataentity) {
          groupdataentity = super.prepare(difficultydamagescaler, groupdataentity);
 -        if (this.world.random.nextInt(7) == 0) {
 +        if (spawnBonus && this.world.random.nextInt(7) == 0) { // Spigot
@@ -26,10 +26,10 @@ index 982b981..d2b3701 100644
                  EntityOcelot entityocelot = new EntityOcelot(this.world);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index df3a5cd..2dcbbab 100644
+index 943fa1a..65d7b9b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1162,6 +1162,12 @@ public class CraftWorld implements World {
+@@ -1168,6 +1168,12 @@ public class CraftWorld implements World {
          }
  
          if (entity != null) {
@@ -43,5 +43,5 @@ index df3a5cd..2dcbbab 100644
          }
  
 -- 
-2.5.0
+2.7.4
 

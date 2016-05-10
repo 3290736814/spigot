@@ -1,4 +1,4 @@
-From 00ba6b1058d452bd2e2ecd6e7246de98b74581a7 Mon Sep 17 00:00:00 2001
+From a997e92809e12f2ddd190062b3699f200692e64a Mon Sep 17 00:00:00 2001
 From: Suddenly <suddenly@suddenly.coffee>
 Date: Tue, 8 Jul 2014 09:44:18 +1000
 Subject: [PATCH] Safer JSON Loading
@@ -27,10 +27,10 @@ index f5c3aae..8e4ecfd 100644
              IOUtils.closeQuietly(bufferedreader);
          }
 diff --git a/src/main/java/net/minecraft/server/UserCache.java b/src/main/java/net/minecraft/server/UserCache.java
-index 825fed6..46129d8 100644
+index b7055f8..63cf3a5 100644
 --- a/src/main/java/net/minecraft/server/UserCache.java
 +++ b/src/main/java/net/minecraft/server/UserCache.java
-@@ -211,6 +211,11 @@ public class UserCache {
+@@ -214,6 +214,11 @@ public class UserCache {
              }
          } catch (FileNotFoundException filenotfoundexception) {
              ;
@@ -43,5 +43,5 @@ index 825fed6..46129d8 100644
              ;
          } finally {
 -- 
-2.5.0
+2.7.4
 

@@ -1,4 +1,4 @@
-From 1879bfdedea961e0a31d8b1ec0c1460f4b270f78 Mon Sep 17 00:00:00 2001
+From 31757f78a12c470cb6578c9a6c236feb65ef6799 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -6,10 +6,10 @@ Subject: [PATCH] Crop Growth Rates
 Allows configuring the growth rates of crops as a percentage of their normal growth rate.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 57f3981..12589d6 100644
+index f76252a..e30df10 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
-@@ -857,4 +857,16 @@ public class Block {
+@@ -895,4 +895,16 @@ public class Block {
      private static void a(int i, String s, Block block) {
          a(i, new MinecraftKey(s), block);
      }
@@ -27,7 +27,7 @@ index 57f3981..12589d6 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/net/minecraft/server/BlockCactus.java b/src/main/java/net/minecraft/server/BlockCactus.java
-index f4b90e1..6f0af4e 100644
+index d42bb77..4368731 100644
 --- a/src/main/java/net/minecraft/server/BlockCactus.java
 +++ b/src/main/java/net/minecraft/server/BlockCactus.java
 @@ -31,7 +31,7 @@ public class BlockCactus extends Block {
@@ -40,10 +40,10 @@ index f4b90e1..6f0af4e 100644
                      IBlockData iblockdata1 = iblockdata.set(BlockCactus.AGE, Integer.valueOf(0));
  
 diff --git a/src/main/java/net/minecraft/server/BlockCrops.java b/src/main/java/net/minecraft/server/BlockCrops.java
-index 062f769..5f8bffe 100644
+index c207554..7d44039 100644
 --- a/src/main/java/net/minecraft/server/BlockCrops.java
 +++ b/src/main/java/net/minecraft/server/BlockCrops.java
-@@ -54,7 +54,7 @@ public class BlockCrops extends BlockPlant implements IBlockFragilePlantElement
+@@ -55,7 +55,7 @@ public class BlockCrops extends BlockPlant implements IBlockFragilePlantElement
              if (i < this.g()) {
                  float f = a((Block) this, world, blockposition);
  
@@ -66,10 +66,10 @@ index fa7919e..7d61eaa 100644
              boolean flag = true;
              Iterator iterator = BlockPosition.b(blockposition.a(-4, -1, -4), blockposition.a(4, 1, 4)).iterator();
 diff --git a/src/main/java/net/minecraft/server/BlockNetherWart.java b/src/main/java/net/minecraft/server/BlockNetherWart.java
-index b2ca55f..c34f338 100644
+index 6da1db1..62489a0 100644
 --- a/src/main/java/net/minecraft/server/BlockNetherWart.java
 +++ b/src/main/java/net/minecraft/server/BlockNetherWart.java
-@@ -29,7 +29,7 @@ public class BlockNetherWart extends BlockPlant {
+@@ -30,7 +30,7 @@ public class BlockNetherWart extends BlockPlant {
      public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
          int i = ((Integer) iblockdata.get(BlockNetherWart.AGE)).intValue();
  
@@ -79,10 +79,10 @@ index b2ca55f..c34f338 100644
              // world.setTypeAndData(blockposition, iblockdata, 2); // CraftBukkit
              org.bukkit.craftbukkit.event.CraftEventFactory.handleBlockGrowEvent(world, blockposition.getX(), blockposition.getY(), blockposition.getZ(), this, toLegacyData(iblockdata)); // CraftBukkit
 diff --git a/src/main/java/net/minecraft/server/BlockReed.java b/src/main/java/net/minecraft/server/BlockReed.java
-index f507b83..4a79cf4 100644
+index b370bf6..4bb63ff 100644
 --- a/src/main/java/net/minecraft/server/BlockReed.java
 +++ b/src/main/java/net/minecraft/server/BlockReed.java
-@@ -30,7 +30,7 @@ public class BlockReed extends Block {
+@@ -31,7 +31,7 @@ public class BlockReed extends Block {
                  if (i < 3) {
                      int j = ((Integer) iblockdata.get(BlockReed.AGE)).intValue();
  
@@ -105,10 +105,10 @@ index a2691a5..76b13a3 100644
                  world.captureTreeGeneration = true;
                  // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/BlockStem.java b/src/main/java/net/minecraft/server/BlockStem.java
-index 41200fa..73e68d8 100644
+index 36ae219..d378ea4 100644
 --- a/src/main/java/net/minecraft/server/BlockStem.java
 +++ b/src/main/java/net/minecraft/server/BlockStem.java
-@@ -50,7 +50,7 @@ public class BlockStem extends BlockPlant implements IBlockFragilePlantElement {
+@@ -51,7 +51,7 @@ public class BlockStem extends BlockPlant implements IBlockFragilePlantElement {
          if (world.getLightLevel(blockposition.up()) >= 9) {
              float f = BlockCrops.a((Block) this, world, blockposition);
  
@@ -160,5 +160,5 @@ index 961ddb4..8860a96 100644
 +    }
  }
 -- 
-2.5.0
+2.7.4
 

@@ -1,4 +1,4 @@
-From a2cc60b83c064942f18d6954875b65667a4e7327 Mon Sep 17 00:00:00 2001
+From aa6e4828f7873d2a24d8df07b711b5c3629e2b8d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 28 Jul 2014 16:55:51 +1000
 Subject: [PATCH] Allow Attribute Capping.
@@ -6,10 +6,10 @@ Subject: [PATCH] Allow Attribute Capping.
 Apply some sensible defaults and allow server owners to customize the maximum values of selected common attributes.
 
 diff --git a/src/main/java/net/minecraft/server/AttributeRanged.java b/src/main/java/net/minecraft/server/AttributeRanged.java
-index 13602f0..838daed 100644
+index 130597c..d012c90 100644
 --- a/src/main/java/net/minecraft/server/AttributeRanged.java
 +++ b/src/main/java/net/minecraft/server/AttributeRanged.java
-@@ -3,7 +3,7 @@ package net.minecraft.server;
+@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
  public class AttributeRanged extends AttributeBase {
  
      private final double a;
@@ -17,12 +17,12 @@ index 13602f0..838daed 100644
 +    public double b; // Spigot
      private String c;
  
-     public AttributeRanged(IAttribute iattribute, String s, double d0, double d1, double d2) {
+     public AttributeRanged(@Nullable IAttribute iattribute, String s, double d0, double d1, double d2) {
 diff --git a/src/main/java/net/minecraft/server/GenericAttributes.java b/src/main/java/net/minecraft/server/GenericAttributes.java
-index 61cb504..501c91d 100644
+index 05e00b8..e2ad77d 100644
 --- a/src/main/java/net/minecraft/server/GenericAttributes.java
 +++ b/src/main/java/net/minecraft/server/GenericAttributes.java
-@@ -9,15 +9,17 @@ import org.apache.logging.log4j.Logger;
+@@ -10,15 +10,17 @@ import org.apache.logging.log4j.Logger;
  public class GenericAttributes {
  
      private static final Logger j = LogManager.getLogger();
@@ -75,5 +75,5 @@ index f67aadb..fc814b4 100644
 +    }
  }
 -- 
-1.9.1
+2.7.4
 

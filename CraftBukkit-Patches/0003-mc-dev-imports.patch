@@ -1,4 +1,4 @@
-From 1add68c38babb8285f1830a777f9f247f2aade1b Mon Sep 17 00:00:00 2001
+From 84a204db6c3fdb789e68283097e01090a1f880a6 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -7,11 +7,13 @@ Imported files which are only modified by Spigot, not upstream. Files here shoul
 
 diff --git a/src/main/java/net/minecraft/server/AttributeRanged.java b/src/main/java/net/minecraft/server/AttributeRanged.java
 new file mode 100644
-index 0000000..13602f0
+index 0000000..130597c
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/AttributeRanged.java
-@@ -0,0 +1,35 @@
+@@ -0,0 +1,37 @@
 +package net.minecraft.server;
++
++import javax.annotation.Nullable;
 +
 +public class AttributeRanged extends AttributeBase {
 +
@@ -19,7 +21,7 @@ index 0000000..13602f0
 +    private final double b;
 +    private String c;
 +
-+    public AttributeRanged(IAttribute iattribute, String s, double d0, double d1, double d2) {
++    public AttributeRanged(@Nullable IAttribute iattribute, String s, double d0, double d1, double d2) {
 +        super(iattribute, s, d0);
 +        this.a = d1;
 +        this.b = d2;
@@ -48,11 +50,13 @@ index 0000000..13602f0
 +}
 diff --git a/src/main/java/net/minecraft/server/BlockTNT.java b/src/main/java/net/minecraft/server/BlockTNT.java
 new file mode 100644
-index 0000000..d72b692
+index 0000000..ce79e19
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/BlockTNT.java
-@@ -0,0 +1,98 @@
+@@ -0,0 +1,100 @@
 +package net.minecraft.server;
++
++import javax.annotation.Nullable;
 +
 +public class BlockTNT extends Block {
 +
@@ -73,7 +77,7 @@ index 0000000..d72b692
 +
 +    }
 +
-+    public void doPhysics(World world, BlockPosition blockposition, IBlockData iblockdata, Block block) {
++    public void a(IBlockData iblockdata, World world, BlockPosition blockposition, Block block) {
 +        if (world.isBlockIndirectlyPowered(blockposition)) {
 +            this.postBreak(world, blockposition, iblockdata.set(BlockTNT.EXPLODE, Boolean.valueOf(true)));
 +            world.setAir(blockposition);
@@ -106,7 +110,7 @@ index 0000000..d72b692
 +        }
 +    }
 +
-+    public boolean interact(World world, BlockPosition blockposition, IBlockData iblockdata, EntityHuman entityhuman, EnumHand enumhand, ItemStack itemstack, EnumDirection enumdirection, float f, float f1, float f2) {
++    public boolean interact(World world, BlockPosition blockposition, IBlockData iblockdata, EntityHuman entityhuman, EnumHand enumhand, @Nullable ItemStack itemstack, EnumDirection enumdirection, float f, float f1, float f2) {
 +        if (itemstack != null && (itemstack.getItem() == Items.FLINT_AND_STEEL || itemstack.getItem() == Items.FIRE_CHARGE)) {
 +            this.a(world, blockposition, iblockdata.set(BlockTNT.EXPLODE, Boolean.valueOf(true)), (EntityLiving) entityhuman);
 +            world.setTypeAndData(blockposition, Blocks.AIR.getBlockData(), 11);
@@ -152,10 +156,10 @@ index 0000000..d72b692
 +}
 diff --git a/src/main/java/net/minecraft/server/CommandDispatcher.java b/src/main/java/net/minecraft/server/CommandDispatcher.java
 new file mode 100644
-index 0000000..3e4a31b
+index 0000000..39f575c
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/CommandDispatcher.java
-@@ -0,0 +1,125 @@
+@@ -0,0 +1,126 @@
 +package net.minecraft.server;
 +
 +import java.util.Iterator;
@@ -209,6 +213,7 @@ index 0000000..3e4a31b
 +        this.a((ICommand) (new CommandWorldBorder()));
 +        this.a((ICommand) (new CommandTitle()));
 +        this.a((ICommand) (new CommandEntityData()));
++        this.a((ICommand) (new CommandStopSound()));
 +        if (minecraftserver.aa()) {
 +            this.a((ICommand) (new CommandOp()));
 +            this.a((ICommand) (new CommandDeop()));
@@ -336,15 +341,16 @@ index 0000000..27ce9d9
 +}
 diff --git a/src/main/java/net/minecraft/server/GenericAttributes.java b/src/main/java/net/minecraft/server/GenericAttributes.java
 new file mode 100644
-index 0000000..61cb504
+index 0000000..05e00b8
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/GenericAttributes.java
-@@ -0,0 +1,117 @@
+@@ -0,0 +1,119 @@
 +package net.minecraft.server;
 +
 +import java.util.Collection;
 +import java.util.Iterator;
 +import java.util.UUID;
++import javax.annotation.Nullable;
 +import org.apache.logging.log4j.LogManager;
 +import org.apache.logging.log4j.Logger;
 +
@@ -446,6 +452,7 @@ index 0000000..61cb504
 +
 +    }
 +
++    @Nullable
 +    public static AttributeModifier a(NBTTagCompound nbttagcompound) {
 +        UUID uuid = nbttagcompound.a("UUID");
 +
@@ -969,362 +976,6 @@ index 0000000..5f17034
 +        return this.data;
 +    }
 +}
-diff --git a/src/main/java/net/minecraft/server/NavigationAbstract.java b/src/main/java/net/minecraft/server/NavigationAbstract.java
-new file mode 100644
-index 0000000..2f4265a
---- /dev/null
-+++ b/src/main/java/net/minecraft/server/NavigationAbstract.java
-@@ -0,0 +1,275 @@
-+package net.minecraft.server;
-+
-+public abstract class NavigationAbstract {
-+
-+    private static int f = 20;
-+    protected EntityInsentient a;
-+    protected World b;
-+    protected PathEntity c;
-+    protected double d;
-+    private final AttributeInstance g;
-+    private int h;
-+    private int i;
-+    private Vec3D j;
-+    private Vec3D k;
-+    private long l;
-+    private long m;
-+    private double n;
-+    private float o;
-+    private boolean p;
-+    private long q;
-+    protected PathfinderAbstract e;
-+    private BlockPosition r;
-+    private final Pathfinder s;
-+
-+    public NavigationAbstract(EntityInsentient entityinsentient, World world) {
-+        this.j = Vec3D.a;
-+        this.k = Vec3D.a;
-+        this.l = 0L;
-+        this.m = 0L;
-+        this.o = 0.5F;
-+        this.a = entityinsentient;
-+        this.b = world;
-+        this.g = entityinsentient.getAttributeInstance(GenericAttributes.FOLLOW_RANGE);
-+        this.s = this.a();
-+        this.b.C().a(this);
-+    }
-+
-+    protected abstract Pathfinder a();
-+
-+    public void a(double d0) {
-+        this.d = d0;
-+    }
-+
-+    public float h() {
-+        return (float) this.g.getValue();
-+    }
-+
-+    public boolean i() {
-+        return this.p;
-+    }
-+
-+    public void j() {
-+        if (this.b.getTime() - this.q > (long) NavigationAbstract.f) {
-+            if (this.r != null) {
-+                this.c = null;
-+                this.c = this.a(this.r);
-+                this.q = this.b.getTime();
-+                this.p = false;
-+            }
-+        } else {
-+            this.p = true;
-+        }
-+
-+    }
-+
-+    public final PathEntity a(double d0, double d1, double d2) {
-+        return this.a(new BlockPosition(MathHelper.floor(d0), (int) d1, MathHelper.floor(d2)));
-+    }
-+
-+    public PathEntity a(BlockPosition blockposition) {
-+        if (!this.b()) {
-+            return null;
-+        } else if (this.c != null && !this.c.b() && blockposition.equals(this.r)) {
-+            return this.c;
-+        } else {
-+            this.r = blockposition;
-+            float f = this.h();
-+
-+            this.b.methodProfiler.a("pathfind");
-+            BlockPosition blockposition1 = new BlockPosition(this.a);
-+            int i = (int) (f + 8.0F);
-+            ChunkCache chunkcache = new ChunkCache(this.b, blockposition1.a(-i, -i, -i), blockposition1.a(i, i, i), 0);
-+            PathEntity pathentity = this.s.a(chunkcache, this.a, this.r, f);
-+
-+            this.b.methodProfiler.b();
-+            return pathentity;
-+        }
-+    }
-+
-+    public PathEntity a(Entity entity) {
-+        if (!this.b()) {
-+            return null;
-+        } else {
-+            BlockPosition blockposition = new BlockPosition(entity);
-+
-+            if (this.c != null && !this.c.b() && blockposition.equals(this.r)) {
-+                return this.c;
-+            } else {
-+                this.r = blockposition;
-+                float f = this.h();
-+
-+                this.b.methodProfiler.a("pathfind");
-+                BlockPosition blockposition1 = (new BlockPosition(this.a)).up();
-+                int i = (int) (f + 16.0F);
-+                ChunkCache chunkcache = new ChunkCache(this.b, blockposition1.a(-i, -i, -i), blockposition1.a(i, i, i), 0);
-+                PathEntity pathentity = this.s.a(chunkcache, this.a, entity, f);
-+
-+                this.b.methodProfiler.b();
-+                return pathentity;
-+            }
-+        }
-+    }
-+
-+    public boolean a(double d0, double d1, double d2, double d3) {
-+        PathEntity pathentity = this.a((double) MathHelper.floor(d0), (double) ((int) d1), (double) MathHelper.floor(d2));
-+
-+        return this.a(pathentity, d3);
-+    }
-+
-+    public boolean a(Entity entity, double d0) {
-+        PathEntity pathentity = this.a(entity);
-+
-+        return pathentity != null ? this.a(pathentity, d0) : false;
-+    }
-+
-+    public boolean a(PathEntity pathentity, double d0) {
-+        if (pathentity == null) {
-+            this.c = null;
-+            return false;
-+        } else {
-+            if (!pathentity.a(this.c)) {
-+                this.c = pathentity;
-+            }
-+
-+            this.d();
-+            if (this.c.d() == 0) {
-+                return false;
-+            } else {
-+                this.d = d0;
-+                Vec3D vec3d = this.c();
-+
-+                this.i = this.h;
-+                this.j = vec3d;
-+                return true;
-+            }
-+        }
-+    }
-+
-+    public PathEntity k() {
-+        return this.c;
-+    }
-+
-+    public void l() {
-+        ++this.h;
-+        if (this.p) {
-+            this.j();
-+        }
-+
-+        if (!this.n()) {
-+            Vec3D vec3d;
-+
-+            if (this.b()) {
-+                this.m();
-+            } else if (this.c != null && this.c.e() < this.c.d()) {
-+                vec3d = this.c();
-+                Vec3D vec3d1 = this.c.a(this.a, this.c.e());
-+
-+                if (vec3d.y > vec3d1.y && !this.a.onGround && MathHelper.floor(vec3d.x) == MathHelper.floor(vec3d1.x) && MathHelper.floor(vec3d.z) == MathHelper.floor(vec3d1.z)) {
-+                    this.c.c(this.c.e() + 1);
-+                }
-+            }
-+
-+            if (!this.n()) {
-+                vec3d = this.c.a((Entity) this.a);
-+                if (vec3d != null) {
-+                    BlockPosition blockposition = (new BlockPosition(vec3d)).down();
-+                    AxisAlignedBB axisalignedbb = this.b.getType(blockposition).c(this.b, blockposition);
-+
-+                    vec3d = vec3d.a(0.0D, 1.0D - axisalignedbb.e, 0.0D);
-+                    this.a.getControllerMove().a(vec3d.x, vec3d.y, vec3d.z, this.d);
-+                }
-+            }
-+        }
-+    }
-+
-+    protected void m() {
-+        Vec3D vec3d = this.c();
-+        int i = this.c.d();
-+
-+        for (int j = this.c.e(); j < this.c.d(); ++j) {
-+            if ((double) this.c.a(j).b != Math.floor(vec3d.y)) {
-+                i = j;
-+                break;
-+            }
-+        }
-+
-+        this.o = this.a.width > 0.75F ? this.a.width / 2.0F : 0.75F - this.a.width / 2.0F;
-+        Vec3D vec3d1 = this.c.f();
-+
-+        if (MathHelper.e((float) (this.a.locX - (vec3d1.x + 0.5D))) < this.o && MathHelper.e((float) (this.a.locZ - (vec3d1.z + 0.5D))) < this.o) {
-+            this.c.c(this.c.e() + 1);
-+        }
-+
-+        int k = MathHelper.f(this.a.width);
-+        int l = (int) this.a.length + 1;
-+        int i1 = k;
-+
-+        for (int j1 = i - 1; j1 >= this.c.e(); --j1) {
-+            if (this.a(vec3d, this.c.a(this.a, j1), k, l, i1)) {
-+                this.c.c(j1);
-+                break;
-+            }
-+        }
-+
-+        this.a(vec3d);
-+    }
-+
-+    protected void a(Vec3D vec3d) {
-+        if (this.h - this.i > 100) {
-+            if (vec3d.distanceSquared(this.j) < 2.25D) {
-+                this.o();
-+            }
-+
-+            this.i = this.h;
-+            this.j = vec3d;
-+        }
-+
-+        if (this.c != null && !this.c.b()) {
-+            Vec3D vec3d1 = this.c.f();
-+
-+            if (!vec3d1.equals(this.k)) {
-+                this.k = vec3d1;
-+                double d0 = vec3d.f(this.k);
-+
-+                this.n = this.a.ck() > 0.0F ? d0 / (double) this.a.ck() * 1000.0D : 0.0D;
-+            } else {
-+                this.l += System.currentTimeMillis() - this.m;
-+            }
-+
-+            if (this.n > 0.0D && (double) this.l > this.n * 3.0D) {
-+                this.k = Vec3D.a;
-+                this.l = 0L;
-+                this.n = 0.0D;
-+                this.o();
-+            }
-+
-+            this.m = System.currentTimeMillis();
-+        }
-+
-+    }
-+
-+    public boolean n() {
-+        return this.c == null || this.c.b();
-+    }
-+
-+    public void o() {
-+        this.c = null;
-+    }
-+
-+    protected abstract Vec3D c();
-+
-+    protected abstract boolean b();
-+
-+    protected boolean p() {
-+        return this.a.isInWater() || this.a.an();
-+    }
-+
-+    protected void d() {}
-+
-+    protected abstract boolean a(Vec3D vec3d, Vec3D vec3d1, int i, int j, int k);
-+
-+    public boolean b(BlockPosition blockposition) {
-+        return this.b.getType(blockposition.down()).b();
-+    }
-+}
-diff --git a/src/main/java/net/minecraft/server/NavigationListener.java b/src/main/java/net/minecraft/server/NavigationListener.java
-new file mode 100644
-index 0000000..f82ea80
---- /dev/null
-+++ b/src/main/java/net/minecraft/server/NavigationListener.java
-@@ -0,0 +1,69 @@
-+package net.minecraft.server;
-+
-+import java.util.WeakHashMap;
-+
-+public class NavigationListener implements IWorldAccess {
-+
-+    private static final Object a = new Object();
-+    private final WeakHashMap<NavigationAbstract, Object> b = new WeakHashMap();
-+
-+    public NavigationListener() {}
-+
-+    public void a(NavigationAbstract navigationabstract) {
-+        this.b.put(navigationabstract, NavigationListener.a);
-+    }
-+
-+    public void a(World world, BlockPosition blockposition, IBlockData iblockdata, IBlockData iblockdata1, int i) {
-+        if (this.a(world, blockposition, iblockdata, iblockdata1)) {
-+            NavigationAbstract[] anavigationabstract = (NavigationAbstract[]) this.b.keySet().toArray(new NavigationAbstract[0]);
-+            NavigationAbstract[] anavigationabstract1 = anavigationabstract;
-+            int j = anavigationabstract.length;
-+
-+            for (int k = 0; k < j; ++k) {
-+                NavigationAbstract navigationabstract = anavigationabstract1[k];
-+
-+                if (navigationabstract != null && !navigationabstract.i()) {
-+                    PathEntity pathentity = navigationabstract.k();
-+
-+                    if (pathentity != null && !pathentity.b() && pathentity.d() != 0) {
-+                        PathPoint pathpoint = navigationabstract.c.c();
-+                        double d0 = blockposition.distanceSquared(((double) pathpoint.a + navigationabstract.a.locX) / 2.0D, ((double) pathpoint.b + navigationabstract.a.locY) / 2.0D, ((double) pathpoint.c + navigationabstract.a.locZ) / 2.0D);
-+                        int l = (pathentity.d() - pathentity.e()) * (pathentity.d() - pathentity.e());
-+
-+                        if (d0 < (double) l) {
-+                            navigationabstract.j();
-+                        }
-+                    }
-+                }
-+            }
-+
-+        }
-+    }
-+
-+    protected boolean a(World world, BlockPosition blockposition, IBlockData iblockdata, IBlockData iblockdata1) {
-+        AxisAlignedBB axisalignedbb = iblockdata.d(world, blockposition);
-+        AxisAlignedBB axisalignedbb1 = iblockdata1.d(world, blockposition);
-+
-+        return axisalignedbb != axisalignedbb1 && (axisalignedbb == null || !axisalignedbb.equals(axisalignedbb1));
-+    }
-+
-+    public void a(BlockPosition blockposition) {}
-+
-+    public void a(int i, int j, int k, int l, int i1, int j1) {}
-+
-+    public void a(EntityHuman entityhuman, SoundEffect soundeffect, SoundCategory soundcategory, double d0, double d1, double d2, float f, float f1) {}
-+
-+    public void a(int i, boolean flag, double d0, double d1, double d2, double d3, double d4, double d5, int... aint) {}
-+
-+    public void a(Entity entity) {}
-+
-+    public void b(Entity entity) {}
-+
-+    public void a(SoundEffect soundeffect, BlockPosition blockposition) {}
-+
-+    public void a(int i, BlockPosition blockposition, int j) {}
-+
-+    public void a(EntityHuman entityhuman, int i, BlockPosition blockposition, int j) {}
-+
-+    public void b(int i, BlockPosition blockposition, int j) {}
-+}
 diff --git a/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java b/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java
 new file mode 100644
 index 0000000..1cb9d60
@@ -1492,15 +1143,19 @@ index 0000000..c5147b6
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java b/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java
 new file mode 100644
-index 0000000..3f7fde2
+index 0000000..4248aa1
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java
-@@ -0,0 +1,110 @@
+@@ -0,0 +1,152 @@
 +package net.minecraft.server;
 +
++import com.google.common.collect.Lists;
 +import io.netty.buffer.ByteBuf;
 +import io.netty.buffer.Unpooled;
 +import java.io.IOException;
++import java.util.Iterator;
++import java.util.List;
++import java.util.Map.Entry;
 +
 +public class PacketPlayOutMapChunk implements Packet<PacketListenerPlayOut> {
 +
@@ -1508,24 +1163,41 @@ index 0000000..3f7fde2
 +    private int b;
 +    private int c;
 +    private byte[] d;
-+    private boolean e;
++    private List<NBTTagCompound> e;
++    private boolean f;
 +
 +    public PacketPlayOutMapChunk() {}
 +
-+    public PacketPlayOutMapChunk(Chunk chunk, boolean flag, int i) {
++    public PacketPlayOutMapChunk(Chunk chunk, int i) {
 +        this.a = chunk.locX;
 +        this.b = chunk.locZ;
-+        this.e = flag;
-+        boolean flag1 = !chunk.getWorld().worldProvider.m();
++        this.f = i == '\uffff';
++        boolean flag = !chunk.getWorld().worldProvider.m();
 +
-+        this.d = new byte[a(chunk, flag, flag1, i)];
-+        this.c = a(new PacketDataSerializer(this.f()), chunk, flag, flag1, i);
++        this.d = new byte[this.a(chunk, flag, i)];
++        this.c = this.a(new PacketDataSerializer(this.g()), chunk, flag, i);
++        this.e = Lists.newArrayList();
++        Iterator iterator = chunk.getTileEntities().entrySet().iterator();
++
++        while (iterator.hasNext()) {
++            Entry entry = (Entry) iterator.next();
++            BlockPosition blockposition = (BlockPosition) entry.getKey();
++            TileEntity tileentity = (TileEntity) entry.getValue();
++            int j = blockposition.getY() >> 4;
++
++            if (this.e() || (i & 1 << j) != 0) {
++                NBTTagCompound nbttagcompound = tileentity.E_();
++
++                this.e.add(nbttagcompound);
++            }
++        }
++
 +    }
 +
 +    public void a(PacketDataSerializer packetdataserializer) throws IOException {
 +        this.a = packetdataserializer.readInt();
 +        this.b = packetdataserializer.readInt();
-+        this.e = packetdataserializer.readBoolean();
++        this.f = packetdataserializer.readBoolean();
 +        this.c = packetdataserializer.g();
 +        int i = packetdataserializer.g();
 +
@@ -1534,30 +1206,47 @@ index 0000000..3f7fde2
 +        } else {
 +            this.d = new byte[i];
 +            packetdataserializer.readBytes(this.d);
++            int j = packetdataserializer.g();
++
++            this.e = Lists.newArrayList();
++
++            for (int k = 0; k < j; ++k) {
++                this.e.add(packetdataserializer.j());
++            }
++
 +        }
 +    }
 +
 +    public void b(PacketDataSerializer packetdataserializer) throws IOException {
 +        packetdataserializer.writeInt(this.a);
 +        packetdataserializer.writeInt(this.b);
-+        packetdataserializer.writeBoolean(this.e);
++        packetdataserializer.writeBoolean(this.f);
 +        packetdataserializer.d(this.c);
 +        packetdataserializer.d(this.d.length);
 +        packetdataserializer.writeBytes(this.d);
++        packetdataserializer.d(this.e.size());
++        Iterator iterator = this.e.iterator();
++
++        while (iterator.hasNext()) {
++            NBTTagCompound nbttagcompound = (NBTTagCompound) iterator.next();
++
++            packetdataserializer.a(nbttagcompound);
++        }
++
 +    }
 +
 +    public void a(PacketListenerPlayOut packetlistenerplayout) {
 +        packetlistenerplayout.a(this);
 +    }
 +
-+    private ByteBuf f() {
++    private ByteBuf g() {
 +        ByteBuf bytebuf = Unpooled.wrappedBuffer(this.d);
 +
 +        bytebuf.writerIndex(0);
 +        return bytebuf;
 +    }
 +
-+    public static int a(PacketDataSerializer packetdataserializer, Chunk chunk, boolean flag, boolean flag1, int i) {
++    public int a(PacketDataSerializer packetdataserializer, Chunk chunk, boolean flag, int i) {
 +        int j = 0;
 +        ChunkSection[] achunksection = chunk.getSections();
 +        int k = 0;
@@ -1565,24 +1254,24 @@ index 0000000..3f7fde2
 +        for (int l = achunksection.length; k < l; ++k) {
 +            ChunkSection chunksection = achunksection[k];
 +
-+            if (chunksection != Chunk.a && (!flag || !chunksection.a()) && (i & 1 << k) != 0) {
++            if (chunksection != Chunk.a && (!this.e() || !chunksection.a()) && (i & 1 << k) != 0) {
 +                j |= 1 << k;
 +                chunksection.getBlocks().b(packetdataserializer);
 +                packetdataserializer.writeBytes(chunksection.getEmittedLightArray().asBytes());
-+                if (flag1) {
++                if (flag) {
 +                    packetdataserializer.writeBytes(chunksection.getSkyLightArray().asBytes());
 +                }
 +            }
 +        }
 +
-+        if (flag) {
++        if (this.e()) {
 +            packetdataserializer.writeBytes(chunk.getBiomeIndex());
 +        }
 +
 +        return j;
 +    }
 +
-+    protected static int a(Chunk chunk, boolean flag, boolean flag1, int i) {
++    protected int a(Chunk chunk, boolean flag, int i) {
 +        int j = 0;
 +        ChunkSection[] achunksection = chunk.getSections();
 +        int k = 0;
@@ -1590,28 +1279,32 @@ index 0000000..3f7fde2
 +        for (int l = achunksection.length; k < l; ++k) {
 +            ChunkSection chunksection = achunksection[k];
 +
-+            if (chunksection != Chunk.a && (!flag || !chunksection.a()) && (i & 1 << k) != 0) {
++            if (chunksection != Chunk.a && (!this.e() || !chunksection.a()) && (i & 1 << k) != 0) {
 +                j += chunksection.getBlocks().a();
 +                j += chunksection.getEmittedLightArray().asBytes().length;
-+                if (flag1) {
++                if (flag) {
 +                    j += chunksection.getSkyLightArray().asBytes().length;
 +                }
 +            }
 +        }
 +
-+        if (flag) {
++        if (this.e()) {
 +            j += chunk.getBiomeIndex().length;
 +        }
 +
 +        return j;
 +    }
++
++    public boolean e() {
++        return this.f;
++    }
 +}
 diff --git a/src/main/java/net/minecraft/server/PersistentCollection.java b/src/main/java/net/minecraft/server/PersistentCollection.java
 new file mode 100644
-index 0000000..c29e3f7
+index 0000000..6d3bd4a
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PersistentCollection.java
-@@ -0,0 +1,183 @@
+@@ -0,0 +1,182 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Lists;
@@ -1627,6 +1320,7 @@ index 0000000..c29e3f7
 +import java.util.Iterator;
 +import java.util.List;
 +import java.util.Map;
++import javax.annotation.Nullable;
 +
 +public class PersistentCollection {
 +
@@ -1640,6 +1334,7 @@ index 0000000..c29e3f7
 +        this.b();
 +    }
 +
++    @Nullable
 +    public PersistentBase get(Class<? extends PersistentBase> oclass, String s) {
 +        PersistentBase persistentbase = (PersistentBase) this.a.get(s);
 +
@@ -1706,13 +1401,10 @@ index 0000000..c29e3f7
 +                if (file != null) {
 +                    NBTTagCompound nbttagcompound = new NBTTagCompound();
 +
-+                    persistentbase.b(nbttagcompound);
-+                    NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-+
-+                    nbttagcompound1.set("data", nbttagcompound);
++                    nbttagcompound.set("data", persistentbase.b(new NBTTagCompound()));
 +                    FileOutputStream fileoutputstream = new FileOutputStream(file);
 +
-+                    NBTCompressedStreamTools.a(nbttagcompound1, (OutputStream) fileoutputstream);
++                    NBTCompressedStreamTools.a(nbttagcompound, (OutputStream) fileoutputstream);
 +                    fileoutputstream.close();
 +                }
 +            } catch (Exception exception) {
@@ -1870,10 +1562,10 @@ index 0000000..b07e7d5
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerConnection.java b/src/main/java/net/minecraft/server/ServerConnection.java
 new file mode 100644
-index 0000000..968a1b7
+index 0000000..d4270d1
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerConnection.java
-@@ -0,0 +1,175 @@
+@@ -0,0 +1,174 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Lists;
@@ -1899,7 +1591,6 @@ index 0000000..968a1b7
 +import java.util.Collections;
 +import java.util.Iterator;
 +import java.util.List;
-+import java.util.concurrent.Callable;
 +import org.apache.logging.log4j.LogManager;
 +import org.apache.logging.log4j.Logger;
 +
@@ -2013,7 +1704,7 @@ index 0000000..968a1b7
 +                                CrashReport crashreport = CrashReport.a(exception, "Ticking memory connection");
 +                                CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Ticking connection");
 +
-+                                crashreportsystemdetails.a("Connection", new Callable() {
++                                crashreportsystemdetails.a("Connection", new CrashReportCallable() {
 +                                    public String a() throws Exception {
 +                                        return networkmanager.toString();
 +                                    }

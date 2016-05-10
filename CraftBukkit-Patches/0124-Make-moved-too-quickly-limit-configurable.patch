@@ -1,14 +1,14 @@
-From cc350c3b05b5f69852fd5e3c75fa1e84db68ae82 Mon Sep 17 00:00:00 2001
+From 1c6929dcce1752f8e3a884f15163e9ff854c4b71 Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Tue, 22 Jul 2014 15:59:01 +0200
 Subject: [PATCH] Make "moved too quickly" limit configurable
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index cbd49ec..8c82c09 100644
+index 06a12b1..2d1e60e 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -313,7 +313,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -312,7 +312,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
                  }
                  speed *= 2f; // TODO: Get the speed of the vehicle instead of the player
  
@@ -17,9 +17,9 @@ index cbd49ec..8c82c09 100644
                  // CraftBukkit end
                      PlayerConnection.LOGGER.warn(entity.getName() + " (vehicle of " + this.player.getName() + ") moved too quickly! " + d6 + "," + d7 + "," + d8);
                      this.networkManager.sendPacket(new PacketPlayOutVehicleMove(entity));
-@@ -522,7 +522,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
-                         if (!this.player.K() && (!this.player.x().getGameRules().getBoolean("disableElytraMovementCheck") || !this.player.cB())) {
-                             float f2 = this.player.cB() ? 300.0F : 100.0F;
+@@ -521,7 +521,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+                         if (!this.player.K() && (!this.player.x().getGameRules().getBoolean("disableElytraMovementCheck") || !this.player.cC())) {
+                             float f2 = this.player.cC() ? 300.0F : 100.0F;
  
 -                            if (d11 - d10 > Math.max(100, Math.pow((double) (10.0F * (float) i * speed), 2)) && (!this.minecraftServer.R() || !this.minecraftServer.Q().equals(this.player.getName()))) {
 +                            if (d11 - d10 > Math.max(100, Math.pow((double) (org.spigotmc.SpigotConfig.movedTooQuicklyMultiplier * (float) i * speed), 2)) && (!this.minecraftServer.R() || !this.minecraftServer.Q().equals(this.player.getName()))) { // Spigot
@@ -42,5 +42,5 @@ index 7e774f2..f67aadb 100644
 +    }
  }
 -- 
-1.9.1
+2.7.4
 

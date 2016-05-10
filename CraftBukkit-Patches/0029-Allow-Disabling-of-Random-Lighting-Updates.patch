@@ -1,27 +1,27 @@
-From 7dc12e24417b930db62ada867503c91b62ff4ac2 Mon Sep 17 00:00:00 2001
+From ebbf3b4863ae9ec2a2337824041481f63158811c Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 22 Jun 2013 16:12:02 +1000
 Subject: [PATCH] Allow Disabling of Random Lighting Updates
 
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 2fd5195..4054405 100644
+index 735fb29..979d722 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -967,7 +967,7 @@ public class Chunk {
+@@ -971,7 +971,7 @@ public class Chunk {
          }
  
-         this.q = true;
+         this.r = true;
 -        if (!this.lit && this.done) {
 +        if (!this.lit && this.done && this.world.spigotConfig.randomLightUpdates) { // Spigot - also use random light updates setting to determine if we should relight
              this.o();
          }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 11db4ae..62062be 100644
+index 013c6c3..86bec71 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -377,7 +377,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
+@@ -379,7 +379,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
  
      protected void i() {
          this.methodProfiler.a("playerCheckLight");
@@ -47,5 +47,5 @@ index 4de0a98..c2452d6 100644
 +    }
  }
 -- 
-1.9.1
+2.7.4
 
