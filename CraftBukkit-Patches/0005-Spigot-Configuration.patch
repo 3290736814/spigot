@@ -1,4 +1,4 @@
-From 9f153379f78899b459bbe46d610a98f8b33b7603 Mon Sep 17 00:00:00 2001
+From 9306701f6b1e57253831b64a4fb9a643d966e9e4 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -6,7 +6,7 @@ Subject: [PATCH] Spigot Configuration
 Provides the basic infrastructure to load and save the Spigot configuration file, spigot.yml
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 0ac25e8..008d70c 100644
+index cd7eee7..0ba2f14 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -164,6 +164,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -35,7 +35,7 @@ index 0ac25e8..008d70c 100644
              if (!this.getOnlineMode()) {
                  DedicatedServer.LOGGER.warn("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 06b7e72..ae250b3 100644
+index aad4258..808cc55 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -97,6 +97,7 @@ public abstract class World implements IBlockAccess {
@@ -55,10 +55,10 @@ index 06b7e72..ae250b3 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e4bbe8c..d681258 100644
+index 0f8e1b3..0b132d5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -252,8 +252,10 @@ public final class CraftServer implements Server {
+@@ -253,8 +253,10 @@ public final class CraftServer implements Server {
          chunkGCLoadThresh = configuration.getInt("chunk-gc.load-threshold");
          loadIcon();
  
@@ -71,7 +71,7 @@ index e4bbe8c..d681258 100644
      }
  
      public boolean getCommandBlockOverride(String command) {
-@@ -674,6 +676,7 @@ public final class CraftServer implements Server {
+@@ -675,6 +677,7 @@ public final class CraftServer implements Server {
              logger.log(Level.WARNING, "Failed to load banned-players.json, " + ex.getMessage());
          }
  
@@ -79,7 +79,7 @@ index e4bbe8c..d681258 100644
          for (WorldServer world : console.worlds) {
              world.worldData.setDifficulty(difficulty);
              world.setSpawnFlags(monsters, animals);
-@@ -688,11 +691,14 @@ public final class CraftServer implements Server {
+@@ -689,11 +692,14 @@ public final class CraftServer implements Server {
              } else {
                  world.ticksPerMonsterSpawns = this.getTicksPerMonsterSpawns();
              }

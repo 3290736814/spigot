@@ -1,4 +1,4 @@
-From 4d897f8a870561ec685d3477abd4689c433782ed Mon Sep 17 00:00:00 2001
+From 5cdda5af80a5b0736773830d4f9a702d55ba3571 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 21:07:18 +1100
 Subject: [PATCH] Improve AutoSave Mechanism
@@ -24,10 +24,10 @@ index 7dc6597..4c2f344 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index b252bb6..6c2a3e8 100644
+index 701d29f..6c94565 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -254,7 +254,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -246,7 +246,7 @@ public class ChunkProviderServer implements IChunkProvider {
                  this.saveChunk(chunk);
                  chunk.f(false);
                  ++i;
@@ -37,7 +37,7 @@ index b252bb6..6c2a3e8 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 1f7d8fa..4992664 100644
+index 8edcec1..29f8bd0 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -665,7 +665,17 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
@@ -60,7 +60,7 @@ index 1f7d8fa..4992664 100644
              SpigotTimings.worldSaveTimer.stopTiming(); // Spigot
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 40960ba..d9247ae 100644
+index 207068f..f56261d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -781,12 +781,17 @@ public class CraftWorld implements World {

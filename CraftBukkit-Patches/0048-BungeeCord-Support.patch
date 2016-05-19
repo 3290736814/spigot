@@ -1,4 +1,4 @@
-From 1ba3b2da05a6f91c443f34c6439ecf3d898623c0 Mon Sep 17 00:00:00 2001
+From b47a0f2c11768d36a75a76d21fa3886e776abf6a Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -6,7 +6,7 @@ Subject: [PATCH] BungeeCord Support
 Provides support for IP forwarding via BungeeCord.
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 1d90efc..35d2489 100644
+index e32851a..08199c6 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -7,6 +7,7 @@ import java.util.HashMap;
@@ -130,10 +130,10 @@ index 984862c..7e36500 100644
  
          if (getProfileBans().isBanned(gameprofile) && !getProfileBans().get(gameprofile).hasExpired()) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 70cd974..3f2e988 100644
+index 88ab34d..5fc370a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -560,7 +560,13 @@ public final class CraftServer implements Server {
+@@ -561,7 +561,13 @@ public final class CraftServer implements Server {
  
      @Override
      public long getConnectionThrottle() {
