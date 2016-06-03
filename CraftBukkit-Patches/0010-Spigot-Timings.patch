@@ -1,4 +1,4 @@
-From e72bfcbbb894255f2fa261c8f9e85fc1c5b6295c Mon Sep 17 00:00:00 2001
+From ea81156e4eff005274b1cfcb9bcd783fb3619d3d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -26,10 +26,10 @@ index 5a71bcc..852c236 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index f6018f8..701d29f 100644
+index b758bf2..d988ef1 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -139,6 +139,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -145,6 +145,7 @@ public class ChunkProviderServer implements IChunkProvider {
          // CraftBukkit end
  
          if (chunk == null) {
@@ -37,7 +37,7 @@ index f6018f8..701d29f 100644
              long k = ChunkCoordIntPair.a(i, j);
  
              try {
-@@ -184,6 +185,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -190,6 +191,7 @@ public class ChunkProviderServer implements IChunkProvider {
              }
              // CraftBukkit end
              chunk.loadNearby(this, this.chunkGenerator);
@@ -408,7 +408,7 @@ index 9a6f565..3a13f70 100644
      private static Map<String, Class<? extends TileEntity>> f = Maps.newHashMap();
      private static Map<Class<? extends TileEntity>, String> g = Maps.newHashMap();
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index a759d79..df5719b 100644
+index bdf6806..ef23c94 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -18,6 +18,7 @@ import com.google.common.collect.Maps;
@@ -587,7 +587,7 @@ index 0b132d5..9f04e1d 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index da068e8..9f9fc91 100644
+index 77e17d9..5906fd5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -282,7 +282,9 @@ public class CraftWorld implements World {

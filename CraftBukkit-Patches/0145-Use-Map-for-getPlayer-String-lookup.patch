@@ -1,11 +1,11 @@
-From 13649d3eb587d6e1974d011898e7bd34d4e5bb3a Mon Sep 17 00:00:00 2001
+From 3287ea9852345f9af6a48b20812c8c99986c50d9 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 13 Jul 2015 19:05:15 +1000
 Subject: [PATCH] Use Map for getPlayer(String) lookup.
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index e85b244..13fa79f 100644
+index 6c6aadb..f17f2fe 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -66,6 +66,7 @@ public abstract class PlayerList {
@@ -48,7 +48,7 @@ index e85b244..13fa79f 100644
              this.j.put(entityplayer1.getUniqueID(), entityplayer1);
          }
          // entityplayer1.syncInventory();
-@@ -1132,19 +1137,7 @@ public abstract class PlayerList {
+@@ -1133,19 +1138,7 @@ public abstract class PlayerList {
  
      @Nullable
      public EntityPlayer getPlayer(String s) {

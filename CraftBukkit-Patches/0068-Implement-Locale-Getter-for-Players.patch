@@ -1,14 +1,14 @@
-From 94a8056635666af28b09e9046eee0634678e3214 Mon Sep 17 00:00:00 2001
+From 3fa2fee9840cfc3a94c4d7fc83032828a98f0d6a Mon Sep 17 00:00:00 2001
 From: Smove <jan@lavasurvival.net>
 Date: Sat, 1 Feb 2014 18:12:16 +1100
 Subject: [PATCH] Implement Locale Getter for Players
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 8b4b354..a54f09c 100644
+index 653b9c7..d0cd588 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -26,7 +26,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+@@ -28,7 +28,7 @@ import org.bukkit.inventory.MainHand;
  public class EntityPlayer extends EntityHuman implements ICrafting {
  
      private static final Logger bR = LogManager.getLogger();

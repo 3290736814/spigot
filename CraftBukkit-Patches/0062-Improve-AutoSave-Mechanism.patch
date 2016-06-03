@@ -1,4 +1,4 @@
-From 5cdda5af80a5b0736773830d4f9a702d55ba3571 Mon Sep 17 00:00:00 2001
+From 03d2d6ca8b851ad20dcca7ff91285957ff63e1bb Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 21:07:18 +1100
 Subject: [PATCH] Improve AutoSave Mechanism
@@ -24,10 +24,10 @@ index 7dc6597..4c2f344 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 701d29f..6c94565 100644
+index d988ef1..a0b90df 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -246,7 +246,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -252,7 +252,7 @@ public class ChunkProviderServer implements IChunkProvider {
                  this.saveChunk(chunk);
                  chunk.f(false);
                  ++i;
@@ -60,7 +60,7 @@ index 8edcec1..29f8bd0 100644
              SpigotTimings.worldSaveTimer.stopTiming(); // Spigot
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 207068f..f56261d 100644
+index f71925a..46a8c84 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -781,12 +781,17 @@ public class CraftWorld implements World {
