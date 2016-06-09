@@ -1,4 +1,4 @@
-From c8bce814db6dccb318229b626622f5c7dd82e532 Mon Sep 17 00:00:00 2001
+From ba89045ad43830763a348863e1d90fbaaec526c2 Mon Sep 17 00:00:00 2001
 From: slide23 <me@slide.ws>
 Date: Fri, 20 Dec 2013 20:15:33 -0600
 Subject: [PATCH] Add Late Bind Option
@@ -6,18 +6,18 @@ Subject: [PATCH] Add Late Bind Option
 Add late-bind config option to delay binding until loading is done.
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 65f0502..77091bc 100644
+index 19dcd82..61c6702 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -175,6 +175,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -177,6 +177,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              this.a(MinecraftEncryption.b());
-             DedicatedServer.LOGGER.info("Starting Minecraft server on " + (this.getServerIp().isEmpty() ? "*" : this.getServerIp()) + ":" + this.P());
+             DedicatedServer.LOGGER.info("Starting Minecraft server on {}:{}", new Object[] { this.getServerIp().isEmpty() ? "*" : this.getServerIp(), Integer.valueOf(this.P())});
  
 +        if (!org.spigotmc.SpigotConfig.lateBind) {
              try {
                  this.am().a(inetaddress, this.P());
              } catch (IOException ioexception) {
-@@ -183,6 +184,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -185,6 +186,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                  DedicatedServer.LOGGER.warn("Perhaps a server is already running on that port?");
                  return false;
              }
@@ -25,7 +25,7 @@ index 65f0502..77091bc 100644
  
              // Spigot Start - Move DedicatedPlayerList up and bring plugin loading from CraftServer to here
              // this.a((PlayerList) (new DedicatedPlayerList(this))); // CraftBukkit
-@@ -275,6 +277,17 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -277,6 +279,17 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                  }
                  // CraftBukkit end
  

@@ -1,24 +1,24 @@
-From 3fa2fee9840cfc3a94c4d7fc83032828a98f0d6a Mon Sep 17 00:00:00 2001
+From 61eeb4a97e43e8627c883212613ac9a4275cd625 Mon Sep 17 00:00:00 2001
 From: Smove <jan@lavasurvival.net>
 Date: Sat, 1 Feb 2014 18:12:16 +1100
 Subject: [PATCH] Implement Locale Getter for Players
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 653b9c7..d0cd588 100644
+index 2474aa3..37c94f8 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
 @@ -28,7 +28,7 @@ import org.bukkit.inventory.MainHand;
  public class EntityPlayer extends EntityHuman implements ICrafting {
  
-     private static final Logger bR = LogManager.getLogger();
+     private static final Logger bS = LogManager.getLogger();
 -    private String locale = "en_US";
 +    public String locale = "en_US"; // Spigot private -> public
      public PlayerConnection playerConnection;
      public final MinecraftServer server;
      public final PlayerInteractManager playerInteractManager;
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 1d34436..26df2cb 100644
+index eb66356..4161c4f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -1489,6 +1489,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {

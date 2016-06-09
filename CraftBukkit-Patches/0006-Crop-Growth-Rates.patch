@@ -1,4 +1,4 @@
-From 31757f78a12c470cb6578c9a6c236feb65ef6799 Mon Sep 17 00:00:00 2001
+From 4d50644cd2da7c1e386fedca41f08dd4dfae9ad1 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -6,10 +6,10 @@ Subject: [PATCH] Crop Growth Rates
 Allows configuring the growth rates of crops as a percentage of their normal growth rate.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index f76252a..e30df10 100644
+index 0f5e4d5..8eebac1 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
-@@ -895,4 +895,16 @@ public class Block {
+@@ -905,4 +905,16 @@ public class Block {
      private static void a(int i, String s, Block block) {
          a(i, new MinecraftKey(s), block);
      }
@@ -92,7 +92,7 @@ index b370bf6..4bb63ff 100644
                          // world.setTypeUpdate(blockposition.up(), this.getBlockData()); // CraftBukkit
                          BlockPosition upPos = blockposition.up();
 diff --git a/src/main/java/net/minecraft/server/BlockSapling.java b/src/main/java/net/minecraft/server/BlockSapling.java
-index a2691a5..76b13a3 100644
+index 5c24de5..4118fd1 100644
 --- a/src/main/java/net/minecraft/server/BlockSapling.java
 +++ b/src/main/java/net/minecraft/server/BlockSapling.java
 @@ -34,7 +34,7 @@ public class BlockSapling extends BlockPlant implements IBlockFragilePlantElemen

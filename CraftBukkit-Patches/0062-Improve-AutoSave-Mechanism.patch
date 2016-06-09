@@ -1,4 +1,4 @@
-From 03d2d6ca8b851ad20dcca7ff91285957ff63e1bb Mon Sep 17 00:00:00 2001
+From 0ce3c4e2dd3ca8f48d221d41bac567ecc070eb92 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 21:07:18 +1100
 Subject: [PATCH] Improve AutoSave Mechanism
@@ -11,10 +11,10 @@ Instead we will mimic the save-all command in its behaviour, which is both safe 
 Also, only save modified chunks, or chunks with entities after 4 auto save passes
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 7dc6597..4c2f344 100644
+index 719effb..701fc56 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -879,7 +879,7 @@ public class Chunk {
+@@ -880,7 +880,7 @@ public class Chunk {
              if (this.t && this.world.getTime() != this.lastSaved || this.s) {
                  return true;
              }
@@ -24,7 +24,7 @@ index 7dc6597..4c2f344 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index d988ef1..a0b90df 100644
+index 55aaae2..dc6ec1e 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -252,7 +252,7 @@ public class ChunkProviderServer implements IChunkProvider {
@@ -37,10 +37,10 @@ index d988ef1..a0b90df 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 8edcec1..29f8bd0 100644
+index ab4d50d..954d9bf 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -665,7 +665,17 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -672,7 +672,17 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
              SpigotTimings.worldSaveTimer.startTiming(); // Spigot
              this.methodProfiler.a("save");
              this.v.savePlayers();
@@ -60,7 +60,7 @@ index 8edcec1..29f8bd0 100644
              SpigotTimings.worldSaveTimer.stopTiming(); // Spigot
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index f71925a..46a8c84 100644
+index 797da6e..da432d3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -781,12 +781,17 @@ public class CraftWorld implements World {

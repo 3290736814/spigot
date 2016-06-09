@@ -1,19 +1,19 @@
-From d7e02f76b021de885b1c984fd1e04a7ddf4e6709 Mon Sep 17 00:00:00 2001
+From 29e6905db83167a1a0479d06827a57af2c74fe1a Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Mon, 14 Oct 2013 19:20:10 +1100
 Subject: [PATCH] Arrow Despawn Rate
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index 646265b..7593aa2 100644
+index 0b73db8..cd2f7be 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
-@@ -145,7 +145,7 @@ public abstract class EntityArrow extends Entity implements IProjectile {
+@@ -149,7 +149,7 @@ public abstract class EntityArrow extends Entity implements IProjectile {
  
-             if (block == this.av && i == this.aw) {
-                 ++this.ax;
--                if (this.ax >= 1200) {
-+                if (this.ax >= world.spigotConfig.arrowDespawnRate) { // Spigot - First int after shooter
+             if (block == this.aw && i == this.ax) {
+                 ++this.ay;
+-                if (this.ay >= 1200) {
++                if (this.ay >= world.spigotConfig.arrowDespawnRate) { // Spigot - First int after shooter
                      this.die();
                  }
              } else {

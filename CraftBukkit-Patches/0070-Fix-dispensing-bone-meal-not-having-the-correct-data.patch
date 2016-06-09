@@ -1,11 +1,11 @@
-From b452a64e7da658cd5c2a8db060e9f2a5fc7809de Mon Sep 17 00:00:00 2001
+From 7cda472769872fadd307b4cde51142b0badc215f Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Thu, 6 Feb 2014 21:59:20 +0000
 Subject: [PATCH] Fix dispensing bone meal not having the correct data value
 
 
 diff --git a/src/main/java/net/minecraft/server/DispenserRegistry.java b/src/main/java/net/minecraft/server/DispenserRegistry.java
-index 8a9c09c..392e2fa 100644
+index 092bb79..8530952 100644
 --- a/src/main/java/net/minecraft/server/DispenserRegistry.java
 +++ b/src/main/java/net/minecraft/server/DispenserRegistry.java
 @@ -441,7 +441,7 @@ public class DispenserRegistry {
@@ -18,5 +18,5 @@ index 8a9c09c..392e2fa 100644
                      BlockDispenseEvent event = new BlockDispenseEvent(block, craftItem.clone(), new org.bukkit.util.Vector(0, 0, 0));
                      if (!BlockDispenser.eventFired) {
 -- 
-1.9.1
+2.7.4
 

@@ -1,29 +1,29 @@
-From 4d10ffa2738a3a812e3e5aed2f9eccb64aea7ee5 Mon Sep 17 00:00:00 2001
+From edecd1c57d89ae665dbb7236c42b7b1b7e859f7e Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
 
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index da163af..e32851a 100644
+index 31cdef8..2646ccd 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -62,11 +62,11 @@ public class HandshakeListener implements PacketHandshakingInListener {
              // CraftBukkit end
  
-             if (packethandshakinginsetprotocol.b() > 110) {
--                chatcomponenttext = new ChatComponentText("Outdated server! I\'m still on 1.9.4");
-+                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.9.4" ) ); // Spigot
+             if (packethandshakinginsetprotocol.b() > 210) {
+-                chatcomponenttext = new ChatComponentText("Outdated server! I\'m still on 1.10");
++                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.10" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatcomponenttext));
                  this.b.close(chatcomponenttext);
-             } else if (packethandshakinginsetprotocol.b() < 110) {
--                chatcomponenttext = new ChatComponentText("Outdated client! Please use 1.9.4");
-+                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), "1.9.4" ) ); // Spigot
+             } else if (packethandshakinginsetprotocol.b() < 210) {
+-                chatcomponenttext = new ChatComponentText("Outdated client! Please use 1.10");
++                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), "1.10" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatcomponenttext));
                  this.b.close(chatcomponenttext);
              } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 969241a..6861afc 100644
+index 14c2e4b..2121a21 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -467,7 +467,7 @@ public abstract class PlayerList {
@@ -45,7 +45,7 @@ index 969241a..6861afc 100644
          }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e2b1c64..939438c 100644
+index 388c5a6..be5632e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -628,11 +628,7 @@ public final class CraftServer implements Server {

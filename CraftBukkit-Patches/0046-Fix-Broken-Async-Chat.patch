@@ -1,11 +1,11 @@
-From ae1236a4a4a148d9eb2e7be52b04eeef85ee54fc Mon Sep 17 00:00:00 2001
+From 3c57ca98a98551b15a7f9a8cbef65794270a8292 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Thu, 5 Dec 2013 13:55:53 +1100
 Subject: [PATCH] Fix Broken Async Chat
 
 
 diff --git a/src/main/java/net/minecraft/server/PacketPlayInChat.java b/src/main/java/net/minecraft/server/PacketPlayInChat.java
-index 0ab90f3..18358b4 100644
+index 2e7d61a..846c3a4 100644
 --- a/src/main/java/net/minecraft/server/PacketPlayInChat.java
 +++ b/src/main/java/net/minecraft/server/PacketPlayInChat.java
 @@ -24,7 +24,24 @@ public class PacketPlayInChat implements Packet<PacketListenerPlayIn> {
@@ -35,5 +35,5 @@ index 0ab90f3..18358b4 100644
      }
  
 -- 
-2.5.0
+2.7.4
 

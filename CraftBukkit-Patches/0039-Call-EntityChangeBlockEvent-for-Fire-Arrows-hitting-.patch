@@ -1,4 +1,4 @@
-From 961b87b0e63cc8de39bf9cb9c0f8680648439a8c Mon Sep 17 00:00:00 2001
+From b4f73432b4ce26d50ab866b5313a6a82d788fbd8 Mon Sep 17 00:00:00 2001
 From: BlackHole <black-hole@live.com>
 Date: Tue, 16 Jul 2013 22:34:50 +0200
 Subject: [PATCH] Call EntityChangeBlockEvent for Fire Arrows hitting TNT
@@ -6,7 +6,7 @@ Subject: [PATCH] Call EntityChangeBlockEvent for Fire Arrows hitting TNT
 Adds BUKKIT-4355
 
 diff --git a/src/main/java/net/minecraft/server/BlockTNT.java b/src/main/java/net/minecraft/server/BlockTNT.java
-index ce79e19..c5022e2 100644
+index 863cba4..4e5b437 100644
 --- a/src/main/java/net/minecraft/server/BlockTNT.java
 +++ b/src/main/java/net/minecraft/server/BlockTNT.java
 @@ -75,6 +75,11 @@ public class BlockTNT extends Block {

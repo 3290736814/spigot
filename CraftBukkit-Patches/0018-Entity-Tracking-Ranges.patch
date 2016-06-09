@@ -1,4 +1,4 @@
-From 5403e32e34c1faf829fd715e2d4c005a9494e0be Mon Sep 17 00:00:00 2001
+From 3c7f35f64b8eb16edbc45a6839069e51441d5750 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Feb 2013 11:58:47 -0500
 Subject: [PATCH] Entity Tracking Ranges
@@ -12,7 +12,7 @@ This has multiple benefits:
 4) Less client lag - Not trying to render distant item frames and paintings and entities will reduce entity count on the client, which is major for shop/town worlds which may use tons of item frames.
 
 diff --git a/src/main/java/net/minecraft/server/EntityTracker.java b/src/main/java/net/minecraft/server/EntityTracker.java
-index f6628f8..68242d9 100644
+index 80766b8..5432e70 100644
 --- a/src/main/java/net/minecraft/server/EntityTracker.java
 +++ b/src/main/java/net/minecraft/server/EntityTracker.java
 @@ -102,6 +102,7 @@ public class EntityTracker {

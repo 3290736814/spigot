@@ -1,14 +1,14 @@
-From 9d8a4d8b4809e707fe190917ba287f66d040cb01 Mon Sep 17 00:00:00 2001
+From dd77f58f27756dddb675e2d8a843581461548ade Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Tue, 25 Feb 2014 15:15:26 -0400
 Subject: [PATCH] Cancellable WitherSkull potion effect
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityWitherSkull.java b/src/main/java/net/minecraft/server/EntityWitherSkull.java
-index 1080b00..edac23d 100644
+index f564902..de9eb2d 100644
 --- a/src/main/java/net/minecraft/server/EntityWitherSkull.java
 +++ b/src/main/java/net/minecraft/server/EntityWitherSkull.java
-@@ -38,8 +38,11 @@ public class EntityWitherSkull extends EntityFireball {
+@@ -42,8 +42,11 @@ public class EntityWitherSkull extends EntityFireball {
      protected void a(MovingObjectPosition movingobjectposition) {
          if (!this.world.isClientSide) {
              if (movingobjectposition.entity != null) {
@@ -17,11 +17,11 @@ index 1080b00..edac23d 100644
                  if (this.shooter != null) {
 -                    if (movingobjectposition.entity.damageEntity(DamageSource.projectile(this, shooter), 8.0F)) { // CraftBukkit
 +                    didDamage = movingobjectposition.entity.damageEntity(DamageSource.projectile(this, shooter), 8.0F);
-+                    if (didDamage) {
-                         if (!movingobjectposition.entity.isAlive()) {
-                             this.shooter.heal(5.0F, org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason.WITHER); // CraftBukkit
++                    if (didDamage) { // CraftBukkit
+                         if (movingobjectposition.entity.isAlive()) {
+                             this.a(this.shooter, movingobjectposition.entity);
                          } else {
-@@ -47,10 +50,11 @@ public class EntityWitherSkull extends EntityFireball {
+@@ -51,10 +54,11 @@ public class EntityWitherSkull extends EntityFireball {
                          }
                      }
                  } else {
@@ -36,5 +36,5 @@ index 1080b00..edac23d 100644
  
                      if (this.world.getDifficulty() == EnumDifficulty.NORMAL) {
 -- 
-2.5.0
+2.7.4
 

@@ -1,14 +1,14 @@
-From ebbf3b4863ae9ec2a2337824041481f63158811c Mon Sep 17 00:00:00 2001
+From 6c96f1a97546078d73bf056287a592966d64cc2e Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 22 Jun 2013 16:12:02 +1000
 Subject: [PATCH] Allow Disabling of Random Lighting Updates
 
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 735fb29..979d722 100644
+index 424a0ef..b1fd77d 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -971,7 +971,7 @@ public class Chunk {
+@@ -972,7 +972,7 @@ public class Chunk {
          }
  
          this.r = true;
@@ -18,7 +18,7 @@ index 735fb29..979d722 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 013c6c3..86bec71 100644
+index 7449926..3c6628f 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -379,7 +379,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {

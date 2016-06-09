@@ -1,4 +1,4 @@
-From b47a0f2c11768d36a75a76d21fa3886e776abf6a Mon Sep 17 00:00:00 2001
+From 7bce13d43d72c829075118407d140b3e83e05000 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -6,7 +6,7 @@ Subject: [PATCH] BungeeCord Support
 Provides support for IP forwarding via BungeeCord.
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index e32851a..08199c6 100644
+index 2646ccd..37c5fe5 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -7,6 +7,7 @@ import java.util.HashMap;
@@ -45,7 +45,7 @@ index e32851a..08199c6 100644
              }
              break;
 diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
-index 71d24b2..efa785f 100644
+index 7aeb3ab..1425a48 100644
 --- a/src/main/java/net/minecraft/server/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/LoginListener.java
 @@ -84,9 +84,24 @@ public class LoginListener implements PacketLoginInListener, ITickable {
@@ -75,7 +75,7 @@ index 71d24b2..efa785f 100644
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
-index f740778..c1b5b08 100644
+index da6efc7..c6ae9ea 100644
 --- a/src/main/java/net/minecraft/server/NetworkManager.java
 +++ b/src/main/java/net/minecraft/server/NetworkManager.java
 @@ -65,7 +65,11 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
@@ -117,7 +117,7 @@ index 1cb9d60..aececa3 100644
          this.d = EnumProtocol.a(packetdataserializer.g());
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 984862c..7e36500 100644
+index 1c21c76..0a03871 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -452,7 +452,7 @@ public abstract class PlayerList {
@@ -130,7 +130,7 @@ index 984862c..7e36500 100644
  
          if (getProfileBans().isBanned(gameprofile) && !getProfileBans().get(gameprofile).hasExpired()) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 88ab34d..5fc370a 100644
+index 61ed1f7..259a37b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -561,7 +561,13 @@ public final class CraftServer implements Server {
@@ -149,7 +149,7 @@ index 88ab34d..5fc370a 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index d3cd82a..84ab175 100644
+index 5024c9d..24b7b41 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -1411,6 +1411,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {

@@ -1,14 +1,14 @@
-From 15fda5c97e8a6dde755b6a3e34bbcabc13fcbcba Mon Sep 17 00:00:00 2001
+From 0c133c0fdf6a21636104cc3efcfbdc7296862f03 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 5616c7b..4528d24 100644
+index 2211d45..19dcd82 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -275,7 +275,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -277,7 +277,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                  }
                  // CraftBukkit end
  
@@ -18,10 +18,10 @@ index 5616c7b..4528d24 100644
  
                      thread1.setName("Server Watchdog");
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 37b7fc9..3ea80a7 100644
+index 1ba0b95..4c8047b 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -573,6 +573,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -580,6 +580,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
              this.a(crashreport);
          } finally {
              try {
@@ -29,7 +29,7 @@ index 37b7fc9..3ea80a7 100644
                  this.isStopped = true;
                  this.stop();
              } catch (Throwable throwable1) {
-@@ -677,6 +678,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -684,6 +685,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
  
          this.methodProfiler.b();
          this.methodProfiler.b();
@@ -38,7 +38,7 @@ index 37b7fc9..3ea80a7 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 939438c..88ab34d 100644
+index be5632e..61ed1f7 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1707,6 +1707,11 @@ public final class CraftServer implements Server {

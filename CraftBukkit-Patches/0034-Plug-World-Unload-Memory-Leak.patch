@@ -1,19 +1,19 @@
-From 632ea9bc77699a72031abb4bf747598112e03f03 Mon Sep 17 00:00:00 2001
+From a1b3dfb262b9ab3fdaff547ddd1c35201ddcf159 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 3 Aug 2013 19:02:59 +1000
 Subject: [PATCH] Plug World Unload Memory Leak
 
 
 diff --git a/src/main/java/net/minecraft/server/BlockRedstoneTorch.java b/src/main/java/net/minecraft/server/BlockRedstoneTorch.java
-index 2edb3ce..712b0c0 100644
+index b52e413..7aa5986 100644
 --- a/src/main/java/net/minecraft/server/BlockRedstoneTorch.java
 +++ b/src/main/java/net/minecraft/server/BlockRedstoneTorch.java
 @@ -11,7 +11,7 @@ import org.bukkit.event.block.BlockRedstoneEvent; // CraftBukkit
  
  public class BlockRedstoneTorch extends BlockTorch {
  
--    private static Map<World, List<BlockRedstoneTorch.RedstoneUpdateInfo>> g = Maps.newHashMap();
-+    private static Map<World, List<BlockRedstoneTorch.RedstoneUpdateInfo>> g = new java.util.WeakHashMap(); // Spigot
+-    private static final Map<World, List<BlockRedstoneTorch.RedstoneUpdateInfo>> g = Maps.newHashMap();
++    private static final Map<World, List<BlockRedstoneTorch.RedstoneUpdateInfo>> g = new java.util.WeakHashMap(); // Spigot
      private final boolean isOn;
  
      private boolean a(World world, BlockPosition blockposition, boolean flag) {

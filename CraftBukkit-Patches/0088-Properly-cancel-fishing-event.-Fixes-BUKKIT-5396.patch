@@ -1,4 +1,4 @@
-From 53a7065d5efcc84f18359165baf714339760f67e Mon Sep 17 00:00:00 2001
+From ab199318824503734565411b611a8e36dbc7c4a6 Mon Sep 17 00:00:00 2001
 From: "gjmcferrin@gmail.com" <gjmcferrin@gmail.com>
 Date: Mon, 10 Feb 2014 10:05:11 -0500
 Subject: [PATCH] Properly cancel fishing event. Fixes BUKKIT-5396
@@ -10,7 +10,7 @@ cleared. This ensures that the player's hooked entity value is set to null so
 that the next attempt will result in the proper state being called.
 
 diff --git a/src/main/java/net/minecraft/server/ItemFishingRod.java b/src/main/java/net/minecraft/server/ItemFishingRod.java
-index 19f5f03..1a40b95 100644
+index 579b77b..ec7db59 100644
 --- a/src/main/java/net/minecraft/server/ItemFishingRod.java
 +++ b/src/main/java/net/minecraft/server/ItemFishingRod.java
 @@ -25,6 +25,7 @@ public class ItemFishingRod extends Item {
@@ -22,5 +22,5 @@ index 19f5f03..1a40b95 100644
              }
              // CraftBukkit end
 -- 
-2.5.0
+2.7.4
 

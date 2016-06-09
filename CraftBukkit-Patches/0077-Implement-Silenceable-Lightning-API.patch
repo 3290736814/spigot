@@ -1,11 +1,11 @@
-From 773f9b8f0c46bb64278bbc57605773c5ef06df88 Mon Sep 17 00:00:00 2001
+From cce0f14925e4a315cd70052a657cd2cfb8654547 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sun, 23 Feb 2014 16:16:59 -0400
 Subject: [PATCH] Implement Silenceable Lightning API
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityLightning.java b/src/main/java/net/minecraft/server/EntityLightning.java
-index 10c603e..47928d9 100644
+index 79f640a..f2691d9 100644
 --- a/src/main/java/net/minecraft/server/EntityLightning.java
 +++ b/src/main/java/net/minecraft/server/EntityLightning.java
 @@ -11,6 +11,7 @@ public class EntityLightning extends EntityWeather {
@@ -28,7 +28,7 @@ index 10c603e..47928d9 100644
 +    }
 +    // Spigot end
 +
-     public SoundCategory bA() {
+     public SoundCategory bC() {
          return SoundCategory.WEATHER;
      }
  
@@ -37,13 +37,13 @@ index 10c603e..47928d9 100644
 -        if (this.lifeTicks == 2) {
 +        if (!isSilent && this.lifeTicks == 2) { // Spigot
              // CraftBukkit start - Use relative location for far away sounds
-             // this.world.a((EntityHuman) null, this.locX, this.locY, this.locZ, SoundEffects.dc, SoundCategory.d, 10000.0F, 0.8F + this.random.nextFloat() * 0.2F);
+             // this.world.a((EntityHuman) null, this.locX, this.locY, this.locZ, SoundEffects.dn, SoundCategory.WEATHER, 10000.0F, 0.8F + this.random.nextFloat() * 0.2F);
              float pitch = 0.8F + this.random.nextFloat() * 0.2F;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index d9247ae..943fa1a 100644
+index da432d3..7075ad8 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1590,6 +1590,22 @@ public class CraftWorld implements World {
+@@ -1592,6 +1592,22 @@ public class CraftWorld implements World {
          {
              CraftWorld.this.playEffect( location, effect, 0 );
          }

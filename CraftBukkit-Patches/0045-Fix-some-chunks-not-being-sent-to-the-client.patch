@@ -1,14 +1,14 @@
-From bac32b7b6d1ee97b0352525e880559fd5bcbd2b5 Mon Sep 17 00:00:00 2001
+From cd4ea124b50c1fb4b5305b94548f1f0de72b08ea Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Mon, 2 Dec 2013 23:42:09 +0000
 Subject: [PATCH] Fix some chunks not being sent to the client
 
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 0d9c30e..7dc6597 100644
+index e9c2400..719effb 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -1013,7 +1013,15 @@ public class Chunk {
+@@ -1014,7 +1014,15 @@ public class Chunk {
      }
  
      public boolean isReady() {

@@ -1,11 +1,11 @@
-From 375f19d5b86d8c2498918195a67c992259ffa5f6 Mon Sep 17 00:00:00 2001
+From 440915caa336abd6adef6566a2b6d93fe8db7844 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 18 Dec 2013 13:32:10 +1100
 Subject: [PATCH] Fire PreLogin Events in Offline Mode
 
 
 diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
-index 3cca9ff..71d24b2 100644
+index a5cbe04..7aeb3ab 100644
 --- a/src/main/java/net/minecraft/server/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/LoginListener.java
 @@ -13,6 +13,7 @@ import java.util.Arrays;
@@ -42,7 +42,7 @@ index 3cca9ff..71d24b2 100644
          EntityPlayer s = this.server.getPlayerList().attemptLogin(this, this.i, hostname);
 @@ -133,7 +147,22 @@ public class LoginListener implements PacketLoginInListener, ITickable {
              this.g = LoginListener.EnumProtocolState.KEY;
-             this.networkManager.sendPacket(new PacketLoginOutEncryptionBegin(this.j, this.server.O().getPublic(), this.e));
+             this.networkManager.sendPacket(new PacketLoginOutEncryptionBegin("", this.server.O().getPublic(), this.e));
          } else {
 -            this.g = LoginListener.EnumProtocolState.READY_TO_ACCEPT;
 +            // Spigot start
@@ -75,7 +75,7 @@ index 3cca9ff..71d24b2 100644
 +                            LoginListener.this.g = LoginListener.EnumProtocolState.READY_TO_ACCEPT;
 +                        } else {
 +                            LoginListener.this.disconnect("Failed to verify username!");
-+                            LoginListener.c.error("Username \'" + gameprofile.getName() + "\' tried to join with an invalid session"); // CraftBukkit - fix null pointer
++                            LoginListener.c.error("Username \'{}\' tried to join with an invalid session", new Object[] { gameprofile.getName()});
 +                        }
 +                    } catch (AuthenticationUnavailableException authenticationunavailableexception) {
 +                        if (LoginListener.this.server.R()) {
@@ -106,7 +106,7 @@ index 3cca9ff..71d24b2 100644
                              java.util.UUID uniqueId = i.getId();
 @@ -196,34 +258,9 @@ public class LoginListener implements PacketLoginInListener, ITickable {
                              // CraftBukkit end
-                             LoginListener.c.info("UUID of player " + LoginListener.this.i.getName() + " is " + LoginListener.this.i.getId());
+                             LoginListener.c.info("UUID of player {} is {}", new Object[] { LoginListener.this.i.getName(), LoginListener.this.i.getId()});
                              LoginListener.this.g = LoginListener.EnumProtocolState.READY_TO_ACCEPT;
 -                        } else if (LoginListener.this.server.R()) {
 -                            LoginListener.c.warn("Failed to verify username but will let them in anyway!");
@@ -114,7 +114,7 @@ index 3cca9ff..71d24b2 100644
 -                            LoginListener.this.g = LoginListener.EnumProtocolState.READY_TO_ACCEPT;
 -                        } else {
 -                            LoginListener.this.disconnect("Failed to verify username!");
--                            LoginListener.c.error("Username \'" + gameprofile.getName() + "\' tried to join with an invalid session"); // CraftBukkit - fix null pointer
+-                            LoginListener.c.error("Username \'{}\' tried to join with an invalid session", new Object[] { gameprofile.getName()});
 -                        }
 -                    } catch (AuthenticationUnavailableException authenticationunavailableexception) {
 -                        if (LoginListener.this.server.R()) {
@@ -141,5 +141,5 @@ index 3cca9ff..71d24b2 100644
      protected GameProfile a(GameProfile gameprofile) {
          UUID uuid = UUID.nameUUIDFromBytes(("OfflinePlayer:" + gameprofile.getName()).getBytes(Charsets.UTF_8));
 -- 
-2.5.0
+2.7.4
 

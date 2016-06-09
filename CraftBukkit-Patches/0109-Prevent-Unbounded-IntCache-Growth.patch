@@ -1,4 +1,4 @@
-From bbadef23001534073b04d18671f35bf4fc689c98 Mon Sep 17 00:00:00 2001
+From 1d55a59e375139bb70786f6bdb2ffbfd7721e233 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Jun 2014 19:40:00 +1000
 Subject: [PATCH] Prevent Unbounded IntCache Growth
@@ -6,7 +6,7 @@ Subject: [PATCH] Prevent Unbounded IntCache Growth
 Based on work by Peter Lawrey, this commit prevents unbounded growth of the integer cache and instead caps it to a value specified in the configuration (1024 by default). Should prevent thrashing, especially around world generation.
 
 diff --git a/src/main/java/net/minecraft/server/IntCache.java b/src/main/java/net/minecraft/server/IntCache.java
-index 8167fdd..95060a4 100644
+index d916050..c725f71 100644
 --- a/src/main/java/net/minecraft/server/IntCache.java
 +++ b/src/main/java/net/minecraft/server/IntCache.java
 @@ -17,11 +17,11 @@ public class IntCache {
@@ -58,5 +58,5 @@ index f35e92e..921d7d5 100644
 +    }
  }
 -- 
-2.5.0
+2.7.4
 
