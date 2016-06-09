@@ -1,4 +1,4 @@
-From 7fa6b0c8b5ac954bb44553e02cbac1a86715aa86 Mon Sep 17 00:00:00 2001
+From 8aecd3c235bad543886a1768a2d959cb8373b421 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index c10944f..89730b8 100644
+index 7338524..f860c1e 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -107,7 +107,7 @@ public abstract class Entity implements ICommandListener {
@@ -84,7 +84,7 @@ index 7e1dc13..6092346 100644
          super(world);
      }
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index 057316a..0b73db8 100644
+index 057316a..362acb0 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
 @@ -28,7 +28,7 @@ public abstract class EntityArrow extends Entity implements IProjectile {
@@ -106,7 +106,7 @@ index 057316a..0b73db8 100644
 +    {
 +        if ( this.inGround )
 +        {
-+            this.ax += 1; // Despawn counter. First int after shooter
++            this.ay += 1; // Despawn counter. First int after shooter
 +        }
 +        super.inactiveTick();
 +    }
