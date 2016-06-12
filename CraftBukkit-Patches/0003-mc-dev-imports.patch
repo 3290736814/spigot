@@ -1,4 +1,4 @@
-From db8347318309883af57630598dce0b775939e3cb Mon Sep 17 00:00:00 2001
+From 6c97425d256842a87fefd636af5854d0fe315086 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -1336,79 +1336,6 @@ index 0000000..fe59b75
 +
 +            return oshort.shortValue();
 +        }
-+    }
-+}
-diff --git a/src/main/java/net/minecraft/server/RegionFileCache.java b/src/main/java/net/minecraft/server/RegionFileCache.java
-new file mode 100644
-index 0000000..b07e7d5
---- /dev/null
-+++ b/src/main/java/net/minecraft/server/RegionFileCache.java
-@@ -0,0 +1,67 @@
-+package net.minecraft.server;
-+
-+import com.google.common.collect.Maps;
-+import java.io.DataInputStream;
-+import java.io.DataOutputStream;
-+import java.io.File;
-+import java.io.IOException;
-+import java.util.Iterator;
-+import java.util.Map;
-+
-+public class RegionFileCache {
-+
-+    private static final Map<File, RegionFile> a = Maps.newHashMap();
-+
-+    public static synchronized RegionFile a(File file, int i, int j) {
-+        File file1 = new File(file, "region");
-+        File file2 = new File(file1, "r." + (i >> 5) + "." + (j >> 5) + ".mca");
-+        RegionFile regionfile = (RegionFile) RegionFileCache.a.get(file2);
-+
-+        if (regionfile != null) {
-+            return regionfile;
-+        } else {
-+            if (!file1.exists()) {
-+                file1.mkdirs();
-+            }
-+
-+            if (RegionFileCache.a.size() >= 256) {
-+                a();
-+            }
-+
-+            RegionFile regionfile1 = new RegionFile(file2);
-+
-+            RegionFileCache.a.put(file2, regionfile1);
-+            return regionfile1;
-+        }
-+    }
-+
-+    public static synchronized void a() {
-+        Iterator iterator = RegionFileCache.a.values().iterator();
-+
-+        while (iterator.hasNext()) {
-+            RegionFile regionfile = (RegionFile) iterator.next();
-+
-+            try {
-+                if (regionfile != null) {
-+                    regionfile.c();
-+                }
-+            } catch (IOException ioexception) {
-+                ioexception.printStackTrace();
-+            }
-+        }
-+
-+        RegionFileCache.a.clear();
-+    }
-+
-+    public static DataInputStream c(File file, int i, int j) {
-+        RegionFile regionfile = a(file, i, j);
-+
-+        return regionfile.a(i & 31, j & 31);
-+    }
-+
-+    public static DataOutputStream d(File file, int i, int j) {
-+        RegionFile regionfile = a(file, i, j);
-+
-+        return regionfile.b(i & 31, j & 31);
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerConnection.java b/src/main/java/net/minecraft/server/ServerConnection.java

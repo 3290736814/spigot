@@ -1,4 +1,4 @@
-From 267c6a953d088c22ceee1f65db97dc920abde32f Mon Sep 17 00:00:00 2001
+From ce21b3fec1a88cdfe69a9d37facdc7fefa705a67 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 3 Mar 2016 19:45:46 +1100
 Subject: [PATCH] Implement SpawnerSpawnEvent.
@@ -19,10 +19,10 @@ index 535dcfe..7bae42a 100644
                          ChunkRegionLoader.a(entity, world, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER); // CraftBukkit
                          world.triggerEffect(2004, blockposition, 0);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 2961e0d..61bc0b4 100644
+index 7061881..4424157 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -998,6 +998,21 @@ public class CraftEventFactory {
+@@ -1000,6 +1000,21 @@ public class CraftEventFactory {
          return event;
      }
  

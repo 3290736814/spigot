@@ -1,4 +1,4 @@
-From 61eeb4a97e43e8627c883212613ac9a4275cd625 Mon Sep 17 00:00:00 2001
+From 07de25160764d2aa0115380a2d0d58870a5be27b Mon Sep 17 00:00:00 2001
 From: Smove <jan@lavasurvival.net>
 Date: Sat, 1 Feb 2014 18:12:16 +1100
 Subject: [PATCH] Implement Locale Getter for Players
@@ -18,10 +18,10 @@ index 2474aa3..37c94f8 100644
      public final MinecraftServer server;
      public final PlayerInteractManager playerInteractManager;
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index eb66356..4161c4f 100644
+index aa3c3c9..60e3b7c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1489,6 +1489,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1504,6 +1504,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
                  getHandle().playerConnection.sendPacket( packet );
              }
          }
