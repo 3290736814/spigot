@@ -1,4 +1,4 @@
-From 813b9ea0dd92c8a6426285118091c064a68b496d Mon Sep 17 00:00:00 2001
+From 62af623cd702b130e8058d18ef111578737f6f5b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -10,7 +10,7 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 This feature was commisioned by Chunkr.
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index c33e246..b5b0fd7 100644
+index 3422ea6..f5ab0e8 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -129,6 +129,9 @@ public abstract class World implements IBlockAccess {
@@ -46,7 +46,7 @@ index c33e246..b5b0fd7 100644
              entity = (Entity) this.entityList.get(this.tickPosition);
              // CraftBukkit end
              Entity entity1 = entity.bB();
-@@ -1457,14 +1467,20 @@ public abstract class World implements IBlockAccess {
+@@ -1458,14 +1468,20 @@ public abstract class World implements IBlockAccess {
              this.tileEntityListUnload.clear();
          }
          // CraftBukkit end
@@ -71,7 +71,7 @@ index c33e246..b5b0fd7 100644
                  continue;
              }
              // Spigot end
-@@ -1493,7 +1509,8 @@ public abstract class World implements IBlockAccess {
+@@ -1494,7 +1510,8 @@ public abstract class World implements IBlockAccess {
              }
  
              if (tileentity.x()) {
