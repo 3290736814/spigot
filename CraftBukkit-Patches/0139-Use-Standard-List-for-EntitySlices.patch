@@ -1,11 +1,11 @@
-From 85f2488add242075a039ba078261236c5fdf2f38 Mon Sep 17 00:00:00 2001
+From 25e86222ff6da4936ed58923869a2a67dd567d83 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:33:36 +1100
 Subject: [PATCH] Use Standard List for EntitySlices.
 
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 701fc56..9343615 100644
+index 1376bee..4542987 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -32,7 +32,7 @@ public class Chunk {
@@ -17,7 +17,7 @@ index 701fc56..9343615 100644
      private boolean done;
      private boolean lit;
      private boolean r;
-@@ -82,14 +82,14 @@ public class Chunk {
+@@ -83,14 +83,14 @@ public class Chunk {
          this.tileEntities = Maps.newHashMap();
          this.x = 4096;
          this.y = Queues.newConcurrentLinkedQueue();
@@ -34,7 +34,7 @@ index 701fc56..9343615 100644
          }
  
          Arrays.fill(this.h, -999);
-@@ -742,11 +742,11 @@ public class Chunk {
+@@ -744,11 +744,11 @@ public class Chunk {
      public void addEntities() {
          this.j = true;
          this.world.b(this.tileEntities.values());
@@ -48,7 +48,7 @@ index 701fc56..9343615 100644
  
              this.world.a((Collection) entityslice);
          }
-@@ -775,7 +775,7 @@ public class Chunk {
+@@ -777,7 +777,7 @@ public class Chunk {
              this.world.b(tileentity);
          }
  
@@ -57,7 +57,7 @@ index 701fc56..9343615 100644
          int i = aentityslice.length;
  
          for (int j = 0; j < i; ++j) {
-@@ -862,12 +862,12 @@ public class Chunk {
+@@ -864,12 +864,12 @@ public class Chunk {
          j = MathHelper.clamp(j, 0, this.entitySlices.length - 1);
  
          for (int k = i; k <= j; ++k) {
@@ -72,7 +72,7 @@ index 701fc56..9343615 100644
                      list.add((T) entity); // Fix decompile error
                  }
              }
-@@ -1259,7 +1259,7 @@ public class Chunk {
+@@ -1288,7 +1288,7 @@ public class Chunk {
          return this.tileEntities;
      }
  

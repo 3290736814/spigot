@@ -1,4 +1,4 @@
-From 7889fb597e3cab353b8deb7b581116fb2062c0eb Mon Sep 17 00:00:00 2001
+From 614dae9d6eda3b659ecfeff1fadda63451bfb522 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -6,18 +6,18 @@ Subject: [PATCH] Spigot Timings
 Overhauls the Timings System adding performance tracking all around the Minecraft Server
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 45794e9..7a26472 100644
+index ead421a..38f303d 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -839,6 +839,7 @@ public class Chunk {
-     }
+@@ -842,6 +842,7 @@ public class Chunk {
  
-     public void loadNearby(IChunkProvider ichunkprovider, ChunkGenerator chunkgenerator) {
+     // CraftBukkit start
+     public void loadNearby(IChunkProvider ichunkprovider, ChunkGenerator chunkgenerator, boolean newChunk) {
 +        world.timings.syncChunkLoadPostTimer.startTiming(); // Spigot
-         Chunk chunk = ichunkprovider.getLoadedChunkAt(this.locX, this.locZ - 1);
-         Chunk chunk1 = ichunkprovider.getLoadedChunkAt(this.locX + 1, this.locZ);
-         Chunk chunk2 = ichunkprovider.getLoadedChunkAt(this.locX, this.locZ + 1);
-@@ -863,6 +864,7 @@ public class Chunk {
+         Server server = world.getServer();
+         if (server != null) {
+             /*
+@@ -892,6 +893,7 @@ public class Chunk {
                  chunk4.a(chunkgenerator);
              }
          }
@@ -26,10 +26,10 @@ index 45794e9..7a26472 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 9e99992..a82bfdb 100644
+index 1703382..2a604c6 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -154,6 +154,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -152,6 +152,7 @@ public class ChunkProviderServer implements IChunkProvider {
          // CraftBukkit end
  
          if (chunk == null) {
@@ -37,16 +37,16 @@ index 9e99992..a82bfdb 100644
              long k = ChunkCoordIntPair.a(i, j);
  
              try {
-@@ -199,6 +200,7 @@ public class ChunkProviderServer implements IChunkProvider {
-             }
-             // CraftBukkit end
-             chunk.loadNearby(this, this.chunkGenerator);
+@@ -170,6 +171,7 @@ public class ChunkProviderServer implements IChunkProvider {
+             chunk.addEntities();
+ 
+             chunk.loadNearby(this, this.chunkGenerator, true); // CraftBukkit
 +            world.timings.syncChunkLoadTimer.stopTiming(); // Spigot
          }
  
          return chunk;
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index d91f8c7..2180403 100644
+index 362d2b7..06f0768 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -46,7 +46,9 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
@@ -59,7 +59,7 @@ index d91f8c7..2180403 100644
          if (data != null) {
              Chunk chunk = (Chunk) data[0];
              NBTTagCompound nbttagcompound = (NBTTagCompound) data[1];
-@@ -384,7 +386,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -385,7 +387,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
  
      public void loadEntities(Chunk chunk, NBTTagCompound nbttagcompound, World world) {
          // CraftBukkit end
@@ -68,7 +68,7 @@ index d91f8c7..2180403 100644
          NBTTagList nbttaglist1 = nbttagcompound.getList("Entities", 10);
  
          if (nbttaglist1 != null) {
-@@ -395,7 +397,8 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -396,7 +398,8 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
                  chunk.g(true);
              }
          }
@@ -78,7 +78,7 @@ index d91f8c7..2180403 100644
          NBTTagList nbttaglist2 = nbttagcompound.getList("TileEntities", 10);
  
          if (nbttaglist2 != null) {
-@@ -408,6 +411,8 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -409,6 +412,8 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
                  }
              }
          }
@@ -87,7 +87,7 @@ index d91f8c7..2180403 100644
  
          if (nbttagcompound.hasKeyOfType("TileTicks", 9)) {
              NBTTagList nbttaglist3 = nbttagcompound.getList("TileTicks", 10);
-@@ -427,6 +432,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -428,6 +433,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
                  }
              }
          }
@@ -124,7 +124,7 @@ index 205f943..2211d45 100644
  
      public boolean aa() {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 23590ac..7338524 100644
+index fa2853a..7114925 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -24,6 +24,7 @@ import org.bukkit.block.BlockFace;
@@ -356,10 +356,10 @@ index 046d47c..7014450 100644
          this.methodProfiler.b();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index b33aa21..de5df2f 100644
+index 9946fb7..7bb61f0 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1280,6 +1280,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1283,6 +1283,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
      // CraftBukkit end
  
     private void handleCommand(String s) {
@@ -367,7 +367,7 @@ index b33aa21..de5df2f 100644
         // CraftBukkit start - whole method
          this.LOGGER.info(this.player.getName() + " issued server command: " + s);
  
-@@ -1289,18 +1290,22 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1292,18 +1293,22 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
          this.server.getPluginManager().callEvent(event);
  
          if (event.isCancelled()) {
@@ -589,20 +589,6 @@ index f609035..b09cd94 100644
      };
  
      public Spigot spigot()
-diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index fffb093..6f36594 100644
---- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-+++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -282,7 +282,9 @@ public class CraftWorld implements World {
-         net.minecraft.server.Chunk chunk = world.getChunkProviderServer().chunks.get(ChunkCoordIntPair.a(x, z));
- 
-         if (chunk == null) {
-+            world.timings.syncChunkLoadTimer.startTiming(); // Spigot
-             chunk = world.getChunkProviderServer().getOrLoadChunkAt(x, z);
-+            world.timings.syncChunkLoadTimer.stopTiming(); // Spigot
-         }
-         return chunk != null;
-     }
 diff --git a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java b/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
 new file mode 100644
 index 0000000..558574f
@@ -780,7 +766,7 @@ index 0000000..558574f
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/craftbukkit/chunkio/ChunkIOProvider.java b/src/main/java/org/bukkit/craftbukkit/chunkio/ChunkIOProvider.java
-index 1632f13..7b61b14 100644
+index f1c1dc4..3a95b44 100644
 --- a/src/main/java/org/bukkit/craftbukkit/chunkio/ChunkIOProvider.java
 +++ b/src/main/java/org/bukkit/craftbukkit/chunkio/ChunkIOProvider.java
 @@ -45,7 +45,9 @@ class ChunkIOProvider implements AsynchronousExecutor.CallBackProvider<QueuedChu
@@ -792,7 +778,7 @@ index 1632f13..7b61b14 100644
 +            queuedChunk.provider.world.timings.syncChunkLoadStructuresTimer.stopTiming(); // Spigot
          }
  
-         Server server = queuedChunk.provider.world.getServer();
+         chunk.loadNearby(queuedChunk.provider, queuedChunk.provider.chunkGenerator, false);
 diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
 index 9fea4fb..8442ecb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java

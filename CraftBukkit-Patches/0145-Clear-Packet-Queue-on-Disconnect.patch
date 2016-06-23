@@ -1,4 +1,4 @@
-From 17d31a004f488025df838ee11dc181079767f5a9 Mon Sep 17 00:00:00 2001
+From 3024ac9947bc2fedc51c2085e83f694e3ff5939a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 22 Jul 2015 19:04:37 +1000
 Subject: [PATCH] Clear Packet Queue on Disconnect
@@ -17,10 +17,10 @@ index 8abf323..d59fca4 100644
  
          }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 85b9bf4..19be56f 100644
+index ba8a69a..d1e2fdc 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1082,7 +1082,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1085,7 +1085,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
          }
  
          // CraftBukkit start

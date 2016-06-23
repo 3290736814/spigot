@@ -1,11 +1,11 @@
-From 759776c4cdad028bd6cfa8a4e715de511849e9b0 Mon Sep 17 00:00:00 2001
+From f3360dd3b177f01ddfb14d873554be12a0fb181d Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 6 Oct 2013 17:36:28 +1100
 Subject: [PATCH] Don't Special Case X Move Value
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 244f4c7..7caf0c5 100644
+index f6a7a57..5817601 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -125,6 +125,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
@@ -16,7 +16,7 @@ index 244f4c7..7caf0c5 100644
  
      public CraftPlayer getPlayer() {
          return (this.player == null) ? null : (CraftPlayer) this.player.getBukkitEntity();
-@@ -352,6 +353,18 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -355,6 +356,18 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
  
                  // CraftBukkit start - fire PlayerMoveEvent
                  Player player = this.getPlayer();
@@ -35,7 +35,7 @@ index 244f4c7..7caf0c5 100644
                  Location from = new Location(player.getWorld(), lastPosX, lastPosY, lastPosZ, lastYaw, lastPitch); // Get the Players previous Event location.
                  Location to = player.getLocation().clone(); // Start off the To location as the Players current location.
  
-@@ -377,7 +390,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -380,7 +393,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
                      this.lastPitch = to.getPitch();
  
                      // Skip the first time we do this

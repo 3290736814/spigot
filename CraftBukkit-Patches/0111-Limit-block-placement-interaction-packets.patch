@@ -1,4 +1,4 @@
-From 59e6b1ac807515fe4bf8be6151c5fabfe5d7005e Mon Sep 17 00:00:00 2001
+From 92eb8cf98d351aa5c99963a660b25cb476b13082 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Sun, 29 Jun 2014 21:10:34 +0100
 Subject: [PATCH] Limit block placement/interaction packets
@@ -41,10 +41,10 @@ index cb0356e..0000000
 -    }
 -}
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 124a244..41aa119 100644
+index cc19d79..0d7ed57 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -896,6 +896,10 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -899,6 +899,10 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
  
      }
  
@@ -55,7 +55,7 @@ index 124a244..41aa119 100644
      public void a(PacketPlayInBlockPlace packetplayinblockplace) {
          PlayerConnectionUtils.ensureMainThread(packetplayinblockplace, this, this.player.x());
          if (this.player.dead) return; // CraftBukkit
-@@ -904,7 +908,17 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -907,7 +911,17 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
          ItemStack itemstack = this.player.b(enumhand);
  
          this.player.resetIdleTimer();

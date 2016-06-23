@@ -1,4 +1,4 @@
-From 3da926e39fab01b03f010b294bb69ab8cf7400c6 Mon Sep 17 00:00:00 2001
+From 09134b57f58e97ccb7c6924698eac50b05dd0a44 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,7 +8,7 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 7a26472..424a0ef 100644
+index 38f303d..4fc5848 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -44,6 +44,7 @@ public class Chunk {
@@ -19,7 +19,7 @@ index 7a26472..424a0ef 100644
  
      // CraftBukkit start - Neighbor loaded cache for chunk lighting and entity ticking
      private int neighbors = 0x1 << 12;
-@@ -606,6 +607,22 @@ public class Chunk {
+@@ -608,6 +609,22 @@ public class Chunk {
          entity.ad = k;
          entity.ae = this.locZ;
          this.entitySlices[k].add(entity);
@@ -42,7 +42,7 @@ index 7a26472..424a0ef 100644
      }
  
      public void b(Entity entity) {
-@@ -622,6 +639,22 @@ public class Chunk {
+@@ -624,6 +641,22 @@ public class Chunk {
          }
  
          this.entitySlices[i].remove(entity);
