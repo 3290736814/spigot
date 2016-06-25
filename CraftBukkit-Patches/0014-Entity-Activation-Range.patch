@@ -1,4 +1,4 @@
-From e7c507ede0e37e23014da591713bb4b9afb0cab2 Mon Sep 17 00:00:00 2001
+From c6f56f3fbc7da51f0f0c1ba98599bc1a8eebf9bc Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 7338524..f860c1e 100644
+index 7114925..11f73e1 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -107,7 +107,7 @@ public abstract class Entity implements ICommandListener {
@@ -186,7 +186,7 @@ index 0e5f08f..05a7c9a 100644
      public void Q() {
          this.damageEntity(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 332683a..2996274 100644
+index a5b5e8e..1c56a2b 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1346,6 +1346,7 @@ public abstract class World implements IBlockAccess {
@@ -197,7 +197,7 @@ index 332683a..2996274 100644
          timings.entityTick.startTiming(); // Spigot
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
-@@ -1530,9 +1531,11 @@ public abstract class World implements IBlockAccess {
+@@ -1537,9 +1538,11 @@ public abstract class World implements IBlockAccess {
          int j = MathHelper.floor(entity.locZ);
          boolean flag1 = true;
  

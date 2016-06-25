@@ -1,4 +1,4 @@
-From 42a71f88111570d72dc962044a8c98afc9b08a03 Mon Sep 17 00:00:00 2001
+From ba9bfaa7f4c131cb522a15c7991071e92be4177e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -78,7 +78,7 @@ index 06626b4..af32116 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index d29cd04..efe4d18 100644
+index 0c9f587..778b1c6 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -910,6 +910,7 @@ public abstract class World implements IBlockAccess {
@@ -97,7 +97,7 @@ index d29cd04..efe4d18 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2467,6 +2469,7 @@ public abstract class World implements IBlockAccess {
+@@ -2474,6 +2476,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void a(Collection<Entity> collection) {
