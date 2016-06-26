@@ -1,11 +1,11 @@
-From a9782cc24937aeeb378dcdd90ae5b77eeb16b244 Mon Sep 17 00:00:00 2001
+From afec461a7f62e290bc38dfc6afdd96b20c8e7d8a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 13 Jul 2015 19:05:15 +1000
 Subject: [PATCH] Use Map for getPlayer(String) lookup.
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index b017589..f6a9384 100644
+index ecddf2d..9dcccc9 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -66,6 +66,7 @@ public abstract class PlayerList {
@@ -24,7 +24,7 @@ index b017589..f6a9384 100644
          this.j.put(entityplayer.getUniqueID(), entityplayer);
          // this.sendAll(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, new EntityPlayer[] { entityplayer})); // CraftBukkit - replaced with loop below
          WorldServer worldserver = this.server.getWorldServer(entityplayer.dimension);
-@@ -407,6 +409,7 @@ public abstract class PlayerList {
+@@ -409,6 +411,7 @@ public abstract class PlayerList {
          worldserver.kill(entityplayer);
          worldserver.getPlayerChunkMap().removePlayer(entityplayer);
          this.players.remove(entityplayer);
@@ -32,7 +32,7 @@ index b017589..f6a9384 100644
          UUID uuid = entityplayer.getUniqueID();
          EntityPlayer entityplayer1 = (EntityPlayer) this.j.get(uuid);
  
-@@ -558,6 +561,7 @@ public abstract class PlayerList {
+@@ -560,6 +563,7 @@ public abstract class PlayerList {
          // entityplayer.x().getTracker().untrackEntity(entityplayer); // CraftBukkit
          entityplayer.x().getPlayerChunkMap().removePlayer(entityplayer);
          this.players.remove(entityplayer);
@@ -40,7 +40,7 @@ index b017589..f6a9384 100644
          this.server.getWorldServer(entityplayer.dimension).removeEntity(entityplayer);
          BlockPosition blockposition = entityplayer.getBed();
          boolean flag1 = entityplayer.isRespawnForced();
-@@ -663,6 +667,7 @@ public abstract class PlayerList {
+@@ -665,6 +669,7 @@ public abstract class PlayerList {
              worldserver.getPlayerChunkMap().addPlayer(entityplayer1);
              worldserver.addEntity(entityplayer1);
              this.players.add(entityplayer1);
@@ -48,7 +48,7 @@ index b017589..f6a9384 100644
              this.j.put(entityplayer1.getUniqueID(), entityplayer1);
          }
          // entityplayer1.syncInventory();
-@@ -1134,19 +1139,7 @@ public abstract class PlayerList {
+@@ -1135,19 +1140,7 @@ public abstract class PlayerList {
  
      @Nullable
      public EntityPlayer getPlayer(String s) {

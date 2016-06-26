@@ -1,11 +1,11 @@
-From 0c133c0fdf6a21636104cc3efcfbdc7296862f03 Mon Sep 17 00:00:00 2001
+From 31c6b47a179e04c3e8013630873efae796f01743 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 2211d45..19dcd82 100644
+index b0c4bf6..f2ff8fc 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -277,7 +277,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -18,7 +18,7 @@ index 2211d45..19dcd82 100644
  
                      thread1.setName("Server Watchdog");
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 1ba0b95..4c8047b 100644
+index c961a9f..14c0e0b 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -580,6 +580,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
@@ -38,7 +38,7 @@ index 1ba0b95..4c8047b 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index be5632e..61ed1f7 100644
+index e823fa2..139dd4f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1707,6 +1707,11 @@ public final class CraftServer implements Server {
@@ -55,7 +55,7 @@ index be5632e..61ed1f7 100644
      public Spigot spigot()
 diff --git a/src/main/java/org/spigotmc/RestartCommand.java b/src/main/java/org/spigotmc/RestartCommand.java
 new file mode 100644
-index 0000000..429c258
+index 0000000..5b2992c
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/RestartCommand.java
 @@ -0,0 +1,124 @@
@@ -152,7 +152,7 @@ index 0000000..429c258
 +                    {
 +                        try
 +                        {
-+                            String os = System.getProperty( "os.name" ).toLowerCase();
++                            String os = System.getProperty( "os.name" ).toLowerCase(java.util.Locale.ENGLISH);
 +                            if ( os.contains( "win" ) )
 +                            {
 +                                Runtime.getRuntime().exec( "cmd /c start " + script.getPath() );

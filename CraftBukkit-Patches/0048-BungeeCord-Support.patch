@@ -1,4 +1,4 @@
-From db719e7faffeec13f4505df44d374d985bcb253f Mon Sep 17 00:00:00 2001
+From bfbe6fe19854b5d1d8e86c546af5927de985a4d4 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -6,7 +6,7 @@ Subject: [PATCH] BungeeCord Support
 Provides support for IP forwarding via BungeeCord.
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 2646ccd..37c5fe5 100644
+index 3859e41..e6b6a5f 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -7,6 +7,7 @@ import java.util.HashMap;
@@ -117,10 +117,10 @@ index 1cb9d60..aececa3 100644
          this.d = EnumProtocol.a(packetdataserializer.g());
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 1c21c76..0a03871 100644
+index 5cc83fa..10516dd 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -452,7 +452,7 @@ public abstract class PlayerList {
+@@ -454,7 +454,7 @@ public abstract class PlayerList {
  
          EntityPlayer entity = new EntityPlayer(server, server.getWorldServer(0), gameprofile, new PlayerInteractManager(server.getWorldServer(0)));
          Player player = entity.getBukkitEntity();
@@ -130,7 +130,7 @@ index 1c21c76..0a03871 100644
  
          if (getProfileBans().isBanned(gameprofile) && !getProfileBans().get(gameprofile).hasExpired()) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 61ed1f7..259a37b 100644
+index 139dd4f..c397771 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -561,7 +561,13 @@ public final class CraftServer implements Server {

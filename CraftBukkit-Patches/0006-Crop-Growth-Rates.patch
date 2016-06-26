@@ -1,4 +1,4 @@
-From 4d50644cd2da7c1e386fedca41f08dd4dfae9ad1 Mon Sep 17 00:00:00 2001
+From 4a3c68262a083af251a6a18b678889452fcf91dc Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -118,7 +118,7 @@ index 36ae219..d378ea4 100644
  
                  if (i < 7) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 961ddb4..8860a96 100644
+index 961ddb4..8b10672 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -68,4 +68,37 @@ public class SpigotWorldConfig
@@ -137,7 +137,7 @@ index 961ddb4..8860a96 100644
 +    public int wartModifier;
 +    private int getAndValidateGrowth(String crop)
 +    {
-+        int modifier = getInt( "growth." + crop.toLowerCase() + "-modifier", 100 );
++        int modifier = getInt( "growth." + crop.toLowerCase(java.util.Locale.ENGLISH) + "-modifier", 100 );
 +        if ( modifier == 0 )
 +        {
 +            log( "Cannot set " + crop + " growth to zero, defaulting to 100" );
