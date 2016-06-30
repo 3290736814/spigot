@@ -1,4 +1,4 @@
-From fadc1d73e536a35a054508570470df136661542d Mon Sep 17 00:00:00 2001
+From 3591a6b3ec767ec0a242dbda1e957104ccd936db Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 22 Feb 2015 12:27:40 +1100
 Subject: [PATCH] Use FastMatches for ItemStack Dirty Check
@@ -6,7 +6,7 @@ Subject: [PATCH] Use FastMatches for ItemStack Dirty Check
 The check to find dirty itemstacks and send update packets each tick can be very intensive as it checks the entire itemstack, including the entire NBT map. To save on this, 19/20 times we will simply compare the basic count/data/type. If for some strange reason the NBT of an item already existing in an inventory is changes, it will take up to 1 second to show, with an average time of half a second. This odd 0.5 second delay is far preferable to lag every tick, and shouldn't be noticed by anyone.
 
 diff --git a/src/main/java/net/minecraft/server/Container.java b/src/main/java/net/minecraft/server/Container.java
-index db58968..00f035a 100644
+index db58968..23af626 100644
 --- a/src/main/java/net/minecraft/server/Container.java
 +++ b/src/main/java/net/minecraft/server/Container.java
 @@ -29,6 +29,7 @@ public abstract class Container {
@@ -22,17 +22,9 @@ index db58968..00f035a 100644
              ItemStack itemstack1 = (ItemStack) this.b.get(i);
  
 -            if (!ItemStack.matches(itemstack1, itemstack)) {
-+            if (!ItemStack.fastMatches(itemstack1, itemstack) || (tickCount % 20 == 0 && !ItemStack.matches(itemstack1, itemstack))) { // Spigot
++            if (!ItemStack.fastMatches(itemstack1, itemstack) || (tickCount++ % org.spigotmc.SpigotConfig.itemDirtyTicks == 0 && !ItemStack.matches(itemstack1, itemstack))) { // Spigot
                  itemstack1 = itemstack == null ? null : itemstack.cloneItemStack();
                  this.b.set(i, itemstack1);
- 
-@@ -85,6 +86,7 @@ public abstract class Container {
-                 }
-             }
-         }
-+        tickCount++; // Spigot
- 
-     }
  
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
 index 5c18ad0..66541cc 100644
@@ -57,6 +49,20 @@ index 5c18ad0..66541cc 100644
      public static boolean matches(@Nullable ItemStack itemstack, @Nullable ItemStack itemstack1) {
          return itemstack == null && itemstack1 == null ? true : (itemstack != null && itemstack1 != null ? itemstack.e(itemstack1) : false);
      }
+diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
+index 374dc38..6b7758e 100644
+--- a/src/main/java/org/spigotmc/SpigotConfig.java
++++ b/src/main/java/org/spigotmc/SpigotConfig.java
+@@ -387,4 +387,9 @@ public class SpigotConfig
+             Bukkit.getLogger().info( "Debug logging is disabled" );
+         }
+     }
++
++    public static int itemDirtyTicks;
++    private static void itemDirtyTicks() {
++        itemDirtyTicks = getInt("settings.item-dirty-ticks", 20);
++    }
+ }
 -- 
 2.7.4
 

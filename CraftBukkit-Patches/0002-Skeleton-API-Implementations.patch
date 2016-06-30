@@ -1,4 +1,4 @@
-From ebbe28041140a818e04e61955eed5786b72723a8 Mon Sep 17 00:00:00 2001
+From 42a243e0818de5b8a905449b7dbb4c4c8295e2a5 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -6,7 +6,7 @@ Subject: [PATCH] Skeleton API Implementations
 This contains the basic, empty implementations for some Spigot-API extensions. They are included early in the patching progress so that compilation will still succeed midway despite the APIs only being provided by subsequent patches.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index a793b8f..a01abcc 100644
+index 3c1f3f5..fc6488a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1664,4 +1664,14 @@ public final class CraftServer implements Server {
@@ -25,10 +25,10 @@ index a793b8f..a01abcc 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 2fe3eae..8aab1a7 100644
+index 47a050e..0c49eb4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1477,4 +1477,14 @@ public class CraftWorld implements World {
+@@ -1479,4 +1479,14 @@ public class CraftWorld implements World {
              cps.unload(chunk);
          }
      }
@@ -104,7 +104,7 @@ index 64e346d..243e8e5 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index b89f917..b82b6b0 100644
+index b93ff63..caf1d7d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -1419,4 +1419,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
