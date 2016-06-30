@@ -1,4 +1,4 @@
-From 9144ddcb6cddf47aa763d88cd76d183bf39805fa Mon Sep 17 00:00:00 2001
+From 9a7532984214b94573be38d1e4ca13d758e2b214 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 21:07:18 +1100
 Subject: [PATCH] Improve AutoSave Mechanism
@@ -37,10 +37,10 @@ index 2a604c6..2ee5c92 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index ab4d50d..954d9bf 100644
+index 5cbe3bd..cdadb86 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -672,7 +672,17 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -673,7 +673,17 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
              SpigotTimings.worldSaveTimer.startTiming(); // Spigot
              this.methodProfiler.a("save");
              this.v.savePlayers();
@@ -60,7 +60,7 @@ index ab4d50d..954d9bf 100644
              SpigotTimings.worldSaveTimer.stopTiming(); // Spigot
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index b079d46..39ed7d6 100644
+index d0cb125..a9cffcd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -731,12 +731,17 @@ public class CraftWorld implements World {

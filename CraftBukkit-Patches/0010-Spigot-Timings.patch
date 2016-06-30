@@ -1,4 +1,4 @@
-From 544cf1c81c690e8a8ee1d1814faafdb5c567e111 Mon Sep 17 00:00:00 2001
+From fc6e386a2d4d78e3149364bca505cc07b09cc926 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -230,7 +230,7 @@ index 5b966f7..0e5f08f 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 715ada4..f738015 100644
+index 763e02a..3a9d674 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -50,6 +50,8 @@ import org.apache.logging.log4j.Logger;
@@ -242,7 +242,7 @@ index 715ada4..f738015 100644
  public abstract class MinecraftServer implements Runnable, ICommandListener, IAsyncTaskHandler, IMojangStatistics {
  
      public static final Logger LOGGER = LogManager.getLogger();
-@@ -633,6 +635,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -634,6 +636,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
      public void B() {}
  
      protected void C() throws ExceptionWorldConflict { // CraftBukkit - added throws
@@ -250,7 +250,7 @@ index 715ada4..f738015 100644
          long i = System.nanoTime();
  
          ++this.ticks;
-@@ -659,10 +662,12 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -660,10 +663,12 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
          }
  
          if (autosavePeriod > 0 && this.ticks % autosavePeriod == 0) { // CraftBukkit
@@ -263,7 +263,7 @@ index 715ada4..f738015 100644
          }
  
          this.methodProfiler.a("tallying");
-@@ -679,6 +684,8 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -680,10 +685,14 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
  
          this.methodProfiler.b();
          this.methodProfiler.b();
@@ -272,15 +272,15 @@ index 715ada4..f738015 100644
      }
  
      public void D() {
-@@ -693,16 +700,23 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
- 
-         this.methodProfiler.c("levels");
- 
 +        SpigotTimings.schedulerTimer.startTiming(); // Spigot
-         // CraftBukkit start
-         this.server.getScheduler().mainThreadHeartbeat(this.ticks);
+         this.server.getScheduler().mainThreadHeartbeat(this.ticks); // CraftBukkit
 +        SpigotTimings.schedulerTimer.stopTiming(); // Spigot
+         this.methodProfiler.a("jobs");
+         Queue queue = this.j;
  
+@@ -697,12 +706,17 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+ 
+         // CraftBukkit start
          // Run tasks that are waiting on processing
 +        SpigotTimings.processQueueTimer.startTiming(); // Spigot
          while (!processQueue.isEmpty()) {
@@ -356,7 +356,7 @@ index 715ada4..f738015 100644
          this.methodProfiler.b();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 9946fb7..7bb61f0 100644
+index 4cee909..754fa3b 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -1283,6 +1283,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
@@ -574,7 +574,7 @@ index 844812b..7449926 100644
  
      @Nullable
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f609035..b09cd94 100644
+index b2895b1..c855d9f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1674,6 +1674,11 @@ public final class CraftServer implements Server {

@@ -1,4 +1,4 @@
-From 31c6b47a179e04c3e8013630873efae796f01743 Mon Sep 17 00:00:00 2001
+From b5de4e9d69d09e6cad8399daef50f02e18d8e39e Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
@@ -18,10 +18,10 @@ index b0c4bf6..f2ff8fc 100644
  
                      thread1.setName("Server Watchdog");
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index c961a9f..14c0e0b 100644
+index 902a660..87d9a03 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -580,6 +580,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -581,6 +581,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
              this.a(crashreport);
          } finally {
              try {
@@ -29,7 +29,7 @@ index c961a9f..14c0e0b 100644
                  this.isStopped = true;
                  this.stop();
              } catch (Throwable throwable1) {
-@@ -684,6 +685,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -685,6 +686,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
  
          this.methodProfiler.b();
          this.methodProfiler.b();

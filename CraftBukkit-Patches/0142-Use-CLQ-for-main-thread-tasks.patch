@@ -1,11 +1,11 @@
-From 4942f6eda24c0860e936ba432920a7fe78ef5861 Mon Sep 17 00:00:00 2001
+From 95514e0d786227a4422d1721f960a22b90e10b3b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 19 Apr 2015 09:19:39 +1000
 Subject: [PATCH] Use CLQ for main thread tasks.
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 8b44eea..c5adcc3 100644
+index 1196307..80675f6 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -103,7 +103,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
@@ -17,7 +17,7 @@ index 8b44eea..c5adcc3 100644
      private Thread serverThread;
      private long aa = av();
  
-@@ -726,11 +726,13 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -730,11 +730,13 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
          this.methodProfiler.a("jobs");
          Queue queue = this.j;
  
