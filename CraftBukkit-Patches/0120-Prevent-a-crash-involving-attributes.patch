@@ -1,14 +1,14 @@
-From 2c51a75b1c2ec4a3bcfc3395ff81a639e1b332fa Mon Sep 17 00:00:00 2001
+From fd1898bd073f3871b64eeb21ca463ef7cf4d59c3 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Sat, 19 Jul 2014 19:54:41 +0100
 Subject: [PATCH] Prevent a crash involving attributes
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index b400080..2962e2d 100644
+index c1cb39b..6633bbc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1321,7 +1321,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1325,7 +1325,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
                  break;
              }
          }
