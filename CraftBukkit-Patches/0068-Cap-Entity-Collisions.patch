@@ -1,4 +1,4 @@
-From a3990718d6c910916bbff7590a9d64b4226068b0 Mon Sep 17 00:00:00 2001
+From 9539fba8667de25c6c2ff6b33314f7522de4d4e1 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 31 Jan 2014 11:18:34 -0500
 Subject: [PATCH] Cap Entity Collisions
@@ -19,10 +19,10 @@ index 875dbb9..4427af9 100644
  
      public Entity(World world) {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 05a7c9a..a32e453 100644
+index 780334f..df72e07 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -2026,7 +2026,8 @@ public abstract class EntityLiving extends Entity {
+@@ -2026,9 +2026,14 @@ public abstract class EntityLiving extends Entity {
          List list = this.world.getEntities(this, this.getBoundingBox(), IEntitySelector.a(this));
  
          if (!list.isEmpty()) {
@@ -30,15 +30,11 @@ index 05a7c9a..a32e453 100644
 +                numCollisions = Math.max(0, numCollisions - world.spigotConfig.maxCollisionsPerEntity); // Spigot
 +                for (int i = 0; i < list.size() && numCollisions < world.spigotConfig.maxCollisionsPerEntity; ++i) {
                  Entity entity = (Entity) list.get(i);
-                 // TODO better check now?
-                 // CraftBukkit start - Only handle mob (non-player) collisions every other tick
-@@ -2035,7 +2036,8 @@ public abstract class EntityLiving extends Entity {
-                 }
-                 // CraftBukkit end
  
--
-+                entity.numCollisions++; // Spigot
-+                numCollisions++; // Spigot
++                // Spigot start
++                entity.numCollisions++;
++                numCollisions++;
++                // Spigot end
                  this.C(entity);
              }
          }
