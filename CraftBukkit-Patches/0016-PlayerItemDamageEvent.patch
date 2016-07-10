@@ -1,11 +1,11 @@
-From 5ff24ec2d0fa6ad7bda813ad9cc5cc56601a30a0 Mon Sep 17 00:00:00 2001
+From 10ed64d05658311b27c6b25196a51ad5e4b1acd3 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Mon, 4 Mar 2013 18:45:52 +1100
 Subject: [PATCH] PlayerItemDamageEvent
 
 
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 43516d4..a7cfb2e 100644
+index 43516d4..527a335 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
 @@ -347,6 +347,11 @@ public final class ItemStack {
@@ -20,7 +20,7 @@ index 43516d4..a7cfb2e 100644
          if (!this.e()) {
              return false;
          } else {
-@@ -361,7 +366,16 @@ public final class ItemStack {
+@@ -361,7 +366,19 @@ public final class ItemStack {
                  }
  
                  i -= k;
@@ -30,6 +30,9 @@ index 43516d4..a7cfb2e 100644
 +                    org.bukkit.craftbukkit.inventory.CraftItemStack item = org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(this);
 +                    org.bukkit.event.player.PlayerItemDamageEvent event = new org.bukkit.event.player.PlayerItemDamageEvent((org.bukkit.entity.Player) entityliving.getBukkitEntity(), item, i);
 +                    org.bukkit.Bukkit.getServer().getPluginManager().callEvent(event);
++                    if (i != event.getDamage() || event.isCancelled()) {
++                        event.getPlayer().updateInventory();
++                    }
 +                    if (event.isCancelled()) return false;
 +                    i = event.getDamage();
 +                }
@@ -38,7 +41,7 @@ index 43516d4..a7cfb2e 100644
                      return false;
                  }
              }
-@@ -374,7 +388,7 @@ public final class ItemStack {
+@@ -374,7 +391,7 @@ public final class ItemStack {
      public void damage(int i, EntityLiving entityliving) {
          if (!(entityliving instanceof EntityHuman) || !((EntityHuman) entityliving).abilities.canInstantlyBuild) {
              if (this.e()) {
