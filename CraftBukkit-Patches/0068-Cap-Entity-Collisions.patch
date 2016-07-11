@@ -1,4 +1,4 @@
-From 9539fba8667de25c6c2ff6b33314f7522de4d4e1 Mon Sep 17 00:00:00 2001
+From 1915a0c2ebe060013bf7688a5e47bdbfd15a40a9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 31 Jan 2014 11:18:34 -0500
 Subject: [PATCH] Cap Entity Collisions
@@ -19,7 +19,7 @@ index 875dbb9..4427af9 100644
  
      public Entity(World world) {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 780334f..df72e07 100644
+index 7e6a83c..365b61d 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -2026,9 +2026,14 @@ public abstract class EntityLiving extends Entity {
@@ -39,10 +39,10 @@ index 780334f..df72e07 100644
              }
          }
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 4ea200d..0a6bbba 100644
+index 0c7d958..f1245cf 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -224,4 +224,11 @@ public class SpigotWorldConfig
+@@ -228,4 +228,11 @@ public class SpigotWorldConfig
          enableZombiePigmenPortalSpawns = getBoolean( "enable-zombie-pigmen-portal-spawns", true );
          log( "Allow Zombie Pigmen to spawn from portal blocks: " + enableZombiePigmenPortalSpawns );
      }

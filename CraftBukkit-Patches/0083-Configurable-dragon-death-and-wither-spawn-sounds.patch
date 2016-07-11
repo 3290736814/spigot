@@ -1,4 +1,4 @@
-From d361bee239491590578addeb605bd61284e5fb68 Mon Sep 17 00:00:00 2001
+From 169f1ab3cc1585d41a291e3b9962413954acfb38 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sat, 29 Mar 2014 13:44:25 -0400
 Subject: [PATCH] Configurable dragon death and wither spawn sounds
@@ -47,10 +47,10 @@ index c1d8798..48b5b2c 100644
                          double deltaLength = Math.sqrt(distanceSquared);
                          double relativeX = player.locX + (deltaX / deltaLength) * viewDistance;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 0a6bbba..c3dea1e 100644
+index f1245cf..92144d8 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -231,4 +231,16 @@ public class SpigotWorldConfig
+@@ -235,4 +235,16 @@ public class SpigotWorldConfig
          maxCollisionsPerEntity = getInt( "max-entity-collisions", 8 );
          log( "Max Entity Collisions: " + maxCollisionsPerEntity );
      }

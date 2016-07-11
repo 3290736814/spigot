@@ -1,4 +1,4 @@
-From 7a82f6b128b592ee4e9cf2aa224050206873b32f Mon Sep 17 00:00:00 2001
+From 9b52479cc07ec4d53fc28f52e91a761593342897 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Aug 2014 18:12:32 -0400
 Subject: [PATCH] Limit TNT Detonations per tick
@@ -31,10 +31,10 @@ index f7c4309..a6687c9 100644
  
      protected void l() {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 30db708..56b33b1 100644
+index b2a3b34..7372524 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -264,4 +264,15 @@ public class SpigotWorldConfig
+@@ -268,4 +268,15 @@ public class SpigotWorldConfig
          combatExhaustion = (float) getDouble( "hunger.combat-exhaustion", 0.3 );
          regenExhaustion = (float) getDouble( "hunger.regen-exhaustion", 3 );
      }

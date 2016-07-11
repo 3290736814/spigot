@@ -1,4 +1,4 @@
-From 4a3c68262a083af251a6a18b678889452fcf91dc Mon Sep 17 00:00:00 2001
+From 848d066d0fd388950f9e397e6df75a2623f31ea9 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -39,6 +39,19 @@ index d42bb77..4368731 100644
                      // world.setTypeUpdate(blockposition1, this.getBlockData()); // CraftBukkit
                      IBlockData iblockdata1 = iblockdata.set(BlockCactus.AGE, Integer.valueOf(0));
  
+diff --git a/src/main/java/net/minecraft/server/BlockCocoa.java b/src/main/java/net/minecraft/server/BlockCocoa.java
+index 287d6b1..4abc12b 100644
+--- a/src/main/java/net/minecraft/server/BlockCocoa.java
++++ b/src/main/java/net/minecraft/server/BlockCocoa.java
+@@ -21,7 +21,7 @@ public class BlockCocoa extends BlockFacingHorizontal implements IBlockFragilePl
+     public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
+         if (!this.e(world, blockposition, iblockdata)) {
+             this.f(world, blockposition, iblockdata);
+-        } else if (world.random.nextInt(5) == 0) {
++        } else if (world.random.nextInt(Math.max(1, (int) (100.0F / world.spigotConfig.cocoaModifier) * 5)) == 0) { // Spigot
+             int i = ((Integer) iblockdata.get(BlockCocoa.AGE)).intValue();
+ 
+             if (i < 2) {
 diff --git a/src/main/java/net/minecraft/server/BlockCrops.java b/src/main/java/net/minecraft/server/BlockCrops.java
 index c207554..7d44039 100644
 --- a/src/main/java/net/minecraft/server/BlockCrops.java
@@ -117,11 +130,24 @@ index 36ae219..d378ea4 100644
                  int i = ((Integer) iblockdata.get(BlockStem.AGE)).intValue();
  
                  if (i < 7) {
+diff --git a/src/main/java/net/minecraft/server/BlockVine.java b/src/main/java/net/minecraft/server/BlockVine.java
+index 04ddf46..c3b6441 100644
+--- a/src/main/java/net/minecraft/server/BlockVine.java
++++ b/src/main/java/net/minecraft/server/BlockVine.java
+@@ -139,7 +139,7 @@ public class BlockVine extends Block {
+ 
+     public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
+         if (!world.isClientSide) {
+-            if (world.random.nextInt(4) == 0) {
++            if (world.random.nextInt(Math.max(1, (int) (100.0F / world.spigotConfig.vineModifier) * 4)) == 0) { // Spigot
+                 boolean flag = true;
+                 int i = 5;
+                 boolean flag1 = false;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 961ddb4..8b10672 100644
+index 961ddb4..c62fa45 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -68,4 +68,37 @@ public class SpigotWorldConfig
+@@ -68,4 +68,41 @@ public class SpigotWorldConfig
          config.addDefault( "world-settings.default." + path, def );
          return config.getString( "world-settings." + worldName + "." + path, config.getString( "world-settings.default." + path ) );
      }
@@ -135,6 +161,8 @@ index 961ddb4..8b10672 100644
 +    public int saplingModifier;
 +    public int wheatModifier;
 +    public int wartModifier;
++    public int vineModifier;
++    public int cocoaModifier;
 +    private int getAndValidateGrowth(String crop)
 +    {
 +        int modifier = getInt( "growth." + crop.toLowerCase(java.util.Locale.ENGLISH) + "-modifier", 100 );
@@ -157,6 +185,8 @@ index 961ddb4..8b10672 100644
 +        saplingModifier = getAndValidateGrowth( "Sapling" );
 +        wheatModifier = getAndValidateGrowth( "Wheat" );
 +        wartModifier = getAndValidateGrowth( "NetherWart" );
++        vineModifier = getAndValidateGrowth( "Vine" );
++        cocoaModifier = getAndValidateGrowth( "Cocoa" );
 +    }
  }
 -- 

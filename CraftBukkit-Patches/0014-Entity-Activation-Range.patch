@@ -1,4 +1,4 @@
-From c6f56f3fbc7da51f0f0c1ba98599bc1a8eebf9bc Mon Sep 17 00:00:00 2001
+From ff50b03a441d150de8f2b6cbcc97cbc31be13379 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -168,7 +168,7 @@ index 4b6415c..234c547 100644
          // Spigot start
          double radius = world.spigotConfig.itemMerge;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 0e5f08f..05a7c9a 100644
+index fcb75aa..7e6a83c 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -109,6 +109,13 @@ public abstract class EntityLiving extends Entity {
@@ -227,7 +227,7 @@ index 558574f..41d2d87 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index b451084..37eccd5 100644
+index feaf94e..dd127e2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -236,6 +236,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
@@ -531,10 +531,10 @@ index 0000000..057d65e
 +    }
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index ca888fc..92dbe54 100644
+index 6a8b5cd..82f8212 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -136,4 +136,15 @@ public class SpigotWorldConfig
+@@ -140,4 +140,15 @@ public class SpigotWorldConfig
          itemDespawnRate = getInt( "item-despawn-rate", 6000 );
          log( "Item Despawn Rate: " + itemDespawnRate );
      }

@@ -1,4 +1,4 @@
-From cba8fb19f39a2f4742ed561e0c91fbe2136b34c4 Mon Sep 17 00:00:00 2001
+From 05c78579f6f345bef095abac6173f0fab0ab8f2d Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 22 Jun 2013 16:12:02 +1000
 Subject: [PATCH] Allow Disabling of Random Lighting Updates
@@ -18,7 +18,7 @@ index 4fc5848..b71c4ed 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 7449926..3c6628f 100644
+index 84c4ff5..bdf46d6 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -379,7 +379,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
@@ -31,10 +31,10 @@ index 7449926..3c6628f 100644
              EntityHuman entityhuman = (EntityHuman) this.players.get(i);
              int j = MathHelper.floor(entityhuman.locX) + this.random.nextInt(11) - 5;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 4de0a98..c2452d6 100644
+index 120631b..321238c 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -177,4 +177,11 @@ public class SpigotWorldConfig
+@@ -181,4 +181,11 @@ public class SpigotWorldConfig
          hopperAmount = getInt( "hopper-amount", 1 );
          log( "Hopper Transfer: " + hopperTransfer + " Hopper Check: " + hopperCheck + " Hopper Amount: " + hopperAmount );
      }

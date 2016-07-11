@@ -1,4 +1,4 @@
-From dd840f97d12d1e75db43ef747990af7c98bc20f7 Mon Sep 17 00:00:00 2001
+From 64d25b9aa57e42c88aec84fe84b6d6e0e1944633 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 22 Sep 2013 19:10:53 +1000
 Subject: [PATCH] Item Despawn Rate
@@ -18,10 +18,10 @@ index f5ca08f..4b6415c 100644
                  if (org.bukkit.craftbukkit.event.CraftEventFactory.callItemDespawnEvent(this).isCancelled()) {
                      this.age = 0;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index cacb8fc..ca888fc 100644
+index 3dee3ff..6a8b5cd 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -129,4 +129,11 @@ public class SpigotWorldConfig
+@@ -133,4 +133,11 @@ public class SpigotWorldConfig
          mobSpawnRange = (byte) getInt( "mob-spawn-range", 4 );
          log( "Mob Spawn Range: " + mobSpawnRange );
      }

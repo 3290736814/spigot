@@ -1,4 +1,4 @@
-From d0d575586bbed9b4d9449582006cd0986d188bd8 Mon Sep 17 00:00:00 2001
+From 6ae2b04546f96603826cf604189d1ac5de22e195 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -22,7 +22,7 @@ index 737d510..b0249ff 100644
  
      public WorldServer getWorld() {
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 87405af..844812b 100644
+index 688a753..21ccb8a 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -61,7 +61,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
@@ -35,10 +35,10 @@ index 87405af..844812b 100644
          this.chunkProvider = this.n();
          this.portalTravelAgent = new org.bukkit.craftbukkit.CraftTravelAgent(this); // CraftBukkit
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index d4fb83c..86300d6 100644
+index 2373015..f5096e3 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -115,4 +115,11 @@ public class SpigotWorldConfig
+@@ -119,4 +119,11 @@ public class SpigotWorldConfig
          expMerge = getDouble("merge-radius.exp", 3.0 );
          log( "Experience Merge Radius: " + expMerge );
      }
