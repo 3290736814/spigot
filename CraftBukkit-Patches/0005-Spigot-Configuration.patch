@@ -1,4 +1,4 @@
-From 797c9c52b91e32629c761fe37676ce4a9429ab33 Mon Sep 17 00:00:00 2001
+From 699f0d0e4c87610da51949e346c6e3f889832e8f Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -6,7 +6,7 @@ Subject: [PATCH] Spigot Configuration
 Provides the basic infrastructure to load and save the Spigot configuration file, spigot.yml
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 34c7747..205f943 100644
+index be6da3f..99aa2b0 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -166,6 +166,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -35,7 +35,7 @@ index 34c7747..205f943 100644
              if (!this.getOnlineMode()) {
                  DedicatedServer.LOGGER.warn("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 3cfb30e..1e8f035 100644
+index e5f2f0a..6bb9a4c 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -97,6 +97,7 @@ public abstract class World implements IBlockAccess {
@@ -55,7 +55,7 @@ index 3cfb30e..1e8f035 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index a01abcc..f609035 100644
+index fc6488a..b2895b1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -253,8 +253,10 @@ public final class CraftServer implements Server {

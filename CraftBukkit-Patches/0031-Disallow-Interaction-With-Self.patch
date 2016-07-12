@@ -1,11 +1,11 @@
-From 3a62cc6b69b13c5a5e02486564f1d48017614ef5 Mon Sep 17 00:00:00 2001
+From af1bb568593286bba55dd4f333952aaaf8281d19 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 28 Jun 2013 19:52:54 +1000
 Subject: [PATCH] Disallow Interaction With Self
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 2ea930b..f6a7a57 100644
+index 4319520..39db6fc 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -1446,6 +1446,13 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
