@@ -1,11 +1,11 @@
-From 73991a09568d5ba9953ede0db74129b06497d799 Mon Sep 17 00:00:00 2001
+From c5eb46666e3ebdc9846c0186731381f6e3228441 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Sun, 20 Apr 2014 13:18:55 +0100
 Subject: [PATCH] Convert player skulls async
 
 
 diff --git a/src/main/java/net/minecraft/server/ItemSkull.java b/src/main/java/net/minecraft/server/ItemSkull.java
-index 40338ae..2a8c5f0 100644
+index 4833541..213221f 100644
 --- a/src/main/java/net/minecraft/server/ItemSkull.java
 +++ b/src/main/java/net/minecraft/server/ItemSkull.java
 @@ -108,13 +108,21 @@ public class ItemSkull extends Item {
@@ -32,7 +32,7 @@ index 40338ae..2a8c5f0 100644
 +            // Spigot end
              return true;
          } else {
-             return false;
+             nbttagcompound.remove("SkullOwner"); // CraftBukkit - remove broken skulls
 diff --git a/src/main/java/net/minecraft/server/TileEntitySkull.java b/src/main/java/net/minecraft/server/TileEntitySkull.java
 index 4ae6796..654b51d 100644
 --- a/src/main/java/net/minecraft/server/TileEntitySkull.java
