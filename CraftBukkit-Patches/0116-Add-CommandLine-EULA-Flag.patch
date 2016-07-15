@@ -1,4 +1,4 @@
-From ea5451efbaeb55cd7e2143e22afb114b1dfc993a Mon Sep 17 00:00:00 2001
+From 1efd54321af5c27d336a465dd4fbf61c020be634 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 9 Jul 2014 10:35:44 +1000
 Subject: [PATCH] Add CommandLine EULA Flag
@@ -8,10 +8,10 @@ This flag contains the same message as eula.txt (albeit with proper grammar for 
 This feature only exists for hosting companies and people who manage servers in bulk who wish to agree to the terms by setting a flag in a script.
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 748e564..c277d23 100644
+index 2cb3ada..109d0e8 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -127,7 +127,16 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -128,7 +128,16 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
          DedicatedServer.LOGGER.info("Loading properties");
          this.propertyManager = new PropertyManager(this.options); // CraftBukkit - CLI argument support
          this.r = new EULA(new File("eula.txt"));

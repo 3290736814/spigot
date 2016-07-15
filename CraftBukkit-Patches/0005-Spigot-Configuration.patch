@@ -1,4 +1,4 @@
-From 699f0d0e4c87610da51949e346c6e3f889832e8f Mon Sep 17 00:00:00 2001
+From e41accad18c577c1b9840875e76d13c625fb5112 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -6,10 +6,10 @@ Subject: [PATCH] Spigot Configuration
 Provides the basic infrastructure to load and save the Spigot configuration file, spigot.yml
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index be6da3f..99aa2b0 100644
+index d4f2924..66ae6c0 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -166,6 +166,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -167,6 +167,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              if (this.P() < 0) {
                  this.setPort(this.propertyManager.getInt("server-port", 25565));
              }
@@ -21,7 +21,7 @@ index be6da3f..99aa2b0 100644
  
              DedicatedServer.LOGGER.info("Generating keypair");
              this.a(MinecraftEncryption.b());
-@@ -180,7 +185,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -181,7 +186,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                  return false;
              }
  

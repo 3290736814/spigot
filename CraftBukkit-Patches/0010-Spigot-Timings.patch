@@ -1,4 +1,4 @@
-From 16c7f629e2712bb176588ba4a2b8118461878ab5 Mon Sep 17 00:00:00 2001
+From dae4aabdf24bc991bea00f3f60b248f693c4f07c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -26,7 +26,7 @@ index ead421a..38f303d 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index c57fcf0..c5a022b 100644
+index f2f9aa3..82d9d5f 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -152,6 +152,7 @@ public class ChunkProviderServer implements IChunkProvider {
@@ -37,9 +37,9 @@ index c57fcf0..c5a022b 100644
              long k = ChunkCoordIntPair.a(i, j);
  
              try {
-@@ -170,6 +171,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -169,6 +170,7 @@ public class ChunkProviderServer implements IChunkProvider {
+             this.chunks.put(k, chunk);
              chunk.addEntities();
- 
              chunk.loadNearby(this, this.chunkGenerator, true); // CraftBukkit
 +            world.timings.syncChunkLoadTimer.stopTiming(); // Spigot
          }
@@ -96,10 +96,10 @@ index 5c333de..3de34be 100644
          // return chunk; // CraftBukkit
      }
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 99aa2b0..b0c4bf6 100644
+index 66ae6c0..59b124a 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -22,6 +22,7 @@ import java.io.PrintStream;
+@@ -23,6 +23,7 @@ import java.io.PrintStream;
  import org.apache.logging.log4j.Level;
  
  import org.bukkit.craftbukkit.LoggerOutputStream;
@@ -107,7 +107,7 @@ index 99aa2b0..b0c4bf6 100644
  import org.bukkit.event.server.ServerCommandEvent;
  import org.bukkit.craftbukkit.util.Waitable;
  import org.bukkit.event.server.RemoteServerCommandEvent;
-@@ -393,6 +394,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -394,6 +395,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
      }
  
      public void aL() {
@@ -115,7 +115,7 @@ index 99aa2b0..b0c4bf6 100644
          while (!this.serverCommandQueue.isEmpty()) {
              ServerCommand servercommand = (ServerCommand) this.serverCommandQueue.remove(0);
  
-@@ -407,6 +409,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -408,6 +410,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              // CraftBukkit end
          }
  
@@ -230,19 +230,18 @@ index 8c5df29..fcb75aa 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 763e02a..3a9d674 100644
+index 99c5094..1dade18 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -50,6 +50,8 @@ import org.apache.logging.log4j.Logger;
- import org.bukkit.Bukkit;
+@@ -45,6 +45,7 @@ import org.bukkit.Bukkit;
  import org.bukkit.craftbukkit.CraftServer;
+ import org.bukkit.craftbukkit.Main;
  // CraftBukkit end
 +import org.bukkit.craftbukkit.SpigotTimings; // Spigot
-+
+ 
  public abstract class MinecraftServer implements Runnable, ICommandListener, IAsyncTaskHandler, IMojangStatistics {
  
-     public static final Logger LOGGER = LogManager.getLogger();
-@@ -634,6 +636,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -630,6 +631,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
      public void B() {}
  
      protected void C() throws ExceptionWorldConflict { // CraftBukkit - added throws
@@ -250,7 +249,7 @@ index 763e02a..3a9d674 100644
          long i = System.nanoTime();
  
          ++this.ticks;
-@@ -660,10 +663,12 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -656,10 +658,12 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
          }
  
          if (autosavePeriod > 0 && this.ticks % autosavePeriod == 0) { // CraftBukkit
@@ -263,7 +262,7 @@ index 763e02a..3a9d674 100644
          }
  
          this.methodProfiler.a("tallying");
-@@ -680,10 +685,14 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -676,10 +680,14 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
  
          this.methodProfiler.b();
          this.methodProfiler.b();
@@ -278,7 +277,7 @@ index 763e02a..3a9d674 100644
          this.methodProfiler.a("jobs");
          Queue queue = this.j;
  
-@@ -697,12 +706,17 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -693,12 +701,17 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
  
          // CraftBukkit start
          // Run tasks that are waiting on processing
@@ -296,7 +295,7 @@ index 763e02a..3a9d674 100644
          // Send time updates to everyone, it will get the right time from the world the player is in.
          if (this.ticks % 20 == 0) {
              for (int i = 0; i < this.getPlayerList().players.size(); ++i) {
-@@ -710,6 +724,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -706,6 +719,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
                  entityplayer.playerConnection.sendPacket(new PacketPlayOutUpdateTime(entityplayer.world.getTime(), entityplayer.getPlayerTime(), entityplayer.world.getGameRules().getBoolean("doDaylightCycle"))); // Add support for per player time
              }
          }
@@ -304,7 +303,7 @@ index 763e02a..3a9d674 100644
  
          int i;
  
-@@ -733,7 +748,9 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -729,7 +743,9 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
                  CrashReport crashreport;
  
                  try {
@@ -314,7 +313,7 @@ index 763e02a..3a9d674 100644
                  } catch (Throwable throwable) {
                      crashreport = CrashReport.a(throwable, "Exception ticking world");
                      worldserver.a(crashreport);
-@@ -741,7 +758,9 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -737,7 +753,9 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
                  }
  
                  try {
@@ -324,7 +323,7 @@ index 763e02a..3a9d674 100644
                  } catch (Throwable throwable1) {
                      crashreport = CrashReport.a(throwable1, "Exception ticking world entities");
                      worldserver.a(crashreport);
-@@ -750,7 +769,9 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -746,7 +764,9 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
  
                  this.methodProfiler.b();
                  this.methodProfiler.a("tracker");
@@ -334,7 +333,7 @@ index 763e02a..3a9d674 100644
                  this.methodProfiler.b();
                  this.methodProfiler.b();
              // } // CraftBukkit
-@@ -759,14 +780,20 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -755,14 +775,20 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
          }
  
          this.methodProfiler.c("connection");

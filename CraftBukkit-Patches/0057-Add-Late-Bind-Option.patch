@@ -1,4 +1,4 @@
-From c91bc0c0038db53d9f6a63d1818098e5fc3e6219 Mon Sep 17 00:00:00 2001
+From 0f3033ce98a97accc943c013150073e01bdeb352 Mon Sep 17 00:00:00 2001
 From: slide23 <me@slide.ws>
 Date: Fri, 20 Dec 2013 20:15:33 -0600
 Subject: [PATCH] Add Late Bind Option
@@ -6,10 +6,10 @@ Subject: [PATCH] Add Late Bind Option
 Add late-bind config option to delay binding until loading is done.
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index f2ff8fc..7a15ea6 100644
+index c2aafcf..af3fdf1 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -177,6 +177,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -178,6 +178,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              this.a(MinecraftEncryption.b());
              DedicatedServer.LOGGER.info("Starting Minecraft server on {}:{}", new Object[] { this.getServerIp().isEmpty() ? "*" : this.getServerIp(), Integer.valueOf(this.P())});
  
@@ -17,7 +17,7 @@ index f2ff8fc..7a15ea6 100644
              try {
                  this.am().a(inetaddress, this.P());
              } catch (IOException ioexception) {
-@@ -185,6 +186,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -186,6 +187,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                  DedicatedServer.LOGGER.warn("Perhaps a server is already running on that port?");
                  return false;
              }
@@ -25,7 +25,7 @@ index f2ff8fc..7a15ea6 100644
  
              // Spigot Start - Move DedicatedPlayerList up and bring plugin loading from CraftServer to here
              // this.a((PlayerList) (new DedicatedPlayerList(this))); // CraftBukkit
-@@ -277,6 +279,17 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -278,6 +280,17 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                  }
                  // CraftBukkit end
  

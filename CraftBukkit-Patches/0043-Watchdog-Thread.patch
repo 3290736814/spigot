@@ -1,14 +1,14 @@
-From 3003f75c8f79855c29f45e498d768c65e242a6c1 Mon Sep 17 00:00:00 2001
+From 2a0fb61c3618bd5f770e77a14d3186f4db20688f Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index b0c4bf6..f2ff8fc 100644
+index 59b124a..c2aafcf 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -277,7 +277,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -278,7 +278,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                  }
                  // CraftBukkit end
  
@@ -18,10 +18,10 @@ index b0c4bf6..f2ff8fc 100644
  
                      thread1.setName("Server Watchdog");
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 902a660..87d9a03 100644
+index 48f941e..1ea40f3 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -581,6 +581,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -576,6 +576,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
              this.a(crashreport);
          } finally {
              try {
@@ -29,7 +29,7 @@ index 902a660..87d9a03 100644
                  this.isStopped = true;
                  this.stop();
              } catch (Throwable throwable1) {
-@@ -685,6 +686,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -680,6 +681,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
  
          this.methodProfiler.b();
          this.methodProfiler.b();

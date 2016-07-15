@@ -1,4 +1,4 @@
-From 2cae66cbb4f4d58b840c9c2cb77abe96b38ce6df Mon Sep 17 00:00:00 2001
+From 963d4c864b55a6d59e899dfcd71d15256db35147 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -66,10 +66,10 @@ index 38f303d..4fc5848 100644
  
      public boolean c(BlockPosition blockposition) {
 diff --git a/src/main/java/net/minecraft/server/SpawnerCreature.java b/src/main/java/net/minecraft/server/SpawnerCreature.java
-index c1a7827..f8a871d 100644
+index 73e4cb4..9e86aa2 100644
 --- a/src/main/java/net/minecraft/server/SpawnerCreature.java
 +++ b/src/main/java/net/minecraft/server/SpawnerCreature.java
-@@ -17,6 +17,25 @@ public final class SpawnerCreature {
+@@ -19,6 +19,25 @@ public final class SpawnerCreature {
  
      public SpawnerCreature() {}
  
@@ -95,7 +95,7 @@ index c1a7827..f8a871d 100644
      public int a(WorldServer worldserver, boolean flag, boolean flag1, boolean flag2) {
          if (!flag && !flag1) {
              return 0;
-@@ -36,10 +55,15 @@ public final class SpawnerCreature {
+@@ -38,10 +57,15 @@ public final class SpawnerCreature {
  
                      j = MathHelper.floor(entityhuman.locZ / 16.0D);
                      boolean flag3 = true;
@@ -115,7 +115,7 @@ index c1a7827..f8a871d 100644
                              // CraftBukkit start - use LongHash and LongHashSet
                              // ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(i1 + l, k + j);
  
-@@ -89,18 +113,20 @@ public final class SpawnerCreature {
+@@ -91,18 +115,20 @@ public final class SpawnerCreature {
                  if (limit == 0) {
                      continue;
                  }
@@ -138,7 +138,7 @@ index c1a7827..f8a871d 100644
                              // CraftBukkit start = use LongHash and LongObjectHashMap
                              long key = ((Long) iterator1.next()).longValue();
                              BlockPosition blockposition1 = getRandomPosition(worldserver, LongHash.msw(key), LongHash.lsw(key));
-@@ -162,7 +188,10 @@ public final class SpawnerCreature {
+@@ -164,7 +190,10 @@ public final class SpawnerCreature {
                                                                  entityinsentient.die();
                                                              }
  

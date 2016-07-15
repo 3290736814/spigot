@@ -1,4 +1,4 @@
-From 82cf981e680d53358c84bdac4065a18d97329c68 Mon Sep 17 00:00:00 2001
+From 8dbab1231f68d5b8fea14db51ed4c76303e6944a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 21:07:18 +1100
 Subject: [PATCH] Improve AutoSave Mechanism
@@ -24,10 +24,10 @@ index 0baf90d..1376bee 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index c5a022b..023bcce 100644
+index 82d9d5f..5682f03 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -232,7 +232,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -231,7 +231,7 @@ public class ChunkProviderServer implements IChunkProvider {
                  this.saveChunk(chunk);
                  chunk.f(false);
                  ++i;
@@ -37,10 +37,10 @@ index c5a022b..023bcce 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 5cbe3bd..cdadb86 100644
+index 5e16036..e7e3aa7 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -673,7 +673,17 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -668,7 +668,17 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
              SpigotTimings.worldSaveTimer.startTiming(); // Spigot
              this.methodProfiler.a("save");
              this.v.savePlayers();

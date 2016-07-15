@@ -1,14 +1,14 @@
-From 66335848a353151f454ba4e5a71bca0b8bba6f2f Mon Sep 17 00:00:00 2001
+From 7161f5db3366550f8411c2c2dc9d7d3956057564 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 19 Apr 2015 09:19:39 +1000
 Subject: [PATCH] Use CLQ for main thread tasks.
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 1196307..80675f6 100644
+index ab5ac86..3d76e54 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -103,7 +103,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -98,7 +98,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
      private final GameProfileRepository W;
      private final UserCache X;
      private long Y;
@@ -17,7 +17,7 @@ index 1196307..80675f6 100644
      private Thread serverThread;
      private long aa = av();
  
-@@ -730,11 +730,13 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -725,11 +725,13 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
          this.methodProfiler.a("jobs");
          Queue queue = this.j;
  
@@ -36,7 +36,7 @@ index 1196307..80675f6 100644
  
          this.methodProfiler.c("levels");
  
-@@ -1497,10 +1499,10 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -1492,10 +1494,10 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
              ListenableFutureTask listenablefuturetask = ListenableFutureTask.create(callable);
              Queue queue = this.j;
  

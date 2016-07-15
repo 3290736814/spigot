@@ -1,14 +1,14 @@
-From 460706d9163c13b773bfb886bd5bd9ce51e6c678 Mon Sep 17 00:00:00 2001
+From af6ee10a3376299486c928e2b90fad610bab3196 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 25 Jan 2014 14:08:35 +1100
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index cdadb86..5a2f8c2 100644
+index e7e3aa7..7ef4cd5 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -119,6 +119,12 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -114,6 +114,12 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
      public java.util.Queue<Runnable> processQueue = new java.util.concurrent.ConcurrentLinkedQueue<Runnable>();
      public int autosavePeriod;
      // CraftBukkit end
@@ -21,7 +21,7 @@ index cdadb86..5a2f8c2 100644
  
      public MinecraftServer(OptionSet options, Proxy proxy, DataConverterManager dataconvertermanager, YggdrasilAuthenticationService yggdrasilauthenticationservice, MinecraftSessionService minecraftsessionservice, GameProfileRepository gameprofilerepository, UserCache usercache) {
          this.e = proxy;
-@@ -515,6 +521,13 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -510,6 +516,13 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
          this.isRunning = false;
      }
  
@@ -35,7 +35,7 @@ index cdadb86..5a2f8c2 100644
      public void run() {
          try {
              if (this.init()) {
-@@ -525,38 +538,34 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -520,38 +533,34 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
                  this.q.setServerInfo(new ServerPing.ServerData("1.10.2", 210));
                  this.a(this.q);
  
