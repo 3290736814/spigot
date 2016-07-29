@@ -1,4 +1,4 @@
-From da9451ee7f0f6cdc5c0c805007060a6e0f2ba90e Mon Sep 17 00:00:00 2001
+From d371978625ce965680b73df60ae362c332de8261 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 2 Jun 2013 10:42:57 +1000
 Subject: [PATCH] Spigot Timings
@@ -78,16 +78,16 @@ index a02c28d..0ba9b1c 100644
              return true;
          }
 diff --git a/src/main/java/org/bukkit/command/SimpleCommandMap.java b/src/main/java/org/bukkit/command/SimpleCommandMap.java
-index 5b0f21e..f180da0 100644
+index a026203..e2fc282 100644
 --- a/src/main/java/org/bukkit/command/SimpleCommandMap.java
 +++ b/src/main/java/org/bukkit/command/SimpleCommandMap.java
-@@ -136,11 +136,15 @@ public class SimpleCommandMap implements CommandMap {
+@@ -135,11 +135,15 @@ public class SimpleCommandMap implements CommandMap {
          }
  
          try {
 +            target.timings.startTiming(); // Spigot
              // Note: we don't return the result of target.execute as thats success / failure, we return handled (true) or not handled (false)
-             target.execute(sender, sentCommandLabel, Arrays_copyOfRange(args, 1, args.length));
+             target.execute(sender, sentCommandLabel, Arrays.copyOfRange(args, 1, args.length));
 +            target.timings.stopTiming(); // Spigot
          } catch (CommandException ex) {
 +            target.timings.stopTiming(); // Spigot
