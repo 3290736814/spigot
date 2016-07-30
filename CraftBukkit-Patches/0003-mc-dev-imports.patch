@@ -1,4 +1,4 @@
-From c2c4378d7d78148502d76b9ba476ff4db2499310 Mon Sep 17 00:00:00 2001
+From 9cc906c7892b928cb1b7895fab0aacad410070e8 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -748,6 +748,70 @@ index 0000000..4aa2d89
 +
 +    public NBTBase clone() {
 +        return this.c();
++    }
++}
+diff --git a/src/main/java/net/minecraft/server/NibbleArray.java b/src/main/java/net/minecraft/server/NibbleArray.java
+new file mode 100644
+index 0000000..1509c77
+--- /dev/null
++++ b/src/main/java/net/minecraft/server/NibbleArray.java
+@@ -0,0 +1,58 @@
++package net.minecraft.server;
++
++public class NibbleArray {
++
++    private final byte[] a;
++
++    public NibbleArray() {
++        this.a = new byte[2048];
++    }
++
++    public NibbleArray(byte[] abyte) {
++        this.a = abyte;
++        if (abyte.length != 2048) {
++            throw new IllegalArgumentException("ChunkNibbleArrays should be 2048 bytes not: " + abyte.length);
++        }
++    }
++
++    public int a(int i, int j, int k) {
++        return this.a(this.b(i, j, k));
++    }
++
++    public void a(int i, int j, int k, int l) {
++        this.a(this.b(i, j, k), l);
++    }
++
++    private int b(int i, int j, int k) {
++        return j << 8 | k << 4 | i;
++    }
++
++    public int a(int i) {
++        int j = this.c(i);
++
++        return this.b(i) ? this.a[j] & 15 : this.a[j] >> 4 & 15;
++    }
++
++    public void a(int i, int j) {
++        int k = this.c(i);
++
++        if (this.b(i)) {
++            this.a[k] = (byte) (this.a[k] & 240 | j & 15);
++        } else {
++            this.a[k] = (byte) (this.a[k] & 15 | (j & 15) << 4);
++        }
++
++    }
++
++    private boolean b(int i) {
++        return (i & 1) == 0;
++    }
++
++    private int c(int i) {
++        return i >> 1;
++    }
++
++    public byte[] asBytes() {
++        return this.a;
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java b/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java
