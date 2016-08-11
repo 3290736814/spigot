@@ -1,0 +1,87 @@
+From 2436984014eba1c2fe867ec8a98590771a91a7e9 Mon Sep 17 00:00:00 2001
+From: md_5 <git@md-5.net>
+Date: Sun, 12 Jan 2014 21:07:18 +1100
+Subject: [PATCH] Improve AutoSave Mechanism
+
+The problem here is that MinecraftServer.save(..), will attempt to sleep whilst all pending chunks are written to disk.
+however due to various and complicated bugs, it will wait for an incorrect amount of chunks, which may cause it to sleep for an overly long amount of time.
+
+Instead we will mimic the save-all command in its behaviour, which is both safe and performant.
+
+Also, only save modified chunks, or chunks with entities after 4 auto save passes
+
+diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
+index 0baf90d..1376bee 100644
+--- a/src/main/java/net/minecraft/server/Chunk.java
++++ b/src/main/java/net/minecraft/server/Chunk.java
+@@ -882,7 +882,7 @@ public class Chunk {
+             if (this.t && this.world.getTime() != this.lastSaved || this.s) {
+                 return true;
+             }
+-        } else if (this.t && this.world.getTime() >= this.lastSaved + 600L) {
++        } else if (this.t && this.world.getTime() >= this.lastSaved + MinecraftServer.getServer().autosavePeriod * 4) { // Spigot - Only save if we've passed 2 auto save intervals without modification
+             return true;
+         }
+ 
+diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
+index 82d9d5f..5682f03 100644
+--- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
++++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
+@@ -231,7 +231,7 @@ public class ChunkProviderServer implements IChunkProvider {
+                 this.saveChunk(chunk);
+                 chunk.f(false);
+                 ++i;
+-                if (i == 24 && !flag) {
++                if (i == 24 && !flag && false) { // Spigot
+                     return false;
+                 }
+             }
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index 5e16036..e7e3aa7 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -668,7 +668,17 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+             SpigotTimings.worldSaveTimer.startTiming(); // Spigot
+             this.methodProfiler.a("save");
+             this.v.savePlayers();
+-            this.saveChunks(true);
++            // Spigot Start
++            // We replace this with saving each individual world as this.saveChunks(...) is broken,
++            // and causes the main thread to sleep for random amounts of time depending on chunk activity
++            // Also pass flag to only save modified chunks
++            server.playerCommandState = true;
++            for (World world : worlds) {
++                world.getWorld().save(false);
++            }
++            server.playerCommandState = false;
++            // this.saveChunks(true);
++            // Spigot End
+             this.methodProfiler.b();
+             SpigotTimings.worldSaveTimer.stopTiming(); // Spigot
+         }
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
+index 421c62d..41c09e2 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
+@@ -731,12 +731,17 @@ public class CraftWorld implements World {
+     }
+ 
+     public void save() {
++    // Spigot start
++        save(true);
++    }
++    public void save(boolean forceSave) {
++    // Spigot end
+         this.server.checkSaveState();
+         try {
+             boolean oldSave = world.savingDisabled;
+ 
+             world.savingDisabled = false;
+-            world.save(true, null);
++            world.save(forceSave, null); // Spigot
+ 
+             world.savingDisabled = oldSave;
+         } catch (ExceptionWorldConflict ex) {
+-- 
+2.7.4
+

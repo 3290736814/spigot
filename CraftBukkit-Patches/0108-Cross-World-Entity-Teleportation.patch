@@ -1,0 +1,30 @@
+From 7c6835d89dca5c9397b37f257e7dbd3aad433f5f Mon Sep 17 00:00:00 2001
+From: Andrew Krieger <Slizyboy@hotmail.com>
+Date: Tue, 24 Dec 2013 07:55:23 -0800
+Subject: [PATCH] Cross World Entity Teleportation
+
+Use Entity.teleportTo for cross-world teleportation in CraftEntity.
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
+index 12d33f0..fd3b39c 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
+@@ -234,7 +234,14 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+         // If this entity is riding another entity, we must dismount before teleporting.
+         entity.stopRiding();
+ 
+-        entity.world = ((CraftWorld) location.getWorld()).getHandle();
++        // Spigot start
++        if (!location.getWorld().equals(getWorld())) {
++          entity.teleportTo(location, cause.equals(TeleportCause.NETHER_PORTAL));
++          return true;
++        }
++
++        // entity.world = ((CraftWorld) location.getWorld()).getHandle();
++        // Spigot end
+         entity.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+         entity.world.entityJoinedWorld(entity, false); // Spigot - register to new chunk
+         // entity.setLocation() throws no event, and so cannot be cancelled
+-- 
+2.7.4
+
