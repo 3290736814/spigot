@@ -1,4 +1,4 @@
-From dae4aabdf24bc991bea00f3f60b248f693c4f07c Mon Sep 17 00:00:00 2001
+From 8bb0e84b8c97258d8a1477665ad643aa025cf322 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -124,7 +124,7 @@ index 66ae6c0..59b124a 100644
  
      public boolean aa() {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index fa2853a..7114925 100644
+index 597555b..07537c6 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -24,6 +24,7 @@ import org.bukkit.block.BlockFace;
@@ -135,7 +135,7 @@ index fa2853a..7114925 100644
  import org.bukkit.event.entity.EntityCombustByEntityEvent;
  import org.bukkit.event.hanging.HangingBreakByEntityEvent;
  import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
-@@ -141,6 +142,7 @@ public abstract class Entity implements ICommandListener {
+@@ -142,6 +143,7 @@ public abstract class Entity implements ICommandListener {
      public boolean valid; // CraftBukkit
      public org.bukkit.projectiles.ProjectileSource projectileSource; // CraftBukkit - For projectiles only
      public boolean forceExplosionKnockback; // CraftBukkit - SPIGOT-949
@@ -143,7 +143,7 @@ index fa2853a..7114925 100644
  
      public Entity(World world) {
          this.id = Entity.entityCount++;
-@@ -451,6 +453,7 @@ public abstract class Entity implements ICommandListener {
+@@ -452,6 +454,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public void move(double d0, double d1, double d2) {
@@ -151,7 +151,7 @@ index fa2853a..7114925 100644
          if (this.noclip) {
              this.a(this.getBoundingBox().c(d0, d1, d2));
              this.recalcPosition();
-@@ -788,6 +791,7 @@ public abstract class Entity implements ICommandListener {
+@@ -789,6 +792,7 @@ public abstract class Entity implements ICommandListener {
  
              this.world.methodProfiler.b();
          }
@@ -573,10 +573,10 @@ index 21ccb8a..84c4ff5 100644
  
      @Nullable
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b2895b1..c855d9f 100644
+index 567a25a..a81f8b0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1674,6 +1674,11 @@ public final class CraftServer implements Server {
+@@ -1670,6 +1670,11 @@ public final class CraftServer implements Server {
      private final Spigot spigot = new Spigot()
      {
  

@@ -1,4 +1,4 @@
-From 734fa60222e38874435bb7714a4db069ac4d066b Mon Sep 17 00:00:00 2001
+From 9630c67f99efea2a3ef35a2955168e1f00fc50b1 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,10 +9,10 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 7114925..11f73e1 100644
+index 07537c6..ead7912 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -107,7 +107,7 @@ public abstract class Entity implements ICommandListener {
+@@ -108,7 +108,7 @@ public abstract class Entity implements ICommandListener {
      public int ticksLived;
      public int maxFireTicks;
      public int fireTicks;
@@ -21,7 +21,7 @@ index 7114925..11f73e1 100644
      public int noDamageTicks;
      protected boolean justCreated;
      protected boolean fireProof;
-@@ -143,6 +143,12 @@ public abstract class Entity implements ICommandListener {
+@@ -144,6 +144,12 @@ public abstract class Entity implements ICommandListener {
      public org.bukkit.projectiles.ProjectileSource projectileSource; // CraftBukkit - For projectiles only
      public boolean forceExplosionKnockback; // CraftBukkit - SPIGOT-949
      public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getEntityTimings(this); // Spigot
@@ -34,7 +34,7 @@ index 7114925..11f73e1 100644
  
      public Entity(World world) {
          this.id = Entity.entityCount++;
-@@ -163,7 +169,12 @@ public abstract class Entity implements ICommandListener {
+@@ -164,7 +170,12 @@ public abstract class Entity implements ICommandListener {
          this.setPosition(0.0D, 0.0D, 0.0D);
          if (world != null) {
              this.dimension = world.worldProvider.getDimensionManager().getDimensionID();

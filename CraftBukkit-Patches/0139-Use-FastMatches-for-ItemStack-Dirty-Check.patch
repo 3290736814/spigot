@@ -1,4 +1,4 @@
-From 291258fa24df5fcb3b4913a27164ec655f4d45c0 Mon Sep 17 00:00:00 2001
+From 886134db0449b52906468eec6a329f64d7133d9e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 22 Feb 2015 12:27:40 +1100
 Subject: [PATCH] Use FastMatches for ItemStack Dirty Check
@@ -6,7 +6,7 @@ Subject: [PATCH] Use FastMatches for ItemStack Dirty Check
 The check to find dirty itemstacks and send update packets each tick can be very intensive as it checks the entire itemstack, including the entire NBT map. To save on this, 19/20 times we will simply compare the basic count/data/type. If for some strange reason the NBT of an item already existing in an inventory is changes, it will take up to 1 second to show, with an average time of half a second. This odd 0.5 second delay is far preferable to lag every tick, and shouldn't be noticed by anyone.
 
 diff --git a/src/main/java/net/minecraft/server/Container.java b/src/main/java/net/minecraft/server/Container.java
-index db58968..23af626 100644
+index db58968..02b1fb1 100644
 --- a/src/main/java/net/minecraft/server/Container.java
 +++ b/src/main/java/net/minecraft/server/Container.java
 @@ -29,6 +29,7 @@ public abstract class Container {
@@ -22,9 +22,17 @@ index db58968..23af626 100644
              ItemStack itemstack1 = (ItemStack) this.b.get(i);
  
 -            if (!ItemStack.matches(itemstack1, itemstack)) {
-+            if (!ItemStack.fastMatches(itemstack1, itemstack) || (tickCount++ % org.spigotmc.SpigotConfig.itemDirtyTicks == 0 && !ItemStack.matches(itemstack1, itemstack))) { // Spigot
++            if (!ItemStack.fastMatches(itemstack1, itemstack) || (tickCount % org.spigotmc.SpigotConfig.itemDirtyTicks == 0 && !ItemStack.matches(itemstack1, itemstack))) { // Spigot
                  itemstack1 = itemstack == null ? null : itemstack.cloneItemStack();
                  this.b.set(i, itemstack1);
+ 
+@@ -85,6 +86,7 @@ public abstract class Container {
+                 }
+             }
+         }
++        tickCount++; // Spigot
+ 
+     }
  
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
 index e0c5875..d45a9ec 100644
