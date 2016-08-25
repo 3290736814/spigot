@@ -1,4 +1,4 @@
-From 5ce04b19d40e1696ea08ef6d1f380a4b16ba90be Mon Sep 17 00:00:00 2001
+From 6cc98aa15153577874dff0d23a93f99e42b46b08 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 2 Jun 2013 10:42:57 +1000
 Subject: [PATCH] Spigot Timings
@@ -50,10 +50,10 @@ index 60bcec8..5ca4321 100644
 +    Spigot spigot();
  }
 diff --git a/src/main/java/org/bukkit/command/Command.java b/src/main/java/org/bukkit/command/Command.java
-index a02c28d..0ba9b1c 100644
+index 00264b5..ffbe5dd 100644
 --- a/src/main/java/org/bukkit/command/Command.java
 +++ b/src/main/java/org/bukkit/command/Command.java
-@@ -31,6 +31,7 @@ public abstract class Command {
+@@ -32,6 +32,7 @@ public abstract class Command {
      protected String usageMessage;
      private String permission;
      private String permissionMessage;
@@ -61,7 +61,7 @@ index a02c28d..0ba9b1c 100644
  
      protected Command(String name) {
          this(name, "", "/" + name, new ArrayList<String>());
-@@ -44,6 +45,7 @@ public abstract class Command {
+@@ -45,6 +46,7 @@ public abstract class Command {
          this.usageMessage = usageMessage;
          this.aliases = aliases;
          this.activeAliases = new ArrayList<String>(aliases);
@@ -69,7 +69,7 @@ index a02c28d..0ba9b1c 100644
      }
  
      /**
-@@ -227,6 +229,7 @@ public abstract class Command {
+@@ -248,6 +250,7 @@ public abstract class Command {
      public boolean setLabel(String name) {
          this.nextLabel = name;
          if (!isRegistered()) {
@@ -78,10 +78,10 @@ index a02c28d..0ba9b1c 100644
              return true;
          }
 diff --git a/src/main/java/org/bukkit/command/SimpleCommandMap.java b/src/main/java/org/bukkit/command/SimpleCommandMap.java
-index a026203..e2fc282 100644
+index 4d475c6..5965514 100644
 --- a/src/main/java/org/bukkit/command/SimpleCommandMap.java
 +++ b/src/main/java/org/bukkit/command/SimpleCommandMap.java
-@@ -135,11 +135,15 @@ public class SimpleCommandMap implements CommandMap {
+@@ -136,11 +136,15 @@ public class SimpleCommandMap implements CommandMap {
          }
  
          try {

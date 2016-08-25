@@ -1,17 +1,17 @@
-From c3972654efe8a9eddaaa3b2dbada6f678d8a2ef0 Mon Sep 17 00:00:00 2001
+From 41124f1ddcb172da5bcbe2116413d64cfe5f707b Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 18:05:54 +1000
 Subject: [PATCH] Allow Disabling of Command TabComplete
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index eebf840..b3e26da 100644
+index b016e05..9e2c994 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1579,6 +1579,13 @@ public final class CraftServer implements Server {
+@@ -1580,6 +1580,13 @@ public final class CraftServer implements Server {
      }
  
-     public List<String> tabCompleteCommand(Player player, String message) {
+     public List<String> tabCompleteCommand(Player player, String message, BlockPosition pos) {
 +        // Spigot Start
 +		if ( (org.spigotmc.SpigotConfig.tabComplete < 0 || message.length() <= org.spigotmc.SpigotConfig.tabComplete) && !message.contains( " " ) )
 +        {
@@ -21,7 +21,7 @@ index eebf840..b3e26da 100644
 +
          List<String> completions = null;
          try {
-             completions = getCommandMap().tabComplete(player, message.substring(1));
+             if (pos == null) {
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
 index 3999f5b..ca001e9 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java

@@ -1,14 +1,14 @@
-From d8ae87935fed0da2584ad552545d7edf57995bb4 Mon Sep 17 00:00:00 2001
+From 800896dc575832e4cca8a955e5148b33a4db665a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 14 Apr 2014 17:21:24 +1000
 Subject: [PATCH] Check for blank OfflinePlayer Names
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 1336170..2faad8e 100644
+index df5598a..f3a6516 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1293,6 +1293,7 @@ public final class CraftServer implements Server {
+@@ -1294,6 +1294,7 @@ public final class CraftServer implements Server {
      @Deprecated
      public OfflinePlayer getOfflinePlayer(String name) {
          Validate.notNull(name, "Name cannot be null");
