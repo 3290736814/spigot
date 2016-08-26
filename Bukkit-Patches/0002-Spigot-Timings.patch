@@ -1,4 +1,4 @@
-From 6cc98aa15153577874dff0d23a93f99e42b46b08 Mon Sep 17 00:00:00 2001
+From be63dec80db3e86bc846d03cc6b3e44eba4a5ec2 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 2 Jun 2013 10:42:57 +1000
 Subject: [PATCH] Spigot Timings
@@ -276,10 +276,10 @@ index 74f6d0d..1056186 100644
      }
  
 diff --git a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
-index 2118771..cd843f4 100644
+index 3bacd09..76d3a32 100644
 --- a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
 +++ b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
-@@ -39,6 +39,7 @@ import org.bukkit.plugin.PluginLoader;
+@@ -40,6 +40,7 @@ import org.bukkit.plugin.PluginLoader;
  import org.bukkit.plugin.RegisteredListener;
  import org.bukkit.plugin.TimedRegisteredListener;
  import org.bukkit.plugin.UnknownDependencyException;
@@ -287,15 +287,15 @@ index 2118771..cd843f4 100644
  import org.yaml.snakeyaml.error.YAMLException;
  
  /**
-@@ -49,6 +50,7 @@ public final class JavaPluginLoader implements PluginLoader {
+@@ -50,6 +51,7 @@ public final class JavaPluginLoader implements PluginLoader {
      private final Pattern[] fileFilters = new Pattern[] { Pattern.compile("\\.jar$"), };
      private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
-     private final Map<String, PluginClassLoader> loaders = new LinkedHashMap<String, PluginClassLoader>();
+     private final Map<String, PluginClassLoader> loaders = Collections.synchronizedMap(new LinkedHashMap<String, PluginClassLoader>());
 +    public static final CustomTimingsHandler pluginParentTimer = new CustomTimingsHandler("** Plugins"); // Spigot
  
      /**
       * This class was not meant to be constructed explicitly
-@@ -291,13 +293,19 @@ public final class JavaPluginLoader implements PluginLoader {
+@@ -289,13 +291,19 @@ public final class JavaPluginLoader implements PluginLoader {
                  }
              }
  
@@ -315,7 +315,7 @@ index 2118771..cd843f4 100644
                      } catch (InvocationTargetException ex) {
                          throw new EventException(ex.getCause());
                      } catch (Throwable t) {
-@@ -305,7 +313,7 @@ public final class JavaPluginLoader implements PluginLoader {
+@@ -303,7 +311,7 @@ public final class JavaPluginLoader implements PluginLoader {
                      }
                  }
              };
