@@ -1,4 +1,4 @@
-From be63dec80db3e86bc846d03cc6b3e44eba4a5ec2 Mon Sep 17 00:00:00 2001
+From 59813966f89a3f36bcefc53ad000811b24748927 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 2 Jun 2013 10:42:57 +1000
 Subject: [PATCH] Spigot Timings
@@ -276,7 +276,7 @@ index 74f6d0d..1056186 100644
      }
  
 diff --git a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
-index 3bacd09..76d3a32 100644
+index df613b0..7337253 100644
 --- a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
 +++ b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
 @@ -40,6 +40,7 @@ import org.bukkit.plugin.PluginLoader;
@@ -290,12 +290,12 @@ index 3bacd09..76d3a32 100644
 @@ -50,6 +51,7 @@ public final class JavaPluginLoader implements PluginLoader {
      private final Pattern[] fileFilters = new Pattern[] { Pattern.compile("\\.jar$"), };
      private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
-     private final Map<String, PluginClassLoader> loaders = Collections.synchronizedMap(new LinkedHashMap<String, PluginClassLoader>());
+     private final List<PluginClassLoader> loaders = new CopyOnWriteArrayList<PluginClassLoader>();
 +    public static final CustomTimingsHandler pluginParentTimer = new CustomTimingsHandler("** Plugins"); // Spigot
  
      /**
       * This class was not meant to be constructed explicitly
-@@ -289,13 +291,19 @@ public final class JavaPluginLoader implements PluginLoader {
+@@ -287,13 +289,19 @@ public final class JavaPluginLoader implements PluginLoader {
                  }
              }
  
@@ -315,7 +315,7 @@ index 3bacd09..76d3a32 100644
                      } catch (InvocationTargetException ex) {
                          throw new EventException(ex.getCause());
                      } catch (Throwable t) {
-@@ -303,7 +311,7 @@ public final class JavaPluginLoader implements PluginLoader {
+@@ -301,7 +309,7 @@ public final class JavaPluginLoader implements PluginLoader {
                      }
                  }
              };
