@@ -1,4 +1,4 @@
-From 8c16621203bd0e64a6fe0cffccfc7a0cbd1ea860 Mon Sep 17 00:00:00 2001
+From 90caa8a18ee22db5402f63f9fcdf0949f293c812 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -35,10 +35,10 @@ index d4f2924..66ae6c0 100644
              if (!this.getOnlineMode()) {
                  DedicatedServer.LOGGER.warn("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index e5f2f0a..6bb9a4c 100644
+index 69d1f9c..83b6bd3 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -97,6 +97,7 @@ public abstract class World implements IBlockAccess {
+@@ -84,6 +84,7 @@ public abstract class World implements IBlockAccess {
      public long ticksPerMonsterSpawns;
      public boolean populating;
      private int tickPosition;
@@ -46,7 +46,7 @@ index e5f2f0a..6bb9a4c 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -111,6 +112,7 @@ public abstract class World implements IBlockAccess {
+@@ -98,6 +99,7 @@ public abstract class World implements IBlockAccess {
      }
  
      protected World(IDataManager idatamanager, WorldData worlddata, WorldProvider worldprovider, MethodProfiler methodprofiler, boolean flag, ChunkGenerator gen, org.bukkit.World.Environment env) {
@@ -55,7 +55,7 @@ index e5f2f0a..6bb9a4c 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f8b2e44..56440b8 100644
+index 12c1878..344ad24 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -254,8 +254,10 @@ public final class CraftServer implements Server {

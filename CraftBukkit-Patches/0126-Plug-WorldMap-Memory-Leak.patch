@@ -1,4 +1,4 @@
-From ff51c132772cf06fc0bf34c967d9cca97cf35670 Mon Sep 17 00:00:00 2001
+From 46e7cbb86caac82bb9a65f3b765c2c3361d9219e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 8 Aug 2014 19:57:03 +1000
 Subject: [PATCH] Plug WorldMap Memory Leak
@@ -18,10 +18,10 @@ index fe59b75..936d6c6 100644
  
      public PersistentCollection(IDataManager idatamanager) {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 39740e0..9645393 100644
+index ae4dd5d..41a59dc 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1046,6 +1046,23 @@ public abstract class World implements IBlockAccess {
+@@ -1033,6 +1033,23 @@ public abstract class World implements IBlockAccess {
          entity.die();
          if (entity instanceof EntityHuman) {
              this.players.remove(entity);

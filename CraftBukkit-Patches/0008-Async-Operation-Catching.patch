@@ -1,4 +1,4 @@
-From 7b3f5e38e26df1d7b9da98891e19ba3a048e3869 Mon Sep 17 00:00:00 2001
+From dfa39d42706b7d6278137bbf46352180b87b3aa1 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -78,10 +78,10 @@ index 06626b4..af32116 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 0c9f587..778b1c6 100644
+index 25bbff1..133caee 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -910,6 +910,7 @@ public abstract class World implements IBlockAccess {
+@@ -897,6 +897,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public boolean addEntity(Entity entity, SpawnReason spawnReason) { // Changed signature, added SpawnReason
@@ -89,7 +89,7 @@ index 0c9f587..778b1c6 100644
          if (entity == null) return false;
          // CraftBukkit end
          int i = MathHelper.floor(entity.locX / 16.0D);
-@@ -1017,6 +1018,7 @@ public abstract class World implements IBlockAccess {
+@@ -1004,6 +1005,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void removeEntity(Entity entity) {
@@ -97,7 +97,7 @@ index 0c9f587..778b1c6 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2474,6 +2476,7 @@ public abstract class World implements IBlockAccess {
+@@ -2461,6 +2463,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void a(Collection<Entity> collection) {
@@ -106,7 +106,7 @@ index 0c9f587..778b1c6 100644
          // this.entityList.addAll(collection);
          Iterator iterator = collection.iterator();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 0c49eb4..cbfc11c 100644
+index 620ab31..18a22b7 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -170,6 +170,7 @@ public class CraftWorld implements World {
