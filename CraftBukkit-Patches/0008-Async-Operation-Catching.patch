@@ -1,4 +1,4 @@
-From dfa39d42706b7d6278137bbf46352180b87b3aa1 Mon Sep 17 00:00:00 2001
+From 5be0cdcc54e2af4cc8d527612023ea23a76f5126 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -78,10 +78,10 @@ index 06626b4..af32116 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 25bbff1..133caee 100644
+index 0c9f587..778b1c6 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -897,6 +897,7 @@ public abstract class World implements IBlockAccess {
+@@ -910,6 +910,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public boolean addEntity(Entity entity, SpawnReason spawnReason) { // Changed signature, added SpawnReason
@@ -89,7 +89,7 @@ index 25bbff1..133caee 100644
          if (entity == null) return false;
          // CraftBukkit end
          int i = MathHelper.floor(entity.locX / 16.0D);
-@@ -1004,6 +1005,7 @@ public abstract class World implements IBlockAccess {
+@@ -1017,6 +1018,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void removeEntity(Entity entity) {
@@ -97,7 +97,7 @@ index 25bbff1..133caee 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2461,6 +2463,7 @@ public abstract class World implements IBlockAccess {
+@@ -2474,6 +2476,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void a(Collection<Entity> collection) {

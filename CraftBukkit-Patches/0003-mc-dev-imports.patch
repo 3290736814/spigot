@@ -1,4 +1,4 @@
-From 9cc906c7892b928cb1b7895fab0aacad410070e8 Mon Sep 17 00:00:00 2001
+From cb4ce7e7bc18279c245e8a5aabc35b8fbfff1403 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -895,6 +895,42 @@ index 0000000..cb0356e
 +        return this.a;
 +    }
 +}
+diff --git a/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java b/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java
+new file mode 100644
+index 0000000..43310e8
+--- /dev/null
++++ b/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java
+@@ -0,0 +1,30 @@
++package net.minecraft.server;
++
++import java.io.IOException;
++
++public class PacketPlayInBlockPlace implements Packet<PacketListenerPlayIn> {
++
++    private EnumHand a;
++
++    public PacketPlayInBlockPlace() {}
++
++    public PacketPlayInBlockPlace(EnumHand enumhand) {
++        this.a = enumhand;
++    }
++
++    public void a(PacketDataSerializer packetdataserializer) throws IOException {
++        this.a = (EnumHand) packetdataserializer.a(EnumHand.class);
++    }
++
++    public void b(PacketDataSerializer packetdataserializer) throws IOException {
++        packetdataserializer.a((Enum) this.a);
++    }
++
++    public void a(PacketListenerPlayIn packetlistenerplayin) {
++        packetlistenerplayin.a(this);
++    }
++
++    public EnumHand a() {
++        return this.a;
++    }
++}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayInChat.java b/src/main/java/net/minecraft/server/PacketPlayInChat.java
 new file mode 100644
 index 0000000..2e7d61a
@@ -933,6 +969,73 @@ index 0000000..2e7d61a
 +
 +    public String a() {
 +        return this.a;
++    }
++}
+diff --git a/src/main/java/net/minecraft/server/PacketPlayInUseItem.java b/src/main/java/net/minecraft/server/PacketPlayInUseItem.java
+new file mode 100644
+index 0000000..82e09c1
+--- /dev/null
++++ b/src/main/java/net/minecraft/server/PacketPlayInUseItem.java
+@@ -0,0 +1,61 @@
++package net.minecraft.server;
++
++import java.io.IOException;
++
++public class PacketPlayInUseItem implements Packet<PacketListenerPlayIn> {
++
++    private BlockPosition a;
++    private EnumDirection b;
++    private EnumHand c;
++    private float d;
++    private float e;
++    private float f;
++
++    public PacketPlayInUseItem() {}
++
++    public void a(PacketDataSerializer packetdataserializer) throws IOException {
++        this.a = packetdataserializer.e();
++        this.b = (EnumDirection) packetdataserializer.a(EnumDirection.class);
++        this.c = (EnumHand) packetdataserializer.a(EnumHand.class);
++        this.d = (float) packetdataserializer.readUnsignedByte() / 16.0F;
++        this.e = (float) packetdataserializer.readUnsignedByte() / 16.0F;
++        this.f = (float) packetdataserializer.readUnsignedByte() / 16.0F;
++    }
++
++    public void b(PacketDataSerializer packetdataserializer) throws IOException {
++        packetdataserializer.a(this.a);
++        packetdataserializer.a((Enum) this.b);
++        packetdataserializer.a((Enum) this.c);
++        packetdataserializer.writeByte((int) (this.d * 16.0F));
++        packetdataserializer.writeByte((int) (this.e * 16.0F));
++        packetdataserializer.writeByte((int) (this.f * 16.0F));
++    }
++
++    public void a(PacketListenerPlayIn packetlistenerplayin) {
++        packetlistenerplayin.a(this);
++    }
++
++    public BlockPosition a() {
++        return this.a;
++    }
++
++    public EnumDirection b() {
++        return this.b;
++    }
++
++    public EnumHand c() {
++        return this.c;
++    }
++
++    public float d() {
++        return this.d;
++    }
++
++    public float e() {
++        return this.e;
++    }
++
++    public float f() {
++        return this.f;
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayOutChat.java b/src/main/java/net/minecraft/server/PacketPlayOutChat.java

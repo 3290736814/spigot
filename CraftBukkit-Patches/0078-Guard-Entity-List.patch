@@ -1,11 +1,11 @@
-From 2fc604a42a6f52f35ca6ff893465483a0a9cbd01 Mon Sep 17 00:00:00 2001
+From 70cddbc9ba44a6752029d7b571cd18ffd7f495f2 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 10 Mar 2014 09:03:28 +1100
 Subject: [PATCH] Guard Entity List
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index a70b829..854a545 100644
+index 1c56a2b..03c1a72 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -33,7 +33,32 @@ public abstract class World implements IBlockAccess {
@@ -42,7 +42,7 @@ index a70b829..854a545 100644
      protected final List<Entity> f = Lists.newArrayList();
      public final List<TileEntity> tileEntityList = Lists.newArrayList();
      public final List<TileEntity> tileEntityListTick = Lists.newArrayList();
-@@ -88,6 +113,7 @@ public abstract class World implements IBlockAccess {
+@@ -101,6 +126,7 @@ public abstract class World implements IBlockAccess {
      public final org.spigotmc.SpigotWorldConfig spigotConfig; // Spigot
  
      public final SpigotTimings.WorldTimingsHandler timings; // Spigot
@@ -50,7 +50,7 @@ index a70b829..854a545 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -1335,6 +1361,7 @@ public abstract class World implements IBlockAccess {
+@@ -1348,6 +1374,7 @@ public abstract class World implements IBlockAccess {
  
          org.spigotmc.ActivationRange.activateEntities(this); // Spigot
          timings.entityTick.startTiming(); // Spigot
@@ -58,7 +58,7 @@ index a70b829..854a545 100644
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
              entity = (Entity) this.entityList.get(this.tickPosition);
-@@ -1373,12 +1400,15 @@ public abstract class World implements IBlockAccess {
+@@ -1386,12 +1413,15 @@ public abstract class World implements IBlockAccess {
                      this.getChunkAt(j, l).b(entity);
                  }
  

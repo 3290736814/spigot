@@ -1,4 +1,4 @@
-From 36f6d7ae71e961a5336872298e52a4bff5c10150 Mon Sep 17 00:00:00 2001
+From a437c0d765f56d9a5298b9c2c77a436457c1638d Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Tue, 14 Jan 2014 20:11:25 +0000
 Subject: [PATCH] Fix ConcurrentModificationException while being idle kicked
@@ -6,7 +6,7 @@ Subject: [PATCH] Fix ConcurrentModificationException while being idle kicked
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 854a545..bba856d 100644
+index 03c1a72..3174a71 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1,4 +1,4 @@
@@ -15,7 +15,7 @@ index 854a545..bba856d 100644
  
  import com.google.common.base.Function;
  import com.google.common.base.Objects;
-@@ -1043,6 +1043,7 @@ public abstract class World implements IBlockAccess {
+@@ -1056,6 +1056,7 @@ public abstract class World implements IBlockAccess {
              this.everyoneSleeping();
          }
  
@@ -23,7 +23,7 @@ index 854a545..bba856d 100644
          int i = entity.ac;
          int j = entity.ae;
  
-@@ -1059,6 +1060,7 @@ public abstract class World implements IBlockAccess {
+@@ -1072,6 +1073,7 @@ public abstract class World implements IBlockAccess {
              this.entityList.remove(index);
          }
          // CraftBukkit end

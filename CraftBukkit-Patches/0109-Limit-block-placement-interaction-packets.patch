@@ -1,79 +1,88 @@
-From a0abcf4c62774db217db8cab951707d525bb1126 Mon Sep 17 00:00:00 2001
+From 7435649ea9862bfcc810d327e9948ee81d1af81f Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Sun, 29 Jun 2014 21:10:34 +0100
 Subject: [PATCH] Limit block placement/interaction packets
 
 
-diff --git a/src/main/java/net/minecraft/server/PacketPlayInArmAnimation.java b/src/main/java/net/minecraft/server/PacketPlayInArmAnimation.java
-deleted file mode 100644
-index cb0356e..0000000
---- a/src/main/java/net/minecraft/server/PacketPlayInArmAnimation.java
-+++ /dev/null
-@@ -1,30 +0,0 @@
--package net.minecraft.server;
--
--import java.io.IOException;
--
--public class PacketPlayInArmAnimation implements Packet<PacketListenerPlayIn> {
--
--    private EnumHand a;
--
--    public PacketPlayInArmAnimation() {}
--
--    public PacketPlayInArmAnimation(EnumHand enumhand) {
--        this.a = enumhand;
--    }
--
--    public void a(PacketDataSerializer packetdataserializer) throws IOException {
--        this.a = (EnumHand) packetdataserializer.a(EnumHand.class);
--    }
--
--    public void b(PacketDataSerializer packetdataserializer) throws IOException {
--        packetdataserializer.a((Enum) this.a);
--    }
--
--    public void a(PacketListenerPlayIn packetlistenerplayin) {
--        packetlistenerplayin.a(this);
--    }
--
--    public EnumHand a() {
--        return this.a;
--    }
--}
+diff --git a/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java b/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java
+index 43310e8..9611133 100644
+--- a/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java
++++ b/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java
+@@ -5,6 +5,7 @@ import java.io.IOException;
+ public class PacketPlayInBlockPlace implements Packet<PacketListenerPlayIn> {
+ 
+     private EnumHand a;
++    public long timestamp; // Spigot
+ 
+     public PacketPlayInBlockPlace() {}
+ 
+@@ -13,6 +14,7 @@ public class PacketPlayInBlockPlace implements Packet<PacketListenerPlayIn> {
+     }
+ 
+     public void a(PacketDataSerializer packetdataserializer) throws IOException {
++        this.timestamp = System.currentTimeMillis(); // Spigot
+         this.a = (EnumHand) packetdataserializer.a(EnumHand.class);
+     }
+ 
+diff --git a/src/main/java/net/minecraft/server/PacketPlayInUseItem.java b/src/main/java/net/minecraft/server/PacketPlayInUseItem.java
+index 82e09c1..c13081b 100644
+--- a/src/main/java/net/minecraft/server/PacketPlayInUseItem.java
++++ b/src/main/java/net/minecraft/server/PacketPlayInUseItem.java
+@@ -10,10 +10,12 @@ public class PacketPlayInUseItem implements Packet<PacketListenerPlayIn> {
+     private float d;
+     private float e;
+     private float f;
++    public long timestamp;
+ 
+     public PacketPlayInUseItem() {}
+ 
+     public void a(PacketDataSerializer packetdataserializer) throws IOException {
++        this.timestamp = System.currentTimeMillis(); // Spigot
+         this.a = packetdataserializer.e();
+         this.b = (EnumDirection) packetdataserializer.a(EnumDirection.class);
+         this.c = (EnumHand) packetdataserializer.a(EnumHand.class);
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 4a52d23..f1b6773 100644
+index 4a52d23..f14bf31 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -899,6 +899,10 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
- 
+@@ -864,9 +864,29 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+         // CraftBukkit end
      }
  
 +    // Spigot start - limit place/interactions
-+    private long lastPlace = -1;
-+    private int packets = 0;
++    private int limitedPackets;
++    private long lastLimitedPacket = -1;
++
++    private boolean checkLimit(long timestamp) {
++        if (lastLimitedPacket != -1 && timestamp - lastLimitedPacket < 30 && limitedPackets++ >= 4) {
++            return false;
++        }
++
++        if (lastLimitedPacket == -1 || timestamp - lastLimitedPacket >= 30) {
++            lastLimitedPacket = timestamp;
++            limitedPackets = 0;
++            return true;
++        }
++
++        return true;
++    }
 +    // Spigot end
++
+     public void a(PacketPlayInUseItem packetplayinuseitem) {
+         PlayerConnectionUtils.ensureMainThread(packetplayinuseitem, this, this.player.x());
+         if (this.player.cj()) return; // CraftBukkit
++        if (!checkLimit(packetplayinuseitem.timestamp)) return; // Spigot - check limit
+         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
+         EnumHand enumhand = packetplayinuseitem.c();
+         ItemStack itemstack = this.player.b(enumhand);
+@@ -902,6 +922,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
      public void a(PacketPlayInBlockPlace packetplayinblockplace) {
          PlayerConnectionUtils.ensureMainThread(packetplayinblockplace, this, this.player.x());
          if (this.player.cj()) return; // CraftBukkit
-@@ -907,7 +911,17 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
++        if (!checkLimit(packetplayinblockplace.timestamp)) return; // Spigot - check limit
+         WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
+         EnumHand enumhand = packetplayinblockplace.a();
          ItemStack itemstack = this.player.b(enumhand);
- 
-         this.player.resetIdleTimer();
--        if (itemstack != null) {
-+        // Spigot start
-+        boolean throttled = false;
-+        if (lastPlace != -1 && packetplayinblockplace.timestamp - lastPlace < 30 && packets++ >= 4) {
-+            throttled = true;
-+        } else if ( packetplayinblockplace.timestamp - lastPlace >= 30 || lastPlace == -1 )
-+        {
-+            lastPlace = packetplayinblockplace.timestamp;
-+            packets = 0;
-+        }
-+        // Spigot end
-+        if (!throttled && itemstack != null) { // Spigot - skip the event if throttled
-             // CraftBukkit start
-             // Raytrace to look for 'rogue armswings'
-             float f1 = this.player.pitch;
 -- 
 2.7.4
 

@@ -1,4 +1,4 @@
-From 90caa8a18ee22db5402f63f9fcdf0949f293c812 Mon Sep 17 00:00:00 2001
+From c894eeb6c521daf67fa35a018083aba254be4522 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -35,10 +35,10 @@ index d4f2924..66ae6c0 100644
              if (!this.getOnlineMode()) {
                  DedicatedServer.LOGGER.warn("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 69d1f9c..83b6bd3 100644
+index e5f2f0a..6bb9a4c 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -84,6 +84,7 @@ public abstract class World implements IBlockAccess {
+@@ -97,6 +97,7 @@ public abstract class World implements IBlockAccess {
      public long ticksPerMonsterSpawns;
      public boolean populating;
      private int tickPosition;
@@ -46,7 +46,7 @@ index 69d1f9c..83b6bd3 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -98,6 +99,7 @@ public abstract class World implements IBlockAccess {
+@@ -111,6 +112,7 @@ public abstract class World implements IBlockAccess {
      }
  
      protected World(IDataManager idatamanager, WorldData worlddata, WorldProvider worldprovider, MethodProfiler methodprofiler, boolean flag, ChunkGenerator gen, org.bukkit.World.Environment env) {
