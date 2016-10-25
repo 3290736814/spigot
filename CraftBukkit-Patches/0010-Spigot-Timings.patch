@@ -1,4 +1,4 @@
-From 91ca05cb22920f45450acd7a2c3695ca6110a6e6 Mon Sep 17 00:00:00 2001
+From 8480791f9a4b9521e086a5893468259427e90bcf Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -124,7 +124,7 @@ index 66ae6c0..59b124a 100644
  
      public boolean aa() {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 00a74af..6dfa8c4 100644
+index 7645364..3b029d3 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -24,6 +24,7 @@ import org.bukkit.block.BlockFace;
@@ -151,7 +151,7 @@ index 00a74af..6dfa8c4 100644
          if (this.noclip) {
              this.a(this.getBoundingBox().c(d0, d1, d2));
              this.recalcPosition();
-@@ -787,6 +790,7 @@ public abstract class Entity implements ICommandListener {
+@@ -789,6 +792,7 @@ public abstract class Entity implements ICommandListener {
  
              this.world.methodProfiler.b();
          }
@@ -355,7 +355,7 @@ index ce60178..1fd83fe 100644
          this.methodProfiler.b();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index f70fc13..89b9b2f 100644
+index d0e3329..3e5e168 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -1283,6 +1283,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
@@ -518,10 +518,10 @@ index 778b1c6..c197b65 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 21ccb8a..84c4ff5 100644
+index fc9caee..80c4b3b 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -223,10 +223,13 @@ public class WorldServer extends World implements IAsyncTaskHandler {
+@@ -224,10 +224,13 @@ public class WorldServer extends World implements IAsyncTaskHandler {
          // CraftBukkit start - Only call spawner if we have players online and the world allows for mobs or animals
          long time = this.worldData.getTime();
          if (this.getGameRules().getBoolean("doMobSpawning") && this.worldData.getType() != WorldType.DEBUG_ALL_BLOCK_STATES && (this.allowMonsters || this.allowAnimals) && (this instanceof WorldServer && this.players.size() > 0)) {
@@ -535,7 +535,7 @@ index 21ccb8a..84c4ff5 100644
          this.methodProfiler.c("chunkSource");
          this.chunkProvider.unloadChunks();
          int j = this.a(1.0F);
-@@ -240,21 +243,36 @@ public class WorldServer extends World implements IAsyncTaskHandler {
+@@ -241,21 +244,36 @@ public class WorldServer extends World implements IAsyncTaskHandler {
              this.worldData.setDayTime(this.worldData.getDayTime() + 1L);
          }
  
@@ -862,5 +862,5 @@ index 55db3ff..220e39a 100644
 +    // Spigot end
  }
 -- 
-2.7.4
+2.9.3
 

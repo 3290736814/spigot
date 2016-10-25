@@ -1,4 +1,4 @@
-From 6359ea1fb30d66b59c14105c6f142737cee852ab Mon Sep 17 00:00:00 2001
+From 96ad3664da8e27449ed8b86b57c9dabb9a2998a4 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 22 Jun 2013 16:12:02 +1000
 Subject: [PATCH] Allow Disabling of Random Lighting Updates
@@ -18,10 +18,10 @@ index 4fc5848..b71c4ed 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 84c4ff5..bdf46d6 100644
+index 80c4b3b..9ac8323 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -379,7 +379,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
+@@ -380,7 +380,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
  
      protected void i() {
          this.methodProfiler.a("playerCheckLight");
@@ -47,5 +47,5 @@ index 120631b..321238c 100644
 +    }
  }
 -- 
-2.7.4
+2.9.3
 
