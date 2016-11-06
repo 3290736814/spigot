@@ -1,4 +1,4 @@
-From 7daf81c3bfeba237e06f9a4ad3370fb349ba9073 Mon Sep 17 00:00:00 2001
+From 8b187183ec5225c832053c3f2deefd4d75972b1d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 6dfa8c4..57fb8f7 100644
+index 3b029d3..91fa576 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -108,7 +108,7 @@ public abstract class Entity implements ICommandListener {
@@ -135,7 +135,7 @@ index 1227b00..662b5cd 100644
          this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, Optional.absent());
      }
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 4b6415c..234c547 100644
+index 145996b..310c013 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -126,6 +126,28 @@ public class EntityItem extends Entity {
@@ -227,7 +227,7 @@ index 558574f..41d2d87 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index feaf94e..dd127e2 100644
+index 84b9e2d..001c56a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -236,6 +236,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
@@ -551,5 +551,5 @@ index 6a8b5cd..82f8212 100644
 +    }
  }
 -- 
-2.7.4
+2.9.3
 
