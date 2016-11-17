@@ -1,4 +1,4 @@
-From 26e6e98e977be545bb8e5eda6b82590d3696003d Mon Sep 17 00:00:00 2001
+From fa3966b8e17cdc451ae7d115e249361169ff6146 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 1 Jun 2013 16:34:38 +1000
 Subject: [PATCH] Recipe Deconstruction
@@ -6,21 +6,21 @@ Subject: [PATCH] Recipe Deconstruction
 Some non API methods contributed by Asphodan to allow recipe deconstruction.
 
 diff --git a/src/main/java/net/minecraft/server/IRecipe.java b/src/main/java/net/minecraft/server/IRecipe.java
-index 38dd735..9173c41 100644
+index bad5b39..836f4da 100644
 --- a/src/main/java/net/minecraft/server/IRecipe.java
 +++ b/src/main/java/net/minecraft/server/IRecipe.java
-@@ -17,4 +17,6 @@ public interface IRecipe {
-     ItemStack[] b(InventoryCrafting inventorycrafting);
+@@ -13,4 +13,6 @@ public interface IRecipe {
+     NonNullList<ItemStack> b(InventoryCrafting inventorycrafting);
  
      org.bukkit.inventory.Recipe toBukkitRecipe(); // CraftBukkit
 +
 +    java.util.List<ItemStack> getIngredients(); // Spigot
  }
 diff --git a/src/main/java/net/minecraft/server/ShapedRecipes.java b/src/main/java/net/minecraft/server/ShapedRecipes.java
-index 663c24b..f8b2dc6 100644
+index 2cead16..3d511df 100644
 --- a/src/main/java/net/minecraft/server/ShapedRecipes.java
 +++ b/src/main/java/net/minecraft/server/ShapedRecipes.java
-@@ -11,7 +11,7 @@ public class ShapedRecipes implements IRecipe {
+@@ -10,7 +10,7 @@ public class ShapedRecipes implements IRecipe {
      private final int width;
      private final int height;
      private final ItemStack[] items;
@@ -29,7 +29,7 @@ index 663c24b..f8b2dc6 100644
      private boolean e;
  
      public ShapedRecipes(int i, int j, ItemStack[] aitemstack, ItemStack itemstack) {
-@@ -168,4 +168,11 @@ public class ShapedRecipes implements IRecipe {
+@@ -172,4 +172,11 @@ public class ShapedRecipes implements IRecipe {
      public int a() {
          return this.width * this.height;
      }
@@ -42,10 +42,10 @@ index 663c24b..f8b2dc6 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/net/minecraft/server/ShapelessRecipes.java b/src/main/java/net/minecraft/server/ShapelessRecipes.java
-index fb8ad73..2a866e2 100644
+index 070975a..e234a74 100644
 --- a/src/main/java/net/minecraft/server/ShapelessRecipes.java
 +++ b/src/main/java/net/minecraft/server/ShapelessRecipes.java
-@@ -13,7 +13,7 @@ import org.bukkit.craftbukkit.inventory.CraftShapelessRecipe;
+@@ -12,7 +12,7 @@ import org.bukkit.craftbukkit.inventory.CraftShapelessRecipe;
  
  public class ShapelessRecipes implements IRecipe {
  
@@ -54,7 +54,7 @@ index fb8ad73..2a866e2 100644
      private final List<ItemStack> ingredients;
  
      public ShapelessRecipes(ItemStack itemstack, List<ItemStack> list) {
-@@ -93,4 +93,11 @@ public class ShapelessRecipes implements IRecipe {
+@@ -90,4 +90,11 @@ public class ShapelessRecipes implements IRecipe {
      public int a() {
          return this.ingredients.size();
      }
@@ -67,5 +67,5 @@ index fb8ad73..2a866e2 100644
 +    // Spigot end
  }
 -- 
-2.7.4
+2.9.3
 

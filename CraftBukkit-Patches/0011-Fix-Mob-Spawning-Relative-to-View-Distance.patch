@@ -1,4 +1,4 @@
-From 963d4c864b55a6d59e899dfcd71d15256db35147 Mon Sep 17 00:00:00 2001
+From 9c45227caea6ff31111c0e7dab104efd2a384e58 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,20 +8,20 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 38f303d..4fc5848 100644
+index 241c793..ee898dd 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -44,6 +44,7 @@ public class Chunk {
      private int x;
-     private ConcurrentLinkedQueue<BlockPosition> y;
+     private final ConcurrentLinkedQueue<BlockPosition> y;
      public boolean d;
 +    protected gnu.trove.map.hash.TObjectIntHashMap<Class> entityCount = new gnu.trove.map.hash.TObjectIntHashMap<Class>(); // Spigot
  
      // CraftBukkit start - Neighbor loaded cache for chunk lighting and entity ticking
      private int neighbors = 0x1 << 12;
 @@ -608,6 +609,22 @@ public class Chunk {
-         entity.ad = k;
-         entity.ae = this.locZ;
+         entity.ac = k;
+         entity.ad = this.locZ;
          this.entitySlices[k].add(entity);
 +        // Spigot start - increment creature type count
 +        // Keep this synced up with World.a(Class)
@@ -66,7 +66,7 @@ index 38f303d..4fc5848 100644
  
      public boolean c(BlockPosition blockposition) {
 diff --git a/src/main/java/net/minecraft/server/SpawnerCreature.java b/src/main/java/net/minecraft/server/SpawnerCreature.java
-index 73e4cb4..9e86aa2 100644
+index 5dc4735..bec25e4 100644
 --- a/src/main/java/net/minecraft/server/SpawnerCreature.java
 +++ b/src/main/java/net/minecraft/server/SpawnerCreature.java
 @@ -19,6 +19,25 @@ public final class SpawnerCreature {
@@ -142,7 +142,7 @@ index 73e4cb4..9e86aa2 100644
                                                                  entityinsentient.die();
                                                              }
  
--                                                            if (l2 >= entityinsentient.cO()) {
+-                                                            if (l2 >= entityinsentient.cQ()) {
 +                                                            // Spigot start
 +                                                            if ( --moblimit <= 0 ) {
 +                                                                // If we're past limit, stop spawn
@@ -167,5 +167,5 @@ index f5096e3..3dee3ff 100644
 +    }
  }
 -- 
-2.7.4
+2.9.3
 

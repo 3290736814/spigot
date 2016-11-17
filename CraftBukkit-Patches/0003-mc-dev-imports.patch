@@ -1,4 +1,4 @@
-From cb4ce7e7bc18279c245e8a5aabc35b8fbfff1403 Mon Sep 17 00:00:00 2001
+From 61559ba95b6503be3c50ac0d75ef68a99aa7751e Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -50,10 +50,10 @@ index 0000000..130597c
 +}
 diff --git a/src/main/java/net/minecraft/server/CommandDispatcher.java b/src/main/java/net/minecraft/server/CommandDispatcher.java
 new file mode 100644
-index 0000000..e44fc86
+index 0000000..b4ef581
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/CommandDispatcher.java
-@@ -0,0 +1,127 @@
+@@ -0,0 +1,128 @@
 +package net.minecraft.server;
 +
 +import java.util.Iterator;
@@ -109,6 +109,7 @@ index 0000000..e44fc86
 +        this.a((ICommand) (new CommandTitle()));
 +        this.a((ICommand) (new CommandEntityData()));
 +        this.a((ICommand) (new CommandStopSound()));
++        this.a((ICommand) (new CommandLocate()));
 +        if (minecraftserver.aa()) {
 +            this.a((ICommand) (new CommandOp()));
 +            this.a((ICommand) (new CommandDeop()));
@@ -236,7 +237,7 @@ index 0000000..27ce9d9
 +}
 diff --git a/src/main/java/net/minecraft/server/GenericAttributes.java b/src/main/java/net/minecraft/server/GenericAttributes.java
 new file mode 100644
-index 0000000..1122787
+index 0000000..15ad9fa
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/GenericAttributes.java
 @@ -0,0 +1,119 @@
@@ -316,10 +317,10 @@ index 0000000..1122787
 +            NBTTagCompound nbttagcompound = nbttaglist.get(i);
 +            AttributeInstance attributeinstance = attributemapbase.a(nbttagcompound.getString("Name"));
 +
-+            if (attributeinstance != null) {
-+                a(attributeinstance, nbttagcompound);
-+            } else {
++            if (attributeinstance == null) {
 +                GenericAttributes.j.warn("Ignoring unknown attribute \'{}\'", new Object[] { nbttagcompound.getString("Name")});
++            } else {
++                a(attributeinstance, nbttagcompound);
 +            }
 +        }
 +
@@ -430,10 +431,10 @@ index 0000000..d916050
 +}
 diff --git a/src/main/java/net/minecraft/server/ItemDoor.java b/src/main/java/net/minecraft/server/ItemDoor.java
 new file mode 100644
-index 0000000..6c6f905
+index 0000000..b325563
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ItemDoor.java
-@@ -0,0 +1,66 @@
+@@ -0,0 +1,68 @@
 +package net.minecraft.server;
 +
 +public class ItemDoor extends Item {
@@ -445,7 +446,7 @@ index 0000000..6c6f905
 +        this.a(CreativeModeTab.d);
 +    }
 +
-+    public EnumInteractionResult a(ItemStack itemstack, EntityHuman entityhuman, World world, BlockPosition blockposition, EnumHand enumhand, EnumDirection enumdirection, float f, float f1, float f2) {
++    public EnumInteractionResult a(EntityHuman entityhuman, World world, BlockPosition blockposition, EnumHand enumhand, EnumDirection enumdirection, float f, float f1, float f2) {
 +        if (enumdirection != EnumDirection.UP) {
 +            return EnumInteractionResult.FAIL;
 +        } else {
@@ -456,6 +457,8 @@ index 0000000..6c6f905
 +                blockposition = blockposition.shift(enumdirection);
 +            }
 +
++            ItemStack itemstack = entityhuman.b(enumhand);
++
 +            if (entityhuman.a(blockposition, enumdirection, itemstack) && this.a.canPlace(world, blockposition)) {
 +                EnumDirection enumdirection1 = EnumDirection.fromAngle((double) entityhuman.yaw);
 +                int i = enumdirection1.getAdjacentX();
@@ -463,10 +466,10 @@ index 0000000..6c6f905
 +                boolean flag = i < 0 && f2 < 0.5F || i > 0 && f2 > 0.5F || j < 0 && f > 0.5F || j > 0 && f < 0.5F;
 +
 +                a(world, blockposition, enumdirection1, this.a, flag);
-+                SoundEffectType soundeffecttype = this.a.w();
++                SoundEffectType soundeffecttype = this.a.getStepSound();
 +
 +                world.a(entityhuman, blockposition, soundeffecttype.e(), SoundCategory.BLOCKS, (soundeffecttype.a() + 1.0F) / 2.0F, soundeffecttype.b() * 0.8F);
-+                --itemstack.count;
++                itemstack.subtract(1);
 +                return EnumInteractionResult.SUCCESS;
 +            } else {
 +                return EnumInteractionResult.FAIL;
@@ -477,8 +480,8 @@ index 0000000..6c6f905
 +    public static void a(World world, BlockPosition blockposition, EnumDirection enumdirection, Block block, boolean flag) {
 +        BlockPosition blockposition1 = blockposition.shift(enumdirection.e());
 +        BlockPosition blockposition2 = blockposition.shift(enumdirection.f());
-+        int i = (world.getType(blockposition2).l() ? 1 : 0) + (world.getType(blockposition2.up()).l() ? 1 : 0);
-+        int j = (world.getType(blockposition1).l() ? 1 : 0) + (world.getType(blockposition1.up()).l() ? 1 : 0);
++        int i = (world.getType(blockposition2).m() ? 1 : 0) + (world.getType(blockposition2.up()).m() ? 1 : 0);
++        int j = (world.getType(blockposition1).m() ? 1 : 0) + (world.getType(blockposition1.up()).m() ? 1 : 0);
 +        boolean flag1 = world.getType(blockposition2).getBlock() == block || world.getType(blockposition2.up()).getBlock() == block;
 +        boolean flag2 = world.getType(blockposition1).getBlock() == block || world.getType(blockposition1.up()).getBlock() == block;
 +
@@ -496,8 +499,8 @@ index 0000000..6c6f905
 +
 +        world.setTypeAndData(blockposition, iblockdata.set(BlockDoor.HALF, BlockDoor.EnumDoorHalf.LOWER), 2);
 +        world.setTypeAndData(blockposition3, iblockdata.set(BlockDoor.HALF, BlockDoor.EnumDoorHalf.UPPER), 2);
-+        world.applyPhysics(blockposition, block);
-+        world.applyPhysics(blockposition3, block);
++        world.applyPhysics(blockposition, block, false);
++        world.applyPhysics(blockposition3, block, false);
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java b/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java
@@ -933,7 +936,7 @@ index 0000000..43310e8
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayInChat.java b/src/main/java/net/minecraft/server/PacketPlayInChat.java
 new file mode 100644
-index 0000000..2e7d61a
+index 0000000..3dd4e28
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PacketPlayInChat.java
 @@ -0,0 +1,34 @@
@@ -948,15 +951,15 @@ index 0000000..2e7d61a
 +    public PacketPlayInChat() {}
 +
 +    public PacketPlayInChat(String s) {
-+        if (s.length() > 100) {
-+            s = s.substring(0, 100);
++        if (s.length() > 256) {
++            s = s.substring(0, 256);
 +        }
 +
 +        this.a = s;
 +    }
 +
 +    public void a(PacketDataSerializer packetdataserializer) throws IOException {
-+        this.a = packetdataserializer.e(100);
++        this.a = packetdataserializer.e(256);
 +    }
 +
 +    public void b(PacketDataSerializer packetdataserializer) throws IOException {
@@ -973,7 +976,7 @@ index 0000000..2e7d61a
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayInUseItem.java b/src/main/java/net/minecraft/server/PacketPlayInUseItem.java
 new file mode 100644
-index 0000000..82e09c1
+index 0000000..bdcda81
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PacketPlayInUseItem.java
 @@ -0,0 +1,61 @@
@@ -996,18 +999,18 @@ index 0000000..82e09c1
 +        this.a = packetdataserializer.e();
 +        this.b = (EnumDirection) packetdataserializer.a(EnumDirection.class);
 +        this.c = (EnumHand) packetdataserializer.a(EnumHand.class);
-+        this.d = (float) packetdataserializer.readUnsignedByte() / 16.0F;
-+        this.e = (float) packetdataserializer.readUnsignedByte() / 16.0F;
-+        this.f = (float) packetdataserializer.readUnsignedByte() / 16.0F;
++        this.d = packetdataserializer.readFloat();
++        this.e = packetdataserializer.readFloat();
++        this.f = packetdataserializer.readFloat();
 +    }
 +
 +    public void b(PacketDataSerializer packetdataserializer) throws IOException {
 +        packetdataserializer.a(this.a);
 +        packetdataserializer.a((Enum) this.b);
 +        packetdataserializer.a((Enum) this.c);
-+        packetdataserializer.writeByte((int) (this.d * 16.0F));
-+        packetdataserializer.writeByte((int) (this.e * 16.0F));
-+        packetdataserializer.writeByte((int) (this.f * 16.0F));
++        packetdataserializer.writeFloat(this.d);
++        packetdataserializer.writeFloat(this.e);
++        packetdataserializer.writeFloat(this.f);
 +    }
 +
 +    public void a(PacketListenerPlayIn packetlistenerplayin) {
@@ -1040,10 +1043,10 @@ index 0000000..82e09c1
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayOutChat.java b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
 new file mode 100644
-index 0000000..c5147b6
+index 0000000..24462f1
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
-@@ -0,0 +1,38 @@
+@@ -0,0 +1,42 @@
 +package net.minecraft.server;
 +
 +import java.io.IOException;
@@ -1080,6 +1083,10 @@ index 0000000..c5147b6
 +
 +    public boolean b() {
 +        return this.b == 1 || this.b == 2;
++    }
++
++    public byte c() {
++        return this.b;
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/PersistentCollection.java b/src/main/java/net/minecraft/server/PersistentCollection.java
@@ -1272,7 +1279,7 @@ index 0000000..fe59b75
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerConnection.java b/src/main/java/net/minecraft/server/ServerConnection.java
 new file mode 100644
-index 0000000..3a8f24d
+index 0000000..1abc6b6
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerConnection.java
 @@ -0,0 +1,174 @@
@@ -1351,7 +1358,7 @@ index 0000000..3a8f24d
 +            Class oclass;
 +            LazyInitVar lazyinitvar;
 +
-+            if (Epoll.isAvailable() && this.f.ae()) {
++            if (Epoll.isAvailable() && this.f.af()) {
 +                oclass = EpollServerSocketChannel.class;
 +                lazyinitvar = ServerConnection.b;
 +                ServerConnection.e.info("Using epoll channel type");
@@ -1452,7 +1459,7 @@ index 0000000..3a8f24d
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerStatisticManager.java b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 new file mode 100644
-index 0000000..a527aac
+index 0000000..277e98f
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 @@ -0,0 +1,212 @@
@@ -1521,14 +1528,14 @@ index 0000000..a527aac
 +        this.e.add(statistic);
 +        if (statistic.d() && j == 0 && i > 0) {
 +            this.g = true;
-+            if (this.c.ax()) {
++            if (this.c.ay()) {
 +                this.c.getPlayerList().sendMessage(new ChatMessage("chat.type.achievement", new Object[] { entityhuman.getScoreboardDisplayName(), statistic.j()}));
 +            }
 +        }
 +
 +        if (statistic.d() && j > 0 && i == 0) {
 +            this.g = true;
-+            if (this.c.ax()) {
++            if (this.c.ay()) {
 +                this.c.getPlayerList().sendMessage(new ChatMessage("chat.type.achievement.taken", new Object[] { entityhuman.getScoreboardDisplayName(), statistic.j()}));
 +            }
 +        }
@@ -1631,7 +1638,7 @@ index 0000000..a527aac
 +    }
 +
 +    public void a(EntityPlayer entityplayer) {
-+        int i = this.c.ap();
++        int i = this.c.aq();
 +        HashMap hashmap = Maps.newHashMap();
 +
 +        if (this.g || i - this.f > 300) {
@@ -1668,9 +1675,255 @@ index 0000000..a527aac
 +        return this.g;
 +    }
 +}
+diff --git a/src/main/java/net/minecraft/server/StructureGenerator.java b/src/main/java/net/minecraft/server/StructureGenerator.java
+new file mode 100644
+index 0000000..0aaf72f
+--- /dev/null
++++ b/src/main/java/net/minecraft/server/StructureGenerator.java
+@@ -0,0 +1,240 @@
++package net.minecraft.server;
++
++import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
++import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
++import it.unimi.dsi.fastutil.objects.ObjectIterator;
++import java.util.Iterator;
++import java.util.Random;
++import javax.annotation.Nullable;
++
++public abstract class StructureGenerator extends WorldGenBase {
++
++    private PersistentStructure a;
++    protected Long2ObjectMap<StructureStart> c = new Long2ObjectOpenHashMap(1024);
++
++    public StructureGenerator() {}
++
++    public abstract String a();
++
++    protected final synchronized void a(World world, final int i, final int j, int k, int l, ChunkSnapshot chunksnapshot) {
++        this.a(world);
++        if (!this.c.containsKey(ChunkCoordIntPair.a(i, j))) {
++            this.f.nextInt();
++
++            try {
++                if (this.a(i, j)) {
++                    StructureStart structurestart = this.b(i, j);
++
++                    this.c.put(ChunkCoordIntPair.a(i, j), structurestart);
++                    if (structurestart.a()) {
++                        this.a(i, j, structurestart);
++                    }
++                }
++
++            } catch (Throwable throwable) {
++                CrashReport crashreport = CrashReport.a(throwable, "Exception preparing structure feature");
++                CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Feature being prepared");
++
++                crashreportsystemdetails.a("Is feature chunk", new CrashReportCallable() {
++                    public String a() throws Exception {
++                        return StructureGenerator.this.a(i, j) ? "True" : "False";
++                    }
++
++                    public Object call() throws Exception {
++                        return this.a();
++                    }
++                });
++                crashreportsystemdetails.a("Chunk location", (Object) String.format("%d,%d", new Object[] { Integer.valueOf(i), Integer.valueOf(j)}));
++                crashreportsystemdetails.a("Chunk pos hash", new CrashReportCallable() {
++                    public String a() throws Exception {
++                        return String.valueOf(ChunkCoordIntPair.a(i, j));
++                    }
++
++                    public Object call() throws Exception {
++                        return this.a();
++                    }
++                });
++                crashreportsystemdetails.a("Structure type", new CrashReportCallable() {
++                    public String a() throws Exception {
++                        return StructureGenerator.this.getClass().getCanonicalName();
++                    }
++
++                    public Object call() throws Exception {
++                        return this.a();
++                    }
++                });
++                throw new ReportedException(crashreport);
++            }
++        }
++    }
++
++    public synchronized boolean a(World world, Random random, ChunkCoordIntPair chunkcoordintpair) {
++        this.a(world);
++        int i = (chunkcoordintpair.x << 4) + 8;
++        int j = (chunkcoordintpair.z << 4) + 8;
++        boolean flag = false;
++        ObjectIterator objectiterator = this.c.values().iterator();
++
++        while (objectiterator.hasNext()) {
++            StructureStart structurestart = (StructureStart) objectiterator.next();
++
++            if (structurestart.a() && structurestart.a(chunkcoordintpair) && structurestart.b().a(i, j, i + 15, j + 15)) {
++                structurestart.a(world, random, new StructureBoundingBox(i, j, i + 15, j + 15));
++                structurestart.b(chunkcoordintpair);
++                flag = true;
++                this.a(structurestart.e(), structurestart.f(), structurestart);
++            }
++        }
++
++        return flag;
++    }
++
++    public boolean b(BlockPosition blockposition) {
++        this.a(this.g);
++        return this.c(blockposition) != null;
++    }
++
++    @Nullable
++    protected StructureStart c(BlockPosition blockposition) {
++        ObjectIterator objectiterator = this.c.values().iterator();
++
++        while (objectiterator.hasNext()) {
++            StructureStart structurestart = (StructureStart) objectiterator.next();
++
++            if (structurestart.a() && structurestart.b().b((BaseBlockPosition) blockposition)) {
++                Iterator iterator = structurestart.c().iterator();
++
++                while (iterator.hasNext()) {
++                    StructurePiece structurepiece = (StructurePiece) iterator.next();
++
++                    if (structurepiece.d().b((BaseBlockPosition) blockposition)) {
++                        return structurestart;
++                    }
++                }
++            }
++        }
++
++        return null;
++    }
++
++    public boolean a(World world, BlockPosition blockposition) {
++        this.a(world);
++        ObjectIterator objectiterator = this.c.values().iterator();
++
++        StructureStart structurestart;
++
++        do {
++            if (!objectiterator.hasNext()) {
++                return false;
++            }
++
++            structurestart = (StructureStart) objectiterator.next();
++        } while (!structurestart.a() || !structurestart.b().b((BaseBlockPosition) blockposition));
++
++        return true;
++    }
++
++    @Nullable
++    public abstract BlockPosition getNearestGeneratedFeature(World world, BlockPosition blockposition, boolean flag);
++
++    protected void a(World world) {
++        if (this.a == null) {
++            this.a = (PersistentStructure) world.a(PersistentStructure.class, this.a());
++            if (this.a == null) {
++                this.a = new PersistentStructure(this.a());
++                world.a(this.a(), (PersistentBase) this.a);
++            } else {
++                NBTTagCompound nbttagcompound = this.a.a();
++                Iterator iterator = nbttagcompound.c().iterator();
++
++                while (iterator.hasNext()) {
++                    String s = (String) iterator.next();
++                    NBTBase nbtbase = nbttagcompound.get(s);
++
++                    if (nbtbase.getTypeId() == 10) {
++                        NBTTagCompound nbttagcompound1 = (NBTTagCompound) nbtbase;
++
++                        if (nbttagcompound1.hasKey("ChunkX") && nbttagcompound1.hasKey("ChunkZ")) {
++                            int i = nbttagcompound1.getInt("ChunkX");
++                            int j = nbttagcompound1.getInt("ChunkZ");
++                            StructureStart structurestart = WorldGenFactory.a(nbttagcompound1, world);
++
++                            if (structurestart != null) {
++                                this.c.put(ChunkCoordIntPair.a(i, j), structurestart);
++                            }
++                        }
++                    }
++                }
++            }
++        }
++
++    }
++
++    private void a(int i, int j, StructureStart structurestart) {
++        this.a.a(structurestart.a(i, j), i, j);
++        this.a.c();
++    }
++
++    protected abstract boolean a(int i, int j);
++
++    protected abstract StructureStart b(int i, int j);
++
++    protected static BlockPosition a(World world, StructureGenerator structuregenerator, BlockPosition blockposition, int i, int j, int k, boolean flag, int l, boolean flag1) {
++        int i1 = blockposition.getX() >> 4;
++        int j1 = blockposition.getZ() >> 4;
++        int k1 = 0;
++
++        for (Random random = new Random(); k1 <= l; ++k1) {
++            for (int l1 = -k1; l1 <= k1; ++l1) {
++                boolean flag2 = l1 == -k1 || l1 == k1;
++
++                for (int i2 = -k1; i2 <= k1; ++i2) {
++                    boolean flag3 = i2 == -k1 || i2 == k1;
++
++                    if (flag2 || flag3) {
++                        int j2 = i1 + i * l1;
++                        int k2 = j1 + i * i2;
++
++                        if (j2 < 0) {
++                            j2 -= i - 1;
++                        }
++
++                        if (k2 < 0) {
++                            k2 -= i - 1;
++                        }
++
++                        int l2 = j2 / i;
++                        int i3 = k2 / i;
++                        Random random1 = world.a(l2, i3, k);
++
++                        l2 *= i;
++                        i3 *= i;
++                        if (flag) {
++                            l2 += (random1.nextInt(i - j) + random1.nextInt(i - j)) / 2;
++                            i3 += (random1.nextInt(i - j) + random1.nextInt(i - j)) / 2;
++                        } else {
++                            l2 += random1.nextInt(i - j);
++                            i3 += random1.nextInt(i - j);
++                        }
++
++                        WorldGenBase.a(world.getSeed(), random, l2, i3);
++                        random.nextInt();
++                        if (structuregenerator.a(l2, i3)) {
++                            if (!flag1 || !world.b(l2, i3)) {
++                                return new BlockPosition((l2 << 4) + 8, 64, (i3 << 4) + 8);
++                            }
++                        } else if (k1 == 0) {
++                            break;
++                        }
++                    }
++                }
++
++                if (k1 == 0) {
++                    break;
++                }
++            }
++        }
++
++        return null;
++    }
++}
 diff --git a/src/main/java/net/minecraft/server/TileEntitySkull.java b/src/main/java/net/minecraft/server/TileEntitySkull.java
 new file mode 100644
-index 0000000..4ae6796
+index 0000000..6e91a22
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/TileEntitySkull.java
 @@ -0,0 +1,152 @@
@@ -1736,7 +1989,7 @@ index 0000000..4ae6796
 +
 +    }
 +
-+    public void E_() {
++    public void F_() {
 +        if (this.a == 5) {
 +            if (this.world.isBlockIndirectlyPowered(this.position)) {
 +                this.i = true;
@@ -1755,10 +2008,10 @@ index 0000000..4ae6796
 +
 +    @Nullable
 +    public PacketPlayOutTileEntityData getUpdatePacket() {
-+        return new PacketPlayOutTileEntityData(this.position, 4, this.c());
++        return new PacketPlayOutTileEntityData(this.position, 4, this.d());
 +    }
 +
-+    public NBTTagCompound c() {
++    public NBTTagCompound d() {
 +        return this.save(new NBTTagCompound());
 +    }
 +
@@ -1828,10 +2081,10 @@ index 0000000..4ae6796
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenLargeFeature.java b/src/main/java/net/minecraft/server/WorldGenLargeFeature.java
 new file mode 100644
-index 0000000..8ceac26
+index 0000000..5781a17
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenLargeFeature.java
-@@ -0,0 +1,139 @@
+@@ -0,0 +1,144 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Lists;
@@ -1915,6 +2168,11 @@ index 0000000..8ceac26
 +        return false;
 +    }
 +
++    public BlockPosition getNearestGeneratedFeature(World world, BlockPosition blockposition, boolean flag) {
++        this.g = world;
++        return a(world, this, blockposition, this.d, 8, 14357617, false, 100, flag);
++    }
++
 +    protected StructureStart b(int i, int j) {
 +        return new WorldGenLargeFeature.WorldGenLargeFeatureStart(this.g, this.f, i, j);
 +    }
@@ -1973,10 +2231,10 @@ index 0000000..8ceac26
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenVillage.java b/src/main/java/net/minecraft/server/WorldGenVillage.java
 new file mode 100644
-index 0000000..6ddb752
+index 0000000..11a6ef7
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenVillage.java
-@@ -0,0 +1,138 @@
+@@ -0,0 +1,143 @@
 +package net.minecraft.server;
 +
 +import java.util.Arrays;
@@ -2047,6 +2305,11 @@ index 0000000..6ddb752
 +        }
 +
 +        return false;
++    }
++
++    public BlockPosition getNearestGeneratedFeature(World world, BlockPosition blockposition, boolean flag) {
++        this.g = world;
++        return a(world, this, blockposition, this.d, 8, 10387312, false, 100, flag);
 +    }
 +
 +    protected StructureStart b(int i, int j) {
@@ -2137,5 +2400,5 @@ index 0000000..31fc0a9
 +    }
 +}
 -- 
-2.7.4
+2.9.3
 

@@ -1,22 +1,14 @@
-From 40e56ffebae3d956292ca1f22ff7a9154512d69f Mon Sep 17 00:00:00 2001
+From fbfffce6e7b97970d4cd9648c4f05d0058772f9b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 18 Dec 2013 13:32:10 +1100
 Subject: [PATCH] Fire PreLogin Events in Offline Mode
 
 
 diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
-index a5cbe04..7aeb3ab 100644
+index 1780c4e..d45c357 100644
 --- a/src/main/java/net/minecraft/server/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/LoginListener.java
-@@ -13,6 +13,7 @@ import java.util.Arrays;
- import java.util.Random;
- import java.util.UUID;
- import java.util.concurrent.atomic.AtomicInteger;
-+import java.util.logging.Level;
- import javax.crypto.SecretKey;
- import org.apache.commons.lang3.Validate;
- import org.apache.logging.log4j.LogManager;
-@@ -80,10 +81,23 @@ public class LoginListener implements PacketLoginInListener, ITickable {
+@@ -84,10 +84,23 @@ public class LoginListener implements PacketLoginInListener, ITickable {
  
      }
  
@@ -40,7 +32,7 @@ index a5cbe04..7aeb3ab 100644
  
          // CraftBukkit start - fire PlayerLoginEvent
          EntityPlayer s = this.server.getPlayerList().attemptLogin(this, this.i, hostname);
-@@ -133,7 +147,22 @@ public class LoginListener implements PacketLoginInListener, ITickable {
+@@ -137,7 +150,22 @@ public class LoginListener implements PacketLoginInListener, ITickable {
              this.g = LoginListener.EnumProtocolState.KEY;
              this.networkManager.sendPacket(new PacketLoginOutEncryptionBegin("", this.server.O().getPublic(), this.e));
          } else {
@@ -64,7 +56,7 @@ index a5cbe04..7aeb3ab 100644
          }
  
      }
-@@ -162,6 +191,39 @@ public class LoginListener implements PacketLoginInListener, ITickable {
+@@ -166,6 +194,47 @@ public class LoginListener implements PacketLoginInListener, ITickable {
                                  return;
                              }
  
@@ -92,6 +84,14 @@ index a5cbe04..7aeb3ab 100644
 +                        server.server.getLogger().log(java.util.logging.Level.WARNING, "Exception verifying " + gameprofile.getName(), exception);
 +                        // CraftBukkit end
 +                    }
++
++                }
++
++                @Nullable
++                private InetAddress a() {
++                    SocketAddress socketaddress = LoginListener.this.networkManager.getSocketAddress();
++
++                    return LoginListener.this.server.ac() && socketaddress instanceof InetSocketAddress ? ((InetSocketAddress) socketaddress).getAddress() : null;
 +                }
 +            }).start();
 +        }
@@ -104,7 +104,7 @@ index a5cbe04..7aeb3ab 100644
                              String playerName = i.getName();
                              java.net.InetAddress address = ((java.net.InetSocketAddress) networkManager.getSocketAddress()).getAddress();
                              java.util.UUID uniqueId = i.getId();
-@@ -196,34 +258,9 @@ public class LoginListener implements PacketLoginInListener, ITickable {
+@@ -200,41 +269,9 @@ public class LoginListener implements PacketLoginInListener, ITickable {
                              // CraftBukkit end
                              LoginListener.c.info("UUID of player {} is {}", new Object[] { LoginListener.this.i.getName(), LoginListener.this.i.getId()});
                              LoginListener.this.g = LoginListener.EnumProtocolState.READY_TO_ACCEPT;
@@ -133,6 +133,13 @@ index a5cbe04..7aeb3ab 100644
 -                    }
 -
                  }
+-
+-                @Nullable
+-                private InetAddress a() {
+-                    SocketAddress socketaddress = LoginListener.this.networkManager.getSocketAddress();
+-
+-                    return LoginListener.this.server.ac() && socketaddress instanceof InetSocketAddress ? ((InetSocketAddress) socketaddress).getAddress() : null;
+-                }
 -            }).start();
          }
 -    }
@@ -141,5 +148,5 @@ index a5cbe04..7aeb3ab 100644
      protected GameProfile a(GameProfile gameprofile) {
          UUID uuid = UUID.nameUUIDFromBytes(("OfflinePlayer:" + gameprofile.getName()).getBytes(Charsets.UTF_8));
 -- 
-2.7.4
+2.9.3
 

@@ -1,0 +1,36 @@
+From 4a7ce212346ab33b92d8dabe8f71b06ce1a19b39 Mon Sep 17 00:00:00 2001
+From: Thinkofdeath <thethinkofdeath@gmail.com>
+Date: Tue, 14 Jan 2014 20:11:25 +0000
+Subject: [PATCH] Fix ConcurrentModificationException while being idle kicked
+ in a vehicle
+
+
+diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
+index ca7f203..ed8919d 100644
+--- a/src/main/java/net/minecraft/server/World.java
++++ b/src/main/java/net/minecraft/server/World.java
+@@ -1,4 +1,4 @@
+-package net.minecraft.server;
++	package net.minecraft.server;
+ 
+ import com.google.common.base.Function;
+ import com.google.common.base.Objects;
+@@ -1115,6 +1115,7 @@ public abstract class World implements IBlockAccess {
+             this.everyoneSleeping();
+         }
+ 
++        if (!guardEntityList) { // Spigot - It will get removed after the tick if we are ticking
+         int i = entity.ab;
+         int j = entity.ad;
+ 
+@@ -1131,6 +1132,7 @@ public abstract class World implements IBlockAccess {
+             this.entityList.remove(index);
+         }
+         // CraftBukkit end
++        } // Spigot
+         this.c(entity);
+     }
+ 
+-- 
+2.9.3
+

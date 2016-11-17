@@ -1,4 +1,4 @@
-From 1da70b252c644bc0f6fc6aea0deea099558a0c5a Mon Sep 17 00:00:00 2001
+From 18a6b69c478d3164671e2b798cfe4c667efef50f Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 2 Jul 2013 13:07:39 +1000
 Subject: [PATCH] POM Changes
@@ -6,7 +6,7 @@ Subject: [PATCH] POM Changes
 Basic changes to the build system which mark the artifact as Spigot, and the necessary code changes to ensure proper functionality. Also disables the auto updater provided by CraftBukkit as it is useless to us.
 
 diff --git a/pom.xml b/pom.xml
-index c868c79..5dfa5b6 100644
+index 06ebffa..165863b 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,12 +1,12 @@
@@ -18,7 +18,7 @@ index c868c79..5dfa5b6 100644
 +    <groupId>org.spigotmc</groupId>
 +    <artifactId>spigot</artifactId>
      <packaging>jar</packaging>
-     <version>1.10.2-R0.1-SNAPSHOT</version>
+     <version>1.11-R0.1-SNAPSHOT</version>
 -    <name>CraftBukkit</name>
 -    <url>http://www.bukkit.org</url>
 +    <name>Spigot</name>
@@ -26,7 +26,7 @@ index c868c79..5dfa5b6 100644
  
      <properties>
          <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-@@ -19,10 +19,17 @@
+@@ -20,10 +20,17 @@
          <maven.compiler.target>1.6</maven.compiler.target>
      </properties>
  
@@ -46,8 +46,8 @@ index c868c79..5dfa5b6 100644
              <version>${project.version}</version>
              <scope>compile</scope>
          </dependency>
-@@ -56,6 +63,11 @@
-             <version>5.1.37</version>
+@@ -57,6 +64,11 @@
+             <version>5.1.39</version>
              <scope>compile</scope>
          </dependency>
 +        <dependency>
@@ -58,7 +58,7 @@ index c868c79..5dfa5b6 100644
          <!-- testing -->
          <dependency>
              <groupId>junit</groupId>
-@@ -86,11 +98,26 @@
+@@ -87,11 +99,26 @@
                  <groupId>net.md-5</groupId>
                  <artifactId>scriptus</artifactId>
                  <version>0.2</version>
@@ -88,13 +88,13 @@ index c868c79..5dfa5b6 100644
                          <phase>initialize</phase>
                          <goals>
                              <goal>describe</goal>
-@@ -107,7 +134,7 @@
+@@ -108,7 +135,7 @@
                          <manifestEntries>
                              <Main-Class>org.bukkit.craftbukkit.Main</Main-Class>
                              <Implementation-Title>CraftBukkit</Implementation-Title>
 -                            <Implementation-Version>${describe}</Implementation-Version>
 +                            <Implementation-Version>${spigot.desc}${craftbukkit.desc}</Implementation-Version>
-                             <Implementation-Vendor>Bukkit Team</Implementation-Vendor>
+                             <Implementation-Vendor>${maven.build.timestamp}</Implementation-Vendor>
                              <Specification-Title>Bukkit</Specification-Title>
                              <Specification-Version>${api.version}</Specification-Version>
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
@@ -111,5 +111,5 @@ index f905d17..9304637 100644
  
          if (stream != null) {
 -- 
-2.7.4
+2.9.3
 

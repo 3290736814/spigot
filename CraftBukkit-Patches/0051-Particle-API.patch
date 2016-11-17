@@ -1,4 +1,4 @@
-From 4b34f0880637e83102ff7f32d2148be770d9f3db Mon Sep 17 00:00:00 2001
+From e02874a8cb7758725586d18269c67139608f872f Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Fri, 20 Dec 2013 21:36:06 +0000
 Subject: [PATCH] Particle API
@@ -19,7 +19,7 @@ index 1672183..352ff3a 100644
              datavalue = 0;
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 18a22b7..adf6c52 100644
+index c27c325..f478802 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -827,28 +827,18 @@ public class CraftWorld implements World {
@@ -60,7 +60,7 @@ index 18a22b7..adf6c52 100644
      }
  
      public <T extends Entity> T spawn(Location location, Class<T> clazz) throws IllegalArgumentException {
-@@ -1477,6 +1467,70 @@ public class CraftWorld implements World {
+@@ -1518,6 +1508,70 @@ public class CraftWorld implements World {
      // Spigot start
      private final Spigot spigot = new Spigot()
      {
@@ -132,7 +132,7 @@ index 18a22b7..adf6c52 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 470d17d..1bfb47e 100644
+index d58fcee..fbde4af 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -330,9 +330,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
@@ -211,5 +211,5 @@ index 470d17d..1bfb47e 100644
  
      public Player.Spigot spigot()
 -- 
-2.7.4
+2.9.3
 

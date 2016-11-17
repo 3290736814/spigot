@@ -1,27 +1,27 @@
-From d8fd92ea4d2c28f2600f06f72454ddec0db9fe93 Mon Sep 17 00:00:00 2001
+From 30ff028843299fdddde2c70ae233911924e28dc1 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 59b124a..c2aafcf 100644
+index e065316..33ed43d 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -278,7 +278,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -279,7 +279,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                  }
                  // CraftBukkit end
  
--                if (this.aP() > 0L) {
-+                if (false && this.aP() > 0L) {  // Spigot - disable
+-                if (this.aQ() > 0L) {
++                if (false && this.aQ() > 0L) {  // Spigot - disable
                      Thread thread1 = new Thread(new ThreadWatchdog(this));
  
                      thread1.setName("Server Watchdog");
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index eb3759c..06e67bf 100644
+index 5caa1b1..66a93c5 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -576,6 +576,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -583,6 +583,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
              this.a(crashreport);
          } finally {
              try {
@@ -29,7 +29,7 @@ index eb3759c..06e67bf 100644
                  this.isStopped = true;
                  this.stop();
              } catch (Throwable throwable1) {
-@@ -680,6 +681,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+@@ -687,6 +688,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
  
          this.methodProfiler.b();
          this.methodProfiler.b();
@@ -38,10 +38,10 @@ index eb3759c..06e67bf 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f9b10c3..3c0f854 100644
+index 1489613..c60bbcf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1708,6 +1708,11 @@ public final class CraftServer implements Server {
+@@ -1703,6 +1703,11 @@ public final class CraftServer implements Server {
          {
              return org.spigotmc.SpigotConfig.config;
          }
@@ -338,5 +338,5 @@ index 0000000..de08ad6
 +    }
 +}
 -- 
-2.7.4
+2.9.3
 

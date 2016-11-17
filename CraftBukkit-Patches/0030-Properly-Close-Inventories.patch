@@ -1,4 +1,4 @@
-From 8731e94a6ceb7b5b222db75bab2241a6faa49588 Mon Sep 17 00:00:00 2001
+From 166ff64393ae37157e4a5d833812f15e8edf599d Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Thu, 27 Jun 2013 17:26:09 +1000
 Subject: [PATCH] Properly Close Inventories
@@ -6,7 +6,7 @@ Subject: [PATCH] Properly Close Inventories
 Properly close inventories when unloading and switching worlds.
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index b71c4ed..b49fda1 100644
+index fab61ea..1b9826c 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -761,6 +761,18 @@ public class Chunk {
@@ -48,5 +48,5 @@ index b71c4ed..b49fda1 100644
                  // Do not pass along players, as doing so can get them stuck outside of time.
                  // (which for example disables inventory icon updates and prevents block breaking)
 -- 
-2.7.4
+2.9.3
 

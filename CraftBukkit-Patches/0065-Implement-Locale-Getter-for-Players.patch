@@ -1,0 +1,39 @@
+From d6dbd6b381a91cd92fe593b9d99a7f13654a5b11 Mon Sep 17 00:00:00 2001
+From: Smove <jan@lavasurvival.net>
+Date: Sat, 1 Feb 2014 18:12:16 +1100
+Subject: [PATCH] Implement Locale Getter for Players
+
+
+diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
+index 2a1f4f7..29e33da 100644
+--- a/src/main/java/net/minecraft/server/EntityPlayer.java
++++ b/src/main/java/net/minecraft/server/EntityPlayer.java
+@@ -28,7 +28,7 @@ import org.bukkit.inventory.MainHand;
+ public class EntityPlayer extends EntityHuman implements ICrafting {
+ 
+     private static final Logger bR = LogManager.getLogger();
+-    private String locale = "en_US";
++    public String locale = "en_US"; // Spigot private -> public
+     public PlayerConnection playerConnection;
+     public final MinecraftServer server;
+     public final PlayerInteractManager playerInteractManager;
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+index 66cc975..d9d456d 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+@@ -1508,6 +1508,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+                 getHandle().playerConnection.sendPacket( packet );
+             }
+         }
++
++        @Override
++        public String getLocale()
++        {
++           return getHandle().locale;
++        }
+     };
+ 
+     public Player.Spigot spigot()
+-- 
+2.9.3
+

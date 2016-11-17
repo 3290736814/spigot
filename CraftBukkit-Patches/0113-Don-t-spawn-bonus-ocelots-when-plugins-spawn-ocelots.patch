@@ -1,0 +1,47 @@
+From beac910528bbc7c6cc1edcdb57499b9128b5f2a8 Mon Sep 17 00:00:00 2001
+From: Thinkofdeath <thinkofdeath@spigotmc.org>
+Date: Sat, 19 Jul 2014 12:49:48 +0100
+Subject: [PATCH] Don't spawn bonus ocelots when plugins spawn ocelots
+
+
+diff --git a/src/main/java/net/minecraft/server/EntityOcelot.java b/src/main/java/net/minecraft/server/EntityOcelot.java
+index 1c2bf8e..76dc92a 100644
+--- a/src/main/java/net/minecraft/server/EntityOcelot.java
++++ b/src/main/java/net/minecraft/server/EntityOcelot.java
+@@ -8,6 +8,7 @@ public class EntityOcelot extends EntityTameableAnimal {
+     private static final DataWatcherObject<Integer> bA = DataWatcher.a(EntityOcelot.class, DataWatcherRegistry.b);
+     private PathfinderGoalAvoidTarget<EntityHuman> bB;
+     private PathfinderGoalTempt bC;
++    public boolean spawnBonus = true; // Spigot
+ 
+     public EntityOcelot(World world) {
+         super(world);
+@@ -237,7 +238,7 @@ public class EntityOcelot extends EntityTameableAnimal {
+     @Nullable
+     public GroupDataEntity prepare(DifficultyDamageScaler difficultydamagescaler, @Nullable GroupDataEntity groupdataentity) {
+         groupdataentity = super.prepare(difficultydamagescaler, groupdataentity);
+-        if (this.getCatType() == 0 && this.world.random.nextInt(7) == 0) {
++        if (spawnBonus && this.getCatType() == 0 && this.world.random.nextInt(7) == 0) { // Spigot
+             for (int i = 0; i < 2; ++i) {
+                 EntityOcelot entityocelot = new EntityOcelot(this.world);
+ 
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
+index 4ac0996..bc214af 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
+@@ -1155,6 +1155,12 @@ public class CraftWorld implements World {
+         }
+ 
+         if (entity != null) {
++            // Spigot start
++            if (entity instanceof EntityOcelot)
++            {
++                ( (EntityOcelot) entity ).spawnBonus = false;
++            }
++            // Spigot end
+             return entity;
+         }
+ 
+-- 
+2.9.3
+

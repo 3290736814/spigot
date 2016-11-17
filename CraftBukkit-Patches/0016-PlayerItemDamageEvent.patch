@@ -1,14 +1,14 @@
-From df7b1972e3c0c063caec38e8f43c8fb8d93d7cc0 Mon Sep 17 00:00:00 2001
+From 55e1fbf486b22c9838fbbbbef30266ef0dad525b Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Mon, 4 Mar 2013 18:45:52 +1100
 Subject: [PATCH] PlayerItemDamageEvent
 
 
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 43516d4..527a335 100644
+index d9d8bbb..f9b8db7 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -347,6 +347,11 @@ public final class ItemStack {
+@@ -348,6 +348,11 @@ public final class ItemStack {
      }
  
      public boolean isDamaged(int i, Random random) {
@@ -17,14 +17,13 @@ index 43516d4..527a335 100644
 +
 +    public boolean isDamaged(int i, Random random, EntityLiving entityliving) {
 +        // Spigot end
-         if (!this.e()) {
+         if (!this.f()) {
              return false;
          } else {
-@@ -361,7 +366,19 @@ public final class ItemStack {
+@@ -362,6 +367,18 @@ public final class ItemStack {
                  }
  
                  i -= k;
--                if (i <= 0) {
 +                // Spigot start
 +                if (entityliving instanceof EntityPlayer) {
 +                    org.bukkit.craftbukkit.inventory.CraftItemStack item = org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(this);
@@ -37,19 +36,18 @@ index 43516d4..527a335 100644
 +                    i = event.getDamage();
 +                }
 +                // Spigot end
-+                if (i <= 0 ) {
+                 if (i <= 0) {
                      return false;
                  }
-             }
-@@ -374,7 +391,7 @@ public final class ItemStack {
+@@ -375,7 +392,7 @@ public final class ItemStack {
      public void damage(int i, EntityLiving entityliving) {
          if (!(entityliving instanceof EntityHuman) || !((EntityHuman) entityliving).abilities.canInstantlyBuild) {
-             if (this.e()) {
+             if (this.f()) {
 -                if (this.isDamaged(i, entityliving.getRandom())) {
 +                if (this.isDamaged(i, entityliving.getRandom(), entityliving)) { // Spigot
                      entityliving.b(this);
-                     --this.count;
+                     this.subtract(1);
                      if (entityliving instanceof EntityHuman) {
 -- 
-2.7.4
+2.9.3
 

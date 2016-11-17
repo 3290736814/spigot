@@ -1,4 +1,4 @@
-From b2d544dbe105e5a360aa2b586badf922bc57f248 Mon Sep 17 00:00:00 2001
+From 341bfdc151372e48203fe616560eaa7129224c30 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:46:33 +1100
 Subject: [PATCH] Merge tweaks and configuration
@@ -6,10 +6,10 @@ Subject: [PATCH] Merge tweaks and configuration
 This allows the merging of Experience orbs, as well as the configuration of the merge radius of items. Additionally it refactors the merge algorithm to be a better experience for players.
 
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index e355287..f5ca08f 100644
+index 9841f2c..d792f9c 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
-@@ -127,7 +127,10 @@ public class EntityItem extends Entity {
+@@ -146,7 +146,10 @@ public class EntityItem extends Entity {
      }
  
      private void x() {
@@ -21,19 +21,19 @@ index e355287..f5ca08f 100644
  
          while (iterator.hasNext()) {
              EntityItem entityitem = (EntityItem) iterator.next();
-@@ -161,12 +164,14 @@ public class EntityItem extends Entity {
-                     } else if (itemstack1.count + itemstack.count > itemstack1.getMaxStackSize()) {
+@@ -180,12 +183,14 @@ public class EntityItem extends Entity {
+                     } else if (itemstack1.getCount() + itemstack.getCount() > itemstack1.getMaxStackSize()) {
                          return false;
                      } else {
 -                        if (org.bukkit.craftbukkit.event.CraftEventFactory.callItemMergeEvent(this, entityitem).isCancelled()) return false; // CraftBukkit
--                        itemstack1.count += itemstack.count;
+-                        itemstack1.add(itemstack.getCount());
 -                        entityitem.pickupDelay = Math.max(entityitem.pickupDelay, this.pickupDelay);
 -                        entityitem.age = Math.min(entityitem.age, this.age);
 -                        entityitem.setItemStack(itemstack1);
 -                        this.die();
 +                        // Spigot start
 +                        if (org.bukkit.craftbukkit.event.CraftEventFactory.callItemMergeEvent(entityitem, this).isCancelled()) return false; // CraftBukkit
-+                        itemstack.count += itemstack1.count;
++                        itemstack.add(itemstack1.getCount());
 +                        this.pickupDelay = Math.max(entityitem.pickupDelay, this.pickupDelay);
 +                        this.age = Math.min(entityitem.age, this.age);
 +                        this.setItemStack(itemstack);
@@ -43,10 +43,10 @@ index e355287..f5ca08f 100644
                      }
                  } else {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 6bb9a4c..0c9f587 100644
+index 66d42a2..75e7638 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -940,6 +940,23 @@ public abstract class World implements IBlockAccess {
+@@ -999,6 +999,23 @@ public abstract class World implements IBlockAccess {
              // Not all projectiles extend EntityProjectile, so check for Bukkit interface instead
              event = CraftEventFactory.callProjectileLaunchEvent(entity);
          }
@@ -94,5 +94,5 @@ index c62fa45..2373015 100644
 +    }
  }
 -- 
-2.7.4
+2.9.3
 

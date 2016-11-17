@@ -1,4 +1,4 @@
-From 5be0cdcc54e2af4cc8d527612023ea23a76f5126 Mon Sep 17 00:00:00 2001
+From 48880752d669927f86ca08390886003ad2324c0c Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -6,10 +6,10 @@ Subject: [PATCH] Async Operation Catching
 Catch and throw an exception when a potentially unsafe operation occurs on a thread other than the main server thread.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 8eebac1..a106e44 100644
+index 6987482..9d14403 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
-@@ -303,9 +303,13 @@ public class Block {
+@@ -306,9 +306,13 @@ public class Block {
          return 10;
      }
  
@@ -26,10 +26,10 @@ index 8eebac1..a106e44 100644
      public int a(Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 9902065..8c5df29 100644
+index bf4dc36..92b93ba 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -636,6 +636,7 @@ public abstract class EntityLiving extends Entity {
+@@ -656,6 +656,7 @@ public abstract class EntityLiving extends Entity {
      }
  
      public void addEffect(MobEffect mobeffect) {
@@ -38,10 +38,10 @@ index 9902065..8c5df29 100644
          if (isTickingEffects) {
              effectsToProcess.add(mobeffect);
 diff --git a/src/main/java/net/minecraft/server/EntityTracker.java b/src/main/java/net/minecraft/server/EntityTracker.java
-index 5e01026..80766b8 100644
+index 9cfa570..40ed61a 100644
 --- a/src/main/java/net/minecraft/server/EntityTracker.java
 +++ b/src/main/java/net/minecraft/server/EntityTracker.java
-@@ -101,6 +101,7 @@ public class EntityTracker {
+@@ -105,6 +105,7 @@ public class EntityTracker {
      }
  
      public void addEntity(Entity entity, int i, final int j, boolean flag) {
@@ -49,7 +49,7 @@ index 5e01026..80766b8 100644
          try {
              if (this.trackedEntities.b(entity.getId())) {
                  throw new IllegalStateException("Entity is already tracked!");
-@@ -145,6 +146,7 @@ public class EntityTracker {
+@@ -149,6 +150,7 @@ public class EntityTracker {
      }
  
      public void untrackEntity(Entity entity) {
@@ -58,7 +58,7 @@ index 5e01026..80766b8 100644
              EntityPlayer entityplayer = (EntityPlayer) entity;
              Iterator iterator = this.c.iterator();
 diff --git a/src/main/java/net/minecraft/server/EntityTrackerEntry.java b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
-index 06626b4..af32116 100644
+index 9c8118d..b688e99 100644
 --- a/src/main/java/net/minecraft/server/EntityTrackerEntry.java
 +++ b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
 @@ -324,6 +324,7 @@ public class EntityTrackerEntry {
@@ -69,7 +69,7 @@ index 06626b4..af32116 100644
          if (entityplayer != this.tracker) {
              if (this.c(entityplayer)) {
                  if (!this.trackedPlayers.contains(entityplayer) && (this.e(entityplayer) || this.tracker.attachedToPlayer)) {
-@@ -551,6 +552,7 @@ public class EntityTrackerEntry {
+@@ -563,6 +564,7 @@ public class EntityTrackerEntry {
      }
  
      public void clear(EntityPlayer entityplayer) {
@@ -78,10 +78,10 @@ index 06626b4..af32116 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 0c9f587..778b1c6 100644
+index 75e7638..91eb378 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -910,6 +910,7 @@ public abstract class World implements IBlockAccess {
+@@ -969,6 +969,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public boolean addEntity(Entity entity, SpawnReason spawnReason) { // Changed signature, added SpawnReason
@@ -89,7 +89,7 @@ index 0c9f587..778b1c6 100644
          if (entity == null) return false;
          // CraftBukkit end
          int i = MathHelper.floor(entity.locX / 16.0D);
-@@ -1017,6 +1018,7 @@ public abstract class World implements IBlockAccess {
+@@ -1076,6 +1077,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void removeEntity(Entity entity) {
@@ -97,7 +97,7 @@ index 0c9f587..778b1c6 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2474,6 +2476,7 @@ public abstract class World implements IBlockAccess {
+@@ -2465,6 +2467,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void a(Collection<Entity> collection) {
@@ -106,7 +106,7 @@ index 0c9f587..778b1c6 100644
          // this.entityList.addAll(collection);
          Iterator iterator = collection.iterator();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 620ab31..18a22b7 100644
+index 26d7994..c27c325 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -170,6 +170,7 @@ public class CraftWorld implements World {
@@ -134,7 +134,7 @@ index 620ab31..18a22b7 100644
          if (generate) {
              // Use the default variant of loadChunk when generate == true.
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index bea6681..db7b6de 100644
+index fc64195..101ee66 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -211,6 +211,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
@@ -181,5 +181,5 @@ index 0000000..4b3aa85
 +    }
 +}
 -- 
-2.7.4
+2.9.3
 

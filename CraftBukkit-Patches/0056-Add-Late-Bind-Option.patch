@@ -1,4 +1,4 @@
-From 50f7df21f1814f3c1850ac41bb59822451a665b9 Mon Sep 17 00:00:00 2001
+From 9e47cbfccdc33cce584a5873801812155844ab08 Mon Sep 17 00:00:00 2001
 From: slide23 <me@slide.ws>
 Date: Fri, 20 Dec 2013 20:15:33 -0600
 Subject: [PATCH] Add Late Bind Option
@@ -6,18 +6,18 @@ Subject: [PATCH] Add Late Bind Option
 Add late-bind config option to delay binding until loading is done.
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index c2aafcf..af3fdf1 100644
+index 33ed43d..76b1858 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -178,6 +178,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -179,6 +179,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              this.a(MinecraftEncryption.b());
              DedicatedServer.LOGGER.info("Starting Minecraft server on {}:{}", new Object[] { this.getServerIp().isEmpty() ? "*" : this.getServerIp(), Integer.valueOf(this.P())});
  
 +        if (!org.spigotmc.SpigotConfig.lateBind) {
              try {
-                 this.am().a(inetaddress, this.P());
+                 this.an().a(inetaddress, this.P());
              } catch (IOException ioexception) {
-@@ -186,6 +187,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -187,6 +188,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                  DedicatedServer.LOGGER.warn("Perhaps a server is already running on that port?");
                  return false;
              }
@@ -25,13 +25,13 @@ index c2aafcf..af3fdf1 100644
  
              // Spigot Start - Move DedicatedPlayerList up and bring plugin loading from CraftServer to here
              // this.a((PlayerList) (new DedicatedPlayerList(this))); // CraftBukkit
-@@ -278,6 +280,17 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -279,6 +281,17 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                  }
                  // CraftBukkit end
  
 +        if (org.spigotmc.SpigotConfig.lateBind) {
 +            try {
-+                this.am().a(inetaddress, this.P());
++                this.an().a(inetaddress, this.P());
 +            } catch (IOException ioexception) {
 +                DedicatedServer.LOGGER.warn("**** FAILED TO BIND TO PORT!");
 +                DedicatedServer.LOGGER.warn("The exception was: {}", new Object[] { ioexception.toString()});
@@ -40,7 +40,7 @@ index c2aafcf..af3fdf1 100644
 +            }
 +        }
 +
-                 if (false && this.aP() > 0L) {  // Spigot - disable
+                 if (false && this.aQ() > 0L) {  // Spigot - disable
                      Thread thread1 = new Thread(new ThreadWatchdog(this));
  
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
@@ -58,5 +58,5 @@ index a306266..4edc6af 100644
 +    }
  }
 -- 
-2.7.4
+2.9.3
 
