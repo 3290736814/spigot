@@ -1,4 +1,4 @@
-From 81abca3841d5ae7535e79fbec95b70f22fcf0cf3 Mon Sep 17 00:00:00 2001
+From d2378c992e86deb39a6a1223e7bceb7fa20be7d3 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -32,10 +32,10 @@ index 24462f1..9fc83c4 100644
      }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b2b9927..6f31b47 100644
+index b7fa693..bb066fa 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -128,6 +128,7 @@ import io.netty.buffer.Unpooled;
+@@ -130,6 +130,7 @@ import io.netty.buffer.Unpooled;
  import io.netty.handler.codec.base64.Base64;
  import jline.console.ConsoleReader;
  import org.bukkit.event.server.TabCompleteEvent;
@@ -43,7 +43,7 @@ index b2b9927..6f31b47 100644
  
  public final class CraftServer implements Server {
      private static final Player[] EMPTY_PLAYER_ARRAY = new Player[0];
-@@ -1728,6 +1729,20 @@ public final class CraftServer implements Server {
+@@ -1735,6 +1736,20 @@ public final class CraftServer implements Server {
          public void restart() {
              org.spigotmc.RestartCommand.restart();
          }
@@ -65,7 +65,7 @@ index b2b9927..6f31b47 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index c2f87ff..e83f56f 100644
+index 689308c..055c907 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -19,6 +19,7 @@ import java.util.Set;
@@ -76,7 +76,7 @@ index c2f87ff..e83f56f 100644
  
  import net.minecraft.server.*;
  import net.minecraft.server.PacketPlayOutTitle.EnumTitleAction;
-@@ -1535,6 +1536,34 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1555,6 +1556,34 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
              return java.util.Collections.unmodifiableSet( ret );
          }

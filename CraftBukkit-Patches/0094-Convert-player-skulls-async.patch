@@ -1,4 +1,4 @@
-From adefe60b78d0839952e610b66dfecaa00c3939fe Mon Sep 17 00:00:00 2001
+From 50bedf0aa204ccbb8a4294dc22e60cc672db773e Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Sun, 20 Apr 2014 13:18:55 +0100
 Subject: [PATCH] Convert player skulls async
@@ -198,10 +198,18 @@ index 6e91a22..91ca4a2 100644
      public int getSkullType() {
          return this.a;
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
-index 8a11b87..2abca0c 100644
+index 8a11b87..f07eb2f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
-@@ -68,13 +68,27 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
+@@ -5,6 +5,7 @@ import java.util.Map;
+ import net.minecraft.server.GameProfileSerializer;
+ import net.minecraft.server.NBTBase;
+ import net.minecraft.server.NBTTagCompound;
++import net.minecraft.server.TileEntitySkull;
+ 
+ import org.bukkit.Material;
+ import org.bukkit.configuration.serialization.DelegateDeserialization;
+@@ -68,13 +69,27 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
      }
  
      @Override
@@ -231,6 +239,18 @@ index 8a11b87..2abca0c 100644
          }
      }
  
+@@ -118,7 +133,10 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
+         if (name == null) {
+             profile = null;
+         } else {
+-            profile = new GameProfile(null, name);
++            // Spigot start
++            profile = TileEntitySkull.skinCache.getIfPresent(name.toLowerCase(java.util.Locale.ROOT));
++            if (profile == null) profile = new GameProfile(null, name);
++            // Spigot end
+         }
+ 
+         return true;
 -- 
 2.9.3
 

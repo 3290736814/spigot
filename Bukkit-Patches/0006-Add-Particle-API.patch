@@ -1,4 +1,4 @@
-From 4196af91b289b54b4388027dc38574114c1a8e20 Mon Sep 17 00:00:00 2001
+From 60c53ed950566ac19fd592fb8ec02aa3f39b10f9 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:57:09 +1000
 Subject: [PATCH] Add Particle API
@@ -344,10 +344,10 @@ index ba7dc49..a803228 100644
 +    public enum Type {SOUND, VISUAL, PARTICLE}
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index c14840a..e0362bf 100644
+index 8dd254a..85819b9 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -1194,6 +1194,60 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -1222,6 +1222,60 @@ public interface World extends PluginMessageRecipient, Metadatable {
       */
      public boolean isGameRule(String rule);
  
@@ -409,10 +409,10 @@ index c14840a..e0362bf 100644
       * Gets the world border for this world.
       *
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 7689c6d..65e89c4 100644
+index 5e5995b..738f3bb 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1300,6 +1300,12 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+@@ -1345,6 +1345,12 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
          {
              throw new UnsupportedOperationException( "Not supported yet." );
          }

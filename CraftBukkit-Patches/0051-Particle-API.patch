@@ -1,4 +1,4 @@
-From e02874a8cb7758725586d18269c67139608f872f Mon Sep 17 00:00:00 2001
+From e79a771b05566ad2f108b34f194dad9b89980798 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Fri, 20 Dec 2013 21:36:06 +0000
 Subject: [PATCH] Particle API
@@ -19,7 +19,7 @@ index 1672183..352ff3a 100644
              datavalue = 0;
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index c27c325..f478802 100644
+index d7c942f..20e3cf1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -827,28 +827,18 @@ public class CraftWorld implements World {
@@ -60,7 +60,7 @@ index c27c325..f478802 100644
      }
  
      public <T extends Entity> T spawn(Location location, Class<T> clazz) throws IllegalArgumentException {
-@@ -1518,6 +1508,70 @@ public class CraftWorld implements World {
+@@ -1527,6 +1517,70 @@ public class CraftWorld implements World {
      // Spigot start
      private final Spigot spigot = new Spigot()
      {
@@ -132,10 +132,10 @@ index c27c325..f478802 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index d58fcee..fbde4af 100644
+index c9b8cdc..99e0617 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -330,9 +330,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -350,9 +350,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      public void playEffect(Location loc, Effect effect, int data) {
          if (getHandle().playerConnection == null) return;
  
@@ -146,7 +146,7 @@ index d58fcee..fbde4af 100644
      }
  
      @Override
-@@ -1453,6 +1451,63 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1473,6 +1471,63 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
                  server.getServer().getPlayerList().moveToWorld( getHandle(), 0, false );
              }
          }

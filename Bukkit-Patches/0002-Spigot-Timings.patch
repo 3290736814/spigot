@@ -1,4 +1,4 @@
-From 89e04c1e296c632db16dea921d511c30b66dd02b Mon Sep 17 00:00:00 2001
+From e588a78b19b595a0fccbb0ce382ca29c432d112a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 2 Jun 2013 10:42:57 +1000
 Subject: [PATCH] Spigot Timings
@@ -8,10 +8,10 @@ Adds performance tracking timings all around the Minecraft Server, and improves 
 Plugins can track their own timings with CustomTimingsHandler
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 093aec2..5f60a9b 100644
+index ce6b761..da19608 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -546,6 +546,7 @@ public final class Bukkit {
+@@ -547,6 +547,7 @@ public final class Bukkit {
       */
      public static void reload() {
          server.reload();
@@ -19,7 +19,7 @@ index 093aec2..5f60a9b 100644
      }
  
      /**
-@@ -1137,4 +1138,9 @@ public final class Bukkit {
+@@ -1149,4 +1150,9 @@ public final class Bukkit {
      public static UnsafeValues getUnsafe() {
          return server.getUnsafe();
      }
@@ -30,10 +30,10 @@ index 093aec2..5f60a9b 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 480d873..77ba61f 100644
+index c25fe22..32bf9bb 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -931,4 +931,15 @@ public interface Server extends PluginMessageRecipient {
+@@ -941,4 +941,15 @@ public interface Server extends PluginMessageRecipient {
       */
      @Deprecated
      UnsafeValues getUnsafe();

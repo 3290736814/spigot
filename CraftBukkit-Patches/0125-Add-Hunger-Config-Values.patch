@@ -1,11 +1,11 @@
-From 32df62a6eee38543b2cb3b734cf274b915995c51 Mon Sep 17 00:00:00 2001
+From 2e1583785a72ebf9db6b578efa0b42dc94445ae9 Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index df454f1..9f115d1 100644
+index d6748a3..ada09e8 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -1147,7 +1147,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -17,7 +17,7 @@ index df454f1..9f115d1 100644
                      } else {
                          this.world.a((EntityHuman) null, this.locX, this.locY, this.locZ, SoundEffects.ey, this.bC(), 1.0F, 1.0F);
                          if (flag4) {
-@@ -1409,9 +1409,9 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1414,9 +1414,9 @@ public abstract class EntityHuman extends EntityLiving {
          super.cm();
          this.b(StatisticList.w);
          if (this.isSprinting()) {

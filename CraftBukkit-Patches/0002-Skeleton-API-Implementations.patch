@@ -1,4 +1,4 @@
-From ced2c87fe60e8b99a1b9a0334d51572956cdcbff Mon Sep 17 00:00:00 2001
+From c10e0ac36dc0764bc52197fa4268e763d73cfd20 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -6,10 +6,10 @@ Subject: [PATCH] Skeleton API Implementations
 This contains the basic, empty implementations for some Spigot-API extensions. They are included early in the patching progress so that compilation will still succeed midway despite the APIs only being provided by subsequent patches.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index fe67756..3fe4b3b 100644
+index b3de034..21f8078 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1660,4 +1660,14 @@ public final class CraftServer implements Server {
+@@ -1667,4 +1667,14 @@ public final class CraftServer implements Server {
      public UnsafeValues getUnsafe() {
          return CraftMagicNumbers.INSTANCE;
      }
@@ -25,10 +25,10 @@ index fe67756..3fe4b3b 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index ae0cc72..26d7994 100644
+index 3cbf09e..535f349 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1512,4 +1512,14 @@ public class CraftWorld implements World {
+@@ -1521,4 +1521,14 @@ public class CraftWorld implements World {
              cps.unload(chunk);
          }
      }
@@ -104,10 +104,10 @@ index 64e346d..194d830 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index bdd1aa0..fc64195 100644
+index ab638ba..3988efa 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1423,4 +1423,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1443,4 +1443,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          getHandle().playerConnection.sendPacket(packetplayoutworldparticles);
  
      }
