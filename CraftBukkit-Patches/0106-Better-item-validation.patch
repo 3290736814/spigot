@@ -1,4 +1,4 @@
-From 7c479d0d2affeef57625cef2df757776815172fc Mon Sep 17 00:00:00 2001
+From a88113a70fca12d7ccc8bf3c0653bcc08348a291 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
@@ -58,7 +58,7 @@ index 2ed6ad7..9441364 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 0a5edb5..1213eae 100644
+index d3d3bb7..4ab8c04 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -47,6 +47,10 @@ import java.util.logging.Logger;
@@ -72,7 +72,7 @@ index 0a5edb5..1213eae 100644
  /**
   * Children must include the following:
   *
-@@ -247,7 +251,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
+@@ -251,7 +255,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
              NBTTagCompound display = tag.getCompound(DISPLAY.NBT);
  
              if (display.hasKey(NAME.NBT)) {
@@ -81,7 +81,7 @@ index 0a5edb5..1213eae 100644
              }
  
              if (display.hasKey(LORE.NBT)) {
-@@ -255,7 +259,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
+@@ -259,7 +263,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
                  lore = new ArrayList<String>(list.size());
  
                  for (int index = 0; index < list.size(); index++) {

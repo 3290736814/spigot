@@ -1,14 +1,14 @@
-From c80bf14ae8bc0fdce105e5a083f49c23b80ea82a Mon Sep 17 00:00:00 2001
+From 7fe571088a17dff18654f9efdac8065ad46bae07 Mon Sep 17 00:00:00 2001
 From: libraryaddict <redwarfare@live.com>
 Date: Fri, 22 Aug 2014 05:31:04 -0400
 Subject: [PATCH] Added isUnbreakable and setUnbreakable to ItemMeta
 
 
 diff --git a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-index 459e09c..d8cc821 100644
+index fa3efe3..ae918bf 100644
 --- a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
 +++ b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-@@ -157,4 +157,32 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
+@@ -172,4 +172,36 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
  
      @SuppressWarnings("javadoc")
      ItemMeta clone();
@@ -21,7 +21,9 @@ index 459e09c..d8cc821 100644
 +         * Sets the unbreakable tag
 +         *
 +         * @param unbreakable true if set unbreakable
++         * @deprecated see {@link ItemMeta#setUnbreakable(boolean)}
 +         */
++        @Deprecated
 +        public void setUnbreakable(boolean unbreakable)
 +        {
 +            throw new UnsupportedOperationException( "Not supported yet." );
@@ -31,7 +33,9 @@ index 459e09c..d8cc821 100644
 +         * Return if the unbreakable tag is true
 +         *
 +         * @return true if the unbreakable tag is true
++         * @deprecated see {@link ItemMeta#isUnbreakable()}
 +         */
++        @Deprecated
 +        public boolean isUnbreakable()
 +        {
 +            throw new UnsupportedOperationException( "Not supported yet." );
