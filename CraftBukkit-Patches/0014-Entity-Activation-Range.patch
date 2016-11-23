@@ -1,4 +1,4 @@
-From a62b424c011ca3070880da9a129c6e0e2e1a374f Mon Sep 17 00:00:00 2001
+From f7f54af47ed947f248a0aa0bcefe130eb42fd27b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -159,7 +159,7 @@ index 575f1f2..6d70253 100644
          // Spigot start
          double radius = world.spigotConfig.itemMerge;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index b9e2adc..21ef68a 100644
+index e732a4a..4617473 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -115,6 +115,13 @@ public abstract class EntityLiving extends Entity {
@@ -218,15 +218,15 @@ index 558574f..41d2d87 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 1be22d0..08de2e7 100644
+index 822000f..eccad0f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -258,6 +258,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
- 
-         entity.world = ((CraftWorld) location.getWorld()).getHandle();
+@@ -261,6 +261,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          entity.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+         // SPIGOT-619: Force sync head rotation also
+         entity.h(location.getYaw()); // PAIL: setHeadRotation
 +        entity.world.entityJoinedWorld(entity, false); // Spigot - register to new chunk
-         // entity.setLocation() throws no event, and so cannot be cancelled
+ 
          return true;
      }
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
