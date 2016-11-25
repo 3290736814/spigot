@@ -1,4 +1,4 @@
-From 2e1583785a72ebf9db6b578efa0b42dc94445ae9 Mon Sep 17 00:00:00 2001
+From 5f486c710ac9717986b047e472597d3a5bfc2549 Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
@@ -43,10 +43,10 @@ index b5fd8e8..b6e9786 100644
              }
          } else if (this.foodLevel <= 0) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index a5c7ee2..b26fb1c 100644
+index a5c7ee2..83acf9a 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -249,4 +249,16 @@ public class SpigotWorldConfig
+@@ -249,4 +249,24 @@ public class SpigotWorldConfig
          largeFeatureSeed = getInt( "seed-feature", 14357617 );
          log( "Custom Map Seeds:  Village: " + villageSeed + " Feature: " + largeFeatureSeed );
      }
@@ -57,10 +57,18 @@ index a5c7ee2..b26fb1c 100644
 +    public float regenExhaustion;
 +    private void initHunger()
 +    {
-+        walkExhaustion = (float) getDouble( "hunger.walk-exhaustion", 0.2 );
-+        sprintExhaustion = (float) getDouble( "hunger.sprint-exhaustion", 0.8 );
-+        combatExhaustion = (float) getDouble( "hunger.combat-exhaustion", 0.3 );
-+        regenExhaustion = (float) getDouble( "hunger.regen-exhaustion", 3 );
++        if ( SpigotConfig.version < 9 )
++        {
++            set( "hunger.walk-exhaustion", 0.05 );
++            set( "hunger.sprint-exhaustion", 0.2 );
++            set( "hunger.combat-exhaustion", 0.1 );
++            set( "hunger.regen-exhaustion", 6.0 );
++        }
++
++        walkExhaustion = (float) getDouble( "hunger.walk-exhaustion", 0.05 );
++        sprintExhaustion = (float) getDouble( "hunger.sprint-exhaustion", 0.2 );
++        combatExhaustion = (float) getDouble( "hunger.combat-exhaustion", 0.1 );
++        regenExhaustion = (float) getDouble( "hunger.regen-exhaustion", 6.0 );
 +    }
  }
 -- 

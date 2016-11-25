@@ -1,4 +1,4 @@
-From d44cb9750a009b8e9b69bd6ac21fe3cd53781f84 Mon Sep 17 00:00:00 2001
+From dc7437c84d34eae6e21cba8d344c483b47db401e Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -55,7 +55,7 @@ index c2aa7b7..66d42a2 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 21f8078..95c21c3 100644
+index e91ba67..c37383f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -256,8 +256,10 @@ public final class CraftServer implements Server {
@@ -115,7 +115,7 @@ index 86218a5..8dcf8e9 100644
  
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
 new file mode 100644
-index 0000000..cb88089
+index 0000000..4cc61de
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -0,0 +1,139 @@
@@ -178,8 +178,8 @@ index 0000000..cb88089
 +
 +        commands = new HashMap<String, Command>();
 +
-+        version = getInt( "config-version", 8 );
-+        set( "config-version", 8 );
++        version = getInt( "config-version", 9 );
++        set( "config-version", 9 );
 +        readConfig( SpigotConfig.class, null );
 +    }
 +
