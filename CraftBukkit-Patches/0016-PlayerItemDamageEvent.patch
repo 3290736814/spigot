@@ -1,14 +1,14 @@
-From 70b887016230e864ae13734117f983d957e6d53b Mon Sep 17 00:00:00 2001
+From 645a607ecab4296cce16a02c413dc586b5689837 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Mon, 4 Mar 2013 18:45:52 +1100
 Subject: [PATCH] PlayerItemDamageEvent
 
 
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index f4f7e55..88211ab 100644
+index 008976a..861854b 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -349,6 +349,11 @@ public final class ItemStack {
+@@ -356,6 +356,11 @@ public final class ItemStack {
      }
  
      public boolean isDamaged(int i, Random random) {
@@ -20,7 +20,7 @@ index f4f7e55..88211ab 100644
          if (!this.f()) {
              return false;
          } else {
-@@ -363,6 +368,18 @@ public final class ItemStack {
+@@ -370,6 +375,18 @@ public final class ItemStack {
                  }
  
                  i -= k;
@@ -39,15 +39,15 @@ index f4f7e55..88211ab 100644
                  if (i <= 0) {
                      return false;
                  }
-@@ -376,7 +393,7 @@ public final class ItemStack {
+@@ -383,7 +400,7 @@ public final class ItemStack {
      public void damage(int i, EntityLiving entityliving) {
          if (!(entityliving instanceof EntityHuman) || !((EntityHuman) entityliving).abilities.canInstantlyBuild) {
              if (this.f()) {
 -                if (this.isDamaged(i, entityliving.getRandom())) {
 +                if (this.isDamaged(i, entityliving.getRandom(), entityliving)) { // Spigot
                      entityliving.b(this);
-                     this.subtract(1);
-                     if (entityliving instanceof EntityHuman) {
+                     // CraftBukkit start - Check for item breaking
+                     if (this.count == 1 && entityliving instanceof EntityHuman) {
 -- 
 2.9.3
 

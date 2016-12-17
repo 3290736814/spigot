@@ -1,4 +1,4 @@
-From f48f62451d11e139f467c1f9e41a6d2068547de6 Mon Sep 17 00:00:00 2001
+From c8b08ad47cab667770ed291216b2dcc3a505e620 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -160,7 +160,7 @@ index 27f9bcd..e6514d2 100644
  
      public void recalcPosition() {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index e41017e..e732a4a 100644
+index a630e5e..450f390 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -31,6 +31,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
@@ -172,7 +172,7 @@ index e41017e..e732a4a 100644
  public abstract class EntityLiving extends Entity {
  
      private static final Logger a = LogManager.getLogger();
-@@ -1803,6 +1805,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1806,6 +1808,7 @@ public abstract class EntityLiving extends Entity {
      }
  
      public void A_() {
@@ -180,7 +180,7 @@ index e41017e..e732a4a 100644
          super.A_();
          this.cA();
          if (!this.world.isClientSide) {
-@@ -1875,7 +1878,9 @@ public abstract class EntityLiving extends Entity {
+@@ -1878,7 +1881,9 @@ public abstract class EntityLiving extends Entity {
              }
          }
  
@@ -190,7 +190,7 @@ index e41017e..e732a4a 100644
          double d0 = this.locX - this.lastX;
          double d1 = this.locZ - this.lastZ;
          float f = (float) (d0 * d0 + d1 * d1);
-@@ -1945,6 +1950,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1948,6 +1953,7 @@ public abstract class EntityLiving extends Entity {
              this.bp = 0;
          }
  
@@ -198,7 +198,7 @@ index e41017e..e732a4a 100644
      }
  
      protected float h(float f, float f1) {
-@@ -2009,6 +2015,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2012,6 +2018,7 @@ public abstract class EntityLiving extends Entity {
          }
  
          this.world.methodProfiler.a("ai");
@@ -206,7 +206,7 @@ index e41017e..e732a4a 100644
          if (this.isFrozen()) {
              this.bd = false;
              this.be = 0.0F;
-@@ -2019,6 +2026,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2022,6 +2029,7 @@ public abstract class EntityLiving extends Entity {
              this.doTick();
              this.world.methodProfiler.b();
          }
@@ -214,7 +214,7 @@ index e41017e..e732a4a 100644
  
          this.world.methodProfiler.b();
          this.world.methodProfiler.a("jump");
-@@ -2041,10 +2049,14 @@ public abstract class EntityLiving extends Entity {
+@@ -2044,10 +2052,14 @@ public abstract class EntityLiving extends Entity {
          this.bf *= 0.98F;
          this.bg *= 0.9F;
          this.r();
@@ -355,10 +355,10 @@ index 7da4b02..2476207 100644
          this.methodProfiler.b();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index a5b0788..967282d 100644
+index 16c3555..9cd95fc 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1260,6 +1260,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1262,6 +1262,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
      // CraftBukkit end
  
     private void handleCommand(String s) {
@@ -366,7 +366,7 @@ index a5b0788..967282d 100644
         // CraftBukkit start - whole method
          this.LOGGER.info(this.player.getName() + " issued server command: " + s);
  
-@@ -1269,18 +1270,22 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1271,18 +1272,22 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
          this.server.getPluginManager().callEvent(event);
  
          if (event.isCancelled()) {
@@ -407,7 +407,7 @@ index 9f93b12..8781203 100644
      private static final RegistryMaterials<MinecraftKey, Class<? extends TileEntity>> f = new RegistryMaterials();
      protected World world;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 91eb378..672e65c 100644
+index 8f30e07..e1d1a77 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -18,6 +18,7 @@ import com.google.common.collect.Maps;
@@ -435,7 +435,7 @@ index 91eb378..672e65c 100644
      }
  
      public World b() {
-@@ -1364,6 +1368,7 @@ public abstract class World implements IBlockAccess {
+@@ -1365,6 +1369,7 @@ public abstract class World implements IBlockAccess {
          CrashReportSystemDetails crashreportsystemdetails1;
          CrashReport crashreport1;
  
@@ -443,7 +443,7 @@ index 91eb378..672e65c 100644
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
              entity = (Entity) this.entityList.get(this.tickPosition);
-@@ -1381,7 +1386,9 @@ public abstract class World implements IBlockAccess {
+@@ -1382,7 +1387,9 @@ public abstract class World implements IBlockAccess {
              this.methodProfiler.a("tick");
              if (!entity.dead && !(entity instanceof EntityPlayer)) {
                  try {
@@ -453,7 +453,7 @@ index 91eb378..672e65c 100644
                  } catch (Throwable throwable1) {
                      crashreport1 = CrashReport.a(throwable1, "Ticking entity");
                      crashreportsystemdetails1 = crashreport1.a("Entity being ticked");
-@@ -1407,8 +1414,10 @@ public abstract class World implements IBlockAccess {
+@@ -1408,8 +1415,10 @@ public abstract class World implements IBlockAccess {
              this.methodProfiler.b();
          }
  
@@ -464,7 +464,7 @@ index 91eb378..672e65c 100644
          // CraftBukkit start - From below, clean up tile entities before ticking them
          if (!this.tileEntityListUnload.isEmpty()) {
              this.tileEntityListTick.removeAll(this.tileEntityListUnload);
-@@ -1427,6 +1436,7 @@ public abstract class World implements IBlockAccess {
+@@ -1428,6 +1437,7 @@ public abstract class World implements IBlockAccess {
                  if (this.isLoaded(blockposition) && this.N.a(blockposition)) {
                      try {
                          this.methodProfiler.a(""/*tileentity.getClass().getSimpleName()*/); // CraftBukkit: SPIGOT-1900
@@ -472,7 +472,7 @@ index 91eb378..672e65c 100644
                          ((ITickable) tileentity).F_();
                          this.methodProfiler.b();
                      } catch (Throwable throwable2) {
-@@ -1435,6 +1445,11 @@ public abstract class World implements IBlockAccess {
+@@ -1436,6 +1446,11 @@ public abstract class World implements IBlockAccess {
                          tileentity.a(crashreportsystemdetails1);
                          throw new ReportedException(crashreport1);
                      }
@@ -484,7 +484,7 @@ index 91eb378..672e65c 100644
                  }
              }
  
-@@ -1447,6 +1462,8 @@ public abstract class World implements IBlockAccess {
+@@ -1448,6 +1463,8 @@ public abstract class World implements IBlockAccess {
              }
          }
  
@@ -493,7 +493,7 @@ index 91eb378..672e65c 100644
          this.M = false;
          /* CraftBukkit start - Moved up
          if (!this.tileEntityListUnload.isEmpty()) {
-@@ -1487,6 +1504,7 @@ public abstract class World implements IBlockAccess {
+@@ -1488,6 +1505,7 @@ public abstract class World implements IBlockAccess {
              this.b.clear();
          }
  
@@ -501,7 +501,7 @@ index 91eb378..672e65c 100644
          this.methodProfiler.b();
          this.methodProfiler.b();
      }
-@@ -1537,6 +1555,7 @@ public abstract class World implements IBlockAccess {
+@@ -1538,6 +1556,7 @@ public abstract class World implements IBlockAccess {
          // CraftBukkit start - Use neighbor cache instead of looking up
          Chunk startingChunk = this.getChunkIfLoaded(i >> 4, j >> 4);
          if (!flag || (startingChunk != null && startingChunk.areNeighborsLoaded(2)) /* this.isAreaLoaded(i - b0, 0, j - b0, i + b0, 0, j + b0) */) {
@@ -509,7 +509,7 @@ index 91eb378..672e65c 100644
              // CraftBukkit end
              entity.M = entity.locX;
              entity.N = entity.locY;
-@@ -1604,6 +1623,7 @@ public abstract class World implements IBlockAccess {
+@@ -1605,6 +1624,7 @@ public abstract class World implements IBlockAccess {
                  }
              }
  
@@ -518,7 +518,7 @@ index 91eb378..672e65c 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 20dfac7..ed5ee83 100644
+index 87abceb..b49e6ad 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -224,10 +224,13 @@ public class WorldServer extends World implements IAsyncTaskHandler {
@@ -573,7 +573,7 @@ index 20dfac7..ed5ee83 100644
  
      @Nullable
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 95c21c3..df59768 100644
+index c37383f..387ec18 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1677,6 +1677,11 @@ public final class CraftServer implements Server {

@@ -1,14 +1,14 @@
-From bfaed30eff607a383864c45dcf0959a7859c1a0e Mon Sep 17 00:00:00 2001
+From 29dc08527440b4cd0cfe72dd5854acdbd857c5b2 Mon Sep 17 00:00:00 2001
 From: "Evan A. Haskell" <eah2119@gmail.com>
 Date: Thu, 26 Jun 2014 18:37:29 -0400
 Subject: [PATCH] Fix Null Tile Entity Worlds
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 23ced07..b9730a2 100644
+index b4c7b11..950fc01 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1976,6 +1976,7 @@ public abstract class World implements IBlockAccess {
+@@ -1977,6 +1977,7 @@ public abstract class World implements IBlockAccess {
                          }
                      }
  

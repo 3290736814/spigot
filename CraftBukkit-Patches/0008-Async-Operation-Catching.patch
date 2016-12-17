@@ -1,4 +1,4 @@
-From 48880752d669927f86ca08390886003ad2324c0c Mon Sep 17 00:00:00 2001
+From 28959bea9edcffe34af70a86cc9d37c970680e08 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -26,7 +26,7 @@ index 6987482..9d14403 100644
      public int a(Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index bf4dc36..92b93ba 100644
+index 178bc15..a630e5e 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -656,6 +656,7 @@ public abstract class EntityLiving extends Entity {
@@ -78,7 +78,7 @@ index 9c8118d..b688e99 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 75e7638..91eb378 100644
+index 09dfd2e..8f30e07 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -969,6 +969,7 @@ public abstract class World implements IBlockAccess {
@@ -89,7 +89,7 @@ index 75e7638..91eb378 100644
          if (entity == null) return false;
          // CraftBukkit end
          int i = MathHelper.floor(entity.locX / 16.0D);
-@@ -1076,6 +1077,7 @@ public abstract class World implements IBlockAccess {
+@@ -1077,6 +1078,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void removeEntity(Entity entity) {
@@ -97,7 +97,7 @@ index 75e7638..91eb378 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2465,6 +2467,7 @@ public abstract class World implements IBlockAccess {
+@@ -2466,6 +2468,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void a(Collection<Entity> collection) {
@@ -106,10 +106,10 @@ index 75e7638..91eb378 100644
          // this.entityList.addAll(collection);
          Iterator iterator = collection.iterator();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 26d7994..c27c325 100644
+index 1784418..5c59f0d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -170,6 +170,7 @@ public class CraftWorld implements World {
+@@ -172,6 +172,7 @@ public class CraftWorld implements World {
      }
  
      public boolean unloadChunkRequest(int x, int z, boolean safe) {
@@ -117,7 +117,7 @@ index 26d7994..c27c325 100644
          if (safe && isChunkInUse(x, z)) {
              return false;
          }
-@@ -183,6 +184,7 @@ public class CraftWorld implements World {
+@@ -185,6 +186,7 @@ public class CraftWorld implements World {
      }
  
      public boolean unloadChunk(int x, int z, boolean save, boolean safe) {
@@ -125,7 +125,7 @@ index 26d7994..c27c325 100644
          if (isChunkInUse(x, z)) {
              return false;
          }
-@@ -253,6 +255,7 @@ public class CraftWorld implements World {
+@@ -255,6 +257,7 @@ public class CraftWorld implements World {
      }
  
      public boolean loadChunk(int x, int z, boolean generate) {
@@ -134,7 +134,7 @@ index 26d7994..c27c325 100644
          if (generate) {
              // Use the default variant of loadChunk when generate == true.
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index fc64195..101ee66 100644
+index 56e9a46..6d95870 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -211,6 +211,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {

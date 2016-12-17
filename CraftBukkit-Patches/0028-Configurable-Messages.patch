@@ -1,4 +1,4 @@
-From 724eb97e38e0ab5eadb11fe4748fbf4caaf48d05 Mon Sep 17 00:00:00 2001
+From 8770eec41e046d27d8694333c3a3014e8541f6c4 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
@@ -23,10 +23,10 @@ index ec03fe5..b0642a2 100644
                  this.b.close(chatcomponenttext);
              } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 04ea4cc..0de7e74 100644
+index 9c1d5ff..226e7ef 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -467,7 +467,7 @@ public abstract class PlayerList {
+@@ -470,7 +470,7 @@ public abstract class PlayerList {
              event.disallow(PlayerLoginEvent.Result.KICK_BANNED, s);
          } else if (!this.isWhitelisted(gameprofile)) {
              // return "You are not white-listed on this server!";
@@ -35,7 +35,7 @@ index 04ea4cc..0de7e74 100644
          } else if (getIPBans().isBanned(socketaddress) && !getIPBans().get(socketaddress).hasExpired()) {
              IpBanEntry ipbanentry = this.l.get(socketaddress);
  
-@@ -481,7 +481,7 @@ public abstract class PlayerList {
+@@ -484,7 +484,7 @@ public abstract class PlayerList {
          } else {
              // return this.players.size() >= this.maxPlayers && !this.f(gameprofile) ? "The server is full!" : null;
              if (this.players.size() >= this.maxPlayers && !this.f(gameprofile)) {
@@ -45,7 +45,7 @@ index 04ea4cc..0de7e74 100644
          }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 2d9a9fc..34c46fb 100644
+index 798c949..a367917 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -631,11 +631,7 @@ public final class CraftServer implements Server {
@@ -62,7 +62,7 @@ index 2d9a9fc..34c46fb 100644
          return false;
      }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index ca001e9..3726ea5 100644
+index c0d33ee..05dd091 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -12,6 +12,7 @@ import java.util.Map;

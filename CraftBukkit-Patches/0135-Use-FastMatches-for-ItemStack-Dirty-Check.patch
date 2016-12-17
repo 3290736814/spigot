@@ -1,4 +1,4 @@
-From 56fcf9d521b1588b3d52b0c534cd2d2f32fcc4fd Mon Sep 17 00:00:00 2001
+From 599d77117a7ef1d05582ef470c119b58b5af7ac9 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 22 Feb 2015 12:27:40 +1100
 Subject: [PATCH] Use FastMatches for ItemStack Dirty Check
@@ -35,10 +35,10 @@ index a985405..686250e 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 88211ab..92db67d 100644
+index 861854b..c8694e8 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -454,6 +454,18 @@ public final class ItemStack {
+@@ -461,6 +461,18 @@ public final class ItemStack {
          return itemstack.isEmpty() && itemstack1.isEmpty() ? true : (!itemstack.isEmpty() && !itemstack1.isEmpty() ? (itemstack.tag == null && itemstack1.tag != null ? false : itemstack.tag == null || itemstack.tag.equals(itemstack1.tag)) : false);
      }
  
@@ -58,7 +58,7 @@ index 88211ab..92db67d 100644
          return itemstack.isEmpty() && itemstack1.isEmpty() ? true : (!itemstack.isEmpty() && !itemstack1.isEmpty() ? itemstack.d(itemstack1) : false);
      }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index e7b602c..1a1f03b 100644
+index 43cdf81..8302e9e 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -387,4 +387,9 @@ public class SpigotConfig
