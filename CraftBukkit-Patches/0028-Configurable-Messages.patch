@@ -1,4 +1,4 @@
-From 8770eec41e046d27d8694333c3a3014e8541f6c4 Mon Sep 17 00:00:00 2001
+From f2c1eb864ae92cbf3cb891ea77ed9eaa4740a8fb Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
@@ -62,7 +62,7 @@ index 798c949..a367917 100644
          return false;
      }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index c0d33ee..05dd091 100644
+index c0d33ee..be3bd59 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -12,6 +12,7 @@ import java.util.Map;
@@ -85,7 +85,7 @@ index c0d33ee..05dd091 100644
 +    public static String outdatedServerMessage = "Outdated server! I\'m still on {0}";
 +    private static String transform(String s)
 +    {
-+        return ChatColor.translateAlternateColorCodes( '&', s ).replaceAll( "\\n", "\n" );
++        return ChatColor.translateAlternateColorCodes( '&', s ).replaceAll( "\\\\n", "\n" );
 +    }
 +    private static void messages()
 +    {
