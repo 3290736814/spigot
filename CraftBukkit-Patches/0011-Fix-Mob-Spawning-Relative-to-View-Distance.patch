@@ -1,4 +1,4 @@
-From 9c45227caea6ff31111c0e7dab104efd2a384e58 Mon Sep 17 00:00:00 2001
+From 6f661c0af625d4e3b3ab406e6da7215e061303a4 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -66,7 +66,7 @@ index 241c793..ee898dd 100644
  
      public boolean c(BlockPosition blockposition) {
 diff --git a/src/main/java/net/minecraft/server/SpawnerCreature.java b/src/main/java/net/minecraft/server/SpawnerCreature.java
-index 5dc4735..bec25e4 100644
+index f8b6817..17bf3e4 100644
 --- a/src/main/java/net/minecraft/server/SpawnerCreature.java
 +++ b/src/main/java/net/minecraft/server/SpawnerCreature.java
 @@ -19,6 +19,25 @@ public final class SpawnerCreature {
@@ -112,9 +112,9 @@ index 5dc4735..bec25e4 100644
 +                        for (k = -b0; k <= b0; ++k) {
 +                            boolean flag4 = i1 == -b0 || i1 == b0 || k == -b0 || k == b0;
 +                            // Spigot End
-                             // CraftBukkit start - use LongHash and LongHashSet
-                             // ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(i1 + l, k + j);
+                             ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(i1 + l, k + j);
  
+                             // CraftBukkit start - use LongHash and LongHashSet
 @@ -91,18 +115,20 @@ public final class SpawnerCreature {
                  if (limit == 0) {
                      continue;
