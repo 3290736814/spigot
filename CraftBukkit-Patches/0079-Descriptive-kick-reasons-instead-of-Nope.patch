@@ -1,14 +1,14 @@
-From f425823eaa2845779dc90575bfb3826cc86763ed Mon Sep 17 00:00:00 2001
+From 329b61f426705dcb3cbddd04607cc587d793feea Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sat, 15 Mar 2014 01:30:05 -0400
 Subject: [PATCH] Descriptive kick reasons instead of Nope!
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index dc020bc..e148e37 100644
+index ba36c19..e89dd7b 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -267,7 +267,7 @@ public abstract class Entity implements ICommandListener {
+@@ -271,7 +271,7 @@ public abstract class Entity implements ICommandListener {
          if (f == Float.POSITIVE_INFINITY || f == Float.NEGATIVE_INFINITY) {
              if (this instanceof EntityPlayer) {
                  this.world.getServer().getLogger().warning(this.getName() + " was caught trying to crash the server with an invalid yaw");
@@ -17,7 +17,7 @@ index dc020bc..e148e37 100644
              }
              f = 0;
          }
-@@ -280,7 +280,7 @@ public abstract class Entity implements ICommandListener {
+@@ -284,7 +284,7 @@ public abstract class Entity implements ICommandListener {
          if (f1 == Float.POSITIVE_INFINITY || f1 == Float.NEGATIVE_INFINITY) {
              if (this instanceof EntityPlayer) {
                  this.world.getServer().getLogger().warning(this.getName() + " was caught trying to crash the server with an invalid pitch");
@@ -27,10 +27,10 @@ index dc020bc..e148e37 100644
              f1 = 0;
          }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index e9a0a03..5fb5a77 100644
+index 11ce3eb..2cef848 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1093,7 +1093,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1100,7 +1100,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
              this.player.resetIdleTimer();
          } else {
              PlayerConnection.LOGGER.warn("{} tried to set an invalid carried item", new Object[] { this.player.getName()});

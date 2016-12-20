@@ -1,4 +1,4 @@
-From 01cf4a1b005635450c007c07412e3d6112fe080f Mon Sep 17 00:00:00 2001
+From a7b2a95731fd67dd27cb4f5a4cb9672c7dd22924 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,10 +9,10 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index e6514d2..542f61e 100644
+index 3c1c8da..d293139 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -108,7 +108,7 @@ public abstract class Entity implements ICommandListener {
+@@ -109,7 +109,7 @@ public abstract class Entity implements ICommandListener {
      protected Random random;
      public int ticksLived;
      public int fireTicks;
@@ -21,7 +21,7 @@ index e6514d2..542f61e 100644
      public int noDamageTicks;
      protected boolean justCreated;
      protected boolean fireProof;
-@@ -143,6 +143,12 @@ public abstract class Entity implements ICommandListener {
+@@ -146,6 +146,12 @@ public abstract class Entity implements ICommandListener {
      public org.bukkit.projectiles.ProjectileSource projectileSource; // CraftBukkit - For projectiles only
      public boolean forceExplosionKnockback; // CraftBukkit - SPIGOT-949
      public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getEntityTimings(this); // Spigot
@@ -34,7 +34,7 @@ index e6514d2..542f61e 100644
  
      public Entity(World world) {
          this.id = Entity.entityCount++;
-@@ -162,7 +168,12 @@ public abstract class Entity implements ICommandListener {
+@@ -166,7 +172,12 @@ public abstract class Entity implements ICommandListener {
          this.setPosition(0.0D, 0.0D, 0.0D);
          if (world != null) {
              this.dimension = world.worldProvider.getDimensionManager().getDimensionID();
@@ -84,7 +84,7 @@ index 233a3f6..cc4406d 100644
          super(world);
      }
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index f070379..9b544cd 100644
+index f64838d..c7eda46 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
 @@ -39,6 +39,18 @@ public abstract class EntityArrow extends Entity implements IProjectile {
@@ -107,10 +107,10 @@ index f070379..9b544cd 100644
          super(world);
          this.h = -1;
 diff --git a/src/main/java/net/minecraft/server/EntityFireworks.java b/src/main/java/net/minecraft/server/EntityFireworks.java
-index d8fb786..917064e 100644
+index 278b80c..7fc5d88 100644
 --- a/src/main/java/net/minecraft/server/EntityFireworks.java
 +++ b/src/main/java/net/minecraft/server/EntityFireworks.java
-@@ -11,6 +11,14 @@ public class EntityFireworks extends Entity {
+@@ -16,6 +16,14 @@ public class EntityFireworks extends Entity {
          this.setSize(0.25F, 0.25F);
      }
  
@@ -124,9 +124,9 @@ index d8fb786..917064e 100644
 +
      protected void i() {
          this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, ItemStack.a);
-     }
+         this.datawatcher.register(EntityFireworks.b, Integer.valueOf(0));
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index d605892..6fc56f4 100644
+index 2bebcb1..9742afc 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -140,6 +140,28 @@ public class EntityItem extends Entity {
@@ -159,7 +159,7 @@ index d605892..6fc56f4 100644
          // Spigot start
          double radius = world.spigotConfig.itemMerge;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 450f390..95b59ba 100644
+index 1fd637a..9a3c573 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -115,6 +115,13 @@ public abstract class EntityLiving extends Entity {
@@ -177,10 +177,10 @@ index 450f390..95b59ba 100644
      public void Q() {
          this.damageEntity(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 5a9fa7e..849a49f 100644
+index 1d2ac0a..47e0d4d 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1369,6 +1369,7 @@ public abstract class World implements IBlockAccess {
+@@ -1348,6 +1348,7 @@ public abstract class World implements IBlockAccess {
          CrashReportSystemDetails crashreportsystemdetails1;
          CrashReport crashreport1;
  
@@ -188,7 +188,7 @@ index 5a9fa7e..849a49f 100644
          timings.entityTick.startTiming(); // Spigot
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
-@@ -1560,9 +1561,11 @@ public abstract class World implements IBlockAccess {
+@@ -1539,9 +1540,11 @@ public abstract class World implements IBlockAccess {
          int j = MathHelper.floor(entity.locZ);
          boolean flag1 = true;
  

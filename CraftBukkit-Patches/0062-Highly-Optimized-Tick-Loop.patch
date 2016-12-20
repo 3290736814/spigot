@@ -1,11 +1,11 @@
-From 0e744b98399774d034bfd6c02b136e13e2bdb302 Mon Sep 17 00:00:00 2001
+From 036805897cf52c636806333d71951b802bf8d830 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 25 Jan 2014 14:08:35 +1100
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 6121608..0102661 100644
+index a52d495..93d491e 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -117,6 +117,12 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
@@ -36,7 +36,7 @@ index 6121608..0102661 100644
          try {
              if (this.init()) {
 @@ -527,38 +540,34 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
-                 this.q.setServerInfo(new ServerPing.ServerData("1.11", 315));
+                 this.q.setServerInfo(new ServerPing.ServerData("1.11.1", 316));
                  this.a(this.q);
  
 +                // Spigot start
@@ -96,7 +96,7 @@ index 6121608..0102661 100644
                  this.a((CrashReport) null);
              }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index a2be9df..e1cc2e0 100644
+index 4037837..5ef8c8a 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -262,4 +262,9 @@ public class SpigotConfig

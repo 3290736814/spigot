@@ -1,4 +1,4 @@
-From e276ea96c869c9d04dd59f035edc96ecf8a98a32 Mon Sep 17 00:00:00 2001
+From 0ecbb9594f7dbf2570a2a8e5f1d7b4998a39552f Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -6,7 +6,7 @@ Subject: [PATCH] BungeeCord Support
 Provides support for IP forwarding via BungeeCord.
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index b0642a2..d29796a 100644
+index 6b24b41..c1ed460 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -7,6 +7,7 @@ import java.util.HashMap;
@@ -117,10 +117,10 @@ index 1cb9d60..aececa3 100644
          this.d = EnumProtocol.a(packetdataserializer.g());
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 0412317..795be50 100644
+index 747cf85..800f54b 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -455,7 +455,7 @@ public abstract class PlayerList {
+@@ -448,7 +448,7 @@ public abstract class PlayerList {
  
          EntityPlayer entity = new EntityPlayer(server, server.getWorldServer(0), gameprofile, new PlayerInteractManager(server.getWorldServer(0)));
          Player player = entity.getBukkitEntity();
@@ -166,7 +166,7 @@ index 4ba5ccc..8e39734 100644
              return CraftPlayer.this.isCollidable();
          }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 83f3c0a..6d97556 100644
+index e0a3481..fa7ea26 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -211,4 +211,14 @@ public class SpigotConfig

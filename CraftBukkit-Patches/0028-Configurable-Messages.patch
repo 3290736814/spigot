@@ -1,32 +1,32 @@
-From f2c1eb864ae92cbf3cb891ea77ed9eaa4740a8fb Mon Sep 17 00:00:00 2001
+From 13d387e3bc2c8062fb7d74eb5606368d128fcc31 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
 
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index ec03fe5..b0642a2 100644
+index 1d1ea42..6b24b41 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -62,11 +62,11 @@ public class HandshakeListener implements PacketHandshakingInListener {
              // CraftBukkit end
  
-             if (packethandshakinginsetprotocol.b() > 315) {
--                chatcomponenttext = new ChatComponentText("Outdated server! I\'m still on 1.11");
-+                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.11" ) ); // Spigot
+             if (packethandshakinginsetprotocol.b() > 316) {
+-                chatcomponenttext = new ChatComponentText("Outdated server! I\'m still on 1.11.1");
++                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.11.1" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatcomponenttext));
                  this.b.close(chatcomponenttext);
-             } else if (packethandshakinginsetprotocol.b() < 315) {
--                chatcomponenttext = new ChatComponentText("Outdated client! Please use 1.11");
-+                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), "1.11" ) ); // Spigot
+             } else if (packethandshakinginsetprotocol.b() < 316) {
+-                chatcomponenttext = new ChatComponentText("Outdated client! Please use 1.11.1");
++                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), "1.11.1" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatcomponenttext));
                  this.b.close(chatcomponenttext);
              } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 9c1d5ff..226e7ef 100644
+index 4df43af..cd14059 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -470,7 +470,7 @@ public abstract class PlayerList {
+@@ -463,7 +463,7 @@ public abstract class PlayerList {
              event.disallow(PlayerLoginEvent.Result.KICK_BANNED, s);
          } else if (!this.isWhitelisted(gameprofile)) {
              // return "You are not white-listed on this server!";
@@ -35,7 +35,7 @@ index 9c1d5ff..226e7ef 100644
          } else if (getIPBans().isBanned(socketaddress) && !getIPBans().get(socketaddress).hasExpired()) {
              IpBanEntry ipbanentry = this.l.get(socketaddress);
  
-@@ -484,7 +484,7 @@ public abstract class PlayerList {
+@@ -477,7 +477,7 @@ public abstract class PlayerList {
          } else {
              // return this.players.size() >= this.maxPlayers && !this.f(gameprofile) ? "The server is full!" : null;
              if (this.players.size() >= this.maxPlayers && !this.f(gameprofile)) {

@@ -1,4 +1,4 @@
-From 28959bea9edcffe34af70a86cc9d37c970680e08 Mon Sep 17 00:00:00 2001
+From 254635024a8d9bc18340926ee9fd2e7dae40c18d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -6,7 +6,7 @@ Subject: [PATCH] Async Operation Catching
 Catch and throw an exception when a potentially unsafe operation occurs on a thread other than the main server thread.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 6987482..9d14403 100644
+index 288ca93..e8511ac 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -306,9 +306,13 @@ public class Block {
@@ -26,7 +26,7 @@ index 6987482..9d14403 100644
      public int a(Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 178bc15..a630e5e 100644
+index 74a4c93..d7e1e3f 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -656,6 +656,7 @@ public abstract class EntityLiving extends Entity {
@@ -78,7 +78,7 @@ index 9c8118d..b688e99 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 09dfd2e..8f30e07 100644
+index 25483ff..9f81334 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -969,6 +969,7 @@ public abstract class World implements IBlockAccess {
@@ -97,7 +97,7 @@ index 09dfd2e..8f30e07 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2466,6 +2468,7 @@ public abstract class World implements IBlockAccess {
+@@ -2445,6 +2447,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void a(Collection<Entity> collection) {

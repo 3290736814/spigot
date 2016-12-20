@@ -1,11 +1,11 @@
-From 9dd97e58099d74401a1f4823d2746fd01c2372aa Mon Sep 17 00:00:00 2001
+From 2da658b0354f091b6d2b9edfa79ba45f4221a4d9 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 13 Jul 2015 19:05:15 +1000
 Subject: [PATCH] Use Map for getPlayer(String) lookup.
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 29cd737..5359e8c 100644
+index 3c4a405..7be0135 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -69,6 +69,7 @@ public abstract class PlayerList {
@@ -16,7 +16,7 @@ index 29cd737..5359e8c 100644
  
      public PlayerList(MinecraftServer minecraftserver) {
          this.cserver = minecraftserver.server = new CraftServer(minecraftserver, this);
-@@ -323,6 +324,7 @@ public abstract class PlayerList {
+@@ -316,6 +317,7 @@ public abstract class PlayerList {
  
      public void onPlayerJoin(EntityPlayer entityplayer, String joinMessage) { // CraftBukkit added param
          this.players.add(entityplayer);
@@ -24,7 +24,7 @@ index 29cd737..5359e8c 100644
          this.j.put(entityplayer.getUniqueID(), entityplayer);
          // this.sendAll(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, new EntityPlayer[] { entityplayer})); // CraftBukkit - replaced with loop below
          WorldServer worldserver = this.server.getWorldServer(entityplayer.dimension);
-@@ -410,6 +412,7 @@ public abstract class PlayerList {
+@@ -403,6 +405,7 @@ public abstract class PlayerList {
          worldserver.kill(entityplayer);
          worldserver.getPlayerChunkMap().removePlayer(entityplayer);
          this.players.remove(entityplayer);
@@ -32,7 +32,7 @@ index 29cd737..5359e8c 100644
          UUID uuid = entityplayer.getUniqueID();
          EntityPlayer entityplayer1 = (EntityPlayer) this.j.get(uuid);
  
-@@ -561,6 +564,7 @@ public abstract class PlayerList {
+@@ -554,6 +557,7 @@ public abstract class PlayerList {
          // entityplayer.x().getTracker().untrackEntity(entityplayer); // CraftBukkit
          entityplayer.x().getPlayerChunkMap().removePlayer(entityplayer);
          this.players.remove(entityplayer);
@@ -40,7 +40,7 @@ index 29cd737..5359e8c 100644
          this.server.getWorldServer(entityplayer.dimension).removeEntity(entityplayer);
          BlockPosition blockposition = entityplayer.getBed();
          boolean flag1 = entityplayer.isRespawnForced();
-@@ -666,6 +670,7 @@ public abstract class PlayerList {
+@@ -659,6 +663,7 @@ public abstract class PlayerList {
              worldserver.getPlayerChunkMap().addPlayer(entityplayer1);
              worldserver.addEntity(entityplayer1);
              this.players.add(entityplayer1);
@@ -48,7 +48,7 @@ index 29cd737..5359e8c 100644
              this.j.put(entityplayer1.getUniqueID(), entityplayer1);
          }
          // entityplayer1.syncInventory();
-@@ -1147,19 +1152,7 @@ public abstract class PlayerList {
+@@ -1140,19 +1145,7 @@ public abstract class PlayerList {
  
      @Nullable
      public EntityPlayer getPlayer(String s) {

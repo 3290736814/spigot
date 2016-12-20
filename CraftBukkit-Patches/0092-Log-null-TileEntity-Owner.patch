@@ -1,14 +1,14 @@
-From 275cc4367dec08a73a804b0661021fb07b9fb2bb Mon Sep 17 00:00:00 2001
+From 0eaf8659a9c82a0591f8ae917afbbf29c6bd9cc7 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 20 Apr 2014 11:16:54 +1000
 Subject: [PATCH] Log null TileEntity Owner
 
 
 diff --git a/src/main/java/net/minecraft/server/TileEntity.java b/src/main/java/net/minecraft/server/TileEntity.java
-index 8781203..8d54eb3 100644
+index f1284c7..6958a2e 100644
 --- a/src/main/java/net/minecraft/server/TileEntity.java
 +++ b/src/main/java/net/minecraft/server/TileEntity.java
-@@ -263,7 +263,14 @@ public abstract class TileEntity {
+@@ -258,7 +258,14 @@ public abstract class TileEntity {
      // CraftBukkit start - add method
      public InventoryHolder getOwner() {
          if (world == null) return null;
