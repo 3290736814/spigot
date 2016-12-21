@@ -1,14 +1,14 @@
-From ab5dd545829ad7446dbb4cda6dd234f8368f423c Mon Sep 17 00:00:00 2001
+From 25a4fa23ead1c28f3b2a0ab159ec59d92eedf2f6 Mon Sep 17 00:00:00 2001
 From: DerFlash <bte@freenet.de>
 Date: Tue, 9 Jul 2013 00:11:12 +0200
 Subject: [PATCH] Save ticks lived to nbttag
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index f8525d0..42c3a67 100644
+index 4268bca..ca5f8a0 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -1411,6 +1411,7 @@ public abstract class Entity implements ICommandListener {
+@@ -1407,6 +1407,7 @@ public abstract class Entity implements ICommandListener {
              nbttagcompound.setLong("WorldUUIDLeast", this.world.getDataManager().getUUID().getLeastSignificantBits());
              nbttagcompound.setLong("WorldUUIDMost", this.world.getDataManager().getUUID().getMostSignificantBits());
              nbttagcompound.setInt("Bukkit.updateLevel", CURRENT_LEVEL);
@@ -16,7 +16,7 @@ index f8525d0..42c3a67 100644
              // CraftBukkit end
              if (this.hasCustomName()) {
                  nbttagcompound.setString("CustomName", this.getCustomName());
-@@ -1562,6 +1563,8 @@ public abstract class Entity implements ICommandListener {
+@@ -1558,6 +1559,8 @@ public abstract class Entity implements ICommandListener {
              if (this instanceof EntityLiving) {
                  EntityLiving entity = (EntityLiving) this;
  

@@ -1,24 +1,24 @@
-From 13d387e3bc2c8062fb7d74eb5606368d128fcc31 Mon Sep 17 00:00:00 2001
+From 461654b8918d428800463a556fea30804898105c Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
 
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 1d1ea42..6b24b41 100644
+index 97f937a..1a66efc 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -62,11 +62,11 @@ public class HandshakeListener implements PacketHandshakingInListener {
              // CraftBukkit end
  
              if (packethandshakinginsetprotocol.b() > 316) {
--                chatcomponenttext = new ChatComponentText("Outdated server! I\'m still on 1.11.1");
-+                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.11.1" ) ); // Spigot
+-                chatcomponenttext = new ChatComponentText("Outdated server! I\'m still on 1.11.2");
++                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.11.2" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatcomponenttext));
                  this.b.close(chatcomponenttext);
              } else if (packethandshakinginsetprotocol.b() < 316) {
--                chatcomponenttext = new ChatComponentText("Outdated client! Please use 1.11.1");
-+                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), "1.11.1" ) ); // Spigot
+-                chatcomponenttext = new ChatComponentText("Outdated client! Please use 1.11.2");
++                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), "1.11.2" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatcomponenttext));
                  this.b.close(chatcomponenttext);
              } else {

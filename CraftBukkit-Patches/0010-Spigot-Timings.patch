@@ -1,4 +1,4 @@
-From 65088ed3c4f26f343e8c161fa2d6ff18e77cd116 Mon Sep 17 00:00:00 2001
+From 1c462aecce606723eff29a8cc6567c0bae912e63 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -46,7 +46,7 @@ index e07d08e..ea7c10f 100644
  
          return chunk;
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index f653eee..69387ea 100644
+index 210c2a8..a97e7d3 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -46,7 +46,9 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
@@ -96,7 +96,7 @@ index f653eee..69387ea 100644
          // return chunk; // CraftBukkit
      }
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 0659df7..123554a 100644
+index 9d2d7af..0a28b09 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -23,6 +23,7 @@ import java.io.PrintStream;
@@ -124,7 +124,7 @@ index 0659df7..123554a 100644
  
      public boolean aa() {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 929816a..3c1c8da 100644
+index dc4695f..1d13ab2 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -25,6 +25,7 @@ import org.bukkit.block.BlockFace;
@@ -151,7 +151,7 @@ index 929816a..3c1c8da 100644
          if (this.noclip) {
              this.a(this.getBoundingBox().d(d0, d1, d2));
              this.recalcPosition();
-@@ -854,6 +857,7 @@ public abstract class Entity implements ICommandListener {
+@@ -852,6 +855,7 @@ public abstract class Entity implements ICommandListener {
  
              this.world.methodProfiler.b();
          }
@@ -230,7 +230,7 @@ index d7e1e3f..1fd637a 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index a4f2d65..be16ff3 100644
+index 1553c0e..1d5f7dc 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -47,6 +47,7 @@ import org.bukkit.Bukkit;
@@ -407,7 +407,7 @@ index 8a0194e..f1284c7 100644
      private static final RegistryMaterials<MinecraftKey, Class<? extends TileEntity>> f = new RegistryMaterials();
      protected World world;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 9f81334..0c9925e 100644
+index 1fad179..952b3ad 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -18,6 +18,7 @@ import com.google.common.collect.Maps;
