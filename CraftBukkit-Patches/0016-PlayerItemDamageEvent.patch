@@ -1,14 +1,14 @@
-From 645a607ecab4296cce16a02c413dc586b5689837 Mon Sep 17 00:00:00 2001
+From 18fc9f41d6a5dba63f2ac2dacb4790d72cbe4c63 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Mon, 4 Mar 2013 18:45:52 +1100
 Subject: [PATCH] PlayerItemDamageEvent
 
 
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 008976a..861854b 100644
+index 450d27c..00ffb05 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -356,6 +356,11 @@ public final class ItemStack {
+@@ -364,6 +364,11 @@ public final class ItemStack {
      }
  
      public boolean isDamaged(int i, Random random) {
@@ -20,7 +20,7 @@ index 008976a..861854b 100644
          if (!this.f()) {
              return false;
          } else {
-@@ -370,6 +375,18 @@ public final class ItemStack {
+@@ -378,6 +383,18 @@ public final class ItemStack {
                  }
  
                  i -= k;
@@ -39,7 +39,7 @@ index 008976a..861854b 100644
                  if (i <= 0) {
                      return false;
                  }
-@@ -383,7 +400,7 @@ public final class ItemStack {
+@@ -391,7 +408,7 @@ public final class ItemStack {
      public void damage(int i, EntityLiving entityliving) {
          if (!(entityliving instanceof EntityHuman) || !((EntityHuman) entityliving).abilities.canInstantlyBuild) {
              if (this.f()) {

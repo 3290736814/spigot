@@ -1,11 +1,11 @@
-From 575e0263aaaf1547dc3617acc5eb5a2449ddc0ea Mon Sep 17 00:00:00 2001
+From c309383cd51222650a3a0a92244c388a5e1b0a84 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index e065316..33ed43d 100644
+index 0a28b09..017dc44 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -279,7 +279,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -18,7 +18,7 @@ index e065316..33ed43d 100644
  
                      thread1.setName("Server Watchdog");
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 5caa1b1..66a93c5 100644
+index 1293390..d522fd2 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -583,6 +583,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
@@ -38,10 +38,10 @@ index 5caa1b1..66a93c5 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 34c46fb..588e57f 100644
+index 531094b..32c9721 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1710,6 +1710,11 @@ public final class CraftServer implements Server {
+@@ -1718,6 +1718,11 @@ public final class CraftServer implements Server {
          {
              return org.spigotmc.SpigotConfig.config;
          }
@@ -192,7 +192,7 @@ index 0000000..4976873
 +    }
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 3726ea5..34def7b 100644
+index be3bd59..e0a3481 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -197,4 +197,18 @@ public class SpigotConfig

@@ -1,4 +1,4 @@
-From 254635024a8d9bc18340926ee9fd2e7dae40c18d Mon Sep 17 00:00:00 2001
+From 4a7da0b40a23736251ba6ed276c931e7b4d415df Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -26,10 +26,10 @@ index 288ca93..e8511ac 100644
      public int a(Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 74a4c93..d7e1e3f 100644
+index c12f12b..1a1973d 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -656,6 +656,7 @@ public abstract class EntityLiving extends Entity {
+@@ -657,6 +657,7 @@ public abstract class EntityLiving extends Entity {
      }
  
      public void addEffect(MobEffect mobeffect) {
@@ -58,7 +58,7 @@ index 9cfa570..40ed61a 100644
              EntityPlayer entityplayer = (EntityPlayer) entity;
              Iterator iterator = this.c.iterator();
 diff --git a/src/main/java/net/minecraft/server/EntityTrackerEntry.java b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
-index 9c8118d..b688e99 100644
+index a328ba2..1493f9a 100644
 --- a/src/main/java/net/minecraft/server/EntityTrackerEntry.java
 +++ b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
 @@ -324,6 +324,7 @@ public class EntityTrackerEntry {
@@ -78,7 +78,7 @@ index 9c8118d..b688e99 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 25483ff..9f81334 100644
+index 7922bc8..19470bc 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -969,6 +969,7 @@ public abstract class World implements IBlockAccess {
@@ -97,7 +97,7 @@ index 25483ff..9f81334 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2445,6 +2447,7 @@ public abstract class World implements IBlockAccess {
+@@ -2442,6 +2444,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void a(Collection<Entity> collection) {
@@ -106,7 +106,7 @@ index 25483ff..9f81334 100644
          // this.entityList.addAll(collection);
          Iterator iterator = collection.iterator();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 1784418..5c59f0d 100644
+index ea5ae62..e216415 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -172,6 +172,7 @@ public class CraftWorld implements World {

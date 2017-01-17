@@ -1,14 +1,14 @@
-From 0321e81ffbed01f7aa467079a351a5a642a09a25 Mon Sep 17 00:00:00 2001
+From a509794b46779a860d57ec7115f506e1f0ff8f5a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 20 Apr 2014 18:58:00 +1000
 Subject: [PATCH] Don't special case 'invalid' usernames for UUIDs.
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index a394633..cada4d7 100644
+index ca881a7..c3949e4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1293,11 +1293,6 @@ public final class CraftServer implements Server {
+@@ -1294,11 +1294,6 @@ public final class CraftServer implements Server {
          Validate.notNull(name, "Name cannot be null");
          com.google.common.base.Preconditions.checkArgument( !org.apache.commons.lang.StringUtils.isBlank( name ), "Name cannot be blank" ); // Spigot
  

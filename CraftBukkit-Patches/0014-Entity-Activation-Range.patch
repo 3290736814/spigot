@@ -1,4 +1,4 @@
-From a7b2a95731fd67dd27cb4f5a4cb9672c7dd22924 Mon Sep 17 00:00:00 2001
+From 98ef319642be2cfd708b704bede53ee59f653055 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 3c1c8da..d293139 100644
+index 1d13ab2..0cdfd98 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -109,7 +109,7 @@ public abstract class Entity implements ICommandListener {
@@ -107,10 +107,10 @@ index f64838d..c7eda46 100644
          super(world);
          this.h = -1;
 diff --git a/src/main/java/net/minecraft/server/EntityFireworks.java b/src/main/java/net/minecraft/server/EntityFireworks.java
-index 278b80c..7fc5d88 100644
+index 5ba67ee..572f4de 100644
 --- a/src/main/java/net/minecraft/server/EntityFireworks.java
 +++ b/src/main/java/net/minecraft/server/EntityFireworks.java
-@@ -16,6 +16,14 @@ public class EntityFireworks extends Entity {
+@@ -17,6 +17,14 @@ public class EntityFireworks extends Entity {
          this.setSize(0.25F, 0.25F);
      }
  
@@ -159,7 +159,7 @@ index 2bebcb1..9742afc 100644
          // Spigot start
          double radius = world.spigotConfig.itemMerge;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 1fd637a..9a3c573 100644
+index 9645da6..318d57e 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -115,6 +115,13 @@ public abstract class EntityLiving extends Entity {
@@ -177,10 +177,10 @@ index 1fd637a..9a3c573 100644
      public void Q() {
          this.damageEntity(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 1d2ac0a..47e0d4d 100644
+index 92fdb19..5856400 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1348,6 +1348,7 @@ public abstract class World implements IBlockAccess {
+@@ -1345,6 +1345,7 @@ public abstract class World implements IBlockAccess {
          CrashReportSystemDetails crashreportsystemdetails1;
          CrashReport crashreport1;
  
@@ -188,7 +188,7 @@ index 1d2ac0a..47e0d4d 100644
          timings.entityTick.startTiming(); // Spigot
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
-@@ -1539,9 +1540,11 @@ public abstract class World implements IBlockAccess {
+@@ -1536,9 +1537,11 @@ public abstract class World implements IBlockAccess {
          int j = MathHelper.floor(entity.locZ);
          boolean flag1 = true;
  
@@ -218,10 +218,10 @@ index 558574f..41d2d87 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 822000f..eccad0f 100644
+index 528361d..d393de9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -261,6 +261,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -263,6 +263,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          entity.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
          // SPIGOT-619: Force sync head rotation also
          entity.h(location.getYaw()); // PAIL: setHeadRotation

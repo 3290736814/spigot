@@ -1,4 +1,4 @@
-From b1079e22707619122716e6d526f81c9e072dcd20 Mon Sep 17 00:00:00 2001
+From bbba4fbe338ecc7c2efc2919ffe191591ab70a5b Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Thu, 31 Jul 2014 17:48:20 +0100
 Subject: [PATCH] Filter attribute modifiers which cause the attribute to go
@@ -6,7 +6,7 @@ Subject: [PATCH] Filter attribute modifiers which cause the attribute to go
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index bd94dfd..1ea4cd5 100644
+index 75adccd..717c5b9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -49,6 +49,8 @@ import org.apache.commons.codec.binary.Base64;
@@ -18,7 +18,7 @@ index bd94dfd..1ea4cd5 100644
  // Spigot end
  
  /**
-@@ -287,6 +289,123 @@ class CraftMetaItem implements ItemMeta, Repairable {
+@@ -293,6 +295,123 @@ class CraftMetaItem implements ItemMeta, Repairable {
              NBTTagList save = null;
              NBTTagList nbttaglist = tag.getList(ATTRIBUTES.NBT, 10);
  
