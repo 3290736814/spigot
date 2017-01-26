@@ -1,4 +1,4 @@
-From 26e560269de2cb316171587d54e9ffe50c7c280d Mon Sep 17 00:00:00 2001
+From 9a8e3b172cf5d871c487156daa3642e867e30166 Mon Sep 17 00:00:00 2001
 From: erocs <github@erocs.org>
 Date: Sun, 8 Sep 2013 12:06:15 -0700
 Subject: [PATCH] Hopper Customisations
@@ -6,10 +6,10 @@ Subject: [PATCH] Hopper Customisations
 Allows editing hopper cooldowns and amount transferred per tick.
 
 diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
-index b92af20..d8e9253 100644
+index 7dfdfe9..84c1aa1 100644
 --- a/src/main/java/net/minecraft/server/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
-@@ -135,7 +135,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -135,12 +135,11 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                  }
  
                  if (flag) {
@@ -18,7 +18,12 @@ index b92af20..d8e9253 100644
                      this.update();
                      return true;
                  }
-@@ -200,7 +200,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+             }
+-
+             return false;
+         } else {
+             return false;
+@@ -200,7 +199,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                          // ItemStack itemstack1 = addItem(this, iinventory, this.splitStack(i, 1), enumdirection);
  
                          // CraftBukkit start - Call event when pushing items into other inventories
@@ -27,15 +32,19 @@ index b92af20..d8e9253 100644
  
                          Inventory destinationInventory;
                          // Have to special case large chests as they work oddly
-@@ -216,6 +216,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -214,9 +213,10 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+                         this.getWorld().getServer().getPluginManager().callEvent(event);
+                         if (event.isCancelled()) {
                              this.setItem(i, itemstack);
-                             continue;
+-                            this.setCooldown(8); // Delay hopper checks
++                            this.setCooldown(world.spigotConfig.hopperTransfer); // Spigot
+                             return false;
                          }
 +                        int origCount = event.getItem().getAmount(); // Spigot
                          ItemStack itemstack1 = addItem(this, iinventory, CraftItemStack.asNMSCopy(event.getItem()), enumdirection);
  
                          if (itemstack1.isEmpty()) {
-@@ -228,6 +229,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -229,6 +229,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                              return true;
                          }
  
@@ -43,7 +52,7 @@ index b92af20..d8e9253 100644
                          this.setItem(i, itemstack);
                      }
                  }
-@@ -348,7 +350,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -349,7 +350,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
              ItemStack itemstack1 = itemstack.cloneItemStack();
              // ItemStack itemstack2 = addItem(iinventory, ihopper, iinventory.splitStack(i, 1), (EnumDirection) null);
              // CraftBukkit start - Call event on collection of items from inventories into the hopper
@@ -52,7 +61,7 @@ index b92af20..d8e9253 100644
  
              Inventory sourceInventory;
              // Have to special case large chests as they work oddly
-@@ -365,13 +367,13 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -366,13 +367,13 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                  iinventory.setItem(i, itemstack1);
  
                  if (ihopper instanceof TileEntityHopper) {
@@ -69,7 +78,7 @@ index b92af20..d8e9253 100644
              ItemStack itemstack2 = addItem(iinventory, ihopper, CraftItemStack.asNMSCopy(event.getItem()), null);
  
              if (itemstack2.isEmpty()) {
-@@ -384,6 +386,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -385,6 +386,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                  return true;
              }
  
@@ -77,7 +86,7 @@ index b92af20..d8e9253 100644
              iinventory.setItem(i, itemstack1);
          }
  
-@@ -479,7 +482,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -480,7 +482,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                              }
                          }
  
