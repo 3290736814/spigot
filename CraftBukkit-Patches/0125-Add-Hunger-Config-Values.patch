@@ -1,11 +1,11 @@
-From e430dd48f608bed74b48b3c597d659ddeec21b13 Mon Sep 17 00:00:00 2001
+From 9afda281dc7ce0811743a0571e76813c05b2b87f Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 84910e6..82146de 100644
+index dddfe62..ec8f581 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -1148,7 +1148,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -76,12 +76,12 @@ index b5fd8e8..b6e9786 100644
              }
          } else if (this.foodLevel <= 0) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index a5c7ee2..964e86e 100644
+index d89eab1..24c46c4 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -249,4 +249,30 @@ public class SpigotWorldConfig
-         largeFeatureSeed = getInt( "seed-feature", 14357617 );
-         log( "Custom Map Seeds:  Village: " + villageSeed + " Feature: " + largeFeatureSeed );
+@@ -253,4 +253,30 @@ public class SpigotWorldConfig
+         slimeSeed = getInt( "seed-slime", 987234911 );
+         log( "Custom Map Seeds:  Village: " + villageSeed + " Feature: " + largeFeatureSeed + "Monument: "  + monumentSeed + " Slime: " + slimeSeed );
      }
 +
 +    public float jumpWalkExhaustion;

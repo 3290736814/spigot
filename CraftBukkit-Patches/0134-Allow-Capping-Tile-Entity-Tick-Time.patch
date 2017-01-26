@@ -1,4 +1,4 @@
-From 3370f0ede2fc64914f5cf72785edcdd8a6e7ee5d Mon Sep 17 00:00:00 2001
+From e2206684e1e5665a074c97c1986190232cee034d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -10,7 +10,7 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 This feature was commisioned by Chunkr.
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 7ffeb01..80a8c55 100644
+index 17ea24c..d7cc8b6 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -129,6 +129,9 @@ public abstract class World implements IBlockAccess {
@@ -82,10 +82,10 @@ index 7ffeb01..80a8c55 100644
                  if (this.isLoaded(tileentity.getPosition())) {
                      this.getChunkAtWorldCoords(tileentity.getPosition()).d(tileentity.getPosition());
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 9c5f324..fd859f1 100644
+index 6d9489c..ca6e9c8 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -292,4 +292,13 @@ public class SpigotWorldConfig
+@@ -296,4 +296,13 @@ public class SpigotWorldConfig
      {
          hangingTickFrequency = getInt( "hanging-tick-frequency", 100 );
      }
