@@ -1,11 +1,11 @@
-From 0311aac6baf7238e1fc4ce5f57f87acbf1537205 Mon Sep 17 00:00:00 2001
+From 2e6f69ef9b5e33f6ccef955a65dbfe2acaca0d5d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
-Date: Sat, 25 Jan 2014 14:08:35 +1100
+Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index cd217a5..f93f52d 100644
+index cd217a5..bab4f72 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -117,6 +117,12 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
@@ -13,8 +13,8 @@ index cd217a5..f93f52d 100644
      public int autosavePeriod;
      // CraftBukkit end
 +    // Spigot start
-+    private static final int TPS = 20;
-+    private static final int TICK_TIME = 1000000000 / TPS;
++    public static final int TPS = 20;
++    public static final int TICK_TIME = 1000000000 / TPS;
 +    private static final int SAMPLE_INTERVAL = 100;
 +    public final double[] recentTps = new double[ 3 ];
 +    // Spigot end
@@ -31,7 +31,7 @@ index cd217a5..f93f52d 100644
 +        return ( avg * exp ) + ( tps * ( 1 - exp ) );
 +    }
 +    // Spigot End
-+ 
++
      public void run() {
          try {
              if (this.init()) {
