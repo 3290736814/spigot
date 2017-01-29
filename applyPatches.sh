@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 
 PS1="$"
 basedir=`pwd`
 echo "Rebuilding Forked projects.... "
 
-function applyPatch {
+applyPatch() {
     what=$1
     target=$2
     branch=$3

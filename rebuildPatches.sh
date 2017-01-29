@@ -4,7 +4,7 @@ PS1="$"
 basedir=`pwd`
 echo "Rebuilding patch files from current fork state..."
 
-function cleanupPatches {
+cleanupPatches() {
     cd "$1"
     for patch in *.patch; do
         gitver=$(tail -n 2 $patch | grep -ve "^$" | tail -n 1)
@@ -14,7 +14,7 @@ function cleanupPatches {
         if [ "x$testver" != "x" ]; then
             diffs=$(echo "$diffs" | head -n -2)
         fi
-        
+
 
         if [ "x$diffs" == "x" ] ; then
             git reset HEAD $patch >/dev/null
@@ -23,7 +23,7 @@ function cleanupPatches {
     done
 }
 
-function savePatches {
+savePatches() {
     what=$1
     target=$2
     cd "$basedir/$target"
