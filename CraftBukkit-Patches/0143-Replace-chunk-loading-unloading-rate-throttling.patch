@@ -1,4 +1,4 @@
-From 5861e7e0854696046ba37d50fc61f9f93fec14b3 Mon Sep 17 00:00:00 2001
+From 0b2b4d79ea5328dc946ded64b743609f7dd54e3d Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Thu, 26 Jan 2017 20:54:55 +0000
 Subject: [PATCH] Replace chunk loading / unloading rate throttling.
@@ -7,16 +7,22 @@ Uses a scheme based on estimated tick slack time.
 See https://hub.spigotmc.org/stash/projects/SPIGOT/repos/spigot/pull-requests/71/overview
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index b39937f..87c07f2 100644
+index b39937f..daf2c0a 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -248,10 +248,16 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -245,13 +245,22 @@ public class ChunkProviderServer implements IChunkProvider {
+         this.chunkLoader.b();
+     }
+ 
++    private static final double UNLOAD_QUEUE_RESIZE_FACTOR = 0.96;
++
      public boolean unloadChunks() {
          if (!this.world.savingDisabled) {
              if (!this.unloadQueue.isEmpty()) {
 +                // Spigot start
 +                org.spigotmc.SlackActivityAccountant activityAccountant = this.world.getMinecraftServer().slackActivityAccountant;
 +                activityAccountant.startActivity(0.5);
++                int targetSize = (int) (this.unloadQueue.size() * UNLOAD_QUEUE_RESIZE_FACTOR);
 +                // Spigot end
 +
                  Iterator iterator = this.unloadQueue.iterator();
@@ -28,13 +34,13 @@ index b39937f..87c07f2 100644
                      Chunk chunk = (Chunk) this.chunks.get(olong);
  
                      if (chunk != null && chunk.d) {
-@@ -261,9 +267,15 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -261,9 +270,15 @@ public class ChunkProviderServer implements IChunkProvider {
                          }
                          // CraftBukkit end
  
 -                        ++i;
 +                        // Spigot start
-+                        if (activityAccountant.activityTimeIsExhausted()) {
++                        if (this.unloadQueue.size() <= targetSize && activityAccountant.activityTimeIsExhausted()) {
 +                            break;
 +                        }
 +                        // Spigot end
@@ -217,5 +223,5 @@ index 0000000..aabc7ad
 +    }
 +}
 -- 
-2.9.3
+2.10.0.windows.1
 
