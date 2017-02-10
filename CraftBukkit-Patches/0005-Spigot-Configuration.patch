@@ -1,4 +1,4 @@
-From e4532dc43d3a93e0dfe229c9a9103e6e913555fa Mon Sep 17 00:00:00 2001
+From 6951ff29c90372d73fb3b0397660a0d66837b4fa Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -35,7 +35,7 @@ index 71eb615..9d2d7af 100644
              if (!this.getOnlineMode()) {
                  DedicatedServer.LOGGER.warn("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index e6a28cc..c63cedd 100644
+index 59b5e5a..06e0180 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -97,6 +97,7 @@ public abstract class World implements IBlockAccess {
@@ -95,7 +95,7 @@ index e8f0dd3..343846f 100644
  
          int pollCount = 0;
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index f9760b6..822c912 100644
+index 4467eee..a151451 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -118,6 +118,14 @@ public class Main {
@@ -115,7 +115,7 @@ index f9760b6..822c912 100644
  
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
 new file mode 100644
-index 0000000..f157de8
+index 0000000..b86bf9c
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -0,0 +1,139 @@
@@ -178,8 +178,8 @@ index 0000000..f157de8
 +
 +        commands = new HashMap<String, Command>();
 +
-+        version = getInt( "config-version", 10 );
-+        set( "config-version", 10 );
++        version = getInt( "config-version", 11 );
++        set( "config-version", 11 );
 +        readConfig( SpigotConfig.class, null );
 +    }
 +

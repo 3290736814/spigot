@@ -1,4 +1,4 @@
-From 9a8e3b172cf5d871c487156daa3642e867e30166 Mon Sep 17 00:00:00 2001
+From b7329e4b46dc0a657ccefba1c19f2ef9e29b8afb Mon Sep 17 00:00:00 2001
 From: erocs <github@erocs.org>
 Date: Sun, 8 Sep 2013 12:06:15 -0700
 Subject: [PATCH] Hopper Customisations
@@ -6,10 +6,23 @@ Subject: [PATCH] Hopper Customisations
 Allows editing hopper cooldowns and amount transferred per tick.
 
 diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
-index 7dfdfe9..84c1aa1 100644
+index 7dfdfe9..f8c2681 100644
 --- a/src/main/java/net/minecraft/server/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
-@@ -135,12 +135,11 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -115,7 +115,11 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+             this.g = this.world.getTime();
+             if (!this.J()) {
+                 this.setCooldown(0);
+-                this.o();
++                // Spigot start
++                if (!this.o() && this.world.spigotConfig.hopperCheck > 1) {
++                    this.setCooldown(this.world.spigotConfig.hopperCheck);
++                }
++                // Spigot end
+             }
+ 
+         }
+@@ -135,12 +139,11 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                  }
  
                  if (flag) {
@@ -23,7 +36,7 @@ index 7dfdfe9..84c1aa1 100644
              return false;
          } else {
              return false;
-@@ -200,7 +199,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -200,7 +203,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                          // ItemStack itemstack1 = addItem(this, iinventory, this.splitStack(i, 1), enumdirection);
  
                          // CraftBukkit start - Call event when pushing items into other inventories
@@ -32,7 +45,7 @@ index 7dfdfe9..84c1aa1 100644
  
                          Inventory destinationInventory;
                          // Have to special case large chests as they work oddly
-@@ -214,9 +213,10 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -214,9 +217,10 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                          this.getWorld().getServer().getPluginManager().callEvent(event);
                          if (event.isCancelled()) {
                              this.setItem(i, itemstack);
@@ -44,7 +57,7 @@ index 7dfdfe9..84c1aa1 100644
                          ItemStack itemstack1 = addItem(this, iinventory, CraftItemStack.asNMSCopy(event.getItem()), enumdirection);
  
                          if (itemstack1.isEmpty()) {
-@@ -229,6 +229,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -229,6 +233,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                              return true;
                          }
  
@@ -52,7 +65,7 @@ index 7dfdfe9..84c1aa1 100644
                          this.setItem(i, itemstack);
                      }
                  }
-@@ -349,7 +350,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -349,7 +354,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
              ItemStack itemstack1 = itemstack.cloneItemStack();
              // ItemStack itemstack2 = addItem(iinventory, ihopper, iinventory.splitStack(i, 1), (EnumDirection) null);
              // CraftBukkit start - Call event on collection of items from inventories into the hopper
@@ -61,7 +74,7 @@ index 7dfdfe9..84c1aa1 100644
  
              Inventory sourceInventory;
              // Have to special case large chests as they work oddly
-@@ -366,13 +367,13 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -366,13 +371,13 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                  iinventory.setItem(i, itemstack1);
  
                  if (ihopper instanceof TileEntityHopper) {
@@ -78,7 +91,7 @@ index 7dfdfe9..84c1aa1 100644
              ItemStack itemstack2 = addItem(iinventory, ihopper, CraftItemStack.asNMSCopy(event.getItem()), null);
  
              if (itemstack2.isEmpty()) {
-@@ -385,6 +386,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -385,6 +390,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                  return true;
              }
  
@@ -86,7 +99,7 @@ index 7dfdfe9..84c1aa1 100644
              iinventory.setItem(i, itemstack1);
          }
  
-@@ -480,7 +482,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -480,7 +486,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                              }
                          }
  
@@ -96,10 +109,10 @@ index 7dfdfe9..84c1aa1 100644
                  }
  
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index e4a364b..120631b 100644
+index e4a364b..2847bbf 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -166,4 +166,19 @@ public class SpigotWorldConfig
+@@ -166,4 +166,20 @@ public class SpigotWorldConfig
          otherTrackingRange = getInt( "entity-tracking-range.other", otherTrackingRange );
          log( "Entity Tracking Range: Pl " + playerTrackingRange + " / An " + animalTrackingRange + " / Mo " + monsterTrackingRange + " / Mi " + miscTrackingRange + " / Other " + otherTrackingRange );
      }
@@ -111,10 +124,11 @@ index e4a364b..120631b 100644
 +    {
 +        // Set the tick delay between hopper item movements
 +        hopperTransfer = getInt( "ticks-per.hopper-transfer", 8 );
-+        // Set the tick delay between checking for items after the associated
-+        // container is empty. Default to the hopperTransfer value to prevent
-+        // hopper sorting machines from becoming out of sync.
-+        hopperCheck = getInt( "ticks-per.hopper-check", hopperTransfer );
++        if ( SpigotConfig.version < 11 )
++        {
++            set( "ticks-per.hopper-check", 1 );
++        }
++        hopperCheck = getInt( "ticks-per.hopper-check", 1 );
 +        hopperAmount = getInt( "hopper-amount", 1 );
 +        log( "Hopper Transfer: " + hopperTransfer + " Hopper Check: " + hopperCheck + " Hopper Amount: " + hopperAmount );
 +    }
