@@ -1,11 +1,11 @@
-From 3358a98bb4f18cabe730bcd6a3955e047f6c58d0 Mon Sep 17 00:00:00 2001
+From 4eec7aa16193a25e4e9f8fe00c252287983ed743 Mon Sep 17 00:00:00 2001
 From: Smove <jan@lavasurvival.net>
 Date: Sat, 1 Feb 2014 18:12:16 +1100
 Subject: [PATCH] Implement Locale Getter for Players
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index c9bffc4..64ba161 100644
+index e7fc76d..5e0b3fc 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
 @@ -29,7 +29,7 @@ import org.bukkit.inventory.MainHand;
@@ -18,10 +18,10 @@ index c9bffc4..64ba161 100644
      public final MinecraftServer server;
      public final PlayerInteractManager playerInteractManager;
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 8d3af2f..888a1c5 100644
+index f38d585..325c9a0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1538,6 +1538,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1549,6 +1549,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
                  getHandle().playerConnection.sendPacket( packet );
              }
          }

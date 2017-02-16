@@ -1,4 +1,4 @@
-From c09e90b9991c44880aedf6862eef96430898099b Mon Sep 17 00:00:00 2001
+From 9adf0669d8ee1fcafbe13c422838e8e0e72f49b0 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
@@ -58,10 +58,10 @@ index 2ed6ad7..9441364 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 9127cf9..75adccd 100644
+index d54a541..bc11260 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -47,6 +47,10 @@ import java.util.logging.Logger;
+@@ -46,6 +46,10 @@ import java.util.logging.Logger;
  import net.minecraft.server.NBTCompressedStreamTools;
  import org.apache.commons.codec.binary.Base64;
  
@@ -72,7 +72,7 @@ index 9127cf9..75adccd 100644
  /**
   * Children must include the following:
   *
-@@ -258,7 +262,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
+@@ -260,7 +264,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
              NBTTagCompound display = tag.getCompound(DISPLAY.NBT);
  
              if (display.hasKey(NAME.NBT)) {
@@ -80,8 +80,8 @@ index 9127cf9..75adccd 100644
 +                displayName = limit( display.getString(NAME.NBT), 1024 ); // Spigot
              }
  
-             if (display.hasKey(LORE.NBT)) {
-@@ -266,7 +270,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
+             if (display.hasKey(LOCNAME.NBT)) {
+@@ -272,7 +276,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
                  lore = new ArrayList<String>(list.size());
  
                  for (int index = 0; index < list.size(); index++) {

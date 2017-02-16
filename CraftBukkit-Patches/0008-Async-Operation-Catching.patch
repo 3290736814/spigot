@@ -1,4 +1,4 @@
-From 4a7da0b40a23736251ba6ed276c931e7b4d415df Mon Sep 17 00:00:00 2001
+From 543af83fd9b5ab4172daee6b14449c7d12df7221 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -78,7 +78,7 @@ index a328ba2..1493f9a 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 7922bc8..19470bc 100644
+index 09d33d1..2cb3715 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -969,6 +969,7 @@ public abstract class World implements IBlockAccess {
@@ -106,7 +106,7 @@ index 7922bc8..19470bc 100644
          // this.entityList.addAll(collection);
          Iterator iterator = collection.iterator();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index ea5ae62..e216415 100644
+index 808f745..abf1cb3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -172,6 +172,7 @@ public class CraftWorld implements World {
@@ -134,10 +134,10 @@ index ea5ae62..e216415 100644
          if (generate) {
              // Use the default variant of loadChunk when generate == true.
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 56e9a46..6d95870 100644
+index eb6f6e0..f0ed347 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -211,6 +211,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -213,6 +213,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
      @Override
      public void kickPlayer(String message) {

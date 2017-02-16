@@ -1,4 +1,4 @@
-From c164242f7df7ffd95e0d0c5e3b11c19c9de7b4fc Mon Sep 17 00:00:00 2001
+From 5ec0df68dd2861f14b44a308a2ecc5f1a0baa038 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -117,7 +117,7 @@ index 1cb9d60..aececa3 100644
          this.d = EnumProtocol.a(packetdataserializer.g());
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 747cf85..800f54b 100644
+index 77e890e..aed8142 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -448,7 +448,7 @@ public abstract class PlayerList {
@@ -149,10 +149,10 @@ index 32c9721..73f9ab1 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 4ba5ccc..8e39734 100644
+index c48d7fb..279ebeb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1460,6 +1460,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1471,6 +1471,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      {
  
          @Override
@@ -166,7 +166,7 @@ index 4ba5ccc..8e39734 100644
              return CraftPlayer.this.isCollidable();
          }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index e0a3481..fa7ea26 100644
+index ccb1154..4afe559 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -211,4 +211,14 @@ public class SpigotConfig

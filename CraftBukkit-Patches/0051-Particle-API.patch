@@ -1,4 +1,4 @@
-From e4f59c2e9f3df18203ce58b170a7621be2535419 Mon Sep 17 00:00:00 2001
+From 8fe538bc7b843ef43e2799772d3d858c918f6211 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Fri, 20 Dec 2013 21:36:06 +0000
 Subject: [PATCH] Particle API
@@ -132,10 +132,10 @@ index abf1cb3..e1dd8a3 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 8e39734..905ed46 100644
+index 279ebeb..8f42339 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -350,9 +350,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -352,9 +352,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      public void playEffect(Location loc, Effect effect, int data) {
          if (getHandle().playerConnection == null) return;
  
@@ -146,7 +146,7 @@ index 8e39734..905ed46 100644
      }
  
      @Override
-@@ -1483,6 +1481,63 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1494,6 +1492,63 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
                  server.getServer().getPlayerList().moveToWorld( getHandle(), 0, false );
              }
          }
