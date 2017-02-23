@@ -1,4 +1,4 @@
-From 19dac90dbdf3de75de6ec33ae733d5b33b0172db Mon Sep 17 00:00:00 2001
+From cc21d938a91bc5cd87d41446d7de414c2397844f Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
@@ -76,12 +76,12 @@ index b5fd8e8..b6e9786 100644
              }
          } else if (this.foodLevel <= 0) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 4e55284..d5d7ef7 100644
+index 5b1dc38..715ceef 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -254,4 +254,30 @@ public class SpigotWorldConfig
          slimeSeed = getInt( "seed-slime", 987234911 );
-         log( "Custom Map Seeds:  Village: " + villageSeed + " Feature: " + largeFeatureSeed + "Monument: "  + monumentSeed + " Slime: " + slimeSeed );
+         log( "Custom Map Seeds:  Village: " + villageSeed + " Feature: " + largeFeatureSeed + " Monument: "  + monumentSeed + " Slime: " + slimeSeed );
      }
 +
 +    public float jumpWalkExhaustion;
