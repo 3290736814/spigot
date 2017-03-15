@@ -1,11 +1,11 @@
-From 85c78563dc5e55cb13547208a124cf60e83970be Mon Sep 17 00:00:00 2001
+From 507daa3159a86666ba64c0e059a6936b46a7e175 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 19 Apr 2015 09:19:39 +1000
 Subject: [PATCH] Use CLQ for main thread tasks.
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 5d8583c..0b790ab 100644
+index 790bae6..9bc177f 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -101,7 +101,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs

@@ -1,4 +1,4 @@
-From 9e47cbfccdc33cce584a5873801812155844ab08 Mon Sep 17 00:00:00 2001
+From 0da85ccff161bf5221a8d1d9f819540d46365d6e Mon Sep 17 00:00:00 2001
 From: slide23 <me@slide.ws>
 Date: Fri, 20 Dec 2013 20:15:33 -0600
 Subject: [PATCH] Add Late Bind Option
@@ -6,7 +6,7 @@ Subject: [PATCH] Add Late Bind Option
 Add late-bind config option to delay binding until loading is done.
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 33ed43d..76b1858 100644
+index 017dc44..3b3aab3 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -179,6 +179,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -44,7 +44,7 @@ index 33ed43d..76b1858 100644
                      Thread thread1 = new Thread(new ThreadWatchdog(this));
  
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index a306266..4edc6af 100644
+index 427db46..ef6190c 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -228,4 +228,9 @@ public class SpigotConfig

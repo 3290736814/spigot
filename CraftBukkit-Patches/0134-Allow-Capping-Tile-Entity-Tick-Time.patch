@@ -1,4 +1,4 @@
-From 8179bd19433d543ea344cf99f8c257fa129bbbc4 Mon Sep 17 00:00:00 2001
+From 8a997fc4683cdc9b1a9573a044fb62f6ae4d2725 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -10,7 +10,7 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 This feature was commisioned by Chunkr.
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 17ea24c..d7cc8b6 100644
+index 42aeede..1bb519b 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -129,6 +129,9 @@ public abstract class World implements IBlockAccess {
@@ -32,7 +32,7 @@ index 17ea24c..d7cc8b6 100644
      }
  
      public World b() {
-@@ -1400,7 +1405,12 @@ public abstract class World implements IBlockAccess {
+@@ -1402,7 +1407,12 @@ public abstract class World implements IBlockAccess {
          timings.entityTick.startTiming(); // Spigot
          guardEntityList = true; // Spigot
          // CraftBukkit start - Use field for loop variable
@@ -46,7 +46,7 @@ index 17ea24c..d7cc8b6 100644
              entity = (Entity) this.entityList.get(this.tickPosition);
              // CraftBukkit end
              Entity entity1 = entity.bB();
-@@ -1458,14 +1468,20 @@ public abstract class World implements IBlockAccess {
+@@ -1460,14 +1470,20 @@ public abstract class World implements IBlockAccess {
              this.tileEntityListUnload.clear();
          }
          // CraftBukkit end
@@ -71,7 +71,7 @@ index 17ea24c..d7cc8b6 100644
                  continue;
              }
              // Spigot end
-@@ -1494,7 +1510,8 @@ public abstract class World implements IBlockAccess {
+@@ -1496,7 +1512,8 @@ public abstract class World implements IBlockAccess {
              }
  
              if (tileentity.y()) {
@@ -82,7 +82,7 @@ index 17ea24c..d7cc8b6 100644
                  if (this.isLoaded(tileentity.getPosition())) {
                      this.getChunkAtWorldCoords(tileentity.getPosition()).d(tileentity.getPosition());
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 48ac741..9a4a73c 100644
+index dd53f6d..01e73eb 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -297,4 +297,13 @@ public class SpigotWorldConfig

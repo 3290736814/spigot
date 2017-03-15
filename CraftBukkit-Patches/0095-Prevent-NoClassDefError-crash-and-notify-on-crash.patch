@@ -1,11 +1,11 @@
-From 0335ecec5a582d9a3196439aa1d45a3ca6fc07c8 Mon Sep 17 00:00:00 2001
+From f6decc7344ed7794005fb016431e18228c64b9a0 Mon Sep 17 00:00:00 2001
 From: David <dmck2b@gmail.com>
 Date: Mon, 21 Apr 2014 12:43:08 +0100
 Subject: [PATCH] Prevent NoClassDefError crash and notify on crash
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index ed8919d..23ced07 100644
+index 067d9fb..55e4af3 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -127,6 +127,8 @@ public abstract class World implements IBlockAccess {

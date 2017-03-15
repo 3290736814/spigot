@@ -1,4 +1,4 @@
-From 86a38fc68f367e3efd6755f3d9e999bc7e8ef887 Mon Sep 17 00:00:00 2001
+From eb176553bd35ac55905234ed570350f8a6567350 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 21:07:18 +1100
 Subject: [PATCH] Improve AutoSave Mechanism
@@ -37,7 +37,7 @@ index ea7c10f..b39937f 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index f8ee4b9..6121608 100644
+index 10aba2a..cd217a5 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -675,7 +675,17 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
@@ -60,7 +60,7 @@ index f8ee4b9..6121608 100644
              SpigotTimings.worldSaveTimer.stopTiming(); // Spigot
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index e5729d0..cc08ec6 100644
+index e1dd8a3..50d8948 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -735,12 +735,17 @@ public class CraftWorld implements World {

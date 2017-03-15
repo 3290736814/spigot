@@ -1,4 +1,4 @@
-From 36eeed0f966ef0905d39e9e6231b0780f694be98 Mon Sep 17 00:00:00 2001
+From add1d5a8280aec4c84b5606c303b25baa732deb2 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,7 +6,7 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances, and view distances below 3. Be wary of the issues selecting a view distance of 1 or 2 may cause!
 
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index e4d740d..ae427b4 100644
+index 35b15a7..a5a096b 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -52,9 +52,9 @@ public class PlayerChunkMap {
@@ -22,7 +22,7 @@ index e4d740d..ae427b4 100644
  
      public WorldServer getWorld() {
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 5a92d07..20dfac7 100644
+index 7b9b383..4efe636 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -62,7 +62,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
