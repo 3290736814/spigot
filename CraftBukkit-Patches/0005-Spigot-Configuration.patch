@@ -1,4 +1,4 @@
-From e699c28eb5066f1e0e7b75b07c20c23087feb083 Mon Sep 17 00:00:00 2001
+From 5fe5afa2ffc17932fde79174a1e95bed168839d7 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -35,7 +35,7 @@ index 71eb615..9d2d7af 100644
              if (!this.getOnlineMode()) {
                  DedicatedServer.LOGGER.warn("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 59b5e5a..06e0180 100644
+index f714bda..6602cb1 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -97,6 +97,7 @@ public abstract class World implements IBlockAccess {
@@ -113,12 +113,62 @@ index 4467eee..a151451 100644
              }
          };
  
+diff --git a/src/main/java/org/spigotmc/SpigotCommand.java b/src/main/java/org/spigotmc/SpigotCommand.java
+new file mode 100644
+index 0000000..fdb030c
+--- /dev/null
++++ b/src/main/java/org/spigotmc/SpigotCommand.java
+@@ -0,0 +1,44 @@
++package org.spigotmc;
++
++import java.io.File;
++import net.minecraft.server.MinecraftServer;
++import net.minecraft.server.WorldServer;
++import org.bukkit.ChatColor;
++import org.bukkit.command.Command;
++import org.bukkit.command.CommandSender;
++
++public class SpigotCommand extends Command {
++
++    public SpigotCommand(String name) {
++        super(name);
++        this.description = "Spigot related commands";
++        this.usageMessage = "/spigot reload";
++        this.setPermission("bukkit.command.spigot");
++    }
++
++    @Override
++    public boolean execute(CommandSender sender, String commandLabel, String[] args) {
++        if (!testPermission(sender)) return true;
++
++        if (args.length != 1) {
++            sender.sendMessage(ChatColor.RED + "Usage: " + usageMessage);
++            return false;
++        }
++
++        if (args[0].equals("reload")) {
++            Command.broadcastCommandMessage(sender, ChatColor.RED + "Please note that this command is not supported and may cause issues.");
++            Command.broadcastCommandMessage(sender, ChatColor.RED + "If you encounter any issues please use the /stop command to restart your server.");
++
++            MinecraftServer console = MinecraftServer.getServer();
++            org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings"));
++            for (WorldServer world : console.worlds) {
++                world.spigotConfig.init();
++            }
++            console.server.reloadCount++;
++
++            Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Reload complete.");
++        }
++
++        return true;
++    }
++}
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
 new file mode 100644
-index 0000000..b86bf9c
+index 0000000..132ab78
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
-@@ -0,0 +1,139 @@
+@@ -0,0 +1,140 @@
 +package org.spigotmc;
 +
 +import com.google.common.base.Throwables;
@@ -177,6 +227,7 @@ index 0000000..b86bf9c
 +        config.options().copyDefaults( true );
 +
 +        commands = new HashMap<String, Command>();
++        commands.put( "spigot", new SpigotCommand( "spigot" ) );
 +
 +        version = getInt( "config-version", 11 );
 +        set( "config-version", 11 );
