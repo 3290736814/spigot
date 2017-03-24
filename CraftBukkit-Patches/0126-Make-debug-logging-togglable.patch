@@ -1,11 +1,11 @@
-From be11210421c9f27d323fba4198f9ebacd15fa6e6 Mon Sep 17 00:00:00 2001
+From 7dabdd87930081daa1018ffcbfb068d36a682b4d Mon Sep 17 00:00:00 2001
 From: Minecrell <dev@minecrell.net>
 Date: Sun, 17 Aug 2014 12:42:53 +0200
 Subject: [PATCH] Make debug logging togglable.
 
 
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index eb8e940..ca37f0f 100644
+index f32eddd..231b4fa 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -17,6 +17,9 @@ import gnu.trove.map.hash.TObjectIntHashMap;
@@ -18,7 +18,7 @@ index eb8e940..ca37f0f 100644
  import org.bukkit.Bukkit;
  import org.bukkit.ChatColor;
  import org.bukkit.command.Command;
-@@ -361,4 +364,27 @@ public class SpigotConfig
+@@ -362,4 +365,27 @@ public class SpigotConfig
          attackDamage = getDouble( "settings.attribute.attackDamage.max", attackDamage );
          ( (AttributeRanged) GenericAttributes.ATTACK_DAMAGE ).b = attackDamage;
      }

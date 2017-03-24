@@ -1,4 +1,4 @@
-From 48127a2d3869d3c6932f509e6ca34b06bd7d270c Mon Sep 17 00:00:00 2001
+From b3ccb595c92bb9c03aa02f6a7abfdb60849ab423 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -75,6 +75,19 @@ index 11a6ef7..fd82756 100644
  
          i1 *= this.d;
          j1 *= this.d;
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
+index 0cc838c..ba3676b 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
+@@ -133,7 +133,7 @@ public class CraftChunk implements Chunk {
+     @Override
+     public boolean isSlimeChunk() {
+         // 987234911L is deterimined in EntitySlime when seeing if a slime can spawn in a chunk
+-        return getHandle().a(987234911L).nextInt(10) == 0;
++        return getHandle().a(worldServer.spigotConfig.slimeSeed).nextInt(10) == 0;
+     }
+ 
+     public boolean unload(boolean save) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 index 66f4d8f..5b1dc38 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
