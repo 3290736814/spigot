@@ -1,4 +1,4 @@
-From bebe2642cf03a1bd6006d719f69499b12eba5601 Mon Sep 17 00:00:00 2001
+From 3bc381c8c95b927921297c2e7c82395ae7957c88 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -66,7 +66,7 @@ index 241c793..ee898dd 100644
  
      public boolean c(BlockPosition blockposition) {
 diff --git a/src/main/java/net/minecraft/server/SpawnerCreature.java b/src/main/java/net/minecraft/server/SpawnerCreature.java
-index f8b6817..17bf3e4 100644
+index 2d6e88c..b23c0be 100644
 --- a/src/main/java/net/minecraft/server/SpawnerCreature.java
 +++ b/src/main/java/net/minecraft/server/SpawnerCreature.java
 @@ -19,6 +19,25 @@ public final class SpawnerCreature {
@@ -138,13 +138,20 @@ index f8b6817..17bf3e4 100644
                              // CraftBukkit start = use LongHash and LongObjectHashMap
                              long key = ((Long) iterator1.next()).longValue();
                              BlockPosition blockposition1 = getRandomPosition(worldserver, LongHash.msw(key), LongHash.lsw(key));
-@@ -164,7 +190,10 @@ public final class SpawnerCreature {
+@@ -161,13 +187,17 @@ public final class SpawnerCreature {
+                                                                 // CraftBukkit start
+                                                                 if (worldserver.addEntity(entityinsentient, SpawnReason.NATURAL)) {
+                                                                     ++l2;
++                                                                    moblimit--; // Spigot
+                                                                 }
+                                                                 // CraftBukkit end
+                                                             } else {
                                                                  entityinsentient.die();
                                                              }
  
 -                                                            if (l2 >= entityinsentient.cQ()) {
 +                                                            // Spigot start
-+                                                            if ( --moblimit <= 0 ) {
++                                                            if ( moblimit <= 0 ) {
 +                                                                // If we're past limit, stop spawn
 +                                                                // Spigot end
                                                                  continue label120;
