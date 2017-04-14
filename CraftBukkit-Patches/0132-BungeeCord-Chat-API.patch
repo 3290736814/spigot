@@ -1,11 +1,11 @@
-From af914993d420c747a34b2223748d8c08843bf7a8 Mon Sep 17 00:00:00 2001
+From b1e83f986b0d4661788e7a771ae6039bef2847ea Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
 
 
 diff --git a/src/main/java/net/minecraft/server/PacketPlayOutChat.java b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
-index 24462f1..9fc83c4 100644
+index 24462f10..9fc83c4a 100644
 --- a/src/main/java/net/minecraft/server/PacketPlayOutChat.java
 +++ b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
 @@ -5,6 +5,7 @@ import java.io.IOException;
@@ -32,7 +32,7 @@ index 24462f1..9fc83c4 100644
      }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 8baacf5..3122607 100644
+index 5be295d8..b7e1f182 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -131,6 +131,7 @@ import io.netty.buffer.Unpooled;
@@ -43,7 +43,7 @@ index 8baacf5..3122607 100644
  
  public final class CraftServer implements Server {
      private static final Player[] EMPTY_PLAYER_ARRAY = new Player[0];
-@@ -1743,6 +1744,20 @@ public final class CraftServer implements Server {
+@@ -1747,6 +1748,20 @@ public final class CraftServer implements Server {
          public void restart() {
              org.spigotmc.RestartCommand.restart();
          }
@@ -65,7 +65,7 @@ index 8baacf5..3122607 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 77d5fda..5ceb086 100644
+index 77d5fdaa..5ceb086e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -21,6 +21,7 @@ import java.util.Set;
@@ -112,5 +112,5 @@ index 77d5fda..5ceb086 100644
  
      public Player.Spigot spigot()
 -- 
-2.9.3
+2.11.0
 
