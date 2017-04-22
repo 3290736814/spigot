@@ -1,11 +1,11 @@
-From dd4308275c7edae78c8a878cc34276a8b169885a Mon Sep 17 00:00:00 2001
+From fd46c72130bc3339e652049faeb1cd40251da936 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 13 Jul 2015 19:05:15 +1000
 Subject: [PATCH] Use Map for getPlayer(String) lookup.
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 0801194..c0af82b 100644
+index e0f4e037..be52f3ad 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -69,6 +69,7 @@ public abstract class PlayerList {
@@ -32,7 +32,7 @@ index 0801194..c0af82b 100644
          UUID uuid = entityplayer.getUniqueID();
          EntityPlayer entityplayer1 = (EntityPlayer) this.j.get(uuid);
  
-@@ -554,6 +557,7 @@ public abstract class PlayerList {
+@@ -555,6 +558,7 @@ public abstract class PlayerList {
          // entityplayer.x().getTracker().untrackEntity(entityplayer); // CraftBukkit
          entityplayer.x().getPlayerChunkMap().removePlayer(entityplayer);
          this.players.remove(entityplayer);
@@ -40,7 +40,7 @@ index 0801194..c0af82b 100644
          this.server.getWorldServer(entityplayer.dimension).removeEntity(entityplayer);
          BlockPosition blockposition = entityplayer.getBed();
          boolean flag1 = entityplayer.isRespawnForced();
-@@ -659,6 +663,7 @@ public abstract class PlayerList {
+@@ -660,6 +664,7 @@ public abstract class PlayerList {
              worldserver.getPlayerChunkMap().addPlayer(entityplayer1);
              worldserver.addEntity(entityplayer1);
              this.players.add(entityplayer1);
@@ -48,7 +48,7 @@ index 0801194..c0af82b 100644
              this.j.put(entityplayer1.getUniqueID(), entityplayer1);
          }
          // entityplayer1.syncInventory();
-@@ -1140,19 +1145,7 @@ public abstract class PlayerList {
+@@ -1141,19 +1146,7 @@ public abstract class PlayerList {
  
      @Nullable
      public EntityPlayer getPlayer(String s) {
@@ -71,7 +71,7 @@ index 0801194..c0af82b 100644
      public void sendPacketNearby(@Nullable EntityHuman entityhuman, double d0, double d1, double d2, double d3, int i, Packet<?> packet) {
 diff --git a/src/main/java/org/spigotmc/CaseInsensitiveHashingStrategy.java b/src/main/java/org/spigotmc/CaseInsensitiveHashingStrategy.java
 new file mode 100644
-index 0000000..aafdd36
+index 00000000..aafdd368
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/CaseInsensitiveHashingStrategy.java
 @@ -0,0 +1,18 @@
@@ -95,7 +95,7 @@ index 0000000..aafdd36
 +}
 diff --git a/src/main/java/org/spigotmc/CaseInsensitiveMap.java b/src/main/java/org/spigotmc/CaseInsensitiveMap.java
 new file mode 100644
-index 0000000..1934fd5
+index 00000000..1934fd50
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/CaseInsensitiveMap.java
 @@ -0,0 +1,15 @@
@@ -115,5 +115,5 @@ index 0000000..1934fd5
 +    }
 +}
 -- 
-2.9.3
+2.11.0
 

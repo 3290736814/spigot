@@ -1,14 +1,14 @@
-From e544ff22f141cb3cd481ba82b26db5f195daa68a Mon Sep 17 00:00:00 2001
+From 76356002f652753f0dc26714a2b08621696c3284 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 6 Oct 2013 17:36:28 +1100
 Subject: [PATCH] Don't Special Case X Move Value
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 6302731..705a612 100644
+index fd744d25..d59b4405 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -124,6 +124,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -125,6 +125,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
      private float lastPitch = Float.MAX_VALUE;
      private float lastYaw = Float.MAX_VALUE;
      private boolean justTeleported = false;
@@ -16,7 +16,7 @@ index 6302731..705a612 100644
  
      public CraftPlayer getPlayer() {
          return (this.player == null) ? null : (CraftPlayer) this.player.getBukkitEntity();
-@@ -354,6 +355,18 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -355,6 +356,18 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
  
                  // CraftBukkit start - fire PlayerMoveEvent
                  Player player = this.getPlayer();
@@ -35,7 +35,7 @@ index 6302731..705a612 100644
                  Location from = new Location(player.getWorld(), lastPosX, lastPosY, lastPosZ, lastYaw, lastPitch); // Get the Players previous Event location.
                  Location to = player.getLocation().clone(); // Start off the To location as the Players current location.
  
-@@ -379,7 +392,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -380,7 +393,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
                      this.lastPitch = to.getPitch();
  
                      // Skip the first time we do this
@@ -45,5 +45,5 @@ index 6302731..705a612 100644
                          PlayerMoveEvent event = new PlayerMoveEvent(player, from, to);
                          this.server.getPluginManager().callEvent(event);
 -- 
-2.9.3
+2.11.0
 

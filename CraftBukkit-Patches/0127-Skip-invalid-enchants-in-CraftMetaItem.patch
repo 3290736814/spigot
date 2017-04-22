@@ -1,4 +1,4 @@
-From aec2a7c8211d9aa6fd7b85bd1ee0f4f532f8f3ef Mon Sep 17 00:00:00 2001
+From 2b2cf9df5c49920701261628edca6a2aa4ea7546 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Tue, 19 Aug 2014 11:04:21 +0100
 Subject: [PATCH] Skip invalid enchants in CraftMetaItem
@@ -8,10 +8,10 @@ CraftMetaItem would add a null enchantment into the enchantment map which causes
 NullPointers later
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index dac1242..2a24c19 100644
+index 2f577de9..1bddd92b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -480,7 +480,11 @@ class CraftMetaItem implements ItemMeta, Repairable {
+@@ -481,7 +481,11 @@ class CraftMetaItem implements ItemMeta, Repairable {
              int id = 0xffff & ((NBTTagCompound) ench.get(i)).getShort(ENCHANTMENTS_ID.NBT);
              int level = 0xffff & ((NBTTagCompound) ench.get(i)).getShort(ENCHANTMENTS_LVL.NBT);
  
@@ -25,5 +25,5 @@ index dac1242..2a24c19 100644
  
          return enchantments;
 -- 
-2.9.3
+2.11.0
 

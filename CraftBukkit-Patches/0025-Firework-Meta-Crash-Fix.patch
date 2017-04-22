@@ -1,14 +1,14 @@
-From f38f29df537b93228bc1f9291f7afe4bfd66fa4f Mon Sep 17 00:00:00 2001
+From 07533468bdd32e8db4b201fc866730d2db762f73 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 15 Jun 2013 21:34:48 +1000
 Subject: [PATCH] Firework Meta Crash Fix
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaFirework.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaFirework.java
-index 0f7da6b..5a409ae 100644
+index 8bcc476e..db336aa1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaFirework.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaFirework.java
-@@ -145,7 +145,7 @@ class CraftMetaFirework extends CraftMetaItem implements FireworkMeta {
+@@ -146,7 +146,7 @@ class CraftMetaFirework extends CraftMetaItem implements FireworkMeta {
              case BURST:
                  return 4;
              default:
@@ -17,7 +17,7 @@ index 0f7da6b..5a409ae 100644
          }
      }
  
-@@ -162,7 +162,7 @@ class CraftMetaFirework extends CraftMetaItem implements FireworkMeta {
+@@ -163,7 +163,7 @@ class CraftMetaFirework extends CraftMetaItem implements FireworkMeta {
              case 4:
                  return Type.BURST;
              default:
@@ -27,5 +27,5 @@ index 0f7da6b..5a409ae 100644
      }
  
 -- 
-2.9.3
+2.11.0
 

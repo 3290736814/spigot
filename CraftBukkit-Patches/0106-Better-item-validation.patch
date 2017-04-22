@@ -1,11 +1,11 @@
-From db0abc3cf12ab8dd7b4700d459e74cf7c6b6fc1e Mon Sep 17 00:00:00 2001
+From 616e2f7010e3b7cf1089dd967afb3201a33ece30 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
 
 
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index 5637d02..7a66195 100644
+index 5637d023..7a661959 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
 @@ -243,6 +243,10 @@ public class PacketDataSerializer extends ByteBuf {
@@ -20,10 +20,10 @@ index 5637d02..7a66195 100644
              }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index 2ed6ad7..9441364 100644
+index e67877d3..dfeeb54e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-@@ -22,6 +22,10 @@ import net.minecraft.server.IChatBaseComponent;
+@@ -23,6 +23,10 @@ import net.minecraft.server.IChatBaseComponent;
  import net.minecraft.server.NBTTagString;
  import org.bukkit.craftbukkit.util.CraftChatMessage;
  
@@ -34,7 +34,7 @@ index 2ed6ad7..9441364 100644
  @DelegateDeserialization(SerializableMeta.class)
  public class CraftMetaBook extends CraftMetaItem implements BookMeta {
      static final ItemMetaKey BOOK_TITLE = new ItemMetaKey("title");
-@@ -57,11 +61,11 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+@@ -59,11 +63,11 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
          super(tag);
  
          if (tag.hasKey(BOOK_TITLE.NBT)) {
@@ -48,7 +48,7 @@ index 2ed6ad7..9441364 100644
          }
  
          boolean resolved = false;
-@@ -86,7 +90,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+@@ -88,7 +92,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
                          // Ignore and treat as an old book
                      }
                  }
@@ -58,10 +58,10 @@ index 2ed6ad7..9441364 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index d54a541..bc11260 100644
+index c15486fa..197ccfe2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -46,6 +46,10 @@ import java.util.logging.Logger;
+@@ -47,6 +47,10 @@ import java.util.logging.Logger;
  import net.minecraft.server.NBTCompressedStreamTools;
  import org.apache.commons.codec.binary.Base64;
  
@@ -72,7 +72,7 @@ index d54a541..bc11260 100644
  /**
   * Children must include the following:
   *
-@@ -260,7 +264,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
+@@ -261,7 +265,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
              NBTTagCompound display = tag.getCompound(DISPLAY.NBT);
  
              if (display.hasKey(NAME.NBT)) {
@@ -81,7 +81,7 @@ index d54a541..bc11260 100644
              }
  
              if (display.hasKey(LOCNAME.NBT)) {
-@@ -272,7 +276,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
+@@ -273,7 +277,7 @@ class CraftMetaItem implements ItemMeta, Repairable {
                  lore = new ArrayList<String>(list.size());
  
                  for (int index = 0; index < list.size(); index++) {
@@ -92,7 +92,7 @@ index d54a541..bc11260 100644
              }
 diff --git a/src/main/java/org/spigotmc/ValidateUtils.java b/src/main/java/org/spigotmc/ValidateUtils.java
 new file mode 100644
-index 0000000..58a9534
+index 00000000..58a95348
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ValidateUtils.java
 @@ -0,0 +1,14 @@
@@ -111,5 +111,5 @@ index 0000000..58a9534
 +    }
 +}
 -- 
-2.9.3
+2.11.0
 

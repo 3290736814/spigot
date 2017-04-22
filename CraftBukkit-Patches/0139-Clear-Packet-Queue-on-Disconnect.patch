@@ -1,11 +1,11 @@
-From 0f5197ac456aeab10550167e5169bb2098b83392 Mon Sep 17 00:00:00 2001
+From 5b47c2c09ef3b7558b6af54f6132e166f6164a77 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 22 Jul 2015 19:04:37 +1000
 Subject: [PATCH] Clear Packet Queue on Disconnect
 
 
 diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
-index c2e9966..184ef32 100644
+index c2e99663..184ef32a 100644
 --- a/src/main/java/net/minecraft/server/NetworkManager.java
 +++ b/src/main/java/net/minecraft/server/NetworkManager.java
 @@ -317,6 +317,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
@@ -17,10 +17,10 @@ index c2e9966..184ef32 100644
  
          }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index d51c300..86f9776 100644
+index 85a8c32e..9897bade 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1087,7 +1087,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1088,7 +1088,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
          }
  
          // CraftBukkit start
@@ -30,5 +30,5 @@ index d51c300..86f9776 100644
          } else if (packet instanceof PacketPlayOutSpawnPosition) {
              PacketPlayOutSpawnPosition packet6 = (PacketPlayOutSpawnPosition) packet;
 -- 
-2.9.3
+2.11.0
 
