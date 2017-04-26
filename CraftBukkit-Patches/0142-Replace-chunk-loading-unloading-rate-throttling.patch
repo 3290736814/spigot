@@ -1,4 +1,4 @@
-From ca4611e6372b313ab849abe00681ad309dca261b Mon Sep 17 00:00:00 2001
+From 468897e1e7ecd8cf209dceb4f336cc6fb8499d11 Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Thu, 26 Jan 2017 20:54:55 +0000
 Subject: [PATCH] Replace chunk loading / unloading rate throttling.
@@ -7,7 +7,7 @@ Uses a scheme based on estimated tick slack time.
 See https://hub.spigotmc.org/stash/projects/SPIGOT/repos/spigot/pull-requests/71/overview
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index b39937f..daf2c0a 100644
+index b39937f3..daf2c0a6 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -245,13 +245,22 @@ public class ChunkProviderServer implements IChunkProvider {
@@ -52,7 +52,7 @@ index b39937f..daf2c0a 100644
  
              this.chunkLoader.a();
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 9bc177f..d1b488e 100644
+index 6269c4a5..cc0efa2e 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -48,6 +48,7 @@ import org.bukkit.craftbukkit.CraftServer;
@@ -102,7 +102,7 @@ index 9bc177f..d1b488e 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index a5a096b..703d581 100644
+index a5a096be..703d5813 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -153,8 +153,11 @@ public class PlayerChunkMap {
@@ -140,7 +140,7 @@ index a5a096b..703d581 100644
          if (!this.g.isEmpty()) {
 diff --git a/src/main/java/org/spigotmc/SlackActivityAccountant.java b/src/main/java/org/spigotmc/SlackActivityAccountant.java
 new file mode 100644
-index 0000000..aabc7ad
+index 00000000..aabc7ad2
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SlackActivityAccountant.java
 @@ -0,0 +1,78 @@
@@ -223,5 +223,5 @@ index 0000000..aabc7ad
 +    }
 +}
 -- 
-2.9.3
+2.11.0
 

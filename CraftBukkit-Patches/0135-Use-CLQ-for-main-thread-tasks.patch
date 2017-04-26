@@ -1,11 +1,11 @@
-From 507daa3159a86666ba64c0e059a6936b46a7e175 Mon Sep 17 00:00:00 2001
+From 71081c523fb378a86fd62cee9955b918d5c2be6e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 19 Apr 2015 09:19:39 +1000
 Subject: [PATCH] Use CLQ for main thread tasks.
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 790bae6..9bc177f 100644
+index 83cc7f07..6269c4a5 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -101,7 +101,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
@@ -52,5 +52,5 @@ index 790bae6..9bc177f 100644
              try {
                  return Futures.immediateFuture(callable.call());
 -- 
-2.9.3
+2.11.0
 
