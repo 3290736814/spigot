@@ -1,41 +1,38 @@
-From add1d5a8280aec4c84b5606c303b25baa732deb2 Mon Sep 17 00:00:00 2001
+From b7bebe6768e14ba2d8d69cd29e24bf3bbbacaee5 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
 
 This commit allows the user to select per world view distances, and view distances below 3. Be wary of the issues selecting a view distance of 1 or 2 may cause!
 
+diff --git a/src/main/java/net/minecraft/server/EntityTracker.java b/src/main/java/net/minecraft/server/EntityTracker.java
+index 40ed61ac..aa1ddab0 100644
+--- a/src/main/java/net/minecraft/server/EntityTracker.java
++++ b/src/main/java/net/minecraft/server/EntityTracker.java
+@@ -18,7 +18,7 @@ public class EntityTracker {
+ 
+     public EntityTracker(WorldServer worldserver) {
+         this.world = worldserver;
+-        this.e = worldserver.getMinecraftServer().getPlayerList().d();
++        this.e = PlayerChunkMap.getFurthestViewableBlock(worldserver.spigotConfig.viewDistance); // Spigot
+     }
+ 
+     public static long a(double d0) {
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 35b15a7..a5a096b 100644
+index 35b15a7b..7e9fc514 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -52,9 +52,9 @@ public class PlayerChunkMap {
-     private boolean m = true;
-     private boolean wasNotEmpty; // CraftBukkit - add field
+@@ -54,7 +54,7 @@ public class PlayerChunkMap {
  
--    public PlayerChunkMap(WorldServer worldserver) {
-+    public PlayerChunkMap(WorldServer worldserver, int viewDistance /* Spigot */) {
+     public PlayerChunkMap(WorldServer worldserver) {
          this.world = worldserver;
 -        this.a(worldserver.getMinecraftServer().getPlayerList().s());
-+        this.a(viewDistance); // Spigot
++        this.a(worldserver.spigotConfig.viewDistance); // Spigot
      }
  
      public WorldServer getWorld() {
-diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 7b9b383..4efe636 100644
---- a/src/main/java/net/minecraft/server/WorldServer.java
-+++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -62,7 +62,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
-         // CraftBukkit end
-         this.server = minecraftserver;
-         this.tracker = new EntityTracker(this);
--        this.manager = new PlayerChunkMap(this);
-+        this.manager = new PlayerChunkMap(this, spigotConfig.viewDistance); // Spigot
-         this.worldProvider.a((World) this);
-         this.chunkProvider = this.n();
-         this.portalTravelAgent = new org.bukkit.craftbukkit.CraftTravelAgent(this); // CraftBukkit
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 2373015..f5096e3 100644
+index 23730154..f5096e3a 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -119,4 +119,11 @@ public class SpigotWorldConfig
@@ -51,5 +48,5 @@ index 2373015..f5096e3 100644
 +    }
  }
 -- 
-2.9.3
+2.11.0
 

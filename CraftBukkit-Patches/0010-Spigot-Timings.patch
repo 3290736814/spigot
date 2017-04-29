@@ -1,4 +1,4 @@
-From 947e8fdca07d3aa1fff83674afbf0253428923eb Mon Sep 17 00:00:00 2001
+From 7d7275207554ac054395818660734cdcc8c1044a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -26,7 +26,7 @@ index ba02b674..241c793a 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index e07d08ed..ea7c10ff 100644
+index d770b70e..13393512 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -153,6 +153,7 @@ public class ChunkProviderServer implements IChunkProvider {
@@ -46,10 +46,10 @@ index e07d08ed..ea7c10ff 100644
  
          return chunk;
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index 210c2a88..a97e7d3c 100644
+index 23cf53fc..65fe4e2e 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-@@ -46,7 +46,9 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -32,7 +32,9 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
      // CraftBukkit start - Add async variant, provide compatibility
      @Nullable
      public Chunk a(World world, int i, int j) throws IOException {
@@ -59,7 +59,7 @@ index 210c2a88..a97e7d3c 100644
          if (data != null) {
              Chunk chunk = (Chunk) data[0];
              NBTTagCompound nbttagcompound = (NBTTagCompound) data[1];
-@@ -400,7 +402,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -386,7 +388,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
  
      public void loadEntities(Chunk chunk, NBTTagCompound nbttagcompound, World world) {
          // CraftBukkit end
@@ -68,7 +68,7 @@ index 210c2a88..a97e7d3c 100644
          NBTTagList nbttaglist1 = nbttagcompound.getList("Entities", 10);
  
          for (int l = 0; l < nbttaglist1.size(); ++l) {
-@@ -409,7 +411,8 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -395,7 +397,8 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
              a(nbttagcompound2, world, chunk);
              chunk.g(true);
          }
@@ -78,7 +78,7 @@ index 210c2a88..a97e7d3c 100644
          NBTTagList nbttaglist2 = nbttagcompound.getList("TileEntities", 10);
  
          for (int i1 = 0; i1 < nbttaglist2.size(); ++i1) {
-@@ -420,6 +423,8 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -406,6 +409,8 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
                  chunk.a(tileentity);
              }
          }
@@ -87,7 +87,7 @@ index 210c2a88..a97e7d3c 100644
  
          if (nbttagcompound.hasKeyOfType("TileTicks", 9)) {
              NBTTagList nbttaglist3 = nbttagcompound.getList("TileTicks", 10);
-@@ -437,6 +442,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -423,6 +428,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
                  world.b(new BlockPosition(nbttagcompound4.getInt("x"), nbttagcompound4.getInt("y"), nbttagcompound4.getInt("z")), block, nbttagcompound4.getInt("t"), nbttagcompound4.getInt("p"));
              }
          }
@@ -518,7 +518,7 @@ index 928d48af..88244e2c 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 4efe636a..0990ddb5 100644
+index 7b9b3836..af30db1e 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -225,10 +225,13 @@ public class WorldServer extends World implements IAsyncTaskHandler {

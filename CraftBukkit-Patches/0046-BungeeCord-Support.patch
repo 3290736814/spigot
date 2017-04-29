@@ -1,4 +1,4 @@
-From 4a3d8b57214f5caba848697fe4869c21714c376b Mon Sep 17 00:00:00 2001
+From 217c5f0c1e0cb419ada7bdd052917cd0032ac0e4 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -6,7 +6,7 @@ Subject: [PATCH] BungeeCord Support
 Provides support for IP forwarding via BungeeCord.
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 1a66efc..a46df4b 100644
+index 1a66efcb..a46df4b7 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -7,6 +7,7 @@ import java.util.HashMap;
@@ -45,7 +45,7 @@ index 1a66efc..a46df4b 100644
              }
              break;
 diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
-index d45c357..fe390fe 100644
+index d45c357a..fe390feb 100644
 --- a/src/main/java/net/minecraft/server/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/LoginListener.java
 @@ -87,9 +87,24 @@ public class LoginListener implements PacketLoginInListener, ITickable {
@@ -75,7 +75,7 @@ index d45c357..fe390fe 100644
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
-index 9e0e057..f591362 100644
+index 9e0e0575..f5913621 100644
 --- a/src/main/java/net/minecraft/server/NetworkManager.java
 +++ b/src/main/java/net/minecraft/server/NetworkManager.java
 @@ -65,7 +65,11 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
@@ -104,7 +104,7 @@ index 9e0e057..f591362 100644
 +    // Spigot End
  }
 diff --git a/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java b/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java
-index 1cb9d60..aececa3 100644
+index 1cb9d60d..aececa39 100644
 --- a/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java
 +++ b/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java
 @@ -13,7 +13,7 @@ public class PacketHandshakingInSetProtocol implements Packet<PacketHandshakingI
@@ -117,10 +117,10 @@ index 1cb9d60..aececa3 100644
          this.d = EnumProtocol.a(packetdataserializer.g());
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 77e890e..aed8142 100644
+index 157b9daf..468a97ca 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -448,7 +448,7 @@ public abstract class PlayerList {
+@@ -449,7 +449,7 @@ public abstract class PlayerList {
  
          EntityPlayer entity = new EntityPlayer(server, server.getWorldServer(0), gameprofile, new PlayerInteractManager(server.getWorldServer(0)));
          Player player = entity.getBukkitEntity();
@@ -130,7 +130,7 @@ index 77e890e..aed8142 100644
  
          if (getProfileBans().isBanned(gameprofile) && !getProfileBans().get(gameprofile).hasExpired()) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 32c9721..73f9ab1 100644
+index 5d8af2bf..d556e648 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -565,7 +565,13 @@ public final class CraftServer implements Server {
@@ -149,7 +149,7 @@ index 32c9721..73f9ab1 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 674b0e1..649e5a5 100644
+index 0c0c5841..22dd6d8f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -1461,6 +1461,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
@@ -166,7 +166,7 @@ index 674b0e1..649e5a5 100644
              return CraftPlayer.this.isCollidable();
          }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index e27c48b..145b33a 100644
+index e27c48b4..145b33a9 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -212,4 +212,14 @@ public class SpigotConfig
@@ -185,5 +185,5 @@ index e27c48b..145b33a 100644
 +    }
  }
 -- 
-2.9.3
+2.11.0
 
