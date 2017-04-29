@@ -1,4 +1,4 @@
-From 5fe5afa2ffc17932fde79174a1e95bed168839d7 Mon Sep 17 00:00:00 2001
+From 2d228efd1ae04dc69f57c0c474f8945cc4c972e5 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -6,7 +6,7 @@ Subject: [PATCH] Spigot Configuration
 Provides the basic infrastructure to load and save the Spigot configuration file, spigot.yml
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 71eb615..9d2d7af 100644
+index 71eb6157..9d2d7af1 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -168,6 +168,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -35,7 +35,7 @@ index 71eb615..9d2d7af 100644
              if (!this.getOnlineMode()) {
                  DedicatedServer.LOGGER.warn("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index f714bda..6602cb1 100644
+index f714bda4..6602cb10 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -97,6 +97,7 @@ public abstract class World implements IBlockAccess {
@@ -55,7 +55,7 @@ index f714bda..6602cb1 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e8f0dd3..343846f 100644
+index a4586af7..6025bc98 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -257,8 +257,10 @@ public final class CraftServer implements Server {
@@ -95,7 +95,7 @@ index e8f0dd3..343846f 100644
  
          int pollCount = 0;
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 4467eee..a151451 100644
+index 4467eee9..a151451d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -118,6 +118,14 @@ public class Main {
@@ -115,7 +115,7 @@ index 4467eee..a151451 100644
  
 diff --git a/src/main/java/org/spigotmc/SpigotCommand.java b/src/main/java/org/spigotmc/SpigotCommand.java
 new file mode 100644
-index 0000000..fdb030c
+index 00000000..fdb030c7
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SpigotCommand.java
 @@ -0,0 +1,44 @@
@@ -165,7 +165,7 @@ index 0000000..fdb030c
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
 new file mode 100644
-index 0000000..132ab78
+index 00000000..132ab78c
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -0,0 +1,140 @@
@@ -311,7 +311,7 @@ index 0000000..132ab78
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 new file mode 100644
-index 0000000..961ddb4
+index 00000000..961ddb42
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -0,0 +1,71 @@
@@ -387,5 +387,5 @@ index 0000000..961ddb4
 +    }
 +}
 -- 
-2.9.3
+2.11.0
 

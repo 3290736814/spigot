@@ -1,11 +1,11 @@
-From acf4e9ae45a09acdce7140c6cdd12598f4765949 Mon Sep 17 00:00:00 2001
+From e1153afebe8c0eda20ff0c702471d1a2e80c5886 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 02:59:14 +0100
 Subject: [PATCH] BungeeCord Chat API
 
 
 diff --git a/pom.xml b/pom.xml
-index 60b9a44..28d2a57 100644
+index 60b9a44c..28d2a576 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -84,6 +84,14 @@
@@ -24,7 +24,7 @@ index 60b9a44..28d2a57 100644
          <dependency>
              <groupId>junit</groupId>
 diff --git a/src/main/java/org/bukkit/ChatColor.java b/src/main/java/org/bukkit/ChatColor.java
-index b8872b4..adbae51 100644
+index b8872b41..adbae51a 100644
 --- a/src/main/java/org/bukkit/ChatColor.java
 +++ b/src/main/java/org/bukkit/ChatColor.java
 @@ -10,95 +10,205 @@ import com.google.common.collect.Maps;
@@ -268,7 +268,7 @@ index b8872b4..adbae51 100644
       * Gets the char value associated with this color
       *
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 8a9c26b..80a64bc 100644
+index 8a9c26b9..80a64bc3 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
 @@ -948,6 +948,24 @@ public interface Server extends PluginMessageRecipient {
@@ -297,7 +297,7 @@ index 8a9c26b..80a64bc 100644
  
      Spigot spigot();
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 55f88ee..0794688 100644
+index 55f88ee2..0794688e 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -1459,6 +1459,44 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
@@ -346,5 +346,5 @@ index 55f88ee..0794688 100644
  
      Spigot spigot();
 -- 
-2.9.3
+2.11.0
 

@@ -1,11 +1,11 @@
-From 4d04dba60bf9292e2d9a8f95858bcf41321c7b46 Mon Sep 17 00:00:00 2001
+From 14296a3ce775f87a6a637a46aa351f0a84a86352 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 21 Sep 2013 12:33:09 +1000
 Subject: [PATCH] Allow Disabling of 1.6.3 Structure Saving
 
 
 diff --git a/src/main/java/net/minecraft/server/StructureGenerator.java b/src/main/java/net/minecraft/server/StructureGenerator.java
-index 0aaf72f..761e074 100644
+index 0aaf72f5..761e0740 100644
 --- a/src/main/java/net/minecraft/server/StructureGenerator.java
 +++ b/src/main/java/net/minecraft/server/StructureGenerator.java
 @@ -139,7 +139,13 @@ public abstract class StructureGenerator extends WorldGenBase {
@@ -24,7 +24,7 @@ index 0aaf72f..761e074 100644
                  this.a = new PersistentStructure(this.a());
                  world.a(this.a(), (PersistentBase) this.a);
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 0202eeb..1bdcd8e 100644
+index 0202eeb8..1bdcd8e1 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -189,4 +189,16 @@ public class SpigotWorldConfig
@@ -45,5 +45,5 @@ index 0202eeb..1bdcd8e 100644
 +    }
  }
 -- 
-2.9.3
+2.11.0
 

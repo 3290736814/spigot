@@ -1,4 +1,4 @@
-From fa094b20b0d44905874ddb6cafcc96da49ff3d15 Mon Sep 17 00:00:00 2001
+From c1aac9f70bb6a9ffd94d682e8d6ecce1381999fe Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 22 Jul 2014 21:01:32 +1000
 Subject: [PATCH] Fix slow tab complete for some commands.
@@ -6,7 +6,7 @@ Subject: [PATCH] Fix slow tab complete for some commands.
 Use online players instead of offline players, which is very slow.
 
 diff --git a/src/main/java/org/bukkit/command/defaults/WhitelistCommand.java b/src/main/java/org/bukkit/command/defaults/WhitelistCommand.java
-index 92de43c..855f560 100644
+index 92de43cf..855f5600 100644
 --- a/src/main/java/org/bukkit/command/defaults/WhitelistCommand.java
 +++ b/src/main/java/org/bukkit/command/defaults/WhitelistCommand.java
 @@ -105,7 +105,7 @@ public class WhitelistCommand extends VanillaCommand {
@@ -19,5 +19,5 @@ index 92de43c..855f560 100644
                      if (StringUtil.startsWithIgnoreCase(name, args[1]) && !player.isWhitelisted()) {
                          completions.add(name);
 -- 
-2.9.3
+2.11.0
 

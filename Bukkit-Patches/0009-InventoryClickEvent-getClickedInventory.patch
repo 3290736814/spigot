@@ -1,4 +1,4 @@
-From f3866013e9b728a6c68898107dea4be21b9e928c Mon Sep 17 00:00:00 2001
+From e47018de55a38f09690da304665d2b623fc48b45 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 7 Jul 2013 10:32:05 -0400
 Subject: [PATCH] InventoryClickEvent getClickedInventory
@@ -9,7 +9,7 @@ in order to determine the inventory clicked. This provides the logic for plugins
 readily identify which inventory was clicked.
 
 diff --git a/src/main/java/org/bukkit/event/inventory/InventoryClickEvent.java b/src/main/java/org/bukkit/event/inventory/InventoryClickEvent.java
-index 5552765..60feaf3 100644
+index 55527652..60feaf3b 100644
 --- a/src/main/java/org/bukkit/event/inventory/InventoryClickEvent.java
 +++ b/src/main/java/org/bukkit/event/inventory/InventoryClickEvent.java
 @@ -47,6 +47,7 @@ public class InventoryClickEvent extends InventoryInteractEvent {
@@ -50,5 +50,5 @@ index 5552765..60feaf3 100644
       *
       * @return the slot type
 -- 
-2.9.3
+2.11.0
 

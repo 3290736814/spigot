@@ -1,4 +1,4 @@
-From 6f0d24601fbfe532c21c165e9138ab6c4d81954d Mon Sep 17 00:00:00 2001
+From a093508de162f6728b5bb49a3dadc08a5d9a0236 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Thu, 17 Jul 2014 21:13:15 -0400
 Subject: [PATCH] Fix for enchanting table wiping meta when placing stacked
@@ -6,7 +6,7 @@ Subject: [PATCH] Fix for enchanting table wiping meta when placing stacked
 
 
 diff --git a/src/main/java/net/minecraft/server/ContainerEnchantTable.java b/src/main/java/net/minecraft/server/ContainerEnchantTable.java
-index cce4fa6..1c8aff3 100644
+index cce4fa65..1c8aff3c 100644
 --- a/src/main/java/net/minecraft/server/ContainerEnchantTable.java
 +++ b/src/main/java/net/minecraft/server/ContainerEnchantTable.java
 @@ -367,7 +367,11 @@ public class ContainerEnchantTable extends Container {
@@ -23,5 +23,5 @@ index cce4fa6..1c8aff3 100644
                  }
              }
 -- 
-2.9.3
+2.11.0
 

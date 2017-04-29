@@ -1,4 +1,4 @@
-From d0bc54cdb65a29ebd889c166624cdbebbe267540 Mon Sep 17 00:00:00 2001
+From ecb5bf690f1f654569913fd3b389685321e8a42d Mon Sep 17 00:00:00 2001
 From: hauno <imhauno@gmail.com>
 Date: Tue, 6 May 2014 18:01:37 -0700
 Subject: [PATCH] Cap Objective Score Length
@@ -6,7 +6,7 @@ Subject: [PATCH] Cap Objective Score Length
 Adds a check for Score arguments that would crash the client
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftObjective.java b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftObjective.java
-index 239ceca..5bd8cf9 100644
+index 239ceca0..5bd8cf9d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftObjective.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftObjective.java
 @@ -93,6 +93,7 @@ final class CraftObjective extends CraftScoreboardComponent implements Objective
@@ -18,5 +18,5 @@ index 239ceca..5bd8cf9 100644
  
          return new CraftScore(this, entry);
 -- 
-2.9.3
+2.11.0
 

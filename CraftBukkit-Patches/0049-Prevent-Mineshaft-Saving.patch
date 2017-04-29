@@ -1,11 +1,11 @@
-From 91308c8cd6570019eb08999a81532845954328b7 Mon Sep 17 00:00:00 2001
+From 48a4f430780c917fc648bc4337cee8d0a186bbeb Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 13 Dec 2013 15:21:02 +1100
 Subject: [PATCH] Prevent Mineshaft Saving
 
 
 diff --git a/src/main/java/net/minecraft/server/StructureGenerator.java b/src/main/java/net/minecraft/server/StructureGenerator.java
-index 761e074..f1f2065 100644
+index 761e0740..f1f20650 100644
 --- a/src/main/java/net/minecraft/server/StructureGenerator.java
 +++ b/src/main/java/net/minecraft/server/StructureGenerator.java
 @@ -140,7 +140,7 @@ public abstract class StructureGenerator extends WorldGenBase {
@@ -18,5 +18,5 @@ index 761e074..f1f2065 100644
              } else {
                  this.a = new PersistentStructure(this.a());
 -- 
-2.9.3
+2.11.0
 

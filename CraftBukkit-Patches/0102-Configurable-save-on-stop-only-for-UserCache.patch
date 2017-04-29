@@ -1,11 +1,11 @@
-From 5debdd771fac73dff690ff2a794b01d2a9da2df6 Mon Sep 17 00:00:00 2001
+From 490e73e66c5f52168c0d6934ec0a09cb1f460f28 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Fri, 23 May 2014 18:05:10 -0400
 Subject: [PATCH] Configurable save-on-stop-only for UserCache
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index f2b072f..1cc4c08 100644
+index 0c7d5dee..bc44a83a 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -505,6 +505,12 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
@@ -22,7 +22,7 @@ index f2b072f..1cc4c08 100644
  
      public String getServerIp() {
 diff --git a/src/main/java/net/minecraft/server/UserCache.java b/src/main/java/net/minecraft/server/UserCache.java
-index d0ede6a..f159310 100644
+index d0ede6a1..f159310c 100644
 --- a/src/main/java/net/minecraft/server/UserCache.java
 +++ b/src/main/java/net/minecraft/server/UserCache.java
 @@ -132,7 +132,7 @@ public class UserCache {
@@ -44,7 +44,7 @@ index d0ede6a..f159310 100644
      }
  
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 7f03f94..bd29318 100644
+index 7f03f94b..bd293182 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -323,4 +323,10 @@ public class SpigotConfig
@@ -59,5 +59,5 @@ index 7f03f94..bd29318 100644
 +    }
  }
 -- 
-2.9.3
+2.11.0
 

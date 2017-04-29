@@ -1,4 +1,4 @@
-From 8ce52ce662a52625254039adb2e6076c4853cf6b Mon Sep 17 00:00:00 2001
+From 14a7df32e204c183aaf05e9a3fb0e46825990704 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 01c1dfd..8c260a3 100644
+index 01c1dfdc..8c260a3f 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -109,7 +109,7 @@ public abstract class Entity implements ICommandListener {
@@ -48,7 +48,7 @@ index 01c1dfd..8c260a3 100644
          this.datawatcher = new DataWatcher(this);
          this.datawatcher.register(Entity.Z, Byte.valueOf((byte) 0));
 diff --git a/src/main/java/net/minecraft/server/EntityAgeable.java b/src/main/java/net/minecraft/server/EntityAgeable.java
-index 233a3f6..cc4406d 100644
+index 233a3f62..cc4406d1 100644
 --- a/src/main/java/net/minecraft/server/EntityAgeable.java
 +++ b/src/main/java/net/minecraft/server/EntityAgeable.java
 @@ -12,6 +12,31 @@ public abstract class EntityAgeable extends EntityCreature {
@@ -84,7 +84,7 @@ index 233a3f6..cc4406d 100644
          super(world);
      }
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index f64838d..c7eda46 100644
+index f64838da..c7eda46b 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
 @@ -39,6 +39,18 @@ public abstract class EntityArrow extends Entity implements IProjectile {
@@ -107,7 +107,7 @@ index f64838d..c7eda46 100644
          super(world);
          this.h = -1;
 diff --git a/src/main/java/net/minecraft/server/EntityFireworks.java b/src/main/java/net/minecraft/server/EntityFireworks.java
-index 5ba67ee..572f4de 100644
+index 5ba67ee3..572f4dea 100644
 --- a/src/main/java/net/minecraft/server/EntityFireworks.java
 +++ b/src/main/java/net/minecraft/server/EntityFireworks.java
 @@ -17,6 +17,14 @@ public class EntityFireworks extends Entity {
@@ -126,7 +126,7 @@ index 5ba67ee..572f4de 100644
          this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, ItemStack.a);
          this.datawatcher.register(EntityFireworks.b, Integer.valueOf(0));
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 2bebcb1..9742afc 100644
+index 2bebcb1c..9742afc6 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -140,6 +140,28 @@ public class EntityItem extends Entity {
@@ -159,7 +159,7 @@ index 2bebcb1..9742afc 100644
          // Spigot start
          double radius = world.spigotConfig.itemMerge;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 70c65c3..e9002c9 100644
+index 70c65c3f..e9002c95 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -115,6 +115,13 @@ public abstract class EntityLiving extends Entity {
@@ -177,7 +177,7 @@ index 70c65c3..e9002c9 100644
      public void Q() {
          this.damageEntity(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 0d51c12..8a0db52 100644
+index 0d51c12d..8a0db52b 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1347,6 +1347,7 @@ public abstract class World implements IBlockAccess {
@@ -204,7 +204,7 @@ index 0d51c12..8a0db52 100644
              // CraftBukkit end
              entity.M = entity.locX;
 diff --git a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java b/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
-index 558574f..41d2d87 100644
+index 558574f5..41d2d87e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
 +++ b/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
 @@ -39,6 +39,9 @@ public class SpigotTimings {
@@ -218,7 +218,7 @@ index 558574f..41d2d87 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 4c1ddc4..3dabbb1 100644
+index 4c1ddc46..3dabbb12 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -273,6 +273,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
@@ -231,7 +231,7 @@ index 4c1ddc4..3dabbb1 100644
      }
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
 new file mode 100644
-index 0000000..12bcdad
+index 00000000..12bcdadd
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -0,0 +1,286 @@
@@ -522,7 +522,7 @@ index 0000000..12bcdad
 +    }
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 6a8b5cd..82f8212 100644
+index 6a8b5cd3..82f82120 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -140,4 +140,15 @@ public class SpigotWorldConfig
@@ -542,5 +542,5 @@ index 6a8b5cd..82f8212 100644
 +    }
  }
 -- 
-2.9.3
+2.11.0
 

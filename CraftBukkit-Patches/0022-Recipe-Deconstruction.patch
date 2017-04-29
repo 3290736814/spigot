@@ -1,4 +1,4 @@
-From a5d05cd27a71c9c363e843cebea89677b405c846 Mon Sep 17 00:00:00 2001
+From c1832bad5359bf9df518019ca0530d4db5437906 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 1 Jun 2013 16:34:38 +1000
 Subject: [PATCH] Recipe Deconstruction
@@ -6,7 +6,7 @@ Subject: [PATCH] Recipe Deconstruction
 Some non API methods contributed by Asphodan to allow recipe deconstruction.
 
 diff --git a/src/main/java/net/minecraft/server/IRecipe.java b/src/main/java/net/minecraft/server/IRecipe.java
-index bad5b39..836f4da 100644
+index bad5b399..836f4da1 100644
 --- a/src/main/java/net/minecraft/server/IRecipe.java
 +++ b/src/main/java/net/minecraft/server/IRecipe.java
 @@ -13,4 +13,6 @@ public interface IRecipe {
@@ -17,7 +17,7 @@ index bad5b39..836f4da 100644
 +    java.util.List<ItemStack> getIngredients(); // Spigot
  }
 diff --git a/src/main/java/net/minecraft/server/ShapedRecipes.java b/src/main/java/net/minecraft/server/ShapedRecipes.java
-index 2cead16..3d511df 100644
+index 2cead161..3d511dff 100644
 --- a/src/main/java/net/minecraft/server/ShapedRecipes.java
 +++ b/src/main/java/net/minecraft/server/ShapedRecipes.java
 @@ -10,7 +10,7 @@ public class ShapedRecipes implements IRecipe {
@@ -42,7 +42,7 @@ index 2cead16..3d511df 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/net/minecraft/server/ShapelessRecipes.java b/src/main/java/net/minecraft/server/ShapelessRecipes.java
-index 070975a..e234a74 100644
+index 070975a6..e234a749 100644
 --- a/src/main/java/net/minecraft/server/ShapelessRecipes.java
 +++ b/src/main/java/net/minecraft/server/ShapelessRecipes.java
 @@ -12,7 +12,7 @@ import org.bukkit.craftbukkit.inventory.CraftShapelessRecipe;
@@ -67,5 +67,5 @@ index 070975a..e234a74 100644
 +    // Spigot end
  }
 -- 
-2.9.3
+2.11.0
 

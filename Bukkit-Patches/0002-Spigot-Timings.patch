@@ -1,4 +1,4 @@
-From 35570fc52fe922c399d32e1e4df8af02a7c314f8 Mon Sep 17 00:00:00 2001
+From c9c213528f266ba105a8528375b5418a5ea61b20 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 2 Jun 2013 10:42:57 +1000
 Subject: [PATCH] Spigot Timings
@@ -8,7 +8,7 @@ Adds performance tracking timings all around the Minecraft Server, and improves 
 Plugins can track their own timings with CustomTimingsHandler
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index cadbbca..bf9686c 100644
+index cadbbcad..bf9686c0 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
 @@ -547,6 +547,7 @@ public final class Bukkit {
@@ -30,7 +30,7 @@ index cadbbca..bf9686c 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 4c03a99..48fd8f4 100644
+index 4c03a997..48fd8f47 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
 @@ -949,4 +949,15 @@ public interface Server extends PluginMessageRecipient {
@@ -50,7 +50,7 @@ index 4c03a99..48fd8f4 100644
 +    Spigot spigot();
  }
 diff --git a/src/main/java/org/bukkit/command/Command.java b/src/main/java/org/bukkit/command/Command.java
-index 7adc6ee..08a9739 100644
+index 7adc6ee9..08a9739f 100644
 --- a/src/main/java/org/bukkit/command/Command.java
 +++ b/src/main/java/org/bukkit/command/Command.java
 @@ -32,6 +32,7 @@ public abstract class Command {
@@ -78,7 +78,7 @@ index 7adc6ee..08a9739 100644
              return true;
          }
 diff --git a/src/main/java/org/bukkit/command/SimpleCommandMap.java b/src/main/java/org/bukkit/command/SimpleCommandMap.java
-index 4d475c6..5965514 100644
+index 4d475c62..5965514a 100644
 --- a/src/main/java/org/bukkit/command/SimpleCommandMap.java
 +++ b/src/main/java/org/bukkit/command/SimpleCommandMap.java
 @@ -136,11 +136,15 @@ public class SimpleCommandMap implements CommandMap {
@@ -98,7 +98,7 @@ index 4d475c6..5965514 100644
          }
  
 diff --git a/src/main/java/org/bukkit/command/defaults/TimingsCommand.java b/src/main/java/org/bukkit/command/defaults/TimingsCommand.java
-index a39ea5d..a8f61f2 100644
+index a39ea5dd..a8f61f2d 100644
 --- a/src/main/java/org/bukkit/command/defaults/TimingsCommand.java
 +++ b/src/main/java/org/bukkit/command/defaults/TimingsCommand.java
 @@ -19,23 +19,101 @@ import org.bukkit.util.StringUtil;
@@ -264,7 +264,7 @@ index a39ea5d..a8f61f2 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/plugin/SimplePluginManager.java b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
-index 74f6d0d..1056186 100644
+index 60d3eca7..1b73dc02 100644
 --- a/src/main/java/org/bukkit/plugin/SimplePluginManager.java
 +++ b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
 @@ -295,6 +295,7 @@ public final class SimplePluginManager implements PluginManager {
@@ -276,7 +276,7 @@ index 74f6d0d..1056186 100644
      }
  
 diff --git a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
-index df613b0..7337253 100644
+index df613b0c..73372534 100644
 --- a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
 +++ b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
 @@ -40,6 +40,7 @@ import org.bukkit.plugin.PluginLoader;
@@ -326,7 +326,7 @@ index df613b0..7337253 100644
                  eventSet.add(new RegisteredListener(listener, executor, eh.priority(), plugin, eh.ignoreCancelled()));
 diff --git a/src/main/java/org/spigotmc/CustomTimingsHandler.java b/src/main/java/org/spigotmc/CustomTimingsHandler.java
 new file mode 100644
-index 0000000..8d98297
+index 00000000..8d982974
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/CustomTimingsHandler.java
 @@ -0,0 +1,165 @@
@@ -496,5 +496,5 @@ index 0000000..8d98297
 +    }
 +}
 -- 
-2.9.3
+2.11.0
 

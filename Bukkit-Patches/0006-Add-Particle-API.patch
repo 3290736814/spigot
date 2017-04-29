@@ -1,11 +1,11 @@
-From 5a5060241df16fb8e48a03a2d3db01c6b4edaad3 Mon Sep 17 00:00:00 2001
+From acf8bf54bec3a55a4910c6da7d52cefd09baee76 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:57:09 +1000
 Subject: [PATCH] Add Particle API
 
 
 diff --git a/src/main/java/org/bukkit/Effect.java b/src/main/java/org/bukkit/Effect.java
-index ba7dc49..a803228 100644
+index ba7dc495..a8032289 100644
 --- a/src/main/java/org/bukkit/Effect.java
 +++ b/src/main/java/org/bukkit/Effect.java
 @@ -5,6 +5,7 @@ import java.util.Map;
@@ -344,7 +344,7 @@ index ba7dc49..a803228 100644
 +    public enum Type {SOUND, VISUAL, PARTICLE}
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index f34b3a9..2504810 100644
+index f34b3a93..2504810d 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
 @@ -1258,6 +1258,60 @@ public interface World extends PluginMessageRecipient, Metadatable {
@@ -409,7 +409,7 @@ index f34b3a9..2504810 100644
       * Gets the world border for this world.
       *
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index d694600..cf243c6 100644
+index d6946006..cf243c6c 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -1402,6 +1402,12 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
@@ -426,7 +426,7 @@ index d694600..cf243c6 100644
  
      Spigot spigot();
 diff --git a/src/test/java/org/bukkit/EffectTest.java b/src/test/java/org/bukkit/EffectTest.java
-index 08aa71d..5217aec 100644
+index 08aa71d3..5217aecb 100644
 --- a/src/test/java/org/bukkit/EffectTest.java
 +++ b/src/test/java/org/bukkit/EffectTest.java
 @@ -9,7 +9,11 @@ public class EffectTest {
@@ -443,5 +443,5 @@ index 08aa71d..5217aec 100644
      }
  }
 -- 
-2.9.3
+2.11.0
 

@@ -1,4 +1,4 @@
-From 2c27c555d2d167e3b5b48d1da6f31224cb10a7a6 Mon Sep 17 00:00:00 2001
+From 499b2e2a8bb9370800d6d04e98e234adf26102d2 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 28 Jul 2014 16:55:51 +1000
 Subject: [PATCH] Allow Attribute Capping.
@@ -6,7 +6,7 @@ Subject: [PATCH] Allow Attribute Capping.
 Apply some sensible defaults and allow server owners to customize the maximum values of selected common attributes.
 
 diff --git a/src/main/java/net/minecraft/server/AttributeRanged.java b/src/main/java/net/minecraft/server/AttributeRanged.java
-index 130597c..d012c90 100644
+index 130597c6..d012c90d 100644
 --- a/src/main/java/net/minecraft/server/AttributeRanged.java
 +++ b/src/main/java/net/minecraft/server/AttributeRanged.java
 @@ -5,7 +5,7 @@ import javax.annotation.Nullable;
@@ -19,7 +19,7 @@ index 130597c..d012c90 100644
  
      public AttributeRanged(@Nullable IAttribute iattribute, String s, double d0, double d1, double d2) {
 diff --git a/src/main/java/net/minecraft/server/GenericAttributes.java b/src/main/java/net/minecraft/server/GenericAttributes.java
-index 15ad9fa..cfad8f7 100644
+index 15ad9fae..cfad8f79 100644
 --- a/src/main/java/net/minecraft/server/GenericAttributes.java
 +++ b/src/main/java/net/minecraft/server/GenericAttributes.java
 @@ -10,15 +10,17 @@ import org.apache.logging.log4j.Logger;
@@ -44,7 +44,7 @@ index 15ad9fa..cfad8f7 100644
      public static NBTTagList a(AttributeMapBase attributemapbase) {
          NBTTagList nbttaglist = new NBTTagList();
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index e172625..f32eddd 100644
+index e1726257..f32eddd9 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -14,6 +14,8 @@ import java.util.Map;
@@ -75,5 +75,5 @@ index e172625..f32eddd 100644
 +    }
  }
 -- 
-2.9.3
+2.11.0
 

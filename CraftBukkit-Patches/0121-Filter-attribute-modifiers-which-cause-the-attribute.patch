@@ -1,4 +1,4 @@
-From b7919895ad3cb0508edd64ca76d70e00d51f461c Mon Sep 17 00:00:00 2001
+From 32a439469de78335c3234b36b0b008237662ca0f Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Thu, 31 Jul 2014 17:48:20 +0100
 Subject: [PATCH] Filter attribute modifiers which cause the attribute to go
@@ -6,7 +6,7 @@ Subject: [PATCH] Filter attribute modifiers which cause the attribute to go
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 197ccfe2..7bfec843 100644
+index a1e2fc6e..e4337b51 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -49,6 +49,8 @@ import org.apache.commons.codec.binary.Base64;

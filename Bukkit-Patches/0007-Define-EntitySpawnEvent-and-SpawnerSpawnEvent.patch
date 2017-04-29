@@ -1,4 +1,4 @@
-From 5eea2d761914c13f09273891f41bf2a3f5fadc3d Mon Sep 17 00:00:00 2001
+From 76b9f4f901bc8f52eac3ed45eea25cd72f921f06 Mon Sep 17 00:00:00 2001
 From: Andy Shulman <andy.shulman@hotmail.com>
 Date: Mon, 15 Apr 2013 20:06:01 -0500
 Subject: [PATCH] Define EntitySpawnEvent and SpawnerSpawnEvent
@@ -6,7 +6,7 @@ Subject: [PATCH] Define EntitySpawnEvent and SpawnerSpawnEvent
 Defines EntitySpawnEvent and SpawnerSpawnEvent. Adds BUKKIT-267 and BUKKIT-1559
 
 diff --git a/src/main/java/org/bukkit/event/entity/CreatureSpawnEvent.java b/src/main/java/org/bukkit/event/entity/CreatureSpawnEvent.java
-index 361e0df..2be71b7 100644
+index 361e0df3..2be71b73 100644
 --- a/src/main/java/org/bukkit/event/entity/CreatureSpawnEvent.java
 +++ b/src/main/java/org/bukkit/event/entity/CreatureSpawnEvent.java
 @@ -3,17 +3,13 @@ package org.bukkit.event.entity;
@@ -76,7 +76,7 @@ index 361e0df..2be71b7 100644
       */
 diff --git a/src/main/java/org/bukkit/event/entity/EntitySpawnEvent.java b/src/main/java/org/bukkit/event/entity/EntitySpawnEvent.java
 new file mode 100644
-index 0000000..5dcf98f
+index 00000000..5dcf98f3
 --- /dev/null
 +++ b/src/main/java/org/bukkit/event/entity/EntitySpawnEvent.java
 @@ -0,0 +1,45 @@
@@ -126,7 +126,7 @@ index 0000000..5dcf98f
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/event/entity/ItemSpawnEvent.java b/src/main/java/org/bukkit/event/entity/ItemSpawnEvent.java
-index bafd934..776f8e7 100644
+index bafd934a..776f8e72 100644
 --- a/src/main/java/org/bukkit/event/entity/ItemSpawnEvent.java
 +++ b/src/main/java/org/bukkit/event/entity/ItemSpawnEvent.java
 @@ -1,51 +1,23 @@
@@ -189,7 +189,7 @@ index bafd934..776f8e7 100644
  }
 diff --git a/src/main/java/org/bukkit/event/entity/SpawnerSpawnEvent.java b/src/main/java/org/bukkit/event/entity/SpawnerSpawnEvent.java
 new file mode 100644
-index 0000000..1acb3c4
+index 00000000..1acb3c40
 --- /dev/null
 +++ b/src/main/java/org/bukkit/event/entity/SpawnerSpawnEvent.java
 @@ -0,0 +1,22 @@
@@ -216,5 +216,5 @@ index 0000000..1acb3c4
 +    }
 +}
 -- 
-2.9.3
+2.11.0
 

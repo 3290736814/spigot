@@ -1,11 +1,11 @@
-From 13c9c478ca9083f02862d10ac84b780f362f6ac0 Mon Sep 17 00:00:00 2001
+From 695e94382e26bce161d4630d65971698927b5a5d Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index dddfe62..ec8f581 100644
+index dddfe62c..ec8f581a 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -1148,7 +1148,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -63,7 +63,7 @@ index dddfe62..ec8f581 100644
                  }
              } else if (this.cH()) {
 diff --git a/src/main/java/net/minecraft/server/FoodMetaData.java b/src/main/java/net/minecraft/server/FoodMetaData.java
-index b5fd8e8..b6e9786 100644
+index b5fd8e8e..b6e97866 100644
 --- a/src/main/java/net/minecraft/server/FoodMetaData.java
 +++ b/src/main/java/net/minecraft/server/FoodMetaData.java
 @@ -73,7 +73,7 @@ public class FoodMetaData {
@@ -76,7 +76,7 @@ index b5fd8e8..b6e9786 100644
              }
          } else if (this.foodLevel <= 0) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 5b1dc38..715ceef 100644
+index 5b1dc38f..715ceefc 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -254,4 +254,30 @@ public class SpigotWorldConfig
@@ -111,5 +111,5 @@ index 5b1dc38..715ceef 100644
 +    }
  }
 -- 
-2.9.3
+2.11.0
 

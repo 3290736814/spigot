@@ -1,11 +1,11 @@
-From 4b31707f53601de233fcb30789cca8b62bcd2f97 Mon Sep 17 00:00:00 2001
+From 74c69355ba694df2a553a47aba5f1fa8345df040 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 20 Apr 2014 18:58:00 +1000
 Subject: [PATCH] Don't special case 'invalid' usernames for UUIDs.
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index ca881a7..c3949e4 100644
+index a8b6182c..46e435dd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1294,11 +1294,6 @@ public final class CraftServer implements Server {
@@ -21,5 +21,5 @@ index ca881a7..c3949e4 100644
          if (result == null) {
              // This is potentially blocking :(
 -- 
-2.9.3
+2.11.0
 

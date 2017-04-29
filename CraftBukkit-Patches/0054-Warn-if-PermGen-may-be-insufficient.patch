@@ -1,11 +1,11 @@
-From d478e38e80a92d7144285af78a819ded1be42f15 Mon Sep 17 00:00:00 2001
+From ec0fcc58ff0f3bb7b63be5221c70af18ee591de0 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 23 Dec 2013 14:07:41 +1100
 Subject: [PATCH] Warn if PermGen may be insufficient
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index a151451..ee8ec5a 100644
+index a151451d..ee8ec5a6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -190,6 +190,22 @@ public class Main {
@@ -32,5 +32,5 @@ index a151451..ee8ec5a 100644
                  MinecraftServer.main(options);
              } catch (Throwable t) {
 -- 
-2.9.3
+2.11.0
 
