@@ -1,5 +1,5 @@
-Spigot [![Build Status](https://travis-ci.org/SpigotMC/Spigot.png)](https://travis-ci.org/SpigotMC/Spigot)
-===========
+Spigot
+======
 
 High performance Minecraft server implementation
 
