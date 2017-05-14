@@ -1,4 +1,4 @@
-From 15e9a2d6b6667231b7f9601f5877acf0bd7653c4 Mon Sep 17 00:00:00 2001
+From df281e8c6ca51a2014aa60223ad75571ba863968 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 30 Mar 2014 15:58:22 +1100
 Subject: [PATCH] Remove deprecation on some player lookup methods
@@ -6,10 +6,10 @@ Subject: [PATCH] Remove deprecation on some player lookup methods
 Most of these methods still have plenty of use given that only one player with each name can exist at a time. Deprecating these methods renders even basic functionality such as /msg <name> impossible without causing compiler warnings. We will maintain this API and it should be considered safe and appropriate for most use cases.
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index bf9686c0..5b6413be 100644
+index 51f5aeb2..ab3f6c0b 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -378,12 +378,9 @@ public final class Bukkit {
+@@ -363,12 +363,9 @@ public final class Bukkit {
       * <p>
       * This method may not return objects for offline players.
       *
@@ -22,7 +22,7 @@ index bf9686c0..5b6413be 100644
      public static Player getPlayer(String name) {
          return server.getPlayer(name);
      }
-@@ -391,12 +388,9 @@ public final class Bukkit {
+@@ -376,12 +373,9 @@ public final class Bukkit {
      /**
       * Gets the player with the exact given name, case insensitive.
       *
@@ -35,7 +35,7 @@ index bf9686c0..5b6413be 100644
      public static Player getPlayerExact(String name) {
          return server.getPlayerExact(name);
      }
-@@ -408,12 +402,9 @@ public final class Bukkit {
+@@ -393,12 +387,9 @@ public final class Bukkit {
       * This list is not sorted in any particular order. If an exact match is
       * found, the returned list will only contain a single result.
       *
@@ -49,10 +49,10 @@ index bf9686c0..5b6413be 100644
          return server.matchPlayer(name);
      }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 48fd8f47..8a9c26b9 100644
+index b31ea1b8..64238cdc 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -314,23 +314,17 @@ public interface Server extends PluginMessageRecipient {
+@@ -301,23 +301,17 @@ public interface Server extends PluginMessageRecipient {
       * <p>
       * This method may not return objects for offline players.
       *
@@ -76,7 +76,7 @@ index 48fd8f47..8a9c26b9 100644
      public Player getPlayerExact(String name);
  
      /**
-@@ -340,12 +334,9 @@ public interface Server extends PluginMessageRecipient {
+@@ -327,12 +321,9 @@ public interface Server extends PluginMessageRecipient {
       * This list is not sorted in any particular order. If an exact match is
       * found, the returned list will only contain a single result.
       *

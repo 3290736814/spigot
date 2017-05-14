@@ -1,0 +1,21 @@
+From 94fae53128aaf78c35e0b8ca4117ed81a0d98cba Mon Sep 17 00:00:00 2001
+From: BlackHole <black-hole@live.com>
+Date: Fri, 22 Apr 2016 16:43:47 +0200
+Subject: [PATCH] Don't tick blocks if neighbor chunks aren't loaded
+
+
+diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
+index b587a6cc..c48a1668 100644
+--- a/src/main/java/net/minecraft/server/WorldServer.java
++++ b/src/main/java/net/minecraft/server/WorldServer.java
+@@ -432,6 +432,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
+                 chunk.n();
+                 this.methodProfiler.c("tickChunk");
+                 chunk.b(false);
++                if ( !chunk.areNeighborsLoaded( 1 ) ) continue; // Spigot
+                 this.methodProfiler.c("thunder");
+                 int l;
+                 BlockPosition blockposition;
+-- 
+2.11.0
+

@@ -1,0 +1,37 @@
+From 479a44c21f1f226e6a4324af98d7d8ec113ec454 Mon Sep 17 00:00:00 2001
+From: drXor <mcyoung@mit.edu>
+Date: Sat, 9 Aug 2014 13:56:51 -0400
+Subject: [PATCH] Configurable Hanging Tick
+
+
+diff --git a/src/main/java/net/minecraft/server/EntityHanging.java b/src/main/java/net/minecraft/server/EntityHanging.java
+index 7d6d76ba..0c570685 100644
+--- a/src/main/java/net/minecraft/server/EntityHanging.java
++++ b/src/main/java/net/minecraft/server/EntityHanging.java
+@@ -100,7 +100,7 @@ public abstract class EntityHanging extends Entity {
+         this.lastX = this.locX;
+         this.lastY = this.locY;
+         this.lastZ = this.locZ;
+-        if (this.d++ == 100 && !this.world.isClientSide) {
++        if (this.d++ == this.world.spigotConfig.hangingTickFrequency && !this.world.isClientSide) { // Spigot
+             this.d = 0;
+             if (!this.dead && !this.survives()) {
+                 // CraftBukkit start - fire break events
+diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+index 9926661b..dd53f6db 100644
+--- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
++++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+@@ -291,4 +291,10 @@ public class SpigotWorldConfig
+         maxTntTicksPerTick = getInt( "max-tnt-per-tick", 100 );
+         log( "Max TNT Explosions: " + maxTntTicksPerTick );
+     }
++
++    public int hangingTickFrequency;
++    private void hangingTickFrequency()
++    {
++        hangingTickFrequency = getInt( "hanging-tick-frequency", 100 );
++    }
+ }
+-- 
+2.11.0
+

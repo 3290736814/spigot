@@ -1,4 +1,4 @@
-From bd9c4a34101ded1f808078bfc09a1a0bda80335e Mon Sep 17 00:00:00 2001
+From 4fd306afb011b0cdcccf77df2e728c1eb150e820 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,7 +8,7 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 241c793a..ee898dd4 100644
+index c087e261..17815869 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -44,6 +44,7 @@ public class Chunk {
@@ -66,7 +66,7 @@ index 241c793a..ee898dd4 100644
  
      public boolean c(BlockPosition blockposition) {
 diff --git a/src/main/java/net/minecraft/server/SpawnerCreature.java b/src/main/java/net/minecraft/server/SpawnerCreature.java
-index 2d6e88c8..b23c0be2 100644
+index 86603dad..4c65dc0a 100644
 --- a/src/main/java/net/minecraft/server/SpawnerCreature.java
 +++ b/src/main/java/net/minecraft/server/SpawnerCreature.java
 @@ -19,6 +19,25 @@ public final class SpawnerCreature {
@@ -149,7 +149,7 @@ index 2d6e88c8..b23c0be2 100644
                                                                  entityinsentient.die();
                                                              }
  
--                                                            if (l2 >= entityinsentient.cQ()) {
+-                                                            if (l2 >= entityinsentient.cS()) {
 +                                                            // Spigot start
 +                                                            if ( moblimit <= 0 ) {
 +                                                                // If we're past limit, stop spawn

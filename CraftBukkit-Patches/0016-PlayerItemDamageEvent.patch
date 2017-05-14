@@ -1,33 +1,21 @@
-From a99a6b96142e0ef42e5b7c7a43f0b5100531c222 Mon Sep 17 00:00:00 2001
+From 5ed613dc35cc9835d30a2d7512d49630b771e4d0 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Mon, 4 Mar 2013 18:45:52 +1100
 Subject: [PATCH] PlayerItemDamageEvent
 
 
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 450d27c6..00ffb05a 100644
+index 1a18b6f3..a7eb606b 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -364,6 +364,11 @@ public final class ItemStack {
-     }
- 
-     public boolean isDamaged(int i, Random random) {
-+        return isDamaged(i, random, null);
-+    }
-+
-+    public boolean isDamaged(int i, Random random, EntityLiving entityliving) {
-+        // Spigot end
-         if (!this.f()) {
-             return false;
-         } else {
-@@ -378,6 +383,18 @@ public final class ItemStack {
+@@ -384,6 +384,18 @@ public final class ItemStack {
                  }
  
                  i -= k;
 +                // Spigot start
-+                if (entityliving instanceof EntityPlayer) {
++                if (entityplayer != null) {
 +                    org.bukkit.craftbukkit.inventory.CraftItemStack item = org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(this);
-+                    org.bukkit.event.player.PlayerItemDamageEvent event = new org.bukkit.event.player.PlayerItemDamageEvent((org.bukkit.entity.Player) entityliving.getBukkitEntity(), item, i);
++                    org.bukkit.event.player.PlayerItemDamageEvent event = new org.bukkit.event.player.PlayerItemDamageEvent(entityplayer.getBukkitEntity(), item, i);
 +                    org.bukkit.Bukkit.getServer().getPluginManager().callEvent(event);
 +                    if (i != event.getDamage() || event.isCancelled()) {
 +                        event.getPlayer().updateInventory();
@@ -39,15 +27,6 @@ index 450d27c6..00ffb05a 100644
                  if (i <= 0) {
                      return false;
                  }
-@@ -391,7 +408,7 @@ public final class ItemStack {
-     public void damage(int i, EntityLiving entityliving) {
-         if (!(entityliving instanceof EntityHuman) || !((EntityHuman) entityliving).abilities.canInstantlyBuild) {
-             if (this.f()) {
--                if (this.isDamaged(i, entityliving.getRandom())) {
-+                if (this.isDamaged(i, entityliving.getRandom(), entityliving)) { // Spigot
-                     entityliving.b(this);
-                     // CraftBukkit start - Check for item breaking
-                     if (this.count == 1 && entityliving instanceof EntityHuman) {
 -- 
 2.11.0
 

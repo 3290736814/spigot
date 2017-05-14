@@ -1,4 +1,4 @@
-From a9bfb0e8321e6f5917ed2beca0c40f9f3fab73dc Mon Sep 17 00:00:00 2001
+From 9b9c28dbf493c6272a278d786067ce43260eb7dd Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 2 Jul 2013 13:07:39 +1000
 Subject: [PATCH] POM Changes
@@ -6,7 +6,7 @@ Subject: [PATCH] POM Changes
 Basic changes to the build system which mark the artifact as Spigot, and the necessary code changes to ensure proper functionality. Also disables the auto updater provided by CraftBukkit as it is useless to us.
 
 diff --git a/pom.xml b/pom.xml
-index f8a66e54..41ba4dcd 100644
+index 7d8a5a57..4f14d6f4 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,12 +1,12 @@
@@ -18,7 +18,7 @@ index f8a66e54..41ba4dcd 100644
 +    <groupId>org.spigotmc</groupId>
 +    <artifactId>spigot</artifactId>
      <packaging>jar</packaging>
-     <version>1.11.2-R0.1-SNAPSHOT</version>
+     <version>1.12-pre2-SNAPSHOT</version>
 -    <name>CraftBukkit</name>
 -    <url>http://www.bukkit.org</url>
 +    <name>Spigot</name>
@@ -27,7 +27,7 @@ index f8a66e54..41ba4dcd 100644
      <properties>
          <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 @@ -20,10 +20,17 @@
-         <maven.compiler.target>1.6</maven.compiler.target>
+         <maven.compiler.target>1.8</maven.compiler.target>
      </properties>
  
 +    <parent>
@@ -47,7 +47,7 @@ index f8a66e54..41ba4dcd 100644
              <scope>compile</scope>
          </dependency>
 @@ -57,6 +64,11 @@
-             <version>5.1.40</version>
+             <version>6.0.6</version>
              <scope>compile</scope>
          </dependency>
 +        <dependency>

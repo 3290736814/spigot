@@ -1,4 +1,4 @@
-From 6400d3f9e1b2fa321688099a2a698e0cc49bb5af Mon Sep 17 00:00:00 2001
+From 1c801bed37acb5e5ab192bfd8914557e2a7d9630 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,7 +6,7 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances, and view distances below 3. Be wary of the issues selecting a view distance of 1 or 2 may cause!
 
 diff --git a/src/main/java/net/minecraft/server/EntityTracker.java b/src/main/java/net/minecraft/server/EntityTracker.java
-index 40ed61ac..aa1ddab0 100644
+index 0841829c..94b8617e 100644
 --- a/src/main/java/net/minecraft/server/EntityTracker.java
 +++ b/src/main/java/net/minecraft/server/EntityTracker.java
 @@ -18,7 +18,7 @@ public class EntityTracker {

@@ -1,4 +1,4 @@
-From 3e6877d665f5d989d7ca9ea558422684428c1612 Mon Sep 17 00:00:00 2001
+From c82f35a8478e8d41e15a6fd1700c45085184a58f Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 24 Dec 2013 10:14:25 +1100
 Subject: [PATCH] Fix Tab Completion for Some Commands
@@ -34,48 +34,6 @@ index eb018f16..c70d5129 100644
 +    @Override
 +    public java.util.List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException
 +    {
-+        return java.util.Collections.emptyList();
-+    }
-+    // Spigot End
- }
-diff --git a/src/main/java/org/bukkit/command/defaults/TellCommand.java b/src/main/java/org/bukkit/command/defaults/TellCommand.java
-index 7b0a41c9..2e5d811d 100644
---- a/src/main/java/org/bukkit/command/defaults/TellCommand.java
-+++ b/src/main/java/org/bukkit/command/defaults/TellCommand.java
-@@ -46,4 +46,16 @@ public class TellCommand extends VanillaCommand {
- 
-         return true;
-     }
-+
-+    // Spigot Start
-+    @Override
-+    public java.util.List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException
-+    {
-+        if ( args.length == 0 )
-+        {
-+            return super.tabComplete( sender, alias, args );
-+        }
-+        return java.util.Collections.emptyList();
-+    }
-+    // Spigot End
- }
-diff --git a/src/main/java/org/bukkit/command/defaults/TestForCommand.java b/src/main/java/org/bukkit/command/defaults/TestForCommand.java
-index 7e5494da..e168b498 100644
---- a/src/main/java/org/bukkit/command/defaults/TestForCommand.java
-+++ b/src/main/java/org/bukkit/command/defaults/TestForCommand.java
-@@ -24,4 +24,16 @@ public class TestForCommand extends VanillaCommand {
-         sender.sendMessage(ChatColor.RED + "/testfor is only usable by commandblocks with analog output.");
-         return true;
-     }
-+
-+    // Spigot Start
-+    @Override
-+    public java.util.List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException
-+    {
-+        if ( args.length == 0 )
-+        {
-+            return super.tabComplete( sender, alias, args );
-+        }
 +        return java.util.Collections.emptyList();
 +    }
 +    // Spigot End

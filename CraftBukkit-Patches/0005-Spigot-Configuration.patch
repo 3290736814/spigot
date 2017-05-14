@@ -1,4 +1,4 @@
-From 2d228efd1ae04dc69f57c0c474f8945cc4c972e5 Mon Sep 17 00:00:00 2001
+From d549d778c9095443dcf5686c025e4ede37694a19 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -6,10 +6,10 @@ Subject: [PATCH] Spigot Configuration
 Provides the basic infrastructure to load and save the Spigot configuration file, spigot.yml
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 71eb6157..9d2d7af1 100644
+index dcc8906e..6720b608 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -168,6 +168,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -169,6 +169,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              if (this.P() < 0) {
                  this.setPort(this.propertyManager.getInt("server-port", 25565));
              }
@@ -21,7 +21,7 @@ index 71eb6157..9d2d7af1 100644
  
              DedicatedServer.LOGGER.info("Generating keypair");
              this.a(MinecraftEncryption.b());
-@@ -182,7 +187,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -183,7 +188,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                  return false;
              }
  
@@ -35,10 +35,10 @@ index 71eb6157..9d2d7af1 100644
              if (!this.getOnlineMode()) {
                  DedicatedServer.LOGGER.warn("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index f714bda4..6602cb10 100644
+index 17a5f810..6cb6c317 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -97,6 +97,7 @@ public abstract class World implements IBlockAccess {
+@@ -99,6 +99,7 @@ public abstract class World implements IBlockAccess {
      public long ticksPerMonsterSpawns;
      public boolean populating;
      private int tickPosition;
@@ -46,7 +46,7 @@ index f714bda4..6602cb10 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -111,6 +112,7 @@ public abstract class World implements IBlockAccess {
+@@ -113,6 +114,7 @@ public abstract class World implements IBlockAccess {
      }
  
      protected World(IDataManager idatamanager, WorldData worlddata, WorldProvider worldprovider, MethodProfiler methodprofiler, boolean flag, ChunkGenerator gen, org.bukkit.World.Environment env) {
@@ -55,10 +55,10 @@ index f714bda4..6602cb10 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index a4586af7..6025bc98 100644
+index 5e271dcb..f2cff11e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -257,8 +257,10 @@ public final class CraftServer implements Server {
+@@ -256,8 +256,10 @@ public final class CraftServer implements Server {
          chunkGCLoadThresh = configuration.getInt("chunk-gc.load-threshold");
          loadIcon();
  
@@ -71,7 +71,7 @@ index a4586af7..6025bc98 100644
      }
  
      public boolean getCommandBlockOverride(String command) {
-@@ -679,6 +681,7 @@ public final class CraftServer implements Server {
+@@ -671,6 +673,7 @@ public final class CraftServer implements Server {
              logger.log(Level.WARNING, "Failed to load banned-players.json, " + ex.getMessage());
          }
  
@@ -79,7 +79,7 @@ index a4586af7..6025bc98 100644
          for (WorldServer world : console.worlds) {
              world.worldData.setDifficulty(difficulty);
              world.setSpawnFlags(monsters, animals);
-@@ -693,11 +696,14 @@ public final class CraftServer implements Server {
+@@ -685,12 +688,14 @@ public final class CraftServer implements Server {
              } else {
                  world.ticksPerMonsterSpawns = this.getTicksPerMonsterSpawns();
              }
@@ -89,13 +89,13 @@ index a4586af7..6025bc98 100644
          pluginManager.clearPlugins();
          commandMap.clearCommands();
          resetRecipes();
+         reloadData();
 +        org.spigotmc.SpigotConfig.registerCommands(); // Spigot
-+
          overrideAllCommandBlockCommands = commandsConfiguration.getStringList("command-block-overrides").contains("*");
  
          int pollCount = 0;
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 4467eee9..a151451d 100644
+index 959a63b9..f1d6e668 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -118,6 +118,14 @@ public class Main {

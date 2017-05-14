@@ -1,4 +1,4 @@
-From 0d1dd68f7c45cddf5dd5d4c27cc95a7bb9bf1d7f Mon Sep 17 00:00:00 2001
+From 84d45f7f493c30cef41adc89dd67ea548d9ad64c Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -50,10 +50,10 @@ index 00000000..130597c6
 +}
 diff --git a/src/main/java/net/minecraft/server/CommandDispatcher.java b/src/main/java/net/minecraft/server/CommandDispatcher.java
 new file mode 100644
-index 00000000..b4ef5818
+index 00000000..ab4a51ac
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/CommandDispatcher.java
-@@ -0,0 +1,128 @@
+@@ -0,0 +1,131 @@
 +package net.minecraft.server;
 +
 +import java.util.Iterator;
@@ -96,7 +96,8 @@ index 00000000..b4ef5818
 +        this.a((ICommand) (new CommandScoreboard()));
 +        this.a((ICommand) (new CommandExecute()));
 +        this.a((ICommand) (new CommandTrigger()));
-+        this.a((ICommand) (new CommandAchievement()));
++        this.a((ICommand) (new CommandAdvancement()));
++        this.a((ICommand) (new CommandRecipe()));
 +        this.a((ICommand) (new CommandSummon()));
 +        this.a((ICommand) (new CommandSetBlock()));
 +        this.a((ICommand) (new CommandFill()));
@@ -110,6 +111,8 @@ index 00000000..b4ef5818
 +        this.a((ICommand) (new CommandEntityData()));
 +        this.a((ICommand) (new CommandStopSound()));
 +        this.a((ICommand) (new CommandLocate()));
++        this.a((ICommand) (new CommandReload()));
++        this.a((ICommand) (new CommandFunction()));
 +        if (minecraftserver.aa()) {
 +            this.a((ICommand) (new CommandOp()));
 +            this.a((ICommand) (new CommandDeop()));
@@ -237,10 +240,10 @@ index 00000000..27ce9d90
 +}
 diff --git a/src/main/java/net/minecraft/server/GenericAttributes.java b/src/main/java/net/minecraft/server/GenericAttributes.java
 new file mode 100644
-index 00000000..15ad9fae
+index 00000000..d60cc232
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/GenericAttributes.java
-@@ -0,0 +1,119 @@
+@@ -0,0 +1,120 @@
 +package net.minecraft.server;
 +
 +import java.util.Collection;
@@ -252,16 +255,17 @@ index 00000000..15ad9fae
 +
 +public class GenericAttributes {
 +
-+    private static final Logger j = LogManager.getLogger();
++    private static final Logger k = LogManager.getLogger();
 +    public static final IAttribute maxHealth = (new AttributeRanged((IAttribute) null, "generic.maxHealth", 20.0D, 0.0D, 1024.0D)).a("Max Health").a(true);
 +    public static final IAttribute FOLLOW_RANGE = (new AttributeRanged((IAttribute) null, "generic.followRange", 32.0D, 0.0D, 2048.0D)).a("Follow Range");
 +    public static final IAttribute c = (new AttributeRanged((IAttribute) null, "generic.knockbackResistance", 0.0D, 0.0D, 1.0D)).a("Knockback Resistance");
 +    public static final IAttribute MOVEMENT_SPEED = (new AttributeRanged((IAttribute) null, "generic.movementSpeed", 0.699999988079071D, 0.0D, 1024.0D)).a("Movement Speed").a(true);
++    public static final IAttribute e = (new AttributeRanged((IAttribute) null, "generic.flyingSpeed", 0.4000000059604645D, 0.0D, 1024.0D)).a("Flying Speed").a(true);
 +    public static final IAttribute ATTACK_DAMAGE = new AttributeRanged((IAttribute) null, "generic.attackDamage", 2.0D, 0.0D, 2048.0D);
-+    public static final IAttribute f = (new AttributeRanged((IAttribute) null, "generic.attackSpeed", 4.0D, 0.0D, 1024.0D)).a(true);
-+    public static final IAttribute g = (new AttributeRanged((IAttribute) null, "generic.armor", 0.0D, 0.0D, 30.0D)).a(true);
-+    public static final IAttribute h = (new AttributeRanged((IAttribute) null, "generic.armorToughness", 0.0D, 0.0D, 20.0D)).a(true);
-+    public static final IAttribute i = (new AttributeRanged((IAttribute) null, "generic.luck", 0.0D, -1024.0D, 1024.0D)).a(true);
++    public static final IAttribute g = (new AttributeRanged((IAttribute) null, "generic.attackSpeed", 4.0D, 0.0D, 1024.0D)).a(true);
++    public static final IAttribute h = (new AttributeRanged((IAttribute) null, "generic.armor", 0.0D, 0.0D, 30.0D)).a(true);
++    public static final IAttribute i = (new AttributeRanged((IAttribute) null, "generic.armorToughness", 0.0D, 0.0D, 20.0D)).a(true);
++    public static final IAttribute j = (new AttributeRanged((IAttribute) null, "generic.luck", 0.0D, -1024.0D, 1024.0D)).a(true);
 +
 +    public static NBTTagList a(AttributeMapBase attributemapbase) {
 +        NBTTagList nbttaglist = new NBTTagList();
@@ -318,7 +322,7 @@ index 00000000..15ad9fae
 +            AttributeInstance attributeinstance = attributemapbase.a(nbttagcompound.getString("Name"));
 +
 +            if (attributeinstance == null) {
-+                GenericAttributes.j.warn("Ignoring unknown attribute \'{}\'", new Object[] { nbttagcompound.getString("Name")});
++                GenericAttributes.k.warn("Ignoring unknown attribute \'{}\'", nbttagcompound.getString("Name"));
 +            } else {
 +                a(attributeinstance, nbttagcompound);
 +            }
@@ -355,7 +359,7 @@ index 00000000..15ad9fae
 +        try {
 +            return new AttributeModifier(uuid, nbttagcompound.getString("Name"), nbttagcompound.getDouble("Amount"), nbttagcompound.getInt("Operation"));
 +        } catch (Exception exception) {
-+            GenericAttributes.j.warn("Unable to create attribute: {}", new Object[] { exception.getMessage()});
++            GenericAttributes.k.warn("Unable to create attribute: {}", exception.getMessage());
 +            return null;
 +        }
 +    }
@@ -505,10 +509,10 @@ index 00000000..b3255636
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java b/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java
 new file mode 100644
-index 00000000..2a04b866
+index 00000000..345d763d
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java
-@@ -0,0 +1,90 @@
+@@ -0,0 +1,89 @@
 +package net.minecraft.server;
 +
 +import java.io.BufferedInputStream;
@@ -592,7 +596,6 @@ index 00000000..2a04b866
 +                CrashReport crashreport = CrashReport.a(ioexception, "Loading NBT data");
 +                CrashReportSystemDetails crashreportsystemdetails = crashreport.a("NBT Tag");
 +
-+                crashreportsystemdetails.a("Tag name", (Object) "[UNNAMED TAG]");
 +                crashreportsystemdetails.a("Tag type", (Object) Byte.valueOf(b0));
 +                throw new ReportedException(crashreport);
 +            }
@@ -601,16 +604,17 @@ index 00000000..2a04b866
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTTagByteArray.java b/src/main/java/net/minecraft/server/NBTTagByteArray.java
 new file mode 100644
-index 00000000..c6b5f701
+index 00000000..e880df5a
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NBTTagByteArray.java
-@@ -0,0 +1,58 @@
+@@ -0,0 +1,85 @@
 +package net.minecraft.server;
 +
 +import java.io.DataInput;
 +import java.io.DataOutput;
 +import java.io.IOException;
 +import java.util.Arrays;
++import java.util.List;
 +
 +public class NBTTagByteArray extends NBTBase {
 +
@@ -620,6 +624,22 @@ index 00000000..c6b5f701
 +
 +    public NBTTagByteArray(byte[] abyte) {
 +        this.data = abyte;
++    }
++
++    public NBTTagByteArray(List<Byte> list) {
++        this(a(list));
++    }
++
++    private static byte[] a(List<Byte> list) {
++        byte[] abyte = new byte[list.size()];
++
++        for (int i = 0; i < list.size(); ++i) {
++            Byte obyte = (Byte) list.get(i);
++
++            abyte[i] = obyte == null ? 0 : obyte.byteValue();
++        }
++
++        return abyte;
 +    }
 +
 +    void write(DataOutput dataoutput) throws IOException {
@@ -641,7 +661,17 @@ index 00000000..c6b5f701
 +    }
 +
 +    public String toString() {
-+        return "[" + this.data.length + " bytes]";
++        StringBuilder stringbuilder = new StringBuilder("[B;");
++
++        for (int i = 0; i < this.data.length; ++i) {
++            if (i != 0) {
++                stringbuilder.append(',');
++            }
++
++            stringbuilder.append(this.data[i]).append('B');
++        }
++
++        return stringbuilder.append(']').toString();
 +    }
 +
 +    public NBTBase clone() {
@@ -652,7 +682,7 @@ index 00000000..c6b5f701
 +    }
 +
 +    public boolean equals(Object object) {
-+        return super.equals(object) ? Arrays.equals(this.data, ((NBTTagByteArray) object).data) : false;
++        return super.equals(object) && Arrays.equals(this.data, ((NBTTagByteArray) object).data);
 +    }
 +
 +    public int hashCode() {
@@ -665,16 +695,17 @@ index 00000000..c6b5f701
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTTagIntArray.java b/src/main/java/net/minecraft/server/NBTTagIntArray.java
 new file mode 100644
-index 00000000..4aa2d89b
+index 00000000..1e205649
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NBTTagIntArray.java
-@@ -0,0 +1,84 @@
+@@ -0,0 +1,101 @@
 +package net.minecraft.server;
 +
 +import java.io.DataInput;
 +import java.io.DataOutput;
 +import java.io.IOException;
 +import java.util.Arrays;
++import java.util.List;
 +
 +public class NBTTagIntArray extends NBTBase {
 +
@@ -684,6 +715,22 @@ index 00000000..4aa2d89b
 +
 +    public NBTTagIntArray(int[] aint) {
 +        this.data = aint;
++    }
++
++    public NBTTagIntArray(List<Integer> list) {
++        this(a(list));
++    }
++
++    private static int[] a(List<Integer> list) {
++        int[] aint = new int[list.size()];
++
++        for (int i = 0; i < list.size(); ++i) {
++            Integer integer = (Integer) list.get(i);
++
++            aint[i] = integer == null ? 0 : integer.intValue();
++        }
++
++        return aint;
 +    }
 +
 +    void write(DataOutput dataoutput) throws IOException {
@@ -717,17 +764,17 @@ index 00000000..4aa2d89b
 +    }
 +
 +    public String toString() {
-+        String s = "[";
-+        int[] aint = this.data;
-+        int i = aint.length;
++        StringBuilder stringbuilder = new StringBuilder("[I;");
 +
-+        for (int j = 0; j < i; ++j) {
-+            int k = aint[j];
++        for (int i = 0; i < this.data.length; ++i) {
++            if (i != 0) {
++                stringbuilder.append(',');
++            }
 +
-+            s = s + k + ",";
++            stringbuilder.append(this.data[i]);
 +        }
 +
-+        return s + "]";
++        return stringbuilder.append(']').toString();
 +    }
 +
 +    public NBTTagIntArray c() {
@@ -738,7 +785,7 @@ index 00000000..4aa2d89b
 +    }
 +
 +    public boolean equals(Object object) {
-+        return super.equals(object) ? Arrays.equals(this.data, ((NBTTagIntArray) object).data) : false;
++        return super.equals(object) && Arrays.equals(this.data, ((NBTTagIntArray) object).data);
 +    }
 +
 +    public int hashCode() {
@@ -1043,7 +1090,7 @@ index 00000000..bdcda81c
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayOutChat.java b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
 new file mode 100644
-index 00000000..24462f10
+index 00000000..b1fddee7
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
 @@ -0,0 +1,42 @@
@@ -1054,27 +1101,27 @@ index 00000000..24462f10
 +public class PacketPlayOutChat implements Packet<PacketListenerPlayOut> {
 +
 +    private IChatBaseComponent a;
-+    private byte b;
++    private ChatMessageType b;
 +
 +    public PacketPlayOutChat() {}
 +
 +    public PacketPlayOutChat(IChatBaseComponent ichatbasecomponent) {
-+        this(ichatbasecomponent, (byte) 1);
++        this(ichatbasecomponent, ChatMessageType.SYSTEM);
 +    }
 +
-+    public PacketPlayOutChat(IChatBaseComponent ichatbasecomponent, byte b0) {
++    public PacketPlayOutChat(IChatBaseComponent ichatbasecomponent, ChatMessageType chatmessagetype) {
 +        this.a = ichatbasecomponent;
-+        this.b = b0;
++        this.b = chatmessagetype;
 +    }
 +
 +    public void a(PacketDataSerializer packetdataserializer) throws IOException {
 +        this.a = packetdataserializer.f();
-+        this.b = packetdataserializer.readByte();
++        this.b = ChatMessageType.a(packetdataserializer.readByte());
 +    }
 +
 +    public void b(PacketDataSerializer packetdataserializer) throws IOException {
 +        packetdataserializer.a(this.a);
-+        packetdataserializer.writeByte(this.b);
++        packetdataserializer.writeByte(this.b.a());
 +    }
 +
 +    public void a(PacketListenerPlayOut packetlistenerplayout) {
@@ -1082,10 +1129,10 @@ index 00000000..24462f10
 +    }
 +
 +    public boolean b() {
-+        return this.b == 1 || this.b == 2;
++        return this.b == ChatMessageType.SYSTEM || this.b == ChatMessageType.GAME_INFO;
 +    }
 +
-+    public byte c() {
++    public ChatMessageType c() {
 +        return this.b;
 +    }
 +}
@@ -1279,7 +1326,7 @@ index 00000000..fe59b758
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerConnection.java b/src/main/java/net/minecraft/server/ServerConnection.java
 new file mode 100644
-index 00000000..1abc6b68
+index 00000000..60364643
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerConnection.java
 @@ -0,0 +1,174 @@
@@ -1433,7 +1480,7 @@ index 00000000..1abc6b68
 +                                throw new ReportedException(crashreport);
 +                            }
 +
-+                            ServerConnection.e.warn("Failed to handle packet for {}", new Object[] { networkmanager.getSocketAddress(), exception});
++                            ServerConnection.e.warn("Failed to handle packet for {}", networkmanager.getSocketAddress(), exception);
 +                            final ChatComponentText chatcomponenttext = new ChatComponentText("Internal server error");
 +
 +                            networkmanager.sendPacket(new PacketPlayOutKickDisconnect(chatcomponenttext), new GenericFutureListener() {
@@ -1459,10 +1506,10 @@ index 00000000..1abc6b68
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerStatisticManager.java b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 new file mode 100644
-index 00000000..277e98f0
+index 00000000..7360141a
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerStatisticManager.java
-@@ -0,0 +1,212 @@
+@@ -0,0 +1,167 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Maps;
@@ -1491,7 +1538,6 @@ index 00000000..277e98f0
 +    private final File d;
 +    private final Set<Statistic> e = Sets.newHashSet();
 +    private int f = -300;
-+    private boolean g;
 +
 +    public ServerStatisticManager(MinecraftServer minecraftserver, File file) {
 +        this.c = minecraftserver;
@@ -1504,9 +1550,9 @@ index 00000000..277e98f0
 +                this.a.clear();
 +                this.a.putAll(this.a(FileUtils.readFileToString(this.d)));
 +            } catch (IOException ioexception) {
-+                ServerStatisticManager.b.error("Couldn\'t read statistics file {}", new Object[] { this.d, ioexception});
++                ServerStatisticManager.b.error("Couldn\'t read statistics file {}", this.d, ioexception);
 +            } catch (JsonParseException jsonparseexception) {
-+                ServerStatisticManager.b.error("Couldn\'t parse statistics file {}", new Object[] { this.d, jsonparseexception});
++                ServerStatisticManager.b.error("Couldn\'t parse statistics file {}", this.d, jsonparseexception);
 +            }
 +        }
 +
@@ -1522,31 +1568,14 @@ index 00000000..277e98f0
 +    }
 +
 +    public void setStatistic(EntityHuman entityhuman, Statistic statistic, int i) {
-+        int j = statistic.d() ? this.getStatisticValue(statistic) : 0;
-+
 +        super.setStatistic(entityhuman, statistic, i);
 +        this.e.add(statistic);
-+        if (statistic.d() && j == 0 && i > 0) {
-+            this.g = true;
-+            if (this.c.ay()) {
-+                this.c.getPlayerList().sendMessage(new ChatMessage("chat.type.achievement", new Object[] { entityhuman.getScoreboardDisplayName(), statistic.j()}));
-+            }
-+        }
-+
-+        if (statistic.d() && j > 0 && i == 0) {
-+            this.g = true;
-+            if (this.c.ay()) {
-+                this.c.getPlayerList().sendMessage(new ChatMessage("chat.type.achievement.taken", new Object[] { entityhuman.getScoreboardDisplayName(), statistic.j()}));
-+            }
-+        }
-+
 +    }
 +
-+    public Set<Statistic> c() {
++    private Set<Statistic> d() {
 +        HashSet hashset = Sets.newHashSet(this.e);
 +
 +        this.e.clear();
-+        this.g = false;
 +        return hashset;
 +    }
 +
@@ -1576,22 +1605,22 @@ index 00000000..277e98f0
 +                            statisticwrapper.a(jsonobject1.getAsJsonPrimitive("value").getAsInt());
 +                        }
 +
-+                        if (jsonobject1.has("progress") && statistic.l() != null) {
++                        if (jsonobject1.has("progress") && statistic.g() != null) {
 +                            try {
-+                                Constructor constructor = statistic.l().getConstructor(new Class[0]);
++                                Constructor constructor = statistic.g().getConstructor(new Class[0]);
 +                                IJsonStatistic ijsonstatistic = (IJsonStatistic) constructor.newInstance(new Object[0]);
 +
 +                                ijsonstatistic.a(jsonobject1.get("progress"));
 +                                statisticwrapper.a(ijsonstatistic);
 +                            } catch (Throwable throwable) {
-+                                ServerStatisticManager.b.warn("Invalid statistic progress in {}", new Object[] { this.d, throwable});
++                                ServerStatisticManager.b.warn("Invalid statistic progress in {}", this.d, throwable);
 +                            }
 +                        }
 +                    }
 +
 +                    hashmap.put(statistic, statisticwrapper);
 +                } else {
-+                    ServerStatisticManager.b.warn("Invalid statistic in {}: Don\'t know what {} is", new Object[] { this.d, entry.getKey()});
++                    ServerStatisticManager.b.warn("Invalid statistic in {}: Don\'t know what {} is", this.d, entry.getKey());
 +                }
 +            }
 +
@@ -1614,7 +1643,7 @@ index 00000000..277e98f0
 +                try {
 +                    jsonobject1.add("progress", ((StatisticWrapper) entry.getValue()).b().a());
 +                } catch (Throwable throwable) {
-+                    ServerStatisticManager.b.warn("Couldn\'t save statistic {}: error serializing progress", new Object[] { ((Statistic) entry.getKey()).e(), throwable});
++                    ServerStatisticManager.b.warn("Couldn\'t save statistic {}: error serializing progress", ((Statistic) entry.getKey()).d(), throwable);
 +                }
 +
 +                jsonobject.add(((Statistic) entry.getKey()).name, jsonobject1);
@@ -1626,24 +1655,17 @@ index 00000000..277e98f0
 +        return jsonobject.toString();
 +    }
 +
-+    public void d() {
-+        Iterator iterator = this.a.keySet().iterator();
-+
-+        while (iterator.hasNext()) {
-+            Statistic statistic = (Statistic) iterator.next();
-+
-+            this.e.add(statistic);
-+        }
-+
++    public void c() {
++        this.e.addAll(this.a.keySet());
 +    }
 +
 +    public void a(EntityPlayer entityplayer) {
 +        int i = this.c.aq();
 +        HashMap hashmap = Maps.newHashMap();
 +
-+        if (this.g || i - this.f > 300) {
++        if (i - this.f > 300) {
 +            this.f = i;
-+            Iterator iterator = this.c().iterator();
++            Iterator iterator = this.d().iterator();
 +
 +            while (iterator.hasNext()) {
 +                Statistic statistic = (Statistic) iterator.next();
@@ -1654,33 +1676,13 @@ index 00000000..277e98f0
 +
 +        entityplayer.playerConnection.sendPacket(new PacketPlayOutStatistic(hashmap));
 +    }
-+
-+    public void updateStatistics(EntityPlayer entityplayer) {
-+        HashMap hashmap = Maps.newHashMap();
-+        Iterator iterator = AchievementList.e.iterator();
-+
-+        while (iterator.hasNext()) {
-+            Achievement achievement = (Achievement) iterator.next();
-+
-+            if (this.hasAchievement(achievement)) {
-+                hashmap.put(achievement, Integer.valueOf(this.getStatisticValue(achievement)));
-+                this.e.remove(achievement);
-+            }
-+        }
-+
-+        entityplayer.playerConnection.sendPacket(new PacketPlayOutStatistic(hashmap));
-+    }
-+
-+    public boolean e() {
-+        return this.g;
-+    }
 +}
 diff --git a/src/main/java/net/minecraft/server/StructureGenerator.java b/src/main/java/net/minecraft/server/StructureGenerator.java
 new file mode 100644
-index 00000000..0aaf72f5
+index 00000000..93e1c009
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/StructureGenerator.java
-@@ -0,0 +1,240 @@
+@@ -0,0 +1,244 @@
 +package net.minecraft.server;
 +
 +import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
@@ -1773,8 +1775,12 @@ index 00000000..0aaf72f5
 +    }
 +
 +    public boolean b(BlockPosition blockposition) {
-+        this.a(this.g);
-+        return this.c(blockposition) != null;
++        if (this.g == null) {
++            return false;
++        } else {
++            this.a(this.g);
++            return this.c(blockposition) != null;
++        }
 +    }
 +
 +    @Nullable
@@ -1821,7 +1827,7 @@ index 00000000..0aaf72f5
 +    public abstract BlockPosition getNearestGeneratedFeature(World world, BlockPosition blockposition, boolean flag);
 +
 +    protected void a(World world) {
-+        if (this.a == null) {
++        if (this.a == null && world != null) {
 +            this.a = (PersistentStructure) world.a(PersistentStructure.class, this.a());
 +            if (this.a == null) {
 +                this.a = new PersistentStructure(this.a());
@@ -1923,7 +1929,7 @@ index 00000000..0aaf72f5
 +}
 diff --git a/src/main/java/net/minecraft/server/TileEntitySkull.java b/src/main/java/net/minecraft/server/TileEntitySkull.java
 new file mode 100644
-index 00000000..6e91a22d
+index 00000000..b7469346
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/TileEntitySkull.java
 @@ -0,0 +1,152 @@
@@ -1982,14 +1988,14 @@ index 00000000..6e91a22d
 +
 +                if (!UtilColor.b(s)) {
 +                    this.g = new GameProfile((UUID) null, s);
-+                    this.h();
++                    this.i();
 +                }
 +            }
 +        }
 +
 +    }
 +
-+    public void F_() {
++    public void e() {
 +        if (this.a == 5) {
 +            if (this.world.isBlockIndirectlyPowered(this.position)) {
 +                this.i = true;
@@ -2023,10 +2029,10 @@ index 00000000..6e91a22d
 +    public void setGameProfile(@Nullable GameProfile gameprofile) {
 +        this.a = 3;
 +        this.g = gameprofile;
-+        this.h();
++        this.i();
 +    }
 +
-+    private void h() {
++    private void i() {
 +        this.g = b(this.g);
 +        this.update();
 +    }

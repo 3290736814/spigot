@@ -1,4 +1,4 @@
-From c98fdf0d5e7d3c2486ea120a13c83243052658d6 Mon Sep 17 00:00:00 2001
+From f06388dd1edb0ec393b9f473b2a8290d1e9b3978 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -6,10 +6,10 @@ Subject: [PATCH] Crop Growth Rates
 Allows configuring the growth rates of crops as a percentage of their normal growth rate.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 1968c0ef..288ca939 100644
+index c46125d8..16cd48dc 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
-@@ -929,6 +929,18 @@ public class Block {
+@@ -956,6 +956,18 @@ public class Block {
          a(i, new MinecraftKey(s), block);
      }
  
@@ -29,7 +29,7 @@ index 1968c0ef..288ca939 100644
  
          NONE, XZ, XYZ;
 diff --git a/src/main/java/net/minecraft/server/BlockCactus.java b/src/main/java/net/minecraft/server/BlockCactus.java
-index 715da28d..3f579fbd 100644
+index ff8dc446..ea11e133 100644
 --- a/src/main/java/net/minecraft/server/BlockCactus.java
 +++ b/src/main/java/net/minecraft/server/BlockCactus.java
 @@ -31,7 +31,7 @@ public class BlockCactus extends Block {
@@ -42,7 +42,7 @@ index 715da28d..3f579fbd 100644
                      IBlockData iblockdata1 = iblockdata.set(BlockCactus.AGE, Integer.valueOf(0));
  
 diff --git a/src/main/java/net/minecraft/server/BlockCocoa.java b/src/main/java/net/minecraft/server/BlockCocoa.java
-index fe2298ac..82a9f19b 100644
+index 86c2f967..bae2ab06 100644
 --- a/src/main/java/net/minecraft/server/BlockCocoa.java
 +++ b/src/main/java/net/minecraft/server/BlockCocoa.java
 @@ -21,7 +21,7 @@ public class BlockCocoa extends BlockFacingHorizontal implements IBlockFragilePl
@@ -81,7 +81,7 @@ index 2e5cf995..45713449 100644
              boolean flag = true;
              Iterator iterator = BlockPosition.b(blockposition.a(-4, -1, -4), blockposition.a(4, 1, 4)).iterator();
 diff --git a/src/main/java/net/minecraft/server/BlockNetherWart.java b/src/main/java/net/minecraft/server/BlockNetherWart.java
-index 13f53bba..48bd6173 100644
+index e9824b67..15baf965 100644
 --- a/src/main/java/net/minecraft/server/BlockNetherWart.java
 +++ b/src/main/java/net/minecraft/server/BlockNetherWart.java
 @@ -29,7 +29,7 @@ public class BlockNetherWart extends BlockPlant {
@@ -94,7 +94,7 @@ index 13f53bba..48bd6173 100644
              // world.setTypeAndData(blockposition, iblockdata, 2); // CraftBukkit
              org.bukkit.craftbukkit.event.CraftEventFactory.handleBlockGrowEvent(world, blockposition.getX(), blockposition.getY(), blockposition.getZ(), this, toLegacyData(iblockdata)); // CraftBukkit
 diff --git a/src/main/java/net/minecraft/server/BlockReed.java b/src/main/java/net/minecraft/server/BlockReed.java
-index 11903aee..84014b1c 100644
+index ac7936ab..b6db3d8f 100644
 --- a/src/main/java/net/minecraft/server/BlockReed.java
 +++ b/src/main/java/net/minecraft/server/BlockReed.java
 @@ -31,7 +31,7 @@ public class BlockReed extends Block {
@@ -133,10 +133,10 @@ index 171dff57..c74b6284 100644
  
                  if (i < 7) {
 diff --git a/src/main/java/net/minecraft/server/BlockVine.java b/src/main/java/net/minecraft/server/BlockVine.java
-index 83d4b758..da480829 100644
+index 63abc125..ad5a400c 100644
 --- a/src/main/java/net/minecraft/server/BlockVine.java
 +++ b/src/main/java/net/minecraft/server/BlockVine.java
-@@ -139,7 +139,7 @@ public class BlockVine extends Block {
+@@ -141,7 +141,7 @@ public class BlockVine extends Block {
  
      public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
          if (!world.isClientSide) {

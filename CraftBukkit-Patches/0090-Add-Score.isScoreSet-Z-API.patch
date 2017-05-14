@@ -1,0 +1,25 @@
+From 02474fe78089dd6d9a727f0bd51db6481de1f0f0 Mon Sep 17 00:00:00 2001
+From: md_5 <git@md-5.net>
+Date: Thu, 17 Apr 2014 19:35:53 +1000
+Subject: [PATCH] Add Score.isScoreSet()Z API.
+
+Also fix generics on CraftScore.getScore()I.
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScore.java b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScore.java
+index 0b71b538..ee9d2aed 100644
+--- a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScore.java
++++ b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScore.java
+@@ -63,7 +63,9 @@ final class CraftScore implements Score {
+     // Spigot start
+     @Override
+     public boolean isScoreSet() throws IllegalStateException {
+-        throw new UnsupportedOperationException("Not supported yet.");
++        Scoreboard board = objective.checkState().board;
++
++        return board.getPlayers().contains(entry) && board.getPlayerObjectives(entry).containsKey(objective.getHandle());
+     }
+     // Spigot end
+ }
+-- 
+2.11.0
+
