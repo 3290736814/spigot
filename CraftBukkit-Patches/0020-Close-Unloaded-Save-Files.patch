@@ -1,4 +1,4 @@
-From 9b9cc3baada63a47ed032f2890454c4694949752 Mon Sep 17 00:00:00 2001
+From 8cbb13ce3c9be3978dca07aa1ad8bd015c90e274 Mon Sep 17 00:00:00 2001
 From: Antony Riley <antony@cyberiantiger.org>
 Date: Wed, 27 Mar 2013 01:41:54 +0200
 Subject: [PATCH] Close Unloaded Save Files
@@ -18,10 +18,10 @@ index ecaf7cf8..c15a0d1f 100644
      public static synchronized RegionFile a(File file, int i, int j) {
          File file1 = new File(file, "region");
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 437ed5a7..9a82c116 100644
+index 7b93bcae..19377c33 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -968,6 +968,31 @@ public final class CraftServer implements Server {
+@@ -969,6 +969,31 @@ public final class CraftServer implements Server {
  
          worlds.remove(world.getName().toLowerCase(java.util.Locale.ENGLISH));
          console.worlds.remove(console.worlds.indexOf(handle));

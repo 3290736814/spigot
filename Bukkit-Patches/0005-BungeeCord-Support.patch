@@ -1,22 +1,17 @@
-From fb6669f4d17c6dbc48c97f5c824d69bfdb9fc555 Mon Sep 17 00:00:00 2001
+From e9cace02eac0a325066dec533d9e0090540153ee Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:20:49 +1000
 Subject: [PATCH] BungeeCord Support
 
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index a2ebcae1..4e7ce6f6 100644
+index 9174e47a..e5c0c5ea 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1397,4 +1397,23 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
-      * @return object detailing the player's progress
-      */
-     public AdvancementProgress getAdvancementProgress(Advancement advancement);
-+
-+    // Spigot start
-+    public class Spigot extends Entity.Spigot
-+    {
-+
+@@ -1402,6 +1402,16 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+     public class Spigot extends Entity.Spigot
+     {
+ 
 +        /**
 +         * Gets the connection address of this player, regardless of whether it
 +         * has been spoofed or not.
@@ -27,11 +22,9 @@ index a2ebcae1..4e7ce6f6 100644
 +        {
 +            throw new UnsupportedOperationException( "Not supported yet." );
 +        }
-+    }
-+
-+    Spigot spigot();
-+    // Spigot end
- }
+     }
+ 
+     @Override
 diff --git a/src/main/java/org/bukkit/event/player/PlayerLoginEvent.java b/src/main/java/org/bukkit/event/player/PlayerLoginEvent.java
 index 8b012ea9..de4fb37f 100644
 --- a/src/main/java/org/bukkit/event/player/PlayerLoginEvent.java

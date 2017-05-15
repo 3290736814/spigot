@@ -1,4 +1,4 @@
-From e93b958b43aaa7822d9f8bb4dad7783602edc9d6 Mon Sep 17 00:00:00 2001
+From 52d0d57551bc113ab61869d8f3433dc3c90554a7 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:57:09 +1000
 Subject: [PATCH] Add Particle API
@@ -344,17 +344,13 @@ index ba7dc495..a8032289 100644
 +    public enum Type {SOUND, VISUAL, PARTICLE}
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index f34b3a93..2504810d 100644
+index a2082ee1..5d21aa97 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -1258,6 +1258,60 @@ public interface World extends PluginMessageRecipient, Metadatable {
-      */
-     public boolean isGameRule(String rule);
+@@ -1462,6 +1462,51 @@ public interface World extends PluginMessageRecipient, Metadatable {
+     public class Spigot
+     {
  
-+    // Spigot start
-+    public class Spigot
-+    {
-+
 +        /**
 +         * Plays an effect to all players within a default radius around a given
 +         * location.
@@ -400,16 +396,11 @@ index f34b3a93..2504810d 100644
 +        {
 +            throw new UnsupportedOperationException( "Not supported yet." );
 +        }
-+    }
-+
-+    Spigot spigot();
-+    // Spigot end
-+
-     /**
-      * Gets the world border for this world.
-      *
+     }
+ 
+     Spigot spigot();
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 4e7ce6f6..d0155fe5 100644
+index e5c0c5ea..17393c12 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -1412,6 +1412,12 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
@@ -424,7 +415,7 @@ index 4e7ce6f6..d0155fe5 100644
 +        }
      }
  
-     Spigot spigot();
+     @Override
 diff --git a/src/test/java/org/bukkit/EffectTest.java b/src/test/java/org/bukkit/EffectTest.java
 index 08aa71d3..5217aecb 100644
 --- a/src/test/java/org/bukkit/EffectTest.java

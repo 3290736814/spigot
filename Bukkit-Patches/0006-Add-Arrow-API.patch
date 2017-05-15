@@ -1,21 +1,17 @@
-From 6ac22bb04338cf0281ae594b94fd1b8414c3ec93 Mon Sep 17 00:00:00 2001
+From 12e10cfbb59241b91b35483cfc7f347b1e0b8267 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:08:24 +1000
 Subject: [PATCH] Add Arrow API
 
 
 diff --git a/src/main/java/org/bukkit/entity/Arrow.java b/src/main/java/org/bukkit/entity/Arrow.java
-index 795e40de..1ff09518 100644
+index e51cab87..5850ab6c 100644
 --- a/src/main/java/org/bukkit/entity/Arrow.java
 +++ b/src/main/java/org/bukkit/entity/Arrow.java
-@@ -71,4 +71,20 @@ public interface Arrow extends Projectile {
-          */
-         CREATIVE_ONLY
-     }
-+
-+    public class Spigot extends Entity.Spigot
-+    {
-+
+@@ -76,6 +76,15 @@ public interface Arrow extends Projectile {
+     public class Spigot extends Entity.Spigot
+     {
+ 
 +        public double getDamage()
 +        {
 +            throw new UnsupportedOperationException( "Not supported yet." );
@@ -25,10 +21,9 @@ index 795e40de..1ff09518 100644
 +        {
 +            throw new UnsupportedOperationException( "Not supported yet." );
 +        }
-+    }
-+
-+    Spigot spigot();
- }
+     }
+ 
+     @Override
 -- 
 2.11.0
 

@@ -1,0 +1,171 @@
+From 439bde8300a9b2f8f14e26db03287ea042e244f3 Mon Sep 17 00:00:00 2001
+From: md_5 <git@md-5.net>
+Date: Mon, 15 May 2017 15:16:15 +1000
+Subject: [PATCH] Skeleton API Implementations
+
+
+diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
+index 87c34743..ecedeeb4 100644
+--- a/src/main/java/org/bukkit/Bukkit.java
++++ b/src/main/java/org/bukkit/Bukkit.java
+@@ -1162,4 +1162,9 @@ public final class Bukkit {
+     public static UnsafeValues getUnsafe() {
+         return server.getUnsafe();
+     }
++
++    public static Server.Spigot spigot()
++    {
++        return server.spigot();
++    }
+ }
+diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
+index 073fecd5..5fb827ee 100644
+--- a/src/main/java/org/bukkit/Server.java
++++ b/src/main/java/org/bukkit/Server.java
+@@ -950,4 +950,13 @@ public interface Server extends PluginMessageRecipient {
+      */
+     @Deprecated
+     UnsafeValues getUnsafe();
++
++    // Spigot start
++    public class Spigot
++    {
++
++    }
++
++    Spigot spigot();
++    // Spigot end
+ }
+diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
+index f34b3a93..a2082ee1 100644
+--- a/src/main/java/org/bukkit/World.java
++++ b/src/main/java/org/bukkit/World.java
+@@ -1458,6 +1458,14 @@ public interface World extends PluginMessageRecipient, Metadatable {
+      */
+     public <T> void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX, double offsetY, double offsetZ, double extra, T data);
+ 
++    // Spigot start
++    public class Spigot
++    {
++
++    }
++
++    Spigot spigot();
++    // Spigot end
+ 
+     /**
+      * Represents various map environment types that a world may be
+diff --git a/src/main/java/org/bukkit/command/CommandSender.java b/src/main/java/org/bukkit/command/CommandSender.java
+index 148756b9..5dcd2218 100644
+--- a/src/main/java/org/bukkit/command/CommandSender.java
++++ b/src/main/java/org/bukkit/command/CommandSender.java
+@@ -32,4 +32,13 @@ public interface CommandSender extends Permissible {
+      * @return Name of the sender
+      */
+     public String getName();
++
++    // Spigot start
++    public class Spigot
++    {
++
++    }
++
++    Spigot spigot();
++    // Spigot end
+ }
+diff --git a/src/main/java/org/bukkit/entity/Arrow.java b/src/main/java/org/bukkit/entity/Arrow.java
+index 795e40de..e51cab87 100644
+--- a/src/main/java/org/bukkit/entity/Arrow.java
++++ b/src/main/java/org/bukkit/entity/Arrow.java
+@@ -71,4 +71,14 @@ public interface Arrow extends Projectile {
+          */
+         CREATIVE_ONLY
+     }
++
++    // Spigot start
++    public class Spigot extends Entity.Spigot
++    {
++
++    }
++
++    @Override
++    Spigot spigot();
++    // Spigot end
+ }
+diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
+index 941be7bb..4761279f 100644
+--- a/src/main/java/org/bukkit/entity/Entity.java
++++ b/src/main/java/org/bukkit/entity/Entity.java
+@@ -468,4 +468,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable {
+      * @return true if the tag was successfully removed
+      */
+     boolean removeScoreboardTag(String tag);
++
++    // Spigot start
++    public class Spigot extends CommandSender.Spigot
++    {
++
++    }
++
++    @Override
++    Spigot spigot();
++    // Spigot end
+ }
+diff --git a/src/main/java/org/bukkit/entity/LightningStrike.java b/src/main/java/org/bukkit/entity/LightningStrike.java
+index c8b5154e..ee2218c1 100644
+--- a/src/main/java/org/bukkit/entity/LightningStrike.java
++++ b/src/main/java/org/bukkit/entity/LightningStrike.java
+@@ -12,4 +12,13 @@ public interface LightningStrike extends Weather {
+      */
+     public boolean isEffect();
+ 
++    // Spigot start
++    public class Spigot extends Entity.Spigot
++    {
++
++    }
++
++    @Override
++    Spigot spigot();
++    // Spigot end
+ }
+diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
+index a2ebcae1..9174e47a 100644
+--- a/src/main/java/org/bukkit/entity/Player.java
++++ b/src/main/java/org/bukkit/entity/Player.java
+@@ -1397,4 +1397,14 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+      * @return object detailing the player's progress
+      */
+     public AdvancementProgress getAdvancementProgress(Advancement advancement);
++
++    // Spigot start
++    public class Spigot extends Entity.Spigot
++    {
++
++    }
++
++    @Override
++    Spigot spigot();
++    // Spigot end
+ }
+diff --git a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
+index 37d2e49e..ca8bf945 100644
+--- a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
++++ b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
+@@ -196,4 +196,13 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
+ 
+     @SuppressWarnings("javadoc")
+     ItemMeta clone();
++
++    // Spigot start
++    public class Spigot
++    {
++
++    }
++
++    Spigot spigot();
++    // Spigot end
+ }
+-- 
+2.11.0
+

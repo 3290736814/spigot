@@ -1,11 +1,11 @@
-From b5d2fa06cfa8cb57475068efa24337165ab272cc Mon Sep 17 00:00:00 2001
+From f539dc9d9329174b1c4f97df534f40300d0427be Mon Sep 17 00:00:00 2001
 From: Smove <jan@lavasurvival.net>
 Date: Sat, 1 Feb 2014 18:10:49 +1100
 Subject: [PATCH] Implement Locale Getter for Players
 
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index bcc5ca4b..ac6ce87d 100644
+index 8a2d4f8c..03f637fd 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -1451,6 +1451,16 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
@@ -24,7 +24,7 @@ index bcc5ca4b..ac6ce87d 100644
 +        }
      }
  
-     Spigot spigot();
+     @Override
 -- 
 2.11.0
 

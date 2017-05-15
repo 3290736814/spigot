@@ -1,22 +1,17 @@
-From 44f8028c1293161515bc981c469238115fcf78c4 Mon Sep 17 00:00:00 2001
+From df32333d29502410310bd419524fdab302701faa Mon Sep 17 00:00:00 2001
 From: libraryaddict <redwarfare@live.com>
 Date: Fri, 22 Aug 2014 05:31:04 -0400
 Subject: [PATCH] Added isUnbreakable and setUnbreakable to ItemMeta
 
 
 diff --git a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-index 37d2e49e..7300bc92 100644
+index ca8bf945..7300bc92 100644
 --- a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
 +++ b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-@@ -196,4 +196,36 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
+@@ -201,6 +201,29 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
+     public class Spigot
+     {
  
-     @SuppressWarnings("javadoc")
-     ItemMeta clone();
-+
-+    // Spigot start
-+    public class Spigot
-+    {
-+
 +        /**
 +         * Sets the unbreakable tag
 +         *
@@ -40,11 +35,9 @@ index 37d2e49e..7300bc92 100644
 +        {
 +            throw new UnsupportedOperationException( "Not supported yet." );
 +        }
-+    }
-+
-+    Spigot spigot();
-+    // Spigot end
- }
+     }
+ 
+     Spigot spigot();
 -- 
 2.11.0
 

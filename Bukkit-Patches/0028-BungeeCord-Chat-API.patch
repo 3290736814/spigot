@@ -1,4 +1,4 @@
-From bf799977d436af355fa8dee703cfca37bdf0c4b8 Mon Sep 17 00:00:00 2001
+From 204364b9e4eeed4411b32cb56ba64614ac855d8f Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 02:59:14 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -268,10 +268,10 @@ index b8872b41..adbae51a 100644
       * Gets the char value associated with this color
       *
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 64238cdc..d0e73f99 100644
+index d8318b6e..9470b581 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -941,6 +941,24 @@ public interface Server extends PluginMessageRecipient {
+@@ -950,6 +950,24 @@ public interface Server extends PluginMessageRecipient {
          {
              throw new UnsupportedOperationException( "Not supported yet." );
          }
@@ -296,17 +296,16 @@ index 64238cdc..d0e73f99 100644
      }
  
      Spigot spigot();
-diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index a458cebf..b57c81c1 100644
---- a/src/main/java/org/bukkit/entity/Player.java
-+++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1469,6 +1469,44 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
-         {
-             throw new UnsupportedOperationException( "Not supported yet." );
-         }
-+
+diff --git a/src/main/java/org/bukkit/command/CommandSender.java b/src/main/java/org/bukkit/command/CommandSender.java
+index 5dcd2218..abf68a2c 100644
+--- a/src/main/java/org/bukkit/command/CommandSender.java
++++ b/src/main/java/org/bukkit/command/CommandSender.java
+@@ -37,6 +37,23 @@ public interface CommandSender extends Permissible {
+     public class Spigot
+     {
+ 
 +        /**
-+         * Sends the component to the player
++         * Sends this sender a chat component.
 +         *
 +         * @param component the components to send
 +         */
@@ -315,10 +314,31 @@ index a458cebf..b57c81c1 100644
 +        }
 +
 +        /**
-+         * Sends an array of components as a single message to the player
++         * Sends an array of components as a single message to the sender.
 +         *
 +         * @param components the components to send
 +         */
++        public void sendMessage(net.md_5.bungee.api.chat.BaseComponent... components) {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
+     }
+ 
+     Spigot spigot();
+diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
+index 8ceb875d..9764caa4 100644
+--- a/src/main/java/org/bukkit/entity/Player.java
++++ b/src/main/java/org/bukkit/entity/Player.java
+@@ -1469,6 +1469,36 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+         {
+             throw new UnsupportedOperationException( "Not supported yet." );
+         }
++
++        @Override
++        public void sendMessage(net.md_5.bungee.api.chat.BaseComponent component) {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
++
++        @Override
 +        public void sendMessage(net.md_5.bungee.api.chat.BaseComponent... components) {
 +            throw new UnsupportedOperationException("Not supported yet.");
 +        }
@@ -337,14 +357,14 @@ index a458cebf..b57c81c1 100644
 +         * Sends an array of components as a single message to the specified screen position of this player
 +         *
 +         * @param position the screen position
-+         * @param component the components to send
++         * @param components the components to send
 +         */
 +        public void sendMessage(net.md_5.bungee.api.ChatMessageType position, net.md_5.bungee.api.chat.BaseComponent... components) {
 +            throw new UnsupportedOperationException("Not supported yet.");
 +        }
      }
  
-     Spigot spigot();
+     @Override
 -- 
 2.11.0
 
