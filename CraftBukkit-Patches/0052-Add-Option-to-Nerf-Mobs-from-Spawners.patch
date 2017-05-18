@@ -1,0 +1,41 @@
+From 99c736e34b0af3d1c62b212c471fb0c301cd464d Mon Sep 17 00:00:00 2001
+From: md_5 <git@md-5.net>
+Date: Sun, 2 Feb 2014 16:55:46 +0000
+Subject: [PATCH] Add Option to Nerf Mobs from Spawners
+
+
+diff --git a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
+index 477e8574..573e3fe3 100644
+--- a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
++++ b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
+@@ -101,6 +101,11 @@ public abstract class MobSpawnerAbstract {
+                         if (this.spawnData.b().d() == 1 && this.spawnData.b().hasKeyOfType("id", 8) && entity instanceof EntityInsentient) {
+                             ((EntityInsentient) entity).prepare(world.D(new BlockPosition(entity)), (GroupDataEntity) null);
+                         }
++                        // Spigot Start
++                        if (entity instanceof EntityInsentient) {
++                            ((EntityInsentient) entity).setAI(world.spigotConfig.nerfSpawnerMobs);
++                        }
++                        // Spigot End
+ 
+                         ChunkRegionLoader.a(entity, world, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER); // CraftBukkit
+                         world.triggerEffect(2004, blockposition, 0);
+diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+index 4276472f..e5e54f7e 100644
+--- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
++++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+@@ -215,4 +215,11 @@ public class SpigotWorldConfig
+         zombieAggressiveTowardsVillager = getBoolean( "zombie-aggressive-towards-villager", true );
+         log( "Zombie Aggressive Towards Villager: " + zombieAggressiveTowardsVillager );
+     }
++
++    public boolean nerfSpawnerMobs;
++    private void nerfSpawnerMobs()
++    {
++        nerfSpawnerMobs = getBoolean( "nerf-spawner-mobs", false );
++        log( "Nerfing mobs spawned from spawners: " + nerfSpawnerMobs );
++    }
+ }
+-- 
+2.11.0
+

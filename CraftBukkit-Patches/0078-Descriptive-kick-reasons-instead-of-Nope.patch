@@ -1,14 +1,14 @@
-From 5bdd4c7856945e0f1524b0cc24ab251a916cc8dc Mon Sep 17 00:00:00 2001
+From 50ff22bd9ed61163c387d606835f48f4e8f211ed Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sat, 15 Mar 2014 01:30:05 -0400
 Subject: [PATCH] Descriptive kick reasons instead of Nope!
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 64e61d89..bae717b1 100644
+index 0c6d55b5..02a23e45 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -273,7 +273,7 @@ public abstract class Entity implements ICommandListener {
+@@ -272,7 +272,7 @@ public abstract class Entity implements ICommandListener {
          if (f == Float.POSITIVE_INFINITY || f == Float.NEGATIVE_INFINITY) {
              if (this instanceof EntityPlayer) {
                  this.world.getServer().getLogger().warning(this.getName() + " was caught trying to crash the server with an invalid yaw");
@@ -17,7 +17,7 @@ index 64e61d89..bae717b1 100644
              }
              f = 0;
          }
-@@ -286,7 +286,7 @@ public abstract class Entity implements ICommandListener {
+@@ -285,7 +285,7 @@ public abstract class Entity implements ICommandListener {
          if (f1 == Float.POSITIVE_INFINITY || f1 == Float.NEGATIVE_INFINITY) {
              if (this instanceof EntityPlayer) {
                  this.world.getServer().getLogger().warning(this.getName() + " was caught trying to crash the server with an invalid pitch");
