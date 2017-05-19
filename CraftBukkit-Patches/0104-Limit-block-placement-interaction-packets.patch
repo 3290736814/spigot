@@ -1,4 +1,4 @@
-From ee476ee3175990dfb67bb81da7afd7a50e244024 Mon Sep 17 00:00:00 2001
+From dd3d59e1ff91cab7745c87266e56097f81ae71fd Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Sun, 29 Jun 2014 21:10:34 +0100
 Subject: [PATCH] Limit block placement/interaction packets
@@ -42,10 +42,10 @@ index bdcda81c..5f45300f 100644
          this.b = (EnumDirection) packetdataserializer.a(EnumDirection.class);
          this.c = (EnumHand) packetdataserializer.a(EnumHand.class);
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index bf915b5c..24852068 100644
+index cd608190..8d6ac6f9 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -878,9 +878,29 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -891,9 +891,29 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
          // CraftBukkit end
      }
  
@@ -75,7 +75,7 @@ index bf915b5c..24852068 100644
          WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
          EnumHand enumhand = packetplayinuseitem.c();
          ItemStack itemstack = this.player.b(enumhand);
-@@ -911,6 +931,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -924,6 +944,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
      public void a(PacketPlayInBlockPlace packetplayinblockplace) {
          PlayerConnectionUtils.ensureMainThread(packetplayinblockplace, this, this.player.x());
          if (this.player.isFrozen()) return; // CraftBukkit

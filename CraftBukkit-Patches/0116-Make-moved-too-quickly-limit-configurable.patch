@@ -1,11 +1,11 @@
-From 583c681e173cfe695b5af9192c6dd081876f7402 Mon Sep 17 00:00:00 2001
+From 19895848e96c0bc0ffe60e2df75f2982f4fc9fec Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Tue, 22 Jul 2014 15:59:01 +0200
 Subject: [PATCH] Make "moved too quickly" limit configurable
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 909acae7..ba336d54 100644
+index 256852b1..4540f566 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -315,7 +315,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
@@ -17,7 +17,7 @@ index 909acae7..ba336d54 100644
                  // CraftBukkit end
                      PlayerConnection.LOGGER.warn("{} (vehicle of {}) moved too quickly! {},{},{}", entity.getName(), this.player.getName(), Double.valueOf(d6), Double.valueOf(d7), Double.valueOf(d8));
                      this.networkManager.sendPacket(new PacketPlayOutVehicleMove(entity));
-@@ -541,7 +541,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -554,7 +554,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
                              if (!this.player.L() && (!this.player.x().getGameRules().getBoolean("disableElytraMovementCheck") || !this.player.cN())) {
                                  float f2 = this.player.cN() ? 300.0F : 100.0F;
  

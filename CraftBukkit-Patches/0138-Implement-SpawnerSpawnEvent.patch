@@ -1,16 +1,16 @@
-From bb580fa714b33f101f5c98099cd57e18ff1be155 Mon Sep 17 00:00:00 2001
+From fe311d1531e26c51c2d2b7c2c82f2d00546d34b0 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 3 Mar 2016 19:45:46 +1100
 Subject: [PATCH] Implement SpawnerSpawnEvent.
 
 
 diff --git a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
-index 573e3fe3..77b20081 100644
+index 90c4dd0e..bd4a59c3 100644
 --- a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 +++ b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 @@ -105,6 +105,9 @@ public abstract class MobSpawnerAbstract {
                          if (entity instanceof EntityInsentient) {
-                             ((EntityInsentient) entity).setAI(world.spigotConfig.nerfSpawnerMobs);
+                             ((EntityInsentient) entity).setNoAI(world.spigotConfig.nerfSpawnerMobs);
                          }
 +                        if (org.bukkit.craftbukkit.event.CraftEventFactory.callSpawnerSpawnEvent(entity, blockposition).isCancelled()) {
 +                            continue;

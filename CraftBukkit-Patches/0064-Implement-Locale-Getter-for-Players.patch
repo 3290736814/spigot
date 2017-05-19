@@ -1,17 +1,17 @@
-From bb7d81bd7c08f53f1c1ee6ced55d35e319ca129e Mon Sep 17 00:00:00 2001
+From 1e5336ec03598b63e929dadf2751b22eb5d8f728 Mon Sep 17 00:00:00 2001
 From: Smove <jan@lavasurvival.net>
 Date: Sat, 1 Feb 2014 18:12:16 +1100
 Subject: [PATCH] Implement Locale Getter for Players
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 0237775b..3ef2ffd2 100644
+index bbe5b41c..a6f70d84 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
 @@ -31,7 +31,7 @@ import org.bukkit.inventory.MainHand;
  public class EntityPlayer extends EntityHuman implements ICrafting {
  
-     private static final Logger bW = LogManager.getLogger();
+     private static final Logger bV = LogManager.getLogger();
 -    private String locale = "en_US";
 +    public String locale = "en_US"; // Spigot private -> public
      public PlayerConnection playerConnection;

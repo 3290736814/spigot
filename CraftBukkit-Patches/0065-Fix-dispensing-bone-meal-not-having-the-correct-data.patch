@@ -1,14 +1,14 @@
-From 57d2ffba621eeb0af924cda59e427ad62ec699d7 Mon Sep 17 00:00:00 2001
+From 59b7c00043f3c11f1613ca2c1cb41279426f3871 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Thu, 6 Feb 2014 21:59:20 +0000
 Subject: [PATCH] Fix dispensing bone meal not having the correct data value
 
 
 diff --git a/src/main/java/net/minecraft/server/DispenserRegistry.java b/src/main/java/net/minecraft/server/DispenserRegistry.java
-index 9275aef8..7f947db9 100644
+index 16e62adf..2d6613e2 100644
 --- a/src/main/java/net/minecraft/server/DispenserRegistry.java
 +++ b/src/main/java/net/minecraft/server/DispenserRegistry.java
-@@ -439,7 +439,7 @@ public class DispenserRegistry {
+@@ -440,7 +440,7 @@ public class DispenserRegistry {
  
                      // CraftBukkit start
                      org.bukkit.block.Block block = world.getWorld().getBlockAt(isourceblock.getBlockPosition().getX(), isourceblock.getBlockPosition().getY(), isourceblock.getBlockPosition().getZ());

@@ -1,4 +1,4 @@
-From 2a5c87ba5047f5b7431ed936199ecbad67710d31 Mon Sep 17 00:00:00 2001
+From 14ccbdcf65d058af0138926a915086afe3b5c96e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -6,7 +6,7 @@ Subject: [PATCH] Async Operation Catching
 Catch and throw an exception when a potentially unsafe operation occurs on a thread other than the main server thread.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 16cd48dc..0ee47df3 100644
+index 37188ff6..7c39edca 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -315,9 +315,13 @@ public class Block {
@@ -26,7 +26,7 @@ index 16cd48dc..0ee47df3 100644
      public int a(Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 2c88addf..784b4186 100644
+index 1e2591bd..b9ee0be8 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -662,6 +662,7 @@ public abstract class EntityLiving extends Entity {
@@ -78,7 +78,7 @@ index 5c7d548c..fb876aaf 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 6ae67eb9..cceeef00 100644
+index e9ef6482..02ed20cc 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -971,6 +971,7 @@ public abstract class World implements IBlockAccess {
@@ -97,7 +97,7 @@ index 6ae67eb9..cceeef00 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2447,6 +2449,7 @@ public abstract class World implements IBlockAccess {
+@@ -2444,6 +2446,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void a(Collection<Entity> collection) {

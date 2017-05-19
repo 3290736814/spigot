@@ -1,14 +1,14 @@
-From bd9c91b9c049cfc92571ae96b3ee393f02269a7e Mon Sep 17 00:00:00 2001
+From a7fe4292d713f3dc96d5ca2002d7a4d9c586e55f Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Sun, 20 Apr 2014 13:18:55 +0100
 Subject: [PATCH] Convert player skulls async
 
 
 diff --git a/src/main/java/net/minecraft/server/ItemSkull.java b/src/main/java/net/minecraft/server/ItemSkull.java
-index 00fd18a1..78592762 100644
+index f5e66465..0972862e 100644
 --- a/src/main/java/net/minecraft/server/ItemSkull.java
 +++ b/src/main/java/net/minecraft/server/ItemSkull.java
-@@ -111,13 +111,21 @@ public class ItemSkull extends Item {
+@@ -115,13 +115,21 @@ public class ItemSkull extends Item {
          return super.b(itemstack);
      }
  

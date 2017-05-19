@@ -1,29 +1,29 @@
-From 9c709f91eb35ccc0aba8c4e54e68f0cd55f69955 Mon Sep 17 00:00:00 2001
+From 8ac844dea64a7fc352fbe3d3741c33b25b850917 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
 
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 2b32eea4..108eddc2 100644
+index af3c2453..78622ed6 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -62,11 +62,11 @@ public class HandshakeListener implements PacketHandshakingInListener {
              // CraftBukkit end
  
-             if (packethandshakinginsetprotocol.b() > 329) {
--                chatcomponenttext = new ChatComponentText("Outdated server! I\'m still on 1.12-pre2");
-+                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.12-pre2" ) ); // Spigot
+             if (packethandshakinginsetprotocol.b() > 332) {
+-                chatcomponenttext = new ChatComponentText("Outdated server! I\'m still on 1.12-pre5");
++                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.12-pre5" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatcomponenttext));
                  this.b.close(chatcomponenttext);
-             } else if (packethandshakinginsetprotocol.b() < 329) {
--                chatcomponenttext = new ChatComponentText("Outdated client! Please use 1.12-pre2");
-+                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), "1.12-pre2" ) ); // Spigot
+             } else if (packethandshakinginsetprotocol.b() < 332) {
+-                chatcomponenttext = new ChatComponentText("Outdated client! Please use 1.12-pre5");
++                chatcomponenttext = new ChatComponentText( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), "1.12-pre5" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatcomponenttext));
                  this.b.close(chatcomponenttext);
              } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 898b2b87..23d876fa 100644
+index d0884f29..ef65f5d2 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -481,7 +481,7 @@ public abstract class PlayerList {

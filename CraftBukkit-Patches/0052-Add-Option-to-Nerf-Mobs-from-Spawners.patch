@@ -1,11 +1,11 @@
-From 99c736e34b0af3d1c62b212c471fb0c301cd464d Mon Sep 17 00:00:00 2001
+From 7df5986807213c16bcdbf544aa983018515b2ba9 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 2 Feb 2014 16:55:46 +0000
 Subject: [PATCH] Add Option to Nerf Mobs from Spawners
 
 
 diff --git a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
-index 477e8574..573e3fe3 100644
+index 477e8574..90c4dd0e 100644
 --- a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 +++ b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 @@ -101,6 +101,11 @@ public abstract class MobSpawnerAbstract {
@@ -14,7 +14,7 @@ index 477e8574..573e3fe3 100644
                          }
 +                        // Spigot Start
 +                        if (entity instanceof EntityInsentient) {
-+                            ((EntityInsentient) entity).setAI(world.spigotConfig.nerfSpawnerMobs);
++                            ((EntityInsentient) entity).setNoAI(world.spigotConfig.nerfSpawnerMobs);
 +                        }
 +                        // Spigot End
  

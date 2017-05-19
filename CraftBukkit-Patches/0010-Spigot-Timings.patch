@@ -1,4 +1,4 @@
-From 8465d4d255b68016b0885ab301788a0ca62a518a Mon Sep 17 00:00:00 2001
+From 747501b2b05661c491894c7f689f9863e1f6f43e Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -46,7 +46,7 @@ index cc99740a..5379a145 100644
  
          return chunk;
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index 420b8c56..fe387e21 100644
+index 82daf1b4..2d829280 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -32,7 +32,9 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
@@ -96,7 +96,7 @@ index 420b8c56..fe387e21 100644
          // return chunk; // CraftBukkit
      }
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 6720b608..250167d8 100644
+index fde59498..d22e7672 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -24,6 +24,7 @@ import java.io.PrintStream;
@@ -124,7 +124,7 @@ index 6720b608..250167d8 100644
  
      public boolean aa() {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index da8e4c18..ede96c19 100644
+index 11e57edf..8f7f5178 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -25,6 +25,7 @@ import org.bukkit.block.BlockFace;
@@ -160,7 +160,7 @@ index da8e4c18..ede96c19 100644
  
      public void recalcPosition() {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 784b4186..da737782 100644
+index b9ee0be8..d9d44278 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -31,6 +31,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
@@ -230,7 +230,7 @@ index 784b4186..da737782 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index b6b25ad4..7f6ddccc 100644
+index 49c408f4..e78e49f4 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -47,6 +47,7 @@ import org.bukkit.Bukkit;
@@ -359,10 +359,10 @@ index b6b25ad4..7f6ddccc 100644
          this.methodProfiler.b();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index d226aaf7..8c89d0a1 100644
+index df1b207b..54911b6f 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1290,6 +1290,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1303,6 +1303,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
      // CraftBukkit end
  
      private void handleCommand(String s) {
@@ -370,7 +370,7 @@ index d226aaf7..8c89d0a1 100644
         // CraftBukkit start - whole method
          this.LOGGER.info(this.player.getName() + " issued server command: " + s);
  
-@@ -1299,18 +1300,22 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1312,18 +1313,22 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
          this.server.getPluginManager().callEvent(event);
  
          if (event.isCancelled()) {
@@ -390,7 +390,7 @@ index d226aaf7..8c89d0a1 100644
              return;
          }
 +        org.bukkit.craftbukkit.SpigotTimings.playerCommandTimer.stopTiming(); // Spigot
-         // this.minecraftServer.getCommandHandler().b(this.player, s);
+         // this.minecraftServer.getCommandHandler().a(this.player, s);
          // CraftBukkit end
      }
 diff --git a/src/main/java/net/minecraft/server/TileEntity.java b/src/main/java/net/minecraft/server/TileEntity.java
@@ -411,7 +411,7 @@ index c6ca6f63..8ad066f8 100644
      private static final RegistryMaterials<MinecraftKey, Class<? extends TileEntity>> f = new RegistryMaterials();
      protected World world;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index cceeef00..cf8b7fab 100644
+index 02ed20cc..7c4553e4 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -18,6 +18,7 @@ import com.google.common.collect.Maps;
@@ -505,24 +505,24 @@ index cceeef00..cf8b7fab 100644
          this.methodProfiler.b();
          this.methodProfiler.b();
      }
-@@ -1518,6 +1536,7 @@ public abstract class World implements IBlockAccess {
-         // CraftBukkit start - Use neighbor cache instead of looking up
-         Chunk startingChunk = this.getChunkIfLoaded(i >> 4, j >> 4);
-         if (!flag || (startingChunk != null && startingChunk.areNeighborsLoaded(2)) /* this.isAreaLoaded(i - b0, 0, j - b0, i + b0, 0, j + b0) */) {
-+            entity.tickTimer.startTiming(); // Spigot
-             // CraftBukkit end
-             entity.M = entity.locX;
-             entity.N = entity.locY;
-@@ -1586,6 +1605,7 @@ public abstract class World implements IBlockAccess {
+@@ -1511,6 +1529,7 @@ public abstract class World implements IBlockAccess {
+     }
+ 
+     public void entityJoinedWorld(Entity entity, boolean flag) {
++        entity.tickTimer.startTiming(); // Spigot
+         entity.M = entity.locX;
+         entity.N = entity.locY;
+         entity.O = entity.locZ;
+@@ -1577,6 +1596,7 @@ public abstract class World implements IBlockAccess {
                  }
              }
- 
-+            entity.tickTimer.stopTiming(); // Spigot
          }
++        entity.tickTimer.stopTiming(); // Spigot
+ 
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 890bf76b..8c144d28 100644
+index 2fdd1836..beeb87e6 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -234,10 +234,13 @@ public class WorldServer extends World implements IAsyncTaskHandler {

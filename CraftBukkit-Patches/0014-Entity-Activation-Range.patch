@@ -1,4 +1,4 @@
-From 5f426d22236ff25a6a7a9be2888b50eeffd5c36b Mon Sep 17 00:00:00 2001
+From f4d27b69fc5e416837e6d4a0c0a46b10be84d906 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index ede96c19..d5604893 100644
+index 8f7f5178..01b24eb5 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -110,7 +110,7 @@ public abstract class Entity implements ICommandListener {
@@ -84,7 +84,7 @@ index 2b0a970f..db23aedc 100644
          super(world);
      }
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index a7dd4f24..cd4d1c69 100644
+index 0e3b9f7f..2ff80b13 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
 @@ -39,6 +39,18 @@ public abstract class EntityArrow extends Entity implements IProjectile {
@@ -159,7 +159,7 @@ index 7ff5b287..7b137d84 100644
          // Spigot start
          double radius = world.spigotConfig.itemMerge;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index da737782..3a92c468 100644
+index d9d44278..bf2761d5 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -116,6 +116,13 @@ public abstract class EntityLiving extends Entity {
@@ -177,7 +177,7 @@ index da737782..3a92c468 100644
      public void killEntity() {
          this.damageEntity(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index b0db4305..475835c8 100644
+index dbf50b46..6c780384 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1349,6 +1349,7 @@ public abstract class World implements IBlockAccess {
@@ -188,21 +188,19 @@ index b0db4305..475835c8 100644
          timings.entityTick.startTiming(); // Spigot
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
-@@ -1540,9 +1541,11 @@ public abstract class World implements IBlockAccess {
-         int j = MathHelper.floor(entity.locZ);
-         boolean flag1 = true;
+@@ -1536,6 +1537,12 @@ public abstract class World implements IBlockAccess {
+     }
  
--        // CraftBukkit start - Use neighbor cache instead of looking up
--        Chunk startingChunk = this.getChunkIfLoaded(i >> 4, j >> 4);
--        if (!flag || (startingChunk != null && startingChunk.areNeighborsLoaded(2)) /* this.isAreaLoaded(i - b0, 0, j - b0, i + b0, 0, j + b0) */) {
+     public void entityJoinedWorld(Entity entity, boolean flag) {
 +        // Spigot start
 +        if (flag && !org.spigotmc.ActivationRange.checkIfActive(entity)) {
 +            entity.ticksLived++;
 +            entity.inactiveTick();
-+        } else {
-             entity.tickTimer.startTiming(); // Spigot
-             // CraftBukkit end
-             entity.M = entity.locX;
++        }
++        // Spigot end
+         entity.tickTimer.startTiming(); // Spigot
+         entity.M = entity.locX;
+         entity.N = entity.locY;
 diff --git a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java b/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
 index a3f8a2e5..311a2c3f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
