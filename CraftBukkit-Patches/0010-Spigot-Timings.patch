@@ -1,4 +1,4 @@
-From 747501b2b05661c491894c7f689f9863e1f6f43e Mon Sep 17 00:00:00 2001
+From 1f720233609610957bd397597b67e5c0c3adbff5 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -46,7 +46,7 @@ index cc99740a..5379a145 100644
  
          return chunk;
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index 82daf1b4..2d829280 100644
+index 441c848f..b23de766 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -32,7 +32,9 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
@@ -96,7 +96,7 @@ index 82daf1b4..2d829280 100644
          // return chunk; // CraftBukkit
      }
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index fde59498..d22e7672 100644
+index 6756c5ac..1d45e58d 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -24,6 +24,7 @@ import java.io.PrintStream;
@@ -230,7 +230,7 @@ index b9ee0be8..d9d44278 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 49c408f4..e78e49f4 100644
+index 25880cf0..b2cdea87 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -47,6 +47,7 @@ import org.bukkit.Bukkit;
@@ -411,7 +411,7 @@ index c6ca6f63..8ad066f8 100644
      private static final RegistryMaterials<MinecraftKey, Class<? extends TileEntity>> f = new RegistryMaterials();
      protected World world;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 02ed20cc..7c4553e4 100644
+index ef25222c..8a273d79 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -18,6 +18,7 @@ import com.google.common.collect.Maps;
@@ -505,15 +505,15 @@ index 02ed20cc..7c4553e4 100644
          this.methodProfiler.b();
          this.methodProfiler.b();
      }
-@@ -1511,6 +1529,7 @@ public abstract class World implements IBlockAccess {
-     }
+@@ -1518,6 +1536,7 @@ public abstract class World implements IBlockAccess {
+         }
+         // CraftBukkit end
  
-     public void entityJoinedWorld(Entity entity, boolean flag) {
 +        entity.tickTimer.startTiming(); // Spigot
          entity.M = entity.locX;
          entity.N = entity.locY;
          entity.O = entity.locZ;
-@@ -1577,6 +1596,7 @@ public abstract class World implements IBlockAccess {
+@@ -1584,6 +1603,7 @@ public abstract class World implements IBlockAccess {
                  }
              }
          }
