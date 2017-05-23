@@ -1,4 +1,4 @@
-From 8ac844dea64a7fc352fbe3d3741c33b25b850917 Mon Sep 17 00:00:00 2001
+From 9594094cff9f730010ed71e86a7a155c23c603ed Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
@@ -45,10 +45,18 @@ index d0884f29..ef65f5d2 100644
          }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index dc35fc85..854cb80c 100644
+index dc35fc85..b2a4154e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -625,11 +625,7 @@ public final class CraftServer implements Server {
+@@ -128,6 +128,7 @@ import io.netty.buffer.ByteBufOutputStream;
+ import io.netty.buffer.Unpooled;
+ import io.netty.handler.codec.base64.Base64;
+ import jline.console.ConsoleReader;
++import org.apache.commons.lang.StringUtils;
+ import org.bukkit.NamespacedKey;
+ import org.bukkit.craftbukkit.util.CraftNamespacedKey;
+ import org.bukkit.event.server.TabCompleteEvent;
+@@ -625,11 +626,11 @@ public final class CraftServer implements Server {
              return true;
          }
  
@@ -56,8 +64,11 @@ index dc35fc85..854cb80c 100644
 -            sender.sendMessage("Unknown command. Type \"/help\" for help.");
 -        } else {
 -            sender.sendMessage("Unknown command. Type \"help\" for help.");
--        }
-+        sender.sendMessage(org.spigotmc.SpigotConfig.unknownCommandMessage);
++        // Spigot start
++        if (StringUtils.isNotEmpty(org.spigotmc.SpigotConfig.unknownCommandMessage)) {
++            sender.sendMessage(org.spigotmc.SpigotConfig.unknownCommandMessage);
+         }
++        // Spigot end
  
          return false;
      }
