@@ -1,11 +1,11 @@
-From cd0cc2cdc574fba13859e602421c62579a0e3df9 Mon Sep 17 00:00:00 2001
+From 10551d71fbdc59789cb224321aa6720a39de8d16 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 250167d8..6ddab295 100644
+index 1d45e58d..2a83a0f2 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -285,7 +285,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -18,7 +18,7 @@ index 250167d8..6ddab295 100644
  
                      thread1.setName("Server Watchdog");
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index f4222808..9f1484cd 100644
+index c9010894..fb28e5fa 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -583,6 +583,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
@@ -38,10 +38,10 @@ index f4222808..9f1484cd 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 854cb80c..d7d82232 100644
+index b2a4154e..b77c1a43 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1719,6 +1719,11 @@ public final class CraftServer implements Server {
+@@ -1724,6 +1724,11 @@ public final class CraftServer implements Server {
          {
              return org.spigotmc.SpigotConfig.config;
          }

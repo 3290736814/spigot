@@ -1,4 +1,4 @@
-From 9084e72c198a13b72264db3a2095bca38e4a46a4 Mon Sep 17 00:00:00 2001
+From ecefe05cfa7a0ddc40f2d305f23f47c5071a628e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -134,10 +134,10 @@ index 44354f98..ebe540cf 100644
          if (generate) {
              // Use the default variant of loadChunk when generate == true.
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 2c58e916..df652c4a 100644
+index 27235919..ad71fdb9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -215,6 +215,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -214,6 +214,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
      @Override
      public void kickPlayer(String message) {

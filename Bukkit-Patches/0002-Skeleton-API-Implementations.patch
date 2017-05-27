@@ -1,4 +1,4 @@
-From 439bde8300a9b2f8f14e26db03287ea042e244f3 Mon Sep 17 00:00:00 2001
+From 77c86c3294324251516a537ff91d3afad5883d3a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -130,13 +130,13 @@ index c8b5154e..ee2218c1 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index a2ebcae1..9174e47a 100644
+index 33f6e6dc..8423104b 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1397,4 +1397,14 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
-      * @return object detailing the player's progress
+@@ -1416,4 +1416,14 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+      * @return the player's locale
       */
-     public AdvancementProgress getAdvancementProgress(Advancement advancement);
+     public String getLocale();
 +
 +    // Spigot start
 +    public class Spigot extends Entity.Spigot

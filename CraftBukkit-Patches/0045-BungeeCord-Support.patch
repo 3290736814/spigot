@@ -1,4 +1,4 @@
-From 85f1c173ca72ec230993db9ba356f8b2a7e49bf9 Mon Sep 17 00:00:00 2001
+From 4437a4a736c4f25e50d7972ddbda1576844f59e8 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -6,7 +6,7 @@ Subject: [PATCH] BungeeCord Support
 Provides support for IP forwarding via BungeeCord.
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 108eddc2..2f09728f 100644
+index 78622ed6..f9ae8472 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -7,6 +7,7 @@ import java.util.HashMap;
@@ -117,7 +117,7 @@ index 1cb9d60d..aececa39 100644
          this.d = EnumProtocol.a(packetdataserializer.g());
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 8cf1b080..56990802 100644
+index e8dc7127..f13877df 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -466,7 +466,7 @@ public abstract class PlayerList {
@@ -130,10 +130,10 @@ index 8cf1b080..56990802 100644
  
          if (getProfileBans().isBanned(gameprofile) && !getProfileBans().get(gameprofile).hasExpired()) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index d7d82232..36978abc 100644
+index b77c1a43..d1efa46d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -558,7 +558,13 @@ public final class CraftServer implements Server {
+@@ -559,7 +559,13 @@ public final class CraftServer implements Server {
  
      @Override
      public long getConnectionThrottle() {
@@ -149,10 +149,10 @@ index d7d82232..36978abc 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index f81d3884..d2892f7f 100644
+index e095f054..262cefef 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1453,6 +1453,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1457,6 +1457,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      {
  
          @Override

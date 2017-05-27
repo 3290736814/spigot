@@ -1,11 +1,11 @@
-From 204364b9e4eeed4411b32cb56ba64614ac855d8f Mon Sep 17 00:00:00 2001
+From 5fe99ed040a7e9f2e22489481188121d0e8f81e2 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 02:59:14 +0100
 Subject: [PATCH] BungeeCord Chat API
 
 
 diff --git a/pom.xml b/pom.xml
-index c845e293..e7891169 100644
+index 229bf6c6..66bb7a12 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -78,6 +78,14 @@
@@ -325,10 +325,10 @@ index 5dcd2218..abf68a2c 100644
  
      Spigot spigot();
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 8ceb875d..9764caa4 100644
+index 1930abb3..bd2cc354 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1469,6 +1469,36 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+@@ -1490,6 +1490,36 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
          {
              throw new UnsupportedOperationException( "Not supported yet." );
          }
