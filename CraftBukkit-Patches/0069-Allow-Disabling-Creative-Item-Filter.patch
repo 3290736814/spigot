@@ -1,11 +1,11 @@
-From 7458c2d1dcdf7ebb773bcc08e9c8285e78ce7567 Mon Sep 17 00:00:00 2001
+From cdd9d620bf0d5bd1028f69fdb49f61725f22d458 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 12 Feb 2014 18:18:01 +1100
 Subject: [PATCH] Allow Disabling Creative Item Filter
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index b9e8940d..c52b1edf 100644
+index f2a556b0..c44def0c 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -2039,7 +2039,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
@@ -16,7 +16,7 @@ index b9e8940d..c52b1edf 100644
 +            boolean flag2 = itemstack.isEmpty() || itemstack.getData() >= 0 && itemstack.getCount() <= 64 && !itemstack.isEmpty() && (!invalidItems.contains(Item.getId(itemstack.getItem())) || !org.spigotmc.SpigotConfig.filterCreativeItems); // Spigot
              if (flag || (flag1 && !ItemStack.matches(this.player.defaultContainer.getSlot(packetplayinsetcreativeslot.a()).getItem(), packetplayinsetcreativeslot.getItemStack()))) { // Insist on valid slot
                  // CraftBukkit start - Call click event
-                 org.bukkit.entity.HumanEntity player = this.player.getBukkitEntity();
+                 InventoryView inventory = this.player.defaultContainer.getBukkitView();
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
 index 2a2dbb73..3ef6e55c 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
