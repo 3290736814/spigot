@@ -1,26 +1,26 @@
-From 8e60dbfab6c7b65b75dcdb8b6bc7417eba9b9661 Mon Sep 17 00:00:00 2001
+From c00827817d5623a43fb8d2436da697705c311c7c Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 22 Jul 2015 19:04:37 +1000
 Subject: [PATCH] Clear Packet Queue on Disconnect
 
 
 diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
-index 965c88e4..58011bb2 100644
+index ca32aa337..d583cced6 100644
 --- a/src/main/java/net/minecraft/server/NetworkManager.java
 +++ b/src/main/java/net/minecraft/server/NetworkManager.java
 @@ -320,6 +320,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
                  } else if (this.i() != null) {
-                     this.i().a(new ChatComponentText("Disconnected"));
+                     this.i().a(new ChatMessage("multiplayer.disconnect.generic", new Object[0]));
                  }
 +                this.i.clear(); // Free up packet queue.
              }
  
          }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 4540f566..3bcabb19 100644
+index 64ad61d3d..1bcf74400 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1112,7 +1112,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1119,7 +1119,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
          }
  
          // CraftBukkit start

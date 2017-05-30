@@ -1,4 +1,4 @@
-From ecefe05cfa7a0ddc40f2d305f23f47c5071a628e Mon Sep 17 00:00:00 2001
+From 90c4f95e4c3822669bb5fb75a9bd0447b0f942cd Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -6,7 +6,7 @@ Subject: [PATCH] Async Operation Catching
 Catch and throw an exception when a potentially unsafe operation occurs on a thread other than the main server thread.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 37188ff6..7c39edca 100644
+index 42b8ec7a3..4cb71b294 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -315,9 +315,13 @@ public class Block {
@@ -26,7 +26,7 @@ index 37188ff6..7c39edca 100644
      public int a(Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 1e2591bd..b9ee0be8 100644
+index f68938905..f013051d1 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -662,6 +662,7 @@ public abstract class EntityLiving extends Entity {
@@ -38,7 +38,7 @@ index 1e2591bd..b9ee0be8 100644
          if (isTickingEffects) {
              effectsToProcess.add(mobeffect);
 diff --git a/src/main/java/net/minecraft/server/EntityTracker.java b/src/main/java/net/minecraft/server/EntityTracker.java
-index e35cef7b..0841829c 100644
+index e35cef7b2..0841829c2 100644
 --- a/src/main/java/net/minecraft/server/EntityTracker.java
 +++ b/src/main/java/net/minecraft/server/EntityTracker.java
 @@ -105,6 +105,7 @@ public class EntityTracker {
@@ -58,7 +58,7 @@ index e35cef7b..0841829c 100644
              EntityPlayer entityplayer = (EntityPlayer) entity;
              Iterator iterator = this.c.iterator();
 diff --git a/src/main/java/net/minecraft/server/EntityTrackerEntry.java b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
-index 5c7d548c..fb876aaf 100644
+index 5c7d548c9..fb876aaf5 100644
 --- a/src/main/java/net/minecraft/server/EntityTrackerEntry.java
 +++ b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
 @@ -324,6 +324,7 @@ public class EntityTrackerEntry {
@@ -78,7 +78,7 @@ index 5c7d548c..fb876aaf 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 16c45432..ef25222c 100644
+index ad9b24c16..074165153 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -971,6 +971,7 @@ public abstract class World implements IBlockAccess {
@@ -97,7 +97,7 @@ index 16c45432..ef25222c 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2451,6 +2453,7 @@ public abstract class World implements IBlockAccess {
+@@ -2455,6 +2457,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void a(Collection<Entity> collection) {
@@ -106,7 +106,7 @@ index 16c45432..ef25222c 100644
          // this.entityList.addAll(collection);
          Iterator iterator = collection.iterator();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 44354f98..ebe540cf 100644
+index 44354f989..ebe540cf8 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -172,6 +172,7 @@ public class CraftWorld implements World {
@@ -134,7 +134,7 @@ index 44354f98..ebe540cf 100644
          if (generate) {
              // Use the default variant of loadChunk when generate == true.
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 27235919..ad71fdb9 100644
+index 272359197..ad71fdb90 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -214,6 +214,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
@@ -146,7 +146,7 @@ index 27235919..ad71fdb9 100644
  
          getHandle().playerConnection.disconnect(message == null ? "" : message);
 diff --git a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScoreboardManager.java b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScoreboardManager.java
-index 69fcb108..3992c716 100644
+index 69fcb1082..3992c7165 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScoreboardManager.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScoreboardManager.java
 @@ -42,6 +42,7 @@ public final class CraftScoreboardManager implements ScoreboardManager {
@@ -159,7 +159,7 @@ index 69fcb108..3992c716 100644
          return scoreboard;
 diff --git a/src/main/java/org/spigotmc/AsyncCatcher.java b/src/main/java/org/spigotmc/AsyncCatcher.java
 new file mode 100644
-index 00000000..4b3aa85c
+index 000000000..4b3aa85c9
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/AsyncCatcher.java
 @@ -0,0 +1,17 @@

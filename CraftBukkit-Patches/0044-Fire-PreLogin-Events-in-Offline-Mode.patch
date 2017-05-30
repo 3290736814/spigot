@@ -1,14 +1,14 @@
-From d12dd86609a0dd7ac76c74a922476c682e8a6145 Mon Sep 17 00:00:00 2001
+From b83f248f76e87c5df7640692b82ddce4d6d6ccfe Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 18 Dec 2013 13:32:10 +1100
 Subject: [PATCH] Fire PreLogin Events in Offline Mode
 
 
 diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
-index f722cde2..e2d59278 100644
+index 22cfd5964..ea2b9069c 100644
 --- a/src/main/java/net/minecraft/server/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/LoginListener.java
-@@ -84,10 +84,23 @@ public class LoginListener implements PacketLoginInListener, ITickable {
+@@ -96,10 +96,23 @@ public class LoginListener implements PacketLoginInListener, ITickable {
  
      }
  
@@ -32,7 +32,7 @@ index f722cde2..e2d59278 100644
  
          // CraftBukkit start - fire PlayerLoginEvent
          EntityPlayer s = this.server.getPlayerList().attemptLogin(this, this.i, hostname);
-@@ -137,7 +150,22 @@ public class LoginListener implements PacketLoginInListener, ITickable {
+@@ -149,7 +162,22 @@ public class LoginListener implements PacketLoginInListener, ITickable {
              this.g = LoginListener.EnumProtocolState.KEY;
              this.networkManager.sendPacket(new PacketLoginOutEncryptionBegin("", this.server.O().getPublic(), this.e));
          } else {
@@ -56,7 +56,7 @@ index f722cde2..e2d59278 100644
          }
  
      }
-@@ -166,6 +194,47 @@ public class LoginListener implements PacketLoginInListener, ITickable {
+@@ -178,6 +206,47 @@ public class LoginListener implements PacketLoginInListener, ITickable {
                                  return;
                              }
  
@@ -66,7 +66,7 @@ index f722cde2..e2d59278 100644
 +                            LoginListener.this.i = LoginListener.this.a(gameprofile);
 +                            LoginListener.this.g = LoginListener.EnumProtocolState.READY_TO_ACCEPT;
 +                        } else {
-+                            LoginListener.this.disconnect("Failed to verify username!");
++                            LoginListener.this.disconnect(new ChatMessage("multiplayer.disconnect.unverified_username", new Object[0]));
 +                            LoginListener.c.error("Username \'{}\' tried to join with an invalid session", gameprofile.getName());
 +                        }
 +                    } catch (AuthenticationUnavailableException authenticationunavailableexception) {
@@ -75,7 +75,7 @@ index f722cde2..e2d59278 100644
 +                            LoginListener.this.i = LoginListener.this.a(gameprofile);
 +                            LoginListener.this.g = LoginListener.EnumProtocolState.READY_TO_ACCEPT;
 +                        } else {
-+                            LoginListener.this.disconnect("Authentication servers are down. Please try again later, sorry!");
++                            LoginListener.this.disconnect(new ChatMessage("multiplayer.disconnect.authservers_down", new Object[0]));
 +                            LoginListener.c.error("Couldn\'t verify username because servers are unavailable");
 +                        }
 +                        // CraftBukkit start - catch all exceptions
@@ -104,7 +104,7 @@ index f722cde2..e2d59278 100644
                              String playerName = i.getName();
                              java.net.InetAddress address = ((java.net.InetSocketAddress) networkManager.getSocketAddress()).getAddress();
                              java.util.UUID uniqueId = i.getId();
-@@ -200,41 +269,9 @@ public class LoginListener implements PacketLoginInListener, ITickable {
+@@ -212,41 +281,9 @@ public class LoginListener implements PacketLoginInListener, ITickable {
                              // CraftBukkit end
                              LoginListener.c.info("UUID of player {} is {}", LoginListener.this.i.getName(), LoginListener.this.i.getId());
                              LoginListener.this.g = LoginListener.EnumProtocolState.READY_TO_ACCEPT;
@@ -113,7 +113,7 @@ index f722cde2..e2d59278 100644
 -                            LoginListener.this.i = LoginListener.this.a(gameprofile);
 -                            LoginListener.this.g = LoginListener.EnumProtocolState.READY_TO_ACCEPT;
 -                        } else {
--                            LoginListener.this.disconnect("Failed to verify username!");
+-                            LoginListener.this.disconnect(new ChatMessage("multiplayer.disconnect.unverified_username", new Object[0]));
 -                            LoginListener.c.error("Username \'{}\' tried to join with an invalid session", gameprofile.getName());
 -                        }
 -                    } catch (AuthenticationUnavailableException authenticationunavailableexception) {
@@ -122,7 +122,7 @@ index f722cde2..e2d59278 100644
 -                            LoginListener.this.i = LoginListener.this.a(gameprofile);
 -                            LoginListener.this.g = LoginListener.EnumProtocolState.READY_TO_ACCEPT;
 -                        } else {
--                            LoginListener.this.disconnect("Authentication servers are down. Please try again later, sorry!");
+-                            LoginListener.this.disconnect(new ChatMessage("multiplayer.disconnect.authservers_down", new Object[0]));
 -                            LoginListener.c.error("Couldn\'t verify username because servers are unavailable");
 -                        }
 -                        // CraftBukkit start - catch all exceptions

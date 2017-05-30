@@ -1,14 +1,14 @@
-From cdd9d620bf0d5bd1028f69fdb49f61725f22d458 Mon Sep 17 00:00:00 2001
+From 8ab2945a40e746afb27c12fb698787886f45cf72 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 12 Feb 2014 18:18:01 +1100
 Subject: [PATCH] Allow Disabling Creative Item Filter
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index f2a556b0..c44def0c 100644
+index d82dee5f1..aa2037f00 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -2039,7 +2039,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -2046,7 +2046,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
  
              boolean flag1 = packetplayinsetcreativeslot.a() >= 1 && packetplayinsetcreativeslot.a() <= 45;
              // CraftBukkit - Add invalidItems check
@@ -18,7 +18,7 @@ index f2a556b0..c44def0c 100644
                  // CraftBukkit start - Call click event
                  InventoryView inventory = this.player.defaultContainer.getBukkitView();
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 2a2dbb73..3ef6e55c 100644
+index 2a2dbb735..3ef6e55cc 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -297,4 +297,10 @@ public class SpigotConfig
