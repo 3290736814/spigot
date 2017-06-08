@@ -1,4 +1,4 @@
-From 8bdf838893d5e2575cda18715a79d87434bb4c9d Mon Sep 17 00:00:00 2001
+From 83102e2321cb03f4c431bd55cda91ac603e23bc2 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -6,7 +6,7 @@ Subject: [PATCH] Further Seed Customisation
 Allow server admins that really want to to customise the seeds used in world generation even further.
 
 diff --git a/src/main/java/net/minecraft/server/EntitySlime.java b/src/main/java/net/minecraft/server/EntitySlime.java
-index 134e68dd..24aac10d 100644
+index f1afb000c..272b22652 100644
 --- a/src/main/java/net/minecraft/server/EntitySlime.java
 +++ b/src/main/java/net/minecraft/server/EntitySlime.java
 @@ -252,7 +252,7 @@ public class EntitySlime extends EntityInsentient implements IMonster {
@@ -19,7 +19,7 @@ index 134e68dd..24aac10d 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/server/WorldGenLargeFeature.java b/src/main/java/net/minecraft/server/WorldGenLargeFeature.java
-index 5781a173..7a76544f 100644
+index 5781a173c..7a76544ff 100644
 --- a/src/main/java/net/minecraft/server/WorldGenLargeFeature.java
 +++ b/src/main/java/net/minecraft/server/WorldGenLargeFeature.java
 @@ -54,7 +54,7 @@ public class WorldGenLargeFeature extends StructureGenerator {
@@ -41,7 +41,7 @@ index 5781a173..7a76544f 100644
  
      protected StructureStart b(int i, int j) {
 diff --git a/src/main/java/net/minecraft/server/WorldGenMonument.java b/src/main/java/net/minecraft/server/WorldGenMonument.java
-index 89a52f9c..927d9bc6 100644
+index 89a52f9c4..927d9bc6b 100644
 --- a/src/main/java/net/minecraft/server/WorldGenMonument.java
 +++ b/src/main/java/net/minecraft/server/WorldGenMonument.java
 @@ -57,7 +57,7 @@ public class WorldGenMonument extends StructureGenerator {
@@ -63,7 +63,7 @@ index 89a52f9c..927d9bc6 100644
  
      protected StructureStart b(int i, int j) {
 diff --git a/src/main/java/net/minecraft/server/WorldGenVillage.java b/src/main/java/net/minecraft/server/WorldGenVillage.java
-index 11a6ef7e..fd82756a 100644
+index 11a6ef7e5..fd82756ad 100644
 --- a/src/main/java/net/minecraft/server/WorldGenVillage.java
 +++ b/src/main/java/net/minecraft/server/WorldGenVillage.java
 @@ -53,7 +53,7 @@ public class WorldGenVillage extends StructureGenerator {
@@ -76,7 +76,7 @@ index 11a6ef7e..fd82756a 100644
          i1 *= this.d;
          j1 *= this.d;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index 0cc838cc..ba3676b6 100644
+index 0cc838ccf..ba3676b67 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 @@ -133,7 +133,7 @@ public class CraftChunk implements Chunk {
@@ -89,7 +89,7 @@ index 0cc838cc..ba3676b6 100644
  
      public boolean unload(boolean save) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 66f4d8f2..5b1dc38f 100644
+index 66f4d8f22..5b1dc38ff 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -241,4 +241,17 @@ public class SpigotWorldConfig

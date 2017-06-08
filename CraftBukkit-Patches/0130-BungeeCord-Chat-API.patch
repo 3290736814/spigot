@@ -1,11 +1,11 @@
-From d06c6ca119490904b9cdad0182a1cf5159d87f72 Mon Sep 17 00:00:00 2001
+From b258a1e481b542ea7cd00578c62f2de5879beef0 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
 
 
 diff --git a/src/main/java/net/minecraft/server/PacketPlayOutChat.java b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
-index b1fddee7..67666d35 100644
+index b1fddee73..67666d35b 100644
 --- a/src/main/java/net/minecraft/server/PacketPlayOutChat.java
 +++ b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
 @@ -5,6 +5,7 @@ import java.io.IOException;
@@ -32,7 +32,7 @@ index b1fddee7..67666d35 100644
      }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e213ae79..af8e4a81 100644
+index e213ae791..af8e4a81e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -132,6 +132,7 @@ import org.apache.commons.lang.StringUtils;
@@ -65,7 +65,7 @@ index e213ae79..af8e4a81 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java b/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
-index c10a8445..5c3421dd 100644
+index c10a84452..5c3421dd3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
 +++ b/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
 @@ -81,6 +81,17 @@ public abstract class ServerCommandSender implements CommandSender {
@@ -87,10 +87,10 @@ index c10a8445..5c3421dd 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 5aa72d5a..6375b5c4 100644
+index d9343e601..ce773218c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -721,6 +721,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -726,6 +726,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          {
              return getHandle().isInvulnerable(net.minecraft.server.DamageSource.GENERIC);
          }
@@ -108,7 +108,7 @@ index 5aa72d5a..6375b5c4 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 5f2b0776..c019e522 100644
+index 5f2b0776c..c019e5229 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -20,6 +20,7 @@ import java.util.Set;

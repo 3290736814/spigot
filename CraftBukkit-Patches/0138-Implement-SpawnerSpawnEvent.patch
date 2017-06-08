@@ -1,11 +1,11 @@
-From fe311d1531e26c51c2d2b7c2c82f2d00546d34b0 Mon Sep 17 00:00:00 2001
+From a77ac9c345835ae8a16d0cd252d39ec4735a0d4f Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 3 Mar 2016 19:45:46 +1100
 Subject: [PATCH] Implement SpawnerSpawnEvent.
 
 
 diff --git a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
-index 90c4dd0e..bd4a59c3 100644
+index 90c4dd0e9..bd4a59c32 100644
 --- a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 +++ b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 @@ -105,6 +105,9 @@ public abstract class MobSpawnerAbstract {
@@ -19,7 +19,7 @@ index 90c4dd0e..bd4a59c3 100644
  
                          ChunkRegionLoader.a(entity, world, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 1c0dc7d6..a16694ec 100644
+index be0f46f92..6992a874c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -1006,6 +1006,21 @@ public class CraftEventFactory {

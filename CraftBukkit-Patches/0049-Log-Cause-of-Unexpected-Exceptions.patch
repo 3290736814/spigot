@@ -1,11 +1,11 @@
-From 221cda76e372074a5b0a1c46070116a8ed07da27 Mon Sep 17 00:00:00 2001
+From 98f431a715e442d3588d58f49d3f2fc7dcb520be Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 18 Dec 2013 13:39:14 +1100
 Subject: [PATCH] Log Cause of Unexpected Exceptions
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 6125ad83..cf6d0eba 100644
+index c68614f3b..103fda5d0 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -564,6 +564,12 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs

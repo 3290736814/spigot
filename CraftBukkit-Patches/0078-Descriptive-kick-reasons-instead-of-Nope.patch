@@ -1,11 +1,11 @@
-From ffab065a0d2d999c666ff79c2f0d586067b52a96 Mon Sep 17 00:00:00 2001
+From 830cbc45ecd373f0ce5b041133257714f333c89e Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sat, 15 Mar 2014 01:30:05 -0400
 Subject: [PATCH] Descriptive kick reasons instead of Nope!
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 183d15f95..0138ac4ab 100644
+index fe08d50bb..da1598a24 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -272,7 +272,7 @@ public abstract class Entity implements ICommandListener {
@@ -27,7 +27,7 @@ index 183d15f95..0138ac4ab 100644
              f1 = 0;
          }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index aa2037f00..4d616cdd9 100644
+index 7b20c877b..afb472ea6 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -1141,7 +1141,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {

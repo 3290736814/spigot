@@ -1,29 +1,29 @@
-From c71ba4e7ab23b665513b96925a23809eba1a9e95 Mon Sep 17 00:00:00 2001
+From c1d0eee2491da193889c0e619213318ca63d4c5e Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
 
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 783bd682b..86de5bd15 100644
+index 772271c1d..4ddacbf81 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -62,11 +62,11 @@ public class HandshakeListener implements PacketHandshakingInListener {
              // CraftBukkit end
  
-             if (packethandshakinginsetprotocol.b() > 333) {
--                chatmessage = new ChatMessage("multiplayer.disconnect.outdated_server", new Object[] { "1.12-pre6"});
-+                chatmessage = new ChatMessage( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.12-pre6" ) ); // Spigot
+             if (packethandshakinginsetprotocol.b() > 335) {
+-                chatmessage = new ChatMessage("multiplayer.disconnect.outdated_server", new Object[] { "1.12"});
++                chatmessage = new ChatMessage( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.12" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatmessage));
                  this.b.close(chatmessage);
-             } else if (packethandshakinginsetprotocol.b() < 333) {
--                chatmessage = new ChatMessage("multiplayer.disconnect.outdated_client", new Object[] { "1.12-pre6"});
-+                chatmessage = new ChatMessage( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), "1.12-pre6" ) ); // Spigot
+             } else if (packethandshakinginsetprotocol.b() < 335) {
+-                chatmessage = new ChatMessage("multiplayer.disconnect.outdated_client", new Object[] { "1.12"});
++                chatmessage = new ChatMessage( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), "1.12" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatmessage));
                  this.b.close(chatmessage);
              } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index f8d43a3a1..1e0f3d7c3 100644
+index 28337f2d4..7f2931965 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -481,7 +481,7 @@ public abstract class PlayerList {

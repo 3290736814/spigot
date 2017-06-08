@@ -1,11 +1,11 @@
-From b20544c5d86c445c2dc9a5f86175f30c2e713bc4 Mon Sep 17 00:00:00 2001
+From 9a1495d196e86877600d9fae2d8be58b4a4955d7 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 3 Aug 2013 19:02:59 +1000
 Subject: [PATCH] Plug World Unload Memory Leak
 
 
 diff --git a/src/main/java/net/minecraft/server/BlockRedstoneTorch.java b/src/main/java/net/minecraft/server/BlockRedstoneTorch.java
-index b4dff011..5b0028a7 100644
+index b4dff0110..5b0028a78 100644
 --- a/src/main/java/net/minecraft/server/BlockRedstoneTorch.java
 +++ b/src/main/java/net/minecraft/server/BlockRedstoneTorch.java
 @@ -10,7 +10,7 @@ import org.bukkit.event.block.BlockRedstoneEvent; // CraftBukkit

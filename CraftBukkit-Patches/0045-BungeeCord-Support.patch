@@ -1,4 +1,4 @@
-From 70dfe338832500ce99c9c59a92aaabd88f217a34 Mon Sep 17 00:00:00 2001
+From c35e3d514cb816c5dbb31edf80c29293bcf8e54f Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -6,7 +6,7 @@ Subject: [PATCH] BungeeCord Support
 Provides support for IP forwarding via BungeeCord.
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 86de5bd15..8bac1e161 100644
+index 4ddacbf81..99a634221 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -7,6 +7,7 @@ import java.util.HashMap;
@@ -75,7 +75,7 @@ index ea2b9069c..57f728567 100644
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
-index 882444db7..98f4ba209 100644
+index 65793fc55..05d9d77b4 100644
 --- a/src/main/java/net/minecraft/server/NetworkManager.java
 +++ b/src/main/java/net/minecraft/server/NetworkManager.java
 @@ -65,7 +65,11 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
@@ -117,7 +117,7 @@ index 1cb9d60dd..aececa39d 100644
          this.d = EnumProtocol.a(packetdataserializer.g());
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index ae842114c..22c9457d3 100644
+index e46b3f752..7ed271b22 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -466,7 +466,7 @@ public abstract class PlayerList {

@@ -1,11 +1,11 @@
-From 7df5986807213c16bcdbf544aa983018515b2ba9 Mon Sep 17 00:00:00 2001
+From 6e8ce1d85798a43df2a9448f34adf313f01ed32c Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 2 Feb 2014 16:55:46 +0000
 Subject: [PATCH] Add Option to Nerf Mobs from Spawners
 
 
 diff --git a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
-index 477e8574..90c4dd0e 100644
+index 477e85740..90c4dd0e9 100644
 --- a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 +++ b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 @@ -101,6 +101,11 @@ public abstract class MobSpawnerAbstract {
@@ -21,7 +21,7 @@ index 477e8574..90c4dd0e 100644
                          ChunkRegionLoader.a(entity, world, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER); // CraftBukkit
                          world.triggerEffect(2004, blockposition, 0);
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 4276472f..e5e54f7e 100644
+index 4276472fb..e5e54f7e1 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -215,4 +215,11 @@ public class SpigotWorldConfig

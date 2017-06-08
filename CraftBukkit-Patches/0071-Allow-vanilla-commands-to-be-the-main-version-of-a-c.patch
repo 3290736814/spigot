@@ -1,11 +1,11 @@
-From 422484ed67fb78862b6a798f9b2c1d1bf5f71d4c Mon Sep 17 00:00:00 2001
+From 9f1dad2cfdf16054004c0bd672e47fc076981cbd Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Wed, 12 Feb 2014 20:44:14 +0000
 Subject: [PATCH] Allow vanilla commands to be the main version of a command
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index d1efa46d..5532a74c 100644
+index d1efa46d5..5532a74c0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -328,8 +328,11 @@ public final class CraftServer implements Server {
@@ -44,7 +44,7 @@ index d1efa46d..5532a74c 100644
      }
  
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 3ef6e55c..2d43ea17 100644
+index 3ef6e55cc..2d43ea173 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -8,8 +8,10 @@ import java.lang.reflect.Method;

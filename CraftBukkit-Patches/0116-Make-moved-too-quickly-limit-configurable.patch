@@ -1,11 +1,11 @@
-From 025296adad85fbe8c2739c097ed673905f048d5f Mon Sep 17 00:00:00 2001
+From 2cfbe4e726cdd4e65701352632296bea6e04ce1d Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Tue, 22 Jul 2014 15:59:01 +0200
 Subject: [PATCH] Make "moved too quickly" limit configurable
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index c34b55dc5..e47102f64 100644
+index 861ffca33..dd069ec72 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -322,7 +322,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
@@ -18,8 +18,8 @@ index c34b55dc5..e47102f64 100644
                      PlayerConnection.LOGGER.warn("{} (vehicle of {}) moved too quickly! {},{},{}", entity.getName(), this.player.getName(), Double.valueOf(d6), Double.valueOf(d7), Double.valueOf(d8));
                      this.networkManager.sendPacket(new PacketPlayOutVehicleMove(entity));
 @@ -561,7 +561,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
-                             if (!this.player.L() && (!this.player.x().getGameRules().getBoolean("disableElytraMovementCheck") || !this.player.cN())) {
-                                 float f2 = this.player.cN() ? 300.0F : 100.0F;
+                             if (!this.player.L() && (!this.player.x().getGameRules().getBoolean("disableElytraMovementCheck") || !this.player.cP())) {
+                                 float f2 = this.player.cP() ? 300.0F : 100.0F;
  
 -                                if (d11 - d10 > Math.max(f2, Math.pow((double) (10.0F * (float) i * speed), 2)) && (!this.minecraftServer.R() || !this.minecraftServer.Q().equals(this.player.getName()))) {
 +                                if (d11 - d10 > Math.max(f2, Math.pow((double) (org.spigotmc.SpigotConfig.movedTooQuicklyMultiplier * (float) i * speed), 2)) && (!this.minecraftServer.R() || !this.minecraftServer.Q().equals(this.player.getName()))) { // Spigot

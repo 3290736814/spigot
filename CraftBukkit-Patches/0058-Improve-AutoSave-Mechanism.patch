@@ -1,4 +1,4 @@
-From 37ca508621c08f8a4349e5eb21ec15eb05975053 Mon Sep 17 00:00:00 2001
+From 4dd43eeedab8b1dde0c67359ba1e9cc5522ad3dd Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 21:07:18 +1100
 Subject: [PATCH] Improve AutoSave Mechanism
@@ -11,7 +11,7 @@ Instead we will mimic the save-all command in its behaviour, which is both safe 
 Also, only save modified chunks, or chunks with entities after 4 auto save passes
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 74a422ee..f031721f 100644
+index 26cfcc346..2712f2e19 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -882,7 +882,7 @@ public class Chunk {
@@ -24,7 +24,7 @@ index 74a422ee..f031721f 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 5379a145..f0ce5ba7 100644
+index 5379a145c..f0ce5ba7f 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -232,7 +232,7 @@ public class ChunkProviderServer implements IChunkProvider {
@@ -37,7 +37,7 @@ index 5379a145..f0ce5ba7 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index d7978e5c..b65a2371 100644
+index 3cac0950d..b0b572814 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -675,7 +675,17 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
@@ -60,7 +60,7 @@ index d7978e5c..b65a2371 100644
              SpigotTimings.worldSaveTimer.stopTiming(); // Spigot
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index c95b979e..dd2fbd36 100644
+index c95b979e3..dd2fbd365 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -735,12 +735,17 @@ public class CraftWorld implements World {

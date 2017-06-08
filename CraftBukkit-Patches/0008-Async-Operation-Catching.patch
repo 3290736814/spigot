@@ -1,4 +1,4 @@
-From 90c4f95e4c3822669bb5fb75a9bd0447b0f942cd Mon Sep 17 00:00:00 2001
+From 8d94df89c78c925879d179524715ccd28915b5de Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -6,7 +6,7 @@ Subject: [PATCH] Async Operation Catching
 Catch and throw an exception when a potentially unsafe operation occurs on a thread other than the main server thread.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 42b8ec7a3..4cb71b294 100644
+index d33e4925c..7501a1a28 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -315,9 +315,13 @@ public class Block {
@@ -26,7 +26,7 @@ index 42b8ec7a3..4cb71b294 100644
      public int a(Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index f68938905..f013051d1 100644
+index a71960a75..a65bc14b5 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -662,6 +662,7 @@ public abstract class EntityLiving extends Entity {
@@ -38,7 +38,7 @@ index f68938905..f013051d1 100644
          if (isTickingEffects) {
              effectsToProcess.add(mobeffect);
 diff --git a/src/main/java/net/minecraft/server/EntityTracker.java b/src/main/java/net/minecraft/server/EntityTracker.java
-index e35cef7b2..0841829c2 100644
+index a23a33b5d..fe699860a 100644
 --- a/src/main/java/net/minecraft/server/EntityTracker.java
 +++ b/src/main/java/net/minecraft/server/EntityTracker.java
 @@ -105,6 +105,7 @@ public class EntityTracker {
@@ -58,7 +58,7 @@ index e35cef7b2..0841829c2 100644
              EntityPlayer entityplayer = (EntityPlayer) entity;
              Iterator iterator = this.c.iterator();
 diff --git a/src/main/java/net/minecraft/server/EntityTrackerEntry.java b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
-index 5c7d548c9..fb876aaf5 100644
+index a68b8a5ba..d864c7745 100644
 --- a/src/main/java/net/minecraft/server/EntityTrackerEntry.java
 +++ b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
 @@ -324,6 +324,7 @@ public class EntityTrackerEntry {
@@ -78,7 +78,7 @@ index 5c7d548c9..fb876aaf5 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index ad9b24c16..074165153 100644
+index 6830690a9..8531a42b9 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -971,6 +971,7 @@ public abstract class World implements IBlockAccess {

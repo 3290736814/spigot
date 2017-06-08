@@ -1,11 +1,11 @@
-From 2772cdb797de91656789f6f24e479c9bd2cacc36 Mon Sep 17 00:00:00 2001
+From 8044ceeddea3f51bd613b16f5c96d3f71b2ad54e Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index d6f93282..8e6dcdfe 100644
+index 70cd96295..abd25a1e2 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -1120,7 +1120,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -15,10 +15,10 @@ index d6f93282..8e6dcdfe 100644
 -                        this.applyExhaustion(0.1F);
 +                        this.applyExhaustion(world.spigotConfig.combatExhaustion); // Spigot - Change to use configurable value
                      } else {
-                         this.world.a((EntityHuman) null, this.locX, this.locY, this.locZ, SoundEffects.fx, this.bI(), 1.0F, 1.0F);
+                         this.world.a((EntityHuman) null, this.locX, this.locY, this.locZ, SoundEffects.fx, this.bK(), 1.0F, 1.0F);
                          if (flag4) {
 @@ -1390,9 +1390,9 @@ public abstract class EntityHuman extends EntityLiving {
-         super.cs();
+         super.cu();
          this.b(StatisticList.w);
          if (this.isSprinting()) {
 -            this.applyExhaustion(0.2F);
@@ -61,9 +61,9 @@ index d6f93282..8e6dcdfe 100644
 +                        this.applyExhaustion(world.spigotConfig.otherMultiplier * (float) i * 0.01F); // Spigot
                      }
                  }
-             } else if (this.cN()) {
+             } else if (this.cP()) {
 diff --git a/src/main/java/net/minecraft/server/FoodMetaData.java b/src/main/java/net/minecraft/server/FoodMetaData.java
-index 489b86d4..401002b6 100644
+index 33a2df5d3..d42db9b45 100644
 --- a/src/main/java/net/minecraft/server/FoodMetaData.java
 +++ b/src/main/java/net/minecraft/server/FoodMetaData.java
 @@ -73,7 +73,7 @@ public class FoodMetaData {
@@ -76,7 +76,7 @@ index 489b86d4..401002b6 100644
              }
          } else if (this.foodLevel <= 0) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 5b1dc38f..715ceefc 100644
+index 5b1dc38ff..715ceefc1 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -254,4 +254,30 @@ public class SpigotWorldConfig

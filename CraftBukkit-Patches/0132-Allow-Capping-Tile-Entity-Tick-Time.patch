@@ -1,4 +1,4 @@
-From 15c74040582d23bd92e11df073e3a1731290a316 Mon Sep 17 00:00:00 2001
+From 6e8d076aa260cddbe9968ead6311139caa71b991 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -10,7 +10,7 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 This feature was commisioned by Chunkr.
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 378ebae2..b2cc418a 100644
+index be1451dd1..f52515ea8 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -131,6 +131,9 @@ public abstract class World implements IBlockAccess {
@@ -45,7 +45,7 @@ index 378ebae2..b2cc418a 100644
 +            tickPosition = (tickPosition < entityList.size()) ? tickPosition : 0;
              entity = (Entity) this.entityList.get(this.tickPosition);
              // CraftBukkit end
-             Entity entity1 = entity.bH();
+             Entity entity1 = entity.bJ();
 @@ -1462,14 +1472,20 @@ public abstract class World implements IBlockAccess {
              this.tileEntityListUnload.clear();
          }
@@ -82,7 +82,7 @@ index 378ebae2..b2cc418a 100644
                  if (this.isLoaded(tileentity.getPosition())) {
                      this.getChunkAtWorldCoords(tileentity.getPosition()).d(tileentity.getPosition());
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index dd53f6db..01e73eb8 100644
+index dd53f6dba..01e73eb89 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -297,4 +297,13 @@ public class SpigotWorldConfig
@@ -101,7 +101,7 @@ index dd53f6db..01e73eb8 100644
  }
 diff --git a/src/main/java/org/spigotmc/TickLimiter.java b/src/main/java/org/spigotmc/TickLimiter.java
 new file mode 100644
-index 00000000..23a39382
+index 000000000..23a39382b
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/TickLimiter.java
 @@ -0,0 +1,20 @@

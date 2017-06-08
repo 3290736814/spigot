@@ -1,11 +1,11 @@
-From a7fe4292d713f3dc96d5ca2002d7a4d9c586e55f Mon Sep 17 00:00:00 2001
+From 9d33c842cb30d70da82113bd8fad258dc682bff5 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Sun, 20 Apr 2014 13:18:55 +0100
 Subject: [PATCH] Convert player skulls async
 
 
 diff --git a/src/main/java/net/minecraft/server/ItemSkull.java b/src/main/java/net/minecraft/server/ItemSkull.java
-index f5e66465..0972862e 100644
+index f5e664656..0972862ee 100644
 --- a/src/main/java/net/minecraft/server/ItemSkull.java
 +++ b/src/main/java/net/minecraft/server/ItemSkull.java
 @@ -115,13 +115,21 @@ public class ItemSkull extends Item {
@@ -34,7 +34,7 @@ index f5e66465..0972862e 100644
          } else {
              // CraftBukkit start
 diff --git a/src/main/java/net/minecraft/server/TileEntitySkull.java b/src/main/java/net/minecraft/server/TileEntitySkull.java
-index b7469346..b9712d53 100644
+index b74693466..b9712d536 100644
 --- a/src/main/java/net/minecraft/server/TileEntitySkull.java
 +++ b/src/main/java/net/minecraft/server/TileEntitySkull.java
 @@ -7,6 +7,20 @@ import com.mojang.authlib.properties.Property;
@@ -198,7 +198,7 @@ index b7469346..b9712d53 100644
      public int getSkullType() {
          return this.a;
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
-index b9c54472..c0c4f8e7 100644
+index b9c544724..c0c4f8e7d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
 @@ -5,6 +5,7 @@ import java.util.Map;
