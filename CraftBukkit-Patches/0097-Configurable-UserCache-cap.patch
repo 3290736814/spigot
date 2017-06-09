@@ -1,4 +1,4 @@
-From 95ae8f9e93670a94aa85dc90494fbe601e532a79 Mon Sep 17 00:00:00 2001
+From e53d9bfdff5236df6158b49f559ae28ab9f7e891 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Fri, 25 Apr 2014 18:17:30 -0400
 Subject: [PATCH] Configurable UserCache cap
@@ -18,10 +18,10 @@ index 756080715..4a2d5cf09 100644
  
          try {
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 2d43ea173..7f03f94bf 100644
+index 451e5bca8..5d763bd45 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
-@@ -317,4 +317,10 @@ public class SpigotConfig
+@@ -316,4 +316,10 @@ public class SpigotConfig
          replaceCommands = new HashSet<String>( (List<String>) getList( "commands.replace-commands",
                  Arrays.asList( "setblock", "summon", "testforblock", "tellraw" ) ) );
      }

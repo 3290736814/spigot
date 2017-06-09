@@ -1,4 +1,4 @@
-From 5d9c8662382c94ee1f87d45ef02927d7ddf39dcf Mon Sep 17 00:00:00 2001
+From ee1af066e7d37f124357b337554c1c8f85a5a1a7 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 28 Jul 2014 16:55:51 +1000
 Subject: [PATCH] Allow Attribute Capping.
@@ -45,7 +45,7 @@ index d60cc232c..21865021b 100644
      public static NBTTagList a(AttributeMapBase attributemapbase) {
          NBTTagList nbttaglist = new NBTTagList();
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index e1726257a..f32eddd9c 100644
+index a34886c3c..e9fd1acb3 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -14,6 +14,8 @@ import java.util.Map;
@@ -55,9 +55,9 @@ index e1726257a..f32eddd9c 100644
 +import net.minecraft.server.AttributeRanged;
 +import net.minecraft.server.GenericAttributes;
  import net.minecraft.server.MinecraftServer;
+ import net.minecraft.server.StatisticList;
  import org.bukkit.Bukkit;
- import org.bukkit.ChatColor;
-@@ -347,4 +349,17 @@ public class SpigotConfig
+@@ -346,4 +348,17 @@ public class SpigotConfig
      {
          movedTooQuicklyMultiplier = getDouble( "settings.moved-too-quickly-multiplier", 10.0D );
      }

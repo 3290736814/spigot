@@ -1,4 +1,4 @@
-From 9f1dad2cfdf16054004c0bd672e47fc076981cbd Mon Sep 17 00:00:00 2001
+From 7537a68c550beda782476ed52f37357e6206acc7 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Wed, 12 Feb 2014 20:44:14 +0000
 Subject: [PATCH] Allow vanilla commands to be the main version of a command
@@ -44,7 +44,7 @@ index d1efa46d5..5532a74c0 100644
      }
  
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 3ef6e55cc..2d43ea173 100644
+index 2a72a86d4..451e5bca8 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -8,8 +8,10 @@ import java.lang.reflect.Method;
@@ -58,7 +58,7 @@ index 3ef6e55cc..2d43ea173 100644
  import java.util.logging.Level;
  import gnu.trove.map.hash.TObjectIntHashMap;
  import net.minecraft.server.MinecraftServer;
-@@ -303,4 +305,16 @@ public class SpigotConfig
+@@ -302,4 +304,16 @@ public class SpigotConfig
      {
          filterCreativeItems = getBoolean( "settings.filter-creative-items", true );
      }

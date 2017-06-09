@@ -1,24 +1,24 @@
-From be659a8aac5b2852c92b8cc0458456865839499a Mon Sep 17 00:00:00 2001
+From cbfbc26d5432d4af6a0ede9cad0a01dfa7be3149 Mon Sep 17 00:00:00 2001
 From: Minecrell <dev@minecrell.net>
 Date: Sun, 17 Aug 2014 12:42:53 +0200
 Subject: [PATCH] Make debug logging togglable.
 
 
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index f32eddd9c..231b4fa54 100644
+index e9fd1acb3..4ee7d7606 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
-@@ -17,6 +17,9 @@ import gnu.trove.map.hash.TObjectIntHashMap;
- import net.minecraft.server.AttributeRanged;
+@@ -18,6 +18,9 @@ import net.minecraft.server.AttributeRanged;
  import net.minecraft.server.GenericAttributes;
  import net.minecraft.server.MinecraftServer;
+ import net.minecraft.server.StatisticList;
 +import org.apache.logging.log4j.LogManager;
 +import org.apache.logging.log4j.core.LoggerContext;
 +import org.apache.logging.log4j.core.config.Configuration;
  import org.bukkit.Bukkit;
  import org.bukkit.ChatColor;
  import org.bukkit.command.Command;
-@@ -362,4 +365,27 @@ public class SpigotConfig
+@@ -361,4 +364,27 @@ public class SpigotConfig
          attackDamage = getDouble( "settings.attribute.attackDamage.max", attackDamage );
          ( (AttributeRanged) GenericAttributes.ATTACK_DAMAGE ).b = attackDamage;
      }

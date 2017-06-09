@@ -1,4 +1,4 @@
-From 736cbb1c34a3ed760b47707e7db00932a6785fe2 Mon Sep 17 00:00:00 2001
+From 54cb744ec7bb4de6503e4017e8cd8586cfc71708 Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Fri, 4 Jul 2014 23:03:13 +0200
 Subject: [PATCH] Make "moved wrongly" limit configurable
@@ -27,10 +27,10 @@ index c58e9a84e..861ffca33 100644
                                  PlayerConnection.LOGGER.warn("{} moved wrongly!", this.player.getName());
                              }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index b01b4e627..bab80c404 100644
+index 2ae55b01a..32f0bb430 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
-@@ -335,4 +335,10 @@ public class SpigotConfig
+@@ -334,4 +334,10 @@ public class SpigotConfig
      {
          intCacheLimit = getInt( "settings.int-cache-limit", 1024 );
      }

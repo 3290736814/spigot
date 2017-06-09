@@ -1,4 +1,4 @@
-From 9f5407c31f1a6044360ffff9f2759cfebc652aa2 Mon Sep 17 00:00:00 2001
+From 72d8a40a713e939f89f6f6176f5504c0f15172b7 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Jun 2014 19:40:00 +1000
 Subject: [PATCH] Prevent Unbounded IntCache Growth
@@ -43,10 +43,10 @@ index d916050e0..c725f716e 100644
          }
      }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index bd2931824..b01b4e627 100644
+index 532691f22..2ae55b01a 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
-@@ -329,4 +329,10 @@ public class SpigotConfig
+@@ -328,4 +328,10 @@ public class SpigotConfig
      {
          saveUserCacheOnStopOnly = getBoolean( "settings.save-user-cache-on-stop-only", false );
      }
