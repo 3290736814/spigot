@@ -1,0 +1,21 @@
+From 2402dae41f04423660ab3c4dd57c2ec97dcfa852 Mon Sep 17 00:00:00 2001
+From: md_5 <git@md-5.net>
+Date: Sat, 12 Apr 2014 23:30:44 +1000
+Subject: [PATCH] Add Conversion Message
+
+
+diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
+index ce98732f8..fba2832b6 100644
+--- a/src/main/java/net/minecraft/server/DedicatedServer.java
++++ b/src/main/java/net/minecraft/server/DedicatedServer.java
+@@ -563,6 +563,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+     }
+ 
+     protected boolean aS() {
++        server.getLogger().info( "**** Beginning UUID conversion, this may take A LONG time ****"); // Spigot, let the user know whats up!
+         boolean flag = false;
+ 
+         int i;
+-- 
+2.11.0
+

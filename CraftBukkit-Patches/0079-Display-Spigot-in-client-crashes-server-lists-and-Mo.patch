@@ -1,0 +1,23 @@
+From 09bb7d53e795b8d3e23f4a4a3afff9f450430682 Mon Sep 17 00:00:00 2001
+From: Thinkofdeath <thethinkofdeath@gmail.com>
+Date: Fri, 11 Apr 2014 11:16:34 +0100
+Subject: [PATCH] Display 'Spigot' in client crashes, server lists and Mojang
+ stats
+
+
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index 966619e4e..8877903a4 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -1031,7 +1031,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
+     }
+ 
+     public String getServerModName() {
+-        return server.getName(); // CraftBukkit - cb > vanilla!
++        return "Spigot"; // Spigot - Spigot > // CraftBukkit - cb > vanilla!
+     }
+ 
+     public CrashReport b(CrashReport crashreport) {
+-- 
+2.11.0
+

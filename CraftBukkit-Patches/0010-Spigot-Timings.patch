@@ -1,4 +1,4 @@
-From 8b2811b8aedb1d004c30339913271c2efa3bb642 Mon Sep 17 00:00:00 2001
+From 04f16003ee52fd51b59935d46044a1c469ba5c2a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -522,10 +522,10 @@ index 8531a42b9..9315dea27 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 46b3efb7f..000db7fe8 100644
+index d8c53da55..8f6ceac60 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -234,10 +234,13 @@ public class WorldServer extends World implements IAsyncTaskHandler {
+@@ -282,10 +282,13 @@ public class WorldServer extends World implements IAsyncTaskHandler {
          // CraftBukkit start - Only call spawner if we have players online and the world allows for mobs or animals
          long time = this.worldData.getTime();
          if (this.getGameRules().getBoolean("doMobSpawning") && this.worldData.getType() != WorldType.DEBUG_ALL_BLOCK_STATES && (this.allowMonsters || this.allowAnimals) && (this instanceof WorldServer && this.players.size() > 0)) {
@@ -539,7 +539,7 @@ index 46b3efb7f..000db7fe8 100644
          this.methodProfiler.c("chunkSource");
          this.chunkProvider.unloadChunks();
          int j = this.a(1.0F);
-@@ -251,21 +254,36 @@ public class WorldServer extends World implements IAsyncTaskHandler {
+@@ -299,21 +302,36 @@ public class WorldServer extends World implements IAsyncTaskHandler {
              this.worldData.setDayTime(this.worldData.getDayTime() + 1L);
          }
  
