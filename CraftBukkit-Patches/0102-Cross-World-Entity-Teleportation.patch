@@ -1,4 +1,4 @@
-From d472a5006b07b6a41feae49b6fa40e5b51f688d3 Mon Sep 17 00:00:00 2001
+From e5b80f1258bae3263525cdf045da4dba2e034e32 Mon Sep 17 00:00:00 2001
 From: Andrew Krieger <Slizyboy@hotmail.com>
 Date: Tue, 24 Dec 2013 07:55:23 -0800
 Subject: [PATCH] Cross World Entity Teleportation
@@ -6,10 +6,10 @@ Subject: [PATCH] Cross World Entity Teleportation
 Use Entity.teleportTo for cross-world teleportation in CraftEntity.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index bd712cb90..d9343e601 100644
+index 8302cc2f9..8cc8bf07c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -281,7 +281,14 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -282,7 +282,14 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          // If this entity is riding another entity, we must dismount before teleporting.
          entity.stopRiding();
  

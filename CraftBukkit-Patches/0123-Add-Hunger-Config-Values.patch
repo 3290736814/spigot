@@ -1,14 +1,14 @@
-From 84606d9a601ccba41516c3fd965e08976cb1ccd2 Mon Sep 17 00:00:00 2001
+From fc529be8e25f076e9c84da14a86b11723081a6f3 Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 70cd96295..abd25a1e2 100644
+index b449d51a6..b8479d9cf 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
-@@ -1120,7 +1120,7 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1126,7 +1126,7 @@ public abstract class EntityHuman extends EntityLiving {
                              }
                          }
  
@@ -17,7 +17,7 @@ index 70cd96295..abd25a1e2 100644
                      } else {
                          this.world.a((EntityHuman) null, this.locX, this.locY, this.locZ, SoundEffects.fx, this.bK(), 1.0F, 1.0F);
                          if (flag4) {
-@@ -1390,9 +1390,9 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1396,9 +1396,9 @@ public abstract class EntityHuman extends EntityLiving {
          super.cu();
          this.b(StatisticList.w);
          if (this.isSprinting()) {
@@ -29,7 +29,7 @@ index 70cd96295..abd25a1e2 100644
          }
  
      }
-@@ -1431,13 +1431,13 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1437,13 +1437,13 @@ public abstract class EntityHuman extends EntityLiving {
                  i = Math.round(MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2) * 100.0F);
                  if (i > 0) {
                      this.a(StatisticList.q, i);
@@ -45,7 +45,7 @@ index 70cd96295..abd25a1e2 100644
                  }
              } else if (this.m_()) {
                  if (d1 > 0.0D) {
-@@ -1448,13 +1448,13 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1454,13 +1454,13 @@ public abstract class EntityHuman extends EntityLiving {
                  if (i > 0) {
                      if (this.isSprinting()) {
                          this.a(StatisticList.l, i);

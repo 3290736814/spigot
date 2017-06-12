@@ -1,4 +1,4 @@
-From d550cac1778334d6f0596faa3b24d4b50544d373 Mon Sep 17 00:00:00 2001
+From 8a66a9e402ea8bafc7be18214595b15971e29e14 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -93,13 +93,13 @@ index 795e40de..e51cab87 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 941be7bb..4761279f 100644
+index 84ae807c..e3ab4903 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -468,4 +468,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable {
-      * @return true if the tag was successfully removed
+@@ -476,4 +476,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable {
+      * @return reaction
       */
-     boolean removeScoreboardTag(String tag);
+     PistonMoveReaction getPistonMoveReaction();
 +
 +    // Spigot start
 +    public class Spigot extends CommandSender.Spigot
