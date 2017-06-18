@@ -1,4 +1,4 @@
-From 8d94df89c78c925879d179524715ccd28915b5de Mon Sep 17 00:00:00 2001
+From 5b7081a8be37410937659fe57e02d53b635d289d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -78,7 +78,7 @@ index a68b8a5ba..d864c7745 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 6830690a9..8531a42b9 100644
+index 6830690a9..c275348e4 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -971,6 +971,7 @@ public abstract class World implements IBlockAccess {
@@ -89,7 +89,15 @@ index 6830690a9..8531a42b9 100644
          if (entity == null) return false;
          // CraftBukkit end
          int i = MathHelper.floor(entity.locX / 16.0D);
-@@ -1081,6 +1082,7 @@ public abstract class World implements IBlockAccess {
+@@ -1063,6 +1064,7 @@ public abstract class World implements IBlockAccess {
+     }
+ 
+     public void kill(Entity entity) {
++        org.spigotmc.AsyncCatcher.catchOp( "entity kill"); // Spigot
+         if (entity.isVehicle()) {
+             entity.ejectPassengers();
+         }
+@@ -1081,6 +1083,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void removeEntity(Entity entity) {
@@ -97,7 +105,7 @@ index 6830690a9..8531a42b9 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2455,6 +2457,7 @@ public abstract class World implements IBlockAccess {
+@@ -2455,6 +2458,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void a(Collection<Entity> collection) {
@@ -106,7 +114,7 @@ index 6830690a9..8531a42b9 100644
          // this.entityList.addAll(collection);
          Iterator iterator = collection.iterator();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 44354f989..ebe540cf8 100644
+index c113bc62d..ae00cacc4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -172,6 +172,7 @@ public class CraftWorld implements World {

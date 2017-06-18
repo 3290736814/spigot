@@ -1,4 +1,4 @@
-From 8a1263bd5819ec576f11d2d6f98516d3a8213a22 Mon Sep 17 00:00:00 2001
+From 0b3537285b8153291b6b7dff58a859846f9dfe5c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -177,10 +177,10 @@ index 6d2d4ed15..bc2da3316 100644
      public void killEntity() {
          this.damageEntity(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index e6c58d50e..72be9173e 100644
+index 9949a5059..a70fbe1bf 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1349,6 +1349,7 @@ public abstract class World implements IBlockAccess {
+@@ -1350,6 +1350,7 @@ public abstract class World implements IBlockAccess {
          CrashReportSystemDetails crashreportsystemdetails1;
          CrashReport crashreport1;
  
@@ -188,7 +188,7 @@ index e6c58d50e..72be9173e 100644
          timings.entityTick.startTiming(); // Spigot
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
-@@ -1541,8 +1542,12 @@ public abstract class World implements IBlockAccess {
+@@ -1542,8 +1543,12 @@ public abstract class World implements IBlockAccess {
  
          // CraftBukkit start - check if chunks are loaded as done in previous versions
          // TODO: Go back to Vanilla behaviour when comfortable
