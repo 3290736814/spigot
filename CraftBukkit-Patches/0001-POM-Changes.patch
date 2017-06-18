@@ -1,4 +1,4 @@
-From 4fad71b98ad1ea188eb620e243358ced60b92cd6 Mon Sep 17 00:00:00 2001
+From fa917208a168e57d2477c18972f3f5a4ba6ab9e4 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 2 Jul 2013 13:07:39 +1000
 Subject: [PATCH] POM Changes
@@ -6,7 +6,7 @@ Subject: [PATCH] POM Changes
 Basic changes to the build system which mark the artifact as Spigot, and the necessary code changes to ensure proper functionality. Also disables the auto updater provided by CraftBukkit as it is useless to us.
 
 diff --git a/pom.xml b/pom.xml
-index a05827097..d677e79df 100644
+index 3588a56d8..9bdc62ab8 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,12 +1,12 @@
@@ -46,19 +46,20 @@ index a05827097..d677e79df 100644
              <version>${project.version}</version>
              <scope>compile</scope>
          </dependency>
-@@ -57,6 +64,11 @@
-             <version>5.1.42</version>
+@@ -64,6 +71,12 @@
+             <version>4.1.12.Final</version>
              <scope>compile</scope>
          </dependency>
 +        <dependency>
 +            <groupId>net.sf.trove4j</groupId>
 +            <artifactId>trove4j</artifactId>
 +            <version>3.0.3</version>
++            <scope>compile</scope>
 +        </dependency>
          <!-- testing -->
          <dependency>
              <groupId>junit</groupId>
-@@ -87,11 +99,26 @@
+@@ -94,11 +107,26 @@
                  <groupId>net.md-5</groupId>
                  <artifactId>scriptus</artifactId>
                  <version>0.2</version>
@@ -88,7 +89,7 @@ index a05827097..d677e79df 100644
                          <phase>initialize</phase>
                          <goals>
                              <goal>describe</goal>
-@@ -108,7 +135,7 @@
+@@ -115,7 +143,7 @@
                          <manifestEntries>
                              <Main-Class>org.bukkit.craftbukkit.Main</Main-Class>
                              <Implementation-Title>CraftBukkit</Implementation-Title>
