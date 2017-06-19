@@ -1,4 +1,4 @@
-From 5b7081a8be37410937659fe57e02d53b635d289d Mon Sep 17 00:00:00 2001
+From e489e588c6b5e30106c0195c4ec7cae2845a0756 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -165,6 +165,18 @@ index 69fcb1082..3992c7165 100644
          CraftScoreboard scoreboard = new CraftScoreboard(new ScoreboardServer(server));
          scoreboards.add(scoreboard);
          return scoreboard;
+diff --git a/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java b/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java
+index ae3481ba8..a0cdd2317 100644
+--- a/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java
++++ b/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java
+@@ -13,6 +13,7 @@ public class ServerShutdownThread extends Thread {
+     @Override
+     public void run() {
+         try {
++            org.spigotmc.AsyncCatcher.enabled = false; // Spigot
+             server.stop();
+         } catch (ExceptionWorldConflict ex) {
+             ex.printStackTrace();
 diff --git a/src/main/java/org/spigotmc/AsyncCatcher.java b/src/main/java/org/spigotmc/AsyncCatcher.java
 new file mode 100644
 index 000000000..4b3aa85c9
