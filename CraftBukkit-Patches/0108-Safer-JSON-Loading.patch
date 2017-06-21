@@ -1,11 +1,11 @@
-From d3d05eb90ae9ac89ba21977a575aee879095d133 Mon Sep 17 00:00:00 2001
+From 2d2c1009ed339ad5630c8b95817dc9871d52a1f9 Mon Sep 17 00:00:00 2001
 From: Suddenly <suddenly@suddenly.coffee>
 Date: Tue, 8 Jul 2014 09:44:18 +1000
 Subject: [PATCH] Safer JSON Loading
 
 
 diff --git a/src/main/java/net/minecraft/server/JsonList.java b/src/main/java/net/minecraft/server/JsonList.java
-index 1834cb5ac..c84b5dbd4 100644
+index 1834cb5ac..0859c7eb2 100644
 --- a/src/main/java/net/minecraft/server/JsonList.java
 +++ b/src/main/java/net/minecraft/server/JsonList.java
 @@ -172,6 +172,14 @@ public class JsonList<K, V extends JsonListEntry<K>> {
@@ -13,9 +13,9 @@ index 1834cb5ac..c84b5dbd4 100644
                  bufferedreader = Files.newReader(this.c, StandardCharsets.UTF_8);
                  collection = (Collection) ChatDeserializer.a(this.b, (Reader) bufferedreader, (Type) JsonList.f);
 +            // Spigot Start
-+            } catch ( com.google.gson.JsonSyntaxException ex )
++            } catch ( com.google.gson.JsonParseException ex )
 +            {
-+                org.bukkit.Bukkit.getLogger().log( java.util.logging.Level.WARNING, "Unable to read file {0}, backing it up to {0}.backup and creating new copy.", this.c );
++                org.bukkit.Bukkit.getLogger().log( java.util.logging.Level.WARNING, "Unable to read file " + this.c + ", backing it up to {0}.backup and creating new copy.", ex );
 +                File backup = new File( this.c + ".backup" );
 +                this.c.renameTo( backup );
 +                this.c.delete();
