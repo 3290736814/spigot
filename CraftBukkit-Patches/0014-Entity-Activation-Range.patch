@@ -1,4 +1,4 @@
-From 0b3537285b8153291b6b7dff58a859846f9dfe5c Mon Sep 17 00:00:00 2001
+From 4d434a47e5b5f5d7af29ddfbec694d763b955992 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -126,7 +126,7 @@ index f1f479623..48cdef5db 100644
          this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, ItemStack.a);
          this.datawatcher.register(EntityFireworks.b, Integer.valueOf(0));
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 44f8aac35..14caa86a6 100644
+index bc8cd1ae5..dfd9a81d6 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -140,6 +140,28 @@ public class EntityItem extends Entity {
@@ -159,12 +159,12 @@ index 44f8aac35..14caa86a6 100644
          // Spigot start
          double radius = world.spigotConfig.itemMerge;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 6d2d4ed15..bc2da3316 100644
+index 2e88fddb4..27580a938 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -116,6 +116,13 @@ public abstract class EntityLiving extends Entity {
-     public org.bukkit.craftbukkit.attribute.CraftAttributeMap craftAttributes;
+@@ -117,6 +117,13 @@ public abstract class EntityLiving extends Entity {
      public boolean collides = true;
+     public boolean canPickUpLoot;
      // CraftBukkit end
 +    // Spigot start
 +    public void inactiveTick()
