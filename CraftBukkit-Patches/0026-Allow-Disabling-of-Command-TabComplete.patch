@@ -1,14 +1,14 @@
-From 9fa8c0aec8bfa85fd86ab8587a62ba882cd3b427 Mon Sep 17 00:00:00 2001
+From f1270dde258ddeae891a126c5c448bf3203925bd Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 18:05:54 +1000
 Subject: [PATCH] Allow Disabling of Command TabComplete
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 19377c33d..dc35fc85f 100644
+index 9f057ec4c..f04c09008 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1562,6 +1562,13 @@ public final class CraftServer implements Server {
+@@ -1563,6 +1563,13 @@ public final class CraftServer implements Server {
      }
  
      public List<String> tabCompleteCommand(Player player, String message, BlockPosition pos) {
