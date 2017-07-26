@@ -1,11 +1,11 @@
-From 38e4bfb375c25a7e984568aef9c8fddcb67863cf Mon Sep 17 00:00:00 2001
+From 24875f589a5af506ce37b3aa282cf44ec48d67f4 Mon Sep 17 00:00:00 2001
 From: ninja <xninja@openmailbox.org>
 Date: Tue, 8 Apr 2014 14:05:19 +0200
 Subject: [PATCH] Implement PlayerSpawnLocationEvent.
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 378fc7353..5b4edecc4 100644
+index 50d726fb..a624bd69 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -40,6 +40,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
@@ -16,7 +16,7 @@ index 378fc7353..5b4edecc4 100644
  // CraftBukkit end
  
  public abstract class PlayerList {
-@@ -111,6 +112,19 @@ public abstract class PlayerList {
+@@ -115,6 +116,19 @@ public abstract class PlayerList {
              s1 = networkmanager.getSocketAddress().toString();
          }
  

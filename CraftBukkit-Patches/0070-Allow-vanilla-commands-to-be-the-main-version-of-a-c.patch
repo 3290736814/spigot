@@ -1,14 +1,14 @@
-From dea7ff77c58f2111ccf67fb078127c49b85aeb3c Mon Sep 17 00:00:00 2001
+From 61a6a5f180061603bfb1ca70bfed44d6223f2fb2 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Wed, 12 Feb 2014 20:44:14 +0000
 Subject: [PATCH] Allow vanilla commands to be the main version of a command
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index d1efa46d5..5532a74c0 100644
+index 8bdd2a09..b972ebca 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -328,8 +328,11 @@ public final class CraftServer implements Server {
+@@ -323,8 +323,11 @@ public final class CraftServer implements Server {
          }
  
          if (type == PluginLoadOrder.POSTWORLD) {
@@ -21,7 +21,7 @@ index d1efa46d5..5532a74c0 100644
              commandMap.registerServerAliases();
              loadCustomPermissions();
              DefaultPermissions.registerCorePermissions();
-@@ -342,10 +345,19 @@ public final class CraftServer implements Server {
+@@ -337,10 +340,19 @@ public final class CraftServer implements Server {
          pluginManager.disablePlugins();
      }
  
@@ -44,7 +44,7 @@ index d1efa46d5..5532a74c0 100644
      }
  
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 2a72a86d4..451e5bca8 100644
+index 2a72a86d..451e5bca 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -8,8 +8,10 @@ import java.lang.reflect.Method;
