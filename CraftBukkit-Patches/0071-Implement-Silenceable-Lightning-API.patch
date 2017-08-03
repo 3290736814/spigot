@@ -1,11 +1,11 @@
-From a10dea9c58e228a7c0eaf502a026a82e2d430edc Mon Sep 17 00:00:00 2001
+From 99d96dc147759af3a87228ad0410ebf7d5b957d9 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sun, 23 Feb 2014 16:16:59 -0400
 Subject: [PATCH] Implement Silenceable Lightning API
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityLightning.java b/src/main/java/net/minecraft/server/EntityLightning.java
-index a61531ad2..acb3408d5 100644
+index a61531ad..acb3408d 100644
 --- a/src/main/java/net/minecraft/server/EntityLightning.java
 +++ b/src/main/java/net/minecraft/server/EntityLightning.java
 @@ -11,6 +11,7 @@ public class EntityLightning extends EntityWeather {
@@ -40,7 +40,7 @@ index a61531ad2..acb3408d5 100644
              // this.world.a((EntityHuman) null, this.locX, this.locY, this.locZ, SoundEffects.dG, SoundCategory.WEATHER, 10000.0F, 0.8F + this.random.nextFloat() * 0.2F);
              float pitch = 0.8F + this.random.nextFloat() * 0.2F;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index fc3c7b35b..3550712cc 100644
+index fc3c7b35..3550712c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -1621,6 +1621,22 @@ public class CraftWorld implements World {
@@ -67,7 +67,7 @@ index fc3c7b35b..3550712cc 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
-index 194d830e1..ddd5ccd58 100644
+index 194d830e..ddd5ccd5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
 @@ -31,6 +31,11 @@ public class CraftLightningStrike extends CraftEntity implements LightningStrike

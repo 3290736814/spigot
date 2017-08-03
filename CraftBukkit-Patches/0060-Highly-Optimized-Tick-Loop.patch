@@ -1,14 +1,14 @@
-From a1b8863f46b2d05291f240cb91619747168d8b94 Mon Sep 17 00:00:00 2001
+From 5e8ec3dde1e498020e428f552953071d08c79330 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index b0b572814..966619e4e 100644
+index 0a093bd2..c9e57436 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -117,6 +117,12 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
+@@ -118,6 +118,12 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
      public java.util.Queue<Runnable> processQueue = new java.util.concurrent.ConcurrentLinkedQueue<Runnable>();
      public int autosavePeriod;
      // CraftBukkit end
@@ -21,7 +21,7 @@ index b0b572814..966619e4e 100644
  
      public MinecraftServer(OptionSet options, Proxy proxy, DataConverterManager dataconvertermanager, YggdrasilAuthenticationService yggdrasilauthenticationservice, MinecraftSessionService minecraftsessionservice, GameProfileRepository gameprofilerepository, UserCache usercache) {
          this.e = proxy;
-@@ -517,6 +523,13 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
+@@ -518,6 +524,13 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
          this.isRunning = false;
      }
  
@@ -35,8 +35,8 @@ index b0b572814..966619e4e 100644
      public void run() {
          try {
              if (this.init()) {
-@@ -527,38 +540,34 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
-                 this.q.setServerInfo(new ServerPing.ServerData("1.12", 335));
+@@ -528,38 +541,34 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
+                 this.q.setServerInfo(new ServerPing.ServerData("1.12.1", 338));
                  this.a(this.q);
  
 +                // Spigot start
@@ -96,7 +96,7 @@ index b0b572814..966619e4e 100644
                  this.a((CrashReport) null);
              }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 2555cc582..b4c85ba20 100644
+index 2555cc58..b4c85ba2 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -262,4 +262,9 @@ public class SpigotConfig
@@ -111,7 +111,7 @@ index 2555cc582..b4c85ba20 100644
  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 new file mode 100644
-index 000000000..be2e31dea
+index 00000000..be2e31de
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -0,0 +1,45 @@

@@ -1,4 +1,4 @@
-From 36c8400801139cbefb02723612083da8d444a846 Mon Sep 17 00:00:00 2001
+From 79252d5f62f9400e264bd404a6ad0bba8af62c7e Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -6,7 +6,7 @@ Subject: [PATCH] BungeeCord Support
 Provides support for IP forwarding via BungeeCord.
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 4ddacbf8..99a63422 100644
+index cc95922e..0aa57b9a 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -7,6 +7,7 @@ import java.util.HashMap;
@@ -117,7 +117,7 @@ index 1cb9d60d..aececa39 100644
          this.d = EnumProtocol.a(packetdataserializer.g());
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 8e823677..f91b852c 100644
+index 8319bf17..39c98679 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -472,7 +472,7 @@ public abstract class PlayerList {
@@ -130,10 +130,10 @@ index 8e823677..f91b852c 100644
  
          if (getProfileBans().isBanned(gameprofile) && !getProfileBans().get(gameprofile).hasExpired()) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 78d58a2b..8bdd2a09 100644
+index edacb097..2fb3bc3b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -555,7 +555,13 @@ public final class CraftServer implements Server {
+@@ -556,7 +556,13 @@ public final class CraftServer implements Server {
  
      @Override
      public long getConnectionThrottle() {

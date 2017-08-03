@@ -1,14 +1,14 @@
-From 98f431a715e442d3588d58f49d3f2fc7dcb520be Mon Sep 17 00:00:00 2001
+From 2ac230e0979b868a24fdfd6cf45be2e7f337d0bc Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 18 Dec 2013 13:39:14 +1100
 Subject: [PATCH] Log Cause of Unexpected Exceptions
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index c68614f3b..103fda5d0 100644
+index 0c2995cd..4c77abaa 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -564,6 +564,12 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
+@@ -565,6 +565,12 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
              }
          } catch (Throwable throwable) {
              MinecraftServer.LOGGER.error("Encountered an unexpected exception", throwable);

@@ -1,4 +1,4 @@
-From 374a06be4439f30fc84a0dca1caf1e71e772efd0 Mon Sep 17 00:00:00 2001
+From 097b9992efa4e3a870a44ceeb03cb9f7279d586b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -10,10 +10,10 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 This feature was commisioned by Chunkr.
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index cc1eae509..f5d387511 100644
+index fcf0a67f..e1833f37 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -131,6 +131,9 @@ public abstract class World implements IBlockAccess {
+@@ -133,6 +133,9 @@ public abstract class World implements IBlockAccess {
      private boolean guardEntityList; // Spigot
      public static boolean haveWeSilencedAPhysicsCrash;
      public static String blockLocation;
@@ -23,7 +23,7 @@ index cc1eae509..f5d387511 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -194,6 +197,8 @@ public abstract class World implements IBlockAccess {
+@@ -196,6 +199,8 @@ public abstract class World implements IBlockAccess {
          this.getServer().addWorld(this.world);
          // CraftBukkit end
          timings = new SpigotTimings.WorldTimingsHandler(this); // Spigot - code below can generate new world and access timings
@@ -32,7 +32,7 @@ index cc1eae509..f5d387511 100644
      }
  
      public World b() {
-@@ -1405,7 +1410,12 @@ public abstract class World implements IBlockAccess {
+@@ -1407,7 +1412,12 @@ public abstract class World implements IBlockAccess {
          timings.entityTick.startTiming(); // Spigot
          guardEntityList = true; // Spigot
          // CraftBukkit start - Use field for loop variable
@@ -46,7 +46,7 @@ index cc1eae509..f5d387511 100644
              entity = (Entity) this.entityList.get(this.tickPosition);
              // CraftBukkit end
              Entity entity1 = entity.bJ();
-@@ -1463,14 +1473,20 @@ public abstract class World implements IBlockAccess {
+@@ -1465,14 +1475,20 @@ public abstract class World implements IBlockAccess {
              this.tileEntityListUnload.clear();
          }
          // CraftBukkit end
@@ -71,7 +71,7 @@ index cc1eae509..f5d387511 100644
                  continue;
              }
              // Spigot end
-@@ -1499,7 +1515,8 @@ public abstract class World implements IBlockAccess {
+@@ -1503,7 +1519,8 @@ public abstract class World implements IBlockAccess {
              }
  
              if (tileentity.y()) {
@@ -82,7 +82,7 @@ index cc1eae509..f5d387511 100644
                  if (this.isLoaded(tileentity.getPosition())) {
                      this.getChunkAtWorldCoords(tileentity.getPosition()).d(tileentity.getPosition());
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index dd53f6dba..01e73eb89 100644
+index dd53f6db..01e73eb8 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -297,4 +297,13 @@ public class SpigotWorldConfig
@@ -101,7 +101,7 @@ index dd53f6dba..01e73eb89 100644
  }
 diff --git a/src/main/java/org/spigotmc/TickLimiter.java b/src/main/java/org/spigotmc/TickLimiter.java
 new file mode 100644
-index 000000000..23a39382b
+index 00000000..23a39382
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/TickLimiter.java
 @@ -0,0 +1,20 @@

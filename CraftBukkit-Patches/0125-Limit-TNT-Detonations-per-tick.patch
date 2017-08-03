@@ -1,4 +1,4 @@
-From f669e106fdaca46c0bd00eb3efdc796d1c3d8dd5 Mon Sep 17 00:00:00 2001
+From c7c1c40e312b4d1898a929f8d440d34c69e9faee Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Aug 2014 18:12:32 -0400
 Subject: [PATCH] Limit TNT Detonations per tick
@@ -7,7 +7,7 @@ This gives a per-world control on how much TNT will be processed per-tick,
 preventing a massive TNT detonation from lagging out the server.
 
 diff --git a/src/main/java/net/minecraft/server/EntityTNTPrimed.java b/src/main/java/net/minecraft/server/EntityTNTPrimed.java
-index 419d76eec..44b2d4735 100644
+index 419d76ee..44b2d473 100644
 --- a/src/main/java/net/minecraft/server/EntityTNTPrimed.java
 +++ b/src/main/java/net/minecraft/server/EntityTNTPrimed.java
 @@ -48,6 +48,7 @@ public class EntityTNTPrimed extends Entity {
@@ -19,7 +19,7 @@ index 419d76eec..44b2d4735 100644
          this.lastY = this.locY;
          this.lastZ = this.locZ;
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 35abd5356..3292a3577 100644
+index 1235fc3b..7e1a2d19 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -662,6 +662,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
@@ -31,7 +31,7 @@ index 35abd5356..3292a3577 100644
  
      protected void l() {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 715ceefc1..9926661b5 100644
+index 715ceefc..9926661b 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -280,4 +280,15 @@ public class SpigotWorldConfig

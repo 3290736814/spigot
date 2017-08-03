@@ -1,4 +1,4 @@
-From 0ff57239d036df95a3805083bbabf38d6b257609 Mon Sep 17 00:00:00 2001
+From 5b61a69ee8a31379b22dadac588fa8fc8743ea7a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 9 Jul 2014 10:35:44 +1000
 Subject: [PATCH] Add CommandLine EULA Flag
@@ -8,7 +8,7 @@ This flag contains the same message as eula.txt (albeit with proper grammar for 
 This feature only exists for hosting companies and people who manage servers in bulk who wish to agree to the terms by setting a flag in a script.
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index fba2832b6..4f8eb0992 100644
+index e558eb7d..46b26422 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -129,7 +129,16 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer

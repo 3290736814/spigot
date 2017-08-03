@@ -1,11 +1,11 @@
-From 7e5bdc84934403b58c361c9c8475fa238652e591 Mon Sep 17 00:00:00 2001
+From b4cbfd4d86b3ca32ffda1e0336a5728aaa57e058 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 2fa6e4a7..cc691def 100644
+index 63858880..20b806c3 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -285,7 +285,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -18,10 +18,10 @@ index 2fa6e4a7..cc691def 100644
  
                      thread1.setName("Server Watchdog");
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 2ebca8e3..4b3b274c 100644
+index 9d760e22..5c7a2d7c 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -583,6 +583,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
+@@ -584,6 +584,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
              this.a(crashreport);
          } finally {
              try {
@@ -29,7 +29,7 @@ index 2ebca8e3..4b3b274c 100644
                  this.isStopped = true;
                  this.stop();
              } catch (Throwable throwable1) {
-@@ -687,6 +688,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
+@@ -688,6 +689,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
  
          this.methodProfiler.b();
          this.methodProfiler.b();
@@ -38,10 +38,10 @@ index 2ebca8e3..4b3b274c 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index d70f02f3..78d58a2b 100644
+index 8553d89a..edacb097 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1720,6 +1720,11 @@ public final class CraftServer implements Server {
+@@ -1730,6 +1730,11 @@ public final class CraftServer implements Server {
          {
              return org.spigotmc.SpigotConfig.config;
          }

@@ -1,11 +1,11 @@
-From ef93ca9e223a79f60255a21d1a98a562dceb4230 Mon Sep 17 00:00:00 2001
+From dbb92272f4ed5f8ec37106179cdefc1992b27597 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
 
 
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index a6dc5fd48..a8fc7e431 100644
+index a6dc5fd4..a8fc7e43 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
 @@ -245,6 +245,10 @@ public class PacketDataSerializer extends ByteBuf {
@@ -20,7 +20,7 @@ index a6dc5fd48..a8fc7e431 100644
              }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index 441632bb3..5d971f07b 100644
+index 441632bb..5d971f07 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 @@ -23,6 +23,10 @@ import net.minecraft.server.IChatBaseComponent;
@@ -58,7 +58,7 @@ index 441632bb3..5d971f07b 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 426b2b3be..59bd05aa7 100644
+index c071b7cb..d538f2d3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -47,6 +47,10 @@ import java.util.logging.Logger;
@@ -92,7 +92,7 @@ index 426b2b3be..59bd05aa7 100644
              }
 diff --git a/src/main/java/org/spigotmc/ValidateUtils.java b/src/main/java/org/spigotmc/ValidateUtils.java
 new file mode 100644
-index 000000000..58a953481
+index 00000000..58a95348
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ValidateUtils.java
 @@ -0,0 +1,14 @@

@@ -1,11 +1,11 @@
-From 0c803635a1f3b5e375f6688d672805263512bc99 Mon Sep 17 00:00:00 2001
+From 0db291886e0ab0c1463547a0ec5b862df35a4467 Mon Sep 17 00:00:00 2001
 From: Antony Riley <antony@cyberiantiger.org>
 Date: Sun, 26 Apr 2015 02:14:13 +0300
 Subject: [PATCH] map decoration fix
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityItemFrame.java b/src/main/java/net/minecraft/server/EntityItemFrame.java
-index fe21aba93..8b806c303 100644
+index fe21aba9..8b806c30 100644
 --- a/src/main/java/net/minecraft/server/EntityItemFrame.java
 +++ b/src/main/java/net/minecraft/server/EntityItemFrame.java
 @@ -1,5 +1,9 @@
@@ -28,7 +28,7 @@ index fe21aba93..8b806c303 100644
  
              itemstack.a((EntityItemFrame) null);
 diff --git a/src/main/java/net/minecraft/server/WorldMap.java b/src/main/java/net/minecraft/server/WorldMap.java
-index 140286acb..1096b5c1f 100644
+index 140286ac..1096b5c1 100644
 --- a/src/main/java/net/minecraft/server/WorldMap.java
 +++ b/src/main/java/net/minecraft/server/WorldMap.java
 @@ -1,5 +1,6 @@
@@ -98,7 +98,7 @@ index 140286acb..1096b5c1f 100644
          float f = (float) (d0 - (double) this.centerX) / (float) i;
          float f1 = (float) (d1 - (double) this.centerZ) / (float) i;
 diff --git a/src/main/java/org/bukkit/craftbukkit/map/CraftMapRenderer.java b/src/main/java/org/bukkit/craftbukkit/map/CraftMapRenderer.java
-index a55915a4f..8816d33ca 100644
+index a55915a4..8816d33c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/map/CraftMapRenderer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/map/CraftMapRenderer.java
 @@ -1,5 +1,6 @@
