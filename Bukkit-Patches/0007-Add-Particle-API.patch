@@ -1,11 +1,11 @@
-From 404fc2f6bb2fe57dc471a0ce6d2c3b333ad2e38e Mon Sep 17 00:00:00 2001
+From dc815626b127f0db09119492dfb92f05afcd20d4 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:57:09 +1000
 Subject: [PATCH] Add Particle API
 
 
 diff --git a/src/main/java/org/bukkit/Effect.java b/src/main/java/org/bukkit/Effect.java
-index ba7dc495..a8032289 100644
+index 21f7db58..eeb25812 100644
 --- a/src/main/java/org/bukkit/Effect.java
 +++ b/src/main/java/org/bukkit/Effect.java
 @@ -5,6 +5,7 @@ import java.util.Map;
@@ -245,7 +245,7 @@ index ba7dc495..a8032289 100644
  
 -    Effect(int id, Type type) {
 +    private Effect(int id, Type type) {
-         this(id,type,null);
+         this(id, type, null);
      }
  
 -    Effect(int id, Type type, Class<?> data) {
