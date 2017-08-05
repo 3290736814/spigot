@@ -1,0 +1,26 @@
+From 3577ffe04173a064e495a70240052d5bbe85fd13 Mon Sep 17 00:00:00 2001
+From: Smove <jan@lavasurvival.net>
+Date: Sat, 1 Feb 2014 18:12:16 +1100
+Subject: [PATCH] Implement Locale Getter for Players
+
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+index 09d7be8f..f7b787eb 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+@@ -1565,6 +1565,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+                 getHandle().playerConnection.sendPacket( packet );
+             }
+         }
++
++        @Override
++        public String getLocale()
++        {
++           return getHandle().locale;
++        }
+     };
+ 
+     public Player.Spigot spigot()
+-- 
+2.11.0
+
