@@ -1,11 +1,11 @@
-From 24b65385aeea6ae7eb981c9cb12d2cf41bd4f4e5 Mon Sep 17 00:00:00 2001
+From 6c878298a523dcba651f477aa12cf4c898eaf828 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Sun, 20 Apr 2014 13:18:55 +0100
 Subject: [PATCH] Convert player skulls async
 
 
 diff --git a/src/main/java/net/minecraft/server/ItemSkull.java b/src/main/java/net/minecraft/server/ItemSkull.java
-index cbb902f5..bd99b5a1 100644
+index cbb902f50..bd99b5a18 100644
 --- a/src/main/java/net/minecraft/server/ItemSkull.java
 +++ b/src/main/java/net/minecraft/server/ItemSkull.java
 @@ -124,13 +124,21 @@ public class ItemSkull extends Item {
@@ -34,7 +34,7 @@ index cbb902f5..bd99b5a1 100644
          } else {
              // CraftBukkit start
 diff --git a/src/main/java/net/minecraft/server/TileEntitySkull.java b/src/main/java/net/minecraft/server/TileEntitySkull.java
-index 223e2ed2..fd08e0bd 100644
+index 223e2ed2d..fd08e0bdc 100644
 --- a/src/main/java/net/minecraft/server/TileEntitySkull.java
 +++ b/src/main/java/net/minecraft/server/TileEntitySkull.java
 @@ -7,6 +7,20 @@ import com.mojang.authlib.properties.Property;
@@ -198,7 +198,7 @@ index 223e2ed2..fd08e0bd 100644
      public int getSkullType() {
          return this.a;
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
-index b9c54472..c0c4f8e7 100644
+index fbc16890c..4976eb26a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
 @@ -5,6 +5,7 @@ import java.util.Map;
@@ -207,9 +207,9 @@ index b9c54472..c0c4f8e7 100644
  import net.minecraft.server.NBTTagCompound;
 +import net.minecraft.server.TileEntitySkull;
  
+ import org.bukkit.Bukkit;
  import org.bukkit.Material;
- import org.bukkit.configuration.serialization.DelegateDeserialization;
-@@ -69,13 +70,27 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
+@@ -71,13 +72,27 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
      }
  
      @Override
@@ -239,7 +239,7 @@ index b9c54472..c0c4f8e7 100644
          }
      }
  
-@@ -119,7 +134,10 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
+@@ -136,7 +151,10 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
          if (name == null) {
              profile = null;
          } else {

@@ -1,11 +1,11 @@
-From 42b36a560e2c6fe1568a3df4968042654cefcd88 Mon Sep 17 00:00:00 2001
+From a1bf6ecf20575d6be5e424bb2075b949431c584d Mon Sep 17 00:00:00 2001
 From: Smove <jan@lavasurvival.net>
 Date: Sat, 1 Feb 2014 18:10:49 +1100
 Subject: [PATCH] Implement Locale Getter for Players
 
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 505c5a88..f64a3567 100644
+index 505c5a88..f19a51d7 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -1470,6 +1470,18 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
@@ -17,7 +17,7 @@ index 505c5a88..f64a3567 100644
 +         * Gets player locale language.
 +         *
 +         * @return the player's client language settings
-+         * @deprecated Use {@link Player#getLocale()
++         * @deprecated Use {@link Player#getLocale()}
 +         */
 +        @Deprecated
 +        public String getLocale()
