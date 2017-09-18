@@ -1,4 +1,4 @@
-From 900e738a81399c0cac36eedab2cf32a4a6613af7 Mon Sep 17 00:00:00 2001
+From 328d39704245406f0a66bc0ea8a3987ea6ae87a3 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 30 Mar 2014 15:58:22 +1100
 Subject: [PATCH] Remove deprecation on some player lookup methods
@@ -6,7 +6,7 @@ Subject: [PATCH] Remove deprecation on some player lookup methods
 Most of these methods still have plenty of use given that only one player with each name can exist at a time. Deprecating these methods renders even basic functionality such as /msg <name> impossible without causing compiler warnings. We will maintain this API and it should be considered safe and appropriate for most use cases.
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index c2287eda..5649aaf7 100644
+index cb00d8f9..eb6b7976 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
 @@ -363,12 +363,9 @@ public final class Bukkit {
@@ -49,7 +49,7 @@ index c2287eda..5649aaf7 100644
          return server.matchPlayer(name);
      }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index e3cbe0d9..d8318b6e 100644
+index c0b9c80b..6253fef7 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
 @@ -301,23 +301,17 @@ public interface Server extends PluginMessageRecipient {

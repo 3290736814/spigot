@@ -1,11 +1,11 @@
-From 7036cf7bfd63ca745231bb13c4b679bce2015469 Mon Sep 17 00:00:00 2001
+From 1195344c12d9c89ae798b186b8d292f731fb9340 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 16 Apr 2014 10:09:56 +1000
 Subject: [PATCH] Fix ban expire dates.
 
 
 diff --git a/src/main/java/net/minecraft/server/GameProfileBanEntry.java b/src/main/java/net/minecraft/server/GameProfileBanEntry.java
-index e68d2b33..16fe4819 100644
+index e68d2b33a..16fe48193 100644
 --- a/src/main/java/net/minecraft/server/GameProfileBanEntry.java
 +++ b/src/main/java/net/minecraft/server/GameProfileBanEntry.java
 @@ -12,7 +12,7 @@ public class GameProfileBanEntry extends ExpirableListEntry<GameProfile> {

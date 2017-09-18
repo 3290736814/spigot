@@ -1,14 +1,14 @@
-From c7f0a0026f8a63953a6b8ae4cf668041e97863a9 Mon Sep 17 00:00:00 2001
+From 43a34575e1688a99833fd0acd01b4937f5f020a6 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 18:01:29 +1000
 Subject: [PATCH] Allow Disabling of Command Logging
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index f9c827cc..a1134cef 100644
+index 14ca7904a..88a894f8b 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1313,6 +1313,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1319,6 +1319,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
      private void handleCommand(String s) {
          org.bukkit.craftbukkit.SpigotTimings.playerCommandTimer.startTiming(); // Spigot
         // CraftBukkit start - whole method
@@ -17,7 +17,7 @@ index f9c827cc..a1134cef 100644
  
          CraftPlayer player = this.getPlayer();
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index dd02aefc..45e908ed 100644
+index dd02aefc7..45e908ed4 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -150,4 +150,10 @@ public class SpigotConfig

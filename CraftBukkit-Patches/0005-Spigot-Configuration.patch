@@ -1,4 +1,4 @@
-From 9a978424fd136e260e93b480fb99352fbf557916 Mon Sep 17 00:00:00 2001
+From c3400ba88b612c514aba6c0b42248dd2c4040de3 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -6,7 +6,7 @@ Subject: [PATCH] Spigot Configuration
 Provides the basic infrastructure to load and save the Spigot configuration file, spigot.yml
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index c04ffd501..df9050b72 100644
+index b55a5fe7b..330c5fe3e 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -169,6 +169,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -31,7 +31,7 @@ index c04ffd501..df9050b72 100644
              server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.STARTUP);
              // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 60657c141..1196a37fe 100644
+index d70e83bc4..cc7036ef5 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -101,6 +101,7 @@ public abstract class World implements IBlockAccess {

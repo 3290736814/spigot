@@ -1,11 +1,11 @@
-From 6280da3f54b26de5a6b23eb84c65add39415713d Mon Sep 17 00:00:00 2001
+From 16ab0bc0aa14e1c7c3842b8c7488d25ccfe06fe4 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 8 Aug 2014 19:57:03 +1000
 Subject: [PATCH] Plug WorldMap Memory Leak
 
 
 diff --git a/src/main/java/net/minecraft/server/PersistentCollection.java b/src/main/java/net/minecraft/server/PersistentCollection.java
-index fe59b758..936d6c64 100644
+index fe59b758f..936d6c640 100644
 --- a/src/main/java/net/minecraft/server/PersistentCollection.java
 +++ b/src/main/java/net/minecraft/server/PersistentCollection.java
 @@ -19,7 +19,7 @@ public class PersistentCollection {
@@ -18,7 +18,7 @@ index fe59b758..936d6c64 100644
  
      public PersistentCollection(IDataManager idatamanager) {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 30360041..fcf0a67f 100644
+index 7013dfc29..0fc9fbd61 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1114,6 +1114,23 @@ public abstract class World implements IBlockAccess {
@@ -46,7 +46,7 @@ index 30360041..fcf0a67f 100644
              this.c(entity);
          }
 diff --git a/src/main/java/net/minecraft/server/WorldMap.java b/src/main/java/net/minecraft/server/WorldMap.java
-index 61517f73..140286ac 100644
+index 61517f738..140286acb 100644
 --- a/src/main/java/net/minecraft/server/WorldMap.java
 +++ b/src/main/java/net/minecraft/server/WorldMap.java
 @@ -25,7 +25,7 @@ public class WorldMap extends PersistentBase {

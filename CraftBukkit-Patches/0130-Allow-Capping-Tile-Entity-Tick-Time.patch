@@ -1,4 +1,4 @@
-From b7f1fb93775946f36c3c83ca42224187f80eaacd Mon Sep 17 00:00:00 2001
+From 89f1a00ff31f81d392f1730a92d0c1e69e491c8e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -10,7 +10,7 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 This feature was commisioned by Chunkr.
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index fcf0a67f..e1833f37 100644
+index 0fc9fbd61..f62e7d9e4 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -133,6 +133,9 @@ public abstract class World implements IBlockAccess {
@@ -46,12 +46,12 @@ index fcf0a67f..e1833f37 100644
              entity = (Entity) this.entityList.get(this.tickPosition);
              // CraftBukkit end
              Entity entity1 = entity.bJ();
-@@ -1465,14 +1475,20 @@ public abstract class World implements IBlockAccess {
-             this.tileEntityListUnload.clear();
+@@ -1464,14 +1474,19 @@ public abstract class World implements IBlockAccess {
          }
-         // CraftBukkit end
--        Iterator iterator = this.tileEntityListTick.iterator();
  
+         this.O = true;
+-        Iterator iterator = this.tileEntityListTick.iterator();
+-
 -        while (iterator.hasNext()) {
 -            TileEntity tileentity = (TileEntity) iterator.next();
 +        // Spigot start
@@ -71,7 +71,7 @@ index fcf0a67f..e1833f37 100644
                  continue;
              }
              // Spigot end
-@@ -1503,7 +1519,8 @@ public abstract class World implements IBlockAccess {
+@@ -1502,7 +1517,8 @@ public abstract class World implements IBlockAccess {
              }
  
              if (tileentity.y()) {
@@ -82,7 +82,7 @@ index fcf0a67f..e1833f37 100644
                  if (this.isLoaded(tileentity.getPosition())) {
                      this.getChunkAtWorldCoords(tileentity.getPosition()).d(tileentity.getPosition());
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index dd53f6db..01e73eb8 100644
+index dd53f6dba..01e73eb89 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -297,4 +297,13 @@ public class SpigotWorldConfig
@@ -101,7 +101,7 @@ index dd53f6db..01e73eb8 100644
  }
 diff --git a/src/main/java/org/spigotmc/TickLimiter.java b/src/main/java/org/spigotmc/TickLimiter.java
 new file mode 100644
-index 00000000..23a39382
+index 000000000..23a39382b
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/TickLimiter.java
 @@ -0,0 +1,20 @@

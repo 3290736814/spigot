@@ -1,11 +1,11 @@
-From 999216eb1a1c52dae272240c4392c88c133e3c4f Mon Sep 17 00:00:00 2001
+From 2724a76fbdd02874665c6d41f678c3058fab66a8 Mon Sep 17 00:00:00 2001
 From: David <dmck2b@gmail.com>
 Date: Mon, 21 Apr 2014 12:43:08 +0100
 Subject: [PATCH] Prevent NoClassDefError crash and notify on crash
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 17278b13..ea1a50ac 100644
+index e0e78cc2c..f835b1b01 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -131,6 +131,8 @@ public abstract class World implements IBlockAccess {
@@ -29,7 +29,7 @@ index 17278b13..ea1a50ac 100644
                  CrashReport crashreport = CrashReport.a(throwable, "Exception while updating neighbours");
                  CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Block being updated");
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index de08ad67..94a3d423 100644
+index de08ad67f..94a3d4237 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -60,6 +60,13 @@ public class WatchdogThread extends Thread

@@ -1,11 +1,11 @@
-From d87b43cd0ab3e0c7f34f9ec3865a80ba398354c3 Mon Sep 17 00:00:00 2001
+From 800074ac5cd81f2c55ff97120241865b5cb59d2a Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 638588801..20b806c3d 100644
+index f1a389b65..400c3aeb3 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -285,7 +285,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -18,7 +18,7 @@ index 638588801..20b806c3d 100644
  
                      thread1.setName("Server Watchdog");
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 9d760e225..5c7a2d7c9 100644
+index 6aa9b6058..c4431ce51 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -584,6 +584,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs

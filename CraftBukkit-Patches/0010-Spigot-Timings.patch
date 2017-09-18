@@ -1,4 +1,4 @@
-From 5fc7468d2accf01132cc6a183fe75b7d0a6e24ec Mon Sep 17 00:00:00 2001
+From 07ae4a5445e8cf4e92c70d4dfd96f257ac5978dd Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -26,7 +26,7 @@ index 1c1499a98..779f5714a 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index cc99740a1..5379a145c 100644
+index a9c9d714e..d2546b5d6 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -153,6 +153,7 @@ public class ChunkProviderServer implements IChunkProvider {
@@ -46,7 +46,7 @@ index cc99740a1..5379a145c 100644
  
          return chunk;
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index 2b242c3b1..9655a3ceb 100644
+index 6823819b2..e0e4c9a0e 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -34,7 +34,9 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
@@ -96,7 +96,7 @@ index 2b242c3b1..9655a3ceb 100644
          // return chunk; // CraftBukkit
      }
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index df9050b72..638588801 100644
+index 330c5fe3e..f1a389b65 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -24,6 +24,7 @@ import java.io.PrintStream;
@@ -230,7 +230,7 @@ index 9b70914de..2e88fddb4 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index d384ffc36..f61ec7009 100644
+index 48495b64d..26fe01bae 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -48,6 +48,7 @@ import org.bukkit.Bukkit;
@@ -359,10 +359,10 @@ index d384ffc36..f61ec7009 100644
          this.methodProfiler.b();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index d7f4b2c4a..f9c827cca 100644
+index f1e1b28d2..14ca7904a 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1311,6 +1311,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1317,6 +1317,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
      // CraftBukkit end
  
      private void handleCommand(String s) {
@@ -370,7 +370,7 @@ index d7f4b2c4a..f9c827cca 100644
         // CraftBukkit start - whole method
          this.LOGGER.info(this.player.getName() + " issued server command: " + s);
  
-@@ -1320,18 +1321,22 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1326,18 +1327,22 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
          this.server.getPluginManager().callEvent(event);
  
          if (event.isCancelled()) {
@@ -411,7 +411,7 @@ index 296a02950..e29b593aa 100644
      private static final RegistryMaterials<MinecraftKey, Class<? extends TileEntity>> f = new RegistryMaterials();
      protected World world;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index bb5911b6c..5f902175f 100644
+index b043266be..8a618dfce 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -19,6 +19,7 @@ import com.google.common.collect.Maps;
@@ -457,18 +457,17 @@ index bb5911b6c..5f902175f 100644
                  } catch (Throwable throwable1) {
                      crashreport1 = CrashReport.a(throwable1, "Ticking entity");
                      crashreportsystemdetails1 = crashreport1.a("Entity being ticked");
-@@ -1391,8 +1398,10 @@ public abstract class World implements IBlockAccess {
+@@ -1391,7 +1398,9 @@ public abstract class World implements IBlockAccess {
              this.methodProfiler.b();
          }
  
 +        timings.entityTick.stopTiming(); // Spigot
          this.methodProfiler.c("blockEntities");
-         this.O = true;
 +        timings.tileEntityTick.startTiming(); // Spigot
-         // CraftBukkit start - From below, clean up tile entities before ticking them
          if (!this.tileEntityListUnload.isEmpty()) {
              this.tileEntityListTick.removeAll(this.tileEntityListUnload);
-@@ -1413,6 +1422,7 @@ public abstract class World implements IBlockAccess {
+             this.tileEntityList.removeAll(this.tileEntityListUnload);
+@@ -1412,6 +1421,7 @@ public abstract class World implements IBlockAccess {
                          this.methodProfiler.a(() -> {
                              return String.valueOf(TileEntity.a(tileentity.getClass()));
                          });
@@ -476,7 +475,7 @@ index bb5911b6c..5f902175f 100644
                          ((ITickable) tileentity).e();
                          this.methodProfiler.b();
                      } catch (Throwable throwable2) {
-@@ -1421,6 +1431,11 @@ public abstract class World implements IBlockAccess {
+@@ -1420,6 +1430,11 @@ public abstract class World implements IBlockAccess {
                          tileentity.a(crashreportsystemdetails1);
                          throw new ReportedException(crashreport1);
                      }
@@ -488,16 +487,16 @@ index bb5911b6c..5f902175f 100644
                  }
              }
  
-@@ -1433,6 +1448,8 @@ public abstract class World implements IBlockAccess {
+@@ -1432,6 +1447,8 @@ public abstract class World implements IBlockAccess {
              }
          }
  
 +        timings.tileEntityTick.stopTiming(); // Spigot
 +        timings.tileEntityPending.startTiming(); // Spigot
          this.O = false;
-         /* CraftBukkit start - Moved up
-         if (!this.tileEntityListUnload.isEmpty()) {
-@@ -1473,6 +1490,7 @@ public abstract class World implements IBlockAccess {
+         this.methodProfiler.c("pendingBlockEntities");
+         if (!this.b.isEmpty()) {
+@@ -1464,6 +1481,7 @@ public abstract class World implements IBlockAccess {
              this.b.clear();
          }
  
@@ -505,7 +504,7 @@ index bb5911b6c..5f902175f 100644
          this.methodProfiler.b();
          this.methodProfiler.b();
      }
-@@ -1527,6 +1545,7 @@ public abstract class World implements IBlockAccess {
+@@ -1518,6 +1536,7 @@ public abstract class World implements IBlockAccess {
          }
          // CraftBukkit end
  
@@ -513,7 +512,7 @@ index bb5911b6c..5f902175f 100644
          entity.M = entity.locX;
          entity.N = entity.locY;
          entity.O = entity.locZ;
-@@ -1593,6 +1612,7 @@ public abstract class World implements IBlockAccess {
+@@ -1584,6 +1603,7 @@ public abstract class World implements IBlockAccess {
                  }
              }
          }
@@ -522,10 +521,10 @@ index bb5911b6c..5f902175f 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index a13089f92..d5ec65c02 100644
+index ad88b4d9a..1e07fb296 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -282,10 +282,13 @@ public class WorldServer extends World implements IAsyncTaskHandler {
+@@ -283,10 +283,13 @@ public class WorldServer extends World implements IAsyncTaskHandler {
          // CraftBukkit start - Only call spawner if we have players online and the world allows for mobs or animals
          long time = this.worldData.getTime();
          if (this.getGameRules().getBoolean("doMobSpawning") && this.worldData.getType() != WorldType.DEBUG_ALL_BLOCK_STATES && (this.allowMonsters || this.allowAnimals) && (this instanceof WorldServer && this.players.size() > 0)) {
@@ -539,7 +538,7 @@ index a13089f92..d5ec65c02 100644
          this.methodProfiler.c("chunkSource");
          this.chunkProvider.unloadChunks();
          int j = this.a(1.0F);
-@@ -299,21 +302,36 @@ public class WorldServer extends World implements IAsyncTaskHandler {
+@@ -300,21 +303,36 @@ public class WorldServer extends World implements IAsyncTaskHandler {
              this.worldData.setDayTime(this.worldData.getDayTime() + 1L);
          }
  

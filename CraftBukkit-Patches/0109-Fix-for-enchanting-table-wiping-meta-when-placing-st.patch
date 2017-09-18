@@ -1,4 +1,4 @@
-From 814d9eeeddcfedd9ca0dcd02f4d6e85eb571453f Mon Sep 17 00:00:00 2001
+From a76278e166cc755e0aca5386087e67f4cd8ceb09 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Thu, 17 Jul 2014 21:13:15 -0400
 Subject: [PATCH] Fix for enchanting table wiping meta when placing stacked
@@ -6,18 +6,18 @@ Subject: [PATCH] Fix for enchanting table wiping meta when placing stacked
 
 
 diff --git a/src/main/java/net/minecraft/server/ContainerEnchantTable.java b/src/main/java/net/minecraft/server/ContainerEnchantTable.java
-index 6377d9a1..7a80234a 100644
+index c9cb981fb..edb929cb9 100644
 --- a/src/main/java/net/minecraft/server/ContainerEnchantTable.java
 +++ b/src/main/java/net/minecraft/server/ContainerEnchantTable.java
 @@ -366,7 +366,11 @@ public class ContainerEnchantTable extends Container {
-                     ((Slot) this.c.get(0)).set(itemstack1.cloneItemStack());
+                     ((Slot) this.slots.get(0)).set(itemstack1.cloneItemStack());
                      itemstack1.setCount(0);
                  } else if (!itemstack1.isEmpty()) {
--                    ((Slot) this.c.get(0)).set(new ItemStack(itemstack1.getItem(), 1, itemstack1.getData()));
+-                    ((Slot) this.slots.get(0)).set(new ItemStack(itemstack1.getItem(), 1, itemstack1.getData()));
 +                    // Spigot start
 +                    ItemStack clone = itemstack1.cloneItemStack();
 +                    clone.setCount(1);
-+                    ((Slot) this.c.get(0)).set(clone);
++                    ((Slot) this.slots.get(0)).set(clone);
 +                    // Spigot end
                      itemstack1.subtract(1);
                  }

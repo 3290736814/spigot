@@ -1,11 +1,11 @@
-From 6d17716575404d3dbc321241b11a1c49b608c63d Mon Sep 17 00:00:00 2001
+From 188f1128198cfc544a22f3b9440e0bdd059b2bb4 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 3 Mar 2016 19:45:46 +1100
 Subject: [PATCH] Implement SpawnerSpawnEvent.
 
 
 diff --git a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
-index 439810bc..e87f9047 100644
+index 439810bc4..e87f90474 100644
 --- a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 +++ b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 @@ -107,6 +107,9 @@ public abstract class MobSpawnerAbstract {
@@ -19,7 +19,7 @@ index 439810bc..e87f9047 100644
                          ChunkRegionLoader.a(entity, world, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER); // CraftBukkit
                          world.triggerEffect(2004, blockposition, 0);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 33020b90..4385cd96 100644
+index 33020b902..4385cd969 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -1008,6 +1008,21 @@ public class CraftEventFactory {
@@ -45,5 +45,5 @@ index 33020b90..4385cd96 100644
          EntityToggleGlideEvent event = new EntityToggleGlideEvent((LivingEntity) entity.getBukkitEntity(), gliding);
          entity.world.getServer().getPluginManager().callEvent(event);
 -- 
-2.1.4
+2.11.0
 

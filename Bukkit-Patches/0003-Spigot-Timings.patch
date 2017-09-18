@@ -1,4 +1,4 @@
-From 45fc6b3b7127c8681ea9fecb5a11b8bac09a0a8b Mon Sep 17 00:00:00 2001
+From d962de54bbe9be628c1f9b77df3396d3bd0e9dc1 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 2 Jun 2013 10:42:57 +1000
 Subject: [PATCH] Spigot Timings
@@ -8,7 +8,7 @@ Adds performance tracking timings all around the Minecraft Server, and improves 
 Plugins can track their own timings with CustomTimingsHandler
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index ecedeeb4..c2287eda 100644
+index 790bf36c..cb00d8f9 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
 @@ -532,6 +532,7 @@ public final class Bukkit {
@@ -20,7 +20,7 @@ index ecedeeb4..c2287eda 100644
  
      /**
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 5fb827ee..e3cbe0d9 100644
+index 1e8c1845..c0b9c80b 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
 @@ -955,6 +955,10 @@ public interface Server extends PluginMessageRecipient {
@@ -83,7 +83,7 @@ index 9969185c..71709126 100644
          }
  
 diff --git a/src/main/java/org/bukkit/command/defaults/TimingsCommand.java b/src/main/java/org/bukkit/command/defaults/TimingsCommand.java
-index a39ea5dd..a8f61f2d 100644
+index 66ea6345..bba914d7 100644
 --- a/src/main/java/org/bukkit/command/defaults/TimingsCommand.java
 +++ b/src/main/java/org/bukkit/command/defaults/TimingsCommand.java
 @@ -19,23 +19,101 @@ import org.bukkit.util.StringUtil;
@@ -249,7 +249,7 @@ index a39ea5dd..a8f61f2d 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/plugin/SimplePluginManager.java b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
-index 2dae74e7..a8b4db1c 100644
+index b9015eee..b3bcda52 100644
 --- a/src/main/java/org/bukkit/plugin/SimplePluginManager.java
 +++ b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
 @@ -292,6 +292,7 @@ public final class SimplePluginManager implements PluginManager {

@@ -1,11 +1,11 @@
-From b1c52657fc3cd92408eb2de877653cd989e68bd1 Mon Sep 17 00:00:00 2001
+From 59ba863357e67cb4b0fdca4961de72d1113086a6 Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Fri, 11 Aug 2017 19:23:58 +0100
 Subject: [PATCH] Make unloaded chunk saving more asynchronous
 
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 9dcab42de..787b201fd 100644
+index 960464845..ac478fb27 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -196,17 +196,17 @@ public class ChunkProviderServer implements IChunkProvider {
@@ -24,8 +24,8 @@ index 9dcab42de..787b201fd 100644
 +    public void saveChunk(Chunk chunk, boolean unloaded) { // Spigot
          try {
              chunk.setLastSaved(this.world.getTime());
--            this.chunkLoader.a(this.world, chunk);
-+            this.chunkLoader.a(this.world, chunk, unloaded); // Spigot
+-            this.chunkLoader.saveChunk(this.world, chunk);
++            this.chunkLoader.saveChunk(this.world, chunk, unloaded); // Spigot
          } catch (IOException ioexception) {
              ChunkProviderServer.a.error("Couldn\'t save chunk", ioexception);
          } catch (ExceptionWorldConflict exceptionworldconflict) {
@@ -48,7 +48,7 @@ index 9dcab42de..787b201fd 100644
          }
          this.chunks.remove(chunk.chunkKey);
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index 9655a3ceb..a07e2c1fd 100644
+index e0e4c9a0e..50ec3adb8 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -14,17 +14,22 @@ import java.util.Set;
@@ -97,16 +97,16 @@ index 9655a3ceb..a07e2c1fd 100644
          }
      }
  
--    public void a(World world, Chunk chunk) throws IOException, ExceptionWorldConflict {
-+    public void a(World world, Chunk chunk, boolean unloaded) throws IOException, ExceptionWorldConflict { // Spigot
+-    public void saveChunk(World world, Chunk chunk) throws IOException, ExceptionWorldConflict {
++    public void saveChunk(World world, Chunk chunk, boolean unloaded) throws IOException, ExceptionWorldConflict { // Spigot
          world.checkSession();
  
          try {
 @@ -127,15 +132,27 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
  
              nbttagcompound.set("Level", nbttagcompound1);
-             nbttagcompound.setInt("DataVersion", 1241);
--            this.a(chunk, world, nbttagcompound1);
+             nbttagcompound.setInt("DataVersion", 1343);
+-            this.saveBody(chunk, world, nbttagcompound1);
 -            this.a(chunk.k(), nbttagcompound);
 +
 +            // Spigot start
@@ -175,7 +175,7 @@ index 9655a3ceb..a07e2c1fd 100644
          });
      }
  
--    private void a(Chunk chunk, World world, NBTTagCompound nbttagcompound) {
+-    private void saveBody(Chunk chunk, World world, NBTTagCompound nbttagcompound) {
 +    private static void saveBody(NBTTagCompound nbttagcompound, Chunk chunk, long worldTime, boolean worldHasSkyLight) { // Spigot
          nbttagcompound.setInt("xPos", chunk.locX);
          nbttagcompound.setInt("zPos", chunk.locZ);
@@ -209,15 +209,15 @@ index 9655a3ceb..a07e2c1fd 100644
          NBTTagList nbttaglist1 = new NBTTagList();
  
 diff --git a/src/main/java/net/minecraft/server/IChunkLoader.java b/src/main/java/net/minecraft/server/IChunkLoader.java
-index 117a2a5c5..a65b1606c 100644
+index c541fbb11..f9b80ffc4 100644
 --- a/src/main/java/net/minecraft/server/IChunkLoader.java
 +++ b/src/main/java/net/minecraft/server/IChunkLoader.java
 @@ -8,9 +8,9 @@ public interface IChunkLoader {
      @Nullable
      Chunk a(World world, int i, int j) throws IOException;
  
--    void a(World world, Chunk chunk) throws IOException, ExceptionWorldConflict;
-+    void a(World world, Chunk chunk, boolean unloaded) throws IOException, ExceptionWorldConflict; // PAIL saveChunk; Spigot
+-    void saveChunk(World world, Chunk chunk) throws IOException, ExceptionWorldConflict;
++    void saveChunk(World world, Chunk chunk, boolean unloaded) throws IOException, ExceptionWorldConflict; // Spigot
  
 -    void b(World world, Chunk chunk) throws IOException;
 +    // void b(World world, Chunk chunk) throws IOException; // Spigot
