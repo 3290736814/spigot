@@ -1,4 +1,4 @@
-From 257f603f9b58144a65437908c239ab6d5bfd402d Mon Sep 17 00:00:00 2001
+From 795232ea5be5fe3301ec1062b99339fe62439d58 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 2 Jul 2013 13:07:39 +1000
 Subject: [PATCH] POM Changes
@@ -6,7 +6,7 @@ Subject: [PATCH] POM Changes
 Basic changes to the build system which mark the artifact as Spigot, and the necessary code changes to ensure proper functionality. Also disables the auto updater provided by CraftBukkit as it is useless to us.
 
 diff --git a/pom.xml b/pom.xml
-index 1fd537808..e43014c0a 100644
+index 0841dd9b..c73b4b4f 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,12 +1,12 @@
@@ -53,7 +53,7 @@ index 1fd537808..e43014c0a 100644
          </dependency>
 @@ -64,6 +71,12 @@
              <version>5.1.44</version>
-             <scope>compile</scope>
+             <scope>runtime</scope>
          </dependency>
 +        <dependency>
 +            <groupId>net.sf.trove4j</groupId>
@@ -104,7 +104,7 @@ index 1fd537808..e43014c0a 100644
                              <Specification-Title>Bukkit</Specification-Title>
                              <Specification-Version>${api.version}</Specification-Version>
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
-index f905d17b6..93046379d 100644
+index f905d17b..93046379 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 @@ -11,7 +11,7 @@ public final class Versioning {
