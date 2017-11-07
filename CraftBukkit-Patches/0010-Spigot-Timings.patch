@@ -1,4 +1,4 @@
-From fd7708d7204153db913c3d15394a541cd1a5cf0e Mon Sep 17 00:00:00 2001
+From d99887158d92d36299f5c9ce35008befef50374c Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 28 Oct 2017 16:17:07 +1100
 Subject: [PATCH] Spigot Timings
@@ -124,7 +124,7 @@ index 330c5fe3..f1a389b6 100644
  
      public boolean aa() {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 96bc931a..c1d36c85 100644
+index 0c20b450..23a9764f 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -25,6 +25,7 @@ import org.bukkit.block.BlockFace;
@@ -135,15 +135,15 @@ index 96bc931a..c1d36c85 100644
  import org.bukkit.event.entity.EntityCombustByEntityEvent;
  import org.bukkit.event.hanging.HangingBreakByEntityEvent;
  import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
-@@ -145,6 +146,7 @@ public abstract class Entity implements ICommandListener {
-     public boolean valid; // CraftBukkit
-     public org.bukkit.projectiles.ProjectileSource projectileSource; // CraftBukkit - For projectiles only
-     public boolean forceExplosionKnockback; // CraftBukkit - SPIGOT-949
+@@ -146,6 +147,7 @@ public abstract class Entity implements ICommandListener {
+     public boolean valid;
+     public org.bukkit.projectiles.ProjectileSource projectileSource; // For projectiles only
+     public boolean forceExplosionKnockback; // SPIGOT-949
 +    public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getEntityTimings(this); // Spigot
  
-     public Entity(World world) {
-         this.id = Entity.entityCount++;
-@@ -511,6 +513,7 @@ public abstract class Entity implements ICommandListener {
+     public float getBukkitYaw() {
+         return this.yaw;
+@@ -517,6 +519,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public void move(EnumMoveType enummovetype, double d0, double d1, double d2) {
@@ -151,7 +151,7 @@ index 96bc931a..c1d36c85 100644
          if (this.noclip) {
              this.a(this.getBoundingBox().d(d0, d1, d2));
              this.recalcPosition();
-@@ -904,6 +907,7 @@ public abstract class Entity implements ICommandListener {
+@@ -910,6 +913,7 @@ public abstract class Entity implements ICommandListener {
  
              this.world.methodProfiler.b();
          }
@@ -160,7 +160,7 @@ index 96bc931a..c1d36c85 100644
  
      public void recalcPosition() {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 9b70914d..2e88fddb 100644
+index cc037988..3912b40d 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -31,6 +31,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
@@ -172,7 +172,7 @@ index 9b70914d..2e88fddb 100644
  public abstract class EntityLiving extends Entity {
  
      private static final Logger a = LogManager.getLogger();
-@@ -1853,6 +1855,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1858,6 +1860,7 @@ public abstract class EntityLiving extends Entity {
      }
  
      public void B_() {
@@ -180,7 +180,7 @@ index 9b70914d..2e88fddb 100644
          super.B_();
          this.cI();
          if (!this.world.isClientSide) {
-@@ -1925,7 +1928,9 @@ public abstract class EntityLiving extends Entity {
+@@ -1930,7 +1933,9 @@ public abstract class EntityLiving extends Entity {
              }
          }
  
@@ -190,7 +190,7 @@ index 9b70914d..2e88fddb 100644
          double d0 = this.locX - this.lastX;
          double d1 = this.locZ - this.lastZ;
          float f = (float) (d0 * d0 + d1 * d1);
-@@ -2002,6 +2007,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2007,6 +2012,7 @@ public abstract class EntityLiving extends Entity {
              this.bq = 0;
          }
  
@@ -198,7 +198,7 @@ index 9b70914d..2e88fddb 100644
      }
  
      protected float g(float f, float f1) {
-@@ -2066,6 +2072,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2071,6 +2077,7 @@ public abstract class EntityLiving extends Entity {
          }
  
          this.world.methodProfiler.a("ai");
@@ -206,7 +206,7 @@ index 9b70914d..2e88fddb 100644
          if (this.isFrozen()) {
              this.bd = false;
              this.be = 0.0F;
-@@ -2076,6 +2083,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2081,6 +2088,7 @@ public abstract class EntityLiving extends Entity {
              this.doTick();
              this.world.methodProfiler.b();
          }
@@ -214,7 +214,7 @@ index 9b70914d..2e88fddb 100644
  
          this.world.methodProfiler.b();
          this.world.methodProfiler.a("jump");
-@@ -2098,10 +2106,14 @@ public abstract class EntityLiving extends Entity {
+@@ -2103,10 +2111,14 @@ public abstract class EntityLiving extends Entity {
          this.bg *= 0.98F;
          this.bh *= 0.9F;
          this.r();
@@ -866,5 +866,5 @@ index 9cb666bb..c37275f2 100644
 +    // Spigot end
  }
 -- 
-2.11.0
+2.14.1
 

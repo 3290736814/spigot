@@ -1,4 +1,4 @@
-From d1af9e2623783ddfc719f5b7cbb30e559a1f010a Mon Sep 17 00:00:00 2001
+From 536b854ab620b9920e34d159aebb77ed62438d57 Mon Sep 17 00:00:00 2001
 From: Andy Shulman <andy.shulman@hotmail.com>
 Date: Mon, 15 Apr 2013 20:06:01 -0500
 Subject: [PATCH] Define EntitySpawnEvent and SpawnerSpawnEvent
@@ -28,7 +28,7 @@ index 4a8f2e18..70212ea5 100644
      private final SpawnReason spawnReason;
  
      public CreatureSpawnEvent(final LivingEntity spawnee, final SpawnReason spawnReason) {
-@@ -21,29 +17,12 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
+@@ -21,28 +17,11 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
          this.spawnReason = spawnReason;
      }
  
@@ -45,7 +45,7 @@ index 4a8f2e18..70212ea5 100644
          return (LivingEntity) entity;
      }
  
-     /**
+-    /**
 -     * Gets the location at which the creature is spawning.
 -     *
 -     * @return The location at which the creature is spawning
@@ -54,10 +54,9 @@ index 4a8f2e18..70212ea5 100644
 -        return getEntity().getLocation();
 -    }
 -
--    /**
+     /**
       * Gets the reason for why the creature is being spawned.
       *
-      * @return A SpawnReason value detailing the reason for the creature being
 @@ -53,15 +32,6 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
          return spawnReason;
      }
@@ -216,5 +215,5 @@ index 00000000..1acb3c40
 +    }
 +}
 -- 
-2.11.0
+2.14.1
 

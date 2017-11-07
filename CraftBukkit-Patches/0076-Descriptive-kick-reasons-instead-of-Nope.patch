@@ -1,14 +1,14 @@
-From 325b4e5eb87207fd69d7bd6dbf76fdd8bd4639fc Mon Sep 17 00:00:00 2001
+From a0d71ac35f6b16d9363f804bc92ed91161be6efd Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sat, 15 Mar 2014 01:30:05 -0400
 Subject: [PATCH] Descriptive kick reasons instead of Nope!
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index a8f6a1091..c2da96eaf 100644
+index 1c3e8502..b944be5c 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -273,7 +273,7 @@ public abstract class Entity implements ICommandListener {
+@@ -279,7 +279,7 @@ public abstract class Entity implements ICommandListener {
          if (f == Float.POSITIVE_INFINITY || f == Float.NEGATIVE_INFINITY) {
              if (this instanceof EntityPlayer) {
                  this.world.getServer().getLogger().warning(this.getName() + " was caught trying to crash the server with an invalid yaw");
@@ -17,7 +17,7 @@ index a8f6a1091..c2da96eaf 100644
              }
              f = 0;
          }
-@@ -286,7 +286,7 @@ public abstract class Entity implements ICommandListener {
+@@ -292,7 +292,7 @@ public abstract class Entity implements ICommandListener {
          if (f1 == Float.POSITIVE_INFINITY || f1 == Float.NEGATIVE_INFINITY) {
              if (this instanceof EntityPlayer) {
                  this.world.getServer().getLogger().warning(this.getName() + " was caught trying to crash the server with an invalid pitch");
@@ -27,7 +27,7 @@ index a8f6a1091..c2da96eaf 100644
              f1 = 0;
          }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index b2f6722f7..697c46658 100644
+index 8d495089..8258a79e 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -1148,7 +1148,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
@@ -40,5 +40,5 @@ index b2f6722f7..697c46658 100644
      }
  
 -- 
-2.11.0
+2.14.1
 

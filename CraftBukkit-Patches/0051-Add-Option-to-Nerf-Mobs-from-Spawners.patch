@@ -1,14 +1,14 @@
-From 81011baff2140062e8b8bb8b65d571d25ffacb51 Mon Sep 17 00:00:00 2001
+From db3084eb2b0d53e0b37f09c5a073d79cb672dcc5 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 2 Feb 2014 16:55:46 +0000
 Subject: [PATCH] Add Option to Nerf Mobs from Spawners
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 7e325cc96..a8f6a1091 100644
+index ad86f0ff..1c3e8502 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -151,6 +151,7 @@ public abstract class Entity implements ICommandListener {
+@@ -152,6 +152,7 @@ public abstract class Entity implements ICommandListener {
      public final byte activationType = org.spigotmc.ActivationRange.initializeEntityActivationType(this);
      public final boolean defaultActivationState;
      public long activatedTick = Integer.MIN_VALUE;
@@ -17,7 +17,7 @@ index 7e325cc96..a8f6a1091 100644
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/server/EntityInsentient.java b/src/main/java/net/minecraft/server/EntityInsentient.java
-index d5face7ca..3c48d9463 100644
+index d5face7c..3c48d946 100644
 --- a/src/main/java/net/minecraft/server/EntityInsentient.java
 +++ b/src/main/java/net/minecraft/server/EntityInsentient.java
 @@ -648,6 +648,12 @@ public abstract class EntityInsentient extends EntityLiving {
@@ -34,7 +34,7 @@ index d5face7ca..3c48d9463 100644
          this.bw.a();
          this.world.methodProfiler.b();
 diff --git a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
-index 36d589f73..439810bc4 100644
+index 36d589f7..439810bc 100644
 --- a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 +++ b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 @@ -102,7 +102,12 @@ public abstract class MobSpawnerAbstract {
@@ -52,7 +52,7 @@ index 36d589f73..439810bc4 100644
                          world.triggerEffect(2004, blockposition, 0);
                          if (entityinsentient != null) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 4276472fb..e5e54f7e1 100644
+index 4276472f..e5e54f7e 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -215,4 +215,11 @@ public class SpigotWorldConfig
@@ -68,5 +68,5 @@ index 4276472fb..e5e54f7e1 100644
 +    }
  }
 -- 
-2.11.0
+2.14.1
 

@@ -1,4 +1,4 @@
-From d937267d58b8dc01553f2aa78122e9232306ed8d Mon Sep 17 00:00:00 2001
+From b0219c1238c72a56c44676df7ee60992670ea38a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 7 Jul 2013 10:32:05 -0400
 Subject: [PATCH] InventoryClickEvent getClickedInventory
@@ -34,10 +34,11 @@ index 55527652..60feaf3b 100644
          this.whichSlot = view.convertSlot(slot);
          this.click = click;
          this.action = action;
-@@ -68,6 +76,14 @@ public class InventoryClickEvent extends InventoryInteractEvent {
+@@ -67,6 +75,14 @@ public class InventoryClickEvent extends InventoryInteractEvent {
+         this.hotbarKey = key;
      }
  
-     /**
++    /**
 +     * Gets the inventory that was clicked, or null if outside of window
 +     * @return The clicked inventory
 +     */
@@ -45,10 +46,9 @@ index 55527652..60feaf3b 100644
 +        return clickedInventory;
 +    }
 +
-+    /**
+     /**
       * Gets the type of slot that was clicked.
       *
-      * @return the slot type
 -- 
-2.11.0
+2.14.1
 
