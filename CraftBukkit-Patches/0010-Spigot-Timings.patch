@@ -1,4 +1,4 @@
-From ff87f9a777f0449c4afb645c3dc6dedcc9027167 Mon Sep 17 00:00:00 2001
+From 227613d76e67d5c3107b33ace6d105117cd71e19 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -359,10 +359,10 @@ index 48495b64..26fe01ba 100644
          this.methodProfiler.b();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index eda6dff9..360bca58 100644
+index 3e063e47..24cc25f0 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1317,6 +1317,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1322,6 +1322,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
      // CraftBukkit end
  
      private void handleCommand(String s) {
@@ -370,7 +370,7 @@ index eda6dff9..360bca58 100644
         // CraftBukkit start - whole method
          this.LOGGER.info(this.player.getName() + " issued server command: " + s);
  
-@@ -1326,18 +1327,22 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1331,18 +1332,22 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
          this.server.getPluginManager().callEvent(event);
  
          if (event.isCancelled()) {

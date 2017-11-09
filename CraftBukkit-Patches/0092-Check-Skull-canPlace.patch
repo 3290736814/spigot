@@ -1,0 +1,26 @@
+From a557c8d8fcc0c94aa3c440a95a19ab08f93dad48 Mon Sep 17 00:00:00 2001
+From: md_5 <git@md-5.net>
+Date: Tue, 15 Apr 2014 10:48:35 +1000
+Subject: [PATCH] Check Skull canPlace
+
+
+diff --git a/src/main/java/net/minecraft/server/ItemSkull.java b/src/main/java/net/minecraft/server/ItemSkull.java
+index bd99b5a1..3a542699 100644
+--- a/src/main/java/net/minecraft/server/ItemSkull.java
++++ b/src/main/java/net/minecraft/server/ItemSkull.java
+@@ -36,6 +36,12 @@ public class ItemSkull extends Item {
+                 if (world.isClientSide) {
+                     return EnumInteractionResult.SUCCESS;
+                 } else {
++                    // Spigot Start
++                    if ( !Blocks.SKULL.canPlace( world, blockposition ) )
++                    {
++                        return EnumInteractionResult.FAIL;
++                    }
++                    // Spigot End
+                     world.setTypeAndData(blockposition, Blocks.SKULL.getBlockData().set(BlockSkull.FACING, enumdirection), 11);
+                     int i = 0;
+ 
+-- 
+2.14.1
+

@@ -1,4 +1,4 @@
-From 63dccbf8c8327fd57772224476fd02bea9904c1b Mon Sep 17 00:00:00 2001
+From e03776b01c514d620b7fb4f260e23af9b73d530c Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -101,7 +101,7 @@ index 0e1d9343..f9cd769e 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 8477337b..53fd4d40 100644
+index 7739a3e4..938deeff 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -720,4 +720,15 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
@@ -178,22 +178,6 @@ index 8d82c4dc..c071b7cb 100644
 +    public Spigot spigot()
 +    {
 +        return spigot;
-+    }
-+    // Spigot end
- }
-diff --git a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScore.java b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScore.java
-index d3ae91bc..0b71b538 100644
---- a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScore.java
-+++ b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScore.java
-@@ -59,4 +59,11 @@ final class CraftScore implements Score {
-     public CraftScoreboard getScoreboard() {
-         return objective.getScoreboard();
-     }
-+
-+    // Spigot start
-+    @Override
-+    public boolean isScoreSet() throws IllegalStateException {
-+        throw new UnsupportedOperationException("Not supported yet.");
 +    }
 +    // Spigot end
  }
