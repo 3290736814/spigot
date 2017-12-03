@@ -1,11 +1,11 @@
-From b4993fdbf99bdd01cae7655b17a021a45486a322 Mon Sep 17 00:00:00 2001
+From 0c0f8524631e66adf7d61546c8ae6ecc49c92817 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 02:59:14 +0100
 Subject: [PATCH] BungeeCord Chat API
 
 
 diff --git a/pom.xml b/pom.xml
-index c2d61041..4221e017 100644
+index c731d340..8ee129d9 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -76,6 +76,14 @@
@@ -360,6 +360,87 @@ index 8584437d..8af5f849 100644
 +         * @param components the components to send
 +         */
 +        public void sendMessage(net.md_5.bungee.api.ChatMessageType position, net.md_5.bungee.api.chat.BaseComponent... components) {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
+     }
+ 
+     @Override
+diff --git a/src/main/java/org/bukkit/inventory/meta/BookMeta.java b/src/main/java/org/bukkit/inventory/meta/BookMeta.java
+index 3b6bf419..75b03ac3 100644
+--- a/src/main/java/org/bukkit/inventory/meta/BookMeta.java
++++ b/src/main/java/org/bukkit/inventory/meta/BookMeta.java
+@@ -1,6 +1,7 @@
+ package org.bukkit.inventory.meta;
+ 
+ import java.util.List;
++import net.md_5.bungee.api.chat.BaseComponent;
+ 
+ import org.bukkit.Material;
+ 
+@@ -177,6 +178,68 @@ public interface BookMeta extends ItemMeta {
+     // Spigot start
+     public class Spigot extends ItemMeta.Spigot {
+ 
++        /**
++         * Gets the specified page in the book. The given page must exist.
++         *
++         * @param page the page number to get
++         * @return the page from the book
++         */
++        public BaseComponent[] getPage(int page) {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
++
++        /**
++         * Sets the specified page in the book. Pages of the book must be
++         * contiguous.
++         * <p>
++         * The data can be up to 256 characters in length, additional characters
++         * are truncated.
++         *
++         * @param page the page number to set
++         * @param data the data to set for that page
++         */
++        public void setPage(int page, BaseComponent... data) {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
++
++        /**
++         * Gets all the pages in the book.
++         *
++         * @return list of all the pages in the book
++         */
++        public List<BaseComponent[]> getPages() {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
++
++        /**
++         * Clears the existing book pages, and sets the book to use the provided
++         * pages. Maximum 50 pages with 256 characters per page.
++         *
++         * @param pages A list of pages to set the book to use
++         */
++        public void setPages(List<BaseComponent[]> pages) {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
++
++        /**
++         * Clears the existing book pages, and sets the book to use the provided
++         * pages. Maximum 50 pages with 256 characters per page.
++         *
++         * @param pages A list of component arrays, each being a page
++         */
++        public void setPages(BaseComponent[]... pages) {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
++
++        /**
++         * Adds new pages to the end of the book. Up to a maximum of 50 pages
++         * with 256 characters per page.
++         *
++         * @param pages A list of component arrays, each being a page
++         */
++        public void addPage(BaseComponent[]... pages) {
 +            throw new UnsupportedOperationException("Not supported yet.");
 +        }
      }

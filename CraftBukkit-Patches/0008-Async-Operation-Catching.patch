@@ -1,4 +1,4 @@
-From 3f66fe3920088d3b18d771d18c618d3d0470e51d Mon Sep 17 00:00:00 2001
+From d5caa600c43da87f40acf61c2cc05c75cb72c06e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -6,7 +6,7 @@ Subject: [PATCH] Async Operation Catching
 Catch and throw an exception when a potentially unsafe operation occurs on a thread other than the main server thread.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 76bfeafe..2dca6dbc 100644
+index 76bfeafe6..2dca6dbcb 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -315,9 +315,13 @@ public class Block {
@@ -26,7 +26,7 @@ index 76bfeafe..2dca6dbc 100644
      public int a(Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 87243e26..cc037988 100644
+index 87243e266..cc037988f 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -668,6 +668,7 @@ public abstract class EntityLiving extends Entity {
@@ -38,7 +38,7 @@ index 87243e26..cc037988 100644
          if (isTickingEffects) {
              effectsToProcess.add(mobeffect);
 diff --git a/src/main/java/net/minecraft/server/EntityTracker.java b/src/main/java/net/minecraft/server/EntityTracker.java
-index a23a33b5..fe699860 100644
+index a23a33b5d..fe699860a 100644
 --- a/src/main/java/net/minecraft/server/EntityTracker.java
 +++ b/src/main/java/net/minecraft/server/EntityTracker.java
 @@ -105,6 +105,7 @@ public class EntityTracker {
@@ -58,7 +58,7 @@ index a23a33b5..fe699860 100644
              EntityPlayer entityplayer = (EntityPlayer) entity;
              Iterator iterator = this.c.iterator();
 diff --git a/src/main/java/net/minecraft/server/EntityTrackerEntry.java b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
-index a68b8a5b..d864c774 100644
+index a68b8a5ba..d864c7745 100644
 --- a/src/main/java/net/minecraft/server/EntityTrackerEntry.java
 +++ b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
 @@ -324,6 +324,7 @@ public class EntityTrackerEntry {
@@ -78,7 +78,7 @@ index a68b8a5b..d864c774 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 91df4dfe..b043266b 100644
+index 91df4dfed..b043266be 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -973,6 +973,7 @@ public abstract class World implements IBlockAccess {
@@ -114,10 +114,10 @@ index 91df4dfe..b043266b 100644
          // this.entityList.addAll(collection);
          Iterator iterator = collection.iterator();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index d1eb1e8f..d8dd70d9 100644
+index e6ecabced..5a5b9260a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -172,6 +172,7 @@ public class CraftWorld implements World {
+@@ -179,6 +179,7 @@ public class CraftWorld implements World {
      }
  
      public boolean unloadChunkRequest(int x, int z, boolean safe) {
@@ -125,7 +125,7 @@ index d1eb1e8f..d8dd70d9 100644
          if (safe && isChunkInUse(x, z)) {
              return false;
          }
-@@ -185,6 +186,7 @@ public class CraftWorld implements World {
+@@ -192,6 +193,7 @@ public class CraftWorld implements World {
      }
  
      public boolean unloadChunk(int x, int z, boolean save, boolean safe) {
@@ -133,7 +133,7 @@ index d1eb1e8f..d8dd70d9 100644
          if (isChunkInUse(x, z)) {
              return false;
          }
-@@ -255,6 +257,7 @@ public class CraftWorld implements World {
+@@ -262,6 +264,7 @@ public class CraftWorld implements World {
      }
  
      public boolean loadChunk(int x, int z, boolean generate) {
@@ -142,7 +142,7 @@ index d1eb1e8f..d8dd70d9 100644
          if (generate) {
              // Use the default variant of loadChunk when generate == true.
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index aebb7725..9bc317bd 100644
+index 4db27bf9f..dc072aaf8 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -214,6 +214,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
@@ -154,7 +154,7 @@ index aebb7725..9bc317bd 100644
  
          getHandle().playerConnection.disconnect(message == null ? "" : message);
 diff --git a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScoreboardManager.java b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScoreboardManager.java
-index 69fcb108..3992c716 100644
+index 69fcb1082..3992c7165 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScoreboardManager.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScoreboardManager.java
 @@ -42,6 +42,7 @@ public final class CraftScoreboardManager implements ScoreboardManager {
@@ -166,7 +166,7 @@ index 69fcb108..3992c716 100644
          scoreboards.add(scoreboard);
          return scoreboard;
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java b/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java
-index ae3481ba..a0cdd231 100644
+index ae3481ba8..a0cdd2317 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/ServerShutdownThread.java
 @@ -13,6 +13,7 @@ public class ServerShutdownThread extends Thread {
@@ -179,7 +179,7 @@ index ae3481ba..a0cdd231 100644
              ex.printStackTrace();
 diff --git a/src/main/java/org/spigotmc/AsyncCatcher.java b/src/main/java/org/spigotmc/AsyncCatcher.java
 new file mode 100644
-index 00000000..4b3aa85c
+index 000000000..4b3aa85c9
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/AsyncCatcher.java
 @@ -0,0 +1,17 @@

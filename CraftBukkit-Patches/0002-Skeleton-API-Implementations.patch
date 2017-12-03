@@ -1,4 +1,4 @@
-From 02a17780129e737e4a2f6e193e25f57f1fc29e29 Mon Sep 17 00:00:00 2001
+From ce6ed67d68e56bc6b2379c2b00dcfff97a10d26e Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -25,10 +25,10 @@ index c0ebdf1a8..314ce9a31 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 1941e3a20..d1eb1e8f4 100644
+index 8f6653f77..e6ecabced 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1557,4 +1557,14 @@ public class CraftWorld implements World {
+@@ -1564,4 +1564,14 @@ public class CraftWorld implements World {
              cps.unload(chunk);
          }
      }
@@ -156,6 +156,25 @@ index 9747a8866..4db27bf9f 100644
 +
 +    public Player.Spigot spigot()
 +    {
++        return spigot;
++    }
++    // Spigot end
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
+index 441632bb3..27170814d 100644
+--- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
++++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
+@@ -355,4 +355,14 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+ 
+         return builder;
+     }
++
++    // Spigot start
++    private final BookMeta.Spigot spigot = new BookMeta.Spigot() {
++    };
++
++    @Override
++    public BookMeta.Spigot spigot() {
 +        return spigot;
 +    }
 +    // Spigot end

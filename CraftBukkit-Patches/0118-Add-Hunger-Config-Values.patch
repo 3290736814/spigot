@@ -1,11 +1,11 @@
-From e15c233f4cbb5e23b240da0272a9dde8c0504428 Mon Sep 17 00:00:00 2001
+From 95b24a3ed0972ffa722b83f81bb4f34c37c40b7e Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 8d8a3c127..9643181fe 100644
+index e516d37bb..c374efd79 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -1126,7 +1126,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -29,7 +29,7 @@ index 8d8a3c127..9643181fe 100644
          }
  
      }
-@@ -1437,13 +1437,13 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1441,13 +1441,13 @@ public abstract class EntityHuman extends EntityLiving {
                  i = Math.round(MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2) * 100.0F);
                  if (i > 0) {
                      this.a(StatisticList.q, i);
@@ -45,7 +45,7 @@ index 8d8a3c127..9643181fe 100644
                  }
              } else if (this.m_()) {
                  if (d1 > 0.0D) {
-@@ -1454,13 +1454,13 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1458,13 +1458,13 @@ public abstract class EntityHuman extends EntityLiving {
                  if (i > 0) {
                      if (this.isSprinting()) {
                          this.a(StatisticList.l, i);

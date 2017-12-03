@@ -1,4 +1,4 @@
-From 944057f1a35805f805d4d260268918f57dc140f6 Mon Sep 17 00:00:00 2001
+From 826aaee9e540c65af187b27e6db9a260fb32ecfd Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -37,10 +37,10 @@ index 5f88b720..1e8c1845 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index f34b3a93..a2082ee1 100644
+index c8344c6d..2d4174c9 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -1458,6 +1458,14 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -1470,6 +1470,14 @@ public interface World extends PluginMessageRecipient, Metadatable {
       */
      public <T> void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX, double offsetY, double offsetZ, double extra, T data);
  
@@ -141,6 +141,24 @@ index 33f6e6dc..8423104b 100644
 +    // Spigot start
 +    public class Spigot extends Entity.Spigot
 +    {
++
++    }
++
++    @Override
++    Spigot spigot();
++    // Spigot end
+ }
+diff --git a/src/main/java/org/bukkit/inventory/meta/BookMeta.java b/src/main/java/org/bukkit/inventory/meta/BookMeta.java
+index d66e3f59..3b6bf419 100644
+--- a/src/main/java/org/bukkit/inventory/meta/BookMeta.java
++++ b/src/main/java/org/bukkit/inventory/meta/BookMeta.java
+@@ -173,4 +173,13 @@ public interface BookMeta extends ItemMeta {
+     int getPageCount();
+ 
+     BookMeta clone();
++
++    // Spigot start
++    public class Spigot extends ItemMeta.Spigot {
 +
 +    }
 +
