@@ -1,4 +1,4 @@
-From 69fe0869f1798aa06a037bf1f9c7d5d73cc14f15 Mon Sep 17 00:00:00 2001
+From a61bc79ed8e38b75463e97321bd010da508e187a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -108,18 +108,18 @@ index c1b447963..9958bf869 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 7e14dd866..945a2d271 100644
+index 15f6387aa..328a81dcf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -20,6 +20,7 @@ import java.util.Set;
- import java.util.UUID;
+@@ -23,6 +23,7 @@ import java.util.UUID;
+ import java.util.WeakHashMap;
  import java.util.logging.Level;
  import java.util.logging.Logger;
 +import net.md_5.bungee.api.chat.BaseComponent;
  
  import net.minecraft.server.*;
  import net.minecraft.server.PacketPlayOutTitle.EnumTitleAction;
-@@ -1591,6 +1592,38 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1646,6 +1647,38 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
              return java.util.Collections.unmodifiableSet( ret );
          }
