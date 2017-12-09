@@ -1,4 +1,4 @@
-From b0cfc4244a22c3da93605d330367f24c984d5c0c Mon Sep 17 00:00:00 2001
+From 537f8915811478fbc88c0ab5bf8a43906592cf9c Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -78,7 +78,7 @@ index a68b8a5ba..d864c7745 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 91df4dfed..b043266be 100644
+index 9bb08fa8c..7a133a7c0 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -973,6 +973,7 @@ public abstract class World implements IBlockAccess {
@@ -87,9 +87,9 @@ index 91df4dfed..b043266be 100644
      public boolean addEntity(Entity entity, SpawnReason spawnReason) { // Changed signature, added SpawnReason
 +        org.spigotmc.AsyncCatcher.catchOp( "entity add"); // Spigot
          if (entity == null) return false;
-         // CraftBukkit end
-         int i = MathHelper.floor(entity.locX / 16.0D);
-@@ -1065,6 +1066,7 @@ public abstract class World implements IBlockAccess {
+ 
+         org.bukkit.event.Cancellable event = null;
+@@ -1063,6 +1064,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void kill(Entity entity) {
@@ -97,7 +97,7 @@ index 91df4dfed..b043266be 100644
          if (entity.isVehicle()) {
              entity.ejectPassengers();
          }
-@@ -1083,6 +1085,7 @@ public abstract class World implements IBlockAccess {
+@@ -1081,6 +1083,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void removeEntity(Entity entity) {
@@ -105,7 +105,7 @@ index 91df4dfed..b043266be 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2450,6 +2453,7 @@ public abstract class World implements IBlockAccess {
+@@ -2448,6 +2451,7 @@ public abstract class World implements IBlockAccess {
      }
  
      public void a(Collection<Entity> collection) {

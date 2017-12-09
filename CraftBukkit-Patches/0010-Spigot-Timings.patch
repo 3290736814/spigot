@@ -1,4 +1,4 @@
-From 22227c43525b1fb53f32a18eabb276f9e3d3f8f7 Mon Sep 17 00:00:00 2001
+From bc11187e1e70b7322dfbe794327b4fdf07aefa54 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -411,7 +411,7 @@ index 296a02950..e29b593aa 100644
      private static final RegistryMaterials<MinecraftKey, Class<? extends TileEntity>> f = new RegistryMaterials();
      protected World world;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index b043266be..8a618dfce 100644
+index 7a133a7c0..195e20727 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -19,6 +19,7 @@ import com.google.common.collect.Maps;
@@ -439,7 +439,7 @@ index b043266be..8a618dfce 100644
      }
  
      public World b() {
-@@ -1348,6 +1352,7 @@ public abstract class World implements IBlockAccess {
+@@ -1346,6 +1350,7 @@ public abstract class World implements IBlockAccess {
          CrashReportSystemDetails crashreportsystemdetails1;
          CrashReport crashreport1;
  
@@ -447,7 +447,7 @@ index b043266be..8a618dfce 100644
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
              entity = (Entity) this.entityList.get(this.tickPosition);
-@@ -1365,7 +1370,9 @@ public abstract class World implements IBlockAccess {
+@@ -1363,7 +1368,9 @@ public abstract class World implements IBlockAccess {
              this.methodProfiler.a("tick");
              if (!entity.dead && !(entity instanceof EntityPlayer)) {
                  try {
@@ -457,7 +457,7 @@ index b043266be..8a618dfce 100644
                  } catch (Throwable throwable1) {
                      crashreport1 = CrashReport.a(throwable1, "Ticking entity");
                      crashreportsystemdetails1 = crashreport1.a("Entity being ticked");
-@@ -1391,7 +1398,9 @@ public abstract class World implements IBlockAccess {
+@@ -1389,7 +1396,9 @@ public abstract class World implements IBlockAccess {
              this.methodProfiler.b();
          }
  
@@ -467,7 +467,7 @@ index b043266be..8a618dfce 100644
          if (!this.tileEntityListUnload.isEmpty()) {
              this.tileEntityListTick.removeAll(this.tileEntityListUnload);
              this.tileEntityList.removeAll(this.tileEntityListUnload);
-@@ -1412,6 +1421,7 @@ public abstract class World implements IBlockAccess {
+@@ -1410,6 +1419,7 @@ public abstract class World implements IBlockAccess {
                          this.methodProfiler.a(() -> {
                              return String.valueOf(TileEntity.a(tileentity.getClass()));
                          });
@@ -475,7 +475,7 @@ index b043266be..8a618dfce 100644
                          ((ITickable) tileentity).e();
                          this.methodProfiler.b();
                      } catch (Throwable throwable2) {
-@@ -1420,6 +1430,11 @@ public abstract class World implements IBlockAccess {
+@@ -1418,6 +1428,11 @@ public abstract class World implements IBlockAccess {
                          tileentity.a(crashreportsystemdetails1);
                          throw new ReportedException(crashreport1);
                      }
@@ -487,7 +487,7 @@ index b043266be..8a618dfce 100644
                  }
              }
  
-@@ -1432,6 +1447,8 @@ public abstract class World implements IBlockAccess {
+@@ -1430,6 +1445,8 @@ public abstract class World implements IBlockAccess {
              }
          }
  
@@ -496,7 +496,7 @@ index b043266be..8a618dfce 100644
          this.O = false;
          this.methodProfiler.c("pendingBlockEntities");
          if (!this.b.isEmpty()) {
-@@ -1464,6 +1481,7 @@ public abstract class World implements IBlockAccess {
+@@ -1462,6 +1479,7 @@ public abstract class World implements IBlockAccess {
              this.b.clear();
          }
  
@@ -504,7 +504,7 @@ index b043266be..8a618dfce 100644
          this.methodProfiler.b();
          this.methodProfiler.b();
      }
-@@ -1518,6 +1536,7 @@ public abstract class World implements IBlockAccess {
+@@ -1516,6 +1534,7 @@ public abstract class World implements IBlockAccess {
          }
          // CraftBukkit end
  
@@ -512,7 +512,7 @@ index b043266be..8a618dfce 100644
          entity.M = entity.locX;
          entity.N = entity.locY;
          entity.O = entity.locZ;
-@@ -1584,6 +1603,7 @@ public abstract class World implements IBlockAccess {
+@@ -1582,6 +1601,7 @@ public abstract class World implements IBlockAccess {
                  }
              }
          }
