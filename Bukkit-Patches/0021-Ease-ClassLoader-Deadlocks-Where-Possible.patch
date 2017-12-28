@@ -1,4 +1,4 @@
-From b938b94ff716ebaa8b29244d7cfe27dfc4e04745 Mon Sep 17 00:00:00 2001
+From f449e3d6807f3fda9264b52bad63f5360c9db175 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 16 Jul 2014 17:24:21 +1000
 Subject: [PATCH] Ease ClassLoader Deadlocks Where Possible
@@ -19,10 +19,10 @@ index 73372534..80c6a72e 100644
      public static final CustomTimingsHandler pluginParentTimer = new CustomTimingsHandler("** Plugins"); // Spigot
  
 diff --git a/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java b/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java
-index 13f86338..4cffa137 100644
+index 205468cf..d7d5ac7b 100644
 --- a/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java
 +++ b/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java
-@@ -17,7 +17,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
+@@ -25,7 +25,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
   */
  final class PluginClassLoader extends URLClassLoader {
      private final JavaPluginLoader loader;
@@ -31,7 +31,7 @@ index 13f86338..4cffa137 100644
      private final PluginDescriptionFile description;
      private final File dataFolder;
      private final File file;
-@@ -25,6 +25,30 @@ final class PluginClassLoader extends URLClassLoader {
+@@ -36,6 +36,30 @@ final class PluginClassLoader extends URLClassLoader {
      private JavaPlugin pluginInit;
      private IllegalStateException pluginState;
  
@@ -58,8 +58,8 @@ index 13f86338..4cffa137 100644
 +        }
 +    }
 +    // Spigot End
-+    
-     PluginClassLoader(final JavaPluginLoader loader, final ClassLoader parent, final PluginDescriptionFile description, final File dataFolder, final File file) throws InvalidPluginException, MalformedURLException {
++
+     PluginClassLoader(final JavaPluginLoader loader, final ClassLoader parent, final PluginDescriptionFile description, final File dataFolder, final File file) throws IOException, InvalidPluginException, MalformedURLException {
          super(new URL[] {file.toURI().toURL()}, parent);
          Validate.notNull(loader, "Loader cannot be null");
 -- 
