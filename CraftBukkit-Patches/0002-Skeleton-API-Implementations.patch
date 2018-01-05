@@ -1,4 +1,4 @@
-From bc8a50d918829dcb7337b9cd8f2f938c82d51ebc Mon Sep 17 00:00:00 2001
+From a0c6477f5a118e1ec890a01d364616199a6f47bd Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -81,12 +81,12 @@ index 1314c744b..a461a935b 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
-index 0e1d93432..f9cd769ed 100644
+index 3974778d9..93197bf07 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
-@@ -83,4 +83,15 @@ public class CraftArrow extends AbstractProjectile implements Arrow {
-     public void _INVALID_setShooter(LivingEntity shooter) {
-         getHandle().shooter = ((CraftLivingEntity) shooter).getHandle();
+@@ -70,4 +70,15 @@ public class CraftArrow extends AbstractProjectile implements Arrow {
+     public EntityType getType() {
+         return EntityType.ARROW;
      }
 +
 +    // Spigot start
