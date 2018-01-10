@@ -1,4 +1,4 @@
-From 43400119bece42962230c1a16a0d44357745b671 Mon Sep 17 00:00:00 2001
+From 7dbe485e109023f873e891ba914e2a3321d1b6ee Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -247,6 +247,54 @@ index 000000000..130597c6e
 +    public double a(double d0) {
 +        d0 = MathHelper.a(d0, this.a, this.b);
 +        return d0;
++    }
++}
+diff --git a/src/main/java/net/minecraft/server/BlockState.java b/src/main/java/net/minecraft/server/BlockState.java
+new file mode 100644
+index 000000000..60703c627
+--- /dev/null
++++ b/src/main/java/net/minecraft/server/BlockState.java
+@@ -0,0 +1,42 @@
++package net.minecraft.server;
++
++import com.google.common.base.MoreObjects;
++
++public abstract class BlockState<T extends Comparable<T>> implements IBlockState<T> {
++
++    private final Class<T> a;
++    private final String b;
++
++    protected BlockState(String s, Class<T> oclass) {
++        this.a = oclass;
++        this.b = s;
++    }
++
++    public String a() {
++        return this.b;
++    }
++
++    public Class<T> b() {
++        return this.a;
++    }
++
++    public String toString() {
++        return MoreObjects.toStringHelper(this).add("name", this.b).add("clazz", this.a).add("values", this.c()).toString();
++    }
++
++    public boolean equals(Object object) {
++        if (this == object) {
++            return true;
++        } else if (!(object instanceof BlockState)) {
++            return false;
++        } else {
++            BlockState blockstate = (BlockState) object;
++
++            return this.a.equals(blockstate.a) && this.b.equals(blockstate.b);
++        }
++    }
++
++    public int hashCode() {
++        return 31 * this.a.hashCode() + this.b.hashCode();
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/CommandDispatcher.java b/src/main/java/net/minecraft/server/CommandDispatcher.java
