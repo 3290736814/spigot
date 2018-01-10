@@ -1,4 +1,4 @@
-From 28f558d258806df34f2f264e2b067c35f12a836f Mon Sep 17 00:00:00 2001
+From a3474ae65a9c73c84c898ae9282673a85b72a9fd Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 2 Jul 2013 13:07:39 +1000
 Subject: [PATCH] POM Changes
@@ -6,7 +6,7 @@ Subject: [PATCH] POM Changes
 Basic changes to the build system which mark the artifact as Spigot, and the necessary code changes to ensure proper functionality. Also disables the auto updater provided by CraftBukkit as it is useless to us.
 
 diff --git a/pom.xml b/pom.xml
-index 9d0742edd..f4a9f3f22 100644
+index da5d6c702..001887af3 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,12 +1,12 @@
@@ -52,7 +52,7 @@ index 9d0742edd..f4a9f3f22 100644
              <scope>compile</scope>
          </dependency>
 @@ -64,6 +71,12 @@
-             <version>5.1.44</version>
+             <version>5.1.45</version>
              <scope>runtime</scope>
          </dependency>
 +        <dependency>
