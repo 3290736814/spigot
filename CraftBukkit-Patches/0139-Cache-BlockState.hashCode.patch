@@ -1,4 +1,4 @@
-From a5dc9454a0fd55d55963fe7ef5bd9372333bf4b4 Mon Sep 17 00:00:00 2001
+From da708b9a10d40dc11def41f42e67a84a1707169e Mon Sep 17 00:00:00 2001
 From: Axel Uhl <axel.uhl@sap.com>
 Date: Thu, 11 Jan 2018 10:34:56 +1100
 Subject: [PATCH] Cache BlockState.hashCode
@@ -47,7 +47,7 @@ index 5b193f48b..02b4956ec 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/net/minecraft/server/BlockStateEnum.java b/src/main/java/net/minecraft/server/BlockStateEnum.java
-index 288c52c55..4ec354fb9 100644
+index 288c52c55..21ac1e066 100644
 --- a/src/main/java/net/minecraft/server/BlockStateEnum.java
 +++ b/src/main/java/net/minecraft/server/BlockStateEnum.java
 @@ -58,13 +58,20 @@ public class BlockStateEnum<T extends Enum<T> & INamable> extends BlockState<T>
@@ -67,7 +67,7 @@ index 288c52c55..4ec354fb9 100644
 -        return i;
 +            i = 31 * i + this.a.hashCode();
 +            i = 31 * i + this.b.hashCode();
-+            hashCode = i;
++            hashCode = hash = i;
 +        }
 +        return hash;
      }
