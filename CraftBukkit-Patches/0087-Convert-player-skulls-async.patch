@@ -1,11 +1,11 @@
-From b495e37c71f52cb8f29218aa87546dabf7a44281 Mon Sep 17 00:00:00 2001
+From 654d579ba00af3ad28c5c63c4e4dab712cc39460 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Sun, 20 Apr 2014 13:18:55 +0100
 Subject: [PATCH] Convert player skulls async
 
 
 diff --git a/src/main/java/net/minecraft/server/ItemSkull.java b/src/main/java/net/minecraft/server/ItemSkull.java
-index cbb902f50..ca33c9c13 100644
+index cbb902f50..df79c0dd2 100644
 --- a/src/main/java/net/minecraft/server/ItemSkull.java
 +++ b/src/main/java/net/minecraft/server/ItemSkull.java
 @@ -124,13 +124,21 @@ public class ItemSkull extends Item {
@@ -28,13 +28,13 @@ index cbb902f50..ca33c9c13 100644
 +                    nbttagcompound.set("SkullOwner", GameProfileSerializer.serialize(new NBTTagCompound(), gameprofile));
 +                    return false;
 +                }
-+            });
++            }, false);
 +            // Spigot end
              return true;
          } else {
              // CraftBukkit start
 diff --git a/src/main/java/net/minecraft/server/TileEntitySkull.java b/src/main/java/net/minecraft/server/TileEntitySkull.java
-index 223e2ed2d..1e3c687d6 100644
+index 223e2ed2d..a796c08ab 100644
 --- a/src/main/java/net/minecraft/server/TileEntitySkull.java
 +++ b/src/main/java/net/minecraft/server/TileEntitySkull.java
 @@ -7,6 +7,23 @@ import com.mojang.authlib.properties.Property;
@@ -120,7 +120,7 @@ index 223e2ed2d..1e3c687d6 100644
  
      public TileEntitySkull() {}
  
-@@ -98,35 +167,65 @@ public class TileEntitySkull extends TileEntity implements ITickable {
+@@ -98,35 +167,75 @@ public class TileEntitySkull extends TileEntity implements ITickable {
      }
  
      private void i() {
@@ -141,13 +141,13 @@ index 223e2ed2d..1e3c687d6 100644
 +                }
 +                return false;
 +            }
-+        }); 
++        }, false); 
 +        // Spigot end
      }
  
 -    public static GameProfile b(GameProfile gameprofile) {
 +    // Spigot start - Support async lookups
-+    public static Future<GameProfile> b(final GameProfile gameprofile, final Predicate<GameProfile> callback) {
++    public static Future<GameProfile> b(final GameProfile gameprofile, final Predicate<GameProfile> callback, boolean sync) {
          if (gameprofile != null && !UtilColor.b(gameprofile.getName())) {
              if (gameprofile.isComplete() && gameprofile.getProperties().containsKey("textures")) {
 -                return gameprofile;
@@ -169,13 +169,10 @@ index 223e2ed2d..1e3c687d6 100644
 -
 -                    if (property == null) {
 -                        gameprofile1 = TileEntitySkull.k.fillProfileProperties(gameprofile1, true);
--                    }
--
--                    return gameprofile1;
-+                    return executor.submit(new Callable<GameProfile>() {
++                    Callable<GameProfile> callable = new Callable<GameProfile>() {
 +                        @Override
 +                        public GameProfile call() {
-+                            final GameProfile profile = skinCache.getUnchecked(gameprofile.getName().toLowerCase(java.util.Locale.ROOT));                            
++                            final GameProfile profile = skinCache.getUnchecked(gameprofile.getName().toLowerCase(java.util.Locale.ROOT));
 +                            MinecraftServer.getServer().processQueue.add(new Runnable() {
 +                                @Override
 +                                public void run() {
@@ -188,7 +185,19 @@ index 223e2ed2d..1e3c687d6 100644
 +                            });
 +                            return profile;
 +                        }
-+                    });
++                    };
++                    if (sync) {
++                        try {
++                            return Futures.immediateFuture(callable.call());
++                        } catch (Exception ex) {
++                            com.google.common.base.Throwables.throwIfUnchecked(ex);
++                            throw new RuntimeException(ex); // Not possible
++                        }
++                    } else {
++                        return executor.submit(callable);
+                     }
+-
+-                    return gameprofile1;
                  }
 -            } else {
 -                return gameprofile;
@@ -205,7 +214,7 @@ index 223e2ed2d..1e3c687d6 100644
      public int getSkullType() {
          return this.a;
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
-index 8c5d3effc..8a58615f8 100644
+index 8c5d3effc..b6b34627a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
 @@ -77,7 +77,8 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
@@ -214,7 +223,7 @@ index 8c5d3effc..8a58615f8 100644
              // Fill in textures
 -            profile = TileEntitySkull.b(profile);
 +            // Must be done sync due to way client handles textures
-+            profile = com.google.common.util.concurrent.Futures.getUnchecked(TileEntitySkull.b(profile, com.google.common.base.Predicates.alwaysTrue())); // Spigot
++            profile = com.google.common.util.concurrent.Futures.getUnchecked(TileEntitySkull.b(profile, com.google.common.base.Predicates.alwaysTrue(), true)); // Spigot
  
              NBTTagCompound owner = new NBTTagCompound();
              GameProfileSerializer.serialize(owner, profile);
