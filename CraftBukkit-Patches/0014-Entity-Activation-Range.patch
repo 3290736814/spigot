@@ -1,4 +1,4 @@
-From 3b6ecef1f1df9fb21beb2160397c990e4727a3ff Mon Sep 17 00:00:00 2001
+From 8d45ed0c79ed384bbc463b0a49f2cecff6189c41 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 23a9764f5..4826a4fd0 100644
+index d49a6e4f3..33c9d696b 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -110,7 +110,7 @@ public abstract class Entity implements ICommandListener {
@@ -159,7 +159,7 @@ index 3f51880ab..4d3aef96b 100644
          // Spigot start
          double radius = world.spigotConfig.itemMerge;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 3912b40db..ee2d1f9a9 100644
+index f8007e946..ecff5fce3 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -122,6 +122,13 @@ public abstract class EntityLiving extends Entity {
@@ -176,6 +176,25 @@ index 3912b40db..ee2d1f9a9 100644
  
      public void killEntity() {
          this.damageEntity(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
+diff --git a/src/main/java/net/minecraft/server/EntityVillager.java b/src/main/java/net/minecraft/server/EntityVillager.java
+index fe137ed06..2795447b5 100644
+--- a/src/main/java/net/minecraft/server/EntityVillager.java
++++ b/src/main/java/net/minecraft/server/EntityVillager.java
+@@ -97,6 +97,14 @@ public class EntityVillager extends EntityAgeable implements NPC, IMerchant {
+         this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.5D);
+     }
+ 
++    // Spigot Start
++    @Override
++    public void inactiveTick() {
++        this.M(); // SPIGOT-3846
++        super.inactiveTick();
++    }
++    // Spigot End
++
+     protected void M() {
+         if (--this.profession <= 0) {
+             BlockPosition blockposition = new BlockPosition(this);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
 index 73e951673..04f63941c 100644
 --- a/src/main/java/net/minecraft/server/World.java
@@ -218,7 +237,7 @@ index fa88be0db..4c8ab2bc9 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index bc2fa3cf1..e38cfc642 100644
+index 364b8e369..11c793404 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -287,6 +287,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
