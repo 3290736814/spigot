@@ -1,4 +1,4 @@
-From 2f05c1719d223eaca400c7e8f07df7627d54b09b Mon Sep 17 00:00:00 2001
+From 09500af5077d5b8c3d7b954a981b84d4239f4de8 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -26,7 +26,7 @@ index 76bfeafe6..2dca6dbcb 100644
      public int a(Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 87243e266..cc037988f 100644
+index 5b35f89d5..2994c3436 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -668,6 +668,7 @@ public abstract class EntityLiving extends Entity {
@@ -142,10 +142,10 @@ index e6ecabced..5a5b9260a 100644
          if (generate) {
              // Use the default variant of loadChunk when generate == true.
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 239f6ae32..00528c6ff 100644
+index d1462f695..deda3b431 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -221,6 +221,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -212,6 +212,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
      @Override
      public void kickPlayer(String message) {

@@ -1,4 +1,4 @@
-From 5abb8f0bbafd78e5644c1f6085e95b40953e5e64 Mon Sep 17 00:00:00 2001
+From 1be82a31f13b5492813cfdfb20234725a9e1e809 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 21 Sep 2013 12:33:09 +1000
 Subject: [PATCH] Allow Disabling of 1.6.3 Structure Saving
@@ -24,10 +24,10 @@ index 93e1c0097..0a6e5b327 100644
                  this.a = new PersistentStructure(this.a());
                  world.a(this.a(), (PersistentBase) this.a);
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 0202eeb8d..1bdcd8e15 100644
+index 07a883f19..9df9e0131 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -189,4 +189,16 @@ public class SpigotWorldConfig
+@@ -191,4 +191,16 @@ public class SpigotWorldConfig
          randomLightUpdates = getBoolean( "random-light-updates", false );
          log( "Random Lighting Updates: " + randomLightUpdates );
      }

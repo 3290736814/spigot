@@ -1,4 +1,4 @@
-From 1cb59de80726136774d466341bc1037efd4595a3 Mon Sep 17 00:00:00 2001
+From 10d338db5a11e8b514694bf7c61858847ea0027f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -124,7 +124,7 @@ index 330c5fe3e..f1a389b65 100644
  
      public boolean aa() {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 0c20b4506..23a9764f5 100644
+index 8d99f4d73..d49a6e4f3 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -25,6 +25,7 @@ import org.bukkit.block.BlockFace;
@@ -160,7 +160,7 @@ index 0c20b4506..23a9764f5 100644
  
      public void recalcPosition() {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index cc037988f..3912b40db 100644
+index b805eff80..5f24de685 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -31,6 +31,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
@@ -172,7 +172,7 @@ index cc037988f..3912b40db 100644
  public abstract class EntityLiving extends Entity {
  
      private static final Logger a = LogManager.getLogger();
-@@ -1858,6 +1860,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1860,6 +1862,7 @@ public abstract class EntityLiving extends Entity {
      }
  
      public void B_() {
@@ -180,7 +180,7 @@ index cc037988f..3912b40db 100644
          super.B_();
          this.cI();
          if (!this.world.isClientSide) {
-@@ -1930,7 +1933,9 @@ public abstract class EntityLiving extends Entity {
+@@ -1932,7 +1935,9 @@ public abstract class EntityLiving extends Entity {
              }
          }
  
@@ -190,7 +190,7 @@ index cc037988f..3912b40db 100644
          double d0 = this.locX - this.lastX;
          double d1 = this.locZ - this.lastZ;
          float f = (float) (d0 * d0 + d1 * d1);
-@@ -2007,6 +2012,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2009,6 +2014,7 @@ public abstract class EntityLiving extends Entity {
              this.bq = 0;
          }
  
@@ -198,7 +198,7 @@ index cc037988f..3912b40db 100644
      }
  
      protected float g(float f, float f1) {
-@@ -2071,6 +2077,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2073,6 +2079,7 @@ public abstract class EntityLiving extends Entity {
          }
  
          this.world.methodProfiler.a("ai");
@@ -206,7 +206,7 @@ index cc037988f..3912b40db 100644
          if (this.isFrozen()) {
              this.bd = false;
              this.be = 0.0F;
-@@ -2081,6 +2088,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2083,6 +2090,7 @@ public abstract class EntityLiving extends Entity {
              this.doTick();
              this.world.methodProfiler.b();
          }
@@ -214,7 +214,7 @@ index cc037988f..3912b40db 100644
  
          this.world.methodProfiler.b();
          this.world.methodProfiler.a("jump");
-@@ -2103,10 +2111,14 @@ public abstract class EntityLiving extends Entity {
+@@ -2105,10 +2113,14 @@ public abstract class EntityLiving extends Entity {
          this.bg *= 0.98F;
          this.bh *= 0.9F;
          this.r();
@@ -783,7 +783,7 @@ index f1c1dc495..3a95b4465 100644
  
          chunk.loadNearby(queuedChunk.provider, queuedChunk.provider.chunkGenerator, false);
 diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
-index c5d751e91..f2278e893 100644
+index 96eff377e..b4153cc73 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
 @@ -349,7 +349,9 @@ public class CraftScheduler implements BukkitScheduler {
@@ -797,7 +797,7 @@ index c5d751e91..f2278e893 100644
                      task.getOwner().getLogger().log(
                              Level.WARNING,
 diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftTask.java b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftTask.java
-index 9cb666bb1..c37275f2a 100644
+index a3ec23017..7e7ce9a81 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftTask.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftTask.java
 @@ -1,11 +1,13 @@
@@ -814,17 +814,17 @@ index 9cb666bb1..c37275f2a 100644
 +public class CraftTask implements BukkitTask, Runnable { // Spigot
  
      private volatile CraftTask next = null;
-     /**
-@@ -22,6 +24,7 @@ class CraftTask implements BukkitTask, Runnable {
+     public static final int ERROR = 0;
+@@ -27,6 +29,7 @@ class CraftTask implements BukkitTask, Runnable {
      private final Plugin plugin;
      private final int id;
  
 +    final CustomTimingsHandler timings; // Spigot
      CraftTask() {
-         this(null, null, -1, -1);
+         this(null, null, CraftTask.NO_REPEATING, CraftTask.NO_REPEATING);
      }
-@@ -30,11 +33,26 @@ class CraftTask implements BukkitTask, Runnable {
-         this(null, task, -1, -1);
+@@ -35,11 +38,26 @@ class CraftTask implements BukkitTask, Runnable {
+         this(null, task, CraftTask.NO_REPEATING, CraftTask.NO_REPEATING);
      }
  
 -    CraftTask(final Plugin plugin, final Runnable task, final int id, final long period) {
@@ -851,8 +851,8 @@ index 9cb666bb1..c37275f2a 100644
      }
  
      public final int getTaskId() {
-@@ -99,4 +117,13 @@ class CraftTask implements BukkitTask, Runnable {
-         setPeriod(-2l);
+@@ -104,4 +122,13 @@ class CraftTask implements BukkitTask, Runnable {
+         setPeriod(CraftTask.CANCEL);
          return true;
      }
 +

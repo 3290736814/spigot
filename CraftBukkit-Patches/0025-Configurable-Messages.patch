@@ -1,4 +1,4 @@
-From f7f75e24dc1e71a16385f3a0822dd30d4440087b Mon Sep 17 00:00:00 2001
+From cdfdbe02678177e6f3259f91343ffbf6edcdf1f4 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
@@ -23,10 +23,10 @@ index d273c9a76..fb761bb8a 100644
                  this.b.close(chatmessage);
              } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 204ada0ae..374cfa5dc 100644
+index 9336e1315..1ddd86ede 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -489,7 +489,7 @@ public abstract class PlayerList {
+@@ -493,7 +493,7 @@ public abstract class PlayerList {
              event.disallow(PlayerLoginEvent.Result.KICK_BANNED, s);
          } else if (!this.isWhitelisted(gameprofile)) {
              // return "You are not white-listed on this server!";
@@ -35,7 +35,7 @@ index 204ada0ae..374cfa5dc 100644
          } else if (getIPBans().isBanned(socketaddress) && !getIPBans().get(socketaddress).hasExpired()) {
              IpBanEntry ipbanentry = this.l.get(socketaddress);
  
-@@ -503,7 +503,7 @@ public abstract class PlayerList {
+@@ -507,7 +507,7 @@ public abstract class PlayerList {
          } else {
              // return this.players.size() >= this.maxPlayers && !this.f(gameprofile) ? "The server is full!" : null;
              if (this.players.size() >= this.maxPlayers && !this.f(gameprofile)) {
