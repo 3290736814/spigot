@@ -1,11 +1,11 @@
-From 1e8071558433939ad44b226b01d794adde1b6412 Mon Sep 17 00:00:00 2001
+From 4a2eea4c74ce95a5a7e83bec3e261c4d3bef6c19 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 13 Jul 2015 19:05:15 +1000
 Subject: [PATCH] Use Map for getPlayer(String) lookup.
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 6e88b39fc..0a0b8a426 100644
+index e8fbbd7a..d4acbed0 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -72,6 +72,7 @@ public abstract class PlayerList {
@@ -48,7 +48,7 @@ index 6e88b39fc..0a0b8a426 100644
              this.j.put(entityplayer1.getUniqueID(), entityplayer1);
          }
          // entityplayer1.syncInventory();
-@@ -1177,19 +1182,7 @@ public abstract class PlayerList {
+@@ -1180,19 +1185,7 @@ public abstract class PlayerList {
  
      @Nullable
      public EntityPlayer getPlayer(String s) {
@@ -71,7 +71,7 @@ index 6e88b39fc..0a0b8a426 100644
      public void sendPacketNearby(@Nullable EntityHuman entityhuman, double d0, double d1, double d2, double d3, int i, Packet<?> packet) {
 diff --git a/src/main/java/org/spigotmc/CaseInsensitiveHashingStrategy.java b/src/main/java/org/spigotmc/CaseInsensitiveHashingStrategy.java
 new file mode 100644
-index 000000000..aafdd3682
+index 00000000..aafdd368
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/CaseInsensitiveHashingStrategy.java
 @@ -0,0 +1,18 @@
@@ -95,7 +95,7 @@ index 000000000..aafdd3682
 +}
 diff --git a/src/main/java/org/spigotmc/CaseInsensitiveMap.java b/src/main/java/org/spigotmc/CaseInsensitiveMap.java
 new file mode 100644
-index 000000000..1934fd50a
+index 00000000..1934fd50
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/CaseInsensitiveMap.java
 @@ -0,0 +1,15 @@
