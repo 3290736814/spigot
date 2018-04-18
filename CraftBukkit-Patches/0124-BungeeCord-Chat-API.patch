@@ -1,11 +1,11 @@
-From 810303db94eaaed0fce27b4f223a5b3d6ee0db28 Mon Sep 17 00:00:00 2001
+From fcf1390ea1b8b575e31b9dea25c26f57120dada3 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
 
 
 diff --git a/src/main/java/net/minecraft/server/PacketPlayOutChat.java b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
-index b1fddee73..67666d35b 100644
+index b1fddee7..67666d35 100644
 --- a/src/main/java/net/minecraft/server/PacketPlayOutChat.java
 +++ b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
 @@ -5,6 +5,7 @@ import java.io.IOException;
@@ -32,7 +32,7 @@ index b1fddee73..67666d35b 100644
      }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f39ddb0a3..5ab7cee1a 100644
+index f39ddb0a..5ab7cee1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -133,6 +133,7 @@ import org.apache.commons.lang.StringUtils;
@@ -65,7 +65,7 @@ index f39ddb0a3..5ab7cee1a 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java b/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
-index c10a84452..5c3421dd3 100644
+index c10a8445..5c3421dd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
 +++ b/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
 @@ -81,6 +81,17 @@ public abstract class ServerCommandSender implements CommandSender {
@@ -87,7 +87,7 @@ index c10a84452..5c3421dd3 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 87ed9f929..c5a194ffe 100644
+index 87ed9f92..c5a194ff 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -737,6 +737,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
@@ -108,7 +108,7 @@ index 87ed9f929..c5a194ffe 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index f061af812..2d5dc2179 100644
+index f061af81..2d5dc217 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -23,6 +23,7 @@ import java.util.UUID;
@@ -159,7 +159,7 @@ index f061af812..2d5dc2179 100644
  
      public Player.Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index a3fd23da1..6fab8cd17 100644
+index 76303c06..ed89f64a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 @@ -25,6 +25,9 @@ import org.bukkit.craftbukkit.util.CraftChatMessage;
@@ -172,7 +172,7 @@ index a3fd23da1..6fab8cd17 100644
  // Spigot end
  
  @DelegateDeserialization(SerializableMeta.class)
-@@ -362,6 +365,69 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+@@ -358,6 +361,69 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
  
      // Spigot start
      private final BookMeta.Spigot spigot = new BookMeta.Spigot() {

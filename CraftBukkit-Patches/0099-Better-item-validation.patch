@@ -1,11 +1,11 @@
-From d0dafb1e16398e6e99e9f99ad4e7eb3c3c9d28ab Mon Sep 17 00:00:00 2001
+From 1433e065ebca085163cbdf7dc277991f3ebad415 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
 
 
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index a6dc5fd48..a8fc7e431 100644
+index a6dc5fd4..a8fc7e43 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
 @@ -245,6 +245,10 @@ public class PacketDataSerializer extends ByteBuf {
@@ -20,7 +20,7 @@ index a6dc5fd48..a8fc7e431 100644
              }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index 27170814d..a3fd23da1 100644
+index 081074a1..76303c06 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 @@ -23,6 +23,10 @@ import net.minecraft.server.IChatBaseComponent;
@@ -34,7 +34,7 @@ index 27170814d..a3fd23da1 100644
  @DelegateDeserialization(SerializableMeta.class)
  public class CraftMetaBook extends CraftMetaItem implements BookMeta {
      static final ItemMetaKey BOOK_TITLE = new ItemMetaKey("title");
-@@ -59,11 +63,11 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+@@ -55,11 +59,11 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
          super(tag);
  
          if (tag.hasKey(BOOK_TITLE.NBT)) {
@@ -48,7 +48,7 @@ index 27170814d..a3fd23da1 100644
          }
  
          boolean resolved = false;
-@@ -88,7 +92,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+@@ -84,7 +88,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
                          // Ignore and treat as an old book
                      }
                  }
@@ -58,7 +58,7 @@ index 27170814d..a3fd23da1 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index c071b7cb9..d538f2d39 100644
+index c071b7cb..d538f2d3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -47,6 +47,10 @@ import java.util.logging.Logger;
@@ -92,7 +92,7 @@ index c071b7cb9..d538f2d39 100644
              }
 diff --git a/src/main/java/org/spigotmc/ValidateUtils.java b/src/main/java/org/spigotmc/ValidateUtils.java
 new file mode 100644
-index 000000000..58a953481
+index 00000000..58a95348
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ValidateUtils.java
 @@ -0,0 +1,14 @@
