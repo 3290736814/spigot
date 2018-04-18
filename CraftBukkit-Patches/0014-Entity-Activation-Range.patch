@@ -1,4 +1,4 @@
-From 70cb1626a69b3becb739925e3241c42818164de5 Mon Sep 17 00:00:00 2001
+From 2a5e800bf0b98678ab782edaa10a5aff719919ba Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -177,10 +177,10 @@ index 5f24de68..0026f29d 100644
      public void killEntity() {
          this.damageEntity(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
 diff --git a/src/main/java/net/minecraft/server/EntityVillager.java b/src/main/java/net/minecraft/server/EntityVillager.java
-index fe137ed0..fd3714e8 100644
+index fe137ed0..87ed31b2 100644
 --- a/src/main/java/net/minecraft/server/EntityVillager.java
 +++ b/src/main/java/net/minecraft/server/EntityVillager.java
-@@ -97,6 +97,17 @@ public class EntityVillager extends EntityAgeable implements NPC, IMerchant {
+@@ -97,6 +97,22 @@ public class EntityVillager extends EntityAgeable implements NPC, IMerchant {
          this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.5D);
      }
  
@@ -189,6 +189,11 @@ index fe137ed0..fd3714e8 100644
 +    public void inactiveTick() {
 +        // SPIGOT-3874
 +        if (world.spigotConfig.tickInactiveVillagers) {
++            // SPIGOT-3894
++            Chunk startingChunk = this.world.getChunkIfLoaded(MathHelper.floor(this.locX) >> 4, MathHelper.floor(this.locZ) >> 4);
++            if (!(startingChunk != null && startingChunk.areNeighborsLoaded(1))) {
++                return;
++            }
 +            this.M(); // SPIGOT-3846
 +        }
 +        super.inactiveTick();
