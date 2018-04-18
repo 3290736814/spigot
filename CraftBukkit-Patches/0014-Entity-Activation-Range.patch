@@ -1,4 +1,4 @@
-From 305f8c50830cf1452195e7627bdcb240662679d0 Mon Sep 17 00:00:00 2001
+From 70cb1626a69b3becb739925e3241c42818164de5 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -199,7 +199,7 @@ index fe137ed0..fd3714e8 100644
          if (--this.profession <= 0) {
              BlockPosition blockposition = new BlockPosition(this);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 73e95167..7ba44e3b 100644
+index 73e95167..b2786796 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1350,6 +1350,7 @@ public abstract class World implements IBlockAccess {
@@ -215,7 +215,7 @@ index 73e95167..7ba44e3b 100644
          // CraftBukkit end
  
 +        // Spigot start
-+        if (!org.spigotmc.ActivationRange.checkIfActive(entity)) {
++        if (!org.spigotmc.ActivationRange.checkIfActive(entity, flag)) {
 +            entity.ticksLived++;
 +            entity.inactiveTick();
 +            return;
@@ -252,10 +252,10 @@ index 364b8e36..11c79340 100644
      }
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
 new file mode 100644
-index 00000000..218a2378
+index 00000000..0cfab3e9
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
-@@ -0,0 +1,286 @@
+@@ -0,0 +1,287 @@
 +package org.spigotmc;
 +
 +import java.util.Set;
@@ -498,9 +498,10 @@ index 00000000..218a2378
 +     * Checks if the entity is active for this tick.
 +     *
 +     * @param entity
++     * @param skipOnEdge
 +     * @return
 +     */
-+    public static boolean checkIfActive(Entity entity)
++    public static boolean checkIfActive(Entity entity, boolean skipOnEdge)
 +    {
 +        SpigotTimings.checkIfActiveTimer.startTiming();
 +        // Never safe to skip fireworks or entities not yet added to chunk
@@ -534,7 +535,7 @@ index 00000000..218a2378
 +        int z = MathHelper.floor( entity.locZ );
 +        // Make sure not on edge of unloaded chunk
 +        Chunk chunk = entity.world.getChunkIfLoaded( x >> 4, z >> 4 );
-+        if ( isActive && !( chunk != null && chunk.areNeighborsLoaded( 1 ) ) )
++        if ( isActive && skipOnEdge && !( chunk != null && chunk.areNeighborsLoaded( 1 ) ) )
 +        {
 +            isActive = false;
 +        }
