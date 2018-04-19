@@ -1,4 +1,4 @@
-From 2a5e800bf0b98678ab782edaa10a5aff719919ba Mon Sep 17 00:00:00 2001
+From 2cb54db0312e7560f2124ad62a61cd920fb89df7 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -204,7 +204,7 @@ index fe137ed0..87ed31b2 100644
          if (--this.profession <= 0) {
              BlockPosition blockposition = new BlockPosition(this);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 73e95167..b2786796 100644
+index 73e95167..04f63941 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1350,6 +1350,7 @@ public abstract class World implements IBlockAccess {
@@ -215,20 +215,21 @@ index 73e95167..b2786796 100644
          timings.entityTick.startTiming(); // Spigot
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
-@@ -1541,6 +1542,13 @@ public abstract class World implements IBlockAccess {
-         }
-         // CraftBukkit end
+@@ -1535,8 +1536,12 @@ public abstract class World implements IBlockAccess {
  
+         // CraftBukkit start - check if chunks are loaded as done in previous versions
+         // TODO: Go back to Vanilla behaviour when comfortable
+-        Chunk startingChunk = this.getChunkIfLoaded(MathHelper.floor(entity.locX) >> 4, MathHelper.floor(entity.locZ) >> 4);
+-        if (flag && !(startingChunk != null && startingChunk.areNeighborsLoaded(2))) {
 +        // Spigot start
-+        if (!org.spigotmc.ActivationRange.checkIfActive(entity, flag)) {
++        // Chunk startingChunk = this.getChunkIfLoaded(MathHelper.floor(entity.locX) >> 4, MathHelper.floor(entity.locZ) >> 4);
++        if (flag && !org.spigotmc.ActivationRange.checkIfActive(entity)) {
 +            entity.ticksLived++;
 +            entity.inactiveTick();
-+            return;
-+        }
-+        // Spigot end
-         entity.tickTimer.startTiming(); // Spigot
-         entity.M = entity.locX;
-         entity.N = entity.locY;
++            // Spigot end
+             return;
+         }
+         // CraftBukkit end
 diff --git a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java b/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
 index fa88be0d..4c8ab2bc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
@@ -257,10 +258,10 @@ index 364b8e36..11c79340 100644
      }
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
 new file mode 100644
-index 00000000..0cfab3e9
+index 00000000..218a2378
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
-@@ -0,0 +1,287 @@
+@@ -0,0 +1,286 @@
 +package org.spigotmc;
 +
 +import java.util.Set;
@@ -503,10 +504,9 @@ index 00000000..0cfab3e9
 +     * Checks if the entity is active for this tick.
 +     *
 +     * @param entity
-+     * @param skipOnEdge
 +     * @return
 +     */
-+    public static boolean checkIfActive(Entity entity, boolean skipOnEdge)
++    public static boolean checkIfActive(Entity entity)
 +    {
 +        SpigotTimings.checkIfActiveTimer.startTiming();
 +        // Never safe to skip fireworks or entities not yet added to chunk
@@ -540,7 +540,7 @@ index 00000000..0cfab3e9
 +        int z = MathHelper.floor( entity.locZ );
 +        // Make sure not on edge of unloaded chunk
 +        Chunk chunk = entity.world.getChunkIfLoaded( x >> 4, z >> 4 );
-+        if ( isActive && skipOnEdge && !( chunk != null && chunk.areNeighborsLoaded( 1 ) ) )
++        if ( isActive && !( chunk != null && chunk.areNeighborsLoaded( 1 ) ) )
 +        {
 +            isActive = false;
 +        }
