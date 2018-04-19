@@ -1,4 +1,4 @@
-From 1433e065ebca085163cbdf7dc277991f3ebad415 Mon Sep 17 00:00:00 2001
+From e2ba5ae2ac38ce968fe0dfebd7852a7d556adb01 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
@@ -20,7 +20,7 @@ index a6dc5fd4..a8fc7e43 100644
              }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index 081074a1..76303c06 100644
+index 9f94d91d..c8b1dc28 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 @@ -23,6 +23,10 @@ import net.minecraft.server.IChatBaseComponent;
@@ -34,7 +34,7 @@ index 081074a1..76303c06 100644
  @DelegateDeserialization(SerializableMeta.class)
  public class CraftMetaBook extends CraftMetaItem implements BookMeta {
      static final ItemMetaKey BOOK_TITLE = new ItemMetaKey("title");
-@@ -55,11 +59,11 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+@@ -59,11 +63,11 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
          super(tag);
  
          if (tag.hasKey(BOOK_TITLE.NBT)) {
@@ -48,7 +48,7 @@ index 081074a1..76303c06 100644
          }
  
          boolean resolved = false;
-@@ -84,7 +88,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+@@ -88,7 +92,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
                          // Ignore and treat as an old book
                      }
                  }
