@@ -1,4 +1,4 @@
-From 83b3cc1a8ef8ad8446052ff7250e72569b858284 Mon Sep 17 00:00:00 2001
+From c1ffb29bb889ff980ca9e8cfecb62004b7ac3739 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 23 Apr 2013 11:50:27 +1000
 Subject: [PATCH] Thread Naming and Tweaks
@@ -6,12 +6,12 @@ Subject: [PATCH] Thread Naming and Tweaks
 Removes the sleep forever thread and adds useful names for debugging to all staged thread files.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
-index f2278e893..23d7ce26f 100644
+index 24ebc91d..f11bd754 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
-@@ -75,7 +75,7 @@ public class CraftScheduler implements BukkitScheduler {
+@@ -79,7 +79,7 @@ public class CraftScheduler implements BukkitScheduler {
       */
-     private final ConcurrentHashMap<Integer, CraftTask> runners = new ConcurrentHashMap<Integer, CraftTask>();
+     private volatile CraftTask currentTask = null;
      private volatile int currentTick = -1;
 -    private final Executor executor = Executors.newCachedThreadPool();
 +    private final Executor executor = Executors.newCachedThreadPool(new com.google.common.util.concurrent.ThreadFactoryBuilder().setNameFormat("Craft Scheduler Thread - %1$d").build()); // Spigot
@@ -19,5 +19,5 @@ index f2278e893..23d7ce26f 100644
      private CraftAsyncDebugger debugTail = debugHead;
      private static final int RECENT_TICKS;
 -- 
-2.14.1
+2.17.1
 

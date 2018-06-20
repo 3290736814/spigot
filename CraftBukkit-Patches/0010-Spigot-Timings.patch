@@ -1,4 +1,4 @@
-From 71cc262d806530fe70e51a68b7daa5be5b967df4 Mon Sep 17 00:00:00 2001
+From 418be03f634dae706708d54075cdcefca9c5190b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -783,12 +783,12 @@ index f1c1dc49..3a95b446 100644
  
          chunk.loadNearby(queuedChunk.provider, queuedChunk.provider.chunkGenerator, false);
 diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
-index 96eff377..b4153cc7 100644
+index 7b4dab91..24ebc91d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
-@@ -349,7 +349,9 @@ public class CraftScheduler implements BukkitScheduler {
-             }
+@@ -357,7 +357,9 @@ public class CraftScheduler implements BukkitScheduler {
              if (task.isSync()) {
+                 currentTask = task;
                  try {
 +                    task.timings.startTiming(); // Spigot
                      task.run();
@@ -866,5 +866,5 @@ index a3ec2301..7e7ce9a8 100644
 +    // Spigot end
  }
 -- 
-2.14.1
+2.17.1
 
