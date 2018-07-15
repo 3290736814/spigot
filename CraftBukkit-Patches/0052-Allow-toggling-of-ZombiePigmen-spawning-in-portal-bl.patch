@@ -1,0 +1,38 @@
+From ee225a6ec9d87ef2e9de7011bb1ce6c3ada4d81d Mon Sep 17 00:00:00 2001
+From: Dmck2b <dmck2b+github@gmail.com>
+Date: Mon, 20 Jan 2014 20:18:23 +0000
+Subject: [PATCH] Allow toggling of ZombiePigmen spawning in portal blocks
+
+
+diff --git a/src/main/java/net/minecraft/server/BlockPortal.java b/src/main/java/net/minecraft/server/BlockPortal.java
+index 346d7c41..1f6089ac 100644
+--- a/src/main/java/net/minecraft/server/BlockPortal.java
++++ b/src/main/java/net/minecraft/server/BlockPortal.java
+@@ -33,7 +33,7 @@ public class BlockPortal extends Block {
+     }
+ 
+     public void a(IBlockData iblockdata, World world, BlockPosition blockposition, Random random) {
+-        if (world.worldProvider.o() && world.getGameRules().getBoolean("doMobSpawning") && random.nextInt(2000) < world.getDifficulty().a()) {
++        if (world.spigotConfig.enableZombiePigmenPortalSpawns && world.worldProvider.o() && world.getGameRules().getBoolean("doMobSpawning") && random.nextInt(2000) < world.getDifficulty().a()) { // Spigot
+             int i = blockposition.getY();
+ 
+             BlockPosition blockposition1;
+diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+index 6c506841..243e2f5a 100644
+--- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
++++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+@@ -212,4 +212,11 @@ public class SpigotWorldConfig
+         nerfSpawnerMobs = getBoolean( "nerf-spawner-mobs", false );
+         log( "Nerfing mobs spawned from spawners: " + nerfSpawnerMobs );
+     }
++
++    public boolean enableZombiePigmenPortalSpawns;
++    private void enableZombiePigmenPortalSpawns()
++    {
++        enableZombiePigmenPortalSpawns = getBoolean( "enable-zombie-pigmen-portal-spawns", true );
++        log( "Allow Zombie Pigmen to spawn from portal blocks: " + enableZombiePigmenPortalSpawns );
++    }
+ }
+-- 
+2.17.1
+

@@ -1,0 +1,52 @@
+From 145ec3a3f38c8893758b0748f548295dbbe89667 Mon Sep 17 00:00:00 2001
+From: md_5 <md_5@live.com.au>
+Date: Fri, 21 Jun 2013 17:29:54 +1000
+Subject: [PATCH] Fix Mob Spawning Relative to View Distance
+
+Changes the mob spawning algorithm to properly account for view distance and the range around players.
+
+Needs better documentation.
+
+diff --git a/src/main/java/net/minecraft/server/SpawnerCreature.java b/src/main/java/net/minecraft/server/SpawnerCreature.java
+index 27a02c0a..44fb75c6 100644
+--- a/src/main/java/net/minecraft/server/SpawnerCreature.java
++++ b/src/main/java/net/minecraft/server/SpawnerCreature.java
+@@ -42,10 +42,15 @@ public final class SpawnerCreature {
+ 
+                     j = MathHelper.floor(entityhuman.locZ / 16.0D);
+                     boolean flag3 = true;
+-
+-                    for (int i1 = -8; i1 <= 8; ++i1) {
+-                        for (k = -8; k <= 8; ++k) {
+-                            boolean flag4 = i1 == -8 || i1 == 8 || k == -8 || k == 8;
++                    // Spigot Start
++                    byte b0 = worldserver.spigotConfig.mobSpawnRange;
++                    b0 = ( b0 > worldserver.spigotConfig.viewDistance ) ? (byte) worldserver.spigotConfig.viewDistance : b0;
++                    b0 = ( b0 > 8 ) ? 8 : b0;
++
++                    for (int i1 = -b0; i1 <= b0; ++i1) {
++                        for (k = -b0; k <= b0; ++k) {
++                            boolean flag4 = i1 == -b0 || i1 == b0 || k == -b0 || k == b0;
++                            // Spigot End
+                             ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(i1 + l, k + j);
+ 
+                             // CraftBukkit start - use LongHash and LongHashSet
+diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+index f5096e3a..3dee3ff5 100644
+--- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
++++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+@@ -126,4 +126,11 @@ public class SpigotWorldConfig
+         viewDistance = getInt( "view-distance", Bukkit.getViewDistance() );
+         log( "View Distance: " + viewDistance );
+     }
++
++    public byte mobSpawnRange;
++    private void mobSpawnRange()
++    {
++        mobSpawnRange = (byte) getInt( "mob-spawn-range", 4 );
++        log( "Mob Spawn Range: " + mobSpawnRange );
++    }
+ }
+-- 
+2.17.1
+

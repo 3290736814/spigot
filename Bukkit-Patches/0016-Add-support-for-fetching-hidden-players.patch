@@ -1,0 +1,30 @@
+From 3c2b4abb1c8df72e3a6e88cf40d70d9dcf8d5a8a Mon Sep 17 00:00:00 2001
+From: Tux <write@imaginarycode.com>
+Date: Sun, 9 Feb 2014 14:02:11 -0500
+Subject: [PATCH] Add support for fetching hidden players
+
+
+diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
+index 8c8876cc..c0ffb7f6 100644
+--- a/src/main/java/org/bukkit/entity/Player.java
++++ b/src/main/java/org/bukkit/entity/Player.java
+@@ -1497,6 +1497,16 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+         {
+             throw new UnsupportedOperationException( "Not supported yet." );
+         }
++
++        /**
++         * Gets all players hidden with {@link #hidePlayer(org.bukkit.entity.Player)}.
++         *
++         * @return a Set with all hidden players
++         */
++        public java.util.Set<Player> getHiddenPlayers()
++        {
++            throw new UnsupportedOperationException( "Not supported yet." );
++        }
+     }
+ 
+     @Override
+-- 
+2.17.1
+

@@ -1,4 +1,4 @@
-From 8d2f6d3c28f726dba3a4a9cb2947e489a2952435 Mon Sep 17 00:00:00 2001
+From 410544b8421e49cbf0e04777a1b85dc4bb81f74e Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 2 Jun 2013 10:42:57 +1000
 Subject: [PATCH] Spigot Timings
@@ -8,10 +8,10 @@ Adds performance tracking timings all around the Minecraft Server, and improves 
 Plugins can track their own timings with CustomTimingsHandler
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 790bf36c..cb00d8f9 100644
+index 3ffce71b..27c69e96 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -532,6 +532,7 @@ public final class Bukkit {
+@@ -534,6 +534,7 @@ public final class Bukkit {
       */
      public static void reload() {
          server.reload();
@@ -20,10 +20,10 @@ index 790bf36c..cb00d8f9 100644
  
      /**
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 1e8c1845..c0b9c80b 100644
+index 61d8077a..c9ef86e4 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -955,6 +955,10 @@ public interface Server extends PluginMessageRecipient {
+@@ -1018,6 +1018,10 @@ public interface Server extends PluginMessageRecipient {
      public class Spigot
      {
  
@@ -261,7 +261,7 @@ index 60b23995..8b130abb 100644
      }
  
 diff --git a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
-index df613b0c..73372534 100644
+index 8d54297f..e4e80b0c 100644
 --- a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
 +++ b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
 @@ -40,6 +40,7 @@ import org.bukkit.plugin.PluginLoader;
@@ -280,7 +280,7 @@ index df613b0c..73372534 100644
  
      /**
       * This class was not meant to be constructed explicitly
-@@ -287,13 +289,19 @@ public final class JavaPluginLoader implements PluginLoader {
+@@ -289,13 +291,19 @@ public final class JavaPluginLoader implements PluginLoader {
                  }
              }
  
@@ -300,7 +300,7 @@ index df613b0c..73372534 100644
                      } catch (InvocationTargetException ex) {
                          throw new EventException(ex.getCause());
                      } catch (Throwable t) {
-@@ -301,7 +309,7 @@ public final class JavaPluginLoader implements PluginLoader {
+@@ -303,7 +311,7 @@ public final class JavaPluginLoader implements PluginLoader {
                      }
                  }
              };
@@ -481,5 +481,5 @@ index 00000000..8d982974
 +    }
 +}
 -- 
-2.14.1
+2.17.1
 

@@ -1,0 +1,52 @@
+From 60af6767a2bcbbceb834759c92771e26901cdbb4 Mon Sep 17 00:00:00 2001
+From: md_5 <md_5@live.com.au>
+Date: Thu, 27 Jun 2013 17:26:09 +1000
+Subject: [PATCH] Properly Close Inventories
+
+Properly close inventories when unloading and switching worlds.
+
+diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
+index 9a9181be..3f1dce9d 100644
+--- a/src/main/java/net/minecraft/server/Chunk.java
++++ b/src/main/java/net/minecraft/server/Chunk.java
+@@ -783,6 +783,18 @@ public class Chunk implements IChunkAccess {
+ 
+         while (iterator.hasNext()) {
+             TileEntity tileentity = (TileEntity) iterator.next();
++            // Spigot Start
++            if ( tileentity instanceof IInventory )
++            {
++                for ( org.bukkit.entity.HumanEntity h : Lists.<org.bukkit.entity.HumanEntity>newArrayList((List<org.bukkit.entity.HumanEntity>) ( (IInventory) tileentity ).getViewers() ) )
++                {
++                    if ( h instanceof org.bukkit.craftbukkit.entity.CraftHumanEntity )
++                    {
++                       ( (org.bukkit.craftbukkit.entity.CraftHumanEntity) h).getHandle().closeInventory();
++                    }
++                }
++            }
++            // Spigot End
+ 
+             this.world.b(tileentity);
+         }
+@@ -796,6 +808,18 @@ public class Chunk implements IChunkAccess {
+             java.util.Iterator<Entity> iter = newList.iterator();
+             while (iter.hasNext()) {
+                 Entity entity = iter.next();
++                // Spigot Start
++                if ( entity instanceof IInventory )
++                {
++                    for ( org.bukkit.entity.HumanEntity h : Lists.<org.bukkit.entity.HumanEntity>newArrayList( (List<org.bukkit.entity.HumanEntity>) ( (IInventory) entity ).getViewers() ) )
++                    {
++                        if ( h instanceof org.bukkit.craftbukkit.entity.CraftHumanEntity )
++                        {
++                           ( (org.bukkit.craftbukkit.entity.CraftHumanEntity) h).getHandle().closeInventory();
++                        }
++                    }
++                }
++                // Spigot End
+ 
+                 // Do not pass along players, as doing so can get them stuck outside of time.
+                 // (which for example disables inventory icon updates and prevents block breaking)
+-- 
+2.17.1
+

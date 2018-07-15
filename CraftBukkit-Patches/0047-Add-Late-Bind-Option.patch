@@ -1,0 +1,62 @@
+From eedc3b7a4a1c55ed7f418c130d0e0e0d051258a8 Mon Sep 17 00:00:00 2001
+From: slide23 <me@slide.ws>
+Date: Fri, 20 Dec 2013 20:15:33 -0600
+Subject: [PATCH] Add Late Bind Option
+
+Add late-bind config option to delay binding until loading is done.
+
+diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
+index 52afacb8..a9f17c6d 100644
+--- a/src/main/java/net/minecraft/server/DedicatedServer.java
++++ b/src/main/java/net/minecraft/server/DedicatedServer.java
+@@ -188,6 +188,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+             this.a(MinecraftEncryption.b());
+             DedicatedServer.LOGGER.info("Starting Minecraft server on {}:{}", this.getServerIp().isEmpty() ? "*" : this.getServerIp(), Integer.valueOf(this.H()));
+ 
++        if (!org.spigotmc.SpigotConfig.lateBind) {
+             try {
+                 this.getServerConnection().a(inetaddress, this.H());
+             } catch (IOException ioexception) {
+@@ -196,6 +197,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+                 DedicatedServer.LOGGER.warn("Perhaps a server is already running on that port?");
+                 return false;
+             }
++        }
+ 
+             // CraftBukkit start
+             // this.a((PlayerList) (new DedicatedPlayerList(this))); // Spigot - moved up
+@@ -301,6 +303,17 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+                 }
+                 // CraftBukkit end
+ 
++        if (org.spigotmc.SpigotConfig.lateBind) {
++            try {
++                this.getServerConnection().a(inetaddress, this.H());
++            } catch (IOException ioexception) {
++                DedicatedServer.LOGGER.warn("**** FAILED TO BIND TO PORT!");
++                DedicatedServer.LOGGER.warn("The exception was: {}", ioexception.toString());
++                DedicatedServer.LOGGER.warn("Perhaps a server is already running on that port?");
++                return false;
++            }
++        }
++
+                 if (false && this.ba() > 0L) {  // Spigot - disable
+                     Thread thread1 = new Thread(new ThreadWatchdog(this));
+ 
+diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
+index 63156fd8..d09d53be 100644
+--- a/src/main/java/org/spigotmc/SpigotConfig.java
++++ b/src/main/java/org/spigotmc/SpigotConfig.java
+@@ -229,4 +229,9 @@ public class SpigotConfig
+         System.setProperty( "io.netty.eventLoopThreads", Integer.toString( count ) );
+         Bukkit.getLogger().log( Level.INFO, "Using {0} threads for Netty based IO", count );
+     }
++
++    public static boolean lateBind;
++    private static void lateBind() {
++        lateBind = getBoolean( "settings.late-bind", false );
++    }
+ }
+-- 
+2.17.1
+

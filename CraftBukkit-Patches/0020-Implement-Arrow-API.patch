@@ -1,0 +1,31 @@
+From a2c1c3a8a02e7b42a8534f89e3cf7790011e97bf Mon Sep 17 00:00:00 2001
+From: md_5 <md_5@live.com.au>
+Date: Sun, 2 Jun 2013 15:16:05 +1000
+Subject: [PATCH] Implement Arrow API
+
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
+index 11ad076e..cc6e22a7 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
+@@ -90,6 +90,17 @@ public class CraftArrow extends AbstractProjectile implements Arrow {
+     // Spigot start
+     private final Arrow.Spigot spigot = new Arrow.Spigot()
+     {
++        @Override
++        public double getDamage()
++        {
++            return getHandle().getDamage();
++        }
++
++        @Override
++        public void setDamage(double damage)
++        {
++            getHandle().setDamage( damage );
++        }
+     };
+ 
+     public Arrow.Spigot spigot()
+-- 
+2.17.1
+

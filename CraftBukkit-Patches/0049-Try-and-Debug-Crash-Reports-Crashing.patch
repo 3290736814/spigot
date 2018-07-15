@@ -1,0 +1,41 @@
+From a094113287e731e80af4e20c5fefd711fe4451ed Mon Sep 17 00:00:00 2001
+From: md_5 <git@md-5.net>
+Date: Sun, 12 Jan 2014 20:56:41 +1100
+Subject: [PATCH] Try and Debug Crash Reports Crashing
+
+
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index 442f101d..6638ee27 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -860,7 +860,13 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+                     worldserver.doTick();
+                     worldserver.timings.doTick.stopTiming(); // Spigot
+                 } catch (Throwable throwable) {
++                    // Spigot Start
++                    try {
+                     crashreport = CrashReport.a(throwable, "Exception ticking world");
++                    } catch (Throwable t){
++                        throw new RuntimeException("Error generating crash report", t);
++                    }
++                    // Spigot End
+                     worldserver.a(crashreport);
+                     throw new ReportedException(crashreport);
+                 }
+@@ -870,7 +876,13 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+                     worldserver.tickEntities();
+                     worldserver.timings.tickEntities.stopTiming(); // Spigot
+                 } catch (Throwable throwable1) {
++                    // Spigot Start
++                    try {
+                     crashreport = CrashReport.a(throwable1, "Exception ticking world entities");
++                    } catch (Throwable t){
++                        throw new RuntimeException("Error generating crash report", t);
++                    }
++                    // Spigot End
+                     worldserver.a(crashreport);
+                     throw new ReportedException(crashreport);
+                 }
+-- 
+2.17.1
+

@@ -1,0 +1,32 @@
+From d2e83b8ee63bb2ae0029a3f367197e5893875376 Mon Sep 17 00:00:00 2001
+From: md_5 <md_5@live.com.au>
+Date: Mon, 4 Mar 2013 18:45:52 +1100
+Subject: [PATCH] PlayerItemDamageEvent
+
+
+diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
+index 9279306e..0e31f283 100644
+--- a/src/main/java/net/minecraft/server/ItemStack.java
++++ b/src/main/java/net/minecraft/server/ItemStack.java
+@@ -336,6 +336,18 @@ public final class ItemStack {
+                 }
+ 
+                 i -= k;
++                // Spigot start
++                if (entityplayer != null) {
++                    org.bukkit.craftbukkit.inventory.CraftItemStack item = org.bukkit.craftbukkit.inventory.CraftItemStack.asCraftMirror(this);
++                    org.bukkit.event.player.PlayerItemDamageEvent event = new org.bukkit.event.player.PlayerItemDamageEvent(entityplayer.getBukkitEntity(), item, i);
++                    org.bukkit.Bukkit.getServer().getPluginManager().callEvent(event);
++                    if (i != event.getDamage() || event.isCancelled()) {
++                        event.getPlayer().updateInventory();
++                    }
++                    if (event.isCancelled()) return false;
++                    i = event.getDamage();
++                }
++                // Spigot end
+                 if (i <= 0) {
+                     return false;
+                 }
+-- 
+2.17.1
+
