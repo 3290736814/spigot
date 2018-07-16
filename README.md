@@ -7,8 +7,6 @@ High performance Minecraft server implementation
 How To
 -----------
 
-Init a Craftbukkit and Bukkit module : `git submodule update --init`
-
 Apply Patches : `./applyPatches.sh`
 
 ### Create patch for server ###
