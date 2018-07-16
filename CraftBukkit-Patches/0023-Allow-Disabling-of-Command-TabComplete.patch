@@ -1,9 +1,21 @@
-From 3f663e343e1f6c399e421c8f4c2606b766c15c3f Mon Sep 17 00:00:00 2001
+From ae63081b613f519237d7f43f5921e3cd597e9cbe Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 18:05:54 +1000
 Subject: [PATCH] Allow Disabling of Command TabComplete
 
 
+diff --git a/src/main/java/net/minecraft/server/CommandDispatcher.java b/src/main/java/net/minecraft/server/CommandDispatcher.java
+index 84718730..113a50d2 100644
+--- a/src/main/java/net/minecraft/server/CommandDispatcher.java
++++ b/src/main/java/net/minecraft/server/CommandDispatcher.java
+@@ -256,6 +256,7 @@ public class CommandDispatcher {
+     }
+ 
+     public void a(EntityPlayer entityplayer) {
++		 if ( org.spigotmc.SpigotConfig.tabComplete < 0 ) return; // Spigot
+         HashMap hashmap = Maps.newHashMap();
+         RootCommandNode rootcommandnode = new RootCommandNode();
+ 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 index 5b4ca937..aaafa62e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
