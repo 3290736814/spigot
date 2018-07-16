@@ -1,11 +1,11 @@
-From 6a2fc4b282c17cd8341df22ff0efcdbfeca42c20 Mon Sep 17 00:00:00 2001
+From 53a66f37794c4a6184b70bdca34dfded83b11061 Mon Sep 17 00:00:00 2001
 From: Minecrell <dev@minecrell.net>
 Date: Sun, 17 Aug 2014 12:42:53 +0200
 Subject: [PATCH] Make debug logging togglable.
 
 
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index b1f48f26..9ed40e49 100644
+index 9ec61e45..7b8d9c23 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -19,6 +19,9 @@ import net.minecraft.server.GenericAttributes;
@@ -18,7 +18,7 @@ index b1f48f26..9ed40e49 100644
  import org.bukkit.Bukkit;
  import org.bukkit.ChatColor;
  import org.bukkit.command.Command;
-@@ -351,4 +354,27 @@ public class SpigotConfig
+@@ -353,4 +356,27 @@ public class SpigotConfig
          attackDamage = getDouble( "settings.attribute.attackDamage.max", attackDamage );
          ( (AttributeRanged) GenericAttributes.ATTACK_DAMAGE ).b = attackDamage;
      }

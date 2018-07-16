@@ -1,11 +1,11 @@
-From ae63081b613f519237d7f43f5921e3cd597e9cbe Mon Sep 17 00:00:00 2001
+From 734c50938b219feda2dab6756d695c39a7e4b564 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 18:05:54 +1000
 Subject: [PATCH] Allow Disabling of Command TabComplete
 
 
 diff --git a/src/main/java/net/minecraft/server/CommandDispatcher.java b/src/main/java/net/minecraft/server/CommandDispatcher.java
-index 84718730..113a50d2 100644
+index 84718730..4001b36e 100644
 --- a/src/main/java/net/minecraft/server/CommandDispatcher.java
 +++ b/src/main/java/net/minecraft/server/CommandDispatcher.java
 @@ -256,6 +256,7 @@ public class CommandDispatcher {
@@ -16,6 +16,14 @@ index 84718730..113a50d2 100644
          HashMap hashmap = Maps.newHashMap();
          RootCommandNode rootcommandnode = new RootCommandNode();
  
+@@ -269,6 +270,7 @@ public class CommandDispatcher {
+ 
+         while (iterator.hasNext()) {
+             CommandNode commandnode2 = (CommandNode) iterator.next();
++            if ( !org.spigotmc.SpigotConfig.sendNamespaced && commandnode2.getName().contains( ":" ) ) continue; // Spigot
+ 
+             if (commandnode2.canUse(commandlistenerwrapper)) {
+                 ArgumentBuilder argumentbuilder = commandnode2.createBuilder();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 index 5b4ca937..aaafa62e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
@@ -35,15 +43,16 @@ index 5b4ca937..aaafa62e 100644
          try {
              if (message.startsWith("/")) {
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 45e908ed..7e75f3e9 100644
+index 45e908ed..e53e8013 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
-@@ -156,4 +156,21 @@ public class SpigotConfig
+@@ -156,4 +156,23 @@ public class SpigotConfig
      {
          logCommands = getBoolean( "commands.log", true );
      }
 +
 +    public static int tabComplete;
++    public static boolean sendNamespaced;
 +    private static void tabComplete()
 +    {
 +        if ( version < 6 )
@@ -58,6 +67,7 @@ index 45e908ed..7e75f3e9 100644
 +            }
 +        }
 +        tabComplete = getInt( "commands.tab-complete", 0 );
++        sendNamespaced = getBoolean( "commands.send-namespaced", true );
 +    }
  }
 -- 

@@ -1,4 +1,4 @@
-From b4b0ca9ab8a53ce4104a6d8ea3a8ac4ea390a3b9 Mon Sep 17 00:00:00 2001
+From af429846d955ca3df7c6728649b5060fe8feb43c Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Tue, 22 Jul 2014 15:59:01 +0200
 Subject: [PATCH] Make "moved too quickly" limit configurable
@@ -27,10 +27,10 @@ index b817a8ce..ba132a28 100644
                                      PlayerConnection.LOGGER.warn("{} moved too quickly! {},{},{}", this.player.getDisplayName().getString(), Double.valueOf(d7), Double.valueOf(d8), Double.valueOf(d9));
                                      this.a(this.player.locX, this.player.locY, this.player.locZ, this.player.yaw, this.player.pitch);
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index f0c2539e..952c3769 100644
+index 555ae2f2..37d9dadb 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
-@@ -330,4 +330,10 @@ public class SpigotConfig
+@@ -332,4 +332,10 @@ public class SpigotConfig
      {
          movedWronglyThreshold = getDouble( "settings.moved-wrongly-threshold", 0.0625D );
      }

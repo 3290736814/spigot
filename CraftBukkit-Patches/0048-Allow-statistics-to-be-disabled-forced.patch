@@ -1,4 +1,4 @@
-From 5ea081da9bc69b1b245476fe42cde21d43326088 Mon Sep 17 00:00:00 2001
+From 1e4c0c34f6dea899fdea626447f1363a83b6fbd1 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Tue, 7 Jan 2014 15:56:26 +0000
 Subject: [PATCH] Allow statistics to be disabled/forced
@@ -39,7 +39,7 @@ index 3215f9dd..172f72fd 100644
          this.e.add(statistic);
      }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index d09d53be..617b8b8e 100644
+index 33f0e3b8..5d3060c0 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -10,10 +10,14 @@ import java.util.HashMap;
@@ -57,7 +57,7 @@ index d09d53be..617b8b8e 100644
  import org.bukkit.configuration.InvalidConfigurationException;
  import org.bukkit.configuration.file.YamlConfiguration;
  
-@@ -234,4 +238,30 @@ public class SpigotConfig
+@@ -236,4 +240,30 @@ public class SpigotConfig
      private static void lateBind() {
          lateBind = getBoolean( "settings.late-bind", false );
      }

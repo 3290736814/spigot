@@ -1,4 +1,4 @@
-From 8c6cda8ba5c3200f42750b5e60b227de51d2f848 Mon Sep 17 00:00:00 2001
+From bc74a42e4b51f2a9aaebc2ffb416842f69a3df77 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
@@ -65,7 +65,7 @@ index aaafa62e..19b10aba 100644
          return false;
      }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 7e75f3e9..4accd872 100644
+index e53e8013..cec3c4b2 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -12,6 +12,7 @@ import java.util.Map;
@@ -76,9 +76,9 @@ index 7e75f3e9..4accd872 100644
  import org.bukkit.command.Command;
  import org.bukkit.configuration.InvalidConfigurationException;
  import org.bukkit.configuration.file.YamlConfiguration;
-@@ -173,4 +174,28 @@ public class SpigotConfig
-         }
+@@ -175,4 +176,28 @@ public class SpigotConfig
          tabComplete = getInt( "commands.tab-complete", 0 );
+         sendNamespaced = getBoolean( "commands.send-namespaced", true );
      }
 +
 +    public static String whitelistMessage;
