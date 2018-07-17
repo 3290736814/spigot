@@ -1,14 +1,14 @@
-From 734c50938b219feda2dab6756d695c39a7e4b564 Mon Sep 17 00:00:00 2001
+From 510f1539619f79e313ada17fab4d2a0b02a04221 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 18:05:54 +1000
 Subject: [PATCH] Allow Disabling of Command TabComplete
 
 
 diff --git a/src/main/java/net/minecraft/server/CommandDispatcher.java b/src/main/java/net/minecraft/server/CommandDispatcher.java
-index 84718730..4001b36e 100644
+index ca64db53..f9b0cef2 100644
 --- a/src/main/java/net/minecraft/server/CommandDispatcher.java
 +++ b/src/main/java/net/minecraft/server/CommandDispatcher.java
-@@ -256,6 +256,7 @@ public class CommandDispatcher {
+@@ -260,6 +260,7 @@ public class CommandDispatcher {
      }
  
      public void a(EntityPlayer entityplayer) {
@@ -16,7 +16,7 @@ index 84718730..4001b36e 100644
          HashMap hashmap = Maps.newHashMap();
          RootCommandNode rootcommandnode = new RootCommandNode();
  
-@@ -269,6 +270,7 @@ public class CommandDispatcher {
+@@ -273,6 +274,7 @@ public class CommandDispatcher {
  
          while (iterator.hasNext()) {
              CommandNode commandnode2 = (CommandNode) iterator.next();
