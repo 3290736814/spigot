@@ -1,11 +1,11 @@
-From 03eaa91ba33c2678c70bfbb9f67cbf29177b3798 Mon Sep 17 00:00:00 2001
+From c6fd66205123623fbc11f1fefea3a2e8d418ab04 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sat, 15 Mar 2014 01:30:05 -0400
 Subject: [PATCH] Descriptive kick reasons instead of Nope!
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 9d116c94..30b5500e 100644
+index 2a951592..015959b9 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -289,7 +289,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -27,10 +27,10 @@ index 9d116c94..30b5500e 100644
              f1 = 0;
          }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index ec6225d1..264b79b0 100644
+index 042fd7a9..90523669 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1382,7 +1382,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1387,7 +1387,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
              this.player.resetIdleTimer();
          } else {
              PlayerConnection.LOGGER.warn("{} tried to set an invalid carried item", this.player.getDisplayName().getString());

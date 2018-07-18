@@ -1,14 +1,14 @@
-From 660e329625ef287711509f1cf16e84af03fbf51a Mon Sep 17 00:00:00 2001
+From beeb351cc84051e7c22f0cc04178f70f5906b8dd Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 28 Jun 2013 19:52:54 +1000
 Subject: [PATCH] Disallow Interaction With Self
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 69098039..6761bced 100644
+index 964f3346..15510540 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1717,6 +1717,13 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1722,6 +1722,13 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
          if (this.player.isFrozen()) return; // CraftBukkit
          WorldServer worldserver = this.minecraftServer.getWorldServer(this.player.dimension);
          Entity entity = packetplayinuseentity.a((World) worldserver);

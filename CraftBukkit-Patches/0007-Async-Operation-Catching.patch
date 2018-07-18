@@ -1,4 +1,4 @@
-From 9709b1f9c83f55c35014d4d8ba15bad25af6c1b7 Mon Sep 17 00:00:00 2001
+From 18d7b08dba86af0a209d70831f52d4f0cf4cb6c2 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -114,6 +114,18 @@ index 539e5a5f..b88c35c8 100644
          // CraftBukkit start
          // this.entityList.addAll(collection);
          Iterator iterator = collection.iterator();
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index ea56af0f..b8705cc7 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -668,6 +668,7 @@ public final class CraftServer implements Server {
+     public boolean dispatchCommand(CommandSender sender, String commandLine) {
+         Validate.notNull(sender, "Sender cannot be null");
+         Validate.notNull(commandLine, "CommandLine cannot be null");
++        org.spigotmc.AsyncCatcher.catchOp( "command dispatch" ); // Spigot
+ 
+         if (commandMap.dispatch(sender, commandLine)) {
+             return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 index dbcced1a..c6faa4bf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
