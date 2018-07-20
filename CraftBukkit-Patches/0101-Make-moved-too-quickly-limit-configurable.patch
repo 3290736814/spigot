@@ -1,11 +1,11 @@
-From af429846d955ca3df7c6728649b5060fe8feb43c Mon Sep 17 00:00:00 2001
+From 100f403abc43c1103b5bc9c5f0a3ae884bc6ef04 Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Tue, 22 Jul 2014 15:59:01 +0200
 Subject: [PATCH] Make "moved too quickly" limit configurable
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index b817a8ce..ba132a28 100644
+index 7cb939af5..088734f35 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -326,7 +326,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
@@ -17,7 +17,7 @@ index b817a8ce..ba132a28 100644
                  // CraftBukkit end
                      PlayerConnection.LOGGER.warn("{} (vehicle of {}) moved too quickly! {},{},{}", entity.getDisplayName().getString(), this.player.getDisplayName().getString(), Double.valueOf(d6), Double.valueOf(d7), Double.valueOf(d8));
                      this.networkManager.sendPacket(new PacketPlayOutVehicleMove(entity));
-@@ -844,7 +844,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -845,7 +845,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
                              if (!this.player.H() && (!this.player.getWorldServer().getGameRules().getBoolean("disableElytraMovementCheck") || !this.player.db())) {
                                  float f2 = this.player.db() ? 300.0F : 100.0F;
  
@@ -27,7 +27,7 @@ index b817a8ce..ba132a28 100644
                                      PlayerConnection.LOGGER.warn("{} moved too quickly! {},{},{}", this.player.getDisplayName().getString(), Double.valueOf(d7), Double.valueOf(d8), Double.valueOf(d9));
                                      this.a(this.player.locX, this.player.locY, this.player.locZ, this.player.yaw, this.player.pitch);
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 555ae2f2..37d9dadb 100644
+index 555ae2f2b..37d9dadbc 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -332,4 +332,10 @@ public class SpigotConfig

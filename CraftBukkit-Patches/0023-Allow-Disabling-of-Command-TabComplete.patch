@@ -1,14 +1,14 @@
-From 7971bbc1414ed5dbd1c392e83f1a4febb7fba197 Mon Sep 17 00:00:00 2001
+From c755d4283f51e264230e3c96371a891e256efced Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 18:05:54 +1000
 Subject: [PATCH] Allow Disabling of Command TabComplete
 
 
 diff --git a/src/main/java/net/minecraft/server/CommandDispatcher.java b/src/main/java/net/minecraft/server/CommandDispatcher.java
-index ca64db53..f9b0cef2 100644
+index 274ef4939..3c6b0af62 100644
 --- a/src/main/java/net/minecraft/server/CommandDispatcher.java
 +++ b/src/main/java/net/minecraft/server/CommandDispatcher.java
-@@ -260,6 +260,7 @@ public class CommandDispatcher {
+@@ -247,6 +247,7 @@ public class CommandDispatcher {
      }
  
      public void a(EntityPlayer entityplayer) {
@@ -16,7 +16,7 @@ index ca64db53..f9b0cef2 100644
          HashMap hashmap = Maps.newHashMap();
          RootCommandNode rootcommandnode = new RootCommandNode();
  
-@@ -273,6 +274,7 @@ public class CommandDispatcher {
+@@ -260,6 +261,7 @@ public class CommandDispatcher {
  
          while (iterator.hasNext()) {
              CommandNode commandnode2 = (CommandNode) iterator.next();
@@ -25,7 +25,7 @@ index ca64db53..f9b0cef2 100644
              if (commandnode2.canUse(commandlistenerwrapper)) {
                  ArgumentBuilder argumentbuilder = commandnode2.createBuilder();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 01ee1917..133e833c 100644
+index 01ee19170..133e833c1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1611,6 +1611,13 @@ public final class CraftServer implements Server {
@@ -43,7 +43,7 @@ index 01ee1917..133e833c 100644
          try {
              if (message.startsWith("/")) {
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 45e908ed..e53e8013 100644
+index 45e908ed4..e53e8013d 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -156,4 +156,23 @@ public class SpigotConfig

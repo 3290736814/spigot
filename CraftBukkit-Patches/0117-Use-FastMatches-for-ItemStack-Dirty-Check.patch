@@ -1,4 +1,4 @@
-From b2b012019657d59ad32f2f2612caeaa9ed4e21cb Mon Sep 17 00:00:00 2001
+From 8ba892c9c20d6fedd92f73e06e89910a14cb5608 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 22 Feb 2015 12:27:40 +1100
 Subject: [PATCH] Use FastMatches for ItemStack Dirty Check
@@ -6,7 +6,7 @@ Subject: [PATCH] Use FastMatches for ItemStack Dirty Check
 The check to find dirty itemstacks and send update packets each tick can be very intensive as it checks the entire itemstack, including the entire NBT map. To save on this, 19/20 times we will simply compare the basic count/data/type. If for some strange reason the NBT of an item already existing in an inventory is changes, it will take up to 1 second to show, with an average time of half a second. This odd 0.5 second delay is far preferable to lag every tick, and shouldn't be noticed by anyone.
 
 diff --git a/src/main/java/net/minecraft/server/Container.java b/src/main/java/net/minecraft/server/Container.java
-index 0ae0b5ed..e86ffb4d 100644
+index 0ae0b5ed8..e86ffb4dc 100644
 --- a/src/main/java/net/minecraft/server/Container.java
 +++ b/src/main/java/net/minecraft/server/Container.java
 @@ -28,6 +28,7 @@ public abstract class Container {
@@ -35,10 +35,10 @@ index 0ae0b5ed..e86ffb4d 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index 0e31f283..cc96294f 100644
+index 8184ef0d9..3f0c5d7dd 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
-@@ -428,6 +428,18 @@ public final class ItemStack {
+@@ -434,6 +434,18 @@ public final class ItemStack {
          return itemstack.isEmpty() && itemstack1.isEmpty() ? true : (!itemstack.isEmpty() && !itemstack1.isEmpty() ? (itemstack.tag == null && itemstack1.tag != null ? false : itemstack.tag == null || itemstack.tag.equals(itemstack1.tag)) : false);
      }
  
@@ -58,7 +58,7 @@ index 0e31f283..cc96294f 100644
          return itemstack.isEmpty() && itemstack1.isEmpty() ? true : (!itemstack.isEmpty() && !itemstack1.isEmpty() ? itemstack.c(itemstack1) : false);
      }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 7b8d9c23..f3469d26 100644
+index 7b8d9c23a..f3469d265 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -379,4 +379,9 @@ public class SpigotConfig

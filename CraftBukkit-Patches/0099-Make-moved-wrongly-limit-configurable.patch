@@ -1,11 +1,11 @@
-From a730fe85966151725ccf21dc47023545d0806b32 Mon Sep 17 00:00:00 2001
+From f026bb0690c87ed87f1fb58cc64a8411e34ab5fe Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Fri, 4 Jul 2014 23:03:13 +0200
 Subject: [PATCH] Make "moved wrongly" limit configurable
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 8a6a8350..b817a8ce 100644
+index 4e9cff1ae..7cb939af5 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -351,7 +351,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
@@ -17,7 +17,7 @@ index 8a6a8350..b817a8ce 100644
                      flag1 = true;
                      PlayerConnection.LOGGER.warn("{} moved wrongly!", entity.getDisplayName().getString());
                  }
-@@ -875,7 +875,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -876,7 +876,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
                              d11 = d7 * d7 + d8 * d8 + d9 * d9;
                              boolean flag1 = false;
  
@@ -27,7 +27,7 @@ index 8a6a8350..b817a8ce 100644
                                  PlayerConnection.LOGGER.warn("{} moved wrongly!", this.player.getDisplayName().getString());
                              }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 03af46ad..555ae2f2 100644
+index 03af46ad0..555ae2f2b 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -326,4 +326,10 @@ public class SpigotConfig
