@@ -1,4 +1,4 @@
-From fd74ab689ff01d9d5bb3bd10d97115e91d6400e7 Mon Sep 17 00:00:00 2001
+From cb66502df093503f966530e88032675ff725026f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -136,7 +136,7 @@ index 2a84d5de4..f347d2aa7 100644
  
      protected float ab() {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 46ed9697b..3e762d619 100644
+index 6fa6900a0..7d688f287 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -32,6 +32,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
@@ -148,7 +148,7 @@ index 46ed9697b..3e762d619 100644
  public abstract class EntityLiving extends Entity {
  
      private static final Logger a = LogManager.getLogger();
-@@ -1973,6 +1975,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1975,6 +1977,7 @@ public abstract class EntityLiving extends Entity {
      }
  
      public void tick() {
@@ -156,7 +156,7 @@ index 46ed9697b..3e762d619 100644
          super.tick();
          this.cU();
          this.o();
-@@ -2046,7 +2049,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2048,7 +2051,9 @@ public abstract class EntityLiving extends Entity {
              }
          }
  
@@ -166,7 +166,7 @@ index 46ed9697b..3e762d619 100644
          double d0 = this.locX - this.lastX;
          double d1 = this.locZ - this.lastZ;
          float f = (float) (d0 * d0 + d1 * d1);
-@@ -2123,6 +2128,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2125,6 +2130,7 @@ public abstract class EntityLiving extends Entity {
              this.bv = 0;
          }
  
@@ -174,7 +174,7 @@ index 46ed9697b..3e762d619 100644
      }
  
      protected float e(float f, float f1) {
-@@ -2192,6 +2198,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2194,6 +2200,7 @@ public abstract class EntityLiving extends Entity {
          }
  
          this.world.methodProfiler.a("ai");
@@ -182,7 +182,7 @@ index 46ed9697b..3e762d619 100644
          if (this.isFrozen()) {
              this.bg = false;
              this.bh = 0.0F;
-@@ -2202,6 +2209,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2204,6 +2211,7 @@ public abstract class EntityLiving extends Entity {
              this.doTick();
              this.world.methodProfiler.e();
          }
@@ -190,7 +190,7 @@ index 46ed9697b..3e762d619 100644
  
          this.world.methodProfiler.e();
          this.world.methodProfiler.a("jump");
-@@ -2226,7 +2234,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2228,7 +2236,9 @@ public abstract class EntityLiving extends Entity {
          this.n();
          AxisAlignedBB axisalignedbb = this.getBoundingBox();
  
@@ -200,7 +200,7 @@ index 46ed9697b..3e762d619 100644
          this.world.methodProfiler.e();
          this.world.methodProfiler.a("push");
          if (this.bw > 0) {
-@@ -2234,7 +2244,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2236,7 +2246,9 @@ public abstract class EntityLiving extends Entity {
              this.a(axisalignedbb, this.getBoundingBox());
          }
  

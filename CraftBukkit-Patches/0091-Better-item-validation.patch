@@ -1,11 +1,11 @@
-From 2001731a290a63f8ddc2151c9020a14e35953275 Mon Sep 17 00:00:00 2001
+From ab494f635ae1bcf8ed6f18fe0a4009cdc24b72bc Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
 
 
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index 55e1a1ab..d04afceb 100644
+index 55e1a1ab3..d04afceb7 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
 @@ -246,6 +246,10 @@ public class PacketDataSerializer extends ByteBuf {
@@ -20,7 +20,7 @@ index 55e1a1ab..d04afceb 100644
              }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index 0c1bca2b..600538b1 100644
+index 0c1bca2bd..600538b11 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 @@ -23,6 +23,10 @@ import net.minecraft.server.IChatBaseComponent;
@@ -58,10 +58,10 @@ index 0c1bca2b..600538b1 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 5383bf07..a57f8faf 100644
+index 091d1c1fd..c26a8549b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -51,6 +51,10 @@ import java.util.logging.Logger;
+@@ -52,6 +52,10 @@ import java.util.logging.Logger;
  import net.minecraft.server.NBTCompressedStreamTools;
  import org.apache.commons.codec.binary.Base64;
  
@@ -72,16 +72,25 @@ index 5383bf07..a57f8faf 100644
  /**
   * Children must include the following:
   *
-@@ -271,7 +275,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
-             NBTTagCompound display = tag.getCompound(DISPLAY.NBT);
+@@ -273,7 +277,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
  
              if (display.hasKey(NAME.NBT)) {
--                displayName = IChatBaseComponent.ChatSerializer.a(display.getString(NAME.NBT));
-+                displayName = IChatBaseComponent.ChatSerializer.a(limit( display.getString(NAME.NBT), 1024 )); // Spigot
-             }
+                 try {
+-                    displayName = IChatBaseComponent.ChatSerializer.a(display.getString(NAME.NBT));
++                    displayName = IChatBaseComponent.ChatSerializer.a( limit( display.getString(NAME.NBT), 1024 ) ); // Spigot
+                 } catch (JsonParseException ex) {
+                     // Ignore (stripped like Vanilla)
+                 }
+@@ -281,7 +285,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
  
              if (display.hasKey(LOCNAME.NBT)) {
-@@ -283,7 +287,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
+                 try {
+-                    locName = IChatBaseComponent.ChatSerializer.a(display.getString(LOCNAME.NBT));
++                    locName = IChatBaseComponent.ChatSerializer.a( limit( display.getString(LOCNAME.NBT), 1024 ) ); // Spigot
+                 } catch (JsonParseException ex) {
+                     // Ignore (stripped like Vanilla)
+                 }
+@@ -292,7 +296,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
                  lore = new ArrayList<String>(list.size());
  
                  for (int index = 0; index < list.size(); index++) {
@@ -92,7 +101,7 @@ index 5383bf07..a57f8faf 100644
              }
 diff --git a/src/main/java/org/spigotmc/ValidateUtils.java b/src/main/java/org/spigotmc/ValidateUtils.java
 new file mode 100644
-index 00000000..58a95348
+index 000000000..58a953481
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ValidateUtils.java
 @@ -0,0 +1,14 @@

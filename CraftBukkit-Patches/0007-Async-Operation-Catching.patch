@@ -1,4 +1,4 @@
-From d1fe41f7dddf705d1d0b4cb8a91bbeae13066175 Mon Sep 17 00:00:00 2001
+From ab5a0b76a92bc8f5e8c053bdead5a8a43c92cc44 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -27,10 +27,10 @@ index 139b40f17..ffb91b27b 100644
      public int a(IBlockData iblockdata, Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 88753d6a3..46ed9697b 100644
+index dc0bc803c..6fa6900a0 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -723,6 +723,7 @@ public abstract class EntityLiving extends Entity {
+@@ -725,6 +725,7 @@ public abstract class EntityLiving extends Entity {
      }
  
      public boolean addEffect(MobEffect mobeffect, EntityPotionEffectEvent.Cause cause) {

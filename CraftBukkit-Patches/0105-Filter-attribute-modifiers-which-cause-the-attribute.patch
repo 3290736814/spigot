@@ -1,4 +1,4 @@
-From 3c9fb5bb5c832c8e62e2e8cea199d441c5a0bac7 Mon Sep 17 00:00:00 2001
+From 50acf78224a4c4c18d73c684b0f2d460e9a738e1 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Thu, 31 Jul 2014 17:48:20 +0100
 Subject: [PATCH] Filter attribute modifiers which cause the attribute to go
@@ -6,10 +6,10 @@ Subject: [PATCH] Filter attribute modifiers which cause the attribute to go
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index a57f8faf..20bc03be 100644
+index c26a8549b..022b7a14c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -53,6 +53,8 @@ import org.apache.commons.codec.binary.Base64;
+@@ -54,6 +54,8 @@ import org.apache.commons.codec.binary.Base64;
  
  // Spigot start
  import static org.spigotmc.ValidateUtils.*;
@@ -18,7 +18,7 @@ index a57f8faf..20bc03be 100644
  // Spigot end
  
  /**
-@@ -313,6 +315,123 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
+@@ -322,6 +324,123 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
              NBTTagList save = null;
              NBTTagList nbttaglist = tag.getList(ATTRIBUTES.NBT, CraftMagicNumbers.NBT.TAG_COMPOUND);
  

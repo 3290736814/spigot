@@ -1,14 +1,14 @@
-From d7790e26ca35f8f78e2e356d3da2b070cadfdcf9 Mon Sep 17 00:00:00 2001
+From ac871fd9b9b838ce1c07b2344fbe49b0889081c2 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoung@mit.edu>
 Date: Fri, 15 Aug 2014 18:11:09 -0400
 Subject: [PATCH] Remove uneeded validation
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 20bc03be..c385c39a 100644
+index 022b7a14c..7ac76fb70 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -256,7 +256,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
+@@ -257,7 +257,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
              this.lore = new ArrayList<String>(meta.lore);
          }
  
@@ -17,7 +17,7 @@ index 20bc03be..c385c39a 100644
              this.enchantments = new HashMap<Enchantment, Integer>(meta.enchantments);
          }
  
-@@ -636,7 +636,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
+@@ -645,7 +645,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
      }
  
      static void applyEnchantments(Map<Enchantment, Integer> enchantments, NBTTagCompound tag, ItemMetaKey key) {
@@ -26,7 +26,7 @@ index 20bc03be..c385c39a 100644
              return;
          }
  
-@@ -742,7 +742,14 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
+@@ -751,7 +751,14 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
  
      public boolean removeEnchant(Enchantment ench) {
          Validate.notNull(ench, "Enchantment cannot be null");
