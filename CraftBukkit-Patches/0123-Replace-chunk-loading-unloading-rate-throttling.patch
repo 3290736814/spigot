@@ -1,4 +1,4 @@
-From 67986dd26fd6f1de5136ac9014d1634d991be992 Mon Sep 17 00:00:00 2001
+From 38934618563282527bd26844eb183030d509d553 Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Thu, 26 Jan 2017 20:54:55 +0000
 Subject: [PATCH] Replace chunk loading / unloading rate throttling.
@@ -7,7 +7,7 @@ Uses a scheme based on estimated tick slack time.
 See https://hub.spigotmc.org/stash/projects/SPIGOT/repos/spigot/pull-requests/71/overview
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 62925a0c..d35203cc 100644
+index 62925a0c7..d35203cc5 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -272,13 +272,22 @@ public class ChunkProviderServer implements IChunkProvider {
@@ -52,7 +52,7 @@ index 62925a0c..d35203cc 100644
  
              this.f.a();
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 6705c0e0..bcdd9e0f 100644
+index e0a389367..d813c72e1 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -63,6 +63,7 @@ import org.bukkit.craftbukkit.CraftServer;
@@ -63,7 +63,7 @@ index 6705c0e0..bcdd9e0f 100644
  
  public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStatistics, ICommandListener, Runnable {
  
-@@ -150,6 +151,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -151,6 +152,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
      public static final int TICK_TIME = 1000000000 / TPS;
      private static final int SAMPLE_INTERVAL = 100;
      public final double[] recentTps = new double[ 3 ];
@@ -88,7 +88,7 @@ index 6705c0e0..bcdd9e0f 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index d7c299a4..ac6d8cc6 100644
+index d7c299a41..ac6d8cc6e 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -127,8 +127,11 @@ public class PlayerChunkMap {
@@ -126,7 +126,7 @@ index d7c299a4..ac6d8cc6 100644
          if (!this.g.isEmpty()) {
 diff --git a/src/main/java/org/spigotmc/SlackActivityAccountant.java b/src/main/java/org/spigotmc/SlackActivityAccountant.java
 new file mode 100644
-index 00000000..aabc7ad2
+index 000000000..aabc7ad20
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SlackActivityAccountant.java
 @@ -0,0 +1,78 @@
