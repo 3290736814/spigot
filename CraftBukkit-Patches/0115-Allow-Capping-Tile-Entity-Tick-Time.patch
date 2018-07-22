@@ -1,4 +1,4 @@
-From 3cc6518fbf4d5a5cd88301b0f4a8b61acbf1c045 Mon Sep 17 00:00:00 2001
+From 65a6bce57cb870c980fc8add3f6b63e0e6fbbcbc Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -10,7 +10,7 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 This feature was commisioned by Chunkr.
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 4bb2dff7..c7f5cba2 100644
+index dfcafc6d4..13c404337 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -131,6 +131,9 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
@@ -82,7 +82,7 @@ index 4bb2dff7..c7f5cba2 100644
                  if (this.isLoaded(tileentity.getPosition())) {
                      this.getChunkAtWorldCoords(tileentity.getPosition()).d(tileentity.getPosition());
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 49e70a7c..e146308b 100644
+index 49e70a7c1..e146308ba 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -297,4 +297,13 @@ public class SpigotWorldConfig
@@ -101,7 +101,7 @@ index 49e70a7c..e146308b 100644
  }
 diff --git a/src/main/java/org/spigotmc/TickLimiter.java b/src/main/java/org/spigotmc/TickLimiter.java
 new file mode 100644
-index 00000000..23a39382
+index 000000000..23a39382b
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/TickLimiter.java
 @@ -0,0 +1,20 @@

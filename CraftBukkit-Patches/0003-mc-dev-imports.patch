@@ -1,4 +1,4 @@
-From 9d7dfd74029263cde1add98520ba205fbd88aba5 Mon Sep 17 00:00:00 2001
+From 94b4959e5bb71cb3161a6e2b01230cf3bc24bbeb Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -7,7 +7,7 @@ Imported files which are only modified by Spigot, not upstream. Files here shoul
 
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataWorld.java b/src/main/java/net/minecraft/server/AdvancementDataWorld.java
 new file mode 100644
-index 00000000..47279ebf
+index 000000000..47279ebfd
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/AdvancementDataWorld.java
 @@ -0,0 +1,117 @@
@@ -130,7 +130,7 @@ index 00000000..47279ebf
 +}
 diff --git a/src/main/java/net/minecraft/server/ChunkGenerator.java b/src/main/java/net/minecraft/server/ChunkGenerator.java
 new file mode 100644
-index 00000000..957af9b3
+index 000000000..957af9b3f
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ChunkGenerator.java
 @@ -0,0 +1,43 @@
@@ -179,7 +179,7 @@ index 00000000..957af9b3
 +}
 diff --git a/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
 new file mode 100644
-index 00000000..a0362c3f
+index 000000000..a0362c3f8
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
 @@ -0,0 +1,159 @@
@@ -344,7 +344,7 @@ index 00000000..a0362c3f
 +}
 diff --git a/src/main/java/net/minecraft/server/EntitySquid.java b/src/main/java/net/minecraft/server/EntitySquid.java
 new file mode 100644
-index 00000000..34a3633a
+index 000000000..764dec080
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/EntitySquid.java
 @@ -0,0 +1,271 @@
@@ -398,11 +398,11 @@ index 00000000..34a3633a
 +        return SoundEffects.ENTITY_SQUID_HURT;
 +    }
 +
-+    protected SoundEffect cr() {
++    protected SoundEffect cs() {
 +        return SoundEffects.ENTITY_SQUID_DEATH;
 +    }
 +
-+    protected float cC() {
++    protected float cD() {
 +        return 0.4F;
 +    }
 +
@@ -485,7 +485,7 @@ index 00000000..34a3633a
 +
 +    public boolean damageEntity(DamageSource damagesource, float f) {
 +        if (super.damageEntity(damagesource, f) && this.getLastDamager() != null) {
-+            this.dy();
++            this.dz();
 +            return true;
 +        } else {
 +            return false;
@@ -499,8 +499,8 @@ index 00000000..34a3633a
 +        return vec3d1;
 +    }
 +
-+    private void dy() {
-+        this.a(SoundEffects.ENTITY_SQUID_SQUIRT, this.cC(), this.cD());
++    private void dz() {
++        this.a(SoundEffects.ENTITY_SQUID_SQUIRT, this.cD(), this.cE());
 +        Vec3D vec3d = this.b(new Vec3D(0.0D, -1.0D, 0.0D)).add(this.locX, this.locY, this.locZ);
 +
 +        for (int i = 0; i < 30; ++i) {
@@ -603,7 +603,7 @@ index 00000000..34a3633a
 +        }
 +
 +        public void e() {
-+            int i = this.b.ci();
++            int i = this.b.cj();
 +
 +            if (i > 100) {
 +                this.b.c(0.0F, 0.0F, 0.0F);
@@ -621,7 +621,7 @@ index 00000000..34a3633a
 +}
 diff --git a/src/main/java/net/minecraft/server/GameProfileBanEntry.java b/src/main/java/net/minecraft/server/GameProfileBanEntry.java
 new file mode 100644
-index 00000000..634d4f72
+index 000000000..634d4f721
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/GameProfileBanEntry.java
 @@ -0,0 +1,55 @@
@@ -682,7 +682,7 @@ index 00000000..634d4f72
 +}
 diff --git a/src/main/java/net/minecraft/server/GenericAttributes.java b/src/main/java/net/minecraft/server/GenericAttributes.java
 new file mode 100644
-index 00000000..1a7e20d6
+index 000000000..1a7e20d6f
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/GenericAttributes.java
 @@ -0,0 +1,120 @@
@@ -808,7 +808,7 @@ index 00000000..1a7e20d6
 +}
 diff --git a/src/main/java/net/minecraft/server/IChunkLoader.java b/src/main/java/net/minecraft/server/IChunkLoader.java
 new file mode 100644
-index 00000000..f761bb90
+index 000000000..f761bb90f
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/IChunkLoader.java
 @@ -0,0 +1,24 @@
@@ -838,7 +838,7 @@ index 00000000..f761bb90
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java b/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java
 new file mode 100644
-index 00000000..345d763d
+index 000000000..345d763d9
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java
 @@ -0,0 +1,89 @@
@@ -933,7 +933,7 @@ index 00000000..345d763d
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTTagByteArray.java b/src/main/java/net/minecraft/server/NBTTagByteArray.java
 new file mode 100644
-index 00000000..6f8d3748
+index 000000000..6f8d3748b
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NBTTagByteArray.java
 @@ -0,0 +1,123 @@
@@ -1062,7 +1062,7 @@ index 00000000..6f8d3748
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTTagIntArray.java b/src/main/java/net/minecraft/server/NBTTagIntArray.java
 new file mode 100644
-index 00000000..1022c00b
+index 000000000..1022c00be
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NBTTagIntArray.java
 @@ -0,0 +1,137 @@
@@ -1205,7 +1205,7 @@ index 00000000..1022c00b
 +}
 diff --git a/src/main/java/net/minecraft/server/NibbleArray.java b/src/main/java/net/minecraft/server/NibbleArray.java
 new file mode 100644
-index 00000000..1509c772
+index 000000000..1509c772e
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NibbleArray.java
 @@ -0,0 +1,58 @@
@@ -1269,7 +1269,7 @@ index 00000000..1509c772
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java b/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java
 new file mode 100644
-index 00000000..47b871df
+index 000000000..47b871dfc
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java
 @@ -0,0 +1,39 @@
@@ -1314,7 +1314,7 @@ index 00000000..47b871df
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayInArmAnimation.java b/src/main/java/net/minecraft/server/PacketPlayInArmAnimation.java
 new file mode 100644
-index 00000000..bc93677f
+index 000000000..bc93677fa
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PacketPlayInArmAnimation.java
 @@ -0,0 +1,30 @@
@@ -1350,7 +1350,7 @@ index 00000000..bc93677f
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java b/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java
 new file mode 100644
-index 00000000..06f3954b
+index 000000000..06f3954b0
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java
 @@ -0,0 +1,30 @@
@@ -1386,7 +1386,7 @@ index 00000000..06f3954b
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayInChat.java b/src/main/java/net/minecraft/server/PacketPlayInChat.java
 new file mode 100644
-index 00000000..cfea4d54
+index 000000000..cfea4d549
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PacketPlayInChat.java
 @@ -0,0 +1,34 @@
@@ -1426,7 +1426,7 @@ index 00000000..cfea4d54
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayInUseItem.java b/src/main/java/net/minecraft/server/PacketPlayInUseItem.java
 new file mode 100644
-index 00000000..3c5f8151
+index 000000000..3c5f81519
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PacketPlayInUseItem.java
 @@ -0,0 +1,61 @@
@@ -1493,7 +1493,7 @@ index 00000000..3c5f8151
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayOutChat.java b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
 new file mode 100644
-index 00000000..e55384e7
+index 000000000..e55384e70
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
 @@ -0,0 +1,46 @@
@@ -1545,7 +1545,7 @@ index 00000000..e55384e7
 +}
 diff --git a/src/main/java/net/minecraft/server/PersistentCollection.java b/src/main/java/net/minecraft/server/PersistentCollection.java
 new file mode 100644
-index 00000000..54550602
+index 000000000..855192af3
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PersistentCollection.java
 @@ -0,0 +1,201 @@
@@ -1599,7 +1599,7 @@ index 00000000..54550602
 +
 +                if (file != null && file.exists()) {
 +                    persistentbase = (PersistentBase) function.apply(s);
-+                    persistentbase.a(this.a(s, 1513).getCompound("data"));
++                    persistentbase.a(this.a(s, 1519).getCompound("data"));
 +                    this.a.put(s, persistentbase);
 +                    this.d.add(persistentbase);
 +                }
@@ -1674,7 +1674,7 @@ index 00000000..54550602
 +                    NBTTagCompound nbttagcompound = new NBTTagCompound();
 +
 +                    nbttagcompound.set("data", persistentbase.b(new NBTTagCompound()));
-+                    nbttagcompound.setInt("DataVersion", 1513);
++                    nbttagcompound.setInt("DataVersion", 1519);
 +                    FileOutputStream fileoutputstream = new FileOutputStream(file);
 +
 +                    NBTCompressedStreamTools.a(nbttagcompound, (OutputStream) fileoutputstream);
@@ -1752,7 +1752,7 @@ index 00000000..54550602
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerConnection.java b/src/main/java/net/minecraft/server/ServerConnection.java
 new file mode 100644
-index 00000000..d62670ac
+index 000000000..d62670ac5
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerConnection.java
 @@ -0,0 +1,144 @@
@@ -1902,7 +1902,7 @@ index 00000000..d62670ac
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerStatisticManager.java b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 new file mode 100644
-index 00000000..3215f9dd
+index 000000000..38ff3b662
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 @@ -0,0 +1,229 @@
@@ -2105,7 +2105,7 @@ index 00000000..3215f9dd
 +        JsonObject jsonobject1 = new JsonObject();
 +
 +        jsonobject1.add("stats", jsonobject);
-+        jsonobject1.addProperty("DataVersion", Integer.valueOf(1513));
++        jsonobject1.addProperty("DataVersion", Integer.valueOf(1519));
 +        return jsonobject1.toString();
 +    }
 +
@@ -2137,7 +2137,7 @@ index 00000000..3215f9dd
 +}
 diff --git a/src/main/java/net/minecraft/server/StructureGenerator.java b/src/main/java/net/minecraft/server/StructureGenerator.java
 new file mode 100644
-index 00000000..263ea953
+index 000000000..263ea953a
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/StructureGenerator.java
 @@ -0,0 +1,240 @@
@@ -2383,7 +2383,7 @@ index 00000000..263ea953
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java b/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
 new file mode 100644
-index 00000000..fb5ac05d
+index 000000000..fb5ac05d5
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
 @@ -0,0 +1,37 @@
@@ -2426,7 +2426,7 @@ index 00000000..fb5ac05d
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java b/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java
 new file mode 100644
-index 00000000..e6cc8f01
+index 000000000..e6cc8f011
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java
 @@ -0,0 +1,42 @@
@@ -2474,7 +2474,7 @@ index 00000000..e6cc8f01
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java b/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java
 new file mode 100644
-index 00000000..9d564488
+index 000000000..9d564488e
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java
 @@ -0,0 +1,37 @@
@@ -2517,7 +2517,7 @@ index 00000000..9d564488
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java b/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java
 new file mode 100644
-index 00000000..3d8e08ff
+index 000000000..3d8e08ff5
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java
 @@ -0,0 +1,59 @@
@@ -2582,7 +2582,7 @@ index 00000000..3d8e08ff
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java b/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java
 new file mode 100644
-index 00000000..6acbccb0
+index 000000000..6acbccb0f
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java
 @@ -0,0 +1,56 @@
@@ -2644,7 +2644,7 @@ index 00000000..6acbccb0
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java b/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java
 new file mode 100644
-index 00000000..a50a45c4
+index 000000000..a50a45c43
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java
 @@ -0,0 +1,47 @@
@@ -2697,7 +2697,7 @@ index 00000000..a50a45c4
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
 new file mode 100644
-index 00000000..887293c3
+index 000000000..887293c3c
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
 @@ -0,0 +1,58 @@
@@ -2761,7 +2761,7 @@ index 00000000..887293c3
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenMonument.java b/src/main/java/net/minecraft/server/WorldGenMonument.java
 new file mode 100644
-index 00000000..57afb480
+index 000000000..57afb4809
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenMonument.java
 @@ -0,0 +1,159 @@
@@ -2926,7 +2926,7 @@ index 00000000..57afb480
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenVillage.java b/src/main/java/net/minecraft/server/WorldGenVillage.java
 new file mode 100644
-index 00000000..c9ac6ca8
+index 000000000..c9ac6ca80
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenVillage.java
 @@ -0,0 +1,121 @@
@@ -3053,7 +3053,7 @@ index 00000000..c9ac6ca8
 +}
 diff --git a/src/main/java/org/spigotmc/SneakyThrow.java b/src/main/java/org/spigotmc/SneakyThrow.java
 new file mode 100644
-index 00000000..31fc0a98
+index 000000000..31fc0a984
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SneakyThrow.java
 @@ -0,0 +1,15 @@

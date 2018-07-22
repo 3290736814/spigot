@@ -1,4 +1,4 @@
-From a1306e150ab046d5ee45ce927ca127e0c7a48e2f Mon Sep 17 00:00:00 2001
+From 0172a99e6dbe322c05ee0b184e3675f77f3276ce Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index f347d2aa7..1d272a6a1 100644
+index e7f989686..855f7ff0a 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -159,6 +159,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -98,7 +98,7 @@ index b693c3033..1e5029170 100644
          super(entitytypes, world);
          this.tileX = -1;
 diff --git a/src/main/java/net/minecraft/server/EntityFireworks.java b/src/main/java/net/minecraft/server/EntityFireworks.java
-index ff9eee403..4c2cdd4bc 100644
+index da878c760..6e2592e96 100644
 --- a/src/main/java/net/minecraft/server/EntityFireworks.java
 +++ b/src/main/java/net/minecraft/server/EntityFireworks.java
 @@ -17,6 +17,14 @@ public class EntityFireworks extends Entity {
@@ -150,7 +150,7 @@ index 0ac47b585..4af09f5cd 100644
          if (this.motY < 0.05999999865889549D) {
              this.motY += 5.000000237487257E-4D;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 3e762d619..3c1adeea6 100644
+index 6f8572573..514c95151 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -128,6 +128,13 @@ public abstract class EntityLiving extends Entity {
@@ -168,7 +168,7 @@ index 3e762d619..3c1adeea6 100644
      protected EntityLiving(EntityTypes<?> entitytypes, World world) {
          super(entitytypes, world);
 diff --git a/src/main/java/net/minecraft/server/EntityVillager.java b/src/main/java/net/minecraft/server/EntityVillager.java
-index 593b55eef..6c66f7deb 100644
+index aacb270fc..32893a32c 100644
 --- a/src/main/java/net/minecraft/server/EntityVillager.java
 +++ b/src/main/java/net/minecraft/server/EntityVillager.java
 @@ -98,6 +98,22 @@ public class EntityVillager extends EntityAgeable implements NPC, IMerchant {
@@ -195,7 +195,7 @@ index 593b55eef..6c66f7deb 100644
          if (--this.profession <= 0) {
              BlockPosition blockposition = new BlockPosition(this);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 4c89cb2c2..6207a4cd0 100644
+index 7367dac45..ce5fa30b2 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1065,6 +1065,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose

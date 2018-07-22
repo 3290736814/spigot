@@ -1,4 +1,4 @@
-From abe92e401dcc40f0d3385068e234cc54638eb8a0 Mon Sep 17 00:00:00 2001
+From 70e6582e1ad41d97b0a96d515d770cbd2bb46542 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,7 +6,7 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances, and view distances below 3. Be wary of the issues selecting a view distance of 1 or 2 may cause!
 
 diff --git a/src/main/java/net/minecraft/server/EntityTracker.java b/src/main/java/net/minecraft/server/EntityTracker.java
-index ef581793..4ecdeef2 100644
+index ef5817933..4ecdeef23 100644
 --- a/src/main/java/net/minecraft/server/EntityTracker.java
 +++ b/src/main/java/net/minecraft/server/EntityTracker.java
 @@ -18,7 +18,7 @@ public class EntityTracker {
@@ -19,7 +19,7 @@ index ef581793..4ecdeef2 100644
  
      public static long a(double d0) {
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 551236c9..d7c299a4 100644
+index 551236c95..d7c299a41 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -42,7 +42,7 @@ public class PlayerChunkMap {
@@ -32,7 +32,7 @@ index 551236c9..d7c299a4 100644
  
      public WorldServer getWorld() {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 23730154..f5096e3a 100644
+index 23730154d..f5096e3a4 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -119,4 +119,11 @@ public class SpigotWorldConfig

@@ -1,11 +1,11 @@
-From 53a66f37794c4a6184b70bdca34dfded83b11061 Mon Sep 17 00:00:00 2001
+From c922f77dd02791cdf85c8da0eb5d420151972d46 Mon Sep 17 00:00:00 2001
 From: Minecrell <dev@minecrell.net>
 Date: Sun, 17 Aug 2014 12:42:53 +0200
 Subject: [PATCH] Make debug logging togglable.
 
 
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 9ec61e45..7b8d9c23 100644
+index d15a66d12..f615a8231 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -19,6 +19,9 @@ import net.minecraft.server.GenericAttributes;
@@ -20,7 +20,7 @@ index 9ec61e45..7b8d9c23 100644
  import org.bukkit.command.Command;
 @@ -353,4 +356,27 @@ public class SpigotConfig
          attackDamage = getDouble( "settings.attribute.attackDamage.max", attackDamage );
-         ( (AttributeRanged) GenericAttributes.ATTACK_DAMAGE ).b = attackDamage;
+         ( (AttributeRanged) GenericAttributes.ATTACK_DAMAGE ).maximum = attackDamage;
      }
 +
 +    public static boolean debug;
@@ -47,7 +47,7 @@ index 9ec61e45..7b8d9c23 100644
 +    }
  }
 diff --git a/src/main/resources/log4j2.xml b/src/main/resources/log4j2.xml
-index 4a5ca1eb..5cee8f00 100644
+index 4a5ca1ebd..5cee8f00e 100644
 --- a/src/main/resources/log4j2.xml
 +++ b/src/main/resources/log4j2.xml
 @@ -19,9 +19,9 @@

@@ -1,4 +1,4 @@
-From 91dfb21763f8da57c53d4a765395913f41932950 Mon Sep 17 00:00:00 2001
+From 9ce4bd9551226b42402e7fdc7dcc9f29471c62cb Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 18:05:54 +1000
 Subject: [PATCH] Allow Disabling of Command TabComplete
@@ -25,10 +25,10 @@ index 8c7c8a043..c9eadd560 100644
              if (commandnode2.canUse(commandlistenerwrapper)) {
                  ArgumentBuilder argumentbuilder = commandnode2.createBuilder();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 72cc19866..f09b9902b 100644
+index 52465acea..8912d91c0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1611,6 +1611,13 @@ public final class CraftServer implements Server {
+@@ -1593,6 +1593,13 @@ public final class CraftServer implements Server {
      }
  
      public List<String> tabCompleteCommand(Player player, String message, WorldServer world, Vec3D pos) {

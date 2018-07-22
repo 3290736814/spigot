@@ -1,14 +1,14 @@
-From 074e1c77789736133f8c4e003315ab01662f5aa8 Mon Sep 17 00:00:00 2001
+From 7316080501bd346405991b9dc4d68c8dfa363267 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index bb130be80..e2f70ff0e 100644
+index 7aa788871..540079fcb 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -146,6 +146,12 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -147,6 +147,12 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
      public File bukkitDataPackFolder;
      public CommandDispatcher vanillaCommandDispatcher;
      // CraftBukkit end
@@ -21,7 +21,7 @@ index bb130be80..e2f70ff0e 100644
  
      public MinecraftServer(OptionSet options, Proxy proxy, DataFixer datafixer, CommandDispatcher commanddispatcher, YggdrasilAuthenticationService yggdrasilauthenticationservice, MinecraftSessionService minecraftsessionservice, GameProfileRepository gameprofilerepository, UserCache usercache) {
          this.ac = new ResourceManager(EnumResourcePackType.SERVER_DATA);
-@@ -621,6 +627,13 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -660,6 +666,13 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
          this.isRunning = false;
      }
  
@@ -35,8 +35,8 @@ index bb130be80..e2f70ff0e 100644
      public void run() {
          try {
              if (this.init()) {
-@@ -629,28 +642,36 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
-                 this.n.setServerInfo(new ServerPing.ServerData("1.13-pre7", 389));
+@@ -668,28 +681,36 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+                 this.n.setServerInfo(new ServerPing.ServerData("1.13", 393));
                  this.a(this.n);
  
 +                // Spigot start

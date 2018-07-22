@@ -1,4 +1,4 @@
-From ab5a0b76a92bc8f5e8c053bdead5a8a43c92cc44 Mon Sep 17 00:00:00 2001
+From ad3abfbdc0f3615e7b996d95ac7963f2fcdc460b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -6,10 +6,10 @@ Subject: [PATCH] Async Operation Catching
 Catch and throw an exception when a potentially unsafe operation occurs on a thread other than the main server thread.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 139b40f17..ffb91b27b 100644
+index 95d6174e8..06f10e1e8 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
-@@ -396,10 +396,14 @@ public class Block implements IMaterial {
+@@ -395,10 +395,14 @@ public class Block implements IMaterial {
      }
  
      @Deprecated
@@ -27,7 +27,7 @@ index 139b40f17..ffb91b27b 100644
      public int a(IBlockData iblockdata, Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index dc0bc803c..6fa6900a0 100644
+index 549fa2105..caccb1a15 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -725,6 +725,7 @@ public abstract class EntityLiving extends Entity {
@@ -59,7 +59,7 @@ index 14fab2b31..ef5817933 100644
              EntityPlayer entityplayer = (EntityPlayer) entity;
              Iterator iterator = this.c.iterator();
 diff --git a/src/main/java/net/minecraft/server/EntityTrackerEntry.java b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
-index 3cd0b0a9f..0410f9cf3 100644
+index 0a59da7d5..6e940b640 100644
 --- a/src/main/java/net/minecraft/server/EntityTrackerEntry.java
 +++ b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
 @@ -324,6 +324,7 @@ public class EntityTrackerEntry {
@@ -79,7 +79,7 @@ index 3cd0b0a9f..0410f9cf3 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 539e5a5fe..b88c35c8e 100644
+index 457e868d8..882fa397f 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -840,6 +840,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
@@ -106,7 +106,7 @@ index 539e5a5fe..b88c35c8e 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2153,6 +2156,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -2157,6 +2160,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
      }
  
      public void a(Collection<Entity> collection) {
@@ -115,7 +115,7 @@ index 539e5a5fe..b88c35c8e 100644
          // this.entityList.addAll(collection);
          Iterator iterator = collection.iterator();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index ea56af0f4..b8705cc7b 100644
+index 6804b84fa..099bc9e34 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -668,6 +668,7 @@ public final class CraftServer implements Server {

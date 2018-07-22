@@ -1,4 +1,4 @@
-From 933d7d5cbd8d876f7118da1fa90c123f210bc1a1 Mon Sep 17 00:00:00 2001
+From e42d759ca82b9562428380f2e1f3f3da6731896b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Feb 2013 11:58:47 -0500
 Subject: [PATCH] Entity Tracking Ranges
@@ -12,7 +12,7 @@ This has multiple benefits:
 4) Less client lag - Not trying to render distant item frames and paintings and entities will reduce entity count on the client, which is major for shop/town worlds which may use tons of item frames.
 
 diff --git a/src/main/java/net/minecraft/server/EntityTracker.java b/src/main/java/net/minecraft/server/EntityTracker.java
-index 4ecdeef2..ae31935c 100644
+index 4ecdeef23..ae31935c4 100644
 --- a/src/main/java/net/minecraft/server/EntityTracker.java
 +++ b/src/main/java/net/minecraft/server/EntityTracker.java
 @@ -104,8 +104,9 @@ public class EntityTracker {
@@ -27,7 +27,7 @@ index 4ecdeef2..ae31935c 100644
              if (this.trackedEntities.b(entity.getId())) {
                  throw new IllegalStateException("Entity is already tracked!");
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 1d7544ee..b2393688 100644
+index 1d7544ee7..b23936889 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -153,4 +153,19 @@ public class SpigotWorldConfig
@@ -52,7 +52,7 @@ index 1d7544ee..b2393688 100644
  }
 diff --git a/src/main/java/org/spigotmc/TrackingRange.java b/src/main/java/org/spigotmc/TrackingRange.java
 new file mode 100644
-index 00000000..4bf4d2ac
+index 000000000..4bf4d2ac6
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/TrackingRange.java
 @@ -0,0 +1,51 @@

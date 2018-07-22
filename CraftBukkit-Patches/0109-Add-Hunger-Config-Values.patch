@@ -1,11 +1,11 @@
-From a25132e0b9fc006be85b27437169faf044531d78 Mon Sep 17 00:00:00 2001
+From 081daae07e86047bcf2dfd0ccad241ac5d432be2 Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 45e1ffc6..40efd6c6 100644
+index 71f4cb47a..fc64ba3c9 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -1166,7 +1166,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -18,7 +18,7 @@ index 45e1ffc6..40efd6c6 100644
                          this.world.a((EntityHuman) null, this.locX, this.locY, this.locZ, SoundEffects.ENTITY_PLAYER_ATTACK_NODAMAGE, this.bV(), 1.0F, 1.0F);
                          if (flag4) {
 @@ -1455,9 +1455,9 @@ public abstract class EntityHuman extends EntityLiving {
-         super.cG();
+         super.cH();
          this.a(StatisticList.JUMP);
          if (this.isSprinting()) {
 -            this.applyExhaustion(0.2F);
@@ -61,9 +61,9 @@ index 45e1ffc6..40efd6c6 100644
 +                        this.applyExhaustion(world.spigotConfig.otherMultiplier * (float) i * 0.01F); // Spigot
                      }
                  }
-             } else if (this.db()) {
+             } else if (this.dc()) {
 diff --git a/src/main/java/net/minecraft/server/FoodMetaData.java b/src/main/java/net/minecraft/server/FoodMetaData.java
-index cf731ae8..bbcc488b 100644
+index 18361a996..03dbd21ee 100644
 --- a/src/main/java/net/minecraft/server/FoodMetaData.java
 +++ b/src/main/java/net/minecraft/server/FoodMetaData.java
 @@ -73,7 +73,7 @@ public class FoodMetaData {
@@ -76,7 +76,7 @@ index cf731ae8..bbcc488b 100644
              }
          } else if (this.foodLevel <= 0) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index d8d5877a..585a70b6 100644
+index d8d5877a8..585a70b6a 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -254,4 +254,30 @@ public class SpigotWorldConfig

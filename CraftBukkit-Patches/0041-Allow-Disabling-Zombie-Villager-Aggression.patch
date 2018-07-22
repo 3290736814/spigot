@@ -1,4 +1,4 @@
-From fbc7f545f7e9bf435a43bea36d9c22c5d88ff0f2 Mon Sep 17 00:00:00 2001
+From b7d109fb16ea2b923ca99050d3a8c49e98261c01 Mon Sep 17 00:00:00 2001
 From: Dylan Xaldin <Puremin0rez515@gmail.com>
 Date: Thu, 12 Dec 2013 18:05:03 -0600
 Subject: [PATCH] Allow Disabling Zombie Villager Aggression
@@ -6,7 +6,7 @@ Subject: [PATCH] Allow Disabling Zombie Villager Aggression
 Ability to configure if Zombies will be aggressive towards Villagers.
 
 diff --git a/src/main/java/net/minecraft/server/EntityZombie.java b/src/main/java/net/minecraft/server/EntityZombie.java
-index a1d03e56..b24e73f2 100644
+index 581be66bc..3f0e636b7 100644
 --- a/src/main/java/net/minecraft/server/EntityZombie.java
 +++ b/src/main/java/net/minecraft/server/EntityZombie.java
 @@ -54,7 +54,7 @@ public class EntityZombie extends EntityMonster {
@@ -19,7 +19,7 @@ index a1d03e56..b24e73f2 100644
          this.targetSelector.a(5, new PathfinderGoalNearestAttackableTarget(this, EntityTurtle.class, 10, true, false, EntityTurtle.bC));
      }
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index a4f1645a..14e33e58 100644
+index a4f1645a6..14e33e588 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -198,4 +198,11 @@ public class SpigotWorldConfig

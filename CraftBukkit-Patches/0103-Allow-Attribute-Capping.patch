@@ -1,4 +1,4 @@
-From edc3a6427ad69351df783b600dffaa788c49f2f2 Mon Sep 17 00:00:00 2001
+From eb6aa7dc03179574e0522f4e3204545ab65567b8 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 28 Jul 2014 16:55:51 +1000
 Subject: [PATCH] Allow Attribute Capping.
@@ -6,20 +6,20 @@ Subject: [PATCH] Allow Attribute Capping.
 Apply some sensible defaults and allow server owners to customize the maximum values of selected common attributes.
 
 diff --git a/src/main/java/net/minecraft/server/AttributeRanged.java b/src/main/java/net/minecraft/server/AttributeRanged.java
-index 130597c6..d012c90d 100644
+index 8cbde48f0..02dea695c 100644
 --- a/src/main/java/net/minecraft/server/AttributeRanged.java
 +++ b/src/main/java/net/minecraft/server/AttributeRanged.java
 @@ -5,7 +5,7 @@ import javax.annotation.Nullable;
  public class AttributeRanged extends AttributeBase {
  
      private final double a;
--    private final double b;
-+    public double b; // Spigot
+-    public final double maximum;
++    public double maximum; // Spigot
      private String c;
  
      public AttributeRanged(@Nullable IAttribute iattribute, String s, double d0, double d1, double d2) {
 diff --git a/src/main/java/net/minecraft/server/GenericAttributes.java b/src/main/java/net/minecraft/server/GenericAttributes.java
-index 1a7e20d6..a3f89696 100644
+index 1a7e20d6f..a3f896963 100644
 --- a/src/main/java/net/minecraft/server/GenericAttributes.java
 +++ b/src/main/java/net/minecraft/server/GenericAttributes.java
 @@ -10,16 +10,18 @@ import org.apache.logging.log4j.Logger;
@@ -45,7 +45,7 @@ index 1a7e20d6..a3f89696 100644
      public static NBTTagList a(AttributeMapBase attributemapbase) {
          NBTTagList nbttaglist = new NBTTagList();
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 37d9dadb..9ec61e45 100644
+index 37d9dadbc..d15a66d12 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -14,6 +14,8 @@ import java.util.Map;
@@ -68,11 +68,11 @@ index 37d9dadb..9ec61e45 100644
 +    private static void attributeMaxes()
 +    {
 +        maxHealth = getDouble( "settings.attribute.maxHealth.max", maxHealth );
-+        ( (AttributeRanged) GenericAttributes.maxHealth ).b = maxHealth;
++        ( (AttributeRanged) GenericAttributes.maxHealth ).maximum = maxHealth;
 +        movementSpeed = getDouble( "settings.attribute.movementSpeed.max", movementSpeed );
-+        ( (AttributeRanged) GenericAttributes.MOVEMENT_SPEED ).b = movementSpeed;
++        ( (AttributeRanged) GenericAttributes.MOVEMENT_SPEED ).maximum = movementSpeed;
 +        attackDamage = getDouble( "settings.attribute.attackDamage.max", attackDamage );
-+        ( (AttributeRanged) GenericAttributes.ATTACK_DAMAGE ).b = attackDamage;
++        ( (AttributeRanged) GenericAttributes.ATTACK_DAMAGE ).maximum = attackDamage;
 +    }
  }
 -- 

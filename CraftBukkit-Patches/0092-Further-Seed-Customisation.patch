@@ -1,4 +1,4 @@
-From 973e5eb863be41bd87eb054a793471296dd9bfbb Mon Sep 17 00:00:00 2001
+From f13294bf6ce2ef9053c46e9bded6bc3f3a6d612b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -6,7 +6,7 @@ Subject: [PATCH] Further Seed Customisation
 Allow server admins that really want to to customise the seeds used in world generation even further.
 
 diff --git a/src/main/java/net/minecraft/server/ChunkGenerator.java b/src/main/java/net/minecraft/server/ChunkGenerator.java
-index 957af9b3..002993b5 100644
+index 957af9b3f..002993b5e 100644
 --- a/src/main/java/net/minecraft/server/ChunkGenerator.java
 +++ b/src/main/java/net/minecraft/server/ChunkGenerator.java
 @@ -40,4 +40,6 @@ public interface ChunkGenerator<C extends GeneratorSettings> {
@@ -17,7 +17,7 @@ index 957af9b3..002993b5 100644
 +    World getWorld(); // Spigot
  }
 diff --git a/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
-index a0362c3f..79f1a602 100644
+index a0362c3f8..79f1a6024 100644
 --- a/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
 +++ b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
 @@ -156,4 +156,11 @@ public abstract class ChunkGeneratorAbstract<C extends GeneratorSettings> implem
@@ -33,7 +33,7 @@ index a0362c3f..79f1a602 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/net/minecraft/server/EntitySlime.java b/src/main/java/net/minecraft/server/EntitySlime.java
-index 772a2eaf..3167c3f5 100644
+index 590cd057f..31e066b54 100644
 --- a/src/main/java/net/minecraft/server/EntitySlime.java
 +++ b/src/main/java/net/minecraft/server/EntitySlime.java
 @@ -252,7 +252,7 @@ public class EntitySlime extends EntityInsentient implements IMonster {
@@ -46,7 +46,7 @@ index 772a2eaf..3167c3f5 100644
                  if (this.random.nextInt(10) == 0 && flag && this.locY < 40.0D) {
                      return super.a(generatoraccess);
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java b/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
-index fb5ac05d..889b2fc6 100644
+index fb5ac05d5..889b2fc66 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
 @@ -18,8 +18,10 @@ public class WorldGenFeatureDesertPyramid extends WorldGenFeatureRandomScattered
@@ -63,7 +63,7 @@ index fb5ac05d..889b2fc6 100644
  
      public static class a extends StructureStart {
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java b/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java
-index e6cc8f01..22c31dcb 100644
+index e6cc8f011..22c31dcb0 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java
 @@ -18,8 +18,10 @@ public class WorldGenFeatureIgloo extends WorldGenFeatureRandomScattered<WorldGe
@@ -80,7 +80,7 @@ index e6cc8f01..22c31dcb 100644
  
      public static class a extends StructureStart {
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java b/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java
-index 9d564488..519adcab 100644
+index 9d564488e..519adcab5 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java
 @@ -18,8 +18,10 @@ public class WorldGenFeatureJunglePyramid extends WorldGenFeatureRandomScattered
@@ -97,7 +97,7 @@ index 9d564488..519adcab 100644
  
      public static class a extends StructureStart {
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java b/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java
-index 3d8e08ff..ad3dc719 100644
+index 3d8e08ff5..ad3dc7199 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java
 @@ -28,8 +28,10 @@ public class WorldGenFeatureOceanRuin extends WorldGenFeatureRandomScattered<Wor
@@ -114,7 +114,7 @@ index 3d8e08ff..ad3dc719 100644
  
      public static enum Temperature {
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java b/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java
-index 6acbccb0..6a0f10ed 100644
+index 6acbccb0f..6a0f10edf 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java
 @@ -16,7 +16,7 @@ public abstract class WorldGenFeatureRandomScattered<C extends WorldGenFeatureCo
@@ -134,7 +134,7 @@ index 6acbccb0..6a0f10ed 100644
 +    protected abstract int c(World world); // Spigot
  }
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java b/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java
-index a50a45c4..f3b185d5 100644
+index a50a45c43..f3b185d58 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java
 @@ -18,8 +18,10 @@ public class WorldGenFeatureShipwreck extends WorldGenFeatureRandomScattered<Wor
@@ -151,7 +151,7 @@ index a50a45c4..f3b185d5 100644
  
      protected int a(ChunkGenerator<?> chunkgenerator) {
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
-index 887293c3..0f132259 100644
+index 887293c3c..0f1322590 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
 @@ -23,8 +23,10 @@ public class WorldGenFeatureSwampHut extends WorldGenFeatureRandomScattered<Worl
@@ -168,7 +168,7 @@ index 887293c3..0f132259 100644
  
      public List<BiomeBase.BiomeMeta> d() {
 diff --git a/src/main/java/net/minecraft/server/WorldGenMonument.java b/src/main/java/net/minecraft/server/WorldGenMonument.java
-index 57afb480..307da2a6 100644
+index 57afb4809..307da2a6d 100644
 --- a/src/main/java/net/minecraft/server/WorldGenMonument.java
 +++ b/src/main/java/net/minecraft/server/WorldGenMonument.java
 @@ -23,7 +23,7 @@ public class WorldGenMonument extends StructureGenerator<WorldGenMonumentConfigu
@@ -181,7 +181,7 @@ index 57afb480..307da2a6 100644
          l2 *= i1;
          k2 += (random.nextInt(i1 - j1) + random.nextInt(i1 - j1)) / 2;
 diff --git a/src/main/java/net/minecraft/server/WorldGenVillage.java b/src/main/java/net/minecraft/server/WorldGenVillage.java
-index c9ac6ca8..951d11da 100644
+index c9ac6ca80..951d11dab 100644
 --- a/src/main/java/net/minecraft/server/WorldGenVillage.java
 +++ b/src/main/java/net/minecraft/server/WorldGenVillage.java
 @@ -30,7 +30,7 @@ public class WorldGenVillage extends StructureGenerator<WorldGenFeatureVillageCo
@@ -194,7 +194,7 @@ index c9ac6ca8..951d11da 100644
          l2 *= i1;
          k2 += random.nextInt(i1 - j1);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index b0297c64..0a47353b 100644
+index b0297c64b..0a47353b4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 @@ -133,7 +133,7 @@ public class CraftChunk implements Chunk {
@@ -207,7 +207,7 @@ index b0297c64..0a47353b 100644
  
      public boolean unload(boolean save) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java b/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
-index 774a5e34..35d1a8bc 100644
+index 774a5e344..35d1a8bcb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
 +++ b/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
 @@ -177,4 +177,10 @@ public class CustomChunkGenerator extends InternalChunkGenerator<GeneratorSettin
@@ -222,7 +222,7 @@ index 774a5e34..35d1a8bc 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/generator/NormalChunkGenerator.java b/src/main/java/org/bukkit/craftbukkit/generator/NormalChunkGenerator.java
-index 4356d2bf..a1c9c343 100644
+index 4356d2bff..a1c9c3430 100644
 --- a/src/main/java/org/bukkit/craftbukkit/generator/NormalChunkGenerator.java
 +++ b/src/main/java/org/bukkit/craftbukkit/generator/NormalChunkGenerator.java
 @@ -11,9 +11,11 @@ import net.minecraft.server.*;
@@ -250,7 +250,7 @@ index 4356d2bf..a1c9c343 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 96bf3ade..d8d5877a 100644
+index 96bf3adec..d8d5877a8 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -231,4 +231,27 @@ public class SpigotWorldConfig

@@ -1,4 +1,4 @@
-From 145ec3a3f38c8893758b0748f548295dbbe89667 Mon Sep 17 00:00:00 2001
+From 57f02a5f69eb4b3257901cf2b67e1bbcefc3dea6 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,7 +8,7 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/SpawnerCreature.java b/src/main/java/net/minecraft/server/SpawnerCreature.java
-index 27a02c0a..44fb75c6 100644
+index da3229cec..e54dcaa99 100644
 --- a/src/main/java/net/minecraft/server/SpawnerCreature.java
 +++ b/src/main/java/net/minecraft/server/SpawnerCreature.java
 @@ -42,10 +42,15 @@ public final class SpawnerCreature {
@@ -32,7 +32,7 @@ index 27a02c0a..44fb75c6 100644
  
                              // CraftBukkit start - use LongHash and LongHashSet
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index f5096e3a..3dee3ff5 100644
+index f5096e3a4..3dee3ff5e 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -126,4 +126,11 @@ public class SpigotWorldConfig
