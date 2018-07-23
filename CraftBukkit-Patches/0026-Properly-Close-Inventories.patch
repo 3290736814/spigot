@@ -1,4 +1,4 @@
-From afc7d64ef2ca1466092c7244a814ba493019bf44 Mon Sep 17 00:00:00 2001
+From f9c567fac70730fe2e78ffd0880c1166d4eff8ee Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Thu, 27 Jun 2013 17:26:09 +1000
 Subject: [PATCH] Properly Close Inventories
@@ -6,10 +6,10 @@ Subject: [PATCH] Properly Close Inventories
 Properly close inventories when unloading and switching worlds.
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index bc9bf0041..7f18563e7 100644
+index a45387427..daa126825 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -783,6 +783,18 @@ public class Chunk implements IChunkAccess {
+@@ -780,6 +780,18 @@ public class Chunk implements IChunkAccess {
  
          while (iterator.hasNext()) {
              TileEntity tileentity = (TileEntity) iterator.next();
@@ -28,7 +28,7 @@ index bc9bf0041..7f18563e7 100644
  
              this.world.b(tileentity);
          }
-@@ -796,6 +808,18 @@ public class Chunk implements IChunkAccess {
+@@ -793,6 +805,18 @@ public class Chunk implements IChunkAccess {
              java.util.Iterator<Entity> iter = newList.iterator();
              while (iter.hasNext()) {
                  Entity entity = iter.next();

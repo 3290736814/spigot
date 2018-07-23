@@ -1,4 +1,4 @@
-From 3601e4b8cca85b621936b3a6fd09df3a7a5d54f1 Mon Sep 17 00:00:00 2001
+From 8cbe3a8af73893827d99807cdb902dcb5eecebeb Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 21:07:18 +1100
 Subject: [PATCH] Improve AutoSave Mechanism
@@ -11,10 +11,10 @@ Instead we will mimic the save-all command in its behaviour, which is both safe 
 Also, only save modified chunks, or chunks with entities after 4 auto save passes
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 7f18563e7..d5aaf872a 100644
+index daa126825..78bfd9fe9 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -904,7 +904,7 @@ public class Chunk implements IChunkAccess {
+@@ -901,7 +901,7 @@ public class Chunk implements IChunkAccess {
              if (this.w && this.world.getTime() != this.lastSaved || this.y) {
                  return true;
              }
