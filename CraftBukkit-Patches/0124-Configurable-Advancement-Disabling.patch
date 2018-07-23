@@ -1,4 +1,4 @@
-From 557d17f26b5e730a891025a2d7b6b44459f83c09 Mon Sep 17 00:00:00 2001
+From b3c2e7e3c4f371c4b97321dd19f9ca0b9b525b80 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 9 Jun 2017 16:29:31 +1000
 Subject: [PATCH] Configurable Advancement Disabling
@@ -34,10 +34,10 @@ index 47279ebfd..5a49181bc 100644
                  try {
                      Advancement.SerializedAdvancement advancement_serializedadvancement = (Advancement.SerializedAdvancement) ChatDeserializer.a(AdvancementDataWorld.DESERIALIZER, IOUtils.toString(iresource.b(), StandardCharsets.UTF_8), Advancement.SerializedAdvancement.class);
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index ed697b216..5175e9523 100644
+index 8d186a630..9e6d19419 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
-@@ -384,4 +384,11 @@ public class SpigotConfig
+@@ -390,4 +390,11 @@ public class SpigotConfig
      private static void itemDirtyTicks() {
          itemDirtyTicks = getInt("settings.item-dirty-ticks", 20);
      }

@@ -1,4 +1,4 @@
-From 12379abc3129397bc7351f4e492d5e96ac96277a Mon Sep 17 00:00:00 2001
+From 1e650eb88661bd0d4798244476006b6080eda39c Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Wed, 12 Feb 2014 20:44:14 +0000
 Subject: [PATCH] Allow vanilla commands to be the main version of a command
@@ -46,7 +46,7 @@ index eb4ba4c40..36bab78d5 100644
      }
  
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index bf2aa1fa1..e371c261e 100644
+index 81f6d530e..85dcb7f9b 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -8,8 +8,10 @@ import java.lang.reflect.Method;
@@ -60,7 +60,7 @@ index bf2aa1fa1..e371c261e 100644
  import java.util.logging.Level;
  import gnu.trove.map.hash.TObjectIntHashMap;
  import net.minecraft.server.MinecraftKey;
-@@ -300,4 +302,16 @@ public class SpigotConfig
+@@ -306,4 +308,16 @@ public class SpigotConfig
      {
          silentCommandBlocks = getBoolean( "commands.silent-commandblock-console", false );
      }

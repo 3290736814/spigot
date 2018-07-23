@@ -1,4 +1,4 @@
-From 1d26957f16c414ef822753573c81cc0557cc0715 Mon Sep 17 00:00:00 2001
+From ba2c586431917714f37ce2bd64398100ca75690d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 22 Feb 2015 12:27:40 +1100
 Subject: [PATCH] Use FastMatches for ItemStack Dirty Check
@@ -58,10 +58,10 @@ index f5e311f2a..1e27433b9 100644
          return itemstack.isEmpty() && itemstack1.isEmpty() ? true : (!itemstack.isEmpty() && !itemstack1.isEmpty() ? itemstack.c(itemstack1) : false);
      }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index f615a8231..ed697b216 100644
+index 0686bc79e..8d186a630 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
-@@ -379,4 +379,9 @@ public class SpigotConfig
+@@ -385,4 +385,9 @@ public class SpigotConfig
              Bukkit.getLogger().info( "Debug logging is disabled" );
          }
      }
