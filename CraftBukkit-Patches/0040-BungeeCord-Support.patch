@@ -1,4 +1,4 @@
-From a3883ae11de748a8f4482a557fe68d93dd109a9b Mon Sep 17 00:00:00 2001
+From 8c03cc5fcaf508c648a33d0fe5db1dfd44004027 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -45,7 +45,7 @@ index 387d8a09f..5b784002f 100644
              }
              break;
 diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
-index 0cf9d4bde..a22f4c55e 100644
+index c777c9dfd..eb936a044 100644
 --- a/src/main/java/net/minecraft/server/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/LoginListener.java
 @@ -96,9 +96,24 @@ public class LoginListener implements PacketLoginInListener, ITickable {
@@ -130,10 +130,10 @@ index 668452809..9d0e29df7 100644
          if (getProfileBans().isBanned(gameprofile) && !getProfileBans().get(gameprofile).hasExpired()) {
              GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.k.get(gameprofile);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 2ef172a4e..eb4ba4c40 100644
+index 87be3a337..b27bdc7ca 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -606,7 +606,13 @@ public final class CraftServer implements Server {
+@@ -607,7 +607,13 @@ public final class CraftServer implements Server {
  
      @Override
      public long getConnectionThrottle() {
@@ -149,7 +149,7 @@ index 2ef172a4e..eb4ba4c40 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 3ce1218a4..6290c9374 100644
+index ced5f7371..06b61faab 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -1581,6 +1581,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {

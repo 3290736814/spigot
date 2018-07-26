@@ -1,4 +1,4 @@
-From ad3abfbdc0f3615e7b996d95ac7963f2fcdc460b Mon Sep 17 00:00:00 2001
+From 0f2fe6acdf257b005b7784967d0fe1664360f318 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -115,10 +115,10 @@ index 457e868d8..882fa397f 100644
          // this.entityList.addAll(collection);
          Iterator iterator = collection.iterator();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 6804b84fa..099bc9e34 100644
+index 7a437cd27..0140df40a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -668,6 +668,7 @@ public final class CraftServer implements Server {
+@@ -669,6 +669,7 @@ public final class CraftServer implements Server {
      public boolean dispatchCommand(CommandSender sender, String commandLine) {
          Validate.notNull(sender, "Sender cannot be null");
          Validate.notNull(commandLine, "CommandLine cannot be null");
@@ -127,7 +127,7 @@ index 6804b84fa..099bc9e34 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index dbcced1a3..c6faa4bfe 100644
+index 6a87562b6..08765768a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -178,6 +178,7 @@ public class CraftWorld implements World {
@@ -146,7 +146,7 @@ index dbcced1a3..c6faa4bfe 100644
          if (isChunkInUse(x, z)) {
              return false;
          }
-@@ -260,6 +262,7 @@ public class CraftWorld implements World {
+@@ -256,6 +258,7 @@ public class CraftWorld implements World {
      }
  
      public boolean loadChunk(int x, int z, boolean generate) {
@@ -155,7 +155,7 @@ index dbcced1a3..c6faa4bfe 100644
          if (generate) {
              // Use the default variant of loadChunk when generate == true.
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 7a3313084..db1338561 100644
+index 02bf84009..093b5a8f4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -250,6 +250,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {

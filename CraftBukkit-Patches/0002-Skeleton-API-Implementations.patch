@@ -1,4 +1,4 @@
-From d54f2d5aa988c8017b7bd5694a99dd7b5780796c Mon Sep 17 00:00:00 2001
+From 3f197d8179238db9284a8cd16144060bf8b3ad7c Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -6,10 +6,10 @@ Subject: [PATCH] Skeleton API Implementations
 This contains the basic, empty implementations for some Spigot-API extensions. They are included early in the patching progress so that compilation will still succeed midway despite the APIs only being provided by subsequent patches.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index c5e1c0374..73e4cb4aa 100644
+index 61d9fa33c..d9239d358 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1766,4 +1766,14 @@ public final class CraftServer implements Server {
+@@ -1768,4 +1768,14 @@ public final class CraftServer implements Server {
      public UnsafeValues getUnsafe() {
          return CraftMagicNumbers.INSTANCE;
      }
@@ -25,10 +25,10 @@ index c5e1c0374..73e4cb4aa 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 162c79e88..dbcced1a3 100644
+index 9b295cdc1..6a87562b6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1579,4 +1579,14 @@ public class CraftWorld implements World {
+@@ -1575,4 +1575,14 @@ public class CraftWorld implements World {
              cps.unload(chunk);
          }
      }
@@ -180,7 +180,7 @@ index c8654c68f..0c1bca2bd 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index ff7ec7e2b..8acc6397b 100644
+index f47a36236..bbb72e3b5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -966,4 +966,16 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {

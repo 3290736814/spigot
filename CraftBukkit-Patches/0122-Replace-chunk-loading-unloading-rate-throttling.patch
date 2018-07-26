@@ -1,4 +1,4 @@
-From 61cd93d7f42ebf8c3bb0a3df9b1a322fb196e8bb Mon Sep 17 00:00:00 2001
+From 3a68e700dfa171668e3b6c97aae75780e501e675 Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Thu, 26 Jan 2017 20:54:55 +0000
 Subject: [PATCH] Replace chunk loading / unloading rate throttling.
@@ -7,10 +7,10 @@ Uses a scheme based on estimated tick slack time.
 See https://hub.spigotmc.org/stash/projects/SPIGOT/repos/spigot/pull-requests/71/overview
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 62925a0c7..d35203cc5 100644
+index 287487150..62d00c2f6 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -272,13 +272,22 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -283,13 +283,22 @@ public class ChunkProviderServer implements IChunkProvider {
          this.chunkLoader.c();
      }
  
@@ -34,7 +34,7 @@ index 62925a0c7..d35203cc5 100644
                      Chunk chunk = (Chunk) this.chunks.get(olong);
  
                      if (chunk != null && chunk.d) {
-@@ -288,9 +297,15 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -299,9 +308,15 @@ public class ChunkProviderServer implements IChunkProvider {
                          }
                          // CraftBukkit end
  

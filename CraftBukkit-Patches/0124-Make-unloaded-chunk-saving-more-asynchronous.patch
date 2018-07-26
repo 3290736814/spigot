@@ -1,14 +1,14 @@
-From 5a33cfbc43fd6aa79ce4e830d3f09f0ce62d8ecc Mon Sep 17 00:00:00 2001
+From f7e0d7e2eb68991eac8ed7dda32ca0e646ab7a02 Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Fri, 11 Aug 2017 19:23:58 +0100
 Subject: [PATCH] Make unloaded chunk saving more asynchronous
 
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index d35203cc5..0296d3ef0 100644
+index 62d00c2f6..00cd8d8ce 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -213,17 +213,17 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -224,17 +224,17 @@ public class ChunkProviderServer implements IChunkProvider {
  
      public void saveChunkNOP(Chunk chunk) {
          try {
@@ -29,7 +29,7 @@ index d35203cc5..0296d3ef0 100644
          } catch (IOException ioexception) {
              ChunkProviderServer.a.error("Couldn\'t save chunk", ioexception);
          } catch (ExceptionWorldConflict exceptionworldconflict) {
-@@ -247,7 +247,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -258,7 +258,7 @@ public class ChunkProviderServer implements IChunkProvider {
              }
  
              if (chunk.c(flag)) {
@@ -38,7 +38,7 @@ index d35203cc5..0296d3ef0 100644
                  chunk.a(false);
                  ++i;
                  if (i == 24 && !flag && false) { // Spigot
-@@ -341,7 +341,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -352,7 +352,7 @@ public class ChunkProviderServer implements IChunkProvider {
          // Moved from unloadChunks above
          chunk.removeEntities();
          if (save) {
