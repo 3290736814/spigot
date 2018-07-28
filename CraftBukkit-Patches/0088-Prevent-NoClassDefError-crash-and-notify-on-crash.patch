@@ -1,11 +1,11 @@
-From 030bb278bb482cad608bcc584a5a7f5d81697a1a Mon Sep 17 00:00:00 2001
+From 70901992e26aac379328a86cf4f18c01a35403b0 Mon Sep 17 00:00:00 2001
 From: David <dmck2b@gmail.com>
 Date: Mon, 21 Apr 2014 12:43:08 +0100
 Subject: [PATCH] Prevent NoClassDefError crash and notify on crash
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 0653941c3..ba061bd55 100644
+index 0653941c..ba061bd5 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -131,6 +131,8 @@ public abstract class World implements IBlockAccess {
@@ -29,7 +29,7 @@ index 0653941c3..ba061bd55 100644
                  CrashReport crashreport = CrashReport.a(throwable, "Exception while updating neighbours");
                  CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Block being updated");
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index de08ad67f..94a3d4237 100644
+index de08ad67..94a3d423 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -60,6 +60,13 @@ public class WatchdogThread extends Thread
@@ -47,5 +47,5 @@ index de08ad67f..94a3d4237 100644
                  log.log( Level.SEVERE, "Server thread dump (Look for plugins here before reporting to Spigot!):" );
                  dumpThread( ManagementFactory.getThreadMXBean().getThreadInfo( MinecraftServer.getServer().primaryThread.getId(), Integer.MAX_VALUE ), log );
 -- 
-2.14.1
+2.17.1
 

@@ -1,11 +1,11 @@
-From cdfdbe02678177e6f3259f91343ffbf6edcdf1f4 Mon Sep 17 00:00:00 2001
+From 6f273337dbbcb86cfc85f7383fdba93d580b07a2 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
 
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index d273c9a76..fb761bb8a 100644
+index d273c9a7..fb761bb8 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -62,11 +62,11 @@ public class HandshakeListener implements PacketHandshakingInListener {
@@ -23,7 +23,7 @@ index d273c9a76..fb761bb8a 100644
                  this.b.close(chatmessage);
              } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 9336e1315..1ddd86ede 100644
+index 0c989024..21e96d13 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -493,7 +493,7 @@ public abstract class PlayerList {
@@ -45,7 +45,7 @@ index 9336e1315..1ddd86ede 100644
          }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 24da1bc83..24f692eb4 100644
+index 24da1bc8..24f692eb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -129,6 +129,7 @@ import io.netty.buffer.ByteBufOutputStream;
@@ -73,7 +73,7 @@ index 24da1bc83..24f692eb4 100644
          return false;
      }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 7e75f3e92..4accd872a 100644
+index 7e75f3e9..4accd872 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -12,6 +12,7 @@ import java.util.Map;
@@ -114,5 +114,5 @@ index 7e75f3e92..4accd872a 100644
 +    }
  }
 -- 
-2.14.1
+2.17.1
 

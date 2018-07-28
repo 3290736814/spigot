@@ -1,11 +1,11 @@
-From 89e82d5418fb9f14ac5a57e5462781df5bf28c0a Mon Sep 17 00:00:00 2001
+From 5c600aef2359b8582368171a90d782443e36d2e9 Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Fri, 11 Aug 2017 19:23:58 +0100
 Subject: [PATCH] Make unloaded chunk saving more asynchronous
 
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 960464845..ac478fb27 100644
+index 6eba8759..86973cb9 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -196,17 +196,17 @@ public class ChunkProviderServer implements IChunkProvider {
@@ -48,7 +48,7 @@ index 960464845..ac478fb27 100644
          }
          this.chunks.remove(chunk.chunkKey);
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index e0e4c9a0e..50ec3adb8 100644
+index e0e4c9a0..50ec3adb 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -14,17 +14,22 @@ import java.util.Set;
@@ -209,7 +209,7 @@ index e0e4c9a0e..50ec3adb8 100644
          NBTTagList nbttaglist1 = new NBTTagList();
  
 diff --git a/src/main/java/net/minecraft/server/IChunkLoader.java b/src/main/java/net/minecraft/server/IChunkLoader.java
-index c541fbb11..f9b80ffc4 100644
+index c541fbb1..f9b80ffc 100644
 --- a/src/main/java/net/minecraft/server/IChunkLoader.java
 +++ b/src/main/java/net/minecraft/server/IChunkLoader.java
 @@ -8,9 +8,9 @@ public interface IChunkLoader {
@@ -226,7 +226,7 @@ index c541fbb11..f9b80ffc4 100644
  
 diff --git a/src/main/java/org/spigotmc/SupplierUtils.java b/src/main/java/org/spigotmc/SupplierUtils.java
 new file mode 100644
-index 000000000..f63ce98bf
+index 00000000..f63ce98b
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SupplierUtils.java
 @@ -0,0 +1,69 @@
@@ -300,5 +300,5 @@ index 000000000..f63ce98bf
 +    }
 +}
 -- 
-2.14.1
+2.17.1
 

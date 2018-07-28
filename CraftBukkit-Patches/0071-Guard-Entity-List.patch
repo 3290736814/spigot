@@ -1,11 +1,11 @@
-From 1307c9825f0a3db33dbed00548722561c5e6d25b Mon Sep 17 00:00:00 2001
+From dc1b42cb8b2fe88ffd612407c412b410ddecbd55 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 10 Mar 2014 09:03:28 +1100
 Subject: [PATCH] Guard Entity List
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 04f63941c..5a97b38c7 100644
+index 04f63941..5a97b38c 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -34,7 +34,32 @@ public abstract class World implements IBlockAccess {
@@ -75,5 +75,5 @@ index 04f63941c..5a97b38c7 100644
          timings.entityTick.stopTiming(); // Spigot
          this.methodProfiler.c("blockEntities");
 -- 
-2.14.1
+2.17.1
 

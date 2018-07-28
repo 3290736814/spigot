@@ -1,4 +1,4 @@
-From d3df3992a0d496c38e8c291e15bf05efc36e1e3a Mon Sep 17 00:00:00 2001
+From e26de9a4ffb16f470889dd354a9ef5c8a7d58b29 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 22 Feb 2015 12:27:40 +1100
 Subject: [PATCH] Use FastMatches for ItemStack Dirty Check
@@ -6,7 +6,7 @@ Subject: [PATCH] Use FastMatches for ItemStack Dirty Check
 The check to find dirty itemstacks and send update packets each tick can be very intensive as it checks the entire itemstack, including the entire NBT map. To save on this, 19/20 times we will simply compare the basic count/data/type. If for some strange reason the NBT of an item already existing in an inventory is changes, it will take up to 1 second to show, with an average time of half a second. This odd 0.5 second delay is far preferable to lag every tick, and shouldn't be noticed by anyone.
 
 diff --git a/src/main/java/net/minecraft/server/Container.java b/src/main/java/net/minecraft/server/Container.java
-index 15a3e39ef..7d80b68b2 100644
+index 15a3e39e..7d80b68b 100644
 --- a/src/main/java/net/minecraft/server/Container.java
 +++ b/src/main/java/net/minecraft/server/Container.java
 @@ -28,6 +28,7 @@ public abstract class Container {
@@ -35,7 +35,7 @@ index 15a3e39ef..7d80b68b2 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/ItemStack.java b/src/main/java/net/minecraft/server/ItemStack.java
-index a3b34375d..0dcea61d2 100644
+index b9faa0ef..76bfbaa8 100644
 --- a/src/main/java/net/minecraft/server/ItemStack.java
 +++ b/src/main/java/net/minecraft/server/ItemStack.java
 @@ -475,6 +475,18 @@ public final class ItemStack {
@@ -58,7 +58,7 @@ index a3b34375d..0dcea61d2 100644
          return itemstack.isEmpty() && itemstack1.isEmpty() ? true : (!itemstack.isEmpty() && !itemstack1.isEmpty() ? itemstack.d(itemstack1) : false);
      }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 4ee7d7606..4b21fa599 100644
+index 4ee7d760..4b21fa59 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -387,4 +387,9 @@ public class SpigotConfig
@@ -72,5 +72,5 @@ index 4ee7d7606..4b21fa599 100644
 +    }
  }
 -- 
-2.14.1
+2.17.1
 

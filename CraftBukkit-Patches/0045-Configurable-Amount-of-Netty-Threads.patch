@@ -1,4 +1,4 @@
-From db29bee033ca647871425618fba2593aa8080da8 Mon Sep 17 00:00:00 2001
+From 0e0545732125630de859e4c140a24e0075ca9d3b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 13 Dec 2013 11:58:58 +1100
 Subject: [PATCH] Configurable Amount of Netty Threads
@@ -6,7 +6,7 @@ Subject: [PATCH] Configurable Amount of Netty Threads
 This brings back the option that the Spigot version of netty saw. By default Netty will try and use cores*2 threads, however if running multiple servers on the same machine, this can be too many threads. Additionally some people have 16 core servers. If 32 Netty threads are allowed in this setup, then the lock contention, and thus blocking between threads becomes much greater, leading to decreased performance.
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index c4431ce51..845539896 100644
+index c4431ce5..84553989 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -60,7 +60,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
@@ -37,7 +37,7 @@ index c4431ce51..845539896 100644
  
      public boolean ap() {
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 145b33a9c..63156fd81 100644
+index 145b33a9..63156fd8 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -222,4 +222,11 @@ public class SpigotConfig
@@ -53,5 +53,5 @@ index 145b33a9c..63156fd81 100644
 +    }
  }
 -- 
-2.14.1
+2.17.1
 

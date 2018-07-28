@@ -1,4 +1,4 @@
-From 63064797f7c5ff02ec8ced8554939ae89b49cfcb Mon Sep 17 00:00:00 2001
+From b4afd9cc2e67434205227ee8517cbf9566ed59ba Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -6,7 +6,7 @@ Subject: [PATCH] Crop Growth Rates
 Allows configuring the growth rates of crops as a percentage of their normal growth rate.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 26a4c8250..76bfeafe6 100644
+index 26a4c825..76bfeafe 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -970,6 +970,18 @@ public class Block {
@@ -29,7 +29,7 @@ index 26a4c8250..76bfeafe6 100644
  
          NONE, XZ, XYZ;
 diff --git a/src/main/java/net/minecraft/server/BlockCactus.java b/src/main/java/net/minecraft/server/BlockCactus.java
-index 81b051a70..64b7d08fa 100644
+index 81b051a7..64b7d08f 100644
 --- a/src/main/java/net/minecraft/server/BlockCactus.java
 +++ b/src/main/java/net/minecraft/server/BlockCactus.java
 @@ -31,7 +31,7 @@ public class BlockCactus extends Block {
@@ -42,7 +42,7 @@ index 81b051a70..64b7d08fa 100644
                      IBlockData iblockdata1 = iblockdata.set(BlockCactus.AGE, Integer.valueOf(0));
  
 diff --git a/src/main/java/net/minecraft/server/BlockCocoa.java b/src/main/java/net/minecraft/server/BlockCocoa.java
-index 7dea07a14..effdc3c5b 100644
+index 7dea07a1..effdc3c5 100644
 --- a/src/main/java/net/minecraft/server/BlockCocoa.java
 +++ b/src/main/java/net/minecraft/server/BlockCocoa.java
 @@ -21,7 +21,7 @@ public class BlockCocoa extends BlockFacingHorizontal implements IBlockFragilePl
@@ -55,7 +55,7 @@ index 7dea07a14..effdc3c5b 100644
  
              if (i < 2) {
 diff --git a/src/main/java/net/minecraft/server/BlockCrops.java b/src/main/java/net/minecraft/server/BlockCrops.java
-index 258ddf9ab..c0b88580c 100644
+index 258ddf9a..c0b88580 100644
 --- a/src/main/java/net/minecraft/server/BlockCrops.java
 +++ b/src/main/java/net/minecraft/server/BlockCrops.java
 @@ -54,7 +54,7 @@ public class BlockCrops extends BlockPlant implements IBlockFragilePlantElement
@@ -68,7 +68,7 @@ index 258ddf9ab..c0b88580c 100644
                      IBlockData data = this.setAge(i + 1);
                      CraftEventFactory.handleBlockGrowEvent(world, blockposition.getX(), blockposition.getY(), blockposition.getZ(), this, toLegacyData(data));
 diff --git a/src/main/java/net/minecraft/server/BlockMushroom.java b/src/main/java/net/minecraft/server/BlockMushroom.java
-index 2d7d47b06..83a0cabd6 100644
+index 2d7d47b0..83a0cabd 100644
 --- a/src/main/java/net/minecraft/server/BlockMushroom.java
 +++ b/src/main/java/net/minecraft/server/BlockMushroom.java
 @@ -23,7 +23,7 @@ public class BlockMushroom extends BlockPlant implements IBlockFragilePlantEleme
@@ -81,7 +81,7 @@ index 2d7d47b06..83a0cabd6 100644
              boolean flag = true;
              Iterator iterator = BlockPosition.b(blockposition.a(-4, -1, -4), blockposition.a(4, 1, 4)).iterator();
 diff --git a/src/main/java/net/minecraft/server/BlockNetherWart.java b/src/main/java/net/minecraft/server/BlockNetherWart.java
-index ccb6882d2..705c02174 100644
+index ccb6882d..705c0217 100644
 --- a/src/main/java/net/minecraft/server/BlockNetherWart.java
 +++ b/src/main/java/net/minecraft/server/BlockNetherWart.java
 @@ -29,7 +29,7 @@ public class BlockNetherWart extends BlockPlant {
@@ -94,7 +94,7 @@ index ccb6882d2..705c02174 100644
              // world.setTypeAndData(blockposition, iblockdata, 2); // CraftBukkit
              org.bukkit.craftbukkit.event.CraftEventFactory.handleBlockGrowEvent(world, blockposition.getX(), blockposition.getY(), blockposition.getZ(), this, toLegacyData(iblockdata)); // CraftBukkit
 diff --git a/src/main/java/net/minecraft/server/BlockReed.java b/src/main/java/net/minecraft/server/BlockReed.java
-index 9519aafa3..57f24f55d 100644
+index 9519aafa..57f24f55 100644
 --- a/src/main/java/net/minecraft/server/BlockReed.java
 +++ b/src/main/java/net/minecraft/server/BlockReed.java
 @@ -31,7 +31,7 @@ public class BlockReed extends Block {
@@ -107,7 +107,7 @@ index 9519aafa3..57f24f55d 100644
                          // world.setTypeUpdate(blockposition.up(), this.getBlockData()); // CraftBukkit
                          BlockPosition upPos = blockposition.up();
 diff --git a/src/main/java/net/minecraft/server/BlockSapling.java b/src/main/java/net/minecraft/server/BlockSapling.java
-index 85c941dce..6d0f4c156 100644
+index 85c941dc..6d0f4c15 100644
 --- a/src/main/java/net/minecraft/server/BlockSapling.java
 +++ b/src/main/java/net/minecraft/server/BlockSapling.java
 @@ -34,7 +34,7 @@ public class BlockSapling extends BlockPlant implements IBlockFragilePlantElemen
@@ -120,7 +120,7 @@ index 85c941dce..6d0f4c156 100644
                  world.captureTreeGeneration = true;
                  // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/BlockStem.java b/src/main/java/net/minecraft/server/BlockStem.java
-index 32994c394..f12987c84 100644
+index 32994c39..f12987c8 100644
 --- a/src/main/java/net/minecraft/server/BlockStem.java
 +++ b/src/main/java/net/minecraft/server/BlockStem.java
 @@ -51,7 +51,7 @@ public class BlockStem extends BlockPlant implements IBlockFragilePlantElement {
@@ -133,7 +133,7 @@ index 32994c394..f12987c84 100644
  
                  if (i < 7) {
 diff --git a/src/main/java/net/minecraft/server/BlockVine.java b/src/main/java/net/minecraft/server/BlockVine.java
-index 5757ecb21..ac5b639ae 100644
+index 5757ecb2..ac5b639a 100644
 --- a/src/main/java/net/minecraft/server/BlockVine.java
 +++ b/src/main/java/net/minecraft/server/BlockVine.java
 @@ -141,7 +141,7 @@ public class BlockVine extends Block {
@@ -146,7 +146,7 @@ index 5757ecb21..ac5b639ae 100644
                  int i = 5;
                  boolean flag1 = false;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 961ddb428..c62fa4569 100644
+index 961ddb42..c62fa456 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -68,4 +68,41 @@ public class SpigotWorldConfig
@@ -192,5 +192,5 @@ index 961ddb428..c62fa4569 100644
 +    }
  }
 -- 
-2.14.1
+2.17.1
 

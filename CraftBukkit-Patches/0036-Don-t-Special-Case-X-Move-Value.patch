@@ -1,11 +1,11 @@
-From 84f0d60740692e756fa9efd36d3b002235319185 Mon Sep 17 00:00:00 2001
+From 158af6e4c011dff7910a26449ab0d0eb1c2e326b Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 6 Oct 2013 17:36:28 +1100
 Subject: [PATCH] Don't Special Case X Move Value
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index d87c09856..1aecdb6a7 100644
+index e45851cf..7caa30a7 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -126,6 +126,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
@@ -45,5 +45,5 @@ index d87c09856..1aecdb6a7 100644
                          PlayerMoveEvent event = new PlayerMoveEvent(player, from, to);
                          this.server.getPluginManager().callEvent(event);
 -- 
-2.14.1
+2.17.1
 

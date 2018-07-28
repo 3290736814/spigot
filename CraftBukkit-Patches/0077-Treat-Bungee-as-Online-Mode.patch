@@ -1,11 +1,11 @@
-From b058fd6602ff3a57f704bd67359106416b908632 Mon Sep 17 00:00:00 2001
+From 51c64906bb8e5545571301a8603bb80a934d11cf Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 12 Apr 2014 21:23:58 +1000
 Subject: [PATCH] Treat Bungee as Online Mode
 
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index cd5f56993..f4f474b17 100644
+index cd5f5699..f4f474b1 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -200,7 +200,14 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -25,7 +25,7 @@ index cd5f56993..f4f474b17 100644
              }
  
 diff --git a/src/main/java/net/minecraft/server/NameReferencingFileConverter.java b/src/main/java/net/minecraft/server/NameReferencingFileConverter.java
-index 3199f07fd..83322b85b 100644
+index 3199f07f..83322b85 100644
 --- a/src/main/java/net/minecraft/server/NameReferencingFileConverter.java
 +++ b/src/main/java/net/minecraft/server/NameReferencingFileConverter.java
 @@ -64,7 +64,7 @@ public class NameReferencingFileConverter {
@@ -38,5 +38,5 @@ index 3199f07fd..83322b85b 100644
          } else {
              String[] astring1 = astring;
 -- 
-2.14.1
+2.17.1
 

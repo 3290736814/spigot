@@ -1,11 +1,11 @@
-From 1e978f42d31177642660236c40772bf8a77e141e Mon Sep 17 00:00:00 2001
+From 9a016fd6888d7d535205096a523f98bf6381975a Mon Sep 17 00:00:00 2001
 From: Axel Uhl <axel.uhl@sap.com>
 Date: Thu, 11 Jan 2018 10:34:56 +1100
 Subject: [PATCH] Cache BlockState.hashCode
 
 
 diff --git a/src/main/java/net/minecraft/server/BlockState.java b/src/main/java/net/minecraft/server/BlockState.java
-index 60703c627..1d626ce2f 100644
+index 60703c62..1d626ce2 100644
 --- a/src/main/java/net/minecraft/server/BlockState.java
 +++ b/src/main/java/net/minecraft/server/BlockState.java
 @@ -36,7 +36,15 @@ public abstract class BlockState<T extends Comparable<T>> implements IBlockState
@@ -26,7 +26,7 @@ index 60703c627..1d626ce2f 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/net/minecraft/server/BlockStateBoolean.java b/src/main/java/net/minecraft/server/BlockStateBoolean.java
-index 5b193f48b..02b4956ec 100644
+index 5b193f48..02b4956e 100644
 --- a/src/main/java/net/minecraft/server/BlockStateBoolean.java
 +++ b/src/main/java/net/minecraft/server/BlockStateBoolean.java
 @@ -40,7 +40,15 @@ public class BlockStateBoolean extends BlockState<Boolean> {
@@ -47,7 +47,7 @@ index 5b193f48b..02b4956ec 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/net/minecraft/server/BlockStateEnum.java b/src/main/java/net/minecraft/server/BlockStateEnum.java
-index 288c52c55..21ac1e066 100644
+index 288c52c5..21ac1e06 100644
 --- a/src/main/java/net/minecraft/server/BlockStateEnum.java
 +++ b/src/main/java/net/minecraft/server/BlockStateEnum.java
 @@ -58,13 +58,20 @@ public class BlockStateEnum<T extends Enum<T> & INamable> extends BlockState<T>
@@ -76,7 +76,7 @@ index 288c52c55..21ac1e066 100644
      public static <T extends Enum<T> & INamable> BlockStateEnum<T> of(String s, Class<T> oclass) {
          return a(s, oclass, Predicates.alwaysTrue());
 diff --git a/src/main/java/net/minecraft/server/BlockStateInteger.java b/src/main/java/net/minecraft/server/BlockStateInteger.java
-index 2b7870ead..403fa144a 100644
+index 2b7870ea..403fa144 100644
 --- a/src/main/java/net/minecraft/server/BlockStateInteger.java
 +++ b/src/main/java/net/minecraft/server/BlockStateInteger.java
 @@ -43,9 +43,17 @@ public class BlockStateInteger extends BlockState<Integer> {
@@ -99,5 +99,5 @@ index 2b7870ead..403fa144a 100644
      public static BlockStateInteger of(String s, int i, int j) {
          return new BlockStateInteger(s, i, j);
 -- 
-2.14.1
+2.17.1
 

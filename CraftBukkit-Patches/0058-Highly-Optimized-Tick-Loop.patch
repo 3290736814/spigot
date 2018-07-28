@@ -1,11 +1,11 @@
-From 0cc69c85ff790f89a5ba6d0cf5d2b6056ff8e29b Mon Sep 17 00:00:00 2001
+From bd70eacadc88b7afea9b180e1d8672b3a9cf99f6 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index d84cb5a1b..62975fdd1 100644
+index d84cb5a1..62975fdd 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -118,6 +118,12 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
@@ -96,7 +96,7 @@ index d84cb5a1b..62975fdd1 100644
                  this.a((CrashReport) null);
              }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 2555cc582..b4c85ba20 100644
+index 2555cc58..b4c85ba2 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -262,4 +262,9 @@ public class SpigotConfig
@@ -111,7 +111,7 @@ index 2555cc582..b4c85ba20 100644
  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 new file mode 100644
-index 000000000..be2e31dea
+index 00000000..be2e31de
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -0,0 +1,45 @@
@@ -161,5 +161,5 @@ index 000000000..be2e31dea
 +    }
 +}
 -- 
-2.14.1
+2.17.1
 

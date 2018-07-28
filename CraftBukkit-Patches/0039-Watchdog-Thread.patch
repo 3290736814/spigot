@@ -1,11 +1,11 @@
-From 47372ff47137a48c99d5da5be5b86772faba286c Mon Sep 17 00:00:00 2001
+From 3026eb1c009d2886003f6daa5f2658f83eb45911 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index f1a389b65..400c3aeb3 100644
+index f1a389b6..400c3aeb 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -285,7 +285,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -18,7 +18,7 @@ index f1a389b65..400c3aeb3 100644
  
                      thread1.setName("Server Watchdog");
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 6aa9b6058..c4431ce51 100644
+index 6aa9b605..c4431ce5 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -584,6 +584,7 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
@@ -38,7 +38,7 @@ index 6aa9b6058..c4431ce51 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 24f692eb4..ec5238526 100644
+index 24f692eb..ec523852 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1732,6 +1732,11 @@ public final class CraftServer implements Server {
@@ -55,7 +55,7 @@ index 24f692eb4..ec5238526 100644
      public Spigot spigot()
 diff --git a/src/main/java/org/spigotmc/RestartCommand.java b/src/main/java/org/spigotmc/RestartCommand.java
 new file mode 100644
-index 000000000..49768734d
+index 00000000..49768734
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/RestartCommand.java
 @@ -0,0 +1,132 @@
@@ -192,7 +192,7 @@ index 000000000..49768734d
 +    }
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 4accd872a..e27c48b49 100644
+index 4accd872..e27c48b4 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -198,4 +198,18 @@ public class SpigotConfig
@@ -216,7 +216,7 @@ index 4accd872a..e27c48b49 100644
  }
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
 new file mode 100644
-index 000000000..de08ad67f
+index 00000000..de08ad67
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -0,0 +1,117 @@
@@ -338,5 +338,5 @@ index 000000000..de08ad67f
 +    }
 +}
 -- 
-2.14.1
+2.17.1
 

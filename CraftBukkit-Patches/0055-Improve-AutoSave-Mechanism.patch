@@ -1,4 +1,4 @@
-From b29d4f4e700ca5899011237722012035e81641ad Mon Sep 17 00:00:00 2001
+From 0b307beeba358883167007042630be81b9f52580 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 21:07:18 +1100
 Subject: [PATCH] Improve AutoSave Mechanism
@@ -11,7 +11,7 @@ Instead we will mimic the save-all command in its behaviour, which is both safe 
 Also, only save modified chunks, or chunks with entities after 4 auto save passes
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 26cfcc346..2712f2e19 100644
+index dcb04917..4bcb887c 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -882,7 +882,7 @@ public class Chunk {
@@ -24,7 +24,7 @@ index 26cfcc346..2712f2e19 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index d2546b5d6..9298dd807 100644
+index 3784accd..951063af 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -232,7 +232,7 @@ public class ChunkProviderServer implements IChunkProvider {
@@ -37,7 +37,7 @@ index d2546b5d6..9298dd807 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index fede33187..d84cb5a1b 100644
+index fede3318..d84cb5a1 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -676,7 +676,17 @@ public abstract class MinecraftServer implements ICommandListener, Runnable, IAs
@@ -60,7 +60,7 @@ index fede33187..d84cb5a1b 100644
              SpigotTimings.worldSaveTimer.stopTiming(); // Spigot
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index d1152d412..120fc2fb5 100644
+index d1152d41..120fc2fb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -742,12 +742,17 @@ public class CraftWorld implements World {
@@ -83,5 +83,5 @@ index d1152d412..120fc2fb5 100644
              world.savingDisabled = oldSave;
          } catch (ExceptionWorldConflict ex) {
 -- 
-2.14.1
+2.17.1
 

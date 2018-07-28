@@ -1,11 +1,11 @@
-From c2aa8848e6f46f99e8a793dc99ce58714bbc3768 Mon Sep 17 00:00:00 2001
+From 7830159ecc5fb93cbe573bc7e5b1bf866aeb23ce Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Sat, 19 Jul 2014 12:49:48 +0100
 Subject: [PATCH] Don't spawn bonus ocelots when plugins spawn ocelots
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityOcelot.java b/src/main/java/net/minecraft/server/EntityOcelot.java
-index ee8f07fcc..5a76821ea 100644
+index ee8f07fc..5a76821e 100644
 --- a/src/main/java/net/minecraft/server/EntityOcelot.java
 +++ b/src/main/java/net/minecraft/server/EntityOcelot.java
 @@ -8,6 +8,7 @@ public class EntityOcelot extends EntityTameableAnimal {
@@ -26,7 +26,7 @@ index ee8f07fcc..5a76821ea 100644
                  EntityOcelot entityocelot = new EntityOcelot(this.world);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 5c553936b..ef8165da4 100644
+index 5c553936..ef8165da 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -1189,6 +1189,12 @@ public class CraftWorld implements World {
@@ -43,5 +43,5 @@ index 5c553936b..ef8165da4 100644
          }
  
 -- 
-2.14.1
+2.17.1
 
