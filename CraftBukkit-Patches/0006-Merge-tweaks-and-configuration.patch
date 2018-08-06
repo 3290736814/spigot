@@ -1,4 +1,4 @@
-From 7258a9a81704a9011d3598d084bcf94eb0a932db Mon Sep 17 00:00:00 2001
+From 270ed681b8340875f52744947cd31c2f6684df65 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:46:33 +1100
 Subject: [PATCH] Merge tweaks and configuration
@@ -43,10 +43,10 @@ index 13a0ed127..9a20b640d 100644
                      }
                  } else {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 28cb33095..457e868d8 100644
+index 47b02c86c..0ce659339 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -864,6 +864,23 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -875,6 +875,23 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
          } else if (entity.getBukkitEntity() instanceof org.bukkit.entity.Vehicle){
              event = CraftEventFactory.callVehicleCreateEvent(entity);
          }

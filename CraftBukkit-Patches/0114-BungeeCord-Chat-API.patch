@@ -1,4 +1,4 @@
-From a5604675760eba02c74aa06077c33a796a7188da Mon Sep 17 00:00:00 2001
+From f7da014334bdb59b45fd12e8e4eba4cd3195fa42 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -32,7 +32,7 @@ index e55384e70..28a262835 100644
      }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index adc16e046..1232ea4b2 100644
+index b810024dd..7cd9b3b8c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -150,6 +150,7 @@ import org.bukkit.craftbukkit.tag.CraftBlockTag;
@@ -43,7 +43,7 @@ index adc16e046..1232ea4b2 100644
  
  public final class CraftServer implements Server {
      private final String serverName = "CraftBukkit";
-@@ -1843,6 +1844,20 @@ public final class CraftServer implements Server {
+@@ -1845,6 +1846,20 @@ public final class CraftServer implements Server {
          public void restart() {
              org.spigotmc.RestartCommand.restart();
          }
@@ -87,10 +87,10 @@ index c10a84452..5c3421dd3 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index eef88cea6..72164e11a 100644
+index 2564bdf4d..b542b17fd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -753,6 +753,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -763,6 +763,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          {
              return getHandle().isInvulnerable(net.minecraft.server.DamageSource.GENERIC);
          }
@@ -108,7 +108,7 @@ index eef88cea6..72164e11a 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 5d7f09ef4..75d56ee3b 100644
+index 36365bce0..2d09bb4fa 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -23,6 +23,7 @@ import java.util.UUID;
@@ -119,7 +119,7 @@ index 5d7f09ef4..75d56ee3b 100644
  
  import net.minecraft.server.AdvancementDataPlayer;
  import net.minecraft.server.AdvancementProgress;
-@@ -1632,6 +1633,38 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1675,6 +1676,38 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
              return java.util.Collections.unmodifiableSet( ret );
          }

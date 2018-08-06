@@ -1,4 +1,4 @@
-From 28f1b85d4b66be8f2500acf576e114ff4afca2ba Mon Sep 17 00:00:00 2001
+From 5e63d04d83d9a5781c43cf47de4fc4758e8a7b2d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -93,10 +93,10 @@ index 752eeb5e..c77f3a4f 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 9d96976d..294eb7f7 100644
+index 62bf70f5..72eae543 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -478,4 +478,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable {
+@@ -508,4 +508,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable {
       * @return reaction
       */
      PistonMoveReaction getPistonMoveReaction();
@@ -130,10 +130,10 @@ index c8b5154e..ee2218c1 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 2596a11d..2e8c19c5 100644
+index 088b2163..11bcb277 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1437,4 +1437,14 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+@@ -1484,4 +1484,14 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
       * @return the player's locale
       */
      public String getLocale();

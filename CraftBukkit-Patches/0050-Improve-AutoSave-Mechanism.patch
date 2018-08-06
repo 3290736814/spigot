@@ -1,4 +1,4 @@
-From d5389b05f44a1ecd02d452f29952f3b7fe0e3438 Mon Sep 17 00:00:00 2001
+From f36ddfc62fb676f9db019e0501343d89487c9780 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 21:07:18 +1100
 Subject: [PATCH] Improve AutoSave Mechanism
@@ -11,10 +11,10 @@ Instead we will mimic the save-all command in its behaviour, which is both safe 
 Also, only save modified chunks, or chunks with entities after 4 auto save passes
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index daa126825..78bfd9fe9 100644
+index cfd844e93..d3e908ef3 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -901,7 +901,7 @@ public class Chunk implements IChunkAccess {
+@@ -912,7 +912,7 @@ public class Chunk implements IChunkAccess {
              if (this.w && this.world.getTime() != this.lastSaved || this.y) {
                  return true;
              }
@@ -37,7 +37,7 @@ index 410601d5f..287487150 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 0c776692b..7aa788871 100644
+index ac29ac5e5..e73f29ffd 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -805,7 +805,17 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati

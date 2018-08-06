@@ -1,4 +1,4 @@
-From 0172a99e6dbe322c05ee0b184e3675f77f3276ce Mon Sep 17 00:00:00 2001
+From 15e004a49a11c0e1d2a1de4de9beac9c4f02a572 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,10 +9,10 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index e7f989686..855f7ff0a 100644
+index d0cc0e103..6fe6fc523 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -159,6 +159,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -161,6 +161,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
      public org.bukkit.projectiles.ProjectileSource projectileSource; // For projectiles only
      public boolean forceExplosionKnockback; // SPIGOT-949
      public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getEntityTimings(this); // Spigot
@@ -25,7 +25,7 @@ index e7f989686..855f7ff0a 100644
  
      public float getBukkitYaw() {
          return this.yaw;
-@@ -185,7 +191,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -187,7 +193,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
          this.setPosition(0.0D, 0.0D, 0.0D);
          if (world != null) {
              this.dimension = world.worldProvider.getDimensionManager().getDimensionID();
@@ -195,10 +195,10 @@ index aacb270fc..32893a32c 100644
          if (--this.profession <= 0) {
              BlockPosition blockposition = new BlockPosition(this);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 7367dac45..ce5fa30b2 100644
+index 4770beefb..79f803899 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1065,6 +1065,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1076,6 +1076,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
          CrashReportSystemDetails crashreportsystemdetails1;
          CrashReport crashreport1;
  
@@ -206,7 +206,7 @@ index 7367dac45..ce5fa30b2 100644
          timings.entityTick.startTiming(); // Spigot
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
-@@ -1250,8 +1251,12 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1261,8 +1262,12 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
  
          // CraftBukkit start - check if chunks are loaded as done in previous versions
          // TODO: Go back to Vanilla behaviour when comfortable
@@ -236,7 +236,7 @@ index fa88be0db..4c8ab2bc9 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 9c9d49800..83eb07888 100644
+index 029094f8d..8c9ac1619 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -302,6 +302,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
@@ -541,7 +541,7 @@ index 000000000..635653abc
 +    }
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 6a8b5cd32..1d7544ee7 100644
+index fedd9d9be..33ab3dfb4 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -140,4 +140,17 @@ public class SpigotWorldConfig

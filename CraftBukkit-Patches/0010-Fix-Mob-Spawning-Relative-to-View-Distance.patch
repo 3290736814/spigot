@@ -1,4 +1,4 @@
-From 57f02a5f69eb4b3257901cf2b67e1bbcefc3dea6 Mon Sep 17 00:00:00 2001
+From 6aa955a83cf6aca67478b02f09c8f78c0c7fc31f Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -32,7 +32,7 @@ index da3229cec..e54dcaa99 100644
  
                              // CraftBukkit start - use LongHash and LongHashSet
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index f5096e3a4..3dee3ff5e 100644
+index f5096e3a4..5aa21d910 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -126,4 +126,11 @@ public class SpigotWorldConfig
@@ -43,7 +43,7 @@ index f5096e3a4..3dee3ff5e 100644
 +    public byte mobSpawnRange;
 +    private void mobSpawnRange()
 +    {
-+        mobSpawnRange = (byte) getInt( "mob-spawn-range", 4 );
++        mobSpawnRange = (byte) getInt( "mob-spawn-range", 6 );
 +        log( "Mob Spawn Range: " + mobSpawnRange );
 +    }
  }

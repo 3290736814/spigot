@@ -1,11 +1,11 @@
-From ec0988d648446c8670f7b56d06ef8ceb0253a7e0 Mon Sep 17 00:00:00 2001
+From 5ba2f4420a9db83a371ca517c053071a8ca20a4e Mon Sep 17 00:00:00 2001
 From: David <dmck2b@gmail.com>
 Date: Mon, 21 Apr 2014 12:43:08 +0100
 Subject: [PATCH] Prevent NoClassDefError crash and notify on crash
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 4223b219a..371e9ed7e 100644
+index af4469237..d772d0e8a 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -129,6 +129,8 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
@@ -17,7 +17,7 @@ index 4223b219a..371e9ed7e 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -515,6 +517,10 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -526,6 +528,10 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
                  }
                  // CraftBukkit end
                  iblockdata.doPhysics(this, blockposition, block, blockposition1);

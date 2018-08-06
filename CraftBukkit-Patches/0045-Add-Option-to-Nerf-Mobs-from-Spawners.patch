@@ -1,14 +1,14 @@
-From 8aaeef929cb618d455cb2385083bca339b3da902 Mon Sep 17 00:00:00 2001
+From b8a61e672998b4d2575faf4ff47e56ce0e334c3f Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 2 Feb 2014 16:55:46 +0000
 Subject: [PATCH] Add Option to Nerf Mobs from Spawners
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 5017c95dd..03e395aed 100644
+index 80bc60a81..522d00f35 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -163,6 +163,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -165,6 +165,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
      public final byte activationType = org.spigotmc.ActivationRange.initializeEntityActivationType(this);
      public final boolean defaultActivationState;
      public long activatedTick = Integer.MIN_VALUE;
@@ -52,7 +52,7 @@ index 3bb5a06cb..967308d97 100644
                          world.triggerEffect(2004, blockposition, 0);
                          if (entityinsentient != null) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 14e33e588..6c5068413 100644
+index 6f989ccfa..7bd25baa0 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -205,4 +205,11 @@ public class SpigotWorldConfig

@@ -1,4 +1,4 @@
-From 0f2fe6acdf257b005b7784967d0fe1664360f318 Mon Sep 17 00:00:00 2001
+From 31f53a8caa44b9b9ed06a9af5cfc680553730e41 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -79,10 +79,10 @@ index 0a59da7d5..6e940b640 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 457e868d8..882fa397f 100644
+index 0ce659339..8c80aab59 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -840,6 +840,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -851,6 +851,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
      }
  
      public boolean addEntity(Entity entity, SpawnReason spawnReason) { // Changed signature, added SpawnReason
@@ -90,7 +90,7 @@ index 457e868d8..882fa397f 100644
          if (entity == null) return false;
  
          org.bukkit.event.Cancellable event = null;
-@@ -930,6 +931,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -941,6 +942,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
      }
  
      public void kill(Entity entity) {
@@ -98,7 +98,7 @@ index 457e868d8..882fa397f 100644
          if (entity.isVehicle()) {
              entity.ejectPassengers();
          }
-@@ -948,6 +950,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -959,6 +961,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
      }
  
      public void removeEntity(Entity entity) {
@@ -106,7 +106,7 @@ index 457e868d8..882fa397f 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2157,6 +2160,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -2168,6 +2171,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
      }
  
      public void a(Collection<Entity> collection) {
@@ -115,7 +115,7 @@ index 457e868d8..882fa397f 100644
          // this.entityList.addAll(collection);
          Iterator iterator = collection.iterator();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 7a437cd27..0140df40a 100644
+index 04b618f4b..fddb1055d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -669,6 +669,7 @@ public final class CraftServer implements Server {
@@ -155,10 +155,10 @@ index 6a87562b6..08765768a 100644
          if (generate) {
              // Use the default variant of loadChunk when generate == true.
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 02bf84009..093b5a8f4 100644
+index b88ad1da5..69770a803 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -250,6 +250,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -293,6 +293,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
      @Override
      public void kickPlayer(String message) {

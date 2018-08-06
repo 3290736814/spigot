@@ -1,11 +1,11 @@
-From 36e4a106937308a374f6c30cfe29a9b7b9400705 Mon Sep 17 00:00:00 2001
+From 53261113d582266e3995b4498dc9c2d36149cbfc Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:33:36 +1100
 Subject: [PATCH] Use Standard List for EntitySlices.
 
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 78bfd9fe9..411ab6061 100644
+index d3e908ef3..03c96de98 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -41,7 +41,7 @@ public class Chunk implements IChunkAccess {
@@ -49,7 +49,7 @@ index 78bfd9fe9..411ab6061 100644
  
              this.world.a((Collection) entityslice);
          }
-@@ -796,7 +796,7 @@ public class Chunk implements IChunkAccess {
+@@ -807,7 +807,7 @@ public class Chunk implements IChunkAccess {
              this.world.b(tileentity);
          }
  
@@ -58,7 +58,7 @@ index 78bfd9fe9..411ab6061 100644
          int i = aentityslice.length;
  
          for (int j = 0; j < i; ++j) {
-@@ -883,12 +883,12 @@ public class Chunk implements IChunkAccess {
+@@ -894,12 +894,12 @@ public class Chunk implements IChunkAccess {
          j = MathHelper.clamp(j, 0, this.entitySlices.length - 1);
  
          for (int k = i; k <= j; ++k) {
@@ -73,7 +73,7 @@ index 78bfd9fe9..411ab6061 100644
                      list.add((T) entity); // Fix decompile error
                  }
              }
-@@ -1043,7 +1043,7 @@ public class Chunk implements IChunkAccess {
+@@ -1054,7 +1054,7 @@ public class Chunk implements IChunkAccess {
          return this.tileEntities;
      }
  

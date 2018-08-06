@@ -1,4 +1,4 @@
-From 65a6bce57cb870c980fc8add3f6b63e0e6fbbcbc Mon Sep 17 00:00:00 2001
+From ff7239a683ec544d94c7ddd6de2f90d2114c3bc8 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -10,7 +10,7 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 This feature was commisioned by Chunkr.
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index dfcafc6d4..13c404337 100644
+index efd9dc9a9..73bd5e1d7 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -131,6 +131,9 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
@@ -32,7 +32,7 @@ index dfcafc6d4..13c404337 100644
      }
  
      public GeneratorAccess b() {
-@@ -1120,7 +1125,12 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1131,7 +1136,12 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
          timings.entityTick.startTiming(); // Spigot
          guardEntityList = true; // Spigot
          // CraftBukkit start - Use field for loop variable
@@ -46,7 +46,7 @@ index dfcafc6d4..13c404337 100644
              entity = (Entity) this.entityList.get(this.tickPosition);
              // CraftBukkit end
              Entity entity1 = entity.getVehicle();
-@@ -1177,14 +1187,19 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1188,14 +1198,19 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
          }
  
          this.J = true;
@@ -71,7 +71,7 @@ index dfcafc6d4..13c404337 100644
                  continue;
              }
              // Spigot end
-@@ -1215,7 +1230,8 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1226,7 +1241,8 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
              }
  
              if (tileentity.x()) {
@@ -82,7 +82,7 @@ index dfcafc6d4..13c404337 100644
                  if (this.isLoaded(tileentity.getPosition())) {
                      this.getChunkAtWorldCoords(tileentity.getPosition()).d(tileentity.getPosition());
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 49e70a7c1..e146308ba 100644
+index 0bddf8f72..e9c68cf13 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -297,4 +297,13 @@ public class SpigotWorldConfig

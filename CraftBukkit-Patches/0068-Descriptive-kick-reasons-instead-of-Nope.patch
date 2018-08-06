@@ -1,14 +1,14 @@
-From f546f98e686f069e6ce25bfaf5f64ffd174e92ae Mon Sep 17 00:00:00 2001
+From f8e1ab6b54c54db0e7b89fd93e96cfa46fdab292 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sat, 15 Mar 2014 01:30:05 -0400
 Subject: [PATCH] Descriptive kick reasons instead of Nope!
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 03e395aed..5046ecb3b 100644
+index 522d00f35..55bf00be9 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -289,7 +289,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -291,7 +291,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
          if (f == Float.POSITIVE_INFINITY || f == Float.NEGATIVE_INFINITY) {
              if (this instanceof EntityPlayer) {
                  this.world.getServer().getLogger().warning(this.getName() + " was caught trying to crash the server with an invalid yaw");
@@ -17,7 +17,7 @@ index 03e395aed..5046ecb3b 100644
              }
              f = 0;
          }
-@@ -302,7 +302,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -304,7 +304,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
          if (f1 == Float.POSITIVE_INFINITY || f1 == Float.NEGATIVE_INFINITY) {
              if (this instanceof EntityPlayer) {
                  this.world.getServer().getLogger().warning(this.getName() + " was caught trying to crash the server with an invalid pitch");
@@ -27,7 +27,7 @@ index 03e395aed..5046ecb3b 100644
              f1 = 0;
          }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index a105669a6..862449c98 100644
+index 340a2c0d6..8d4c92876 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -1388,7 +1388,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {

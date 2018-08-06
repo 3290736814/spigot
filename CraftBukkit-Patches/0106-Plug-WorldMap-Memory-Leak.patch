@@ -1,4 +1,4 @@
-From 3f54d8c7e9f913bb82e80ca110aa5b91b11c7665 Mon Sep 17 00:00:00 2001
+From 2ab401f758fd954f9beb48a658bc142c65f73875 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 8 Aug 2014 19:57:03 +1000
 Subject: [PATCH] Plug WorldMap Memory Leak
@@ -18,10 +18,10 @@ index 855192af3..6b5600ba5 100644
  
      public PersistentCollection(IDataManager idatamanager) {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 9320d88c1..dfcafc6d4 100644
+index 3df194528..efd9dc9a9 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -979,6 +979,23 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -990,6 +990,23 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
          entity.die();
          if (entity instanceof EntityHuman) {
              this.players.remove(entity);
@@ -46,7 +46,7 @@ index 9320d88c1..dfcafc6d4 100644
              this.c(entity);
          }
 diff --git a/src/main/java/net/minecraft/server/WorldMap.java b/src/main/java/net/minecraft/server/WorldMap.java
-index 51fa1b1b9..445a016b7 100644
+index afe676301..c73ffc3bc 100644
 --- a/src/main/java/net/minecraft/server/WorldMap.java
 +++ b/src/main/java/net/minecraft/server/WorldMap.java
 @@ -26,7 +26,7 @@ public class WorldMap extends PersistentBase {

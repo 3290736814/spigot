@@ -1,14 +1,14 @@
-From 92d4dbb97be7e481949b3536925b6449eec43f1c Mon Sep 17 00:00:00 2001
+From d8f501aa6fcb85a23c2f75acf005c10471f75c85 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 27 Mar 2016 20:35:09 +1100
 Subject: [PATCH] Player Collision API
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index db1338561..5eead2833 100644
+index 69770a803..9c510cd73 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1580,6 +1580,16 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1623,6 +1623,16 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      // Spigot start
      private final Player.Spigot spigot = new Player.Spigot()
      {
