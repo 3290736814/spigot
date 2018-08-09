@@ -1,11 +1,11 @@
-From b3344d333e3b6f55ad1c7045b990ec02beb5a17b Mon Sep 17 00:00:00 2001
+From 46f09be2feebb4b8ee3eed4d40e7d53ebeb73aae Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 7aa788871..540079fcb 100644
+index e73f29ffd..17554e149 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -147,6 +147,12 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
@@ -35,13 +35,13 @@ index 7aa788871..540079fcb 100644
      public void run() {
          try {
              if (this.init()) {
-@@ -668,28 +681,36 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -668,26 +681,34 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
                  this.n.setServerInfo(new ServerPing.ServerData("1.13", 393));
                  this.a(this.n);
  
 +                // Spigot start
 +                Arrays.fill( recentTps, 20 );
-+                long lastTick = System.nanoTime(), catchupTime = 0, curTime, wait, tickSection = lastTick;
++                long lastTick = System.nanoTime(), catchupTime = 0, curTime, wait, tickSection = lastTick, tickCount = 1;
                  while (this.isRunning) {
 -                    long i = SystemUtils.b() - this.aa;
 -
@@ -61,7 +61,7 @@ index 7aa788871..540079fcb 100644
 -                        MinecraftServer.LOGGER.warn("Can\'t keep up! Is the server overloaded? Running {}ms or {} ticks behind", Long.valueOf(i), Long.valueOf(j));
 -                        this.aa += j * 50L;
 -                        this.Q = this.aa;
-+                    if ( MinecraftServer.currentTick++ % SAMPLE_INTERVAL == 0 )
++                    if ( tickCount++ % SAMPLE_INTERVAL == 0 )
 +                    {
 +                        double currentTps = 1E9 / ( curTime - tickSection ) * SAMPLE_INTERVAL;
 +                        recentTps[0] = calcTps( recentTps[0], 0.92, currentTps ); // 1/exp(5sec/1min)
@@ -79,12 +79,10 @@ index 7aa788871..540079fcb 100644
 -                        Thread.sleep(1L);
 -                    }
 -
++                    // Spigot end
                      this.P = true;
                  }
-+                // Spigot end
              } else {
-                 this.a((CrashReport) null);
-             }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
 index dde542b95..9d43b080e 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
