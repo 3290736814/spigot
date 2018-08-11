@@ -1,4 +1,4 @@
-From e045e75cc544f2ebe6962ee3c6aa45771ab7c1a6 Mon Sep 17 00:00:00 2001
+From a84c1ed8405130f4835edfe94e0d15b7d3d639e3 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -25,10 +25,10 @@ index abc08ed39..4cc768875 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 9b295cdc1..6a87562b6 100644
+index e4b88cb7c..f1b1eadd0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1575,4 +1575,14 @@ public class CraftWorld implements World {
+@@ -1614,4 +1614,14 @@ public class CraftWorld implements World {
              cps.unload(chunk);
          }
      }
@@ -141,12 +141,12 @@ index 64e346d84..194d830e1 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index c10816cfd..b88ad1da5 100644
+index a8b0bc4e1..46eac051c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1618,4 +1618,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
-     public String getLocale() {
-         return getHandle().locale;
+@@ -1625,4 +1625,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+ 
+         getHandle().server.getCommandDispatcher().a(getHandle());
      }
 +
 +    // Spigot start
