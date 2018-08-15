@@ -1,4 +1,4 @@
-From 31f53a8caa44b9b9ed06a9af5cfc680553730e41 Mon Sep 17 00:00:00 2001
+From 6b3d6733b6a4ed176b7cd9344ebf2f6d6a8d8e27 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -6,7 +6,7 @@ Subject: [PATCH] Async Operation Catching
 Catch and throw an exception when a potentially unsafe operation occurs on a thread other than the main server thread.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 95d6174e8..06f10e1e8 100644
+index f2446b3df..9e298f121 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -395,10 +395,14 @@ public class Block implements IMaterial {
@@ -115,10 +115,10 @@ index 0ce659339..8c80aab59 100644
          // this.entityList.addAll(collection);
          Iterator iterator = collection.iterator();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 04b618f4b..fddb1055d 100644
+index ca9feca1a..ee4abc4dc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -669,6 +669,7 @@ public final class CraftServer implements Server {
+@@ -670,6 +670,7 @@ public final class CraftServer implements Server {
      public boolean dispatchCommand(CommandSender sender, String commandLine) {
          Validate.notNull(sender, "Sender cannot be null");
          Validate.notNull(commandLine, "CommandLine cannot be null");
@@ -127,7 +127,7 @@ index 04b618f4b..fddb1055d 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 6a87562b6..08765768a 100644
+index f1b1eadd0..3b5330dfe 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -178,6 +178,7 @@ public class CraftWorld implements World {
@@ -155,7 +155,7 @@ index 6a87562b6..08765768a 100644
          if (generate) {
              // Use the default variant of loadChunk when generate == true.
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index b88ad1da5..69770a803 100644
+index 46eac051c..e1328d57b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -293,6 +293,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
