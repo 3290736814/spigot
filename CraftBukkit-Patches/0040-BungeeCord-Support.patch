@@ -1,4 +1,4 @@
-From 9f63a51959e63b058d8c7e280bcabab4ed0b9c45 Mon Sep 17 00:00:00 2001
+From 47c1bef3e5dbe48ad02b752f9634fd588c87678b Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -6,7 +6,7 @@ Subject: [PATCH] BungeeCord Support
 Provides support for IP forwarding via BungeeCord.
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 387d8a09f..5b784002f 100644
+index 93e49bcad..72d841af0 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -7,6 +7,7 @@ import java.util.HashMap;
@@ -45,7 +45,7 @@ index 387d8a09f..5b784002f 100644
              }
              break;
 diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
-index c777c9dfd..eb936a044 100644
+index 4347b88cd..dea401c92 100644
 --- a/src/main/java/net/minecraft/server/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/LoginListener.java
 @@ -96,9 +96,24 @@ public class LoginListener implements PacketLoginInListener, ITickable {
@@ -117,12 +117,12 @@ index 47b871dfc..7acdac55e 100644
          this.d = EnumProtocol.a(packetdataserializer.g());
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 668452809..9d0e29df7 100644
+index 1a08999d4..778b3bd85 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -479,7 +479,7 @@ public abstract class PlayerList {
  
-         EntityPlayer entity = new EntityPlayer(this.server, this.server.a(DimensionManager.OVERWORLD), gameprofile, new PlayerInteractManager(this.server.a(DimensionManager.OVERWORLD)));
+         EntityPlayer entity = new EntityPlayer(this.server, this.server.getWorldServer(DimensionManager.OVERWORLD), gameprofile, new PlayerInteractManager(this.server.getWorldServer(DimensionManager.OVERWORLD)));
          Player player = entity.getBukkitEntity();
 -        PlayerLoginEvent event = new PlayerLoginEvent(player, hostname, ((java.net.InetSocketAddress) socketaddress).getAddress());
 +        PlayerLoginEvent event = new PlayerLoginEvent(player, hostname, ((java.net.InetSocketAddress) socketaddress).getAddress(), ((java.net.InetSocketAddress) loginlistener.networkManager.getRawAddress()).getAddress());
@@ -130,10 +130,10 @@ index 668452809..9d0e29df7 100644
          if (getProfileBans().isBanned(gameprofile) && !getProfileBans().get(gameprofile).hasExpired()) {
              GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.k.get(gameprofile);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f8874c6cf..dc922dfdf 100644
+index cf32a4071..21518e3d5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -608,7 +608,13 @@ public final class CraftServer implements Server {
+@@ -609,7 +609,13 @@ public final class CraftServer implements Server {
  
      @Override
      public long getConnectionThrottle() {
@@ -149,7 +149,7 @@ index f8874c6cf..dc922dfdf 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 69e46f1c9..6ef93bcca 100644
+index 01cfad860..6afc09871 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -1631,6 +1631,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {

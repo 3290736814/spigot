@@ -1,4 +1,4 @@
-From 15e004a49a11c0e1d2a1de4de9beac9c4f02a572 Mon Sep 17 00:00:00 2001
+From dace52d60e02bdedd0f80f962c7a730078892489 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index d0cc0e103..6fe6fc523 100644
+index 8b62f5426..3c3796a6c 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -161,6 +161,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -28,7 +28,7 @@ index d0cc0e103..6fe6fc523 100644
 @@ -187,7 +193,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
          this.setPosition(0.0D, 0.0D, 0.0D);
          if (world != null) {
-             this.dimension = world.worldProvider.getDimensionManager().getDimensionID();
+             this.dimension = world.worldProvider.getDimensionManager();
 +            // Spigot start
 +            this.defaultActivationState = org.spigotmc.ActivationRange.initializeEntityActivationState(this, world.spigotConfig);
 +        } else {
@@ -75,10 +75,10 @@ index ef0ad7edd..1d7c998aa 100644
      public abstract EntityAgeable createChild(EntityAgeable entityageable);
  
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index b693c3033..1e5029170 100644
+index 1c7ff6a61..6134dc885 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
-@@ -31,6 +31,18 @@ public abstract class EntityArrow extends Entity implements IProjectile {
+@@ -34,6 +34,18 @@ public abstract class EntityArrow extends Entity implements IProjectile {
      private double damage;
      public int knockbackStrength;
  
@@ -117,7 +117,7 @@ index da878c760..6e2592e96 100644
          this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, ItemStack.a);
          this.datawatcher.register(EntityFireworks.b, Integer.valueOf(0));
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 0ac47b585..4af09f5cd 100644
+index 727ad3be8..eecebafda 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -139,6 +139,28 @@ public class EntityItem extends Entity {
@@ -150,7 +150,7 @@ index 0ac47b585..4af09f5cd 100644
          if (this.motY < 0.05999999865889549D) {
              this.motY += 5.000000237487257E-4D;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 6f8572573..514c95151 100644
+index a3e1f4905..42d605f94 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -128,6 +128,13 @@ public abstract class EntityLiving extends Entity {
@@ -168,7 +168,7 @@ index 6f8572573..514c95151 100644
      protected EntityLiving(EntityTypes<?> entitytypes, World world) {
          super(entitytypes, world);
 diff --git a/src/main/java/net/minecraft/server/EntityVillager.java b/src/main/java/net/minecraft/server/EntityVillager.java
-index aacb270fc..32893a32c 100644
+index a3369ffa9..74a9fa943 100644
 --- a/src/main/java/net/minecraft/server/EntityVillager.java
 +++ b/src/main/java/net/minecraft/server/EntityVillager.java
 @@ -98,6 +98,22 @@ public class EntityVillager extends EntityAgeable implements NPC, IMerchant {
@@ -195,10 +195,10 @@ index aacb270fc..32893a32c 100644
          if (--this.profession <= 0) {
              BlockPosition blockposition = new BlockPosition(this);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 4770beefb..79f803899 100644
+index ff9679341..c563d5710 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1076,6 +1076,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1086,6 +1086,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
          CrashReportSystemDetails crashreportsystemdetails1;
          CrashReport crashreport1;
  
@@ -206,7 +206,7 @@ index 4770beefb..79f803899 100644
          timings.entityTick.startTiming(); // Spigot
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
-@@ -1261,8 +1262,12 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1271,8 +1272,12 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
  
          // CraftBukkit start - check if chunks are loaded as done in previous versions
          // TODO: Go back to Vanilla behaviour when comfortable

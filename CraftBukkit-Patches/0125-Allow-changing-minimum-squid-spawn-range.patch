@@ -1,24 +1,24 @@
-From 65d4f7a8432fc583bd8872052e3dd9a27f9d2356 Mon Sep 17 00:00:00 2001
+From 874a1c2fdb95128f843e2d39c516a9491f81d169 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 11 Jan 2018 08:23:43 +1100
 Subject: [PATCH] Allow changing minimum squid spawn range
 
 
 diff --git a/src/main/java/net/minecraft/server/EntitySquid.java b/src/main/java/net/minecraft/server/EntitySquid.java
-index 764dec080..97de169de 100644
+index 16fabe5ff..5d7d0b691 100644
 --- a/src/main/java/net/minecraft/server/EntitySquid.java
 +++ b/src/main/java/net/minecraft/server/EntitySquid.java
 @@ -167,7 +167,7 @@ public class EntitySquid extends EntityWaterAnimal {
      }
  
-     public boolean a(GeneratorAccess generatoraccess) {
+     public boolean a(GeneratorAccess generatoraccess, boolean flag) {
 -        return this.locY > 45.0D && this.locY < (double) generatoraccess.getSeaLevel();
 +        return this.locY > this.world.spigotConfig.squidSpawnRangeMin && this.locY < (double) generatoraccess.getSeaLevel(); // Spigot
      }
  
      public void c(float f, float f1, float f2) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index e146308ba..9128f7754 100644
+index e9c68cf13..95f7a9587 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -306,4 +306,10 @@ public class SpigotWorldConfig

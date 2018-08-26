@@ -1,11 +1,11 @@
-From 55811e8af6b45add1eb411cfff1dd10602a1f705 Mon Sep 17 00:00:00 2001
+From 44ee6cbcc619b92192d0ac7739e8574ae0be60c5 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 13 Jul 2015 19:05:15 +1000
 Subject: [PATCH] Use Map for getPlayer(String) lookup.
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 19781d73a..e476d3433 100644
+index 88c44d366..ead9697e6 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -72,6 +72,7 @@ public abstract class PlayerList {
@@ -29,7 +29,7 @@ index 19781d73a..e476d3433 100644
          entityplayer.getAdvancementData().a();
          this.players.remove(entityplayer);
 +        this.playersByName.remove(entityplayer.getName()); // Spigot
-         this.server.aR().b(entityplayer);
+         this.server.aP().b(entityplayer);
          UUID uuid = entityplayer.getUniqueID();
          EntityPlayer entityplayer1 = (EntityPlayer) this.j.get(uuid);
 @@ -585,6 +588,7 @@ public abstract class PlayerList {
@@ -40,7 +40,7 @@ index 19781d73a..e476d3433 100644
          this.server.getWorldServer(entityplayer.dimension).removeEntity(entityplayer);
          BlockPosition blockposition = entityplayer.getBed();
          boolean flag1 = entityplayer.isRespawnForced();
-@@ -689,6 +693,7 @@ public abstract class PlayerList {
+@@ -688,6 +692,7 @@ public abstract class PlayerList {
              worldserver.getPlayerChunkMap().addPlayer(entityplayer1);
              worldserver.addEntity(entityplayer1);
              this.players.add(entityplayer1);
@@ -48,7 +48,7 @@ index 19781d73a..e476d3433 100644
              this.j.put(entityplayer1.getUniqueID(), entityplayer1);
          }
          // entityplayer1.syncInventory();
-@@ -1147,19 +1152,7 @@ public abstract class PlayerList {
+@@ -1141,19 +1146,7 @@ public abstract class PlayerList {
  
      @Nullable
      public EntityPlayer getPlayer(String s) {
@@ -68,7 +68,7 @@ index 19781d73a..e476d3433 100644
 +        return this.playersByName.get(s); // Spigot
      }
  
-     public void sendPacketNearby(@Nullable EntityHuman entityhuman, double d0, double d1, double d2, double d3, int i, Packet<?> packet) {
+     public void sendPacketNearby(@Nullable EntityHuman entityhuman, double d0, double d1, double d2, double d3, DimensionManager dimensionmanager, Packet<?> packet) {
 diff --git a/src/main/java/org/spigotmc/CaseInsensitiveHashingStrategy.java b/src/main/java/org/spigotmc/CaseInsensitiveHashingStrategy.java
 new file mode 100644
 index 000000000..aafdd3682

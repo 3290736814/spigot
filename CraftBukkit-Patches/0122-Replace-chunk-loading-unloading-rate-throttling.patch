@@ -1,4 +1,4 @@
-From 3a68e700dfa171668e3b6c97aae75780e501e675 Mon Sep 17 00:00:00 2001
+From b6a15c2226985459d18cfb0579b0065bac731d27 Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Thu, 26 Jan 2017 20:54:55 +0000
 Subject: [PATCH] Replace chunk loading / unloading rate throttling.
@@ -7,16 +7,16 @@ Uses a scheme based on estimated tick slack time.
 See https://hub.spigotmc.org/stash/projects/SPIGOT/repos/spigot/pull-requests/71/overview
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 287487150..62d00c2f6 100644
+index 1da14aa17..e748033d4 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -283,13 +283,22 @@ public class ChunkProviderServer implements IChunkProvider {
-         this.chunkLoader.c();
+@@ -262,13 +262,22 @@ public class ChunkProviderServer implements IChunkProvider {
+         }
      }
  
-+    private static final double UNLOAD_QUEUE_RESIZE_FACTOR = 0.96;
++    private static final double UNLOAD_QUEUE_RESIZE_FACTOR = 0.96; // Spigot
 +
-     public boolean unloadChunks() {
+     public boolean unloadChunks(BooleanSupplier booleansupplier) {
          if (!this.world.savingDisabled) {
              if (!this.unloadQueue.isEmpty()) {
 +                // Spigot start
@@ -27,35 +27,35 @@ index 287487150..62d00c2f6 100644
 +
                  LongIterator longiterator = this.unloadQueue.iterator();
  
--                for (int i = 0; i < 100 && longiterator.hasNext(); longiterator.remove()) {
+-                for (int i = 0; longiterator.hasNext() && (booleansupplier.getAsBoolean() || i < 200 || this.unloadQueue.size() > 2000); longiterator.remove()) {
 +                while (longiterator.hasNext()) { // Spigot
                      Long olong = (Long) longiterator.next();
 +                    longiterator.remove(); // Spigot
-                     Chunk chunk = (Chunk) this.chunks.get(olong);
+                     IChunkLoader ichunkloader = this.chunkLoader;
  
-                     if (chunk != null && chunk.d) {
-@@ -299,9 +308,15 @@ public class ChunkProviderServer implements IChunkProvider {
+                     synchronized (this.chunkLoader) {
+@@ -281,10 +290,15 @@ public class ChunkProviderServer implements IChunkProvider {
+                             }
+                             // CraftBukkit end
+ 
+-                            ++i;
++                            // Spigot start
++                            if (!booleansupplier.getAsBoolean() && this.unloadQueue.size() <= targetSize && activityAccountant.activityTimeIsExhausted()) {
++                                break;
++                            }
++                            // Spigot end
                          }
-                         // CraftBukkit end
- 
--                        ++i;
-+                        // Spigot start
-+                        if (this.unloadQueue.size() <= targetSize && activityAccountant.activityTimeIsExhausted()) {
-+                            break;
-+                        }
-+                        // Spigot end
                      }
                  }
-+
 +                activityAccountant.endActivity(); // Spigot
              }
  
-             this.f.a();
+             this.chunkScheduler.a(booleansupplier);
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index d85fab954..71ee66a9b 100644
+index e7cef27a2..2c69e6827 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -63,6 +63,7 @@ import org.bukkit.craftbukkit.CraftServer;
+@@ -67,6 +67,7 @@ import org.bukkit.craftbukkit.CraftServer;
  import org.bukkit.craftbukkit.Main;
  // CraftBukkit end
  import org.bukkit.craftbukkit.SpigotTimings; // Spigot
@@ -63,7 +63,7 @@ index d85fab954..71ee66a9b 100644
  
  public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStatistics, ICommandListener, Runnable {
  
-@@ -152,6 +153,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -155,6 +156,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
      public static final int TICK_TIME = 1000000000 / TPS;
      private static final int SAMPLE_INTERVAL = 100;
      public final double[] recentTps = new double[ 3 ];
@@ -71,15 +71,15 @@ index d85fab954..71ee66a9b 100644
      // Spigot end
  
      public MinecraftServer(OptionSet options, Proxy proxy, DataFixer datafixer, CommandDispatcher commanddispatcher, YggdrasilAuthenticationService yggdrasilauthenticationservice, MinecraftSessionService minecraftsessionservice, GameProfileRepository gameprofilerepository, UserCache usercache) {
-@@ -804,6 +806,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -816,6 +818,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
  
-     protected void v() {
+     protected void a(BooleanSupplier booleansupplier) {
          SpigotTimings.serverTickTimer.startTiming(); // Spigot
 +        this.slackActivityAccountant.tickStarted(); // Spigot
          long i = SystemUtils.c();
  
          ++this.ticks;
-@@ -864,6 +867,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -876,6 +879,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
          this.methodProfiler.e();
          this.methodProfiler.e();
          org.spigotmc.WatchdogThread.tick(); // Spigot

@@ -1,4 +1,4 @@
-From 94b4959e5bb71cb3161a6e2b01230cf3bc24bbeb Mon Sep 17 00:00:00 2001
+From 2145d15fdb4dce9de4a856991b633b1e115f8f59 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -130,7 +130,7 @@ index 000000000..47279ebfd
 +}
 diff --git a/src/main/java/net/minecraft/server/ChunkGenerator.java b/src/main/java/net/minecraft/server/ChunkGenerator.java
 new file mode 100644
-index 000000000..957af9b3f
+index 000000000..3d5d9d779
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ChunkGenerator.java
 @@ -0,0 +1,43 @@
@@ -154,7 +154,7 @@ index 000000000..957af9b3f
 +    List<BiomeBase.BiomeMeta> getMobsFor(EnumCreatureType enumcreaturetype, BlockPosition blockposition);
 +
 +    @Nullable
-+    BlockPosition findNearestMapFeature(World world, String s, BlockPosition blockposition, int i);
++    BlockPosition findNearestMapFeature(World world, String s, BlockPosition blockposition, int i, boolean flag);
 +
 +    C getSettings();
 +
@@ -179,7 +179,7 @@ index 000000000..957af9b3f
 +}
 diff --git a/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
 new file mode 100644
-index 000000000..a0362c3f8
+index 000000000..1e3ce5a33
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
 @@ -0,0 +1,159 @@
@@ -218,7 +218,7 @@ index 000000000..a0362c3f8
 +        boolean flag = true;
 +        int i = regionlimitedworldaccess.a();
 +        int j = regionlimitedworldaccess.b();
-+        BitSet bitset = regionlimitedworldaccess.c(i, j).a(worldgenstage_features);
++        BitSet bitset = regionlimitedworldaccess.b(i, j).a(worldgenstage_features);
 +
 +        for (int k = i - 8; k <= i + 8; ++k) {
 +            for (int l = j - 8; l <= j + 8; ++l) {
@@ -240,10 +240,10 @@ index 000000000..a0362c3f8
 +    }
 +
 +    @Nullable
-+    public BlockPosition findNearestMapFeature(World world, String s, BlockPosition blockposition, int i) {
++    public BlockPosition findNearestMapFeature(World world, String s, BlockPosition blockposition, int i, boolean flag) {
 +        StructureGenerator structuregenerator = (StructureGenerator) WorldGenerator.aF.get(s.toLowerCase(Locale.ROOT));
 +
-+        return structuregenerator != null ? structuregenerator.getNearestGeneratedFeature(world, this, blockposition, i) : null;
++        return structuregenerator != null ? structuregenerator.getNearestGeneratedFeature(world, this, blockposition, i, flag) : null;
 +    }
 +
 +    protected void a(IChunkAccess ichunkaccess, Random random) {
@@ -271,7 +271,7 @@ index 000000000..a0362c3f8
 +        int k = i * 16;
 +        int l = j * 16;
 +        BlockPosition blockposition = new BlockPosition(k, 0, l);
-+        BiomeBase biomebase = regionlimitedworldaccess.c(i + 1, j + 1).getBiomeIndex()[0];
++        BiomeBase biomebase = regionlimitedworldaccess.b(i + 1, j + 1).getBiomeIndex()[0];
 +        SeededRandom seededrandom = new SeededRandom();
 +        long i1 = seededrandom.a(regionlimitedworldaccess.getSeed(), k, l);
 +        WorldGenStage.Decoration[] aworldgenstage_decoration = WorldGenStage.Decoration.values();
@@ -344,7 +344,7 @@ index 000000000..a0362c3f8
 +}
 diff --git a/src/main/java/net/minecraft/server/EntitySquid.java b/src/main/java/net/minecraft/server/EntitySquid.java
 new file mode 100644
-index 000000000..764dec080
+index 000000000..16fabe5ff
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/EntitySquid.java
 @@ -0,0 +1,271 @@
@@ -411,7 +411,7 @@ index 000000000..764dec080
 +    }
 +
 +    @Nullable
-+    protected MinecraftKey G() {
++    protected MinecraftKey getDefaultLootTable() {
 +        return LootTables.ar;
 +    }
 +
@@ -485,7 +485,7 @@ index 000000000..764dec080
 +
 +    public boolean damageEntity(DamageSource damagesource, float f) {
 +        if (super.damageEntity(damagesource, f) && this.getLastDamager() != null) {
-+            this.dz();
++            this.dy();
 +            return true;
 +        } else {
 +            return false;
@@ -499,7 +499,7 @@ index 000000000..764dec080
 +        return vec3d1;
 +    }
 +
-+    private void dz() {
++    private void dy() {
 +        this.a(SoundEffects.ENTITY_SQUID_SQUIRT, this.cD(), this.cE());
 +        Vec3D vec3d = this.b(new Vec3D(0.0D, -1.0D, 0.0D)).add(this.locX, this.locY, this.locZ);
 +
@@ -516,7 +516,7 @@ index 000000000..764dec080
 +        this.move(EnumMoveType.SELF, this.motX, this.motY, this.motZ);
 +    }
 +
-+    public boolean a(GeneratorAccess generatoraccess) {
++    public boolean a(GeneratorAccess generatoraccess, boolean flag) {
 +        return this.locY > 45.0D && this.locY < (double) generatoraccess.getSeaLevel();
 +    }
 +
@@ -555,7 +555,7 @@ index 000000000..764dec080
 +                IBlockData iblockdata = EntitySquid.this.world.getType(new BlockPosition(EntitySquid.this.locX + vec3d.x, EntitySquid.this.locY + vec3d.y, EntitySquid.this.locZ + vec3d.z));
 +                Fluid fluid = EntitySquid.this.world.b(new BlockPosition(EntitySquid.this.locX + vec3d.x, EntitySquid.this.locY + vec3d.y, EntitySquid.this.locZ + vec3d.z));
 +
-+                if (fluid.a(TagsFluid.a) || iblockdata.isAir()) {
++                if (fluid.a(TagsFluid.WATER) || iblockdata.isAir()) {
 +                    double d0 = vec3d.b();
 +
 +                    if (d0 > 0.0D) {
@@ -808,10 +808,10 @@ index 000000000..1a7e20d6f
 +}
 diff --git a/src/main/java/net/minecraft/server/IChunkLoader.java b/src/main/java/net/minecraft/server/IChunkLoader.java
 new file mode 100644
-index 000000000..f761bb90f
+index 000000000..a53ce424d
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/IChunkLoader.java
-@@ -0,0 +1,24 @@
+@@ -0,0 +1,18 @@
 +package net.minecraft.server;
 +
 +import java.io.IOException;
@@ -828,13 +828,7 @@ index 000000000..f761bb90f
 +
 +    void saveChunk(World world, IChunkAccess ichunkaccess) throws IOException, ExceptionWorldConflict;
 +
-+    void a(IBlockAccess iblockaccess, Chunk chunk) throws IOException;
-+
 +    void b();
-+
-+    void c();
-+
-+    boolean chunkExists(int i, int j);
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java b/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java
 new file mode 100644
@@ -1545,214 +1539,67 @@ index 000000000..e55384e70
 +}
 diff --git a/src/main/java/net/minecraft/server/PersistentCollection.java b/src/main/java/net/minecraft/server/PersistentCollection.java
 new file mode 100644
-index 000000000..855192af3
+index 000000000..cfe8ec20c
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PersistentCollection.java
-@@ -0,0 +1,201 @@
+@@ -0,0 +1,54 @@
 +package net.minecraft.server;
 +
-+import com.google.common.collect.Lists;
-+import com.google.common.collect.Maps;
-+import com.mojang.datafixers.DataFixTypes;
-+import it.unimi.dsi.fastutil.objects.Object2IntMap;
-+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-+import it.unimi.dsi.fastutil.objects.ObjectIterator;
-+import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
-+import java.io.DataInputStream;
-+import java.io.DataOutput;
-+import java.io.DataOutputStream;
-+import java.io.File;
-+import java.io.FileInputStream;
-+import java.io.FileOutputStream;
++import com.google.common.collect.ImmutableMap;
++import com.google.common.collect.ImmutableMap.Builder;
 +import java.io.IOException;
-+import java.io.InputStream;
-+import java.io.OutputStream;
 +import java.util.Iterator;
-+import java.util.List;
 +import java.util.Map;
++import java.util.function.Consumer;
 +import java.util.function.Function;
 +import javax.annotation.Nullable;
-+import org.apache.logging.log4j.LogManager;
-+import org.apache.logging.log4j.Logger;
 +
 +public class PersistentCollection {
 +
-+    private static final Logger b = LogManager.getLogger();
-+    private final IDataManager c;
-+    protected Map<String, PersistentBase> a = Maps.newHashMap();
-+    private final List<PersistentBase> d = Lists.newArrayList();
-+    private final Object2IntMap<String> e = new Object2IntOpenHashMap();
++    private final Map<DimensionManager, WorldPersistentData> a;
++    @Nullable
++    private final IDataManager b;
 +
-+    public PersistentCollection(IDataManager idatamanager) {
-+        this.c = idatamanager;
-+        this.e.defaultReturnValue(-1);
-+        this.b();
++    public PersistentCollection(@Nullable IDataManager idatamanager) {
++        this.b = idatamanager;
++        Builder builder = ImmutableMap.builder();
++        Iterator iterator = DimensionManager.b().iterator();
++
++        while (iterator.hasNext()) {
++            DimensionManager dimensionmanager = (DimensionManager) iterator.next();
++            WorldPersistentData worldpersistentdata = new WorldPersistentData(dimensionmanager, idatamanager);
++
++            builder.put(dimensionmanager, worldpersistentdata);
++            worldpersistentdata.a();
++        }
++
++        this.a = builder.build();
 +    }
 +
 +    @Nullable
-+    public <T extends PersistentBase> T get(Function<String, T> function, String s) {
-+        PersistentBase persistentbase = (PersistentBase) this.a.get(s);
-+
-+        if (persistentbase == null && this.c != null) {
-+            try {
-+                File file = this.c.getDataFile(s);
-+
-+                if (file != null && file.exists()) {
-+                    persistentbase = (PersistentBase) function.apply(s);
-+                    persistentbase.a(this.a(s, 1519).getCompound("data"));
-+                    this.a.put(s, persistentbase);
-+                    this.d.add(persistentbase);
-+                }
-+            } catch (Exception exception) {
-+                PersistentCollection.b.error("Error loading saved data: {}", s, exception);
-+            }
-+        }
-+
-+        return (T) persistentbase;
++    public <T extends PersistentBase> T get(DimensionManager dimensionmanager, Function<String, T> function, String s) {
++        return ((WorldPersistentData) this.a.get(dimensionmanager)).a(function, s);
 +    }
 +
-+    public NBTTagCompound a(String s, int i) throws IOException {
-+        File file = this.c.getDataFile(s);
-+        FileInputStream fileinputstream = new FileInputStream(file);
-+        Throwable throwable = null;
-+
-+        NBTTagCompound nbttagcompound;
-+
-+        try {
-+            NBTTagCompound nbttagcompound1 = NBTCompressedStreamTools.a((InputStream) fileinputstream);
-+            int j = nbttagcompound1.hasKeyOfType("DataVersion", 99) ? nbttagcompound1.getInt("DataVersion") : 1343;
-+
-+            nbttagcompound = GameProfileSerializer.a(this.c.i(), DataFixTypes.SAVED_DATA, nbttagcompound1, j, i);
-+        } catch (Throwable throwable1) {
-+            throwable = throwable1;
-+            throw throwable1;
-+        } finally {
-+            if (fileinputstream != null) {
-+                if (throwable != null) {
-+                    try {
-+                        fileinputstream.close();
-+                    } catch (Throwable throwable2) {
-+                        throwable.addSuppressed(throwable2);
-+                    }
-+                } else {
-+                    fileinputstream.close();
-+                }
-+            }
-+
-+        }
-+
-+        return nbttagcompound;
-+    }
-+
-+    public void a(String s, PersistentBase persistentbase) {
-+        if (this.a.containsKey(s)) {
-+            this.d.remove(this.a.remove(s));
-+        }
-+
-+        this.a.put(s, persistentbase);
-+        this.d.add(persistentbase);
++    public void a(DimensionManager dimensionmanager, String s, PersistentBase persistentbase) {
++        ((WorldPersistentData) this.a.get(dimensionmanager)).a(s, persistentbase);
 +    }
 +
 +    public void a() {
-+        for (int i = 0; i < this.d.size(); ++i) {
-+            PersistentBase persistentbase = (PersistentBase) this.d.get(i);
-+
-+            if (persistentbase.d()) {
-+                this.a(persistentbase);
-+                persistentbase.a(false);
-+            }
-+        }
-+
++        this.a.values().forEach(WorldPersistentData::b);
 +    }
 +
-+    private void a(PersistentBase persistentbase) {
-+        if (this.c != null) {
-+            try {
-+                File file = this.c.getDataFile(persistentbase.getId());
-+
-+                if (file != null) {
-+                    NBTTagCompound nbttagcompound = new NBTTagCompound();
-+
-+                    nbttagcompound.set("data", persistentbase.b(new NBTTagCompound()));
-+                    nbttagcompound.setInt("DataVersion", 1519);
-+                    FileOutputStream fileoutputstream = new FileOutputStream(file);
-+
-+                    NBTCompressedStreamTools.a(nbttagcompound, (OutputStream) fileoutputstream);
-+                    fileoutputstream.close();
-+                }
-+            } catch (Exception exception) {
-+                exception.printStackTrace();
-+            }
-+
-+        }
++    public int a(DimensionManager dimensionmanager, String s) {
++        return ((WorldPersistentData) this.a.get(dimensionmanager)).a(s);
 +    }
 +
-+    private void b() {
-+        try {
-+            this.e.clear();
-+            if (this.c == null) {
-+                return;
-+            }
-+
-+            File file = this.c.getDataFile("idcounts");
-+
-+            if (file != null && file.exists()) {
-+                DataInputStream datainputstream = new DataInputStream(new FileInputStream(file));
-+                NBTTagCompound nbttagcompound = NBTCompressedStreamTools.a(datainputstream);
-+
-+                datainputstream.close();
-+                Iterator iterator = nbttagcompound.getKeys().iterator();
-+
-+                while (iterator.hasNext()) {
-+                    String s = (String) iterator.next();
-+
-+                    if (nbttagcompound.hasKeyOfType(s, 99)) {
-+                        this.e.put(s, nbttagcompound.getInt(s));
-+                    }
-+                }
-+            }
-+        } catch (Exception exception) {
-+            exception.printStackTrace();
-+        }
-+
-+    }
-+
-+    public int a(String s) {
-+        int i = this.e.getInt(s) + 1;
-+
-+        this.e.put(s, i);
-+        if (this.c == null) {
-+            return i;
-+        } else {
-+            try {
-+                File file = this.c.getDataFile("idcounts");
-+
-+                if (file != null) {
-+                    NBTTagCompound nbttagcompound = new NBTTagCompound();
-+                    ObjectIterator objectiterator = this.e.object2IntEntrySet().iterator();
-+
-+                    while (objectiterator.hasNext()) {
-+                        Entry entry = (Entry) objectiterator.next();
-+
-+                        nbttagcompound.setInt((String) entry.getKey(), entry.getIntValue());
-+                    }
-+
-+                    DataOutputStream dataoutputstream = new DataOutputStream(new FileOutputStream(file));
-+
-+                    NBTCompressedStreamTools.a(nbttagcompound, (DataOutput) dataoutputstream);
-+                    dataoutputstream.close();
-+                }
-+            } catch (Exception exception) {
-+                exception.printStackTrace();
-+            }
-+
-+            return i;
-+        }
++    public NBTTagCompound a(String s, int i) throws IOException {
++        return WorldPersistentData.a(this.b, DimensionManager.OVERWORLD, s, i);
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerConnection.java b/src/main/java/net/minecraft/server/ServerConnection.java
 new file mode 100644
-index 000000000..d62670ac5
+index 000000000..a47598c50
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerConnection.java
 @@ -0,0 +1,144 @@
@@ -1811,7 +1658,7 @@ index 000000000..d62670ac5
 +            Class oclass;
 +            LazyInitVar lazyinitvar;
 +
-+            if (Epoll.isAvailable() && this.e.X()) {
++            if (Epoll.isAvailable() && this.e.V()) {
 +                oclass = EpollServerSocketChannel.class;
 +                lazyinitvar = ServerConnection.b;
 +                ServerConnection.d.info("Using epoll channel type");
@@ -1902,10 +1749,10 @@ index 000000000..d62670ac5
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerStatisticManager.java b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 new file mode 100644
-index 000000000..38ff3b662
+index 000000000..f47334c15
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerStatisticManager.java
-@@ -0,0 +1,229 @@
+@@ -0,0 +1,240 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Maps;
@@ -1947,7 +1794,7 @@ index 000000000..38ff3b662
 +        this.d = file;
 +        if (file.isFile()) {
 +            try {
-+                this.a(minecraftserver.aB(), FileUtils.readFileToString(file));
++                this.a(minecraftserver.az(), FileUtils.readFileToString(file));
 +            } catch (IOException ioexception) {
 +                ServerStatisticManager.b.error("Couldn\'t read statistics file {}", file, ioexception);
 +            } catch (JsonParseException jsonparseexception) {
@@ -1986,47 +1833,52 @@ index 000000000..38ff3b662
 +            try {
 +                jsonreader.setLenient(false);
 +                JsonElement jsonelement = Streams.parse(jsonreader);
-+                NBTTagCompound nbttagcompound = a(jsonelement.getAsJsonObject());
 +
-+                if (!nbttagcompound.hasKeyOfType("DataVersion", 99)) {
-+                    nbttagcompound.setInt("DataVersion", 1343);
-+                }
++                if (!jsonelement.isJsonNull()) {
++                    NBTTagCompound nbttagcompound = a(jsonelement.getAsJsonObject());
 +
-+                nbttagcompound = GameProfileSerializer.a(datafixer, DataFixTypes.STATS, nbttagcompound, nbttagcompound.getInt("DataVersion"));
-+                if (nbttagcompound.hasKeyOfType("stats", 10)) {
-+                    NBTTagCompound nbttagcompound1 = nbttagcompound.getCompound("stats");
-+                    Iterator iterator = nbttagcompound1.getKeys().iterator();
++                    if (!nbttagcompound.hasKeyOfType("DataVersion", 99)) {
++                        nbttagcompound.setInt("DataVersion", 1343);
++                    }
 +
-+                    while (iterator.hasNext()) {
-+                        String s1 = (String) iterator.next();
++                    nbttagcompound = GameProfileSerializer.a(datafixer, DataFixTypes.STATS, nbttagcompound, nbttagcompound.getInt("DataVersion"));
++                    if (nbttagcompound.hasKeyOfType("stats", 10)) {
++                        NBTTagCompound nbttagcompound1 = nbttagcompound.getCompound("stats");
++                        Iterator iterator = nbttagcompound1.getKeys().iterator();
 +
-+                        if (nbttagcompound1.hasKeyOfType(s1, 10)) {
-+                            StatisticWrapper statisticwrapper = (StatisticWrapper) StatisticList.REGISTRY.get(new MinecraftKey(s1));
++                        while (iterator.hasNext()) {
++                            String s1 = (String) iterator.next();
 +
-+                            if (statisticwrapper == null) {
-+                                ServerStatisticManager.b.warn("Invalid statistic type in {}: Don\'t know what {} is", this.d, s1);
-+                            } else {
-+                                NBTTagCompound nbttagcompound2 = nbttagcompound1.getCompound(s1);
-+                                Iterator iterator1 = nbttagcompound2.getKeys().iterator();
++                            if (nbttagcompound1.hasKeyOfType(s1, 10)) {
++                                StatisticWrapper statisticwrapper = (StatisticWrapper) IRegistry.STATS.get(new MinecraftKey(s1));
 +
-+                                while (iterator1.hasNext()) {
-+                                    String s2 = (String) iterator1.next();
++                                if (statisticwrapper == null) {
++                                    ServerStatisticManager.b.warn("Invalid statistic type in {}: Don\'t know what {} is", this.d, s1);
++                                } else {
++                                    NBTTagCompound nbttagcompound2 = nbttagcompound1.getCompound(s1);
++                                    Iterator iterator1 = nbttagcompound2.getKeys().iterator();
 +
-+                                    if (nbttagcompound2.hasKeyOfType(s2, 99)) {
-+                                        Statistic statistic = this.a(statisticwrapper, s2);
++                                    while (iterator1.hasNext()) {
++                                        String s2 = (String) iterator1.next();
 +
-+                                        if (statistic == null) {
-+                                            ServerStatisticManager.b.warn("Invalid statistic in {}: Don\'t know what {} is", this.d, s2);
++                                        if (nbttagcompound2.hasKeyOfType(s2, 99)) {
++                                            Statistic statistic = this.a(statisticwrapper, s2);
++
++                                            if (statistic == null) {
++                                                ServerStatisticManager.b.warn("Invalid statistic in {}: Don\'t know what {} is", this.d, s2);
++                                            } else {
++                                                this.a.put(statistic, nbttagcompound2.getInt(s2));
++                                            }
 +                                        } else {
-+                                            this.a.put(statistic, nbttagcompound2.getInt(s2));
++                                            ServerStatisticManager.b.warn("Invalid statistic value in {}: Don\'t know what {} is for key {}", this.d, nbttagcompound2.get(s2), s2);
 +                                        }
-+                                    } else {
-+                                        ServerStatisticManager.b.warn("Invalid statistic value in {}: Don\'t know what {} is for key {}", this.d, nbttagcompound2.get(s2), s2);
 +                                    }
 +                                }
 +                            }
 +                        }
 +                    }
++                } else {
++                    ServerStatisticManager.b.error("Unable to parse Stat data from {}", this.d);
 +                }
 +            } catch (Throwable throwable1) {
 +                throwable = throwable1;
@@ -2053,9 +1905,15 @@ index 000000000..38ff3b662
 +
 +    @Nullable
 +    private <T> Statistic<T> a(StatisticWrapper<T> statisticwrapper, String s) {
-+        Object object = statisticwrapper.a().get(new MinecraftKey(s));
++        MinecraftKey minecraftkey = MinecraftKey.a(s);
 +
-+        return object == null ? null : statisticwrapper.b((T) object);
++        if (minecraftkey == null) {
++            return null;
++        } else {
++            Object object = statisticwrapper.a().get(minecraftkey);
++
++            return object == null ? null : statisticwrapper.b((T) object);
++        }
 +    }
 +
 +    private static NBTTagCompound a(JsonObject jsonobject) {
@@ -2097,20 +1955,20 @@ index 000000000..38ff3b662
 +        Iterator iterator = hashmap.entrySet().iterator();
 +
 +        while (iterator.hasNext()) {
-+            Entry<StatisticWrapper, JsonElement> entry = (Entry) iterator.next();
++            Entry<StatisticWrapper<?>, JsonElement> entry = (Entry) iterator.next();
 +
-+            jsonobject.add(((MinecraftKey) StatisticList.REGISTRY.b(entry.getKey())).toString(), (JsonElement) entry.getValue());
++            jsonobject.add(IRegistry.STATS.getKey(entry.getKey()).toString(), (JsonElement) entry.getValue());
 +        }
 +
 +        JsonObject jsonobject1 = new JsonObject();
 +
 +        jsonobject1.add("stats", jsonobject);
-+        jsonobject1.addProperty("DataVersion", Integer.valueOf(1519));
++        jsonobject1.addProperty("DataVersion", Integer.valueOf(1628));
 +        return jsonobject1.toString();
 +    }
 +
 +    private static <T> MinecraftKey b(Statistic<T> statistic) {
-+        return (MinecraftKey) statistic.a().a().b(statistic.b());
++        return statistic.a().a().getKey(statistic.b());
 +    }
 +
 +    public void c() {
@@ -2118,7 +1976,7 @@ index 000000000..38ff3b662
 +    }
 +
 +    public void a(EntityPlayer entityplayer) {
-+        int i = this.c.aj();
++        int i = this.c.ah();
 +        Object2IntOpenHashMap object2intopenhashmap = new Object2IntOpenHashMap();
 +
 +        if (i - this.f > 300) {
@@ -2137,10 +1995,10 @@ index 000000000..38ff3b662
 +}
 diff --git a/src/main/java/net/minecraft/server/StructureGenerator.java b/src/main/java/net/minecraft/server/StructureGenerator.java
 new file mode 100644
-index 000000000..263ea953a
+index 000000000..142655c57
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/StructureGenerator.java
-@@ -0,0 +1,240 @@
+@@ -0,0 +1,248 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Lists;
@@ -2152,7 +2010,7 @@ index 000000000..263ea953a
 +import java.util.Iterator;
 +import java.util.List;
 +import java.util.Random;
-+import java.util.function.Function;
++import java.util.function.LongFunction;
 +import javax.annotation.Nullable;
 +import org.apache.logging.log4j.LogManager;
 +import org.apache.logging.log4j.Logger;
@@ -2186,10 +2044,10 @@ index 000000000..263ea953a
 +                    StructureStart structurestart = this.a(generatoraccess, chunkgenerator, (SeededRandom) random, i2);
 +
 +                    if (structurestart != StructureGenerator.a && structurestart.c().a(l, i1, l + 15, i1 + 15)) {
-+                        ((LongSet) chunkgenerator.getStructureCache(this).computeIfAbsent(Long.valueOf(j1), (olong) -> {
++                        ((LongSet) chunkgenerator.getStructureCache(this).computeIfAbsent(j1, (ix) -> {
 +                            return new LongOpenHashSet();
 +                        })).add(i2);
-+                        generatoraccess.getChunkProvider().d(j, k).a(this.a(), i2);
++                        generatoraccess.getChunkProvider().a(j, k, true).a(this.a(), i2);
 +                        structurestart.a(generatoraccess, random, new StructureBoundingBox(l, i1, l + 15, i1 + 15), new ChunkCoordIntPair(j, k));
 +                        structurestart.b(new ChunkCoordIntPair(j, k));
 +                        flag = true;
@@ -2246,7 +2104,7 @@ index 000000000..263ea953a
 +    }
 +
 +    @Nullable
-+    public BlockPosition getNearestGeneratedFeature(World world, ChunkGenerator<? extends GeneratorSettings> chunkgenerator, BlockPosition blockposition, int i) {
++    public BlockPosition getNearestGeneratedFeature(World world, ChunkGenerator<? extends GeneratorSettings> chunkgenerator, BlockPosition blockposition, int i, boolean flag) {
 +        if (!chunkgenerator.getWorldChunkManager().a(this)) {
 +            return null;
 +        } else {
@@ -2260,17 +2118,24 @@ index 000000000..263ea953a
 +
 +                while (true) {
 +                    if (i1 <= l) {
-+                        boolean flag = i1 == -l || i1 == l;
++                        boolean flag1 = i1 == -l || i1 == l;
 +
 +                        for (int j1 = -l; j1 <= l; ++j1) {
-+                            boolean flag1 = j1 == -l || j1 == l;
++                            boolean flag2 = j1 == -l || j1 == l;
 +
-+                            if (flag || flag1) {
++                            if (flag1 || flag2) {
 +                                ChunkCoordIntPair chunkcoordintpair = this.a(chunkgenerator, seededrandom, j, k, i1, j1);
 +                                StructureStart structurestart = this.a(world, chunkgenerator, seededrandom, chunkcoordintpair.a());
 +
 +                                if (structurestart != StructureGenerator.a) {
-+                                    return structurestart.a();
++                                    if (flag && structurestart.g()) {
++                                        structurestart.h();
++                                        return structurestart.a();
++                                    }
++
++                                    if (!flag) {
++                                        return structurestart.a();
++                                    }
 +                                }
 +
 +                                if (l == 0) {
@@ -2302,7 +2167,7 @@ index 000000000..263ea953a
 +        LongSet longset = (LongSet) long2objectmap1.get(k);
 +
 +        if (longset == null) {
-+            longset = generatoraccess.getChunkProvider().d(i, j).b(this.a());
++            longset = generatoraccess.getChunkProvider().a(i, j, true).b(this.a());
 +            long2objectmap1.put(k, longset);
 +        }
 +
@@ -2316,7 +2181,7 @@ index 000000000..263ea953a
 +                arraylist.add(structurestart);
 +            } else {
 +                ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(olong.longValue());
-+                IChunkAccess ichunkaccess = generatoraccess.getChunkProvider().d(chunkcoordintpair.x, chunkcoordintpair.z);
++                IChunkAccess ichunkaccess = generatoraccess.getChunkProvider().a(chunkcoordintpair.x, chunkcoordintpair.z, true);
 +
 +                structurestart = ichunkaccess.a(this.a());
 +                if (structurestart != null) {
@@ -2340,9 +2205,10 @@ index 000000000..263ea953a
 +                return structurestart;
 +            } else {
 +                ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(i);
++                IChunkAccess ichunkaccess = generatoraccess.getChunkProvider().a(chunkcoordintpair.x, chunkcoordintpair.z, false);
 +
-+                if (generatoraccess.getChunkProvider().f(chunkcoordintpair.x, chunkcoordintpair.z)) {
-+                    structurestart = generatoraccess.getChunkProvider().d(chunkcoordintpair.x, chunkcoordintpair.z).a(this.a());
++                if (ichunkaccess != null) {
++                    structurestart = ichunkaccess.a(this.a());
 +                    if (structurestart != null) {
 +                        long2objectmap.put(i, structurestart);
 +                        return structurestart;
@@ -2358,7 +2224,7 @@ index 000000000..263ea953a
 +                }
 +
 +                if (structurestart.b()) {
-+                    generatoraccess.getChunkProvider().d(chunkcoordintpair.x, chunkcoordintpair.z).a(this.a(), structurestart);
++                    generatoraccess.getChunkProvider().a(chunkcoordintpair.x, chunkcoordintpair.z, true).a(this.a(), structurestart);
 +                }
 +
 +                long2objectmap.put(i, structurestart);
@@ -2582,7 +2448,7 @@ index 000000000..3d8e08ff5
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java b/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java
 new file mode 100644
-index 000000000..6acbccb0f
+index 000000000..da5fd85c4
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java
 @@ -0,0 +1,56 @@
@@ -2599,8 +2465,8 @@ index 000000000..6acbccb0f
 +        int j1 = this.b(chunkgenerator);
 +        int k1 = i + i1 * k;
 +        int l1 = j + i1 * l;
-+        int i2 = k1 < 0 ? k1 - i1 - 1 : k1;
-+        int j2 = l1 < 0 ? l1 - i1 - 1 : l1;
++        int i2 = k1 < 0 ? k1 - i1 + 1 : k1;
++        int j2 = l1 < 0 ? l1 - i1 + 1 : l1;
 +        int k2 = i2 / i1;
 +        int l2 = j2 / i1;
 +
@@ -2761,7 +2627,7 @@ index 000000000..887293c3c
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenMonument.java b/src/main/java/net/minecraft/server/WorldGenMonument.java
 new file mode 100644
-index 000000000..57afb4809
+index 000000000..be571ba58
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenMonument.java
 @@ -0,0 +1,159 @@
@@ -2785,8 +2651,8 @@ index 000000000..57afb4809
 +        int j1 = chunkgenerator.getSettings().d();
 +        int k1 = i + i1 * k;
 +        int l1 = j + i1 * l;
-+        int i2 = k1 < 0 ? k1 - i1 - 1 : k1;
-+        int j2 = l1 < 0 ? l1 - i1 - 1 : l1;
++        int i2 = k1 < 0 ? k1 - i1 + 1 : k1;
++        int j2 = l1 < 0 ? l1 - i1 + 1 : l1;
 +        int k2 = i2 / i1;
 +        int l2 = j2 / i1;
 +
@@ -2926,7 +2792,7 @@ index 000000000..57afb4809
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenVillage.java b/src/main/java/net/minecraft/server/WorldGenVillage.java
 new file mode 100644
-index 000000000..c9ac6ca80
+index 000000000..968e4144f
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenVillage.java
 @@ -0,0 +1,121 @@
@@ -2957,8 +2823,8 @@ index 000000000..c9ac6ca80
 +        int j1 = chunkgenerator.getSettings().b();
 +        int k1 = i + i1 * k;
 +        int l1 = j + i1 * l;
-+        int i2 = k1 < 0 ? k1 - i1 - 1 : k1;
-+        int j2 = l1 < 0 ? l1 - i1 - 1 : l1;
++        int i2 = k1 < 0 ? k1 - i1 + 1 : k1;
++        int j2 = l1 < 0 ? l1 - i1 + 1 : l1;
 +        int k2 = i2 / i1;
 +        int l2 = j2 / i1;
 +
@@ -3048,6 +2914,210 @@ index 000000000..c9ac6ca80
 +        public void b(NBTTagCompound nbttagcompound) {
 +            super.b(nbttagcompound);
 +            this.e = nbttagcompound.getBoolean("Valid");
++        }
++    }
++}
+diff --git a/src/main/java/net/minecraft/server/WorldPersistentData.java b/src/main/java/net/minecraft/server/WorldPersistentData.java
+new file mode 100644
+index 000000000..0e0427539
+--- /dev/null
++++ b/src/main/java/net/minecraft/server/WorldPersistentData.java
+@@ -0,0 +1,198 @@
++package net.minecraft.server;
++
++import com.google.common.collect.Maps;
++import com.mojang.datafixers.DataFixTypes;
++import it.unimi.dsi.fastutil.objects.Object2IntMap;
++import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
++import it.unimi.dsi.fastutil.objects.ObjectIterator;
++import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
++import java.io.DataInputStream;
++import java.io.DataOutput;
++import java.io.DataOutputStream;
++import java.io.File;
++import java.io.FileInputStream;
++import java.io.FileOutputStream;
++import java.io.IOException;
++import java.io.InputStream;
++import java.io.OutputStream;
++import java.util.Iterator;
++import java.util.Map;
++import java.util.function.Function;
++import javax.annotation.Nullable;
++import org.apache.logging.log4j.LogManager;
++import org.apache.logging.log4j.Logger;
++
++public class WorldPersistentData {
++
++    private static final Logger a = LogManager.getLogger();
++    private final DimensionManager b;
++    private Map<String, PersistentBase> c = Maps.newHashMap();
++    private final Object2IntMap<String> d = new Object2IntOpenHashMap();
++    @Nullable
++    private final IDataManager e;
++
++    public WorldPersistentData(DimensionManager dimensionmanager, @Nullable IDataManager idatamanager) {
++        this.b = dimensionmanager;
++        this.e = idatamanager;
++        this.d.defaultReturnValue(-1);
++    }
++
++    @Nullable
++    public <T extends PersistentBase> T a(Function<String, T> function, String s) {
++        PersistentBase persistentbase = (PersistentBase) this.c.get(s);
++
++        if (persistentbase == null && this.e != null) {
++            try {
++                File file = this.e.getDataFile(this.b, s);
++
++                if (file != null && file.exists()) {
++                    persistentbase = (PersistentBase) function.apply(s);
++                    persistentbase.a(a(this.e, this.b, s, 1628).getCompound("data"));
++                    this.c.put(s, persistentbase);
++                }
++            } catch (Exception exception) {
++                WorldPersistentData.a.error("Error loading saved data: {}", s, exception);
++            }
++        }
++
++        return (T) persistentbase;
++    }
++
++    public void a(String s, PersistentBase persistentbase) {
++        this.c.put(s, persistentbase);
++    }
++
++    public void a() {
++        try {
++            this.d.clear();
++            if (this.e == null) {
++                return;
++            }
++
++            File file = this.e.getDataFile(this.b, "idcounts");
++
++            if (file != null && file.exists()) {
++                DataInputStream datainputstream = new DataInputStream(new FileInputStream(file));
++                NBTTagCompound nbttagcompound = NBTCompressedStreamTools.a(datainputstream);
++
++                datainputstream.close();
++                Iterator iterator = nbttagcompound.getKeys().iterator();
++
++                while (iterator.hasNext()) {
++                    String s = (String) iterator.next();
++
++                    if (nbttagcompound.hasKeyOfType(s, 99)) {
++                        this.d.put(s, nbttagcompound.getInt(s));
++                    }
++                }
++            }
++        } catch (Exception exception) {
++            WorldPersistentData.a.error("Could not load aux values", exception);
++        }
++
++    }
++
++    public int a(String s) {
++        int i = this.d.getInt(s) + 1;
++
++        this.d.put(s, i);
++        if (this.e == null) {
++            return i;
++        } else {
++            try {
++                File file = this.e.getDataFile(this.b, "idcounts");
++
++                if (file != null) {
++                    NBTTagCompound nbttagcompound = new NBTTagCompound();
++                    ObjectIterator objectiterator = this.d.object2IntEntrySet().iterator();
++
++                    while (objectiterator.hasNext()) {
++                        Entry entry = (Entry) objectiterator.next();
++
++                        nbttagcompound.setInt((String) entry.getKey(), entry.getIntValue());
++                    }
++
++                    DataOutputStream dataoutputstream = new DataOutputStream(new FileOutputStream(file));
++
++                    NBTCompressedStreamTools.a(nbttagcompound, (DataOutput) dataoutputstream);
++                    dataoutputstream.close();
++                }
++            } catch (Exception exception) {
++                WorldPersistentData.a.error("Could not get free aux value {}", s, exception);
++            }
++
++            return i;
++        }
++    }
++
++    public static NBTTagCompound a(IDataManager idatamanager, DimensionManager dimensionmanager, String s, int i) throws IOException {
++        File file = idatamanager.getDataFile(dimensionmanager, s);
++        FileInputStream fileinputstream = new FileInputStream(file);
++        Throwable throwable = null;
++
++        NBTTagCompound nbttagcompound;
++
++        try {
++            NBTTagCompound nbttagcompound1 = NBTCompressedStreamTools.a((InputStream) fileinputstream);
++            int j = nbttagcompound1.hasKeyOfType("DataVersion", 99) ? nbttagcompound1.getInt("DataVersion") : 1343;
++
++            nbttagcompound = GameProfileSerializer.a(idatamanager.i(), DataFixTypes.SAVED_DATA, nbttagcompound1, j, i);
++        } catch (Throwable throwable1) {
++            throwable = throwable1;
++            throw throwable1;
++        } finally {
++            if (fileinputstream != null) {
++                if (throwable != null) {
++                    try {
++                        fileinputstream.close();
++                    } catch (Throwable throwable2) {
++                        throwable.addSuppressed(throwable2);
++                    }
++                } else {
++                    fileinputstream.close();
++                }
++            }
++
++        }
++
++        return nbttagcompound;
++    }
++
++    public void b() {
++        if (this.e != null) {
++            Iterator iterator = this.c.values().iterator();
++
++            while (iterator.hasNext()) {
++                PersistentBase persistentbase = (PersistentBase) iterator.next();
++
++                if (persistentbase.d()) {
++                    this.a(persistentbase);
++                    persistentbase.a(false);
++                }
++            }
++
++        }
++    }
++
++    private void a(PersistentBase persistentbase) {
++        if (this.e != null) {
++            try {
++                File file = this.e.getDataFile(this.b, persistentbase.getId());
++
++                if (file != null) {
++                    NBTTagCompound nbttagcompound = new NBTTagCompound();
++
++                    nbttagcompound.set("data", persistentbase.b(new NBTTagCompound()));
++                    nbttagcompound.setInt("DataVersion", 1628);
++                    FileOutputStream fileoutputstream = new FileOutputStream(file);
++
++                    NBTCompressedStreamTools.a(nbttagcompound, (OutputStream) fileoutputstream);
++                    fileoutputstream.close();
++                }
++            } catch (Exception exception) {
++                WorldPersistentData.a.error("Could not save data {}", persistentbase, exception);
++            }
++
 +        }
 +    }
 +}

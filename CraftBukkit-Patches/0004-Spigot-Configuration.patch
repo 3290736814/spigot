@@ -1,4 +1,4 @@
-From c29e0885097b8196bed0d4e2460ce01992bb902c Mon Sep 17 00:00:00 2001
+From 94c6efff0a540dd28426f093797c6afcc1612f5f Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -6,11 +6,11 @@ Subject: [PATCH] Spigot Configuration
 Provides the basic infrastructure to load and save the Spigot configuration file, spigot.yml
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 2d6154bd3..b8a4b0bdd 100644
+index 7a83e5130..2bca5d952 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -177,6 +177,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
-             if (this.H() < 0) {
+             if (this.F() < 0) {
                  this.setPort(this.propertyManager.getInt("server-port", 25565));
              }
 +            // Spigot start
@@ -31,10 +31,10 @@ index 2d6154bd3..b8a4b0bdd 100644
              server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.STARTUP);
              // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index e11e88f2a..47b02c86c 100644
+index 1225567f6..cbc9a9bec 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -99,6 +99,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -106,6 +106,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      public long ticksPerMonsterSpawns;
      public boolean populating;
      private int tickPosition;
@@ -42,27 +42,27 @@ index e11e88f2a..47b02c86c 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -113,6 +114,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -120,6 +121,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      }
  
-     protected World(IDataManager idatamanager, WorldData worlddata, WorldProvider worldprovider, MethodProfiler methodprofiler, boolean flag, ChunkGenerator gen, org.bukkit.World.Environment env) {
+     protected World(IDataManager idatamanager, @Nullable PersistentCollection persistentcollection, WorldData worlddata, WorldProvider worldprovider, MethodProfiler methodprofiler, boolean flag, ChunkGenerator gen, org.bukkit.World.Environment env) {
 +        this.spigotConfig = new org.spigotmc.SpigotWorldConfig( worlddata.getName() ); // Spigot
          this.generator = gen;
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 7ab8d4ae4..ca9feca1a 100644
+index ace730e43..788f1d8fa 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -724,6 +724,7 @@ public final class CraftServer implements Server {
+@@ -725,6 +725,7 @@ public final class CraftServer implements Server {
              logger.log(Level.WARNING, "Failed to load banned-players.json, " + ex.getMessage());
          }
  
 +        org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings")); // Spigot
-         for (WorldServer world : console.worlds) {
+         for (WorldServer world : console.getWorlds()) {
              world.worldData.setDifficulty(difficulty);
              world.setSpawnFlags(monsters, animals);
-@@ -738,12 +739,14 @@ public final class CraftServer implements Server {
+@@ -739,12 +740,14 @@ public final class CraftServer implements Server {
              } else {
                  world.ticksPerMonsterSpawns = this.getTicksPerMonsterSpawns();
              }
@@ -98,7 +98,7 @@ index 452d236ef..484869a8a 100644
  
 diff --git a/src/main/java/org/spigotmc/SpigotCommand.java b/src/main/java/org/spigotmc/SpigotCommand.java
 new file mode 100644
-index 000000000..fdb030c7a
+index 000000000..d0be3c3b5
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SpigotCommand.java
 @@ -0,0 +1,44 @@
@@ -135,7 +135,7 @@ index 000000000..fdb030c7a
 +
 +            MinecraftServer console = MinecraftServer.getServer();
 +            org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings"));
-+            for (WorldServer world : console.worlds) {
++            for (WorldServer world : console.getWorlds()) {
 +                world.spigotConfig.init();
 +            }
 +            console.server.reloadCount++;

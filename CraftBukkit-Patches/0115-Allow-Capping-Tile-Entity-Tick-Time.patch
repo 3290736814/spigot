@@ -1,4 +1,4 @@
-From ff7239a683ec544d94c7ddd6de2f90d2114c3bc8 Mon Sep 17 00:00:00 2001
+From f68cf4dd7f88e036f854512e175523dbd885fbf0 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -10,10 +10,10 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 This feature was commisioned by Chunkr.
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index efd9dc9a9..73bd5e1d7 100644
+index 6bf625c69..8d69cea10 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -131,6 +131,9 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -138,6 +138,9 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      private boolean guardEntityList; // Spigot
      public static boolean haveWeSilencedAPhysicsCrash;
      public static String blockLocation;
@@ -23,7 +23,7 @@ index efd9dc9a9..73bd5e1d7 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -192,6 +195,8 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -200,6 +203,8 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
          this.getServer().addWorld(this.world);
          // CraftBukkit end
          timings = new SpigotTimings.WorldTimingsHandler(this); // Spigot - code below can generate new world and access timings
@@ -31,8 +31,8 @@ index efd9dc9a9..73bd5e1d7 100644
 +        this.tileLimiter = new org.spigotmc.TickLimiter(spigotConfig.tileMaxTickTime);
      }
  
-     public GeneratorAccess b() {
-@@ -1131,7 +1136,12 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+     public BiomeBase getBiome(BlockPosition blockposition) {
+@@ -1144,7 +1149,12 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
          timings.entityTick.startTiming(); // Spigot
          guardEntityList = true; // Spigot
          // CraftBukkit start - Use field for loop variable
@@ -46,7 +46,7 @@ index efd9dc9a9..73bd5e1d7 100644
              entity = (Entity) this.entityList.get(this.tickPosition);
              // CraftBukkit end
              Entity entity1 = entity.getVehicle();
-@@ -1188,14 +1198,19 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1201,14 +1211,19 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
          }
  
          this.J = true;
@@ -71,7 +71,7 @@ index efd9dc9a9..73bd5e1d7 100644
                  continue;
              }
              // Spigot end
-@@ -1226,7 +1241,8 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1239,7 +1254,8 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
              }
  
              if (tileentity.x()) {

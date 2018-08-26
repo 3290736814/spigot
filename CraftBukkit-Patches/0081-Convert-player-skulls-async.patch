@@ -1,4 +1,4 @@
-From c529f59e2e7b11954214087d88d06d22967aee9f Mon Sep 17 00:00:00 2001
+From df903c302b59263adc39cbfde7d37881f295973d Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Sun, 20 Apr 2014 13:18:55 +0100
 Subject: [PATCH] Convert player skulls async
@@ -28,7 +28,7 @@ index 28916b0e3..a21ec22a9 100644
          } else {
              // CraftBukkit start
 diff --git a/src/main/java/net/minecraft/server/TileEntitySkull.java b/src/main/java/net/minecraft/server/TileEntitySkull.java
-index cc86aae35..af5e4093c 100644
+index 102b8dc42..3a54ebdb1 100644
 --- a/src/main/java/net/minecraft/server/TileEntitySkull.java
 +++ b/src/main/java/net/minecraft/server/TileEntitySkull.java
 @@ -7,6 +7,23 @@ import com.mojang.authlib.properties.Property;
@@ -113,8 +113,8 @@ index cc86aae35..af5e4093c 100644
 +    // Spigot end
  
      public TileEntitySkull() {
-         super(TileEntityTypes.p);
-@@ -89,35 +158,70 @@ public class TileEntitySkull extends TileEntity implements ITickable {
+         super(TileEntityTypes.SKULL);
+@@ -88,35 +157,70 @@ public class TileEntitySkull extends TileEntity implements ITickable {
      }
  
      private void f() {
@@ -203,7 +203,7 @@ index cc86aae35..af5e4093c 100644
      // CraftBukkit start
      public static void a(IBlockAccess iblockaccess, BlockPosition blockposition) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
-index e39511038..4cfc70aa7 100644
+index b513120e5..cb5899423 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
 @@ -77,7 +77,8 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {

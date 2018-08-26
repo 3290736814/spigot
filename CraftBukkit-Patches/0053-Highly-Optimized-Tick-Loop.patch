@@ -1,14 +1,14 @@
-From 46f09be2feebb4b8ee3eed4d40e7d53ebeb73aae Mon Sep 17 00:00:00 2001
+From 60ccbba78eafb24f340a808042871c0c9de1fc68 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index e73f29ffd..17554e149 100644
+index 4d95f202b..e78c4f312 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -147,6 +147,12 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -150,6 +150,12 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
      public File bukkitDataPackFolder;
      public CommandDispatcher vanillaCommandDispatcher;
      // CraftBukkit end
@@ -21,8 +21,8 @@ index e73f29ffd..17554e149 100644
  
      public MinecraftServer(OptionSet options, Proxy proxy, DataFixer datafixer, CommandDispatcher commanddispatcher, YggdrasilAuthenticationService yggdrasilauthenticationservice, MinecraftSessionService minecraftsessionservice, GameProfileRepository gameprofilerepository, UserCache usercache) {
          this.ac = new ResourceManager(EnumResourcePackType.SERVER_DATA);
-@@ -660,6 +666,13 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
-         this.isRunning = false;
+@@ -672,6 +678,13 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+         return SystemUtils.b() < this.aa;
      }
  
 +    // Spigot Start
@@ -35,9 +35,9 @@ index e73f29ffd..17554e149 100644
      public void run() {
          try {
              if (this.init()) {
-@@ -668,26 +681,34 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
-                 this.n.setServerInfo(new ServerPing.ServerData("1.13", 393));
-                 this.a(this.n);
+@@ -680,26 +693,34 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+                 this.m.setServerInfo(new ServerPing.ServerData("1.13.1", 401));
+                 this.a(this.m);
  
 +                // Spigot start
 +                Arrays.fill( recentTps, 20 );
@@ -72,10 +72,10 @@ index e73f29ffd..17554e149 100644
 +                    lastTick = curTime;
  
                      MinecraftServer.currentTick = (int) (System.currentTimeMillis() / 50); // CraftBukkit
-                     this.v();
+                     this.a(this::aT);
                      this.aa += 50L;
 -
--                    while (SystemUtils.b() < this.aa) {
+-                    while (this.aT()) {
 -                        Thread.sleep(1L);
 -                    }
 -
@@ -84,7 +84,7 @@ index e73f29ffd..17554e149 100644
                  }
              } else {
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index dde542b95..9d43b080e 100644
+index 7714de11e..22ba9342d 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -272,4 +272,9 @@ public class SpigotConfig

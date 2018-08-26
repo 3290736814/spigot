@@ -1,4 +1,4 @@
-From e4fbbb49183517488d5af67b48d81fe24dc2c344 Mon Sep 17 00:00:00 2001
+From 76f8ed6260678f49c9b137a474fc475dc31c72fc Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 13 Apr 2014 14:41:23 +1000
 Subject: [PATCH] Use Offline Player Data Once if Required.
@@ -6,10 +6,10 @@ Subject: [PATCH] Use Offline Player Data Once if Required.
 If we are online mode and the only copy of player data we can find is the player's offline mode data, we will attempt a once off conversion by reading this data and then renaming the file so it won't be used again.
 
 diff --git a/src/main/java/net/minecraft/server/WorldNBTStorage.java b/src/main/java/net/minecraft/server/WorldNBTStorage.java
-index 752da4a80..0e0ebd403 100644
+index e68a681ad..a0e103318 100644
 --- a/src/main/java/net/minecraft/server/WorldNBTStorage.java
 +++ b/src/main/java/net/minecraft/server/WorldNBTStorage.java
-@@ -167,10 +167,28 @@ public class WorldNBTStorage implements IDataManager, IPlayerFileData {
+@@ -164,10 +164,28 @@ public class WorldNBTStorage implements IDataManager, IPlayerFileData {
  
          try {
              File file = new File(this.playerDir, entityhuman.bu() + ".dat");

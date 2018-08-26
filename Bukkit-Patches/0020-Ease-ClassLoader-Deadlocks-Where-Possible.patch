@@ -1,4 +1,4 @@
-From 8181e3ca8c1a5f47cac15d6bc389d065f2ae9f2b Mon Sep 17 00:00:00 2001
+From 9be993371ab85b7f8d56049825a66dc93a7def2d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 16 Jul 2014 17:24:21 +1000
 Subject: [PATCH] Ease ClassLoader Deadlocks Where Possible
@@ -19,7 +19,7 @@ index e4e80b0c..113b899c 100644
      public static final CustomTimingsHandler pluginParentTimer = new CustomTimingsHandler("** Plugins"); // Spigot
  
 diff --git a/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java b/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java
-index 5eb42df3..a9fc08e0 100644
+index 154481af..af8af8ef 100644
 --- a/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java
 +++ b/src/main/java/org/bukkit/plugin/java/PluginClassLoader.java
 @@ -25,7 +25,7 @@ import org.bukkit.plugin.PluginDescriptionFile;

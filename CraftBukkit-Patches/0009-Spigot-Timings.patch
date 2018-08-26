@@ -1,4 +1,4 @@
-From 888251d4f4f7b25f5f57debd226ef53f21c06627 Mon Sep 17 00:00:00 2001
+From 1f9a1f97502ca2ba74ed482cf7853e0dfe3aa221 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -6,38 +6,40 @@ Subject: [PATCH] Spigot Timings
 Overhauls the Timings System adding performance tracking all around the Minecraft Server
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index ba0dcbaed..410601d5f 100644
+index 2a2d0f99c..d9d37b94b 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -123,11 +123,13 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -107,6 +107,7 @@ public class ChunkProviderServer implements IChunkProvider {
              return chunk;
-         } else {
+         } else if (flag1) {
              try {
 +                world.timings.syncChunkLoadTimer.startTiming(); // Spigot
-                 chunk = (Chunk) this.generateChunk(i, j).get();
-                 return chunk;
-             } catch (ExecutionException | InterruptedException interruptedexception) {
-                 throw this.a(i, j, (Throwable) interruptedexception);
+                 this.batchScheduler.b();
+                 this.batchScheduler.a(new ChunkCoordIntPair(i, j));
+                 CompletableFuture<ProtoChunk> completablefuture = this.batchScheduler.c(); // CraftBukkit - decompile error
+@@ -115,6 +116,7 @@ public class ChunkProviderServer implements IChunkProvider {
+             } catch (RuntimeException runtimeexception) {
+                 throw this.a(i, j, (Throwable) runtimeexception);
              }
 +            finally { world.timings.syncChunkLoadTimer.stopTiming(); } // Spigot
+         } else {
+             return null;
          }
-     }
- 
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index 0989ebd88..6a99c9928 100644
+index 31b1bf671..906a3e7e1 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-@@ -120,7 +120,9 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -124,7 +124,9 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
      // CraftBukkit start - Add async variant, provide compatibility
      @Nullable
-     public synchronized Chunk a(GeneratorAccess generatoraccess, int i, int j, Consumer<Chunk> consumer) throws IOException {
+     public Chunk a(GeneratorAccess generatoraccess, int i, int j, Consumer<Chunk> consumer) throws IOException {
 +        generatoraccess.getMinecraftWorld().timings.syncChunkLoadDataTimer.startTiming(); // Spigot
          Object[] data = loadChunk(generatoraccess, i, j, consumer);
 +        generatoraccess.getMinecraftWorld().timings.syncChunkLoadDataTimer.stopTiming(); // Spigot
          if (data != null) {
              Chunk chunk = (Chunk) data[0];
              NBTTagCompound nbttagcompound = (NBTTagCompound) data[1];
-@@ -653,6 +655,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -642,6 +644,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
      public void loadEntities(NBTTagCompound nbttagcompound, Chunk chunk) {
          NBTTagList nbttaglist = nbttagcompound.getList("Entities", 10);
          World world = chunk.getWorld();
@@ -45,7 +47,7 @@ index 0989ebd88..6a99c9928 100644
  
          for (int i = 0; i < nbttaglist.size(); ++i) {
              NBTTagCompound nbttagcompound1 = nbttaglist.getCompound(i);
-@@ -661,6 +664,8 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -650,6 +653,8 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
              chunk.f(true);
          }
  
@@ -54,25 +56,25 @@ index 0989ebd88..6a99c9928 100644
          NBTTagList nbttaglist1 = nbttagcompound.getList("TileEntities", 10);
  
          for (int j = 0; j < nbttaglist1.size(); ++j) {
-@@ -677,6 +682,8 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -666,6 +671,8 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
                  }
              }
          }
 +        world.timings.syncChunkLoadTileEntitiesTimer.stopTiming(); // Spigot
 +        world.timings.syncChunkLoadTileTicksTimer.startTiming(); // Spigot
  
-         if (nbttagcompound.hasKeyOfType("TileTicks", 9) && world.I() instanceof TickListServer) {
-             ((TickListServer) world.I()).a(nbttagcompound.getList("TileTicks", 10));
-@@ -685,6 +692,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
-         if (nbttagcompound.hasKeyOfType("LiquidTicks", 9) && world.H() instanceof TickListServer) {
-             ((TickListServer) world.H()).a(nbttagcompound.getList("LiquidTicks", 10));
+         if (nbttagcompound.hasKeyOfType("TileTicks", 9) && world.J() instanceof TickListServer) {
+             ((TickListServer) world.J()).a(nbttagcompound.getList("TileTicks", 10));
+@@ -674,6 +681,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+         if (nbttagcompound.hasKeyOfType("LiquidTicks", 9) && world.I() instanceof TickListServer) {
+             ((TickListServer) world.I()).a(nbttagcompound.getList("LiquidTicks", 10));
          }
 +        world.timings.syncChunkLoadTileTicksTimer.stopTiming(); // Spigot
  
      }
  
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index b8a4b0bdd..dbd74d384 100644
+index 2bca5d952..9aceb638f 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -29,6 +29,7 @@ import org.apache.logging.log4j.Level;
@@ -86,7 +88,7 @@ index b8a4b0bdd..dbd74d384 100644
 @@ -409,6 +410,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
      }
  
-     public void aW() {
+     public void aU() {
 +        SpigotTimings.serverCommandTimer.startTiming(); // Spigot
          while (!this.serverCommandQueue.isEmpty()) {
              ServerCommand servercommand = (ServerCommand) this.serverCommandQueue.remove(0);
@@ -98,9 +100,9 @@ index b8a4b0bdd..dbd74d384 100644
 +        SpigotTimings.serverCommandTimer.stopTiming(); // Spigot
      }
  
-     public boolean S() {
+     public boolean Q() {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 98becf844..d0cc0e103 100644
+index 33d34b654..8b62f5426 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -29,6 +29,7 @@ import org.bukkit.command.CommandSender;
@@ -119,7 +121,7 @@ index 98becf844..d0cc0e103 100644
  
      public float getBukkitYaw() {
          return this.yaw;
-@@ -527,6 +529,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -522,6 +524,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
      }
  
      public void move(EnumMoveType enummovetype, double d0, double d1, double d2) {
@@ -127,7 +129,7 @@ index 98becf844..d0cc0e103 100644
          if (this.noclip) {
              this.a(this.getBoundingBox().d(d0, d1, d2));
              this.recalcPosition();
-@@ -875,6 +878,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -871,6 +874,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
  
              this.world.methodProfiler.e();
          }
@@ -136,7 +138,7 @@ index 98becf844..d0cc0e103 100644
  
      protected float ab() {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index caccb1a15..6f8572573 100644
+index efc9c4a74..a3e1f4905 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -32,6 +32,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
@@ -148,7 +150,7 @@ index caccb1a15..6f8572573 100644
  public abstract class EntityLiving extends Entity {
  
      private static final Logger a = LogManager.getLogger();
-@@ -1975,6 +1977,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2010,6 +2012,7 @@ public abstract class EntityLiving extends Entity {
      }
  
      public void tick() {
@@ -156,7 +158,7 @@ index caccb1a15..6f8572573 100644
          super.tick();
          this.cV();
          this.o();
-@@ -2048,7 +2051,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2083,7 +2086,9 @@ public abstract class EntityLiving extends Entity {
              }
          }
  
@@ -166,7 +168,7 @@ index caccb1a15..6f8572573 100644
          double d0 = this.locX - this.lastX;
          double d1 = this.locZ - this.lastZ;
          float f = (float) (d0 * d0 + d1 * d1);
-@@ -2125,6 +2130,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2160,6 +2165,7 @@ public abstract class EntityLiving extends Entity {
              this.bv = 0;
          }
  
@@ -174,7 +176,7 @@ index caccb1a15..6f8572573 100644
      }
  
      protected float e(float f, float f1) {
-@@ -2194,6 +2200,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2229,6 +2235,7 @@ public abstract class EntityLiving extends Entity {
          }
  
          this.world.methodProfiler.a("ai");
@@ -182,7 +184,7 @@ index caccb1a15..6f8572573 100644
          if (this.isFrozen()) {
              this.bg = false;
              this.bh = 0.0F;
-@@ -2204,6 +2211,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2239,6 +2246,7 @@ public abstract class EntityLiving extends Entity {
              this.doTick();
              this.world.methodProfiler.e();
          }
@@ -190,7 +192,7 @@ index caccb1a15..6f8572573 100644
  
          this.world.methodProfiler.e();
          this.world.methodProfiler.a("jump");
-@@ -2228,7 +2236,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2263,7 +2271,9 @@ public abstract class EntityLiving extends Entity {
          this.n();
          AxisAlignedBB axisalignedbb = this.getBoundingBox();
  
@@ -200,7 +202,7 @@ index caccb1a15..6f8572573 100644
          this.world.methodProfiler.e();
          this.world.methodProfiler.a("push");
          if (this.bw > 0) {
-@@ -2236,7 +2246,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2271,7 +2281,9 @@ public abstract class EntityLiving extends Entity {
              this.a(axisalignedbb, this.getBoundingBox());
          }
  
@@ -211,10 +213,10 @@ index caccb1a15..6f8572573 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index c5aea8199..6510a5b15 100644
+index 9a713c53e..f6e1626a7 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -62,6 +62,7 @@ import org.bukkit.Bukkit;
+@@ -66,6 +66,7 @@ import org.bukkit.Bukkit;
  import org.bukkit.craftbukkit.CraftServer;
  import org.bukkit.craftbukkit.Main;
  // CraftBukkit end
@@ -222,15 +224,15 @@ index c5aea8199..6510a5b15 100644
  
  public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStatistics, ICommandListener, Runnable {
  
-@@ -768,6 +769,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
-     public void u() {}
+@@ -780,6 +781,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+     public void t() {}
  
-     protected void v() {
+     protected void a(BooleanSupplier booleansupplier) {
 +        SpigotTimings.serverTickTimer.startTiming(); // Spigot
          long i = SystemUtils.c();
  
          ++this.ticks;
-@@ -793,10 +795,12 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -805,10 +807,12 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
          }
  
          if (autosavePeriod > 0 && this.ticks % autosavePeriod == 0) { // CraftBukkit
@@ -243,7 +245,7 @@ index c5aea8199..6510a5b15 100644
          }
  
          this.methodProfiler.a("snooper");
-@@ -815,10 +819,14 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -827,10 +831,14 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
          this.ap = this.ap * 0.8F + (float) l / 1000000.0F * 0.19999999F;
          this.methodProfiler.e();
          this.methodProfiler.e();
@@ -251,14 +253,14 @@ index c5aea8199..6510a5b15 100644
 +        org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
  
-     public void w() {
+     public void b(BooleanSupplier booleansupplier) {
 +        SpigotTimings.schedulerTimer.startTiming(); // Spigot
          this.server.getScheduler().mainThreadHeartbeat(this.ticks); // CraftBukkit
 +        SpigotTimings.schedulerTimer.stopTiming(); // Spigot
          this.methodProfiler.a("jobs");
  
          FutureTask futuretask;
-@@ -828,17 +836,24 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -840,17 +848,24 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
          }
  
          this.methodProfiler.c("commandFunctions");
@@ -283,25 +285,25 @@ index c5aea8199..6510a5b15 100644
          // Send time updates to everyone, it will get the right time from the world the player is in.
          if (this.ticks % 20 == 0) {
              for (int i = 0; i < this.getPlayerList().players.size(); ++i) {
-@@ -846,6 +861,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -858,6 +873,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
                  entityplayer.playerConnection.sendPacket(new PacketPlayOutUpdateTime(entityplayer.world.getTime(), entityplayer.getPlayerTime(), entityplayer.world.getGameRules().getBoolean("doDaylightCycle"))); // Add support for per player time
              }
          }
 +        SpigotTimings.timeUpdateTimer.stopTiming(); // Spigot
  
-         int i;
- 
-@@ -871,7 +887,9 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+         // WorldServer worldserver; // CraftBukkit - dropped down
+         long i;
+@@ -883,7 +899,9 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
                  CrashReport crashreport;
  
                  try {
 +                    worldserver.timings.doTick.startTiming(); // Spigot
-                     worldserver.doTick();
+                     worldserver.doTick(booleansupplier);
 +                    worldserver.timings.doTick.stopTiming(); // Spigot
                  } catch (Throwable throwable) {
                      crashreport = CrashReport.a(throwable, "Exception ticking world");
                      worldserver.a(crashreport);
-@@ -879,7 +897,9 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -891,7 +909,9 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
                  }
  
                  try {
@@ -311,7 +313,7 @@ index c5aea8199..6510a5b15 100644
                  } catch (Throwable throwable1) {
                      crashreport = CrashReport.a(throwable1, "Exception ticking world entities");
                      worldserver.a(crashreport);
-@@ -888,7 +908,9 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -900,21 +920,29 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
  
                  this.methodProfiler.e();
                  this.methodProfiler.a("tracker");
@@ -321,7 +323,6 @@ index c5aea8199..6510a5b15 100644
                  this.methodProfiler.e();
                  this.methodProfiler.e();
              }
-@@ -897,14 +919,20 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
          }
  
          this.methodProfiler.c("connection");
@@ -335,18 +336,18 @@ index c5aea8199..6510a5b15 100644
          this.methodProfiler.c("tickables");
  
 +        SpigotTimings.tickablesTimer.startTiming(); // Spigot
-         for (i = 0; i < this.l.size(); ++i) {
-             ((ITickable) this.l.get(i)).Y_();
+         for (int j = 0; j < this.k.size(); ++j) {
+             ((ITickable) this.k.get(j)).Y_();
          }
 +        SpigotTimings.tickablesTimer.stopTiming(); // Spigot
  
          this.methodProfiler.e();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index e39d5f0a7..6ca2f9e8d 100644
+index a0e1d29ae..7ebaf6d5c 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1559,6 +1559,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1568,6 +1568,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
      // CraftBukkit end
  
      private void handleCommand(String s) {
@@ -354,7 +355,7 @@ index e39d5f0a7..6ca2f9e8d 100644
          // CraftBukkit start - whole method
          this.LOGGER.info(this.player.getName() + " issued server command: " + s);
  
-@@ -1568,6 +1569,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1577,6 +1578,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
          this.server.getPluginManager().callEvent(event);
  
          if (event.isCancelled()) {
@@ -362,7 +363,7 @@ index e39d5f0a7..6ca2f9e8d 100644
              return;
          }
  
-@@ -1579,6 +1581,8 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1588,6 +1590,8 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
              player.sendMessage(org.bukkit.ChatColor.RED + "An internal error occurred while attempting to perform this command");
              java.util.logging.Logger.getLogger(PlayerConnection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
              return;
@@ -372,7 +373,7 @@ index e39d5f0a7..6ca2f9e8d 100644
          // this.minecraftServer.getCommandDispatcher().a(this.player.getCommandListener(), s);
          // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/TileEntity.java b/src/main/java/net/minecraft/server/TileEntity.java
-index cde437933..331029284 100644
+index 56d7702bd..a6345a858 100644
 --- a/src/main/java/net/minecraft/server/TileEntity.java
 +++ b/src/main/java/net/minecraft/server/TileEntity.java
 @@ -4,10 +4,12 @@ import javax.annotation.Nullable;
@@ -389,10 +390,10 @@ index cde437933..331029284 100644
      private final TileEntityTypes<?> e;
      protected World world;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 8c80aab59..cceab7750 100644
+index 3099fbb46..ee9620590 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -20,6 +20,7 @@ import com.google.common.collect.Maps;
+@@ -26,6 +26,7 @@ import com.google.common.collect.Maps;
  import java.util.Map;
  import org.bukkit.Bukkit;
  import org.bukkit.block.BlockState;
@@ -400,7 +401,7 @@ index 8c80aab59..cceab7750 100644
  import org.bukkit.craftbukkit.CraftServer;
  import org.bukkit.craftbukkit.CraftWorld;
  import org.bukkit.craftbukkit.block.CraftBlockState;
-@@ -101,6 +102,8 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -108,6 +109,8 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      private int tickPosition;
      public final org.spigotmc.SpigotWorldConfig spigotConfig; // Spigot
  
@@ -409,15 +410,15 @@ index 8c80aab59..cceab7750 100644
      public CraftWorld getWorld() {
          return this.world;
      }
-@@ -160,6 +163,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -168,6 +171,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
          });
          this.getServer().addWorld(this.world);
          // CraftBukkit end
 +        timings = new SpigotTimings.WorldTimingsHandler(this); // Spigot - code below can generate new world and access timings
      }
  
-     public GeneratorAccess b() {
-@@ -1072,6 +1076,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+     public BiomeBase getBiome(BlockPosition blockposition) {
+@@ -1082,6 +1086,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
          CrashReportSystemDetails crashreportsystemdetails1;
          CrashReport crashreport1;
  
@@ -425,7 +426,7 @@ index 8c80aab59..cceab7750 100644
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
              entity = (Entity) this.entityList.get(this.tickPosition);
-@@ -1089,7 +1094,9 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1099,7 +1104,9 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
              this.methodProfiler.a("tick");
              if (!entity.dead && !(entity instanceof EntityPlayer)) {
                  try {
@@ -435,7 +436,7 @@ index 8c80aab59..cceab7750 100644
                  } catch (Throwable throwable1) {
                      crashreport1 = CrashReport.a(throwable1, "Ticking entity");
                      crashreportsystemdetails1 = crashreport1.a("Entity being ticked");
-@@ -1115,7 +1122,9 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1125,7 +1132,9 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
              this.methodProfiler.e();
          }
  
@@ -445,7 +446,7 @@ index 8c80aab59..cceab7750 100644
          if (!this.tileEntityListUnload.isEmpty()) {
              this.tileEntityListTick.removeAll(this.tileEntityListUnload);
              this.tileEntityList.removeAll(this.tileEntityListUnload);
-@@ -1136,6 +1145,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1146,6 +1155,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
                          this.methodProfiler.a(() -> {
                              return String.valueOf(TileEntityTypes.a(tileentity.C()));
                          });
@@ -453,7 +454,7 @@ index 8c80aab59..cceab7750 100644
                          ((ITickable) tileentity).Y_();
                          this.methodProfiler.e();
                      } catch (Throwable throwable2) {
-@@ -1144,6 +1154,11 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1154,6 +1164,11 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
                          tileentity.a(crashreportsystemdetails1);
                          throw new ReportedException(crashreport1);
                      }
@@ -465,7 +466,7 @@ index 8c80aab59..cceab7750 100644
                  }
              }
  
-@@ -1156,6 +1171,8 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1166,6 +1181,8 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
              }
          }
  
@@ -474,7 +475,7 @@ index 8c80aab59..cceab7750 100644
          this.J = false;
          this.methodProfiler.c("pendingBlockEntities");
          if (!this.c.isEmpty()) {
-@@ -1188,6 +1205,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1198,6 +1215,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
              this.c.clear();
          }
  
@@ -482,7 +483,7 @@ index 8c80aab59..cceab7750 100644
          this.methodProfiler.e();
          this.methodProfiler.e();
      }
-@@ -1242,6 +1260,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1252,6 +1270,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
          }
          // CraftBukkit end
  
@@ -490,7 +491,7 @@ index 8c80aab59..cceab7750 100644
          entity.N = entity.locX;
          entity.O = entity.locY;
          entity.P = entity.locZ;
-@@ -1312,6 +1331,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1322,6 +1341,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
                  }
              }
          }
@@ -499,7 +500,7 @@ index 8c80aab59..cceab7750 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index a9a257b95..4d5bede24 100644
+index 1a43eaa78..d041d8259 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -274,11 +274,14 @@ public class WorldServer extends World implements IAsyncTaskHandler {
@@ -515,7 +516,7 @@ index a9a257b95..4d5bede24 100644
  
 +        timings.doChunkUnload.startTiming(); // Spigot
          this.methodProfiler.c("chunkSource");
-         this.chunkProvider.unloadChunks();
+         this.chunkProvider.unloadChunks(booleansupplier);
          int j = this.a(1.0F);
 @@ -292,22 +295,37 @@ public class WorldServer extends World implements IAsyncTaskHandler {
              this.worldData.setDayTime(this.worldData.getDayTime() + 1L);
@@ -524,11 +525,11 @@ index a9a257b95..4d5bede24 100644
 +        timings.doChunkUnload.stopTiming(); // Spigot
          this.methodProfiler.c("tickPending");
 +        timings.doTickPending.startTiming(); // Spigot
-         this.p();
+         this.q();
 +        timings.doTickPending.stopTiming(); // Spigot
          this.methodProfiler.c("tickBlocks");
 +        timings.doTickTiles.startTiming(); // Spigot
-         this.l();
+         this.n_();
 +        timings.doTickTiles.stopTiming(); // Spigot
          this.methodProfiler.c("chunkMap");
 +        timings.doChunkMap.startTiming(); // Spigot
@@ -545,9 +546,9 @@ index a9a257b95..4d5bede24 100644
 +        timings.doPortalForcer.stopTiming(); // Spigot
          this.methodProfiler.e();
 +        timings.doSounds.startTiming(); // Spigot
-         this.am();
+         this.an();
 +        timings.doSounds.stopTiming(); // Spigot
-         this.Q = false;
+         this.P = false;
  
 +        timings.doChunkGC.startTiming();// Spigot
          this.getWorld().processChunkGC(); // CraftBukkit
@@ -556,10 +557,10 @@ index a9a257b95..4d5bede24 100644
  
      public boolean j_() {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index ee4abc4dc..d44984268 100644
+index 01ed85beb..50e8ef41c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1786,6 +1786,11 @@ public final class CraftServer implements Server {
+@@ -1806,6 +1806,11 @@ public final class CraftServer implements Server {
      private final Spigot spigot = new Spigot()
      {
  

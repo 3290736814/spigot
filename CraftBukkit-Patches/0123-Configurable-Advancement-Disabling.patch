@@ -1,4 +1,4 @@
-From 0600dfe0ced8fa79e6f3d233d119fae08a5e1a15 Mon Sep 17 00:00:00 2001
+From c55484adeeefe4e43d063240f6a4f85e51ac06b9 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 9 Jun 2017 16:29:31 +1000
 Subject: [PATCH] Configurable Advancement Disabling
@@ -6,7 +6,7 @@ Subject: [PATCH] Configurable Advancement Disabling
 Allow disabling any (or all) inbuilt advancements with a configuration option.
 
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-index fc34bc7ed..d0eb65aaf 100644
+index c3e329ff7..eff958932 100644
 --- a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
 +++ b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
 @@ -201,6 +201,7 @@ public class AdvancementDataPlayer {
@@ -34,7 +34,7 @@ index 47279ebfd..5a49181bc 100644
                  try {
                      Advancement.SerializedAdvancement advancement_serializedadvancement = (Advancement.SerializedAdvancement) ChatDeserializer.a(AdvancementDataWorld.DESERIALIZER, IOUtils.toString(iresource.b(), StandardCharsets.UTF_8), Advancement.SerializedAdvancement.class);
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 0686bc79e..e12511291 100644
+index f941937a1..9b40db46c 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -385,4 +385,11 @@ public class SpigotConfig

@@ -1,14 +1,14 @@
-From 1272d2ea55f57fcabf102df9b7ae748f94c0e0d0 Mon Sep 17 00:00:00 2001
+From da7486c5dde389bddbcee898dbcebbe76b7c1dae Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 10 Mar 2014 09:03:28 +1100
 Subject: [PATCH] Guard Entity List
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 79f803899..7d8696c37 100644
+index c563d5710..5f00a1886 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -38,7 +38,32 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -44,7 +44,32 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      protected static final Logger e = LogManager.getLogger();
      private static final EnumDirection[] a = EnumDirection.values();
      private int b = 63;
@@ -42,7 +42,7 @@ index 79f803899..7d8696c37 100644
      protected final List<Entity> g = Lists.newArrayList();
      public final List<TileEntity> tileEntityList = Lists.newArrayList();
      public final List<TileEntity> tileEntityListTick = Lists.newArrayList();
-@@ -103,6 +128,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -110,6 +135,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      public final org.spigotmc.SpigotWorldConfig spigotConfig; // Spigot
  
      public final SpigotTimings.WorldTimingsHandler timings; // Spigot
@@ -50,7 +50,7 @@ index 79f803899..7d8696c37 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -1078,6 +1104,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1088,6 +1114,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
  
          org.spigotmc.ActivationRange.activateEntities(this); // Spigot
          timings.entityTick.startTiming(); // Spigot
@@ -58,7 +58,7 @@ index 79f803899..7d8696c37 100644
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
              entity = (Entity) this.entityList.get(this.tickPosition);
-@@ -1116,12 +1143,15 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -1126,12 +1153,15 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
                      this.getChunkAt(j, l).b(entity);
                  }
  

@@ -1,4 +1,4 @@
-From 6b3d6733b6a4ed176b7cd9344ebf2f6d6a8d8e27 Mon Sep 17 00:00:00 2001
+From 68df1d9d04a41f22108a25111626ba67e5c0864d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -6,10 +6,10 @@ Subject: [PATCH] Async Operation Catching
 Catch and throw an exception when a potentially unsafe operation occurs on a thread other than the main server thread.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index f2446b3df..9e298f121 100644
+index b9c066cd6..8811dbc9b 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
-@@ -395,10 +395,14 @@ public class Block implements IMaterial {
+@@ -377,10 +377,14 @@ public class Block implements IMaterial {
      }
  
      @Deprecated
@@ -27,7 +27,7 @@ index f2446b3df..9e298f121 100644
      public int a(IBlockData iblockdata, Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 549fa2105..caccb1a15 100644
+index 9c91d7b50..efc9c4a74 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -725,6 +725,7 @@ public abstract class EntityLiving extends Entity {
@@ -59,7 +59,7 @@ index 14fab2b31..ef5817933 100644
              EntityPlayer entityplayer = (EntityPlayer) entity;
              Iterator iterator = this.c.iterator();
 diff --git a/src/main/java/net/minecraft/server/EntityTrackerEntry.java b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
-index 0a59da7d5..6e940b640 100644
+index e44e37999..8478a81f5 100644
 --- a/src/main/java/net/minecraft/server/EntityTrackerEntry.java
 +++ b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
 @@ -324,6 +324,7 @@ public class EntityTrackerEntry {
@@ -79,10 +79,10 @@ index 0a59da7d5..6e940b640 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 0ce659339..8c80aab59 100644
+index 2db8f41a3..3099fbb46 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -851,6 +851,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -861,6 +861,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      }
  
      public boolean addEntity(Entity entity, SpawnReason spawnReason) { // Changed signature, added SpawnReason
@@ -90,7 +90,7 @@ index 0ce659339..8c80aab59 100644
          if (entity == null) return false;
  
          org.bukkit.event.Cancellable event = null;
-@@ -941,6 +942,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -951,6 +952,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      }
  
      public void kill(Entity entity) {
@@ -98,7 +98,7 @@ index 0ce659339..8c80aab59 100644
          if (entity.isVehicle()) {
              entity.ejectPassengers();
          }
-@@ -959,6 +961,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -969,6 +971,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      }
  
      public void removeEntity(Entity entity) {
@@ -106,19 +106,19 @@ index 0ce659339..8c80aab59 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2168,6 +2171,7 @@ public abstract class World implements GeneratorAccess, IIBlockAccess, AutoClose
+@@ -2186,6 +2189,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      }
  
-     public void a(Collection<Entity> collection) {
+     public void a(Stream<Entity> stream) {
 +        org.spigotmc.AsyncCatcher.catchOp( "entity world add"); // Spigot
-         // CraftBukkit start
-         // this.entityList.addAll(collection);
-         Iterator iterator = collection.iterator();
+         stream.forEach((entity) -> {
+             this.entityList.add(entity);
+             this.b(entity);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index ca9feca1a..ee4abc4dc 100644
+index 788f1d8fa..01ed85beb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -670,6 +670,7 @@ public final class CraftServer implements Server {
+@@ -671,6 +671,7 @@ public final class CraftServer implements Server {
      public boolean dispatchCommand(CommandSender sender, String commandLine) {
          Validate.notNull(sender, "Sender cannot be null");
          Validate.notNull(commandLine, "CommandLine cannot be null");
@@ -127,7 +127,7 @@ index ca9feca1a..ee4abc4dc 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index f1b1eadd0..3b5330dfe 100644
+index 0df02a4c8..d26455c16 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -178,6 +178,7 @@ public class CraftWorld implements World {
@@ -146,16 +146,16 @@ index f1b1eadd0..3b5330dfe 100644
          if (isChunkInUse(x, z)) {
              return false;
          }
-@@ -256,6 +258,7 @@ public class CraftWorld implements World {
+@@ -254,6 +256,7 @@ public class CraftWorld implements World {
      }
  
      public boolean loadChunk(int x, int z, boolean generate) {
 +        org.spigotmc.AsyncCatcher.catchOp( "chunk load"); // Spigot
          chunkLoadCount++;
-         if (generate) {
-             // Use the default variant of loadChunk when generate == true.
+         return world.getChunkProviderServer().getChunkAt(x, z, true, generate) != null;
+     }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 46eac051c..e1328d57b 100644
+index 4a3d4da91..8381bdd5b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -293,6 +293,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
