@@ -1,4 +1,4 @@
-From 8ac58ef0e79dbde4b2099b5a63d5d922ddf7c8b4 Mon Sep 17 00:00:00 2001
+From bc6d5fbafc18ee4ef119d42d5b6f0aec65387ae5 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -37,12 +37,12 @@ index c3535e90..4ab47d09 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 2237039b..2cebb5c7 100644
+index 9ce8ecbc..6392c31b 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -1476,6 +1476,14 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -1522,6 +1522,14 @@ public interface World extends PluginMessageRecipient, Metadatable {
       */
-     public <T> void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX, double offsetY, double offsetZ, double extra, T data);
+     public <T> void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX, double offsetY, double offsetZ, double extra, T data, boolean force);
  
 +    // Spigot start
 +    public class Spigot
