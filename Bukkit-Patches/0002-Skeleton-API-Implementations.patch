@@ -1,4 +1,4 @@
-From bc6d5fbafc18ee4ef119d42d5b6f0aec65387ae5 Mon Sep 17 00:00:00 2001
+From f505324f6857f71d578b26dfbd6bd65a3f498e93 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -93,13 +93,13 @@ index 752eeb5e..c77f3a4f 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 62bf70f5..72eae543 100644
+index 2cc60fe9..1184bc15 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -508,4 +508,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable {
-      * @return reaction
+@@ -526,4 +526,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable {
+      * @see Directional#getFacing()
       */
-     PistonMoveReaction getPistonMoveReaction();
+     BlockFace getFacing();
 +
 +    // Spigot start
 +    public class Spigot extends CommandSender.Spigot
@@ -130,10 +130,10 @@ index c8b5154e..ee2218c1 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index c59d93b7..949c4d68 100644
+index c7e58249..274643b3 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1492,4 +1492,14 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+@@ -1482,4 +1482,14 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
       * after permission changes are done.
       */
      public void updateCommands();

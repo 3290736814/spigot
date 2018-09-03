@@ -1,11 +1,11 @@
-From f2177256c0576411417ab3c7e7a98c05c61ebf30 Mon Sep 17 00:00:00 2001
+From 31fb17d7b268a1aaa881b2a4a84c0bc2a42b5cde Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 384649800..72477ec9a 100644
+index a198f0ce0..9996c7f77 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -1172,7 +1172,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -17,7 +17,7 @@ index 384649800..72477ec9a 100644
                      } else {
                          this.world.a((EntityHuman) null, this.locX, this.locY, this.locZ, SoundEffects.ENTITY_PLAYER_ATTACK_NODAMAGE, this.bV(), 1.0F, 1.0F);
                          if (flag4) {
-@@ -1461,9 +1461,9 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1462,9 +1462,9 @@ public abstract class EntityHuman extends EntityLiving {
          super.cH();
          this.a(StatisticList.JUMP);
          if (this.isSprinting()) {
@@ -29,7 +29,7 @@ index 384649800..72477ec9a 100644
          }
  
      }
-@@ -1531,13 +1531,13 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1532,13 +1532,13 @@ public abstract class EntityHuman extends EntityLiving {
                  i = Math.round(MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2) * 100.0F);
                  if (i > 0) {
                      this.a(StatisticList.WALK_UNDER_WATER_ONE_CM, i);
@@ -45,7 +45,7 @@ index 384649800..72477ec9a 100644
                  }
              } else if (this.z_()) {
                  if (d1 > 0.0D) {
-@@ -1548,13 +1548,13 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1549,13 +1549,13 @@ public abstract class EntityHuman extends EntityLiving {
                  if (i > 0) {
                      if (this.isSprinting()) {
                          this.a(StatisticList.SPRINT_ONE_CM, i);

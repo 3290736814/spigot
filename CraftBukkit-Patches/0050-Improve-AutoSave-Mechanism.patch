@@ -1,4 +1,4 @@
-From 18230156365c548c2e7c70635da0a53f5d133bb4 Mon Sep 17 00:00:00 2001
+From 903bbdbfb2a7c9d4d11593f9e0c3b65c5c1011b8 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 21:07:18 +1100
 Subject: [PATCH] Improve AutoSave Mechanism
@@ -11,10 +11,10 @@ Instead we will mimic the save-all command in its behaviour, which is both safe 
 Also, only save modified chunks, or chunks with entities after 4 auto save passes
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index e6911d235..a77ebedd0 100644
+index 05a43083e..5caef447a 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -913,7 +913,7 @@ public class Chunk implements IChunkAccess {
+@@ -920,7 +920,7 @@ public class Chunk implements IChunkAccess {
              if (this.v && this.world.getTime() != this.lastSaved || this.x) {
                  return true;
              }
@@ -60,7 +60,7 @@ index f62d0a5fb..4d95f202b 100644
              SpigotTimings.worldSaveTimer.stopTiming(); // Spigot
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index d26455c16..48b1e5729 100644
+index 9d5f7c879..225d25a9f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -716,12 +716,17 @@ public class CraftWorld implements World {

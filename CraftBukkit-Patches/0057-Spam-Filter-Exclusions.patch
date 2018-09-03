@@ -1,14 +1,14 @@
-From f226e778359681bac2aa3f497f14f8a21362f7c7 Mon Sep 17 00:00:00 2001
+From 36e03b020a82ae0b92142e933217b0a02e550bc8 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 8 Feb 2014 08:13:40 +0000
 Subject: [PATCH] Spam Filter Exclusions
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 5a7914241..dec8c4b66 100644
+index b7398dae2..613a6161f 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1476,9 +1476,20 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1477,9 +1477,20 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
                  this.minecraftServer.getPlayerList().sendMessage(chatmessage, false);
              }
  
