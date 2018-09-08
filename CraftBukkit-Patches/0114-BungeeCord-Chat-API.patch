@@ -1,4 +1,4 @@
-From 6e999d9e0fed4bc76b561ff922ee29621c8209ac Mon Sep 17 00:00:00 2001
+From f5d0e9939b0dcac0bef634f23f5922cf966d149f Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -32,18 +32,18 @@ index e55384e70..28a262835 100644
      }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 6cd8a5abc..77cb85798 100644
+index 7ddfd1ef2..d7b516698 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -152,6 +152,7 @@ import org.bukkit.craftbukkit.tag.CraftBlockTag;
- import org.bukkit.craftbukkit.tag.CraftItemTag;
+@@ -153,6 +153,7 @@ import org.bukkit.craftbukkit.tag.CraftItemTag;
  import org.bukkit.craftbukkit.util.CraftNamespacedKey;
+ import org.bukkit.event.server.ServerLoadEvent;
  import org.bukkit.event.server.TabCompleteEvent;
 +import net.md_5.bungee.api.chat.BaseComponent;
  
  public final class CraftServer implements Server {
      private final String serverName = "CraftBukkit";
-@@ -1873,6 +1874,20 @@ public final class CraftServer implements Server {
+@@ -1875,6 +1876,20 @@ public final class CraftServer implements Server {
          public void restart() {
              org.spigotmc.RestartCommand.restart();
          }

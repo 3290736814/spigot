@@ -1,14 +1,14 @@
-From 60ccbba78eafb24f340a808042871c0c9de1fc68 Mon Sep 17 00:00:00 2001
+From fece2bd87683b73bbbc4e459586843cc99aaeaa5 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 4d95f202b..e78c4f312 100644
+index f30288040..78fd9c105 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -150,6 +150,12 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -151,6 +151,12 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
      public File bukkitDataPackFolder;
      public CommandDispatcher vanillaCommandDispatcher;
      // CraftBukkit end
@@ -21,7 +21,7 @@ index 4d95f202b..e78c4f312 100644
  
      public MinecraftServer(OptionSet options, Proxy proxy, DataFixer datafixer, CommandDispatcher commanddispatcher, YggdrasilAuthenticationService yggdrasilauthenticationservice, MinecraftSessionService minecraftsessionservice, GameProfileRepository gameprofilerepository, UserCache usercache) {
          this.ac = new ResourceManager(EnumResourcePackType.SERVER_DATA);
-@@ -672,6 +678,13 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -676,6 +682,13 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
          return SystemUtils.b() < this.aa;
      }
  
@@ -35,7 +35,7 @@ index 4d95f202b..e78c4f312 100644
      public void run() {
          try {
              if (this.init()) {
-@@ -680,26 +693,34 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -684,26 +697,34 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
                  this.m.setServerInfo(new ServerPing.ServerData("1.13.1", 401));
                  this.a(this.m);
  

@@ -1,11 +1,11 @@
-From bb9ef3199c8b5b25afbbb55a5d80e89107ad31bf Mon Sep 17 00:00:00 2001
+From 0fbded81a514d53d6e2f406ca6bd03d89e1c4b02 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 18:05:54 +1000
 Subject: [PATCH] Allow Disabling of Command TabComplete
 
 
 diff --git a/src/main/java/net/minecraft/server/CommandDispatcher.java b/src/main/java/net/minecraft/server/CommandDispatcher.java
-index 36b7d8ce8..1716a4c53 100644
+index 94cd61e80..f4847dd03 100644
 --- a/src/main/java/net/minecraft/server/CommandDispatcher.java
 +++ b/src/main/java/net/minecraft/server/CommandDispatcher.java
 @@ -248,6 +248,7 @@ public class CommandDispatcher {
@@ -25,10 +25,10 @@ index 36b7d8ce8..1716a4c53 100644
              if (commandnode2.canUse(commandlistenerwrapper)) {
                  ArgumentBuilder argumentbuilder = commandnode2.createBuilder();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 9a43935c9..00ff370c1 100644
+index 70a6a6bb1..1457b8513 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1616,6 +1616,13 @@ public final class CraftServer implements Server {
+@@ -1618,6 +1618,13 @@ public final class CraftServer implements Server {
      }
  
      public List<String> tabCompleteCommand(Player player, String message, WorldServer world, Vec3D pos) {

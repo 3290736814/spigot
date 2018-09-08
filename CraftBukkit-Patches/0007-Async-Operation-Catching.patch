@@ -1,4 +1,4 @@
-From 68df1d9d04a41f22108a25111626ba67e5c0864d Mon Sep 17 00:00:00 2001
+From 1dac592707f5fd219692a828f0681c411ed13869 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -27,7 +27,7 @@ index b9c066cd6..8811dbc9b 100644
      public int a(IBlockData iblockdata, Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 9c91d7b50..efc9c4a74 100644
+index 8389077ad..0092c34e2 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -725,6 +725,7 @@ public abstract class EntityLiving extends Entity {
@@ -79,7 +79,7 @@ index e44e37999..8478a81f5 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 2db8f41a3..3099fbb46 100644
+index 50933f277..2e97852df 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -861,6 +861,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
@@ -115,10 +115,10 @@ index 2db8f41a3..3099fbb46 100644
              this.entityList.add(entity);
              this.b(entity);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 788f1d8fa..01ed85beb 100644
+index 96db76399..28293ac8d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -671,6 +671,7 @@ public final class CraftServer implements Server {
+@@ -672,6 +672,7 @@ public final class CraftServer implements Server {
      public boolean dispatchCommand(CommandSender sender, String commandLine) {
          Validate.notNull(sender, "Sender cannot be null");
          Validate.notNull(commandLine, "CommandLine cannot be null");
@@ -127,7 +127,7 @@ index 788f1d8fa..01ed85beb 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 0df02a4c8..d26455c16 100644
+index e8b06f72f..9d5f7c879 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -178,6 +178,7 @@ public class CraftWorld implements World {

@@ -1,14 +1,14 @@
-From 913dffce3906abcd615cf702aa1819663169ad86 Mon Sep 17 00:00:00 2001
+From 7b37132c7340f1e25e287aa94f2d1ed21e1adee8 Mon Sep 17 00:00:00 2001
 From: agentk20 <agentkid20@gmail.com>
 Date: Sat, 3 Aug 2013 19:28:48 +1000
 Subject: [PATCH] Fully Disable Snooper When Not Required
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index f6e1626a7..6db03ce4e 100644
+index 45207f9b5..2af6051a4 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -816,11 +816,11 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -820,11 +820,11 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
          }
  
          this.methodProfiler.a("snooper");
