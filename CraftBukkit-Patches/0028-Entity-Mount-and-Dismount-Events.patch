@@ -1,11 +1,11 @@
-From 0fa76ae95c62ef8fbe775c24fdee3afbd62ae21e Mon Sep 17 00:00:00 2001
+From a1cf8e567aa0aa081c6e7b472e3883d32eed36c2 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 27 Feb 2016 10:07:58 +1100
 Subject: [PATCH] Entity Mount and Dismount Events
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 3c3796a6c..cbb535eca 100644
+index 22a688637..5135b3359 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -1989,6 +1989,13 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -16,13 +16,13 @@ index 3c3796a6c..cbb535eca 100644
 +            org.spigotmc.event.entity.EntityMountEvent event = new org.spigotmc.event.entity.EntityMountEvent(entity.getBukkitEntity(), this.getBukkitEntity());
 +            Bukkit.getPluginManager().callEvent(event);
 +            if (event.isCancelled()) {
-+                return;
++                return false;
 +            }
 +            // Spigot end
              if (!this.world.isClientSide && entity instanceof EntityHuman && !(this.bO() instanceof EntityHuman)) {
                  this.passengers.add(0, entity);
              } else {
-@@ -2018,6 +2025,13 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -2019,6 +2026,13 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
                  }
              }
              // CraftBukkit end
