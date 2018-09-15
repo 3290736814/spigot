@@ -1,4 +1,4 @@
-From 1dac592707f5fd219692a828f0681c411ed13869 Mon Sep 17 00:00:00 2001
+From 9c39b14573cef69d3004a94de72f31d5c481cb3d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -79,7 +79,7 @@ index e44e37999..8478a81f5 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 50933f277..2e97852df 100644
+index 7e358c33f..cf78ccedb 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -861,6 +861,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
@@ -90,7 +90,7 @@ index 50933f277..2e97852df 100644
          if (entity == null) return false;
  
          org.bukkit.event.Cancellable event = null;
-@@ -951,6 +952,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -958,6 +959,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      }
  
      public void kill(Entity entity) {
@@ -98,7 +98,7 @@ index 50933f277..2e97852df 100644
          if (entity.isVehicle()) {
              entity.ejectPassengers();
          }
-@@ -969,6 +971,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -976,6 +978,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      }
  
      public void removeEntity(Entity entity) {
@@ -106,7 +106,7 @@ index 50933f277..2e97852df 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2186,6 +2189,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -2185,6 +2188,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      }
  
      public void a(Stream<Entity> stream) {

@@ -1,18 +1,25 @@
-From 82e3d3b8b2efb7a0c967016ffcc3204ce764b232 Mon Sep 17 00:00:00 2001
+From bc7640faea34e01319807711116065d4067099f9 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 3 Mar 2016 19:45:46 +1100
 Subject: [PATCH] Implement SpawnerSpawnEvent.
 
 
 diff --git a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
-index 88e7c823b..aded8d508 100644
+index 88e7c823b..b091c89fb 100644
 --- a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 +++ b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
-@@ -115,6 +115,9 @@ public abstract class MobSpawnerAbstract {
+@@ -115,6 +115,16 @@ public abstract class MobSpawnerAbstract {
                          {
                              entity.fromMobSpawner = true;
                          }
 +                        if (org.bukkit.craftbukkit.event.CraftEventFactory.callSpawnerSpawnEvent(entity, blockposition).isCancelled()) {
++                            Entity vehicle = entity.getVehicle();
++                            if (vehicle != null) {
++                                vehicle.dead = true;
++                            }
++                            for (Entity passenger : entity.bQ()) {
++                                passenger.dead = true;
++                            }
 +                            continue;
 +                        }
                          // Spigot End

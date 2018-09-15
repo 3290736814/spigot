@@ -1,4 +1,4 @@
-From 1298a4ae2dee27a337ceea375ffc4e0dfbe643b7 Mon Sep 17 00:00:00 2001
+From e46dd9e73e8fa152d6b814692a0ccfca9a810bfc Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 8b62f5426..3c3796a6c 100644
+index 30908370f..22a688637 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -161,6 +161,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -195,10 +195,10 @@ index 139976f9b..32e327e42 100644
          if (--this.profession <= 0) {
              BlockPosition blockposition = new BlockPosition(this);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 4fb81a371..41a2569c1 100644
+index cac20e54a..d1eca41db 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1086,6 +1086,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1093,6 +1093,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
          CrashReportSystemDetails crashreportsystemdetails1;
          CrashReport crashreport1;
  
@@ -206,7 +206,7 @@ index 4fb81a371..41a2569c1 100644
          timings.entityTick.startTiming(); // Spigot
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
-@@ -1271,8 +1272,12 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1278,8 +1279,12 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
  
          // CraftBukkit start - check if chunks are loaded as done in previous versions
          // TODO: Go back to Vanilla behaviour when comfortable

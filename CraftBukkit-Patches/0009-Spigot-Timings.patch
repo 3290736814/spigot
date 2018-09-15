@@ -1,4 +1,4 @@
-From 9a01f3f4f9f721463e15dd84878e228bfedaa15e Mon Sep 17 00:00:00 2001
+From 17084f79f60891363de6446141fd266f1e7bcf74 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -390,7 +390,7 @@ index 56d7702bd..a6345a858 100644
      private final TileEntityTypes<?> e;
      protected World world;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 2e97852df..97d04bb73 100644
+index cf78ccedb..acbc24678 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -26,6 +26,7 @@ import com.google.common.collect.Maps;
@@ -418,7 +418,7 @@ index 2e97852df..97d04bb73 100644
      }
  
      public BiomeBase getBiome(BlockPosition blockposition) {
-@@ -1082,6 +1086,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1089,6 +1093,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
          CrashReportSystemDetails crashreportsystemdetails1;
          CrashReport crashreport1;
  
@@ -426,7 +426,7 @@ index 2e97852df..97d04bb73 100644
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
              entity = (Entity) this.entityList.get(this.tickPosition);
-@@ -1099,7 +1104,9 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1106,7 +1111,9 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
              this.methodProfiler.a("tick");
              if (!entity.dead && !(entity instanceof EntityPlayer)) {
                  try {
@@ -436,7 +436,7 @@ index 2e97852df..97d04bb73 100644
                  } catch (Throwable throwable1) {
                      crashreport1 = CrashReport.a(throwable1, "Ticking entity");
                      crashreportsystemdetails1 = crashreport1.a("Entity being ticked");
-@@ -1125,7 +1132,9 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1132,7 +1139,9 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
              this.methodProfiler.e();
          }
  
@@ -446,7 +446,7 @@ index 2e97852df..97d04bb73 100644
          if (!this.tileEntityListUnload.isEmpty()) {
              this.tileEntityListTick.removeAll(this.tileEntityListUnload);
              this.tileEntityList.removeAll(this.tileEntityListUnload);
-@@ -1146,6 +1155,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1153,6 +1162,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
                          this.methodProfiler.a(() -> {
                              return String.valueOf(TileEntityTypes.a(tileentity.C()));
                          });
@@ -454,7 +454,7 @@ index 2e97852df..97d04bb73 100644
                          ((ITickable) tileentity).Y_();
                          this.methodProfiler.e();
                      } catch (Throwable throwable2) {
-@@ -1154,6 +1164,11 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1161,6 +1171,11 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
                          tileentity.a(crashreportsystemdetails1);
                          throw new ReportedException(crashreport1);
                      }
@@ -466,7 +466,7 @@ index 2e97852df..97d04bb73 100644
                  }
              }
  
-@@ -1166,6 +1181,8 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1173,6 +1188,8 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
              }
          }
  
@@ -475,7 +475,7 @@ index 2e97852df..97d04bb73 100644
          this.J = false;
          this.methodProfiler.c("pendingBlockEntities");
          if (!this.c.isEmpty()) {
-@@ -1198,6 +1215,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1205,6 +1222,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
              this.c.clear();
          }
  
@@ -483,7 +483,7 @@ index 2e97852df..97d04bb73 100644
          this.methodProfiler.e();
          this.methodProfiler.e();
      }
-@@ -1252,6 +1270,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1259,6 +1277,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
          }
          // CraftBukkit end
  
@@ -491,7 +491,7 @@ index 2e97852df..97d04bb73 100644
          entity.N = entity.locX;
          entity.O = entity.locY;
          entity.P = entity.locZ;
-@@ -1322,6 +1341,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1329,6 +1348,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
                  }
              }
          }
