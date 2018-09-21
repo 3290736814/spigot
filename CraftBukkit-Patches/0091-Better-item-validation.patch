@@ -1,4 +1,4 @@
-From 37ce3c057b772cd4bd3768192dd1836478428393 Mon Sep 17 00:00:00 2001
+From df03cd0aaa5cd243f9eb9b4b9eb4a38400af594b Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
@@ -58,12 +58,12 @@ index 0c1bca2bd..600538b11 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 05ccadc63..3e86cb7dc 100644
+index 3ce230124..89296e042 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -53,6 +53,10 @@ import net.minecraft.server.ChatComponentText;
- import net.minecraft.server.NBTCompressedStreamTools;
- import org.apache.commons.codec.binary.Base64;
+@@ -71,6 +71,10 @@ import org.apache.commons.codec.binary.Base64;
+ import javax.annotation.Nonnull;
+ import javax.annotation.Nullable;
  
 +// Spigot start
 +import static org.spigotmc.ValidateUtils.*;
@@ -72,7 +72,7 @@ index 05ccadc63..3e86cb7dc 100644
  /**
   * Children must include the following:
   *
-@@ -274,7 +278,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
+@@ -298,7 +302,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
  
              if (display.hasKey(NAME.NBT)) {
                  try {
@@ -81,7 +81,7 @@ index 05ccadc63..3e86cb7dc 100644
                  } catch (JsonParseException ex) {
                      // Ignore (stripped like Vanilla)
                  }
-@@ -282,7 +286,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
+@@ -306,7 +310,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
  
              if (display.hasKey(LOCNAME.NBT)) {
                  try {
@@ -90,7 +90,7 @@ index 05ccadc63..3e86cb7dc 100644
                  } catch (JsonParseException ex) {
                      // Ignore (stripped like Vanilla)
                  }
-@@ -293,7 +297,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
+@@ -317,7 +321,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
                  lore = new ArrayList<String>(list.size());
  
                  for (int index = 0; index < list.size(); index++) {

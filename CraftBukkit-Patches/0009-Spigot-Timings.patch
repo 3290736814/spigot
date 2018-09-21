@@ -1,4 +1,4 @@
-From 17084f79f60891363de6446141fd266f1e7bcf74 Mon Sep 17 00:00:00 2001
+From 70e69ec914be43cc3fc5ae4154b540d9c7223aed Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -74,7 +74,7 @@ index 31b1bf671..906a3e7e1 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 2bca5d952..9aceb638f 100644
+index 02a8a5a1f..e701f3333 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -29,6 +29,7 @@ import org.apache.logging.log4j.Level;
@@ -85,7 +85,7 @@ index 2bca5d952..9aceb638f 100644
  import org.bukkit.event.server.ServerCommandEvent;
  import org.bukkit.craftbukkit.util.Waitable;
  import org.bukkit.event.server.RemoteServerCommandEvent;
-@@ -409,6 +410,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -415,6 +416,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
      }
  
      public void aU() {
@@ -93,7 +93,7 @@ index 2bca5d952..9aceb638f 100644
          while (!this.serverCommandQueue.isEmpty()) {
              ServerCommand servercommand = (ServerCommand) this.serverCommandQueue.remove(0);
  
-@@ -423,6 +425,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -429,6 +431,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              // CraftBukkit end
          }
  
@@ -138,7 +138,7 @@ index e14cf0799..30908370f 100644
  
      protected float ab() {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 0092c34e2..6dbfb790d 100644
+index 678e8716c..8acf10aed 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -32,6 +32,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
@@ -150,7 +150,7 @@ index 0092c34e2..6dbfb790d 100644
  public abstract class EntityLiving extends Entity {
  
      private static final Logger a = LogManager.getLogger();
-@@ -2010,6 +2012,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2013,6 +2015,7 @@ public abstract class EntityLiving extends Entity {
      }
  
      public void tick() {
@@ -158,7 +158,7 @@ index 0092c34e2..6dbfb790d 100644
          super.tick();
          this.cV();
          this.o();
-@@ -2083,7 +2086,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2086,7 +2089,9 @@ public abstract class EntityLiving extends Entity {
              }
          }
  
@@ -168,7 +168,7 @@ index 0092c34e2..6dbfb790d 100644
          double d0 = this.locX - this.lastX;
          double d1 = this.locZ - this.lastZ;
          float f = (float) (d0 * d0 + d1 * d1);
-@@ -2160,6 +2165,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2163,6 +2168,7 @@ public abstract class EntityLiving extends Entity {
              this.bv = 0;
          }
  
@@ -176,7 +176,7 @@ index 0092c34e2..6dbfb790d 100644
      }
  
      protected float e(float f, float f1) {
-@@ -2229,6 +2235,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2232,6 +2238,7 @@ public abstract class EntityLiving extends Entity {
          }
  
          this.world.methodProfiler.a("ai");
@@ -184,7 +184,7 @@ index 0092c34e2..6dbfb790d 100644
          if (this.isFrozen()) {
              this.bg = false;
              this.bh = 0.0F;
-@@ -2239,6 +2246,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2242,6 +2249,7 @@ public abstract class EntityLiving extends Entity {
              this.doTick();
              this.world.methodProfiler.e();
          }
@@ -192,7 +192,7 @@ index 0092c34e2..6dbfb790d 100644
  
          this.world.methodProfiler.e();
          this.world.methodProfiler.a("jump");
-@@ -2263,7 +2271,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2266,7 +2274,9 @@ public abstract class EntityLiving extends Entity {
          this.n();
          AxisAlignedBB axisalignedbb = this.getBoundingBox();
  
@@ -202,7 +202,7 @@ index 0092c34e2..6dbfb790d 100644
          this.world.methodProfiler.e();
          this.world.methodProfiler.a("push");
          if (this.bw > 0) {
-@@ -2271,7 +2281,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2274,7 +2284,9 @@ public abstract class EntityLiving extends Entity {
              this.a(axisalignedbb, this.getBoundingBox());
          }
  
@@ -390,7 +390,7 @@ index 56d7702bd..a6345a858 100644
      private final TileEntityTypes<?> e;
      protected World world;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index cf78ccedb..acbc24678 100644
+index cb7f9c6ce..1ec424e07 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -26,6 +26,7 @@ import com.google.common.collect.Maps;
@@ -500,7 +500,7 @@ index cf78ccedb..acbc24678 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 070fb086e..3b5d40ec8 100644
+index 2a584c6c3..620e6e1c3 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -274,11 +274,14 @@ public class WorldServer extends World implements IAsyncTaskHandler {

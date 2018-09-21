@@ -1,4 +1,4 @@
-From ef688f3314e7c465f43f63afbd62e8eaf99bd76d Mon Sep 17 00:00:00 2001
+From 2ec885851cd24ee323747d7a95b7f900f1e62fa1 Mon Sep 17 00:00:00 2001
 From: slide23 <me@slide.ws>
 Date: Fri, 20 Dec 2013 20:15:33 -0600
 Subject: [PATCH] Add Late Bind Option
@@ -6,7 +6,7 @@ Subject: [PATCH] Add Late Bind Option
 Add late-bind config option to delay binding until loading is done.
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 4ae98dfbf..9edfa121b 100644
+index d6bf247be..4b23ac15b 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -188,6 +188,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -25,7 +25,7 @@ index 4ae98dfbf..9edfa121b 100644
  
              // CraftBukkit start
              // this.a((PlayerList) (new DedicatedPlayerList(this))); // Spigot - moved up
-@@ -301,6 +303,17 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -307,6 +309,17 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                  }
                  // CraftBukkit end
  

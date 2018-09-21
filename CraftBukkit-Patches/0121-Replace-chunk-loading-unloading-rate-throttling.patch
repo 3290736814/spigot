@@ -1,4 +1,4 @@
-From 1adfc6974fdd8b65aa5d5b85d3e908c8a5b1e938 Mon Sep 17 00:00:00 2001
+From da8f7679d530250e67806b22dfb24c3e7bc4ff6e Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Thu, 26 Jan 2017 20:54:55 +0000
 Subject: [PATCH] Replace chunk loading / unloading rate throttling.
@@ -7,7 +7,7 @@ Uses a scheme based on estimated tick slack time.
 See https://hub.spigotmc.org/stash/projects/SPIGOT/repos/spigot/pull-requests/71/overview
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 1da14aa17..e748033d4 100644
+index 565c9f7aa..adf995b22 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -262,13 +262,22 @@ public class ChunkProviderServer implements IChunkProvider {
