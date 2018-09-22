@@ -1,4 +1,4 @@
-From 237f8a067357fe78e4cc6122d30c51b79785785d Mon Sep 17 00:00:00 2001
+From 18f3a6ee6d453c10246245588eaa4e5c84ff96a7 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -37,12 +37,12 @@ index c3535e90..4ab47d09 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 9ce8ecbc..6392c31b 100644
+index 9efe6989..d32f3afb 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -1522,6 +1522,14 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -1537,6 +1537,15 @@ public interface World extends PluginMessageRecipient, Metadatable {
       */
-     public <T> void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX, double offsetY, double offsetZ, double extra, T data, boolean force);
+     public Location locateNearestStructure(Location origin, StructureType structureType, int radius, boolean findUnexplored);
  
 +    // Spigot start
 +    public class Spigot
@@ -52,9 +52,10 @@ index 9ce8ecbc..6392c31b 100644
 +
 +    Spigot spigot();
 +    // Spigot end
- 
++
      /**
       * Represents various map environment types that a world may be
+      */
 diff --git a/src/main/java/org/bukkit/command/CommandSender.java b/src/main/java/org/bukkit/command/CommandSender.java
 index 148756b9..5dcd2218 100644
 --- a/src/main/java/org/bukkit/command/CommandSender.java
