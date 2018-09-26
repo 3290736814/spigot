@@ -1,14 +1,14 @@
-From 18f3a6ee6d453c10246245588eaa4e5c84ff96a7 Mon Sep 17 00:00:00 2001
+From 5d39a558d28defd38d8a15c558affaa689d23e9d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 5bea055b..97e3e046 100644
+index 5a4654fd..f3d3e8ac 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -1272,4 +1272,9 @@ public final class Bukkit {
+@@ -1313,4 +1313,9 @@ public final class Bukkit {
      public static UnsafeValues getUnsafe() {
          return server.getUnsafe();
      }
@@ -19,10 +19,10 @@ index 5bea055b..97e3e046 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index c3535e90..4ab47d09 100644
+index 21ed6aeb..4ef22289 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1051,4 +1051,13 @@ public interface Server extends PluginMessageRecipient {
+@@ -1088,4 +1088,13 @@ public interface Server extends PluginMessageRecipient {
       */
      @Deprecated
      UnsafeValues getUnsafe();
@@ -37,10 +37,10 @@ index c3535e90..4ab47d09 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 9efe6989..d32f3afb 100644
+index c8318d30..d6f1de32 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -1537,6 +1537,15 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -1548,6 +1548,15 @@ public interface World extends PluginMessageRecipient, Metadatable {
       */
      public Location locateNearestStructure(Location origin, StructureType structureType, int radius, boolean findUnexplored);
  
