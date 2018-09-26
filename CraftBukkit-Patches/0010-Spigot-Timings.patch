@@ -1,4 +1,4 @@
-From c4d1d8f2d54d8bb53bcea0e99b53e5755604ec9e Mon Sep 17 00:00:00 2001
+From 51f70b752d0eb06e0fe7f6528d2646c5dfdf76dd Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -124,7 +124,7 @@ index 330c5fe3..f1a389b6 100644
  
      public boolean aa() {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 8d99f4d7..d49a6e4f 100644
+index d729c0a9..29da0aac 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -25,6 +25,7 @@ import org.bukkit.block.BlockFace;
@@ -143,7 +143,7 @@ index 8d99f4d7..d49a6e4f 100644
  
      public float getBukkitYaw() {
          return this.yaw;
-@@ -517,6 +519,7 @@ public abstract class Entity implements ICommandListener {
+@@ -518,6 +520,7 @@ public abstract class Entity implements ICommandListener {
      }
  
      public void move(EnumMoveType enummovetype, double d0, double d1, double d2) {
@@ -151,7 +151,7 @@ index 8d99f4d7..d49a6e4f 100644
          if (this.noclip) {
              this.a(this.getBoundingBox().d(d0, d1, d2));
              this.recalcPosition();
-@@ -910,6 +913,7 @@ public abstract class Entity implements ICommandListener {
+@@ -911,6 +914,7 @@ public abstract class Entity implements ICommandListener {
  
              this.world.methodProfiler.b();
          }
@@ -359,10 +359,10 @@ index 48495b64..26fe01ba 100644
          this.methodProfiler.b();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 34c20627..f9b9ee69 100644
+index 3f940156..7bf52d87 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1322,6 +1322,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1324,6 +1324,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
      // CraftBukkit end
  
      private void handleCommand(String s) {
@@ -370,7 +370,7 @@ index 34c20627..f9b9ee69 100644
         // CraftBukkit start - whole method
          this.LOGGER.info(this.player.getName() + " issued server command: " + s);
  
-@@ -1331,18 +1332,22 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1333,18 +1334,22 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
          this.server.getPluginManager().callEvent(event);
  
          if (event.isCancelled()) {
