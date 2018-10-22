@@ -1,4 +1,4 @@
-From e0a50eaa4a4d2445e133a46be4ca0acea2b95036 Mon Sep 17 00:00:00 2001
+From 59be2983f9eb4b87cf5bc3507ab2e2412c1158f4 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -179,7 +179,7 @@ index 000000000..3d5d9d779
 +}
 diff --git a/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
 new file mode 100644
-index 000000000..1e3ce5a33
+index 000000000..8f11487d6
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
 @@ -0,0 +1,159 @@
@@ -257,7 +257,7 @@ index 000000000..1e3ce5a33
 +
 +            for (int k = 4; k >= 0; --k) {
 +                if (k <= random.nextInt(5)) {
-+                    ichunkaccess.a((BlockPosition) blockposition_mutableblockposition.c(blockposition.getX(), k, blockposition.getZ()), Blocks.BEDROCK.getBlockData(), false);
++                    ichunkaccess.setType(blockposition_mutableblockposition.c(blockposition.getX(), k, blockposition.getZ()), Blocks.BEDROCK.getBlockData(), false);
 +                }
 +            }
 +        }
@@ -1749,7 +1749,7 @@ index 000000000..a47598c50
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerStatisticManager.java b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 new file mode 100644
-index 000000000..f47334c15
+index 000000000..1b9086ce4
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 @@ -0,0 +1,240 @@
@@ -1963,7 +1963,7 @@ index 000000000..f47334c15
 +        JsonObject jsonobject1 = new JsonObject();
 +
 +        jsonobject1.add("stats", jsonobject);
-+        jsonobject1.addProperty("DataVersion", Integer.valueOf(1628));
++        jsonobject1.addProperty("DataVersion", Integer.valueOf(1631));
 +        return jsonobject1.toString();
 +    }
 +
@@ -1995,7 +1995,7 @@ index 000000000..f47334c15
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java b/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
 new file mode 100644
-index 000000000..fb5ac05d5
+index 000000000..0b91f1641
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
 @@ -0,0 +1,37 @@
@@ -2014,7 +2014,7 @@ index 000000000..fb5ac05d5
 +    }
 +
 +    protected StructureStart a(GeneratorAccess generatoraccess, ChunkGenerator<?> chunkgenerator, SeededRandom seededrandom, int i, int j) {
-+        BiomeBase biomebase = chunkgenerator.getWorldChunkManager().getBiome(new BlockPosition((i << 4) + 9, 0, (j << 4) + 9), Biomes.c);
++        BiomeBase biomebase = chunkgenerator.getWorldChunkManager().getBiome(new BlockPosition((i << 4) + 9, 0, (j << 4) + 9), Biomes.PLAINS);
 +
 +        return new WorldGenFeatureDesertPyramid.a(generatoraccess, seededrandom, i, j, biomebase);
 +    }
@@ -2038,7 +2038,7 @@ index 000000000..fb5ac05d5
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java b/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java
 new file mode 100644
-index 000000000..e6cc8f011
+index 000000000..36495fd9c
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java
 @@ -0,0 +1,42 @@
@@ -2057,7 +2057,7 @@ index 000000000..e6cc8f011
 +    }
 +
 +    protected StructureStart a(GeneratorAccess generatoraccess, ChunkGenerator<?> chunkgenerator, SeededRandom seededrandom, int i, int j) {
-+        BiomeBase biomebase = chunkgenerator.getWorldChunkManager().getBiome(new BlockPosition((i << 4) + 9, 0, (j << 4) + 9), Biomes.c);
++        BiomeBase biomebase = chunkgenerator.getWorldChunkManager().getBiome(new BlockPosition((i << 4) + 9, 0, (j << 4) + 9), Biomes.PLAINS);
 +
 +        return new WorldGenFeatureIgloo.a(generatoraccess, chunkgenerator, seededrandom, i, j, biomebase);
 +    }
@@ -2086,7 +2086,7 @@ index 000000000..e6cc8f011
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java b/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java
 new file mode 100644
-index 000000000..9d564488e
+index 000000000..604e849f4
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java
 @@ -0,0 +1,37 @@
@@ -2105,7 +2105,7 @@ index 000000000..9d564488e
 +    }
 +
 +    protected StructureStart a(GeneratorAccess generatoraccess, ChunkGenerator<?> chunkgenerator, SeededRandom seededrandom, int i, int j) {
-+        BiomeBase biomebase = chunkgenerator.getWorldChunkManager().getBiome(new BlockPosition((i << 4) + 9, 0, (j << 4) + 9), Biomes.c);
++        BiomeBase biomebase = chunkgenerator.getWorldChunkManager().getBiome(new BlockPosition((i << 4) + 9, 0, (j << 4) + 9), Biomes.PLAINS);
 +
 +        return new WorldGenFeatureJunglePyramid.a(generatoraccess, seededrandom, i, j, biomebase);
 +    }
@@ -2309,7 +2309,7 @@ index 000000000..a50a45c43
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
 new file mode 100644
-index 000000000..887293c3c
+index 000000000..47ff206b2
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
 @@ -0,0 +1,58 @@
@@ -2333,7 +2333,7 @@ index 000000000..887293c3c
 +    }
 +
 +    protected StructureStart a(GeneratorAccess generatoraccess, ChunkGenerator<?> chunkgenerator, SeededRandom seededrandom, int i, int j) {
-+        BiomeBase biomebase = chunkgenerator.getWorldChunkManager().getBiome(new BlockPosition((i << 4) + 9, 0, (j << 4) + 9), Biomes.c);
++        BiomeBase biomebase = chunkgenerator.getWorldChunkManager().getBiome(new BlockPosition((i << 4) + 9, 0, (j << 4) + 9), Biomes.PLAINS);
 +
 +        return new WorldGenFeatureSwampHut.a(generatoraccess, seededrandom, i, j, biomebase);
 +    }
@@ -2665,7 +2665,7 @@ index 000000000..968e4144f
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldPersistentData.java b/src/main/java/net/minecraft/server/WorldPersistentData.java
 new file mode 100644
-index 000000000..0e0427539
+index 000000000..ab79227e3
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldPersistentData.java
 @@ -0,0 +1,198 @@
@@ -2718,7 +2718,7 @@ index 000000000..0e0427539
 +
 +                if (file != null && file.exists()) {
 +                    persistentbase = (PersistentBase) function.apply(s);
-+                    persistentbase.a(a(this.e, this.b, s, 1628).getCompound("data"));
++                    persistentbase.a(a(this.e, this.b, s, 1631).getCompound("data"));
 +                    this.c.put(s, persistentbase);
 +                }
 +            } catch (Exception exception) {
@@ -2854,7 +2854,7 @@ index 000000000..0e0427539
 +                    NBTTagCompound nbttagcompound = new NBTTagCompound();
 +
 +                    nbttagcompound.set("data", persistentbase.b(new NBTTagCompound()));
-+                    nbttagcompound.setInt("DataVersion", 1628);
++                    nbttagcompound.setInt("DataVersion", 1631);
 +                    FileOutputStream fileoutputstream = new FileOutputStream(file);
 +
 +                    NBTCompressedStreamTools.a(nbttagcompound, (OutputStream) fileoutputstream);

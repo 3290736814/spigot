@@ -1,11 +1,11 @@
-From a4b996b68eea73e9aecc8bc02358a21622c6b165 Mon Sep 17 00:00:00 2001
+From 1481fd32b4704e36cb3c8f6032184342c6edcabb Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 3 Mar 2016 19:45:46 +1100
 Subject: [PATCH] Implement SpawnerSpawnEvent.
 
 
 diff --git a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
-index 88e7c823b..b091c89fb 100644
+index 88e7c823b..c9140b447 100644
 --- a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 +++ b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 @@ -115,6 +115,16 @@ public abstract class MobSpawnerAbstract {
@@ -17,7 +17,7 @@ index 88e7c823b..b091c89fb 100644
 +                            if (vehicle != null) {
 +                                vehicle.dead = true;
 +                            }
-+                            for (Entity passenger : entity.bQ()) {
++                            for (Entity passenger : entity.getAllPassengers()) {
 +                                passenger.dead = true;
 +                            }
 +                            continue;
@@ -26,10 +26,10 @@ index 88e7c823b..b091c89fb 100644
                          ChunkRegionLoader.a(entity, (GeneratorAccess) world, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER); // CraftBukkit
                          world.triggerEffect(2004, blockposition, 0);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index deb166d78..58b64a671 100644
+index 79d6578ea..e2d2d1155 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -1024,6 +1024,21 @@ public class CraftEventFactory {
+@@ -1036,6 +1036,21 @@ public class CraftEventFactory {
          return event;
      }
  

@@ -1,11 +1,11 @@
-From 3a4d3a71c3db2f8ab9bfdf3d85498d4001904f52 Mon Sep 17 00:00:00 2001
+From 5c19e55a5842a025cf9d4e1d1a8039685f6ea6c7 Mon Sep 17 00:00:00 2001
 From: BlackHole <black-hole@live.com>
 Date: Fri, 22 Apr 2016 16:43:47 +0200
 Subject: [PATCH] Don't tick blocks if neighbor chunks aren't loaded
 
 
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 2ff390d1a..4be2d8d3c 100644
+index 7f5a27bba..74a61f300 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -485,6 +485,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {

@@ -1,4 +1,4 @@
-From 66b88aa718eca047e1835400d7809ac25cb63130 Mon Sep 17 00:00:00 2001
+From 1ab4f9deeb04a57520986f2a4e95c89260f4e858 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -6,7 +6,7 @@ Subject: [PATCH] Crop Growth Rates
 Allows configuring the growth rates of crops as a percentage of their normal growth rate.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 309208f23..b9c066cd6 100644
+index 6f58cebdd..89a576261 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -1419,6 +1419,18 @@ public class Block implements IMaterial {
@@ -120,7 +120,7 @@ index 6ed02ab7e..42478d1fe 100644
              world.captureTreeGeneration = true;
              // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/BlockStem.java b/src/main/java/net/minecraft/server/BlockStem.java
-index 10c676a18..4fc8c5d3c 100644
+index 6eee8192b..dd309030e 100644
 --- a/src/main/java/net/minecraft/server/BlockStem.java
 +++ b/src/main/java/net/minecraft/server/BlockStem.java
 @@ -30,7 +30,7 @@ public class BlockStem extends BlockPlant implements IBlockFragilePlantElement {

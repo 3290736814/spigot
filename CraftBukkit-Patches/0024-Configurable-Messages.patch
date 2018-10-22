@@ -1,32 +1,32 @@
-From 089a5c97faf65082da681874c784a3ce6aade265 Mon Sep 17 00:00:00 2001
+From 64a287cd6958e941fac8342da9d7329f017751fb Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
 
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index ffeac0abb..93e49bcad 100644
+index 2db318377..169b72b48 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -62,11 +62,11 @@ public class HandshakeListener implements PacketHandshakingInListener {
              // CraftBukkit end
  
-             if (packethandshakinginsetprotocol.c() > 401) {
--                chatmessage = new ChatMessage("multiplayer.disconnect.outdated_server", new Object[] { "1.13.1"});
-+                chatmessage = new ChatMessage( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.13.1" ) ); // Spigot
+             if (packethandshakinginsetprotocol.c() > 404) {
+-                chatmessage = new ChatMessage("multiplayer.disconnect.outdated_server", new Object[] { "1.13.2"});
++                chatmessage = new ChatMessage( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedServerMessage.replaceAll("'", "''"), "1.13.2" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatmessage));
                  this.b.close(chatmessage);
-             } else if (packethandshakinginsetprotocol.c() < 401) {
--                chatmessage = new ChatMessage("multiplayer.disconnect.outdated_client", new Object[] { "1.13.1"});
-+                chatmessage = new ChatMessage( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), "1.13.1" ) ); // Spigot
+             } else if (packethandshakinginsetprotocol.c() < 404) {
+-                chatmessage = new ChatMessage("multiplayer.disconnect.outdated_client", new Object[] { "1.13.2"});
++                chatmessage = new ChatMessage( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), "1.13.2" ) ); // Spigot
                  this.b.sendPacket(new PacketLoginOutDisconnect(chatmessage));
                  this.b.close(chatmessage);
              } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 3fc93fcfd..5aaaa393a 100644
+index 61fe8f3aa..8d43d007c 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -493,7 +493,7 @@ public abstract class PlayerList {
+@@ -494,7 +494,7 @@ public abstract class PlayerList {
              event.disallow(PlayerLoginEvent.Result.KICK_BANNED, CraftChatMessage.fromComponent(chatmessage));
          } else if (!this.isWhitelisted(gameprofile)) {
              chatmessage = new ChatMessage("multiplayer.disconnect.not_whitelisted", new Object[0]);
@@ -35,7 +35,7 @@ index 3fc93fcfd..5aaaa393a 100644
          } else if (getIPBans().isBanned(socketaddress) && !getIPBans().get(socketaddress).hasExpired()) {
              IpBanEntry ipbanentry = this.l.get(socketaddress);
  
-@@ -507,7 +507,7 @@ public abstract class PlayerList {
+@@ -508,7 +508,7 @@ public abstract class PlayerList {
          } else {
              // return this.players.size() >= this.maxPlayers && !this.f(gameprofile) ? new ChatMessage("multiplayer.disconnect.server_full", new Object[0]) : null;
              if (this.players.size() >= this.maxPlayers && !this.f(gameprofile)) {
@@ -45,7 +45,7 @@ index 3fc93fcfd..5aaaa393a 100644
          }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b1b8a5511..615462eab 100644
+index ef8bb3951..3fb33734f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -681,11 +681,11 @@ public final class CraftServer implements Server {

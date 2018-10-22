@@ -1,4 +1,4 @@
-From d87bc1b39fc2fcb7ab1b761f3a708f60e81175cf Mon Sep 17 00:00:00 2001
+From 5a9f2fc0fbeb6bb3c77c77b99cfbfc8588aa57e9 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -6,7 +6,7 @@ Subject: [PATCH] Skeleton API Implementations
 This contains the basic, empty implementations for some Spigot-API extensions. They are included early in the patching progress so that compilation will still succeed midway despite the APIs only being provided by subsequent patches.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index a0eefe04b..e94f69743 100644
+index a1eacecfa..a7b55976d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1827,4 +1827,14 @@ public final class CraftServer implements Server {
@@ -25,10 +25,10 @@ index a0eefe04b..e94f69743 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index adf232ea5..875c90f9c 100644
+index cc10e2778..d33e28e4f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1626,4 +1626,14 @@ public class CraftWorld implements World {
+@@ -1631,4 +1631,14 @@ public class CraftWorld implements World {
              cps.unload(chunk);
          }
      }
@@ -180,7 +180,7 @@ index c8654c68f..0c1bca2bd 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index a58354791..983023fc8 100644
+index 60cdd1dc8..cbc65e6a8 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -1231,4 +1231,16 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {

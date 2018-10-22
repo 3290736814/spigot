@@ -1,4 +1,4 @@
-From f8f3d5e5185c0d90297827207455d5cc6ce80c4c Mon Sep 17 00:00:00 2001
+From e44f27d67de7f95f5e84ad4fa0773250f921de32 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Aug 2014 18:12:32 -0400
 Subject: [PATCH] Limit TNT Detonations per tick
@@ -19,7 +19,7 @@ index aa4c31bb7..7edc02852 100644
          this.lastY = this.locY;
          this.lastZ = this.locZ;
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 961d9abce..2ff390d1a 100644
+index 9e7fb4bd3..7f5a27bba 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -598,6 +598,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {

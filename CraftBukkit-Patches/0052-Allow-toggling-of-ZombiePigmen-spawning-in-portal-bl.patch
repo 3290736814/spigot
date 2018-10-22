@@ -1,19 +1,19 @@
-From 25e1dfd0ca2ed191acf532b838a1476aa7de9ece Mon Sep 17 00:00:00 2001
+From 8656a5375c225439d4d70564d48a70f014afff11 Mon Sep 17 00:00:00 2001
 From: Dmck2b <dmck2b+github@gmail.com>
 Date: Mon, 20 Jan 2014 20:18:23 +0000
 Subject: [PATCH] Allow toggling of ZombiePigmen spawning in portal blocks
 
 
 diff --git a/src/main/java/net/minecraft/server/BlockPortal.java b/src/main/java/net/minecraft/server/BlockPortal.java
-index f63d823e7..7bd8eab47 100644
+index b598e55da..223dc4ef8 100644
 --- a/src/main/java/net/minecraft/server/BlockPortal.java
 +++ b/src/main/java/net/minecraft/server/BlockPortal.java
 @@ -33,7 +33,7 @@ public class BlockPortal extends Block {
      }
  
      public void a(IBlockData iblockdata, World world, BlockPosition blockposition, Random random) {
--        if (world.worldProvider.o() && world.getGameRules().getBoolean("doMobSpawning") && random.nextInt(2000) < world.getDifficulty().a()) {
-+        if (world.spigotConfig.enableZombiePigmenPortalSpawns && world.worldProvider.o() && world.getGameRules().getBoolean("doMobSpawning") && random.nextInt(2000) < world.getDifficulty().a()) { // Spigot
+-        if (world.worldProvider.isOverworld() && world.getGameRules().getBoolean("doMobSpawning") && random.nextInt(2000) < world.getDifficulty().a()) {
++        if (world.spigotConfig.enableZombiePigmenPortalSpawns && world.worldProvider.isOverworld() && world.getGameRules().getBoolean("doMobSpawning") && random.nextInt(2000) < world.getDifficulty().a()) { // Spigot
              int i = blockposition.getY();
  
              BlockPosition blockposition1;

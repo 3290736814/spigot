@@ -1,4 +1,4 @@
-From e46dd9e73e8fa152d6b814692a0ccfca9a810bfc Mon Sep 17 00:00:00 2001
+From 33b9a484a4c5db1856b6eee8e8e25db4ca821d4c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 30908370f..22a688637 100644
+index 76b833a57..0bba90596 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -161,6 +161,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -75,7 +75,7 @@ index ef0ad7edd..1d7c998aa 100644
      public abstract EntityAgeable createChild(EntityAgeable entityageable);
  
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index 1c7ff6a61..6134dc885 100644
+index e82d2fc39..c13d0d4e3 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
 @@ -34,6 +34,18 @@ public abstract class EntityArrow extends Entity implements IProjectile {
@@ -117,7 +117,7 @@ index da878c760..6e2592e96 100644
          this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, ItemStack.a);
          this.datawatcher.register(EntityFireworks.b, Integer.valueOf(0));
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 727ad3be8..eecebafda 100644
+index bcb241bf2..5be2d9314 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -139,6 +139,28 @@ public class EntityItem extends Entity {
@@ -150,7 +150,7 @@ index 727ad3be8..eecebafda 100644
          if (this.motY < 0.05999999865889549D) {
              this.motY += 5.000000237487257E-4D;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 6dbfb790d..fd050c5f3 100644
+index 6167c190e..6081ffcae 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -128,6 +128,13 @@ public abstract class EntityLiving extends Entity {
@@ -168,7 +168,7 @@ index 6dbfb790d..fd050c5f3 100644
      protected EntityLiving(EntityTypes<?> entitytypes, World world) {
          super(entitytypes, world);
 diff --git a/src/main/java/net/minecraft/server/EntityVillager.java b/src/main/java/net/minecraft/server/EntityVillager.java
-index 139976f9b..32e327e42 100644
+index 1b27c4ca9..5e5234906 100644
 --- a/src/main/java/net/minecraft/server/EntityVillager.java
 +++ b/src/main/java/net/minecraft/server/EntityVillager.java
 @@ -98,6 +98,22 @@ public class EntityVillager extends EntityAgeable implements NPC, IMerchant {
@@ -195,7 +195,7 @@ index 139976f9b..32e327e42 100644
          if (--this.profession <= 0) {
              BlockPosition blockposition = new BlockPosition(this);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index cac20e54a..d1eca41db 100644
+index db5e5c5ea..ef3e7bfa7 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1093,6 +1093,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
@@ -249,7 +249,7 @@ index d7ddcd739..8570d2f2e 100644
      }
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
 new file mode 100644
-index 000000000..635653abc
+index 000000000..f45e0a344
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -0,0 +1,287 @@
@@ -371,10 +371,10 @@ index 000000000..635653abc
 +            animalBB = player.getBoundingBox().grow( animalActivationRange, 256, animalActivationRange );
 +            monsterBB = player.getBoundingBox().grow( monsterActivationRange, 256, monsterActivationRange );
 +
-+            int i = MathHelper.floor( maxBB.a / 16.0D );
-+            int j = MathHelper.floor( maxBB.d / 16.0D );
-+            int k = MathHelper.floor( maxBB.c / 16.0D );
-+            int l = MathHelper.floor( maxBB.f / 16.0D );
++            int i = MathHelper.floor( maxBB.minX / 16.0D );
++            int j = MathHelper.floor( maxBB.maxX / 16.0D );
++            int k = MathHelper.floor( maxBB.minZ / 16.0D );
++            int l = MathHelper.floor( maxBB.maxZ / 16.0D );
 +
 +            for ( int i1 = i; i1 <= j; ++i1 )
 +            {

@@ -1,11 +1,11 @@
-From b9fa8b619da4a2e98deb76cfbd686e897ccc588c Mon Sep 17 00:00:00 2001
+From 829fb86311a31176b02caadcb5c9636ade13bf42 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index e701f3333..d6bf247be 100644
+index 2b2b8739e..512577dc2 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -307,7 +307,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -18,7 +18,7 @@ index e701f3333..d6bf247be 100644
  
                      thread1.setUncaughtExceptionHandler(new ThreadNamedUncaughtExceptionHandler(DedicatedServer.LOGGER));
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 2af6051a4..2529992af 100644
+index c86985632..00a59a32b 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -730,6 +730,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
@@ -38,7 +38,7 @@ index 2af6051a4..2529992af 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 615462eab..79238bd12 100644
+index 3fb33734f..1ec462e55 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1872,6 +1872,11 @@ public final class CraftServer implements Server {

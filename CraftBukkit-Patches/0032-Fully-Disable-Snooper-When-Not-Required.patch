@@ -1,11 +1,11 @@
-From 7b37132c7340f1e25e287aa94f2d1ed21e1adee8 Mon Sep 17 00:00:00 2001
+From 8b67f1fd95e30495ba9fbb89559a1009e4e58c75 Mon Sep 17 00:00:00 2001
 From: agentk20 <agentkid20@gmail.com>
 Date: Sat, 3 Aug 2013 19:28:48 +1000
 Subject: [PATCH] Fully Disable Snooper When Not Required
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 45207f9b5..2af6051a4 100644
+index 8d46b445d..c86985632 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -820,11 +820,11 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati

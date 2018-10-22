@@ -1,11 +1,11 @@
-From fece2bd87683b73bbbc4e459586843cc99aaeaa5 Mon Sep 17 00:00:00 2001
+From 041317cd61a70e6118b73239fc2f418b245cdfca Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index f30288040..78fd9c105 100644
+index b3d3dd070..12b25560f 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -151,6 +151,12 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
@@ -36,7 +36,7 @@ index f30288040..78fd9c105 100644
          try {
              if (this.init()) {
 @@ -684,26 +697,34 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
-                 this.m.setServerInfo(new ServerPing.ServerData("1.13.1", 401));
+                 this.m.setServerInfo(new ServerPing.ServerData("1.13.2", 404));
                  this.a(this.m);
  
 +                // Spigot start
