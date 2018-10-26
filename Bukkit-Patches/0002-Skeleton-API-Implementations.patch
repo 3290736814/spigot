@@ -1,4 +1,4 @@
-From f928a658347a9b597f452a418bd68901ac59e4b8 Mon Sep 17 00:00:00 2001
+From 296a1e1fba90991db0600be8062f90812fd04799 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -37,10 +37,10 @@ index 21ed6aeb..4ef22289 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 93ff5f5a..231bebcb 100644
+index 89a08cc9..35f0d18f 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -1557,6 +1557,15 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -1774,6 +1774,15 @@ public interface World extends PluginMessageRecipient, Metadatable {
       */
      public Location locateNearestStructure(Location origin, StructureType structureType, int radius, boolean findUnexplored);
  
@@ -94,10 +94,10 @@ index 752eeb5e..c77f3a4f 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index c798998c..385f9cca 100644
+index 1a7ec6da..45dd4d7c 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -527,4 +527,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable {
+@@ -538,4 +538,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable {
       * @see Directional#getFacing()
       */
      BlockFace getFacing();
@@ -168,10 +168,10 @@ index b2851209..a252e3a8 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-index 73bdcebd..a5014166 100644
+index 031400b3..0529488b 100644
 --- a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
 +++ b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-@@ -318,4 +318,13 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
+@@ -316,4 +316,13 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
  
      @SuppressWarnings("javadoc")
      ItemMeta clone();

@@ -1,4 +1,4 @@
-From cabcbb1cd5a319afe098a7b8e36d189a21636de1 Mon Sep 17 00:00:00 2001
+From 62b62f2615dff15340671883feb999eedcd1bbdb Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -127,10 +127,10 @@ index 9bdea6b21..0824cb005 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index d33e28e4f..a2d18014c 100644
+index 3a874d7c1..3ce860b2b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -184,6 +184,7 @@ public class CraftWorld implements World {
+@@ -189,6 +189,7 @@ public class CraftWorld implements World {
      }
  
      public boolean unloadChunkRequest(int x, int z, boolean safe) {
@@ -138,7 +138,7 @@ index d33e28e4f..a2d18014c 100644
          if (safe && isChunkInUse(x, z)) {
              return false;
          }
-@@ -197,6 +198,7 @@ public class CraftWorld implements World {
+@@ -202,6 +203,7 @@ public class CraftWorld implements World {
      }
  
      public boolean unloadChunk(int x, int z, boolean save, boolean safe) {
@@ -146,7 +146,7 @@ index d33e28e4f..a2d18014c 100644
          if (isChunkInUse(x, z)) {
              return false;
          }
-@@ -260,6 +262,7 @@ public class CraftWorld implements World {
+@@ -265,6 +267,7 @@ public class CraftWorld implements World {
      }
  
      public boolean loadChunk(int x, int z, boolean generate) {

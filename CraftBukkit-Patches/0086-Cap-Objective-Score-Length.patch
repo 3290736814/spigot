@@ -1,4 +1,4 @@
-From 26f9b66e5d6a2c8feb57f2b5c78d7dd009caf760 Mon Sep 17 00:00:00 2001
+From a58d90f19a07bff04c9c58298da7ecda9ca3c48d Mon Sep 17 00:00:00 2001
 From: hauno <imhauno@gmail.com>
 Date: Tue, 6 May 2014 18:01:37 -0700
 Subject: [PATCH] Cap Objective Score Length
@@ -6,10 +6,10 @@ Subject: [PATCH] Cap Objective Score Length
 Adds a check for Score arguments that would crash the client
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftObjective.java b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftObjective.java
-index 0ef48af0d..9b2c23e53 100644
+index 2b96d3c97..2ff68bb88 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftObjective.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftObjective.java
-@@ -95,6 +95,7 @@ final class CraftObjective extends CraftScoreboardComponent implements Objective
+@@ -110,6 +110,7 @@ final class CraftObjective extends CraftScoreboardComponent implements Objective
  
      public Score getScore(String entry) throws IllegalArgumentException, IllegalStateException {
          Validate.notNull(entry, "Entry cannot be null");

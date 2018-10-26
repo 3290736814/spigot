@@ -1,4 +1,4 @@
-From 33b9a484a4c5db1856b6eee8e8e25db4ca821d4c Mon Sep 17 00:00:00 2001
+From dec1b1c32a39f815f2e2374d7ec7aa298ad0be13 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -236,10 +236,10 @@ index fa88be0db..4c8ab2bc9 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index d7ddcd739..8570d2f2e 100644
+index d9843a010..848209fef 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -304,6 +304,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -311,6 +311,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          entity.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
          // SPIGOT-619: Force sync head rotation also
          entity.setHeadRotation(location.getYaw());
