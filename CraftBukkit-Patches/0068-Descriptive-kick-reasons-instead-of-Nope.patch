@@ -1,4 +1,4 @@
-From a3cc38d4fa7b9a9d0a212d94e20aac48884d43c1 Mon Sep 17 00:00:00 2001
+From 5632a14368859a41e9e1133715b22826f6f45416 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sat, 15 Mar 2014 01:30:05 -0400
 Subject: [PATCH] Descriptive kick reasons instead of Nope!
@@ -27,10 +27,10 @@ index 6988be7f7..c9b332f45 100644
              f1 = 0;
          }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index c374fabef..f13f87a93 100644
+index 1da7f762f..41426bdff 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1400,7 +1400,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1402,7 +1402,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
              this.player.resetIdleTimer();
          } else {
              PlayerConnection.LOGGER.warn("{} tried to set an invalid carried item", this.player.getDisplayName().getString());

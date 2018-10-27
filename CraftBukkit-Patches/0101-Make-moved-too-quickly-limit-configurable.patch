@@ -1,14 +1,14 @@
-From e0c435a5ae10cee52a23fd9da7b5e83e269f0f8c Mon Sep 17 00:00:00 2001
+From c9f9b90632c2f7c49acab65382509e0157f89352 Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Tue, 22 Jul 2014 15:59:01 +0200
 Subject: [PATCH] Make "moved too quickly" limit configurable
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 040412f1d..839866eca 100644
+index e1de7ad9c..59d715268 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -328,7 +328,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -330,7 +330,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
                  }
                  speed *= 2f; // TODO: Get the speed of the vehicle instead of the player
  
@@ -17,7 +17,7 @@ index 040412f1d..839866eca 100644
                  // CraftBukkit end
                      PlayerConnection.LOGGER.warn("{} (vehicle of {}) moved too quickly! {},{},{}", entity.getDisplayName().getString(), this.player.getDisplayName().getString(), Double.valueOf(d6), Double.valueOf(d7), Double.valueOf(d8));
                      this.networkManager.sendPacket(new PacketPlayOutVehicleMove(entity));
-@@ -860,7 +860,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -862,7 +862,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
                              if (!this.player.H() && (!this.player.getWorldServer().getGameRules().getBoolean("disableElytraMovementCheck") || !this.player.dc())) {
                                  float f2 = this.player.dc() ? 300.0F : 100.0F;
  

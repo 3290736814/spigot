@@ -1,4 +1,4 @@
-From 07861759a348043dbd4d24445543fce2814f82ff Mon Sep 17 00:00:00 2001
+From 7b51514d1c86cde9ebc83da87e63907df92ee7c6 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -344,10 +344,26 @@ index c07b0b488..8d46b445d 100644
          this.methodProfiler.e();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 39a313354..1d7fbd896 100644
+index 39a313354..5436e6c1b 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1571,6 +1571,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -135,6 +135,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+     // CraftBukkit end
+ 
+     public void Y_() {
++        org.bukkit.craftbukkit.SpigotTimings.playerConnectionTimer.startTiming(); // Spigot
+         this.syncPosition();
+         this.player.playerTick();
+         this.player.setLocation(this.l, this.m, this.n, this.player.yaw, this.player.pitch);
+@@ -207,6 +208,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+             this.player.resetIdleTimer(); // CraftBukkit - SPIGOT-854
+             this.disconnect(new ChatMessage("multiplayer.disconnect.idling", new Object[0]));
+         }
++        org.bukkit.craftbukkit.SpigotTimings.playerConnectionTimer.stopTiming(); // Spigot
+ 
+     }
+ 
+@@ -1571,6 +1573,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
      // CraftBukkit end
  
      private void handleCommand(String s) {
@@ -355,7 +371,7 @@ index 39a313354..1d7fbd896 100644
          // CraftBukkit start - whole method
          this.LOGGER.info(this.player.getName() + " issued server command: " + s);
  
-@@ -1580,6 +1581,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1580,6 +1583,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
          this.server.getPluginManager().callEvent(event);
  
          if (event.isCancelled()) {
@@ -363,7 +379,7 @@ index 39a313354..1d7fbd896 100644
              return;
          }
  
-@@ -1591,6 +1593,8 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1591,6 +1595,8 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
              player.sendMessage(org.bukkit.ChatColor.RED + "An internal error occurred while attempting to perform this command");
              java.util.logging.Logger.getLogger(PlayerConnection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
              return;
@@ -574,10 +590,10 @@ index 0824cb005..20353128f 100644
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java b/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
 new file mode 100644
-index 000000000..fa88be0db
+index 000000000..42f3f03d8
 --- /dev/null
 +++ b/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
-@@ -0,0 +1,171 @@
+@@ -0,0 +1,172 @@
 +package org.bukkit.craftbukkit;
 +
 +import com.google.common.collect.Maps;
@@ -597,6 +613,7 @@ index 000000000..fa88be0db
 +    public static final CustomTimingsHandler playerListTimer = new CustomTimingsHandler("Player List");
 +    public static final CustomTimingsHandler commandFunctionsTimer = new CustomTimingsHandler("Command Functions");
 +    public static final CustomTimingsHandler connectionTimer = new CustomTimingsHandler("Connection Handler");
++    public static final CustomTimingsHandler playerConnectionTimer = new CustomTimingsHandler("** PlayerConnection");
 +    public static final CustomTimingsHandler tickablesTimer = new CustomTimingsHandler("Tickables");
 +    public static final CustomTimingsHandler schedulerTimer = new CustomTimingsHandler("Scheduler");
 +    public static final CustomTimingsHandler chunkIOTickTimer = new CustomTimingsHandler("ChunkIOTick");

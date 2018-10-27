@@ -1,4 +1,4 @@
-From 228fb04af2afe091290c2706c199a361d78a5a9a Mon Sep 17 00:00:00 2001
+From e13072a26a2baff55b3466d83b70edb596d4bac4 Mon Sep 17 00:00:00 2001
 From: riking <rikingcoding@gmail.com>
 Date: Wed, 14 May 2014 13:46:48 -0700
 Subject: [PATCH] Process conversation input on the main thread. Fixes
@@ -6,10 +6,10 @@ Subject: [PATCH] Process conversation input on the main thread. Fixes
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index f13f87a93..b1d8f8fa2 100644
+index 41426bdff..0fad5f90a 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1464,7 +1464,18 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1466,7 +1466,18 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
              } else if (s.isEmpty()) {
                  LOGGER.warn(this.player.getName() + " tried to send an empty message");
              } else if (getPlayer().isConversing()) {
