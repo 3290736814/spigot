@@ -1,4 +1,4 @@
-From 3e9aafd7ed1681b32b020b7f08562ad2e5902a17 Mon Sep 17 00:00:00 2001
+From 5bac03ce35fdddac372b42743360c62b419d5a98 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index d49a6e4f..33c9d696 100644
+index 29da0aac..8f76d537 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -110,7 +110,7 @@ public abstract class Entity implements ICommandListener {
@@ -231,10 +231,10 @@ index 73e95167..04f63941 100644
          }
          // CraftBukkit end
 diff --git a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java b/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
-index fa88be0d..4c8ab2bc 100644
+index 42f3f03d..666d1eb9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
 +++ b/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
-@@ -40,6 +40,9 @@ public class SpigotTimings {
+@@ -41,6 +41,9 @@ public class SpigotTimings {
  
      public static final CustomTimingsHandler playerCommandTimer = new CustomTimingsHandler("** playerCommand");
  

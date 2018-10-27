@@ -1,4 +1,4 @@
-From 51f70b752d0eb06e0fe7f6528d2646c5dfdf76dd Mon Sep 17 00:00:00 2001
+From b23d5bed99aa0052b927fc64fa0b93098970ba4a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -359,10 +359,26 @@ index 48495b64..26fe01ba 100644
          this.methodProfiler.b();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 3f940156..7bf52d87 100644
+index 3f940156..4eece278 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1324,6 +1324,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -134,6 +134,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+     // CraftBukkit end
+ 
+     public void e() {
++        org.bukkit.craftbukkit.SpigotTimings.playerConnectionTimer.startTiming(); // Spigot
+         this.syncPosition();
+         this.player.playerTick();
+         this.player.setLocation(this.l, this.m, this.n, this.player.yaw, this.player.pitch);
+@@ -206,6 +207,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+             this.player.resetIdleTimer(); // CraftBukkit - SPIGOT-854
+             this.disconnect(new ChatMessage("multiplayer.disconnect.idling", new Object[0]));
+         }
++        org.bukkit.craftbukkit.SpigotTimings.playerConnectionTimer.stopTiming(); // Spigot
+ 
+     }
+ 
+@@ -1324,6 +1326,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
      // CraftBukkit end
  
      private void handleCommand(String s) {
@@ -370,7 +386,7 @@ index 3f940156..7bf52d87 100644
         // CraftBukkit start - whole method
          this.LOGGER.info(this.player.getName() + " issued server command: " + s);
  
-@@ -1333,18 +1334,22 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1333,18 +1336,22 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
          this.server.getPluginManager().callEvent(event);
  
          if (event.isCancelled()) {
@@ -593,10 +609,10 @@ index acdf68df..f9207f36 100644
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java b/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
 new file mode 100644
-index 00000000..fa88be0d
+index 00000000..42f3f03d
 --- /dev/null
 +++ b/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
-@@ -0,0 +1,171 @@
+@@ -0,0 +1,172 @@
 +package org.bukkit.craftbukkit;
 +
 +import com.google.common.collect.Maps;
@@ -616,6 +632,7 @@ index 00000000..fa88be0d
 +    public static final CustomTimingsHandler playerListTimer = new CustomTimingsHandler("Player List");
 +    public static final CustomTimingsHandler commandFunctionsTimer = new CustomTimingsHandler("Command Functions");
 +    public static final CustomTimingsHandler connectionTimer = new CustomTimingsHandler("Connection Handler");
++    public static final CustomTimingsHandler playerConnectionTimer = new CustomTimingsHandler("** PlayerConnection");
 +    public static final CustomTimingsHandler tickablesTimer = new CustomTimingsHandler("Tickables");
 +    public static final CustomTimingsHandler schedulerTimer = new CustomTimingsHandler("Scheduler");
 +    public static final CustomTimingsHandler chunkIOTickTimer = new CustomTimingsHandler("ChunkIOTick");
