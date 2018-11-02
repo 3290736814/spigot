@@ -1,4 +1,4 @@
-From 86c016b9876d6cede6d8fac1aa37f24e47aba700 Mon Sep 17 00:00:00 2001
+From 58ab60a6e0281e949cf1900a89e05c794d012996 Mon Sep 17 00:00:00 2001
 From: Andy Shulman <andy.shulman@hotmail.com>
 Date: Mon, 15 Apr 2013 20:06:01 -0500
 Subject: [PATCH] Define EntitySpawnEvent and SpawnerSpawnEvent
@@ -6,12 +6,12 @@ Subject: [PATCH] Define EntitySpawnEvent and SpawnerSpawnEvent
 Defines EntitySpawnEvent and SpawnerSpawnEvent. Adds BUKKIT-267 and BUKKIT-1559
 
 diff --git a/src/main/java/org/bukkit/event/entity/CreatureSpawnEvent.java b/src/main/java/org/bukkit/event/entity/CreatureSpawnEvent.java
-index 73a26ba8..6ffafc5c 100644
+index ed5da79e..e7bc61be 100644
 --- a/src/main/java/org/bukkit/event/entity/CreatureSpawnEvent.java
 +++ b/src/main/java/org/bukkit/event/entity/CreatureSpawnEvent.java
-@@ -3,17 +3,13 @@ package org.bukkit.event.entity;
+@@ -2,17 +2,13 @@ package org.bukkit.event.entity;
+ 
  import org.bukkit.Location;
- import org.bukkit.entity.Entity;
  import org.bukkit.entity.LivingEntity;
 -import org.bukkit.event.Cancellable;
 -import org.bukkit.event.HandlerList;
@@ -28,7 +28,7 @@ index 73a26ba8..6ffafc5c 100644
      private final SpawnReason spawnReason;
  
      public CreatureSpawnEvent(final LivingEntity spawnee, final SpawnReason spawnReason) {
-@@ -21,28 +17,11 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
+@@ -20,28 +16,11 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
          this.spawnReason = spawnReason;
      }
  
@@ -57,7 +57,7 @@ index 73a26ba8..6ffafc5c 100644
      /**
       * Gets the reason for why the creature is being spawned.
       *
-@@ -53,15 +32,6 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
+@@ -52,15 +31,6 @@ public class CreatureSpawnEvent extends EntityEvent implements Cancellable {
          return spawnReason;
      }
  

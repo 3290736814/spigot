@@ -1,4 +1,4 @@
-From 01684bfd345ecc147ed03b44acc201a150564273 Mon Sep 17 00:00:00 2001
+From a64ec2810cf8b8f0d660d85bbd8e7d6f74da5de2 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 2 Jun 2013 10:42:57 +1000
 Subject: [PATCH] Spigot Timings
@@ -35,10 +35,10 @@ index 4ef22289..32910c15 100644
  
      Spigot spigot();
 diff --git a/src/main/java/org/bukkit/command/Command.java b/src/main/java/org/bukkit/command/Command.java
-index d00bad28..7ca5be84 100644
+index c77623f4..4c931f18 100644
 --- a/src/main/java/org/bukkit/command/Command.java
 +++ b/src/main/java/org/bukkit/command/Command.java
-@@ -32,6 +32,7 @@ public abstract class Command {
+@@ -33,6 +33,7 @@ public abstract class Command {
      protected String usageMessage;
      private String permission;
      private String permissionMessage;
@@ -46,7 +46,7 @@ index d00bad28..7ca5be84 100644
  
      protected Command(String name) {
          this(name, "", "/" + name, new ArrayList<String>());
-@@ -45,6 +46,7 @@ public abstract class Command {
+@@ -46,6 +47,7 @@ public abstract class Command {
          this.usageMessage = usageMessage;
          this.aliases = aliases;
          this.activeAliases = new ArrayList<String>(aliases);
@@ -54,7 +54,7 @@ index d00bad28..7ca5be84 100644
      }
  
      /**
-@@ -233,6 +235,7 @@ public abstract class Command {
+@@ -234,6 +236,7 @@ public abstract class Command {
      public boolean setLabel(String name) {
          this.nextLabel = name;
          if (!isRegistered()) {
@@ -63,10 +63,10 @@ index d00bad28..7ca5be84 100644
              return true;
          }
 diff --git a/src/main/java/org/bukkit/command/SimpleCommandMap.java b/src/main/java/org/bukkit/command/SimpleCommandMap.java
-index f81ae85d..1b5b37bf 100644
+index 9eeafaf9..d9183db2 100644
 --- a/src/main/java/org/bukkit/command/SimpleCommandMap.java
 +++ b/src/main/java/org/bukkit/command/SimpleCommandMap.java
-@@ -136,11 +136,15 @@ public class SimpleCommandMap implements CommandMap {
+@@ -134,11 +134,15 @@ public class SimpleCommandMap implements CommandMap {
          }
  
          try {
