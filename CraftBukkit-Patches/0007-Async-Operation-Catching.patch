@@ -1,4 +1,4 @@
-From 62b62f2615dff15340671883feb999eedcd1bbdb Mon Sep 17 00:00:00 2001
+From 0e8ceef3f4e416044313525a2c083df5097f025d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -127,7 +127,7 @@ index 9bdea6b21..0824cb005 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 3a874d7c1..3ce860b2b 100644
+index a86014042..945c35075 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -189,6 +189,7 @@ public class CraftWorld implements World {
@@ -142,11 +142,19 @@ index 3a874d7c1..3ce860b2b 100644
      }
  
      public boolean unloadChunk(int x, int z, boolean save, boolean safe) {
-+        org.spigotmc.AsyncCatcher.catchOp( "chunk unload"); // Spigot
++        org.spigotmc.AsyncCatcher.catchOp( "chunk unload" ); // Spigot
          if (isChunkInUse(x, z)) {
              return false;
          }
-@@ -265,6 +267,7 @@ public class CraftWorld implements World {
+@@ -220,6 +222,7 @@ public class CraftWorld implements World {
+     }
+ 
+     public boolean regenerateChunk(int x, int z) {
++        org.spigotmc.AsyncCatcher.catchOp( "chunk regenerate" ); // Spigot
+         if (!unloadChunk0(x, z, false)) {
+             return false;
+         }
+@@ -265,6 +268,7 @@ public class CraftWorld implements World {
      }
  
      public boolean loadChunk(int x, int z, boolean generate) {

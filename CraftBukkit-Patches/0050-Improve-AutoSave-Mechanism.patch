@@ -1,4 +1,4 @@
-From 28fb4ee54ecf908c7ab95cb17683ba2d38a8cb21 Mon Sep 17 00:00:00 2001
+From 631b4e950e3fbfa22e23eeb4a4bb423c65c21916 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 21:07:18 +1100
 Subject: [PATCH] Improve AutoSave Mechanism
@@ -60,10 +60,10 @@ index d1490632a..b3d3dd070 100644
              SpigotTimings.worldSaveTimer.stopTiming(); // Spigot
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 74287e359..1cde46282 100644
+index 945c35075..d4cb7ebec 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -845,12 +845,17 @@ public class CraftWorld implements World {
+@@ -846,12 +846,17 @@ public class CraftWorld implements World {
      }
  
      public void save() {

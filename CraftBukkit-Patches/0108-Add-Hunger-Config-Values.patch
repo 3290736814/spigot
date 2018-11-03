@@ -1,14 +1,14 @@
-From 859c252cf913dd5f53b931fca28ead2d95c04329 Mon Sep 17 00:00:00 2001
+From abfba356f216036974d16d671283207bd1d74e39 Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 42c33c2c1..ae6e5fa5f 100644
+index 364f0acc7..5c1f7d72a 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
-@@ -1172,7 +1172,7 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1171,7 +1171,7 @@ public abstract class EntityHuman extends EntityLiving {
                              }
                          }
  
@@ -17,7 +17,7 @@ index 42c33c2c1..ae6e5fa5f 100644
                      } else {
                          this.world.a((EntityHuman) null, this.locX, this.locY, this.locZ, SoundEffects.ENTITY_PLAYER_ATTACK_NODAMAGE, this.bV(), 1.0F, 1.0F);
                          if (flag4) {
-@@ -1462,9 +1462,9 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1467,9 +1467,9 @@ public abstract class EntityHuman extends EntityLiving {
          super.cH();
          this.a(StatisticList.JUMP);
          if (this.isSprinting()) {
@@ -29,7 +29,7 @@ index 42c33c2c1..ae6e5fa5f 100644
          }
  
      }
-@@ -1532,13 +1532,13 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1537,13 +1537,13 @@ public abstract class EntityHuman extends EntityLiving {
                  i = Math.round(MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2) * 100.0F);
                  if (i > 0) {
                      this.a(StatisticList.WALK_UNDER_WATER_ONE_CM, i);
@@ -45,7 +45,7 @@ index 42c33c2c1..ae6e5fa5f 100644
                  }
              } else if (this.z_()) {
                  if (d1 > 0.0D) {
-@@ -1549,13 +1549,13 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1554,13 +1554,13 @@ public abstract class EntityHuman extends EntityLiving {
                  if (i > 0) {
                      if (this.isSprinting()) {
                          this.a(StatisticList.SPRINT_ONE_CM, i);
