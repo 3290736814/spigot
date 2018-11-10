@@ -1,14 +1,14 @@
-From 86a48d3164d28ef9eacb88419e0799a155725d14 Mon Sep 17 00:00:00 2001
+From 570418ef27831c62f15e51c9d887ae941ae36b0a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 13 Jul 2015 19:10:15 +1000
 Subject: [PATCH] Add restart API.
 
 
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 21f64cdb..da4ced2d 100644
+index 3318ba9d..63392d5e 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1106,6 +1106,13 @@ public interface Server extends PluginMessageRecipient {
+@@ -1173,6 +1173,13 @@ public interface Server extends PluginMessageRecipient {
          public void broadcast(net.md_5.bungee.api.chat.BaseComponent... components) {
              throw new UnsupportedOperationException("Not supported yet.");
          }

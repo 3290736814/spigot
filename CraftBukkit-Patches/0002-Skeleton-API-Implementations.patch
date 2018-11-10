@@ -1,4 +1,4 @@
-From 6392d99e63845335a28cbe5a1b7d9a744ee238f6 Mon Sep 17 00:00:00 2001
+From d68a635d9c2f60cd8694f291c535916e60113ebb Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -6,10 +6,10 @@ Subject: [PATCH] Skeleton API Implementations
 This contains the basic, empty implementations for some Spigot-API extensions. They are included early in the patching progress so that compilation will still succeed midway despite the APIs only being provided by subsequent patches.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index a1eacecfa..a7b55976d 100644
+index e5be1ba6e..27f904632 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1827,4 +1827,14 @@ public final class CraftServer implements Server {
+@@ -1877,4 +1877,14 @@ public final class CraftServer implements Server {
      public UnsafeValues getUnsafe() {
          return CraftMagicNumbers.INSTANCE;
      }
@@ -141,10 +141,10 @@ index 64e346d84..194d830e1 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 82000a350..4a3d4da91 100644
+index 675d5a4ea..f77241361 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1625,4 +1625,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1630,4 +1630,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
          getHandle().server.getCommandDispatcher().a(getHandle());
      }
