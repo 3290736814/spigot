@@ -1,11 +1,11 @@
-From 97330920d4e00a690e5fb75c818d1e23a5341f77 Mon Sep 17 00:00:00 2001
+From 941a7d6d5dd4a61f46886b49d575f68c3dbbfb94 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 6 Oct 2013 17:36:28 +1100
 Subject: [PATCH] Don't Special Case X Move Value
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 49b92157..c30767fb 100644
+index 19f1426e..eb873a0b 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -126,6 +126,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
@@ -23,7 +23,7 @@ index 49b92157..c30767fb 100644
 +                Location curPos = this.getPlayer().getLocation(); // Spigot
  
                  entity.setLocation(d3, d4, d5, f, f1);
-                 player.setLocation(d3, d4, d5, f, f1); // CraftBukkit
+                 player.setLocation(d3, d4, d5, this.player.yaw, this.player.pitch); // CraftBukkit
 @@ -373,6 +375,17 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
  
                  // CraftBukkit start - fire PlayerMoveEvent
