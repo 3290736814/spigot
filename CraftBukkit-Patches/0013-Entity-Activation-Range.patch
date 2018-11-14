@@ -1,4 +1,4 @@
-From d9a1b333e15acf240f71ec40e5653f2cda1e0c44 Mon Sep 17 00:00:00 2001
+From 5038e7bf80ce8c48597c458ca22a8aa1c958bd20 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -168,10 +168,10 @@ index 6167c190e..6081ffcae 100644
      protected EntityLiving(EntityTypes<?> entitytypes, World world) {
          super(entitytypes, world);
 diff --git a/src/main/java/net/minecraft/server/EntityVillager.java b/src/main/java/net/minecraft/server/EntityVillager.java
-index 1b27c4ca9..5e5234906 100644
+index 3fabc69b1..ab77d07b1 100644
 --- a/src/main/java/net/minecraft/server/EntityVillager.java
 +++ b/src/main/java/net/minecraft/server/EntityVillager.java
-@@ -98,6 +98,22 @@ public class EntityVillager extends EntityAgeable implements NPC, IMerchant {
+@@ -100,6 +100,22 @@ public class EntityVillager extends EntityAgeable implements NPC, IMerchant {
          this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.5D);
      }
  
@@ -563,5 +563,5 @@ index fedd9d9be..33ab3dfb4 100644
 +    }
  }
 -- 
-2.17.1
+2.19.1
 
