@@ -1,4 +1,4 @@
-From 2462dfc4557fcefacb18172ba43d70e3ea1c977f Mon Sep 17 00:00:00 2001
+From 36820c3f11f95bcc60482ec741f3752387611e9c Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
@@ -216,10 +216,10 @@ index cec3c4b24..d8145db91 100644
  }
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
 new file mode 100644
-index 000000000..de08ad67f
+index 000000000..1d60ddf0d
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
-@@ -0,0 +1,117 @@
+@@ -0,0 +1,127 @@
 +package org.spigotmc;
 +
 +import java.lang.management.ManagementFactory;
@@ -246,6 +246,11 @@ index 000000000..de08ad67f
 +        this.restart = restart;
 +    }
 +
++    private static long monotonicMillis()
++    {
++        return System.nanoTime() / 1000000L;
++    }
++
 +    public static void doStart(int timeoutTime, boolean restart)
 +    {
 +        if ( instance == null )
@@ -257,7 +262,7 @@ index 000000000..de08ad67f
 +
 +    public static void tick()
 +    {
-+        instance.lastTick = System.currentTimeMillis();
++        instance.lastTick = monotonicMillis();
 +    }
 +
 +    public static void doStop()
@@ -274,11 +279,16 @@ index 000000000..de08ad67f
 +        while ( !stopping )
 +        {
 +            //
-+            if ( lastTick != 0 && System.currentTimeMillis() > lastTick + timeoutTime )
++            if ( lastTick != 0 && monotonicMillis() > lastTick + timeoutTime )
 +            {
 +                Logger log = Bukkit.getServer().getLogger();
-+                log.log( Level.SEVERE, "The server has stopped responding!" );
-+                log.log( Level.SEVERE, "Please report this to http://www.spigotmc.org/" );
++                log.log( Level.SEVERE, "------------------------------" );
++                log.log( Level.SEVERE, "The server has stopped responding! This is (probably) not a Spigot bug." );
++                log.log( Level.SEVERE, "If you see a plugin in the Server thread dump below, then please report it to that author" );
++                log.log( Level.SEVERE, "\t *Especially* if it looks like HTTP or MySQL operations are occurring" );
++                log.log( Level.SEVERE, "If you see a world save or edit, then it means you did far more than your server can handle at once" );
++                log.log( Level.SEVERE, "\t If this is the case, consider increasing timeout-time in spigot.yml but note that this will replace the crash with LARGE lag spikes" );
++                log.log( Level.SEVERE, "If you are unsure or still think this is a Spigot bug, please report to https://www.spigotmc.org/" );
 +                log.log( Level.SEVERE, "Be sure to include ALL relevant console errors and Minecraft crash reports" );
 +                log.log( Level.SEVERE, "Spigot version: " + Bukkit.getServer().getVersion() );
 +                //
