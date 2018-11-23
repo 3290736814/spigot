@@ -1,4 +1,4 @@
-From 59399f9e7a4b335a8a5906630e4ac93add29ae94 Mon Sep 17 00:00:00 2001
+From 703f55505e13f075832480041a2fd34ece0b7683 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -779,7 +779,7 @@ index b5c22e209..28e247aec 100644
                      task.getOwner().getLogger().log(
                              Level.WARNING,
 diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftTask.java b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftTask.java
-index adacb60a4..7d30dbeb0 100644
+index 15c62552e..3ec0f393e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftTask.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftTask.java
 @@ -2,11 +2,13 @@ package org.bukkit.craftbukkit.scheduler;
@@ -820,7 +820,7 @@ index adacb60a4..7d30dbeb0 100644
 +
 +    // Spigot start
 +    public String getTaskName() {
-+        return getTaskClass().getName();
++        return (getTaskClass() == null) ? "Unknown" : getTaskClass().getName();
 +    }
 +    // Spigot end
  }
