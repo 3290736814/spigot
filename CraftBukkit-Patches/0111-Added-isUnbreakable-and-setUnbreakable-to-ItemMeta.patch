@@ -1,14 +1,14 @@
-From d25ba6e5d31d23cfa9df3fc8efb2a1af878b5431 Mon Sep 17 00:00:00 2001
+From 23275eb6cb07836b01f09a95306d7b64960128b8 Mon Sep 17 00:00:00 2001
 From: libraryaddict <redwarfare@live.com>
 Date: Fri, 22 Aug 2014 05:35:16 -0400
 Subject: [PATCH] Added isUnbreakable and setUnbreakable to ItemMeta
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 3b03520b2..973250c04 100644
+index 246d3ac5d..dfc5bb4fd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -1246,6 +1246,17 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
+@@ -1287,6 +1287,17 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
      // Spigot start
      private final Spigot spigot = new Spigot()
      {
