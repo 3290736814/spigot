@@ -1,11 +1,11 @@
-From 712341db1f6e4c159288fb21b6f14ed31ec41ca0 Mon Sep 17 00:00:00 2001
+From 5e5e85c5ce47748354174f610fe50d888b7a6231 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Sat, 19 Jul 2014 12:49:48 +0100
 Subject: [PATCH] Don't spawn bonus ocelots when plugins spawn ocelots
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityOcelot.java b/src/main/java/net/minecraft/server/EntityOcelot.java
-index 18171d7d0..22bbe2c8e 100644
+index f31ba7e25..9fc35730a 100644
 --- a/src/main/java/net/minecraft/server/EntityOcelot.java
 +++ b/src/main/java/net/minecraft/server/EntityOcelot.java
 @@ -10,6 +10,7 @@ public class EntityOcelot extends EntityTameableAnimal {

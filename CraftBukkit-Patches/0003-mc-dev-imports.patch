@@ -1,4 +1,4 @@
-From c91f967a6da20111575999d2942c12624769a935 Mon Sep 17 00:00:00 2001
+From 21b568e1f5e282153d7a5bd29ddb1fe2790bf835 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -7,7 +7,7 @@ Imported files which are only modified by Spigot, not upstream. Files here shoul
 
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataWorld.java b/src/main/java/net/minecraft/server/AdvancementDataWorld.java
 new file mode 100644
-index 000000000..47279ebfd
+index 000000000..8b3917f73
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/AdvancementDataWorld.java
 @@ -0,0 +1,117 @@
@@ -68,7 +68,7 @@ index 000000000..47279ebfd
 +                    Advancement.SerializedAdvancement advancement_serializedadvancement = (Advancement.SerializedAdvancement) ChatDeserializer.a(AdvancementDataWorld.DESERIALIZER, IOUtils.toString(iresource.b(), StandardCharsets.UTF_8), Advancement.SerializedAdvancement.class);
 +
 +                    if (advancement_serializedadvancement == null) {
-+                        AdvancementDataWorld.c.error("Couldn\'t load custom advancement {} from {} as it\'s empty or null", minecraftkey1, minecraftkey);
++                        AdvancementDataWorld.c.error("Couldn't load custom advancement {} from {} as it's empty or null", minecraftkey1, minecraftkey);
 +                    } else {
 +                        hashmap.put(minecraftkey1, advancement_serializedadvancement);
 +                    }
@@ -93,7 +93,7 @@ index 000000000..47279ebfd
 +                AdvancementDataWorld.c.error("Parsing error loading custom advancement {}: {}", minecraftkey1, jsonparseexception.getMessage());
 +                this.f = true;
 +            } catch (IOException ioexception) {
-+                AdvancementDataWorld.c.error("Couldn\'t read custom advancement {} from {}", minecraftkey1, minecraftkey, ioexception);
++                AdvancementDataWorld.c.error("Couldn't read custom advancement {} from {}", minecraftkey1, minecraftkey, ioexception);
 +                this.f = true;
 +            }
 +        }
@@ -344,7 +344,7 @@ index 000000000..8f11487d6
 +}
 diff --git a/src/main/java/net/minecraft/server/EntitySquid.java b/src/main/java/net/minecraft/server/EntitySquid.java
 new file mode 100644
-index 000000000..16fabe5ff
+index 000000000..efcf38336
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/EntitySquid.java
 @@ -0,0 +1,271 @@
@@ -553,7 +553,7 @@ index 000000000..16fabe5ff
 +            if (entityliving != null) {
 +                Vec3D vec3d = new Vec3D(EntitySquid.this.locX - entityliving.locX, EntitySquid.this.locY - entityliving.locY, EntitySquid.this.locZ - entityliving.locZ);
 +                IBlockData iblockdata = EntitySquid.this.world.getType(new BlockPosition(EntitySquid.this.locX + vec3d.x, EntitySquid.this.locY + vec3d.y, EntitySquid.this.locZ + vec3d.z));
-+                Fluid fluid = EntitySquid.this.world.b(new BlockPosition(EntitySquid.this.locX + vec3d.x, EntitySquid.this.locY + vec3d.y, EntitySquid.this.locZ + vec3d.z));
++                Fluid fluid = EntitySquid.this.world.getFluid(new BlockPosition(EntitySquid.this.locX + vec3d.x, EntitySquid.this.locY + vec3d.y, EntitySquid.this.locZ + vec3d.z));
 +
 +                if (fluid.a(TagsFluid.WATER) || iblockdata.isAir()) {
 +                    double d0 = vec3d.b();
@@ -682,7 +682,7 @@ index 000000000..634d4f721
 +}
 diff --git a/src/main/java/net/minecraft/server/GenericAttributes.java b/src/main/java/net/minecraft/server/GenericAttributes.java
 new file mode 100644
-index 000000000..1a7e20d6f
+index 000000000..3fd73aa12
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/GenericAttributes.java
 @@ -0,0 +1,120 @@
@@ -764,7 +764,7 @@ index 000000000..1a7e20d6f
 +            AttributeInstance attributeinstance = attributemapbase.a(nbttagcompound.getString("Name"));
 +
 +            if (attributeinstance == null) {
-+                GenericAttributes.k.warn("Ignoring unknown attribute \'{}\'", nbttagcompound.getString("Name"));
++                GenericAttributes.k.warn("Ignoring unknown attribute '{}'", nbttagcompound.getString("Name"));
 +            } else {
 +                a(attributeinstance, nbttagcompound);
 +            }
@@ -832,7 +832,7 @@ index 000000000..a53ce424d
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java b/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java
 new file mode 100644
-index 000000000..345d763d9
+index 000000000..34800456b
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java
 @@ -0,0 +1,89 @@
@@ -919,7 +919,7 @@ index 000000000..345d763d9
 +                CrashReport crashreport = CrashReport.a(ioexception, "Loading NBT data");
 +                CrashReportSystemDetails crashreportsystemdetails = crashreport.a("NBT Tag");
 +
-+                crashreportsystemdetails.a("Tag type", (Object) Byte.valueOf(b0));
++                crashreportsystemdetails.a("Tag type", (Object) b0);
 +                throw new ReportedException(crashreport);
 +            }
 +        }
@@ -927,7 +927,7 @@ index 000000000..345d763d9
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTTagByteArray.java b/src/main/java/net/minecraft/server/NBTTagByteArray.java
 new file mode 100644
-index 000000000..6f8d3748b
+index 000000000..71b5dfd37
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NBTTagByteArray.java
 @@ -0,0 +1,123 @@
@@ -960,7 +960,7 @@ index 000000000..6f8d3748b
 +        for (int i = 0; i < list.size(); ++i) {
 +            Byte obyte = (Byte) list.get(i);
 +
-+            abyte[i] = obyte == null ? 0 : obyte.byteValue();
++            abyte[i] = obyte == null ? 0 : obyte;
 +        }
 +
 +        return abyte;
@@ -1043,7 +1043,7 @@ index 000000000..6f8d3748b
 +    }
 +
 +    public void a(int i, NBTBase nbtbase) {
-+        this.data[i] = ((NBTNumber) nbtbase).g();
++        this.data[i] = ((NBTNumber) nbtbase).asByte();
 +    }
 +
 +    public void b(int i) {
@@ -1056,7 +1056,7 @@ index 000000000..6f8d3748b
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTTagIntArray.java b/src/main/java/net/minecraft/server/NBTTagIntArray.java
 new file mode 100644
-index 000000000..1022c00be
+index 000000000..704946d0d
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NBTTagIntArray.java
 @@ -0,0 +1,137 @@
@@ -1089,7 +1089,7 @@ index 000000000..1022c00be
 +        for (int i = 0; i < list.size(); ++i) {
 +            Integer integer = (Integer) list.get(i);
 +
-+            aint[i] = integer == null ? 0 : integer.intValue();
++            aint[i] = integer == null ? 0 : integer;
 +        }
 +
 +        return aint;
@@ -1182,7 +1182,7 @@ index 000000000..1022c00be
 +    }
 +
 +    public void a(int i, NBTBase nbtbase) {
-+        this.data[i] = ((NBTNumber) nbtbase).e();
++        this.data[i] = ((NBTNumber) nbtbase).asInt();
 +    }
 +
 +    public void b(int i) {
@@ -1599,7 +1599,7 @@ index 000000000..cfe8ec20c
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerConnection.java b/src/main/java/net/minecraft/server/ServerConnection.java
 new file mode 100644
-index 000000000..a47598c50
+index 000000000..9e36530b9
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerConnection.java
 @@ -0,0 +1,144 @@
@@ -1671,7 +1671,7 @@ index 000000000..a47598c50
 +            this.f.add(((ServerBootstrap) ((ServerBootstrap) (new ServerBootstrap()).channel(oclass)).childHandler(new ChannelInitializer() {
 +                protected void initChannel(Channel channel) throws Exception {
 +                    try {
-+                        channel.config().setOption(ChannelOption.TCP_NODELAY, Boolean.valueOf(true));
++                        channel.config().setOption(ChannelOption.TCP_NODELAY, true);
 +                    } catch (ChannelException channelexception) {
 +                        ;
 +                    }
@@ -1749,7 +1749,7 @@ index 000000000..a47598c50
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerStatisticManager.java b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 new file mode 100644
-index 000000000..1b9086ce4
+index 000000000..e7b6538f2
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 @@ -0,0 +1,240 @@
@@ -1796,9 +1796,9 @@ index 000000000..1b9086ce4
 +            try {
 +                this.a(minecraftserver.az(), FileUtils.readFileToString(file));
 +            } catch (IOException ioexception) {
-+                ServerStatisticManager.b.error("Couldn\'t read statistics file {}", file, ioexception);
++                ServerStatisticManager.b.error("Couldn't read statistics file {}", file, ioexception);
 +            } catch (JsonParseException jsonparseexception) {
-+                ServerStatisticManager.b.error("Couldn\'t parse statistics file {}", file, jsonparseexception);
++                ServerStatisticManager.b.error("Couldn't parse statistics file {}", file, jsonparseexception);
 +            }
 +        }
 +
@@ -1808,7 +1808,7 @@ index 000000000..1b9086ce4
 +        try {
 +            FileUtils.writeStringToFile(this.d, this.b());
 +        } catch (IOException ioexception) {
-+            ServerStatisticManager.b.error("Couldn\'t save stats", ioexception);
++            ServerStatisticManager.b.error("Couldn't save stats", ioexception);
 +        }
 +
 +    }
@@ -1853,7 +1853,7 @@ index 000000000..1b9086ce4
 +                                StatisticWrapper statisticwrapper = (StatisticWrapper) IRegistry.STATS.get(new MinecraftKey(s1));
 +
 +                                if (statisticwrapper == null) {
-+                                    ServerStatisticManager.b.warn("Invalid statistic type in {}: Don\'t know what {} is", this.d, s1);
++                                    ServerStatisticManager.b.warn("Invalid statistic type in {}: Don't know what {} is", this.d, s1);
 +                                } else {
 +                                    NBTTagCompound nbttagcompound2 = nbttagcompound1.getCompound(s1);
 +                                    Iterator iterator1 = nbttagcompound2.getKeys().iterator();
@@ -1865,12 +1865,12 @@ index 000000000..1b9086ce4
 +                                            Statistic statistic = this.a(statisticwrapper, s2);
 +
 +                                            if (statistic == null) {
-+                                                ServerStatisticManager.b.warn("Invalid statistic in {}: Don\'t know what {} is", this.d, s2);
++                                                ServerStatisticManager.b.warn("Invalid statistic in {}: Don't know what {} is", this.d, s2);
 +                                            } else {
 +                                                this.a.put(statistic, nbttagcompound2.getInt(s2));
 +                                            }
 +                                        } else {
-+                                            ServerStatisticManager.b.warn("Invalid statistic value in {}: Don\'t know what {} is for key {}", this.d, nbttagcompound2.get(s2), s2);
++                                            ServerStatisticManager.b.warn("Invalid statistic value in {}: Don't know what {} is for key {}", this.d, nbttagcompound2.get(s2), s2);
 +                                        }
 +                                    }
 +                                }
@@ -1948,7 +1948,7 @@ index 000000000..1b9086ce4
 +
 +            ((JsonObject) hashmap.computeIfAbsent(statistic.a(), (statisticwrapper) -> {
 +                return new JsonObject();
-+            })).addProperty(b(statistic).toString(), Integer.valueOf(it_unimi_dsi_fastutil_objects_object2intmap_entry.getIntValue()));
++            })).addProperty(b(statistic).toString(), it_unimi_dsi_fastutil_objects_object2intmap_entry.getIntValue());
 +        }
 +
 +        JsonObject jsonobject = new JsonObject();
@@ -1963,7 +1963,7 @@ index 000000000..1b9086ce4
 +        JsonObject jsonobject1 = new JsonObject();
 +
 +        jsonobject1.add("stats", jsonobject);
-+        jsonobject1.addProperty("DataVersion", Integer.valueOf(1631));
++        jsonobject1.addProperty("DataVersion", 1631);
 +        return jsonobject1.toString();
 +    }
 +

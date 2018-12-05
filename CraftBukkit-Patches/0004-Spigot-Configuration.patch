@@ -1,4 +1,4 @@
-From 8d9baed3c36986c86c6172b8d7b0ddd49d264204 Mon Sep 17 00:00:00 2001
+From 51ac93ce11cea80189bb80f3d03b593d96a71bcf Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -6,7 +6,7 @@ Subject: [PATCH] Spigot Configuration
 Provides the basic infrastructure to load and save the Spigot configuration file, spigot.yml
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 9f8f1e7e0..50c4b6ebe 100644
+index 0abfc849b..4351458ff 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -177,6 +177,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -31,7 +31,7 @@ index 9f8f1e7e0..50c4b6ebe 100644
              server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.STARTUP);
              // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 733ec5635..769493844 100644
+index 7211e0547..154f3616f 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -106,6 +106,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
@@ -51,7 +51,7 @@ index 733ec5635..769493844 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 27f904632..f86f92141 100644
+index 028d83b45..7fdcc40b0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -732,6 +732,7 @@ public final class CraftServer implements Server {
@@ -78,7 +78,7 @@ index 27f904632..f86f92141 100644
          ignoreVanillaPermissions = commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index c7f445327..23a503ad4 100644
+index 07682e980..8b51997fc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -120,6 +120,14 @@ public class Main {

@@ -1,4 +1,4 @@
-From 91864a22f3706bca65e367a2e3867d818300b33c Mon Sep 17 00:00:00 2001
+From f830770aff2c687138ba080ecac748131b5d6abe Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:46:33 +1100
 Subject: [PATCH] Merge tweaks and configuration
@@ -6,7 +6,7 @@ Subject: [PATCH] Merge tweaks and configuration
 This allows the merging of Experience orbs, as well as the configuration of the merge radius of items. Additionally it refactors the merge algorithm to be a better experience for players.
 
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 712fba1eb..7b515f8e7 100644
+index 1a2794e3b..e45b8171b 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -149,7 +149,10 @@ public class EntityItem extends Entity {
@@ -43,7 +43,7 @@ index 712fba1eb..7b515f8e7 100644
                      }
                  } else {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 769493844..1da0cf692 100644
+index 154f3616f..eda9db6b0 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -885,6 +885,23 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc

@@ -1,11 +1,11 @@
-From 5733cf73fe80f97ca4fe389a09f6c895e31f8ce3 Mon Sep 17 00:00:00 2001
+From 5708f5d03dbcc196fb26e07df0db8b998d5318ea Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index b3d3dd070..12b25560f 100644
+index 52b62990c..7303b8e6e 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -151,6 +151,12 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
@@ -58,7 +58,7 @@ index b3d3dd070..12b25560f 100644
 +                    }
  
 -                        if (server.getWarnOnOverload()) // CraftBukkit
--                        MinecraftServer.LOGGER.warn("Can\'t keep up! Is the server overloaded? Running {}ms or {} ticks behind", Long.valueOf(i), Long.valueOf(j));
+-                        MinecraftServer.LOGGER.warn("Can't keep up! Is the server overloaded? Running {}ms or {} ticks behind", i, j);
 -                        this.aa += j * 50L;
 -                        this.Q = this.aa;
 +                    if ( tickCount++ % SAMPLE_INTERVAL == 0 )

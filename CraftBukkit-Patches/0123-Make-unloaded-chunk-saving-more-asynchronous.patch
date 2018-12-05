@@ -1,11 +1,11 @@
-From 6996bef6fe10e744b0f7aabf685cd5ebc14020f5 Mon Sep 17 00:00:00 2001
+From 7c3ffc60778127d80c6ea672fd1b259370f39c9e Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Fri, 11 Aug 2017 19:23:58 +0100
 Subject: [PATCH] Make unloaded chunk saving more asynchronous
 
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 911140b37..5819e86f3 100644
+index c1e66d314..b859a5b9e 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -205,10 +205,10 @@ public class ChunkProviderServer implements IChunkProvider {
@@ -19,7 +19,7 @@ index 911140b37..5819e86f3 100644
 -            this.chunkLoader.saveChunk(this.world, ichunkaccess);
 +            this.chunkLoader.saveChunk(this.world, ichunkaccess, unloaded); // Spigot
          } catch (IOException ioexception) {
-             ChunkProviderServer.a.error("Couldn\'t save chunk", ioexception);
+             ChunkProviderServer.a.error("Couldn't save chunk", ioexception);
          } catch (ExceptionWorldConflict exceptionworldconflict) {
 @@ -232,7 +232,7 @@ public class ChunkProviderServer implements IChunkProvider {
                  Chunk chunk = (Chunk) objectiterator.next();
@@ -40,7 +40,7 @@ index 911140b37..5819e86f3 100644
              this.chunks.remove(chunk.chunkKey);
              this.lastChunk = null;
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index b2e972066..71c0e069a 100644
+index 00675ed0f..3bf55a054 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -23,15 +23,20 @@ import java.util.function.Predicate;

@@ -1,4 +1,4 @@
-From 72fc645eb41b9af98e953862835161ad7a55b7ec Mon Sep 17 00:00:00 2001
+From 6543d0fc0389960129f56b2100f83387d6ba65de Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Thu, 26 Jan 2017 20:54:55 +0000
 Subject: [PATCH] Replace chunk loading / unloading rate throttling.
@@ -7,7 +7,7 @@ Uses a scheme based on estimated tick slack time.
 See https://hub.spigotmc.org/stash/projects/SPIGOT/repos/spigot/pull-requests/71/overview
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 349ec3536..911140b37 100644
+index ea5e2f482..c1e66d314 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -262,13 +262,22 @@ public class ChunkProviderServer implements IChunkProvider {
@@ -52,7 +52,7 @@ index 349ec3536..911140b37 100644
  
              this.chunkScheduler.a(booleansupplier);
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 41298bae8..bdbd24b6b 100644
+index b878cb45d..04c5c1796 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -68,6 +68,7 @@ import org.bukkit.craftbukkit.Main;
@@ -88,7 +88,7 @@ index 41298bae8..bdbd24b6b 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 885aa2eff..15194bd63 100644
+index e163d0019..384f4f45b 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -127,8 +127,11 @@ public class PlayerChunkMap {

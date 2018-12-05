@@ -1,4 +1,4 @@
-From 7d1ed7ea240d71fbc61acb1b8cbf8f5ef9d32e88 Mon Sep 17 00:00:00 2001
+From 145301e54b43f5bb66036bdbac00cfcf20e2af02 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 8 Aug 2014 19:57:03 +1000
 Subject: [PATCH] Plug WorldMap Memory Leak
@@ -18,7 +18,7 @@ index cfe8ec20c..9c5f9204b 100644
      private final IDataManager b;
  
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 50edf2f66..cec8ebe82 100644
+index fe35dda2e..213ee1c3a 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1007,6 +1007,26 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc

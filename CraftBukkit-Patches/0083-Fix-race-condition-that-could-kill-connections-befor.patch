@@ -1,4 +1,4 @@
-From 6150d1cce767ced34ca6d63d0eb8b44a67b0c332 Mon Sep 17 00:00:00 2001
+From 7d0b25004326746edf6820115d4ec3a5bd6669ba Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Fri, 25 Apr 2014 23:46:46 +0200
 Subject: [PATCH] Fix race condition that could kill connections before they
@@ -44,7 +44,7 @@ index 88aad6d43..d9d3d7714 100644
              this.channel.close(); // We can't wait as this may be called from an event loop.
              this.n = ichatbasecomponent;
 diff --git a/src/main/java/net/minecraft/server/ServerConnection.java b/src/main/java/net/minecraft/server/ServerConnection.java
-index de0c528b8..9cff011da 100644
+index 1c0950fd7..ce1229a9d 100644
 --- a/src/main/java/net/minecraft/server/ServerConnection.java
 +++ b/src/main/java/net/minecraft/server/ServerConnection.java
 @@ -136,6 +136,10 @@ public class ServerConnection {

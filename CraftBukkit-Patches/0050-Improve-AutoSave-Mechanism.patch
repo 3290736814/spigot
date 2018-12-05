@@ -1,4 +1,4 @@
-From 51b5bc6394e0bc1984ddfc4e76d2cab741961fd8 Mon Sep 17 00:00:00 2001
+From d4cd4f5d828b1badd35547f87e25ed48f12bdfa5 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 21:07:18 +1100
 Subject: [PATCH] Improve AutoSave Mechanism
@@ -11,7 +11,7 @@ Instead we will mimic the save-all command in its behaviour, which is both safe 
 Also, only save modified chunks, or chunks with entities after 4 auto save passes
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index b7e5ae7a2..14ecc1456 100644
+index 397498836..9e6be1880 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -956,7 +956,7 @@ public class Chunk implements IChunkAccess {
@@ -24,7 +24,7 @@ index b7e5ae7a2..14ecc1456 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 81c7228df..349ec3536 100644
+index 3afa1d6b3..ea5e2f482 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -235,7 +235,7 @@ public class ChunkProviderServer implements IChunkProvider {
@@ -37,7 +37,7 @@ index 81c7228df..349ec3536 100644
                      }
                  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index d1490632a..b3d3dd070 100644
+index 1c8d1ed96..52b62990c 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -821,7 +821,17 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati

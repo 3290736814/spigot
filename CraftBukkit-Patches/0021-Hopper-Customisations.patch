@@ -1,4 +1,4 @@
-From daeb7b24b0b54b60dd33d3f5db994bac32786aec Mon Sep 17 00:00:00 2001
+From 03b4c478b849140696cd23eed7771c4cdb8af03c Mon Sep 17 00:00:00 2001
 From: erocs <github@erocs.org>
 Date: Sun, 8 Sep 2013 12:06:15 -0700
 Subject: [PATCH] Hopper Customisations
@@ -6,7 +6,7 @@ Subject: [PATCH] Hopper Customisations
 Allows editing hopper cooldowns and amount transferred per tick.
 
 diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
-index d27a93cb2..26a731680 100644
+index 06b6ab75c..c0c801cd7 100644
 --- a/src/main/java/net/minecraft/server/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
 @@ -115,9 +115,14 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
@@ -16,7 +16,7 @@ index d27a93cb2..26a731680 100644
 -                this.a(() -> {
 +                // Spigot start
 +                boolean result = this.a(() -> {
-                     return Boolean.valueOf(a((IHopper) this));
+                     return a((IHopper) this);
                  });
 +                if (!result && this.world.spigotConfig.hopperCheck > 1) {
 +                    this.setCooldown(this.world.spigotConfig.hopperCheck);
