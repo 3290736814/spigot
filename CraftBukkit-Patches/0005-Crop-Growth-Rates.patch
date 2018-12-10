@@ -1,4 +1,4 @@
-From 310c199144e779234507696a2fd8f0be856553f2 Mon Sep 17 00:00:00 2001
+From 904e9b268d8fd18c309f3b1f8da800559c7ee376 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -68,13 +68,13 @@ index c141f6737..29b45e219 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/server/BlockMushroom.java b/src/main/java/net/minecraft/server/BlockMushroom.java
-index ea2d9f4d0..56d290caa 100644
+index c064fdf99..53ad72fce 100644
 --- a/src/main/java/net/minecraft/server/BlockMushroom.java
 +++ b/src/main/java/net/minecraft/server/BlockMushroom.java
-@@ -21,7 +21,7 @@ public class BlockMushroom extends BlockPlant implements IBlockFragilePlantEleme
+@@ -20,7 +20,7 @@ public class BlockMushroom extends BlockPlant implements IBlockFragilePlantEleme
+     }
  
      public void a(IBlockData iblockdata, World world, BlockPosition blockposition, Random random) {
-         final int sourceX = blockposition.getX(), sourceY = blockposition.getY(), sourceZ = blockposition.getZ(); // CraftBukkit
 -        if (random.nextInt(25) == 0) {
 +        if (random.nextInt(Math.max(1, (int) (100.0F / world.spigotConfig.mushroomModifier) * 25)) == 0) { // Spigot
              int i = 5;
