@@ -1,4 +1,4 @@
-From 2888aa36e3d60b9b11d6a7c55ac0b9bd8ede32c2 Mon Sep 17 00:00:00 2001
+From b63589ffed353339ebe086e379c74c66996bb129 Mon Sep 17 00:00:00 2001
 From: slide23 <me@slide.ws>
 Date: Fri, 20 Dec 2013 20:15:33 -0600
 Subject: [PATCH] Add Late Bind Option
@@ -6,16 +6,16 @@ Subject: [PATCH] Add Late Bind Option
 Add late-bind config option to delay binding until loading is done.
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index a22858c6d..f2143ce88 100644
+index cea6dd812..57a2f7398 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -188,6 +188,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              this.a(MinecraftEncryption.b());
-             DedicatedServer.LOGGER.info("Starting Minecraft server on {}:{}", this.getServerIp().isEmpty() ? "*" : this.getServerIp(), this.F());
+             DedicatedServer.LOGGER.info("Starting Minecraft server on {}:{}", this.getServerIp().isEmpty() ? "*" : this.getServerIp(), this.getPort());
  
 +        if (!org.spigotmc.SpigotConfig.lateBind) {
              try {
-                 this.getServerConnection().a(inetaddress, this.F());
+                 this.getServerConnection().a(inetaddress, this.getPort());
              } catch (IOException ioexception) {
 @@ -196,6 +197,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                  DedicatedServer.LOGGER.warn("Perhaps a server is already running on that port?");
@@ -31,7 +31,7 @@ index a22858c6d..f2143ce88 100644
  
 +        if (org.spigotmc.SpigotConfig.lateBind) {
 +            try {
-+                this.getServerConnection().a(inetaddress, this.F());
++                this.getServerConnection().a(inetaddress, this.getPort());
 +            } catch (IOException ioexception) {
 +                DedicatedServer.LOGGER.warn("**** FAILED TO BIND TO PORT!");
 +                DedicatedServer.LOGGER.warn("The exception was: {}", ioexception.toString());
@@ -40,7 +40,7 @@ index a22858c6d..f2143ce88 100644
 +            }
 +        }
 +
-                 if (false && this.aY() > 0L) {  // Spigot - disable
+                 if (false && this.getMaxTickTime() > 0L) {  // Spigot - disable
                      Thread thread1 = new Thread(new ThreadWatchdog(this));
  
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java

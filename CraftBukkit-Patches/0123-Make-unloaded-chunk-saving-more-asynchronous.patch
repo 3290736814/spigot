@@ -1,4 +1,4 @@
-From 7c3ffc60778127d80c6ea672fd1b259370f39c9e Mon Sep 17 00:00:00 2001
+From 37d297113a875fb674a8ecd93b9e97f04654db98 Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Fri, 11 Aug 2017 19:23:58 +0100
 Subject: [PATCH] Make unloaded chunk saving more asynchronous
@@ -40,7 +40,7 @@ index c1e66d314..b859a5b9e 100644
              this.chunks.remove(chunk.chunkKey);
              this.lastChunk = null;
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index 00675ed0f..3bf55a054 100644
+index 9b31f7615..1b8c28096 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -23,15 +23,20 @@ import java.util.function.Predicate;

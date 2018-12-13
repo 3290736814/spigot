@@ -1,24 +1,24 @@
-From 3aa973099cd9c472cc82723bc1f323f09d579240 Mon Sep 17 00:00:00 2001
+From 4a4d3368bdd2c19a84798a92c69da96017080ead Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 6a2069d4e..a22858c6d 100644
+index 8cb1b8799..cea6dd812 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -307,7 +307,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                  }
                  // CraftBukkit end
  
--                if (this.aY() > 0L) {
-+                if (false && this.aY() > 0L) {  // Spigot - disable
+-                if (this.getMaxTickTime() > 0L) {
++                if (false && this.getMaxTickTime() > 0L) {  // Spigot - disable
                      Thread thread1 = new Thread(new ThreadWatchdog(this));
  
                      thread1.setUncaughtExceptionHandler(new ThreadNamedUncaughtExceptionHandler(DedicatedServer.LOGGER));
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 8de21d0b0..5e7ef465d 100644
+index 340417059..df003da96 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -730,6 +730,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
@@ -31,17 +31,17 @@ index 8de21d0b0..5e7ef465d 100644
              } catch (Throwable throwable1) {
 @@ -835,6 +836,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
          this.ap = this.ap * 0.8F + (float) l / 1000000.0F * 0.19999999F;
-         this.methodProfiler.e();
-         this.methodProfiler.e();
+         this.methodProfiler.exit();
+         this.methodProfiler.exit();
 +        org.spigotmc.WatchdogThread.tick(); // Spigot
          SpigotTimings.serverTickTimer.stopTiming(); // Spigot
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index ba6d000e7..7fa0da8c2 100644
+index acfcafdc5..16c2067fa 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1922,6 +1922,11 @@ public final class CraftServer implements Server {
+@@ -1921,6 +1921,11 @@ public final class CraftServer implements Server {
          {
              return org.spigotmc.SpigotConfig.config;
          }

@@ -1,4 +1,4 @@
-From 338d86e81bb878ac688aebd61a33fffdef4d9586 Mon Sep 17 00:00:00 2001
+From 8105d2daca9edb45921999930ff6c5228779782a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -32,7 +32,7 @@ index e55384e70..28a262835 100644
      }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e91c06f2c..8ade4244e 100644
+index 5ef47e3b1..aa0dfa4cc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -159,6 +159,7 @@ import org.bukkit.craftbukkit.util.CraftChatMessage;
@@ -43,7 +43,7 @@ index e91c06f2c..8ade4244e 100644
  
  public final class CraftServer implements Server {
      private final String serverName = "CraftBukkit";
-@@ -1952,6 +1953,20 @@ public final class CraftServer implements Server {
+@@ -1951,6 +1952,20 @@ public final class CraftServer implements Server {
          public void restart() {
              org.spigotmc.RestartCommand.restart();
          }

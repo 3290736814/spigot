@@ -1,4 +1,4 @@
-From 6543d0fc0389960129f56b2100f83387d6ba65de Mon Sep 17 00:00:00 2001
+From 8d14a252f5633970cf1752eadd750809cf49d6de Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Thu, 26 Jan 2017 20:54:55 +0000
 Subject: [PATCH] Replace chunk loading / unloading rate throttling.
@@ -52,7 +52,7 @@ index ea5e2f482..c1e66d314 100644
  
              this.chunkScheduler.a(booleansupplier);
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index b878cb45d..04c5c1796 100644
+index d64e6d230..37211c33a 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -68,6 +68,7 @@ import org.bukkit.craftbukkit.Main;
@@ -76,26 +76,26 @@ index b878cb45d..04c5c1796 100644
      protected void a(BooleanSupplier booleansupplier) {
          SpigotTimings.serverTickTimer.startTiming(); // Spigot
 +        this.slackActivityAccountant.tickStarted(); // Spigot
-         long i = SystemUtils.c();
+         long i = SystemUtils.getMonotonicNanos();
  
          ++this.ticks;
 @@ -880,6 +883,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
-         this.methodProfiler.e();
-         this.methodProfiler.e();
+         this.methodProfiler.exit();
+         this.methodProfiler.exit();
          org.spigotmc.WatchdogThread.tick(); // Spigot
 +        this.slackActivityAccountant.tickEnded(l); // Spigot
          SpigotTimings.serverTickTimer.stopTiming(); // Spigot
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index e163d0019..384f4f45b 100644
+index 682d2a803..ceac52fe5 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -127,8 +127,11 @@ public class PlayerChunkMap {
+@@ -123,8 +123,11 @@ public class PlayerChunkMap {
          }
  
          if (!this.h.isEmpty()) {
--            long k = SystemUtils.c() + 50000000L;
+-            long k = SystemUtils.getMonotonicNanos() + 50000000L;
 -            int l = 49;
 +            // Spigot start
 +            org.spigotmc.SlackActivityAccountant activityAccountant = this.world.getMinecraftServer().slackActivityAccountant;
@@ -105,17 +105,17 @@ index e163d0019..384f4f45b 100644
              Iterator iterator1 = this.h.iterator();
  
              while (iterator1.hasNext()) {
-@@ -143,8 +146,7 @@ public class PlayerChunkMap {
+@@ -139,8 +142,7 @@ public class PlayerChunkMap {
                              this.g.remove(playerchunk1);
                          }
  
 -                        --l;
--                        if (l < 0 || SystemUtils.c() > k) {
+-                        if (l < 0 || SystemUtils.getMonotonicNanos() > k) {
 +                        if (activityAccountant.activityTimeIsExhausted()) { // Spigot
                              break;
                          }
                      }
-@@ -154,6 +156,8 @@ public class PlayerChunkMap {
+@@ -150,6 +152,8 @@ public class PlayerChunkMap {
                  }
                  // CraftBukkit end
              }

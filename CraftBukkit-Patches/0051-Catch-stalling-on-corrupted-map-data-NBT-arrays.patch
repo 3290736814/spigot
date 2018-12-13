@@ -1,11 +1,11 @@
-From 979fb773b730ef4348fe8e8e2d356a5ef22a0702 Mon Sep 17 00:00:00 2001
+From eb3ed1a2ad3ac161809757de3c9bf3c8bcff6d46 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 20 Jan 2014 13:44:07 +1100
 Subject: [PATCH] Catch stalling on corrupted map data / NBT arrays.
 
 
 diff --git a/src/main/java/net/minecraft/server/NBTTagByteArray.java b/src/main/java/net/minecraft/server/NBTTagByteArray.java
-index 71b5dfd37..86881a22d 100644
+index 86fbd92a0..973f28cc5 100644
 --- a/src/main/java/net/minecraft/server/NBTTagByteArray.java
 +++ b/src/main/java/net/minecraft/server/NBTTagByteArray.java
 @@ -41,6 +41,7 @@ public class NBTTagByteArray extends NBTList<NBTTagByte> {
@@ -17,7 +17,7 @@ index 71b5dfd37..86881a22d 100644
          nbtreadlimiter.a((long) (8 * j));
          this.data = new byte[j];
 diff --git a/src/main/java/net/minecraft/server/NBTTagIntArray.java b/src/main/java/net/minecraft/server/NBTTagIntArray.java
-index 704946d0d..40f6179cd 100644
+index 43e715d4c..cc44c2100 100644
 --- a/src/main/java/net/minecraft/server/NBTTagIntArray.java
 +++ b/src/main/java/net/minecraft/server/NBTTagIntArray.java
 @@ -49,6 +49,7 @@ public class NBTTagIntArray extends NBTList<NBTTagInt> {

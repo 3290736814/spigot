@@ -1,11 +1,11 @@
-From 0e1ef029d5be5e01e2910bdbc6031000662658e8 Mon Sep 17 00:00:00 2001
+From ba2dd1af39272569d9d3a6a6189e6280fba38f7b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 18 Dec 2013 13:39:14 +1100
 Subject: [PATCH] Log Cause of Unexpected Exceptions
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 57d6b8540..058f07460 100644
+index 10fb7ed68..7fa5fea04 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -711,6 +711,12 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati

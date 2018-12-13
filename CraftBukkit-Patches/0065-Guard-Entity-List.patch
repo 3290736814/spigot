@@ -1,11 +1,11 @@
-From ed6059a579a506090ab28d0f0129d28d36ff12f4 Mon Sep 17 00:00:00 2001
+From 5179d34b835182e3a16b5f5243a853c987265d95 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 10 Mar 2014 09:03:28 +1100
 Subject: [PATCH] Guard Entity List
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index d40f86ab7..c231d311d 100644
+index 026e1f1ed..ed64ea8b9 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -44,7 +44,32 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
@@ -68,12 +68,12 @@ index d40f86ab7..c231d311d 100644
                  this.c(entity);
              }
  
-             this.methodProfiler.e();
+             this.methodProfiler.exit();
          }
 +        guardEntityList = false; // Spigot
  
          timings.entityTick.stopTiming(); // Spigot
-         this.methodProfiler.c("blockEntities");
+         this.methodProfiler.exitEnter("blockEntities");
 -- 
 2.19.1
 

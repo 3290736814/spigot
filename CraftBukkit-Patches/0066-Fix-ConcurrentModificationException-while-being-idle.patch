@@ -1,4 +1,4 @@
-From 1a56dc266e6ac77eda8f0d9e96b78bf8246720e3 Mon Sep 17 00:00:00 2001
+From 975a915d691061b3dfc573db29b29b0c00a567fc Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Tue, 14 Jan 2014 20:11:25 +0000
 Subject: [PATCH] Fix ConcurrentModificationException while being idle kicked
@@ -6,7 +6,7 @@ Subject: [PATCH] Fix ConcurrentModificationException while being idle kicked
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index c231d311d..82ecb610f 100644
+index ed64ea8b9..ea3d8db47 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1,4 +1,4 @@
@@ -20,8 +20,8 @@ index c231d311d..82ecb610f 100644
          }
  
 +        if (!guardEntityList) { // Spigot - It will get removed after the tick if we are ticking
-         int i = entity.ae;
-         int j = entity.ag;
+         int i = entity.chunkX;
+         int j = entity.chunkZ;
  
 @@ -1032,6 +1033,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
              this.entityList.remove(index);

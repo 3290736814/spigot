@@ -1,4 +1,4 @@
-From 17a680e083ebc8427b634ad27a1a11bbcc84bcad Mon Sep 17 00:00:00 2001
+From 4ebd57e64b82c0932516507443a594d52f93bd57 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Sun, 20 Apr 2014 13:18:55 +0100
 Subject: [PATCH] Convert player skulls async
@@ -28,7 +28,7 @@ index 28916b0e3..a21ec22a9 100644
          } else {
              // CraftBukkit start
 diff --git a/src/main/java/net/minecraft/server/TileEntitySkull.java b/src/main/java/net/minecraft/server/TileEntitySkull.java
-index 102b8dc42..3a54ebdb1 100644
+index 042e84771..48fbcf863 100644
 --- a/src/main/java/net/minecraft/server/TileEntitySkull.java
 +++ b/src/main/java/net/minecraft/server/TileEntitySkull.java
 @@ -7,6 +7,23 @@ import com.mojang.authlib.properties.Property;
@@ -57,8 +57,8 @@ index 102b8dc42..3a54ebdb1 100644
      private GameProfile a;
 @@ -15,6 +32,58 @@ public class TileEntitySkull extends TileEntity implements ITickable {
      public boolean drop = true;
-     private static UserCache h;
-     private static MinecraftSessionService i;
+     private static UserCache userCache;
+     private static MinecraftSessionService sessionService;
 +    // Spigot start
 +    public static final ExecutorService executor = Executors.newFixedThreadPool(3,
 +            new ThreadFactoryBuilder()
@@ -102,7 +102,7 @@ index 102b8dc42..3a54ebdb1 100644
 +
 +                        if ( property == null )
 +                        {
-+                            profile = TileEntitySkull.i.fillProfileProperties( profile, true );
++                            profile = TileEntitySkull.sessionService.fillProfileProperties( profile, true );
 +                        }
 +                    }
 +
@@ -140,8 +140,8 @@ index 102b8dc42..3a54ebdb1 100644
          if (gameprofile != null && !UtilColor.b(gameprofile.getName())) {
              if (gameprofile.isComplete() && gameprofile.getProperties().containsKey("textures")) {
 -                return gameprofile;
--            } else if (TileEntitySkull.h != null && TileEntitySkull.i != null) {
--                GameProfile gameprofile1 = TileEntitySkull.h.getProfile(gameprofile.getName());
+-            } else if (TileEntitySkull.userCache != null && TileEntitySkull.sessionService != null) {
+-                GameProfile gameprofile1 = TileEntitySkull.userCache.getProfile(gameprofile.getName());
 +                callback.apply(gameprofile);
 +            } else if (MinecraftServer.getServer() == null) {
 +                callback.apply(gameprofile);
@@ -157,7 +157,7 @@ index 102b8dc42..3a54ebdb1 100644
 -                    Property property = (Property) Iterables.getFirst(gameprofile1.getProperties().get("textures"), (Object) null);
 -
 -                    if (property == null) {
--                        gameprofile1 = TileEntitySkull.i.fillProfileProperties(gameprofile1, true);
+-                        gameprofile1 = TileEntitySkull.sessionService.fillProfileProperties(gameprofile1, true);
 +                    Callable<GameProfile> callable = new Callable<GameProfile>() {
 +                        @Override
 +                        public GameProfile call() {

@@ -1,4 +1,4 @@
-From 6cc6a98729e643ebee719ef2b13a32b5c06bbac9 Mon Sep 17 00:00:00 2001
+From 5431a3d57d7377954cbc2866e6fa40b7e28f62dc Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 9 Jul 2014 10:35:44 +1000
 Subject: [PATCH] Add CommandLine EULA Flag
@@ -8,14 +8,14 @@ This flag contains the same message as eula.txt (albeit with proper grammar for 
 This feature only exists for hosting companies and people who manage servers in bulk who wish to agree to the terms by setting a flag in a script.
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 3f6c74423..1f44d8119 100644
+index 57d0f7887..6368bfd56 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -136,7 +136,16 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
          DedicatedServer.LOGGER.info("Loading properties");
          this.propertyManager = new PropertyManager(this.options); // CraftBukkit - CLI argument support
-         this.n = new EULA(new File("eula.txt"));
--        if (!this.n.a()) {
+         this.eula = new EULA(new File("eula.txt"));
+-        if (!this.eula.a()) {
 +        // Spigot Start
 +        boolean eulaAgreed = Boolean.getBoolean( "com.mojang.eula.agree" );
 +        if ( eulaAgreed )
@@ -25,9 +25,9 @@ index 3f6c74423..1f44d8119 100644
 +            System.err.println( "If you do not agree to the above EULA please stop your server and remove this flag immediately." );
 +        }
 +        // Spigot End
-+        if (!this.n.a() && !eulaAgreed) { // Spigot
++        if (!this.eula.a() && !eulaAgreed) { // Spigot
              DedicatedServer.LOGGER.info("You need to agree to the EULA in order to run the server. Go to eula.txt for more info.");
-             this.n.b();
+             this.eula.b();
              return false;
 -- 
 2.19.1

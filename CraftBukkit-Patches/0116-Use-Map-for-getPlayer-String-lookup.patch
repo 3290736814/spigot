@@ -1,11 +1,11 @@
-From 734325c46715bd56c9648d25ec60ce917c741aed Mon Sep 17 00:00:00 2001
+From 3f93007d37b664a1ca4c678bb206e0a61feb48ff Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 13 Jul 2015 19:05:15 +1000
 Subject: [PATCH] Use Map for getPlayer(String) lookup.
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 1c027c7a4..39f149a81 100644
+index 33075fecb..9db7d7e30 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -72,6 +72,7 @@ public abstract class PlayerList {

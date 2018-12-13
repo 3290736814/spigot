@@ -1,11 +1,11 @@
-From 5708f5d03dbcc196fb26e07df0db8b998d5318ea Mon Sep 17 00:00:00 2001
+From 828ef432bf475fc561b02b72be626841a3d37e04 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 52b62990c..7303b8e6e 100644
+index 04b0647c2..b301dac82 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -151,6 +151,12 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
@@ -22,7 +22,7 @@ index 52b62990c..7303b8e6e 100644
      public MinecraftServer(OptionSet options, Proxy proxy, DataFixer datafixer, CommandDispatcher commanddispatcher, YggdrasilAuthenticationService yggdrasilauthenticationservice, MinecraftSessionService minecraftsessionservice, GameProfileRepository gameprofilerepository, UserCache usercache) {
          this.ac = new ResourceManager(EnumResourcePackType.SERVER_DATA);
 @@ -676,6 +682,13 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
-         return SystemUtils.b() < this.aa;
+         return SystemUtils.getMonotonicMillis() < this.nextTick;
      }
  
 +    // Spigot Start
@@ -43,9 +43,9 @@ index 52b62990c..7303b8e6e 100644
 +                Arrays.fill( recentTps, 20 );
 +                long lastTick = System.nanoTime(), catchupTime = 0, curTime, wait, tickSection = lastTick, tickCount = 1;
                  while (this.isRunning) {
--                    long i = SystemUtils.b() - this.aa;
+-                    long i = SystemUtils.getMonotonicMillis() - this.nextTick;
 -
--                    if (i > 2000L && this.aa - this.Q >= 15000L) {
+-                    if (i > 2000L && this.nextTick - this.lastOverloadTime >= 15000L) {
 -                        long j = i / 50L;
 +                    curTime = System.nanoTime();
 +                    wait = TICK_TIME - (curTime - lastTick) - catchupTime;
@@ -59,8 +59,8 @@ index 52b62990c..7303b8e6e 100644
  
 -                        if (server.getWarnOnOverload()) // CraftBukkit
 -                        MinecraftServer.LOGGER.warn("Can't keep up! Is the server overloaded? Running {}ms or {} ticks behind", i, j);
--                        this.aa += j * 50L;
--                        this.Q = this.aa;
+-                        this.nextTick += j * 50L;
+-                        this.lastOverloadTime = this.nextTick;
 +                    if ( tickCount++ % SAMPLE_INTERVAL == 0 )
 +                    {
 +                        double currentTps = 1E9 / ( curTime - tickSection ) * SAMPLE_INTERVAL;
@@ -72,10 +72,10 @@ index 52b62990c..7303b8e6e 100644
 +                    lastTick = curTime;
  
                      MinecraftServer.currentTick = (int) (System.currentTimeMillis() / 50); // CraftBukkit
-                     this.a(this::aT);
-                     this.aa += 50L;
+                     this.a(this::canSleepForTick);
+                     this.nextTick += 50L;
 -
--                    while (this.aT()) {
+-                    while (this.canSleepForTick()) {
 -                        Thread.sleep(1L);
 -                    }
 -

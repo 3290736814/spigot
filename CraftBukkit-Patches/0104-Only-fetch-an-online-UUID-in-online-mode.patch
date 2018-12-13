@@ -1,4 +1,4 @@
-From e8361ea0df95a4b0f4a5765393756b0d47c77d64 Mon Sep 17 00:00:00 2001
+From 4a386d261223d5e565b657ded95ea766dbc6f87f Mon Sep 17 00:00:00 2001
 From: Maxim Van de Wynckel <maxim_vdw@hotmail.com>
 Date: Wed, 30 Jul 2014 01:19:51 +0200
 Subject: [PATCH] Only fetch an online UUID in online mode
@@ -12,10 +12,10 @@ You want to store data for player "Test"  who never joined. An online UUID is cr
 The player Test joins with an offline UUID but that will not match the online UUID of the saved data.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b65613687..e91c06f2c 100644
+index 102d64bf2..5ef47e3b1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1369,8 +1369,14 @@ public final class CraftServer implements Server {
+@@ -1368,8 +1368,14 @@ public final class CraftServer implements Server {
  
          OfflinePlayer result = getPlayerExact(name);
          if (result == null) {

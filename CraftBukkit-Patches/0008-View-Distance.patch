@@ -1,4 +1,4 @@
-From 9ea99e973b3eb28d30d9d80a5078f2e934bc09fc Mon Sep 17 00:00:00 2001
+From 8a30479ae9128b8e47923403003701dc0462c0f3 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,27 +6,27 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances, and view distances below 3. Be wary of the issues selecting a view distance of 1 or 2 may cause!
 
 diff --git a/src/main/java/net/minecraft/server/EntityTracker.java b/src/main/java/net/minecraft/server/EntityTracker.java
-index ef5817933..4ecdeef23 100644
+index 5cfa09fff..72adb634e 100644
 --- a/src/main/java/net/minecraft/server/EntityTracker.java
 +++ b/src/main/java/net/minecraft/server/EntityTracker.java
 @@ -18,7 +18,7 @@ public class EntityTracker {
  
      public EntityTracker(WorldServer worldserver) {
          this.world = worldserver;
--        this.e = worldserver.getMinecraftServer().getPlayerList().d();
-+        this.e = PlayerChunkMap.getFurthestViewableBlock(worldserver.spigotConfig.viewDistance); // Spigot
+-        this.trackingDistance = worldserver.getMinecraftServer().getPlayerList().getFurthestViewableBlock();
++        this.trackingDistance = PlayerChunkMap.getFurthestViewableBlock(worldserver.spigotConfig.viewDistance); // Spigot
      }
  
      public static long a(double d0) {
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index feb931162..e163d0019 100644
+index 84e068f87..682d2a803 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -42,7 +42,7 @@ public class PlayerChunkMap {
  
      public PlayerChunkMap(WorldServer worldserver) {
          this.world = worldserver;
--        this.a(worldserver.getMinecraftServer().getPlayerList().s());
+-        this.a(worldserver.getMinecraftServer().getPlayerList().getViewDistance());
 +        this.a(worldserver.spigotConfig.viewDistance); // Spigot
      }
  

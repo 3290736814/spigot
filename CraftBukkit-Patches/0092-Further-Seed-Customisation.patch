@@ -1,4 +1,4 @@
-From 15ea063ec2e3c7735e978a9b0e3c8196417ec9da Mon Sep 17 00:00:00 2001
+From 73c60432fb5db28a30f3f6e6ee1336f555819af6 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -6,22 +6,22 @@ Subject: [PATCH] Further Seed Customisation
 Allow server admins that really want to to customise the seeds used in world generation even further.
 
 diff --git a/src/main/java/net/minecraft/server/ChunkGenerator.java b/src/main/java/net/minecraft/server/ChunkGenerator.java
-index 3d5d9d779..6aa9fd76d 100644
+index 4cfa3df19..0c9583834 100644
 --- a/src/main/java/net/minecraft/server/ChunkGenerator.java
 +++ b/src/main/java/net/minecraft/server/ChunkGenerator.java
 @@ -40,4 +40,6 @@ public interface ChunkGenerator<C extends GeneratorSettings> {
      int getSpawnHeight();
  
-     int e();
+     int getGenerationDepth();
 +
 +    World getWorld(); // Spigot
  }
 diff --git a/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
-index 8f11487d6..c8c1444e8 100644
+index 53ce31c80..39a548881 100644
 --- a/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
 +++ b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
 @@ -156,4 +156,11 @@ public abstract class ChunkGeneratorAbstract<C extends GeneratorSettings> implem
-     public int e() {
+     public int getGenerationDepth() {
          return 256;
      }
 +
@@ -207,11 +207,11 @@ index 6424572ff..76d395c4e 100644
  
      public boolean unload(boolean save) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java b/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
-index 8c8fa453e..9c2adb235 100644
+index 3f2948a5e..4cca65666 100644
 --- a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
 +++ b/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
 @@ -177,4 +177,10 @@ public class CustomChunkGenerator extends InternalChunkGenerator<GeneratorSettin
-     public int e() {
+     public int getGenerationDepth() {
          return world.getHeight();
      }
 +
@@ -222,7 +222,7 @@ index 8c8fa453e..9c2adb235 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/generator/NormalChunkGenerator.java b/src/main/java/org/bukkit/craftbukkit/generator/NormalChunkGenerator.java
-index aaa1bc1cf..9f6e31e2d 100644
+index fd5280e00..97a373771 100644
 --- a/src/main/java/org/bukkit/craftbukkit/generator/NormalChunkGenerator.java
 +++ b/src/main/java/org/bukkit/craftbukkit/generator/NormalChunkGenerator.java
 @@ -11,9 +11,11 @@ import net.minecraft.server.*;
@@ -238,8 +238,8 @@ index aaa1bc1cf..9f6e31e2d 100644
      }
  
 @@ -111,4 +113,11 @@ public class NormalChunkGenerator<C extends GeneratorSettings> extends InternalC
-     public int e() {
-         return generator.e(); // PAIL: Gen depth
+     public int getGenerationDepth() {
+         return generator.getGenerationDepth();
      }
 +
 +    // Spigot start

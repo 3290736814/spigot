@@ -1,17 +1,17 @@
-From 1e04fc0e389bb8dabee16c8dfb782f831208bb2c Mon Sep 17 00:00:00 2001
+From d7437eeca5894e1f57c78cbab1c7e286ba538fd0 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 22 Jun 2013 16:12:02 +1000
 Subject: [PATCH] Allow Disabling of Random Lighting Updates
 
 
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 33b67b1f9..e5407bfdc 100644
+index e1bafc0f8..138ce73e0 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -446,7 +446,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
  
      protected void l() {
-         this.methodProfiler.a("playerCheckLight");
+         this.methodProfiler.enter("playerCheckLight");
 -        if (!this.players.isEmpty()) {
 +        if (spigotConfig.randomLightUpdates && !this.players.isEmpty()) { // Spigot
              int i = this.random.nextInt(this.players.size());

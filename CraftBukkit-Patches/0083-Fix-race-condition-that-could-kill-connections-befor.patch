@@ -1,4 +1,4 @@
-From 7d0b25004326746edf6820115d4ec3a5bd6669ba Mon Sep 17 00:00:00 2001
+From 86e880d6041d055156ce409d56e8e43637c3f139 Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Fri, 25 Apr 2014 23:46:46 +0200
 Subject: [PATCH] Fix race condition that could kill connections before they
@@ -12,21 +12,21 @@ initialized. The ServerConnection does not remove NetworkManagers with
 this flag.
 
 diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
-index 88aad6d43..d9d3d7714 100644
+index 30c1e3344..15a686bec 100644
 --- a/src/main/java/net/minecraft/server/NetworkManager.java
 +++ b/src/main/java/net/minecraft/server/NetworkManager.java
 @@ -51,6 +51,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
-     public SocketAddress l;
+     // Spigot Start
      public java.util.UUID spoofedUUID;
      public com.mojang.authlib.properties.Property[] spoofedProfile;
 +    public boolean preparing = true;
      // Spigot End
-     private PacketListener m;
+     private PacketListener packetListener;
      private IChatBaseComponent n;
 @@ -71,6 +72,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
          super.channelActive(channelhandlercontext);
          this.channel = channelhandlercontext.channel();
-         this.l = this.channel.remoteAddress();
+         this.socketAddress = this.channel.remoteAddress();
 +        // Spigot Start
 +        this.preparing = false;
 +        // Spigot End

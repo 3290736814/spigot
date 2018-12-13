@@ -1,4 +1,4 @@
-From e0ec479127fab19120f7ce2f740962f203600164 Mon Sep 17 00:00:00 2001
+From aff7db769caafb42a55243cc3be09c12c79ee320 Mon Sep 17 00:00:00 2001
 From: riking <rikingcoding@gmail.com>
 Date: Wed, 14 May 2014 13:46:48 -0700
 Subject: [PATCH] Process conversation input on the main thread. Fixes
@@ -6,7 +6,7 @@ Subject: [PATCH] Process conversation input on the main thread. Fixes
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 8c2c21086..73c813820 100644
+index 6f312fbec..c67511c90 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -1459,7 +1459,18 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
