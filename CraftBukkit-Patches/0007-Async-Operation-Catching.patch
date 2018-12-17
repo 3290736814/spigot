@@ -1,4 +1,4 @@
-From c8651ebe88df15eb12df958cccffb81ae543c0c4 Mon Sep 17 00:00:00 2001
+From 2e1ed66a446f78ec4dca2579ffc7e146a6e677ec Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -27,7 +27,7 @@ index a7f942de8..a30b21ad2 100644
      public int a(IBlockData iblockdata, Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index f411c0378..2f9944ba5 100644
+index 8c0d8ed72..432d752d9 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -725,6 +725,7 @@ public abstract class EntityLiving extends Entity {
@@ -79,7 +79,7 @@ index e6b492048..6a622f72e 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index f51dbf185..fe95194e5 100644
+index 95917ffa9..af5f73c7a 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -861,6 +861,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
@@ -87,10 +87,10 @@ index f51dbf185..fe95194e5 100644
  
      public boolean addEntity(Entity entity, SpawnReason spawnReason) { // Changed signature, added SpawnReason
 +        org.spigotmc.AsyncCatcher.catchOp( "entity add"); // Spigot
-         if (entity == null) return false;
- 
-         org.bukkit.event.Cancellable event = null;
-@@ -958,6 +959,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+         if (!CraftEventFactory.doEntityAddEventCalling(this, entity, spawnReason)) {
+             return false;
+         }
+@@ -908,6 +909,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      }
  
      public void kill(Entity entity) {
@@ -98,7 +98,7 @@ index f51dbf185..fe95194e5 100644
          if (entity.isVehicle()) {
              entity.ejectPassengers();
          }
-@@ -976,6 +978,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -926,6 +928,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      }
  
      public void removeEntity(Entity entity) {
@@ -106,7 +106,7 @@ index f51dbf185..fe95194e5 100644
          entity.b(false);
          entity.die();
          if (entity instanceof EntityHuman) {
-@@ -2193,6 +2196,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -2143,6 +2146,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      }
  
      public void a(Stream<Entity> stream) {

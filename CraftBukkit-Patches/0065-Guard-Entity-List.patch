@@ -1,11 +1,11 @@
-From 5179d34b835182e3a16b5f5243a853c987265d95 Mon Sep 17 00:00:00 2001
+From 30b193647ebe06e1c234780d4599a5d7915552b7 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 10 Mar 2014 09:03:28 +1100
 Subject: [PATCH] Guard Entity List
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 026e1f1ed..ed64ea8b9 100644
+index 3f8bfbead..1c7645078 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -44,7 +44,32 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
@@ -50,7 +50,7 @@ index 026e1f1ed..ed64ea8b9 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -1095,6 +1121,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1045,6 +1071,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
  
          org.spigotmc.ActivationRange.activateEntities(this); // Spigot
          timings.entityTick.startTiming(); // Spigot
@@ -58,7 +58,7 @@ index 026e1f1ed..ed64ea8b9 100644
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
              entity = (Entity) this.entityList.get(this.tickPosition);
-@@ -1133,12 +1160,15 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1083,12 +1110,15 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
                      this.getChunkAt(j, l).b(entity);
                  }
  

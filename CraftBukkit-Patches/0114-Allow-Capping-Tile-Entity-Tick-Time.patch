@@ -1,4 +1,4 @@
-From 27c6a77f0824c72c4bc96db64909e47f1d6f4e2c Mon Sep 17 00:00:00 2001
+From ef6415feb59aedc9f126efdc4fbb7a0c6e329d89 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -10,7 +10,7 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 This feature was commisioned by Chunkr.
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 6bbdbb828..7fa81cabc 100644
+index 538bfebc9..673764369 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -138,6 +138,9 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
@@ -32,7 +32,7 @@ index 6bbdbb828..7fa81cabc 100644
      }
  
      public BiomeBase getBiome(BlockPosition blockposition) {
-@@ -1151,7 +1156,12 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1101,7 +1106,12 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
          timings.entityTick.startTiming(); // Spigot
          guardEntityList = true; // Spigot
          // CraftBukkit start - Use field for loop variable
@@ -46,7 +46,7 @@ index 6bbdbb828..7fa81cabc 100644
              entity = (Entity) this.entityList.get(this.tickPosition);
              // CraftBukkit end
              Entity entity1 = entity.getVehicle();
-@@ -1208,14 +1218,19 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1158,14 +1168,19 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
          }
  
          this.J = true;
@@ -71,7 +71,7 @@ index 6bbdbb828..7fa81cabc 100644
                  continue;
              }
              // Spigot end
-@@ -1246,7 +1261,8 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1196,7 +1211,8 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
              }
  
              if (tileentity.x()) {

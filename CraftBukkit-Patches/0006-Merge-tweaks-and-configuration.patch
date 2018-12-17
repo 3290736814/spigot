@@ -1,4 +1,4 @@
-From c7015652b25bd173257b771c968aaba011ccefc3 Mon Sep 17 00:00:00 2001
+From 583654188cc2996d8acadd6b98431c9a317de864 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:46:33 +1100
 Subject: [PATCH] Merge tweaks and configuration
@@ -42,20 +42,20 @@ index 1a2794e3b..e45b8171b 100644
                          return true;
                      }
                  } else {
-diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 6c1335d50..f51dbf185 100644
---- a/src/main/java/net/minecraft/server/World.java
-+++ b/src/main/java/net/minecraft/server/World.java
-@@ -885,6 +885,23 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+index a7d88fe6a..d8e61b132 100644
+--- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
++++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+@@ -384,6 +384,23 @@ public class CraftEventFactory {
          } else if (entity.getBukkitEntity() instanceof org.bukkit.entity.Vehicle){
              event = CraftEventFactory.callVehicleCreateEvent(entity);
          }
 +        // Spigot start
 +        else if (entity instanceof EntityExperienceOrb) {
 +            EntityExperienceOrb xp = (EntityExperienceOrb) entity;
-+            double radius = spigotConfig.expMerge;
++            double radius = world.spigotConfig.expMerge;
 +            if (radius > 0) {
-+                List<Entity> entities = this.getEntities(entity, entity.getBoundingBox().grow(radius, radius, radius));
++                List<Entity> entities = world.getEntities(entity, entity.getBoundingBox().grow(radius, radius, radius));
 +                for (Entity e : entities) {
 +                    if (e instanceof EntityExperienceOrb) {
 +                        EntityExperienceOrb loopItem = (EntityExperienceOrb) e;

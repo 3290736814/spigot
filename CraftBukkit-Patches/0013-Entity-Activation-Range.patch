@@ -1,4 +1,4 @@
-From 8750a785e75acae032506f8dcf0745a46d1e49fb Mon Sep 17 00:00:00 2001
+From 8df1a06a269cc09490fc4400a7cdc9ff196b49f6 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 6c7488553..8b5db7d1f 100644
+index 720cd5502..0106bb267 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -161,6 +161,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -150,7 +150,7 @@ index 87fbd73cc..3c30cd5b3 100644
          if (this.motY < 0.05999999865889549D) {
              this.motY += 5.000000237487257E-4D;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 982554660..d8a53d7fd 100644
+index 1237843a7..341af9c16 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -128,6 +128,13 @@ public abstract class EntityLiving extends Entity {
@@ -195,10 +195,10 @@ index d9c99bf9d..d2572b3e1 100644
          if (--this.profession <= 0) {
              BlockPosition blockposition = new BlockPosition(this);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 3a7c552a8..026e1f1ed 100644
+index 322b07d2f..3f8bfbead 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1093,6 +1093,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1043,6 +1043,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
          CrashReport crashreport1;
          CrashReportSystemDetails crashreportsystemdetails1;
  
@@ -206,7 +206,7 @@ index 3a7c552a8..026e1f1ed 100644
          timings.entityTick.startTiming(); // Spigot
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
-@@ -1278,8 +1279,12 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -1228,8 +1229,12 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
  
          // CraftBukkit start - check if chunks are loaded as done in previous versions
          // TODO: Go back to Vanilla behaviour when comfortable
