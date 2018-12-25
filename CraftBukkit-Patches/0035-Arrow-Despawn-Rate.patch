@@ -1,0 +1,38 @@
+From 234540c31a938bf4358fcd210dc3d2715b8b908a Mon Sep 17 00:00:00 2001
+From: md_5 <md_5@live.com.au>
+Date: Mon, 14 Oct 2013 19:20:10 +1100
+Subject: [PATCH] Arrow Despawn Rate
+
+
+diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
+index fc4ef01c3..e947405a8 100644
+--- a/src/main/java/net/minecraft/server/EntityArrow.java
++++ b/src/main/java/net/minecraft/server/EntityArrow.java
+@@ -262,7 +262,7 @@ public abstract class EntityArrow extends Entity implements IProjectile {
+ 
+     protected void f() {
+         ++this.despawnCounter;
+-        if (this.despawnCounter >= 1200) {
++        if (this.despawnCounter >= world.spigotConfig.arrowDespawnRate) { // Spigot
+             this.die();
+         }
+ 
+diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+index b909d7bbd..c7984825d 100644
+--- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
++++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+@@ -191,4 +191,11 @@ public class SpigotWorldConfig
+         randomLightUpdates = getBoolean( "random-light-updates", false );
+         log( "Random Lighting Updates: " + randomLightUpdates );
+     }
++
++    public int arrowDespawnRate;
++    private void arrowDespawnRate()
++    {
++        arrowDespawnRate = getInt( "arrow-despawn-rate", 1200  );
++        log( "Arrow Despawn Rate: " + arrowDespawnRate );
++    }
+ }
+-- 
+2.19.1
+

@@ -1,4 +1,4 @@
-From d80e3a135da7956ef3a0391ce97b1f59dd2536db Mon Sep 17 00:00:00 2001
+From f397b16ceef518f1a8fab7e00f64bcda0e8fa821 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -37,10 +37,10 @@ index 23b1344b..4f47f65e 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 89a08cc9..35f0d18f 100644
+index 4a703ddb..56ef5979 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -1774,6 +1774,15 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -1777,6 +1777,15 @@ public interface World extends PluginMessageRecipient, Metadatable {
       */
      public Location locateNearestStructure(Location origin, StructureType structureType, int radius, boolean findUnexplored);
  
@@ -75,10 +75,10 @@ index 148756b9..5dcd2218 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Arrow.java b/src/main/java/org/bukkit/entity/Arrow.java
-index 752eeb5e..c77f3a4f 100644
+index bf0d362d..c9d1e42f 100644
 --- a/src/main/java/org/bukkit/entity/Arrow.java
 +++ b/src/main/java/org/bukkit/entity/Arrow.java
-@@ -89,4 +89,14 @@ public interface Arrow extends Projectile {
+@@ -107,4 +107,14 @@ public interface Arrow extends Projectile {
           */
          CREATIVE_ONLY
      }
@@ -168,10 +168,10 @@ index b2851209..a252e3a8 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-index 64b68b1a..7081773d 100644
+index cf7a1730..2e1e77ec 100644
 --- a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
 +++ b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-@@ -333,4 +333,13 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
+@@ -331,4 +331,13 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
  
      @SuppressWarnings("javadoc")
      ItemMeta clone();

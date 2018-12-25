@@ -1,0 +1,43 @@
+From 724a50316bb0a5bed23b66f972e6ec7f0fe9bbfa Mon Sep 17 00:00:00 2001
+From: libraryaddict <redwarfare@live.com>
+Date: Fri, 22 Aug 2014 05:31:04 -0400
+Subject: [PATCH] Added isUnbreakable and setUnbreakable to ItemMeta
+
+
+diff --git a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
+index 2e1e77ec..4d0351c4 100644
+--- a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
++++ b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
+@@ -336,6 +336,29 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
+     public class Spigot
+     {
+ 
++        /**
++         * Sets the unbreakable tag
++         *
++         * @param unbreakable true if set unbreakable
++         * @deprecated see {@link ItemMeta#setUnbreakable(boolean)}
++         */
++        @Deprecated
++        public void setUnbreakable(boolean unbreakable)
++        {
++            throw new UnsupportedOperationException( "Not supported yet." );
++        }
++
++        /**
++         * Return if the unbreakable tag is true
++         *
++         * @return true if the unbreakable tag is true
++         * @deprecated see {@link ItemMeta#isUnbreakable()}
++         */
++        @Deprecated
++        public boolean isUnbreakable()
++        {
++            throw new UnsupportedOperationException( "Not supported yet." );
++        }
+     }
+ 
+     Spigot spigot();
+-- 
+2.19.1
+

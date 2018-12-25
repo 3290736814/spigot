@@ -1,0 +1,286 @@
+From 423a359bb6c54a4b416ffc998050bed533616863 Mon Sep 17 00:00:00 2001
+From: md_5 <git@md-5.net>
+Date: Fri, 4 Jul 2014 13:28:45 +1000
+Subject: [PATCH] Further Seed Customisation
+
+Allow server admins that really want to to customise the seeds used in world generation even further.
+
+diff --git a/src/main/java/net/minecraft/server/ChunkGenerator.java b/src/main/java/net/minecraft/server/ChunkGenerator.java
+index 4cfa3df19..0c9583834 100644
+--- a/src/main/java/net/minecraft/server/ChunkGenerator.java
++++ b/src/main/java/net/minecraft/server/ChunkGenerator.java
+@@ -40,4 +40,6 @@ public interface ChunkGenerator<C extends GeneratorSettings> {
+     int getSpawnHeight();
+ 
+     int getGenerationDepth();
++
++    World getWorld(); // Spigot
+ }
+diff --git a/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
+index 646f5f917..a23768441 100644
+--- a/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
++++ b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
+@@ -155,4 +155,11 @@ public abstract class ChunkGeneratorAbstract<C extends GeneratorSettings> implem
+     public int getGenerationDepth() {
+         return 256;
+     }
++
++    // Spigot start
++    @Override
++    public World getWorld() {
++        return this.a.getMinecraftWorld();
++    }
++    // Spigot end
+ }
+diff --git a/src/main/java/net/minecraft/server/EntitySlime.java b/src/main/java/net/minecraft/server/EntitySlime.java
+index d761e2bc9..aa23cdff1 100644
+--- a/src/main/java/net/minecraft/server/EntitySlime.java
++++ b/src/main/java/net/minecraft/server/EntitySlime.java
+@@ -267,7 +267,7 @@ public class EntitySlime extends EntityInsentient implements IMonster {
+                 }
+ 
+                 ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(blockposition);
+-                boolean flag1 = SeededRandom.a(chunkcoordintpair.x, chunkcoordintpair.z, generatoraccess.getSeed(), 987234911L).nextInt(10) == 0;
++                boolean flag1 = SeededRandom.a(chunkcoordintpair.x, chunkcoordintpair.z, generatoraccess.getSeed(), world.spigotConfig.slimeSeed).nextInt(10) == 0; // Spigot
+ 
+                 if (this.random.nextInt(10) == 0 && flag1 && this.locY < 40.0D) {
+                     return super.a(generatoraccess, flag);
+diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java b/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
+index 0b91f1641..d38758276 100644
+--- a/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
++++ b/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
+@@ -18,8 +18,10 @@ public class WorldGenFeatureDesertPyramid extends WorldGenFeatureRandomScattered
+         return new WorldGenFeatureDesertPyramid.a(generatoraccess, seededrandom, i, j, biomebase);
+     }
+ 
+-    protected int c() {
+-        return 14357617;
++    // Spigot start
++    protected int c(World world) {
++        return world.spigotConfig.desertSeed;
++        // Spigot end
+     }
+ 
+     public static class a extends StructureStart {
+diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java b/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java
+index 36495fd9c..de8be1aa9 100644
+--- a/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java
++++ b/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java
+@@ -18,8 +18,10 @@ public class WorldGenFeatureIgloo extends WorldGenFeatureRandomScattered<WorldGe
+         return new WorldGenFeatureIgloo.a(generatoraccess, chunkgenerator, seededrandom, i, j, biomebase);
+     }
+ 
+-    protected int c() {
+-        return 14357618;
++    // Spigot start
++    protected int c(World world) {
++        return world.spigotConfig.iglooSeed;
++        // Spigot end
+     }
+ 
+     public static class a extends StructureStart {
+diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java b/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java
+index 604e849f4..c10f79864 100644
+--- a/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java
++++ b/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java
+@@ -18,8 +18,10 @@ public class WorldGenFeatureJunglePyramid extends WorldGenFeatureRandomScattered
+         return new WorldGenFeatureJunglePyramid.a(generatoraccess, seededrandom, i, j, biomebase);
+     }
+ 
+-    protected int c() {
+-        return 14357619;
++    // Spigot start
++    protected int c(World world) {
++        return world.spigotConfig.jungleSeed;
++        // Spigot end
+     }
+ 
+     public static class a extends StructureStart {
+diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java b/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java
+index 3d8e08ff5..ad3dc7199 100644
+--- a/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java
++++ b/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java
+@@ -28,8 +28,10 @@ public class WorldGenFeatureOceanRuin extends WorldGenFeatureRandomScattered<Wor
+         return new WorldGenFeatureOceanRuin.a(generatoraccess, chunkgenerator, seededrandom, i, j, biomebase);
+     }
+ 
+-    protected int c() {
+-        return 14357621;
++    // Spigot start
++    protected int c(World world) {
++        return world.spigotConfig.oceanSeed;
++        // Spigot end
+     }
+ 
+     public static enum Temperature {
+diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java b/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java
+index da5fd85c4..c9c4e49b1 100644
+--- a/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java
++++ b/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java
+@@ -16,7 +16,7 @@ public abstract class WorldGenFeatureRandomScattered<C extends WorldGenFeatureCo
+         int k2 = i2 / i1;
+         int l2 = j2 / i1;
+ 
+-        ((SeededRandom) random).a(chunkgenerator.getSeed(), k2, l2, this.c());
++        ((SeededRandom) random).a(chunkgenerator.getSeed(), k2, l2, this.c(chunkgenerator.getWorld())); // Spigot
+         k2 *= i1;
+         l2 *= i1;
+         k2 += random.nextInt(i1 - j1);
+@@ -52,5 +52,5 @@ public abstract class WorldGenFeatureRandomScattered<C extends WorldGenFeatureCo
+ 
+     protected abstract StructureStart a(GeneratorAccess generatoraccess, ChunkGenerator<?> chunkgenerator, SeededRandom seededrandom, int i, int j);
+ 
+-    protected abstract int c();
++    protected abstract int c(World world); // Spigot
+ }
+diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java b/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java
+index a50a45c43..f3b185d58 100644
+--- a/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java
++++ b/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java
+@@ -18,8 +18,10 @@ public class WorldGenFeatureShipwreck extends WorldGenFeatureRandomScattered<Wor
+         return new WorldGenFeatureShipwreck.a(generatoraccess, chunkgenerator, seededrandom, i, j, biomebase);
+     }
+ 
+-    protected int c() {
+-        return 165745295;
++    // Spigot start
++    protected int c(World world) {
++        return world.spigotConfig.shipwreckSeed;
++        // Spigot end
+     }
+ 
+     protected int a(ChunkGenerator<?> chunkgenerator) {
+diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
+index 47ff206b2..f0788eb5d 100644
+--- a/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
++++ b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
+@@ -23,8 +23,10 @@ public class WorldGenFeatureSwampHut extends WorldGenFeatureRandomScattered<Worl
+         return new WorldGenFeatureSwampHut.a(generatoraccess, seededrandom, i, j, biomebase);
+     }
+ 
+-    protected int c() {
+-        return 14357620;
++    // Spigot start
++    protected int c(World world) {
++        return world.spigotConfig.swampSeed;
++        // Spigot end
+     }
+ 
+     public List<BiomeBase.BiomeMeta> d() {
+diff --git a/src/main/java/net/minecraft/server/WorldGenMonument.java b/src/main/java/net/minecraft/server/WorldGenMonument.java
+index cc72270f3..9a1795ad6 100644
+--- a/src/main/java/net/minecraft/server/WorldGenMonument.java
++++ b/src/main/java/net/minecraft/server/WorldGenMonument.java
+@@ -23,7 +23,7 @@ public class WorldGenMonument extends StructureGenerator<WorldGenMonumentConfigu
+         int k2 = i2 / i1;
+         int l2 = j2 / i1;
+ 
+-        ((SeededRandom) random).a(chunkgenerator.getSeed(), k2, l2, 10387313);
++        ((SeededRandom) random).a(chunkgenerator.getSeed(), k2, l2, chunkgenerator.getWorld().spigotConfig.monumentSeed); // Spigot
+         k2 *= i1;
+         l2 *= i1;
+         k2 += (random.nextInt(i1 - j1) + random.nextInt(i1 - j1)) / 2;
+diff --git a/src/main/java/net/minecraft/server/WorldGenVillage.java b/src/main/java/net/minecraft/server/WorldGenVillage.java
+index 5b98dcfce..ca41a90cf 100644
+--- a/src/main/java/net/minecraft/server/WorldGenVillage.java
++++ b/src/main/java/net/minecraft/server/WorldGenVillage.java
+@@ -30,7 +30,7 @@ public class WorldGenVillage extends StructureGenerator<WorldGenFeatureVillageCo
+         int k2 = i2 / i1;
+         int l2 = j2 / i1;
+ 
+-        ((SeededRandom) random).a(chunkgenerator.getSeed(), k2, l2, 10387312);
++        ((SeededRandom) random).a(chunkgenerator.getSeed(), k2, l2, chunkgenerator.getWorld().spigotConfig.villageSeed); // Spigot
+         k2 *= i1;
+         l2 *= i1;
+         k2 += random.nextInt(i1 - j1);
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
+index 6424572ff..76d395c4e 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
+@@ -136,7 +136,7 @@ public class CraftChunk implements Chunk {
+     @Override
+     public boolean isSlimeChunk() {
+         // 987234911L is deterimined in EntitySlime when seeing if a slime can spawn in a chunk
+-        return SeededRandom.a(getX(), getZ(), getWorld().getSeed(), 987234911L).nextInt(10) == 0;
++        return SeededRandom.a(getX(), getZ(), getWorld().getSeed(), worldServer.spigotConfig.slimeSeed).nextInt(10) == 0;
+     }
+ 
+     public boolean unload(boolean save) {
+diff --git a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java b/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
+index 3f2948a5e..4cca65666 100644
+--- a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
++++ b/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
+@@ -177,4 +177,10 @@ public class CustomChunkGenerator extends InternalChunkGenerator<GeneratorSettin
+     public int getGenerationDepth() {
+         return world.getHeight();
+     }
++
++    // Spigot start
++    public WorldServer getWorld() {
++        return world;
++    }
++    // Spigot end
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/generator/NormalChunkGenerator.java b/src/main/java/org/bukkit/craftbukkit/generator/NormalChunkGenerator.java
+index fd5280e00..97a373771 100644
+--- a/src/main/java/org/bukkit/craftbukkit/generator/NormalChunkGenerator.java
++++ b/src/main/java/org/bukkit/craftbukkit/generator/NormalChunkGenerator.java
+@@ -11,9 +11,11 @@ import net.minecraft.server.*;
+ import org.bukkit.generator.BlockPopulator;
+ 
+ public class NormalChunkGenerator<C extends GeneratorSettings> extends InternalChunkGenerator<C> {
++    private final World world; // Spigot
+     private final ChunkGenerator<?> generator;
+ 
+     public NormalChunkGenerator(World world, long seed) {
++        this.world = world; // Spigot
+         generator = world.worldProvider.getChunkGenerator();
+     }
+ 
+@@ -111,4 +113,11 @@ public class NormalChunkGenerator<C extends GeneratorSettings> extends InternalC
+     public int getGenerationDepth() {
+         return generator.getGenerationDepth();
+     }
++
++    // Spigot start
++    @Override
++    public World getWorld() {
++        return this.world;
++    }
++    // Spigot end
+ }
+diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+index 5c9a29e94..817ae6bc1 100644
+--- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
++++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+@@ -231,4 +231,27 @@ public class SpigotWorldConfig
+     {
+         witherSpawnSoundRadius = getInt( "wither-spawn-sound-radius", 0 );
+     }
++
++    public int villageSeed;
++    public int desertSeed;
++    public int iglooSeed;
++    public int jungleSeed;
++    public int swampSeed;
++    public int monumentSeed;
++    public int oceanSeed;
++    public int shipwreckSeed;
++    public int slimeSeed;
++    private void initWorldGenSeeds()
++    {
++        villageSeed = getInt( "seed-village", 10387312 );
++        desertSeed = getInt( "seed-desert", 14357617 );
++        iglooSeed = getInt( "seed-igloo", 14357618 );
++        jungleSeed = getInt( "seed-jungle", 14357619 );
++        swampSeed = getInt( "seed-swamp", 14357620 );
++        monumentSeed = getInt( "seed-monument", 10387313 );
++        shipwreckSeed = getInt( "seed-shipwreck", 165745295 );
++        oceanSeed = getInt( "seed-ocean", 14357621 );
++        slimeSeed = getInt( "seed-slime", 987234911 );
++        log( "Custom Map Seeds:  Village: " + villageSeed + " Desert: " + desertSeed + " Igloo: " + iglooSeed + " Jungle: " + jungleSeed + " Swamp: " + swampSeed + " Monument: " + monumentSeed + "Ocean: " + oceanSeed + " Shipwreck: " + shipwreckSeed + " Slime: " + slimeSeed );
++    }
+ }
+-- 
+2.19.1
+

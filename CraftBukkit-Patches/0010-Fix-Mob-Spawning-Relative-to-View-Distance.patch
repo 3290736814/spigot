@@ -1,4 +1,4 @@
-From 442db856e4aa706f0ea47acbc8e42588feb5d51b Mon Sep 17 00:00:00 2001
+From 549694c3d8f321a18137eeaea66417c6a54e723b Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,7 +8,7 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/SpawnerCreature.java b/src/main/java/net/minecraft/server/SpawnerCreature.java
-index 6d0a07469..afe039905 100644
+index 5f262bc53..6ca0e19cb 100644
 --- a/src/main/java/net/minecraft/server/SpawnerCreature.java
 +++ b/src/main/java/net/minecraft/server/SpawnerCreature.java
 @@ -42,10 +42,15 @@ public final class SpawnerCreature {

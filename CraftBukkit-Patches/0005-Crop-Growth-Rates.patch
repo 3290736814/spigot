@@ -1,4 +1,4 @@
-From c3ecfc241571e38a410c7982fffd6c26dd4ea30a Mon Sep 17 00:00:00 2001
+From e5271293a1a795da5b06bece6dca416ccb7f5bde Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -6,10 +6,10 @@ Subject: [PATCH] Crop Growth Rates
 Allows configuring the growth rates of crops as a percentage of their normal growth rate.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 8458a657b..a7f942de8 100644
+index 848d2f5cf..f6829ff07 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
-@@ -1416,6 +1416,18 @@ public class Block implements IMaterial {
+@@ -1415,6 +1415,18 @@ public class Block implements IMaterial {
          a(new MinecraftKey(s), block);
      }
  
@@ -68,7 +68,7 @@ index c141f6737..29b45e219 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/server/BlockMushroom.java b/src/main/java/net/minecraft/server/BlockMushroom.java
-index c064fdf99..53ad72fce 100644
+index a9fb0e187..7cc30a4f3 100644
 --- a/src/main/java/net/minecraft/server/BlockMushroom.java
 +++ b/src/main/java/net/minecraft/server/BlockMushroom.java
 @@ -20,7 +20,7 @@ public class BlockMushroom extends BlockPlant implements IBlockFragilePlantEleme
@@ -133,10 +133,10 @@ index e432ed1ac..53f091835 100644
  
                  if (i < 7) {
 diff --git a/src/main/java/net/minecraft/server/BlockVine.java b/src/main/java/net/minecraft/server/BlockVine.java
-index 551f5d419..9bd2ede5f 100644
+index d89753bae..7006619b2 100644
 --- a/src/main/java/net/minecraft/server/BlockVine.java
 +++ b/src/main/java/net/minecraft/server/BlockVine.java
-@@ -166,7 +166,7 @@ public class BlockVine extends Block {
+@@ -165,7 +165,7 @@ public class BlockVine extends Block {
                      world.setAir(blockposition);
                  }
  

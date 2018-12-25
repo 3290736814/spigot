@@ -1,4 +1,4 @@
-From e694723a0b26ce575afb0123d5927fdc008b0028 Mon Sep 17 00:00:00 2001
+From 3dafd780032b16d442155b080fca390bc5f76fd9 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -7,17 +7,16 @@ Imported files which are only modified by Spigot, not upstream. Files here shoul
 
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataWorld.java b/src/main/java/net/minecraft/server/AdvancementDataWorld.java
 new file mode 100644
-index 000000000..8b3917f73
+index 000000000..1c38f22ba
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/AdvancementDataWorld.java
-@@ -0,0 +1,117 @@
+@@ -0,0 +1,114 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Maps;
 +import com.google.gson.Gson;
 +import com.google.gson.GsonBuilder;
 +import com.google.gson.JsonDeserializationContext;
-+import com.google.gson.JsonDeserializer;
 +import com.google.gson.JsonElement;
 +import com.google.gson.JsonObject;
 +import com.google.gson.JsonParseException;
@@ -25,10 +24,8 @@ index 000000000..8b3917f73
 +import java.lang.reflect.Type;
 +import java.nio.charset.StandardCharsets;
 +import java.util.Collection;
-+import java.util.HashMap;
 +import java.util.Iterator;
 +import java.util.Map;
-+import java.util.function.Predicate;
 +import javax.annotation.Nullable;
 +import org.apache.commons.io.IOUtils;
 +import org.apache.logging.log4j.LogManager;
@@ -37,7 +34,7 @@ index 000000000..8b3917f73
 +public class AdvancementDataWorld implements IResourcePackListener {
 +
 +    private static final Logger c = LogManager.getLogger();
-+    public static final Gson DESERIALIZER = (new GsonBuilder()).registerTypeHierarchyAdapter(Advancement.SerializedAdvancement.class, (JsonDeserializer) (jsonelement, type, jsondeserializationcontext) -> {
++    public static final Gson DESERIALIZER = (new GsonBuilder()).registerTypeHierarchyAdapter(Advancement.SerializedAdvancement.class, (com.google.gson.JsonDeserializer) (jsonelement, type, jsondeserializationcontext) -> {
 +        JsonObject jsonobject = ChatDeserializer.m(jsonelement, "advancement");
 +
 +        return Advancement.SerializedAdvancement.a(jsonobject, jsondeserializationcontext);
@@ -50,7 +47,7 @@ index 000000000..8b3917f73
 +    public AdvancementDataWorld() {}
 +
 +    private Map<MinecraftKey, Advancement.SerializedAdvancement> b(IResourceManager iresourcemanager) {
-+        HashMap hashmap = Maps.newHashMap();
++        Map<MinecraftKey, Advancement.SerializedAdvancement> map = Maps.newHashMap();
 +        Iterator iterator = iresourcemanager.a("advancements", (s) -> {
 +            return s.endsWith(".json");
 +        }).iterator();
@@ -70,7 +67,7 @@ index 000000000..8b3917f73
 +                    if (advancement_serializedadvancement == null) {
 +                        AdvancementDataWorld.c.error("Couldn't load custom advancement {} from {} as it's empty or null", minecraftkey1, minecraftkey);
 +                    } else {
-+                        hashmap.put(minecraftkey1, advancement_serializedadvancement);
++                        map.put(minecraftkey1, advancement_serializedadvancement);
 +                    }
 +                } catch (Throwable throwable1) {
 +                    throwable = throwable1;
@@ -98,7 +95,7 @@ index 000000000..8b3917f73
 +            }
 +        }
 +
-+        return hashmap;
++        return map;
 +    }
 +
 +    @Nullable
@@ -113,7 +110,7 @@ index 000000000..8b3917f73
 +    public void a(IResourceManager iresourcemanager) {
 +        this.f = false;
 +        AdvancementDataWorld.REGISTRY.a();
-+        Map map = this.b(iresourcemanager);
++        Map<MinecraftKey, Advancement.SerializedAdvancement> map = this.b(iresourcemanager);
 +
 +        AdvancementDataWorld.REGISTRY.a(map);
 +        Iterator iterator = AdvancementDataWorld.REGISTRY.b().iterator();
@@ -179,10 +176,10 @@ index 000000000..4cfa3df19
 +}
 diff --git a/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
 new file mode 100644
-index 000000000..53ce31c80
+index 000000000..646f5f917
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
-@@ -0,0 +1,159 @@
+@@ -0,0 +1,158 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Maps;
@@ -196,7 +193,6 @@ index 000000000..53ce31c80
 +import java.util.Locale;
 +import java.util.Map;
 +import java.util.Random;
-+import java.util.function.Function;
 +import javax.annotation.Nullable;
 +
 +public abstract class ChunkGeneratorAbstract<C extends GeneratorSettings> implements ChunkGenerator<C> {
@@ -222,12 +218,12 @@ index 000000000..53ce31c80
 +
 +        for (int k = i - 8; k <= i + 8; ++k) {
 +            for (int l = j - 8; l <= j + 8; ++l) {
-+                List list = regionlimitedworldaccess.getChunkProvider().getChunkGenerator().getWorldChunkManager().getBiome(new BlockPosition(k * 16, 0, l * 16), (BiomeBase) null).a(worldgenstage_features);
++                List<WorldGenCarverWrapper<?>> list = regionlimitedworldaccess.getChunkProvider().getChunkGenerator().getWorldChunkManager().getBiome(new BlockPosition(k * 16, 0, l * 16), (BiomeBase) null).a(worldgenstage_features);
 +                ListIterator listiterator = list.listIterator();
 +
 +                while (listiterator.hasNext()) {
 +                    int i1 = listiterator.nextIndex();
-+                    WorldGenCarverWrapper worldgencarverwrapper = (WorldGenCarverWrapper) listiterator.next();
++                    WorldGenCarverWrapper<?> worldgencarverwrapper = (WorldGenCarverWrapper) listiterator.next();
 +
 +                    seededrandom.c(regionlimitedworldaccess.getMinecraftWorld().getSeed() + (long) i1, k, l);
 +                    if (worldgencarverwrapper.a(regionlimitedworldaccess, seededrandom, k, l, WorldGenFeatureConfiguration.e)) {
@@ -241,7 +237,7 @@ index 000000000..53ce31c80
 +
 +    @Nullable
 +    public BlockPosition findNearestMapFeature(World world, String s, BlockPosition blockposition, int i, boolean flag) {
-+        StructureGenerator structuregenerator = (StructureGenerator) WorldGenerator.aF.get(s.toLowerCase(Locale.ROOT));
++        StructureGenerator<?> structuregenerator = (StructureGenerator) WorldGenerator.aF.get(s.toLowerCase(Locale.ROOT));
 +
 +        return structuregenerator != null ? structuregenerator.getNearestGeneratedFeature(world, this, blockposition, i, flag) : null;
 +    }
@@ -327,14 +323,14 @@ index 000000000..53ce31c80
 +    }
 +
 +    public Long2ObjectMap<StructureStart> getStructureStartCache(StructureGenerator<? extends WorldGenFeatureConfiguration> structuregenerator) {
-+        return (Long2ObjectMap) this.d.computeIfAbsent(structuregenerator, (s) -> {
-+            return Long2ObjectMaps.synchronize(new ExpiringMap(8192, 10000));
++        return (Long2ObjectMap) this.d.computeIfAbsent(structuregenerator, (structuregenerator1) -> {
++            return Long2ObjectMaps.synchronize(new ExpiringMap<>(8192, 10000));
 +        });
 +    }
 +
 +    public Long2ObjectMap<LongSet> getStructureCache(StructureGenerator<? extends WorldGenFeatureConfiguration> structuregenerator) {
-+        return (Long2ObjectMap) this.e.computeIfAbsent(structuregenerator, (s) -> {
-+            return Long2ObjectMaps.synchronize(new ExpiringMap(8192, 10000));
++        return (Long2ObjectMap) this.e.computeIfAbsent(structuregenerator, (structuregenerator1) -> {
++            return Long2ObjectMaps.synchronize(new ExpiringMap<>(8192, 10000));
 +        });
 +    }
 +
@@ -678,7 +674,7 @@ index 000000000..634d4f721
 +}
 diff --git a/src/main/java/net/minecraft/server/GenericAttributes.java b/src/main/java/net/minecraft/server/GenericAttributes.java
 new file mode 100644
-index 000000000..3fd73aa12
+index 000000000..46345ea01
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/GenericAttributes.java
 @@ -0,0 +1,120 @@
@@ -724,7 +720,7 @@ index 000000000..3fd73aa12
 +
 +        nbttagcompound.setString("Name", iattribute.getName());
 +        nbttagcompound.setDouble("Base", attributeinstance.b());
-+        Collection collection = attributeinstance.c();
++        Collection<AttributeModifier> collection = attributeinstance.c();
 +
 +        if (collection != null && !collection.isEmpty()) {
 +            NBTTagList nbttaglist = new NBTTagList();
@@ -923,7 +919,7 @@ index 000000000..34800456b
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTTagByteArray.java b/src/main/java/net/minecraft/server/NBTTagByteArray.java
 new file mode 100644
-index 000000000..86fbd92a0
+index 000000000..a2067526d
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NBTTagByteArray.java
 @@ -0,0 +1,119 @@
@@ -977,7 +973,7 @@ index 000000000..86fbd92a0
 +    }
 +
 +    public byte getTypeId() {
-+        return (byte) 7;
++        return 7;
 +    }
 +
 +    public String toString() {
@@ -1048,7 +1044,7 @@ index 000000000..86fbd92a0
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTTagIntArray.java b/src/main/java/net/minecraft/server/NBTTagIntArray.java
 new file mode 100644
-index 000000000..43e715d4c
+index 000000000..3d5f86497
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NBTTagIntArray.java
 @@ -0,0 +1,129 @@
@@ -1114,7 +1110,7 @@ index 000000000..43e715d4c
 +    }
 +
 +    public byte getTypeId() {
-+        return (byte) 11;
++        return 11;
 +    }
 +
 +    public String toString() {
@@ -1523,10 +1519,10 @@ index 000000000..e55384e70
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerConnection.java b/src/main/java/net/minecraft/server/ServerConnection.java
 new file mode 100644
-index 000000000..9e36530b9
+index 000000000..8a7bdffe6
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerConnection.java
-@@ -0,0 +1,144 @@
+@@ -0,0 +1,143 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Lists;
@@ -1542,16 +1538,15 @@ index 000000000..9e36530b9
 +import io.netty.channel.epoll.EpollEventLoopGroup;
 +import io.netty.channel.epoll.EpollServerSocketChannel;
 +import io.netty.channel.nio.NioEventLoopGroup;
++import io.netty.channel.socket.ServerSocketChannel;
 +import io.netty.channel.socket.nio.NioServerSocketChannel;
 +import io.netty.handler.timeout.ReadTimeoutHandler;
 +import io.netty.util.concurrent.Future;
-+import io.netty.util.concurrent.GenericFutureListener;
 +import java.io.IOException;
 +import java.net.InetAddress;
 +import java.util.Collections;
 +import java.util.Iterator;
 +import java.util.List;
-+import java.util.function.Supplier;
 +import javax.annotation.Nullable;
 +import org.apache.logging.log4j.LogManager;
 +import org.apache.logging.log4j.Logger;
@@ -1559,10 +1554,10 @@ index 000000000..9e36530b9
 +public class ServerConnection {
 +
 +    private static final Logger d = LogManager.getLogger();
-+    public static final LazyInitVar<NioEventLoopGroup> a = new LazyInitVar(() -> {
++    public static final LazyInitVar<NioEventLoopGroup> a = new LazyInitVar<>(() -> {
 +        return new NioEventLoopGroup(0, (new ThreadFactoryBuilder()).setNameFormat("Netty Server IO #%d").setDaemon(true).build());
 +    });
-+    public static final LazyInitVar<EpollEventLoopGroup> b = new LazyInitVar(() -> {
++    public static final LazyInitVar<EpollEventLoopGroup> b = new LazyInitVar<>(() -> {
 +        return new EpollEventLoopGroup(0, (new ThreadFactoryBuilder()).setNameFormat("Netty Epoll Server IO #%d").setDaemon(true).build());
 +    });
 +    private final MinecraftServer e;
@@ -1592,7 +1587,7 @@ index 000000000..9e36530b9
 +                ServerConnection.d.info("Using default channel type");
 +            }
 +
-+            this.f.add(((ServerBootstrap) ((ServerBootstrap) (new ServerBootstrap()).channel(oclass)).childHandler(new ChannelInitializer() {
++            this.f.add(((ServerBootstrap) ((ServerBootstrap) (new ServerBootstrap()).channel(oclass)).childHandler(new ChannelInitializer<Channel>() {
 +                protected void initChannel(Channel channel) throws Exception {
 +                    try {
 +                        channel.config().setOption(ChannelOption.TCP_NODELAY, true);
@@ -1673,10 +1668,10 @@ index 000000000..9e36530b9
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerStatisticManager.java b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 new file mode 100644
-index 000000000..e7b6538f2
+index 000000000..565329a05
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerStatisticManager.java
-@@ -0,0 +1,240 @@
+@@ -0,0 +1,239 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Maps;
@@ -1689,17 +1684,16 @@ index 000000000..e7b6538f2
 +import com.google.gson.stream.JsonReader;
 +import com.mojang.datafixers.DataFixTypes;
 +import com.mojang.datafixers.DataFixer;
++import it.unimi.dsi.fastutil.objects.Object2IntMap;
 +import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 +import it.unimi.dsi.fastutil.objects.ObjectIterator;
 +import java.io.File;
 +import java.io.IOException;
 +import java.io.StringReader;
-+import java.util.HashMap;
-+import java.util.HashSet;
 +import java.util.Iterator;
++import java.util.Map;
 +import java.util.Set;
 +import java.util.Map.Entry;
-+import java.util.function.Function;
 +import javax.annotation.Nullable;
 +import org.apache.commons.io.FileUtils;
 +import org.apache.logging.log4j.LogManager;
@@ -1743,10 +1737,10 @@ index 000000000..e7b6538f2
 +    }
 +
 +    private Set<Statistic<?>> d() {
-+        HashSet hashset = Sets.newHashSet(this.e);
++        Set<Statistic<?>> set = Sets.newHashSet(this.e);
 +
 +        this.e.clear();
-+        return hashset;
++        return set;
 +    }
 +
 +    public void a(DataFixer datafixer, String s) {
@@ -1774,7 +1768,7 @@ index 000000000..e7b6538f2
 +                            String s1 = (String) iterator.next();
 +
 +                            if (nbttagcompound1.hasKeyOfType(s1, 10)) {
-+                                StatisticWrapper statisticwrapper = (StatisticWrapper) IRegistry.STATS.get(new MinecraftKey(s1));
++                                StatisticWrapper<?> statisticwrapper = (StatisticWrapper) IRegistry.STATS.get(new MinecraftKey(s1));
 +
 +                                if (statisticwrapper == null) {
 +                                    ServerStatisticManager.b.warn("Invalid statistic type in {}: Don't know what {} is", this.d, s1);
@@ -1786,7 +1780,7 @@ index 000000000..e7b6538f2
 +                                        String s2 = (String) iterator1.next();
 +
 +                                        if (nbttagcompound2.hasKeyOfType(s2, 99)) {
-+                                            Statistic statistic = this.a(statisticwrapper, s2);
++                                            Statistic<?> statistic = this.a(statisticwrapper, s2);
 +
 +                                            if (statistic == null) {
 +                                                ServerStatisticManager.b.warn("Invalid statistic in {}: Don't know what {} is", this.d, s2);
@@ -1834,9 +1828,9 @@ index 000000000..e7b6538f2
 +        if (minecraftkey == null) {
 +            return null;
 +        } else {
-+            Object object = statisticwrapper.a().get(minecraftkey);
++            T t0 = statisticwrapper.a().get(minecraftkey);
 +
-+            return object == null ? null : statisticwrapper.b((T) object);
++            return t0 == null ? null : statisticwrapper.b(t0);
 +        }
 +    }
 +
@@ -1845,7 +1839,7 @@ index 000000000..e7b6538f2
 +        Iterator iterator = jsonobject.entrySet().iterator();
 +
 +        while (iterator.hasNext()) {
-+            Entry entry = (Entry) iterator.next();
++            Entry<String, JsonElement> entry = (Entry) iterator.next();
 +            JsonElement jsonelement = (JsonElement) entry.getValue();
 +
 +            if (jsonelement.isJsonObject()) {
@@ -1863,23 +1857,23 @@ index 000000000..e7b6538f2
 +    }
 +
 +    protected String b() {
-+        HashMap hashmap = Maps.newHashMap();
++        Map<StatisticWrapper<?>, JsonObject> map = Maps.newHashMap();
 +        ObjectIterator objectiterator = this.a.object2IntEntrySet().iterator();
 +
 +        while (objectiterator.hasNext()) {
-+            it.unimi.dsi.fastutil.objects.Object2IntMap.Entry it_unimi_dsi_fastutil_objects_object2intmap_entry = (it.unimi.dsi.fastutil.objects.Object2IntMap.Entry) objectiterator.next();
-+            Statistic statistic = (Statistic) it_unimi_dsi_fastutil_objects_object2intmap_entry.getKey();
++            it.unimi.dsi.fastutil.objects.Object2IntMap.Entry<Statistic<?>> it_unimi_dsi_fastutil_objects_object2intmap_entry = (it.unimi.dsi.fastutil.objects.Object2IntMap.Entry) objectiterator.next();
++            Statistic<?> statistic = (Statistic) it_unimi_dsi_fastutil_objects_object2intmap_entry.getKey();
 +
-+            ((JsonObject) hashmap.computeIfAbsent(statistic.a(), (statisticwrapper) -> {
++            ((JsonObject) map.computeIfAbsent(statistic.a(), (statisticwrapper) -> {
 +                return new JsonObject();
 +            })).addProperty(b(statistic).toString(), it_unimi_dsi_fastutil_objects_object2intmap_entry.getIntValue());
 +        }
 +
 +        JsonObject jsonobject = new JsonObject();
-+        Iterator iterator = hashmap.entrySet().iterator();
++        Iterator iterator = map.entrySet().iterator();
 +
 +        while (iterator.hasNext()) {
-+            Entry<StatisticWrapper<?>, JsonElement> entry = (Entry) iterator.next();
++            Entry<StatisticWrapper<?>, JsonObject> entry = (Entry) iterator.next();
 +
 +            jsonobject.add(IRegistry.STATS.getKey(entry.getKey()).toString(), (JsonElement) entry.getValue());
 +        }
@@ -1901,20 +1895,20 @@ index 000000000..e7b6538f2
 +
 +    public void a(EntityPlayer entityplayer) {
 +        int i = this.c.ah();
-+        Object2IntOpenHashMap object2intopenhashmap = new Object2IntOpenHashMap();
++        Object2IntMap<Statistic<?>> object2intmap = new Object2IntOpenHashMap();
 +
 +        if (i - this.f > 300) {
 +            this.f = i;
 +            Iterator iterator = this.d().iterator();
 +
 +            while (iterator.hasNext()) {
-+                Statistic statistic = (Statistic) iterator.next();
++                Statistic<?> statistic = (Statistic) iterator.next();
 +
-+                object2intopenhashmap.put(statistic, this.getStatisticValue(statistic));
++                object2intmap.put(statistic, this.getStatisticValue(statistic));
 +            }
 +        }
 +
-+        entityplayer.playerConnection.sendPacket(new PacketPlayOutStatistic(object2intopenhashmap));
++        entityplayer.playerConnection.sendPacket(new PacketPlayOutStatistic(object2intmap));
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java b/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
@@ -2297,7 +2291,7 @@ index 000000000..47ff206b2
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenMonument.java b/src/main/java/net/minecraft/server/WorldGenMonument.java
 new file mode 100644
-index 000000000..be571ba58
+index 000000000..cc72270f3
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenMonument.java
 @@ -0,0 +1,159 @@
@@ -2338,14 +2332,14 @@ index 000000000..be571ba58
 +        ChunkCoordIntPair chunkcoordintpair = this.a(chunkgenerator, random, i, j, 0, 0);
 +
 +        if (i == chunkcoordintpair.x && j == chunkcoordintpair.z) {
-+            Set set = chunkgenerator.getWorldChunkManager().a(i * 16 + 9, j * 16 + 9, 16);
++            Set<BiomeBase> set = chunkgenerator.getWorldChunkManager().a(i * 16 + 9, j * 16 + 9, 16);
 +            Iterator iterator = set.iterator();
 +
 +            BiomeBase biomebase;
 +
 +            do {
 +                if (!iterator.hasNext()) {
-+                    Set set1 = chunkgenerator.getWorldChunkManager().a(i * 16 + 9, j * 16 + 9, 29);
++                    Set<BiomeBase> set1 = chunkgenerator.getWorldChunkManager().a(i * 16 + 9, j * 16 + 9, 29);
 +                    Iterator iterator1 = set1.iterator();
 +
 +                    BiomeBase biomebase1;
@@ -2462,7 +2456,7 @@ index 000000000..be571ba58
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenVillage.java b/src/main/java/net/minecraft/server/WorldGenVillage.java
 new file mode 100644
-index 000000000..968e4144f
+index 000000000..5b98dcfce
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenVillage.java
 @@ -0,0 +1,121 @@
@@ -2533,12 +2527,12 @@ index 000000000..968e4144f
 +        public a(GeneratorAccess generatoraccess, ChunkGenerator<?> chunkgenerator, SeededRandom seededrandom, int i, int j, BiomeBase biomebase) {
 +            super(i, j, biomebase, seededrandom, generatoraccess.getSeed());
 +            WorldGenFeatureVillageConfiguration worldgenfeaturevillageconfiguration = (WorldGenFeatureVillageConfiguration) chunkgenerator.getFeatureConfiguration(biomebase, WorldGenerator.e);
-+            List list = WorldGenVillagePieces.a(seededrandom, worldgenfeaturevillageconfiguration.a);
++            List<WorldGenVillagePieces.WorldGenVillagePieceWeight> list = WorldGenVillagePieces.a(seededrandom, worldgenfeaturevillageconfiguration.a);
 +            WorldGenVillagePieces.WorldGenVillageStartPiece worldgenvillagepieces_worldgenvillagestartpiece = new WorldGenVillagePieces.WorldGenVillageStartPiece(0, seededrandom, (i << 4) + 2, (j << 4) + 2, list, worldgenfeaturevillageconfiguration);
 +
 +            this.a.add(worldgenvillagepieces_worldgenvillagestartpiece);
 +            worldgenvillagepieces_worldgenvillagestartpiece.a((StructurePiece) worldgenvillagepieces_worldgenvillagestartpiece, this.a, (Random) seededrandom);
-+            List list1 = worldgenvillagepieces_worldgenvillagestartpiece.e;
++            List<StructurePiece> list1 = worldgenvillagepieces_worldgenvillagestartpiece.e;
 +            List list2 = worldgenvillagepieces_worldgenvillagestartpiece.d;
 +
 +            int k;

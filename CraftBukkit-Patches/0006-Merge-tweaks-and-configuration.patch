@@ -1,4 +1,4 @@
-From 583654188cc2996d8acadd6b98431c9a317de864 Mon Sep 17 00:00:00 2001
+From ce7ccbcca9b28f05ec419b0f6138bd78b245e50a Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:46:33 +1100
 Subject: [PATCH] Merge tweaks and configuration
@@ -43,15 +43,15 @@ index 1a2794e3b..e45b8171b 100644
                      }
                  } else {
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index a7d88fe6a..d8e61b132 100644
+index 24e9314e0..ba30e5726 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -384,6 +384,23 @@ public class CraftEventFactory {
+@@ -383,6 +383,23 @@ public class CraftEventFactory {
+             event = CraftEventFactory.callProjectileLaunchEvent(entity);
          } else if (entity.getBukkitEntity() instanceof org.bukkit.entity.Vehicle){
              event = CraftEventFactory.callVehicleCreateEvent(entity);
-         }
 +        // Spigot start
-+        else if (entity instanceof EntityExperienceOrb) {
++        } else if (entity instanceof EntityExperienceOrb) {
 +            EntityExperienceOrb xp = (EntityExperienceOrb) entity;
 +            double radius = world.spigotConfig.expMerge;
 +            if (radius > 0) {
@@ -66,10 +66,10 @@ index a7d88fe6a..d8e61b132 100644
 +                    }
 +                }
 +            }
-+        } // Spigot end
- 
-         if (event != null && (event.isCancelled() || entity.dead)) {
-             Entity vehicle = entity.getVehicle();
++        // Spigot end
+         } else {
+             event = CraftEventFactory.callEntitySpawnEvent(entity);
+         }
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 index c62fa4569..23730154d 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java

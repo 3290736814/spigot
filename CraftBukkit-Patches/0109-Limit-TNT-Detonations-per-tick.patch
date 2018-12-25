@@ -1,0 +1,55 @@
+From f8f128de108dab69a54beb355a2121f46632d150 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Wed, 20 Aug 2014 18:12:32 -0400
+Subject: [PATCH] Limit TNT Detonations per tick
+
+This gives a per-world control on how much TNT will be processed per-tick,
+preventing a massive TNT detonation from lagging out the server.
+
+diff --git a/src/main/java/net/minecraft/server/EntityTNTPrimed.java b/src/main/java/net/minecraft/server/EntityTNTPrimed.java
+index 8c1a0f96b..3977498c4 100644
+--- a/src/main/java/net/minecraft/server/EntityTNTPrimed.java
++++ b/src/main/java/net/minecraft/server/EntityTNTPrimed.java
+@@ -48,6 +48,7 @@ public class EntityTNTPrimed extends Entity {
+     }
+ 
+     public void tick() {
++        if (world.spigotConfig.currentPrimedTnt++ > world.spigotConfig.maxTntTicksPerTick) { return; } // Spigot
+         this.lastX = this.locX;
+         this.lastY = this.locY;
+         this.lastZ = this.locZ;
+diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
+index 3aa115cc2..6b4a67d63 100644
+--- a/src/main/java/net/minecraft/server/WorldServer.java
++++ b/src/main/java/net/minecraft/server/WorldServer.java
+@@ -580,6 +580,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
+ 
+         this.worldProvider.l();
+         super.tickEntities();
++        spigotConfig.currentPrimedTnt = 0; // Spigot
+     }
+ 
+     protected void p_() {
+diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+index 15b6d8de4..d9595bc33 100644
+--- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
++++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+@@ -280,4 +280,15 @@ public class SpigotWorldConfig
+         sprintMultiplier = (float) getDouble( "hunger.sprint-multiplier", 0.1 );
+         otherMultiplier = (float) getDouble( "hunger.other-multiplier", 0.0 );
+     }
++
++    public int currentPrimedTnt = 0;
++    public int maxTntTicksPerTick;
++    private void maxTntPerTick() {
++        if ( SpigotConfig.version < 7 )
++        {
++            set( "max-tnt-per-tick", 100 );
++        }
++        maxTntTicksPerTick = getInt( "max-tnt-per-tick", 100 );
++        log( "Max TNT Explosions: " + maxTntTicksPerTick );
++    }
+ }
+-- 
+2.19.1
+

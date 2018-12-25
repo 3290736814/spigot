@@ -1,0 +1,94 @@
+From 84a39e666bd68b7311e9eb79aaacf02b906dc374 Mon Sep 17 00:00:00 2001
+From: md_5 <git@md-5.net>
+Date: Sun, 30 Mar 2014 15:58:22 +1100
+Subject: [PATCH] Remove deprecation on some player lookup methods
+
+Most of these methods still have plenty of use given that only one player with each name can exist at a time. Deprecating these methods renders even basic functionality such as /msg <name> impossible without causing compiler warnings. We will maintain this API and it should be considered safe and appropriate for most use cases.
+
+diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
+index 32e892f8..2ce17440 100644
+--- a/src/main/java/org/bukkit/Bukkit.java
++++ b/src/main/java/org/bukkit/Bukkit.java
+@@ -367,12 +367,9 @@ public final class Bukkit {
+      * <p>
+      * This method may not return objects for offline players.
+      *
+-     * @deprecated Use {@link #getPlayer(UUID)} as player names are no longer
+-     *     guaranteed to be unique
+      * @param name the name to look up
+      * @return a player if one was found, null otherwise
+      */
+-    @Deprecated
+     public static Player getPlayer(String name) {
+         return server.getPlayer(name);
+     }
+@@ -380,12 +377,9 @@ public final class Bukkit {
+     /**
+      * Gets the player with the exact given name, case insensitive.
+      *
+-     * @deprecated Use {@link #getPlayer(UUID)} as player names are no longer
+-     *     guaranteed to be unique
+      * @param name Exact name of the player to retrieve
+      * @return a player object if one was found, null otherwise
+      */
+-    @Deprecated
+     public static Player getPlayerExact(String name) {
+         return server.getPlayerExact(name);
+     }
+@@ -397,12 +391,9 @@ public final class Bukkit {
+      * This list is not sorted in any particular order. If an exact match is
+      * found, the returned list will only contain a single result.
+      *
+-     * @deprecated Use {@link #getPlayer(UUID)} as player names are no longer
+-     *     guaranteed to be unique
+      * @param name the (partial) name to match
+      * @return list of all possible players
+      */
+-    @Deprecated
+     public static List<Player> matchPlayer(String name) {
+         return server.matchPlayer(name);
+     }
+diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
+index 7b354064..335985e7 100644
+--- a/src/main/java/org/bukkit/Server.java
++++ b/src/main/java/org/bukkit/Server.java
+@@ -305,23 +305,17 @@ public interface Server extends PluginMessageRecipient {
+      * <p>
+      * This method may not return objects for offline players.
+      *
+-     * @deprecated Use {@link #getPlayer(UUID)} as player names are no longer
+-     *     guaranteed to be unique
+      * @param name the name to look up
+      * @return a player if one was found, null otherwise
+      */
+-    @Deprecated
+     public Player getPlayer(String name);
+ 
+     /**
+      * Gets the player with the exact given name, case insensitive.
+      *
+-     * @deprecated Use {@link #getPlayer(UUID)} as player names are no longer
+-     *     guaranteed to be unique
+      * @param name Exact name of the player to retrieve
+      * @return a player object if one was found, null otherwise
+      */
+-    @Deprecated
+     public Player getPlayerExact(String name);
+ 
+     /**
+@@ -331,12 +325,9 @@ public interface Server extends PluginMessageRecipient {
+      * This list is not sorted in any particular order. If an exact match is
+      * found, the returned list will only contain a single result.
+      *
+-     * @deprecated Use {@link #getPlayer(UUID)} as player names are no longer
+-     *     guaranteed to be unique
+      * @param name the (partial) name to match
+      * @return list of all possible players
+      */
+-    @Deprecated
+     public List<Player> matchPlayer(String name);
+ 
+     /**
+-- 
+2.19.1
+

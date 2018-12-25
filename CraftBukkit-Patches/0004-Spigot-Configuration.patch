@@ -1,4 +1,4 @@
-From 3ccab3bf5c44f10b3b461b3f78c49c0934711e55 Mon Sep 17 00:00:00 2001
+From c5f266be9d58602ed2d55b9d4cadeae3ec48d732 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -6,7 +6,7 @@ Subject: [PATCH] Spigot Configuration
 Provides the basic infrastructure to load and save the Spigot configuration file, spigot.yml
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index d59443304..ae8faeb87 100644
+index 08c078b99..5813326aa 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -177,6 +177,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -31,10 +31,10 @@ index d59443304..ae8faeb87 100644
              server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.STARTUP);
              // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 5307c0382..6c1335d50 100644
+index 0227acb51..e5b3c3f0a 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -106,6 +106,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -102,6 +102,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      public long ticksPerMonsterSpawns;
      public boolean populating;
      private int tickPosition;
@@ -42,7 +42,7 @@ index 5307c0382..6c1335d50 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -120,6 +121,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -116,6 +117,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
      }
  
      protected World(IDataManager idatamanager, @Nullable PersistentCollection persistentcollection, WorldData worlddata, WorldProvider worldprovider, MethodProfiler methodprofiler, boolean flag, ChunkGenerator gen, org.bukkit.World.Environment env) {

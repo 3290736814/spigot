@@ -1,4 +1,4 @@
-From 8a30479ae9128b8e47923403003701dc0462c0f3 Mon Sep 17 00:00:00 2001
+From a5442cb673a47983d112edcd38f251ba7e568723 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,7 +6,7 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances, and view distances below 3. Be wary of the issues selecting a view distance of 1 or 2 may cause!
 
 diff --git a/src/main/java/net/minecraft/server/EntityTracker.java b/src/main/java/net/minecraft/server/EntityTracker.java
-index 5cfa09fff..72adb634e 100644
+index 9237ae20e..4eeec21bb 100644
 --- a/src/main/java/net/minecraft/server/EntityTracker.java
 +++ b/src/main/java/net/minecraft/server/EntityTracker.java
 @@ -18,7 +18,7 @@ public class EntityTracker {
@@ -19,10 +19,10 @@ index 5cfa09fff..72adb634e 100644
  
      public static long a(double d0) {
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 84e068f87..682d2a803 100644
+index 525c020ee..f9c93f7ad 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -42,7 +42,7 @@ public class PlayerChunkMap {
+@@ -40,7 +40,7 @@ public class PlayerChunkMap {
  
      public PlayerChunkMap(WorldServer worldserver) {
          this.world = worldserver;

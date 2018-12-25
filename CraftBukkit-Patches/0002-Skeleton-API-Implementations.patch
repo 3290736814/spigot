@@ -1,4 +1,4 @@
-From be5ef75578a22fff4c5c8f779cdc57b9dc245728 Mon Sep 17 00:00:00 2001
+From ed43a9a085eb598a92adab05eefac2ab8e895de7 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -25,10 +25,10 @@ index f86cc694b..6784e3045 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 27ebfb301..afd44feff 100644
+index 77019f79d..acec60485 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1754,4 +1754,14 @@ public class CraftWorld implements World {
+@@ -1747,4 +1747,14 @@ public class CraftWorld implements World {
              cps.unload(chunk);
          }
      }
@@ -81,10 +81,10 @@ index 1314c744b..a461a935b 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
-index 516269eaa..0ef6dd933 100644
+index 8aa1eebbf..4a84f8cff 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
-@@ -86,4 +86,15 @@ public class CraftArrow extends AbstractProjectile implements Arrow {
+@@ -97,4 +97,15 @@ public class CraftArrow extends AbstractProjectile implements Arrow {
      public EntityType getType() {
          return EntityType.ARROW;
      }
@@ -180,10 +180,10 @@ index 0831e13e5..adb21dd24 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index dc344be45..275dddf34 100644
+index 7784284a3..ad8d8d131 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -1272,4 +1272,16 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
+@@ -1278,4 +1278,16 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
              return HANDLED_TAGS;
          }
      }
