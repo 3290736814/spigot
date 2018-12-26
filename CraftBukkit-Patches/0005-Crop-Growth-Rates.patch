@@ -1,4 +1,4 @@
-From e5271293a1a795da5b06bece6dca416ccb7f5bde Mon Sep 17 00:00:00 2001
+From df3b71560b4ce383a84dac29679186573b6dfef4 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -55,15 +55,28 @@ index 17b79d6d7..a69b2f043 100644
  
              if (i < 2) {
 diff --git a/src/main/java/net/minecraft/server/BlockCrops.java b/src/main/java/net/minecraft/server/BlockCrops.java
-index c141f6737..29b45e219 100644
+index c141f6737..fe0dde146 100644
 --- a/src/main/java/net/minecraft/server/BlockCrops.java
 +++ b/src/main/java/net/minecraft/server/BlockCrops.java
-@@ -50,7 +50,7 @@ public class BlockCrops extends BlockPlant implements IBlockFragilePlantElement
+@@ -50,7 +50,20 @@ public class BlockCrops extends BlockPlant implements IBlockFragilePlantElement
              if (i < this.e()) {
                  float f = a((Block) this, (IBlockAccess) world, blockposition);
  
 -                if (random.nextInt((int) (25.0F / f) + 1) == 0) {
-+                if (random.nextInt((int) ((100.0F / world.spigotConfig.wheatModifier) * (25.0F / f)) + 1) == 0) { // Spigot
++                // Spigot start
++                int modifier;
++                if (this == Blocks.BEETROOTS) {
++                    modifier = world.spigotConfig.beetrootModifier;
++                } else if (this == Blocks.CARROTS) {
++                    modifier = world.spigotConfig.carrotModifier;
++                } else if (this == Blocks.POTATOES) {
++                    modifier = world.spigotConfig.potatoModifier;
++                } else {
++                    modifier = world.spigotConfig.wheatModifier;
++                }
++
++                if (random.nextInt((int) ((100.0F / modifier) * (25.0F / f)) + 1) == 0) {
++                    // Spigot end
                      CraftEventFactory.handleBlockGrowEvent(world, blockposition, this.setAge(i + 1), 2); // CraftBukkit
                  }
              }
@@ -146,10 +159,10 @@ index d89753bae..7006619b2 100644
                  BlockPosition blockposition1 = blockposition.up();
                  BlockPosition blockposition2;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 961ddb428..c62fa4569 100644
+index 961ddb428..8763048a3 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -68,4 +68,41 @@ public class SpigotWorldConfig
+@@ -68,4 +68,47 @@ public class SpigotWorldConfig
          config.addDefault( "world-settings.default." + path, def );
          return config.getString( "world-settings." + worldName + "." + path, config.getString( "world-settings.default." + path ) );
      }
@@ -161,6 +174,9 @@ index 961ddb428..c62fa4569 100644
 +    public int mushroomModifier;
 +    public int pumpkinModifier;
 +    public int saplingModifier;
++    public int beetrootModifier;
++    public int carrotModifier;
++    public int potatoModifier;
 +    public int wheatModifier;
 +    public int wartModifier;
 +    public int vineModifier;
@@ -185,6 +201,9 @@ index 961ddb428..c62fa4569 100644
 +        mushroomModifier = getAndValidateGrowth( "Mushroom" );
 +        pumpkinModifier = getAndValidateGrowth( "Pumpkin" );
 +        saplingModifier = getAndValidateGrowth( "Sapling" );
++        beetrootModifier = getAndValidateGrowth( "Beetroot" );
++        carrotModifier = getAndValidateGrowth( "Carrot" );
++        potatoModifier = getAndValidateGrowth( "Potato" );
 +        wheatModifier = getAndValidateGrowth( "Wheat" );
 +        wartModifier = getAndValidateGrowth( "NetherWart" );
 +        vineModifier = getAndValidateGrowth( "Vine" );
