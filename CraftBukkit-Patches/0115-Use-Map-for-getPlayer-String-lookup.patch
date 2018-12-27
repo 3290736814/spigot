@@ -1,18 +1,18 @@
-From b0e490d166323cfd2ad0995424dbc13dc61157fb Mon Sep 17 00:00:00 2001
+From 1afd336c90b117738caa2b88a9830e939476148e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 13 Jul 2015 19:05:15 +1000
 Subject: [PATCH] Use Map for getPlayer(String) lookup.
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 548fd7391..012360c5a 100644
+index 548fd7391..8d90b674a 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -71,6 +71,7 @@ public abstract class PlayerList {
  
      // CraftBukkit start
      private CraftServer cserver;
-+    private final Map<String,EntityPlayer> playersByName = new org.spigotmc.CaseInsensitiveMap<EntityPlayer>();
++    private final Map<String,EntityPlayer> playersByName = new java.util.HashMap<>();
  
      public PlayerList(MinecraftServer minecraftserver) {
          this.cserver = minecraftserver.server = new CraftServer(minecraftserver, this);
@@ -20,7 +20,7 @@ index 548fd7391..012360c5a 100644
  
      public void onPlayerJoin(EntityPlayer entityplayer, String joinMessage) { // CraftBukkit added param
          this.players.add(entityplayer);
-+        this.playersByName.put(entityplayer.getName(), entityplayer); // Spigot
++        this.playersByName.put(entityplayer.getName().toLowerCase(java.util.Locale.ROOT), entityplayer); // Spigot
          this.j.put(entityplayer.getUniqueID(), entityplayer);
          // this.sendAll(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, new EntityPlayer[] { entityplayer})); // CraftBukkit - replaced with loop below
          WorldServer worldserver = this.server.getWorldServer(entityplayer.dimension);
@@ -28,7 +28,7 @@ index 548fd7391..012360c5a 100644
          worldserver.getPlayerChunkMap().removePlayer(entityplayer);
          entityplayer.getAdvancementData().a();
          this.players.remove(entityplayer);
-+        this.playersByName.remove(entityplayer.getName()); // Spigot
++        this.playersByName.remove(entityplayer.getName().toLowerCase(java.util.Locale.ROOT)); // Spigot
          this.server.getBossBattleCustomData().b(entityplayer);
          UUID uuid = entityplayer.getUniqueID();
          EntityPlayer entityplayer1 = (EntityPlayer) this.j.get(uuid);
@@ -36,7 +36,7 @@ index 548fd7391..012360c5a 100644
          // entityplayer.getWorldServer().getTracker().untrackEntity(entityplayer); // CraftBukkit
          entityplayer.getWorldServer().getPlayerChunkMap().removePlayer(entityplayer);
          this.players.remove(entityplayer);
-+        this.playersByName.remove(entityplayer.getName()); // Spigot
++        this.playersByName.remove(entityplayer.getName().toLowerCase(java.util.Locale.ROOT)); // Spigot
          this.server.getWorldServer(entityplayer.dimension).removeEntity(entityplayer);
          BlockPosition blockposition = entityplayer.getBed();
          boolean flag1 = entityplayer.isRespawnForced();
@@ -44,7 +44,7 @@ index 548fd7391..012360c5a 100644
              worldserver.getPlayerChunkMap().addPlayer(entityplayer1);
              worldserver.addEntity(entityplayer1);
              this.players.add(entityplayer1);
-+            this.playersByName.put(entityplayer1.getName(), entityplayer1); // Spigot
++            this.playersByName.put(entityplayer1.getName().toLowerCase(java.util.Locale.ROOT), entityplayer1); // Spigot
              this.j.put(entityplayer1.getUniqueID(), entityplayer1);
          }
          // entityplayer1.syncInventory();
@@ -65,55 +65,10 @@ index 548fd7391..012360c5a 100644
 -        } while (!entityplayer.getProfile().getName().equalsIgnoreCase(s));
 -
 -        return entityplayer;
-+        return this.playersByName.get(s); // Spigot
++        return this.playersByName.get(s.toLowerCase(java.util.Locale.ROOT)); // Spigot
      }
  
      public void sendPacketNearby(@Nullable EntityHuman entityhuman, double d0, double d1, double d2, double d3, DimensionManager dimensionmanager, Packet<?> packet) {
-diff --git a/src/main/java/org/spigotmc/CaseInsensitiveHashingStrategy.java b/src/main/java/org/spigotmc/CaseInsensitiveHashingStrategy.java
-new file mode 100644
-index 000000000..aafdd3682
---- /dev/null
-+++ b/src/main/java/org/spigotmc/CaseInsensitiveHashingStrategy.java
-@@ -0,0 +1,18 @@
-+package org.spigotmc;
-+
-+import gnu.trove.strategy.HashingStrategy;
-+
-+class CaseInsensitiveHashingStrategy implements HashingStrategy {
-+
-+    static final CaseInsensitiveHashingStrategy INSTANCE = new CaseInsensitiveHashingStrategy();
-+
-+    @Override
-+    public int computeHashCode(Object object) {
-+        return ((String) object).toLowerCase().hashCode();
-+    }
-+
-+    @Override
-+    public boolean equals(Object o1, Object o2) {
-+        return o1.equals(o2) || (o1 instanceof String && o2 instanceof String && ((String) o1).toLowerCase().equals(((String) o2).toLowerCase()));
-+    }
-+}
-diff --git a/src/main/java/org/spigotmc/CaseInsensitiveMap.java b/src/main/java/org/spigotmc/CaseInsensitiveMap.java
-new file mode 100644
-index 000000000..1934fd50a
---- /dev/null
-+++ b/src/main/java/org/spigotmc/CaseInsensitiveMap.java
-@@ -0,0 +1,15 @@
-+package org.spigotmc;
-+
-+import gnu.trove.map.hash.TCustomHashMap;
-+import java.util.Map;
-+
-+public class CaseInsensitiveMap<V> extends TCustomHashMap<String, V> {
-+
-+    public CaseInsensitiveMap() {
-+        super(CaseInsensitiveHashingStrategy.INSTANCE);
-+    }
-+
-+    public CaseInsensitiveMap(Map<? extends String, ? extends V> map) {
-+        super(CaseInsensitiveHashingStrategy.INSTANCE, map);
-+    }
-+}
 -- 
 2.19.1
 

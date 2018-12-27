@@ -1,11 +1,11 @@
-From 0ce349c3201a4386eb3f051188b0f77f486fd2ae Mon Sep 17 00:00:00 2001
+From 561de992b74fa2fa1871b386be57287c7397ee8b Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Tue, 22 Jul 2014 15:59:01 +0200
 Subject: [PATCH] Make "moved too quickly" limit configurable
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 5b0de596e..348a43615 100644
+index 27a774d9b..c27802b9d 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -329,7 +329,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
@@ -27,10 +27,10 @@ index 5b0de596e..348a43615 100644
                                      PlayerConnection.LOGGER.warn("{} moved too quickly! {},{},{}", this.player.getDisplayName().getString(), d7, d8, d9);
                                      this.a(this.player.locX, this.player.locY, this.player.locZ, this.player.yaw, this.player.pitch);
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 97521a998..7dedebb7c 100644
+index e36d0b41c..4f3211e80 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
-@@ -338,4 +338,10 @@ public class SpigotConfig
+@@ -337,4 +337,10 @@ public class SpigotConfig
      {
          movedWronglyThreshold = getDouble( "settings.moved-wrongly-threshold", 0.0625D );
      }

@@ -1,4 +1,4 @@
-From 627934e5e28abaf74fa237c297dcc2b74a0706b8 Mon Sep 17 00:00:00 2001
+From 47ce528b3a85d00a7c2a26024ef5ef710300cf61 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 9 Jun 2017 16:29:31 +1000
 Subject: [PATCH] Configurable Advancement Disabling
@@ -34,10 +34,10 @@ index 1c38f22ba..9f9e5484d 100644
                  try {
                      Advancement.SerializedAdvancement advancement_serializedadvancement = (Advancement.SerializedAdvancement) ChatDeserializer.a(AdvancementDataWorld.DESERIALIZER, IOUtils.toString(iresource.b(), StandardCharsets.UTF_8), Advancement.SerializedAdvancement.class);
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index f941937a1..9b40db46c 100644
+index 0948343e6..11c4d53df 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
-@@ -385,4 +385,11 @@ public class SpigotConfig
+@@ -384,4 +384,11 @@ public class SpigotConfig
              Bukkit.getLogger().info( "Debug logging is disabled" );
          }
      }
