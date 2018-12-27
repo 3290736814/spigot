@@ -1,4 +1,4 @@
-From a022a1b0c81ffc3ded6d441e8b5edba6627d8548 Mon Sep 17 00:00:00 2001
+From 817ec909d186c68f2ca50cad828e6dcfec7c43c6 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -25,10 +25,10 @@ index f86cc694b..6784e3045 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 77019f79d..acec60485 100644
+index 200b5c17c..f5fce00ca 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1747,4 +1747,14 @@ public class CraftWorld implements World {
+@@ -1769,4 +1769,14 @@ public class CraftWorld implements World {
              cps.unload(chunk);
          }
      }
@@ -81,10 +81,10 @@ index 1314c744b..a461a935b 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
-index 8aa1eebbf..4a84f8cff 100644
+index 75dad21cd..4b8e5ab22 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
-@@ -97,4 +97,15 @@ public class CraftArrow extends AbstractProjectile implements Arrow {
+@@ -105,4 +105,15 @@ public class CraftArrow extends AbstractProjectile implements Arrow {
      public EntityType getType() {
          return EntityType.ARROW;
      }
