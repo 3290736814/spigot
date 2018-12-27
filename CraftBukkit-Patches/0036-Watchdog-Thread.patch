@@ -1,4 +1,4 @@
-From 63c693895a0c30df3f01013ec69ade9308140480 Mon Sep 17 00:00:00 2001
+From c2450d9f56b690e15976c73f2a201659992549f7 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
@@ -55,10 +55,10 @@ index acfcafdc5..16c2067fa 100644
      public Spigot spigot()
 diff --git a/src/main/java/org/spigotmc/RestartCommand.java b/src/main/java/org/spigotmc/RestartCommand.java
 new file mode 100644
-index 000000000..49768734d
+index 000000000..f4e088c13
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/RestartCommand.java
-@@ -0,0 +1,132 @@
+@@ -0,0 +1,130 @@
 +package org.spigotmc;
 +
 +import java.io.File;
@@ -98,17 +98,18 @@ index 000000000..49768734d
 +
 +    public static void restart()
 +    {
-+        restart( new File( SpigotConfig.restartScript ) );
++        restart( SpigotConfig.restartScript );
 +    }
 +
-+    public static void restart(final File script)
++    private static void restart(final String restartScript)
 +    {
 +        AsyncCatcher.enabled = false; // Disable async catcher incase it interferes with us
 +        try
 +        {
-+            if ( script.isFile() )
++            String[] split = restartScript.split( " " );
++            if ( split.length > 0 && new File( split[0] ).isFile() )
 +            {
-+                System.out.println( "Attempting to restart with " + SpigotConfig.restartScript );
++                System.out.println( "Attempting to restart with " + restartScript );
 +
 +                // Disable Watchdog
 +                WatchdogThread.doStop();
@@ -155,13 +156,10 @@ index 000000000..49768734d
 +                            String os = System.getProperty( "os.name" ).toLowerCase(java.util.Locale.ENGLISH);
 +                            if ( os.contains( "win" ) )
 +                            {
-+                                Runtime.getRuntime().exec( "cmd /c start " + script.getPath() );
++                                Runtime.getRuntime().exec( "cmd /c start " + restartScript );
 +                            } else
 +                            {
-+                                Runtime.getRuntime().exec( new String[]
-+                                {
-+                                    "sh", script.getPath()
-+                                } );
++                                Runtime.getRuntime().exec( "sh " + restartScript );
 +                            }
 +                        } catch ( Exception e )
 +                        {
