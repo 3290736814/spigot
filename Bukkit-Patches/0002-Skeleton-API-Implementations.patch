@@ -1,4 +1,4 @@
-From 5ccc13733e85e3c627d78debcac30dbfdd93eeb9 Mon Sep 17 00:00:00 2001
+From cc266dbc4c87f8aeec35aebe9876c1dfa40b8e7b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -37,10 +37,10 @@ index 23b1344b..4f47f65e 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index fb6ccf28..dc180890 100644
+index aa0b073c..5259b8db 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -1810,6 +1810,15 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -1811,6 +1811,15 @@ public interface World extends PluginMessageRecipient, Metadatable {
       */
      public Location locateNearestStructure(Location origin, StructureType structureType, int radius, boolean findUnexplored);
  
@@ -131,10 +131,10 @@ index c8b5154e..ee2218c1 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 9399a420..ca332102 100644
+index b7aff5cb..62c9b651 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1477,4 +1477,14 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1453,4 +1453,14 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       * after permission changes are done.
       */
      public void updateCommands();

@@ -1,14 +1,14 @@
-From ddf20efd868c5be1933635a98d02996b41b5ef73 Mon Sep 17 00:00:00 2001
+From 51643bc6d0cd8436e4d25592540a378760d16401 Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Fri, 11 Aug 2017 19:23:58 +0100
 Subject: [PATCH] Make unloaded chunk saving more asynchronous
 
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 8fd4788f2..0397ce610 100644
+index 4bfaaac93..a8cdcb7da 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -202,10 +202,10 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -205,10 +205,10 @@ public class ChunkProviderServer implements IChunkProvider {
          return chunk;
      }
  
@@ -21,7 +21,7 @@ index 8fd4788f2..0397ce610 100644
          } catch (IOException ioexception) {
              ChunkProviderServer.a.error("Couldn't save chunk", ioexception);
          } catch (ExceptionWorldConflict exceptionworldconflict) {
-@@ -229,7 +229,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -232,7 +232,7 @@ public class ChunkProviderServer implements IChunkProvider {
                  Chunk chunk = (Chunk) objectiterator.next();
  
                  if (chunk.c(flag)) {
@@ -30,7 +30,7 @@ index 8fd4788f2..0397ce610 100644
                      chunk.a(false);
                      ++i;
                      if (i == 24 && !flag && false) { // Spigot
-@@ -330,7 +330,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -333,7 +333,7 @@ public class ChunkProviderServer implements IChunkProvider {
          synchronized (this.chunkLoader) {
              chunk.removeEntities();
              if (save) {
@@ -40,10 +40,10 @@ index 8fd4788f2..0397ce610 100644
              this.chunks.remove(chunk.chunkKey);
              this.lastChunk = null;
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index e44195166..e7ed23453 100644
+index f86358754..8e5ce6c18 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-@@ -21,15 +21,20 @@ import java.util.function.Function;
+@@ -21,16 +21,21 @@ import java.util.function.Function;
  import javax.annotation.Nullable;
  import org.apache.logging.log4j.LogManager;
  import org.apache.logging.log4j.Logger;
@@ -61,20 +61,21 @@ index e44195166..e7ed23453 100644
      private final DataFixer d;
      private PersistentStructureLegacy e;
      // private boolean f; // CraftBukkit
+     public final LongSet blacklist = new LongOpenHashSet();
 +    private static final double SAVE_QUEUE_TARGET_SIZE = 625; // Spigot
  
      public ChunkRegionLoader(File file, DataFixer datafixer) {
          this.c = file;
-@@ -74,7 +79,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
- 
-     @Nullable
-     private NBTTagCompound a(DimensionManager dimensionmanager, @Nullable PersistentCollection persistentcollection, int i, int j, @Nullable GeneratorAccess generatoraccess) throws IOException {
+@@ -80,7 +85,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+             return null;
+         }
+         // CraftBukkit end
 -        NBTTagCompound nbttagcompound = (NBTTagCompound) this.b.get(new ChunkCoordIntPair(i, j));
 +        NBTTagCompound nbttagcompound = SupplierUtils.getIfExists(this.b.get(new ChunkCoordIntPair(i, j))); // Spigot
  
          if (nbttagcompound != null) {
              return nbttagcompound;
-@@ -108,7 +113,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -114,7 +119,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
                  nbttagcompound1 = GameProfileSerializer.a(this.d, DataFixTypes.CHUNK, nbttagcompound1, Math.max(1493, k));
                  if (k < 1631) {
                      nbttagcompound1.setInt("DataVersion", 1631);
@@ -83,7 +84,7 @@ index e44195166..e7ed23453 100644
                  }
  
                  return nbttagcompound1;
-@@ -257,7 +262,13 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -263,7 +268,13 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
          }
      }
  
@@ -97,7 +98,7 @@ index e44195166..e7ed23453 100644
          world.checkSession();
  
          try {
-@@ -268,8 +279,19 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -274,8 +285,19 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
              ChunkCoordIntPair chunkcoordintpair = ichunkaccess.getPos();
  
              nbttagcompound.set("Level", nbttagcompound1);
@@ -118,7 +119,7 @@ index e44195166..e7ed23453 100644
              } else {
                  NBTTagCompound nbttagcompound2 = this.a(world, chunkcoordintpair.x, chunkcoordintpair.z);
  
-@@ -277,17 +299,23 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -283,17 +305,23 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
                      return;
                  }
  
@@ -145,7 +146,7 @@ index e44195166..e7ed23453 100644
          this.b.put(chunkcoordintpair, nbttagcompound);
          FileIOThread.a().a(this);
      }
-@@ -298,7 +326,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -304,7 +332,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
      }
  
      private boolean processSaveQueueEntry(boolean logCompletion) {
@@ -154,7 +155,7 @@ index e44195166..e7ed23453 100644
  
          if (!iterator.hasNext()) {
              if (logCompletion) { // CraftBukkit
-@@ -311,14 +339,14 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -317,14 +345,14 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
  
              iterator.remove();
              ChunkCoordIntPair chunkcoordintpair = (ChunkCoordIntPair) entry.getKey();
@@ -171,7 +172,7 @@ index e44195166..e7ed23453 100644
  
                      /*
                      NBTCompressedStreamTools.a(nbttagcompound, (DataOutput) dataoutputstream);
-@@ -365,13 +393,13 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -371,13 +399,13 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
  
      }
  
@@ -187,7 +188,7 @@ index e44195166..e7ed23453 100644
          nbttagcompound.setLong("InhabitedTime", protochunk.m());
          nbttagcompound.setString("Status", protochunk.i().b());
          ChunkConverter chunkconverter = protochunk.v();
-@@ -381,7 +409,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -387,7 +415,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
          }
  
          ChunkSection[] achunksection = protochunk.getSections();
@@ -196,7 +197,7 @@ index e44195166..e7ed23453 100644
  
          nbttagcompound.set("Sections", nbttaglist);
          BiomeBase[] abiomebase = protochunk.getBiomeIndex();
-@@ -451,10 +479,10 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -457,10 +485,10 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
          nbttagcompound.set("Structures", this.a(i, j, protochunk.e(), protochunk.f()));
      }
  
@@ -209,7 +210,7 @@ index e44195166..e7ed23453 100644
          nbttagcompound.setLong("InhabitedTime", chunk.m());
          nbttagcompound.setString("Status", chunk.i().b());
          ChunkConverter chunkconverter = chunk.F();
-@@ -464,7 +492,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -470,7 +498,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
          }
  
          ChunkSection[] achunksection = chunk.getSections();
@@ -218,7 +219,7 @@ index e44195166..e7ed23453 100644
  
          nbttagcompound.set("Sections", nbttaglist);
          BiomeBase[] abiomebase = chunk.getBiomeIndex();
-@@ -475,6 +503,12 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -481,6 +509,12 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
          }
  
          nbttagcompound.setIntArray("Biomes", aint);
@@ -231,7 +232,7 @@ index e44195166..e7ed23453 100644
          chunk.f(false);
          NBTTagList nbttaglist1 = new NBTTagList();
  
-@@ -765,9 +799,9 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+@@ -771,9 +805,9 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
          return protochunk;
      }
  

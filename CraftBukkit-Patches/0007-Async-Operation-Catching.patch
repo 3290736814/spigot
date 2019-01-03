@@ -1,4 +1,4 @@
-From 934a353658451b21c98d19c455a336e8b6245490 Mon Sep 17 00:00:00 2001
+From 6270717d787b0499c33b662a73a1fb7043cc04a0 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -163,10 +163,10 @@ index f5fce00ca..88182d21e 100644
          return world.getChunkProvider().getChunkAt(x, z, true, generate) != null;
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 44c74f122..f887fdbb6 100644
+index e0e40e22d..dd824a029 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -293,6 +293,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -291,6 +291,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
      @Override
      public void kickPlayer(String message) {

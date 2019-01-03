@@ -1,4 +1,4 @@
-From aeeab9ddd4979fec3cc76066c30cc044824ee95e Mon Sep 17 00:00:00 2001
+From 3232da0577948738be9551e05355fe3ae41c6192 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 21:07:18 +1100
 Subject: [PATCH] Improve AutoSave Mechanism
@@ -24,10 +24,10 @@ index dc6dfcafa..013f4392e 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index fedaf91ef..09071f921 100644
+index d1868c5d0..3c61aa1f4 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -232,7 +232,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -235,7 +235,7 @@ public class ChunkProviderServer implements IChunkProvider {
                      this.saveChunk(chunk);
                      chunk.a(false);
                      ++i;
