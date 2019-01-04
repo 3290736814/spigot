@@ -1,4 +1,4 @@
-From ffa0783a3f51b7e0215e3a1e4eeccc992e79b540 Mon Sep 17 00:00:00 2001
+From ad2a2b895d1381f71d2214b1b7d56ac2acecf1c8 Mon Sep 17 00:00:00 2001
 From: Alex Ciuba <alexciuba@gmail.com>
 Date: Tue, 11 Jun 2013 15:23:03 -0400
 Subject: [PATCH] Prevent Ghost Players Caused by Plugins
@@ -6,7 +6,7 @@ Subject: [PATCH] Prevent Ghost Players Caused by Plugins
 Check if the player is still connected after firing event. Fixes BUKKIT-4327
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 96afe3ae2..fcecb61db 100644
+index a0edfdc7b..01d9e17b4 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -633,6 +633,11 @@ public abstract class PlayerList {

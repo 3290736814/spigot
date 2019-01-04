@@ -2,6 +2,7 @@
 
 PS1="$"
 basedir=`pwd`
+clean=$1
 echo "Rebuilding patch files from current fork state..."
 
 cleanupPatches() {
@@ -26,15 +27,18 @@ cleanupPatches() {
 savePatches() {
     what=$1
     target=$2
+    branch=$3
     cd "$basedir/$target"
-    git format-patch --no-stat -N -o "$basedir/${what}-Patches/" upstream/upstream
+    git format-patch --no-stat -N -o "$basedir/${what}-Patches/" $branch
     cd "$basedir"
     git add -A "$basedir/${what}-Patches"
-    cleanupPatches "$basedir/${what}-Patches"
+    if [ "$clean" != "clean" ]; then
+        cleanupPatches "$basedir/${what}-Patches"
+    fi
     echo "  Patches saved for $what to $what-Patches/"
 }
-if [ "$1" == "clean" ]; then
+if [ "$clean" == "clean" ]; then
 	rm -rf *-Patches
 fi
-savePatches Bukkit Spigot-API
-savePatches CraftBukkit Spigot-Server
+savePatches Bukkit Spigot-API origin/spigot
+savePatches CraftBukkit Spigot-Server origin/patched

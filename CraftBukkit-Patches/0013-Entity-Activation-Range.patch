@@ -1,4 +1,4 @@
-From 4e96d03a7ccb141a703d98dcbf42d3197dc1546d Mon Sep 17 00:00:00 2001
+From 10f43a81da6515032bb3bba85d8d148a937f40a9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -75,7 +75,7 @@ index 1789ee7f6..2af1ac702 100644
      public abstract EntityAgeable createChild(EntityAgeable entityageable);
  
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index 2945a8024..fc4ef01c3 100644
+index 067f54eb4..c85f6cc05 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
 @@ -34,6 +34,18 @@ public abstract class EntityArrow extends Entity implements IProjectile {
@@ -117,7 +117,7 @@ index 3e4fc59b2..9b6d217df 100644
          this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, ItemStack.a);
          this.datawatcher.register(EntityFireworks.b, 0);
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 87fbd73cc..3c30cd5b3 100644
+index d84c4c003..cad1c1a17 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -139,6 +139,28 @@ public class EntityItem extends Entity {
@@ -150,7 +150,7 @@ index 87fbd73cc..3c30cd5b3 100644
          if (this.motY < 0.05999999865889549D) {
              this.motY += 5.000000237487257E-4D;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 4ab2ef161..aad9a020b 100644
+index ab4dbf2d9..892e1aca7 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -128,6 +128,13 @@ public abstract class EntityLiving extends Entity {

@@ -1,4 +1,4 @@
-From 457b86ed06941a646b49bd95ac0cbc8a43e43174 Mon Sep 17 00:00:00 2001
+From d62199f770751ea3abe903bc56616b02ab0884a8 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Sun, 29 Jun 2014 21:10:34 +0100
 Subject: [PATCH] Limit block placement/interaction packets
@@ -42,7 +42,7 @@ index 3c5f81519..ced2336fe 100644
          this.b = (EnumDirection) packetdataserializer.a(EnumDirection.class);
          this.c = (EnumHand) packetdataserializer.a(EnumHand.class);
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 4cc5aa569..e2d82ff26 100644
+index ec4d33efe..e62efdc66 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -1191,9 +1191,29 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
