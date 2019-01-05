@@ -1,4 +1,4 @@
-From b94abd0607c49cb7c4483f4616ce081a4dda9411 Mon Sep 17 00:00:00 2001
+From 5a45d26ec417aa348153a6f4b0b3f3db13af1265 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -102,7 +102,7 @@ index 5813326aa..945055b43 100644
  
      public boolean Q() {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index bfb5de79e..0cb456888 100644
+index b3e2621c6..9cdf15dfc 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -27,6 +27,7 @@ import org.bukkit.command.CommandSender;
@@ -344,7 +344,7 @@ index 7a8542c80..69e14dfc9 100644
          this.methodProfiler.exit();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 641132c1e..b0c60f1c4 100644
+index e3532a516..1dacf1874 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -134,6 +134,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
@@ -363,7 +363,7 @@ index 641132c1e..b0c60f1c4 100644
  
      }
  
-@@ -1563,6 +1565,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1569,6 +1571,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
      // CraftBukkit end
  
      private void handleCommand(String s) {
@@ -371,7 +371,7 @@ index 641132c1e..b0c60f1c4 100644
          // CraftBukkit start - whole method
          this.LOGGER.info(this.player.getName() + " issued server command: " + s);
  
-@@ -1572,6 +1575,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1578,6 +1581,7 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
          this.server.getPluginManager().callEvent(event);
  
          if (event.isCancelled()) {
@@ -379,7 +379,7 @@ index 641132c1e..b0c60f1c4 100644
              return;
          }
  
-@@ -1583,6 +1587,8 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1589,6 +1593,8 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
              player.sendMessage(org.bukkit.ChatColor.RED + "An internal error occurred while attempting to perform this command");
              java.util.logging.Logger.getLogger(PlayerConnection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
              return;
@@ -573,10 +573,10 @@ index f1051d7a4..a8fcf346c 100644
  
      public boolean j_() {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 7166ddb46..8236f852a 100644
+index 23ede066e..ff7dcf867 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1885,6 +1885,11 @@ public final class CraftServer implements Server {
+@@ -1886,6 +1886,11 @@ public final class CraftServer implements Server {
      private final Spigot spigot = new Spigot()
      {
  
@@ -765,10 +765,10 @@ index 000000000..0a52ed375
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
-index 557f72d62..0e2db8ab2 100644
+index 61d9febbf..646128f16 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
-@@ -387,7 +387,9 @@ public class CraftScheduler implements BukkitScheduler {
+@@ -388,7 +388,9 @@ public class CraftScheduler implements BukkitScheduler {
              if (task.isSync()) {
                  currentTask = task;
                  try {

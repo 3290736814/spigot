@@ -1,4 +1,4 @@
-From aa07eabb8a601680bcb3e98cc583bc59b976de4a Mon Sep 17 00:00:00 2001
+From f55957176b644f101656573a6618ffab7fda8f0b Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -1286,42 +1286,6 @@ index 000000000..47b871dfc
 +        return this.a;
 +    }
 +}
-diff --git a/src/main/java/net/minecraft/server/PacketPlayInArmAnimation.java b/src/main/java/net/minecraft/server/PacketPlayInArmAnimation.java
-new file mode 100644
-index 000000000..bc93677fa
---- /dev/null
-+++ b/src/main/java/net/minecraft/server/PacketPlayInArmAnimation.java
-@@ -0,0 +1,30 @@
-+package net.minecraft.server;
-+
-+import java.io.IOException;
-+
-+public class PacketPlayInArmAnimation implements Packet<PacketListenerPlayIn> {
-+
-+    private EnumHand a;
-+
-+    public PacketPlayInArmAnimation() {}
-+
-+    public PacketPlayInArmAnimation(EnumHand enumhand) {
-+        this.a = enumhand;
-+    }
-+
-+    public void a(PacketDataSerializer packetdataserializer) throws IOException {
-+        this.a = (EnumHand) packetdataserializer.a(EnumHand.class);
-+    }
-+
-+    public void b(PacketDataSerializer packetdataserializer) throws IOException {
-+        packetdataserializer.a((Enum) this.a);
-+    }
-+
-+    public void a(PacketListenerPlayIn packetlistenerplayin) {
-+        packetlistenerplayin.a(this);
-+    }
-+
-+    public EnumHand b() {
-+        return this.a;
-+    }
-+}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java b/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java
 new file mode 100644
 index 000000000..06f3954b0
@@ -2579,27 +2543,6 @@ index 000000000..5b98dcfce
 +            super.b(nbttagcompound);
 +            this.e = nbttagcompound.getBoolean("Valid");
 +        }
-+    }
-+}
-diff --git a/src/main/java/org/spigotmc/SneakyThrow.java b/src/main/java/org/spigotmc/SneakyThrow.java
-new file mode 100644
-index 000000000..31fc0a984
---- /dev/null
-+++ b/src/main/java/org/spigotmc/SneakyThrow.java
-@@ -0,0 +1,15 @@
-+package org.spigotmc;
-+
-+public class SneakyThrow
-+{
-+
-+    public static void sneaky(Throwable t)
-+    {
-+        throw SneakyThrow.<RuntimeException>superSneaky( t );
-+    }
-+
-+    private static <T extends Throwable> T superSneaky(Throwable t) throws T
-+    {
-+        throw (T) t;
 +    }
 +}
 -- 

@@ -1,4 +1,4 @@
-From e73ad8284ab641485f6ac0401b1277a4bdfa5b6d Mon Sep 17 00:00:00 2001
+From e12f2c3099e661511fa2b1e3af4047ef0520f076 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -115,7 +115,7 @@ index e5b3c3f0a..010ddbc5e 100644
              this.entityList.add(entity);
              this.b(entity);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e00b59959..7166ddb46 100644
+index 47f156ea7..23ede066e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -678,6 +678,7 @@ public final class CraftServer implements Server {
@@ -163,7 +163,7 @@ index f5fce00ca..88182d21e 100644
          return world.getChunkProvider().getChunkAt(x, z, true, generate) != null;
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index e0e40e22d..dd824a029 100644
+index ef17b0ab8..700af54cf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -291,6 +291,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
