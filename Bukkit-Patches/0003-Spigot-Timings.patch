@@ -1,4 +1,4 @@
-From 086c753ff9e386a26dc41112ed79537a64979cac Mon Sep 17 00:00:00 2001
+From 513670f788946f070a0c6a9167567211ecf13df4 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 2 Jun 2013 10:42:57 +1000
 Subject: [PATCH] Spigot Timings
@@ -8,10 +8,10 @@ Adds performance tracking timings all around the Minecraft Server, and improves 
 Plugins can track their own timings with CustomTimingsHandler
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index aa22c3b7..32e892f8 100644
+index 25c5d246..e6c69a22 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -577,6 +577,7 @@ public final class Bukkit {
+@@ -581,6 +581,7 @@ public final class Bukkit {
       */
      public static void reload() {
          server.reload();
@@ -20,10 +20,10 @@ index aa22c3b7..32e892f8 100644
  
      /**
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 4f47f65e..7b354064 100644
+index d713ac8e..65023479 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1160,6 +1160,10 @@ public interface Server extends PluginMessageRecipient {
+@@ -1188,6 +1188,10 @@ public interface Server extends PluginMessageRecipient {
      public class Spigot
      {
  
@@ -35,7 +35,7 @@ index 4f47f65e..7b354064 100644
  
      Spigot spigot();
 diff --git a/src/main/java/org/bukkit/command/Command.java b/src/main/java/org/bukkit/command/Command.java
-index c77623f4..4c931f18 100644
+index 1ad768c7..33e8681d 100644
 --- a/src/main/java/org/bukkit/command/Command.java
 +++ b/src/main/java/org/bukkit/command/Command.java
 @@ -33,6 +33,7 @@ public abstract class Command {

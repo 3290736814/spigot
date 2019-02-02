@@ -1,4 +1,4 @@
-From e0f6292be76aa07b76e64b46797dd2abb0707969 Mon Sep 17 00:00:00 2001
+From 2ee76569bf7cfc91dbcd319ecbea7bc880d10ce7 Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Thu, 26 Jan 2017 20:54:55 +0000
 Subject: [PATCH] Replace chunk loading / unloading rate throttling.
@@ -51,7 +51,7 @@ index 3c61aa1f4..4bfaaac93 100644
  
              this.chunkScheduler.a(booleansupplier);
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 98284a63e..963c7e777 100644
+index 354a827bf..72de40434 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -63,6 +63,7 @@ import org.bukkit.craftbukkit.Main;
@@ -70,7 +70,7 @@ index 98284a63e..963c7e777 100644
      // Spigot end
  
      public MinecraftServer(OptionSet options, Proxy proxy, DataFixer datafixer, CommandDispatcher commanddispatcher, YggdrasilAuthenticationService yggdrasilauthenticationservice, MinecraftSessionService minecraftsessionservice, GameProfileRepository gameprofilerepository, UserCache usercache) {
-@@ -815,6 +817,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -816,6 +818,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
  
      protected void a(BooleanSupplier booleansupplier) {
          SpigotTimings.serverTickTimer.startTiming(); // Spigot
@@ -78,7 +78,7 @@ index 98284a63e..963c7e777 100644
          long i = SystemUtils.getMonotonicNanos();
  
          ++this.ticks;
-@@ -875,6 +878,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -876,6 +879,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
          this.methodProfiler.exit();
          this.methodProfiler.exit();
          org.spigotmc.WatchdogThread.tick(); // Spigot

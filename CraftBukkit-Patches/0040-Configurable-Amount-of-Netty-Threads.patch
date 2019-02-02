@@ -1,4 +1,4 @@
-From 54ff2d6a6b15d114481ce40c23684029f74c7fb2 Mon Sep 17 00:00:00 2001
+From 82aa36132ef001176e5f1dbad68deefb4541af17 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 13 Dec 2013 11:58:58 +1100
 Subject: [PATCH] Configurable Amount of Netty Threads
@@ -6,7 +6,7 @@ Subject: [PATCH] Configurable Amount of Netty Threads
 This brings back the option that the Spigot version of netty saw. By default Netty will try and use cores*2 threads, however if running multiple servers on the same machine, this can be too many threads. Additionally some people have 16 core servers. If 32 Netty threads are allowed in this setup, then the lock contention, and thus blocking between threads becomes much greater, leading to decreased performance.
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 75b7220ab..71a48a6bc 100644
+index 0d3e9577e..c6604f004 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -73,7 +73,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
@@ -27,7 +27,7 @@ index 75b7220ab..71a48a6bc 100644
          // this.convertable = file == null ? null : new WorldLoaderServer(file.toPath(), file.toPath().resolve("../backups"), datafixer); // CraftBukkit - moved to DedicatedServer.init
          this.dataConverterManager = datafixer;
          this.ac.a((IResourcePackListener) this.ah);
-@@ -1419,7 +1419,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -1420,7 +1420,7 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
      }
  
      public ServerConnection getServerConnection() {

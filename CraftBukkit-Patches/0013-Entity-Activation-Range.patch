@@ -1,4 +1,4 @@
-From 2568c2ce0072ffe843e95a9e8ae29e1a5923f136 Mon Sep 17 00:00:00 2001
+From da73cf5188cf4d8fde9cab1bd657876c664401fb Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 9cdf15dfc..2be19a0bf 100644
+index 6fd1db6a1..31370dc87 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -159,6 +159,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -75,10 +75,10 @@ index 1789ee7f6..2af1ac702 100644
      public abstract EntityAgeable createChild(EntityAgeable entityageable);
  
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index 067f54eb4..c85f6cc05 100644
+index 241c29c0f..733ce2ad6 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
-@@ -34,6 +34,18 @@ public abstract class EntityArrow extends Entity implements IProjectile {
+@@ -33,6 +33,18 @@ public abstract class EntityArrow extends Entity implements IProjectile {
      private double damage;
      public int knockbackStrength;
  
@@ -117,7 +117,7 @@ index 3e4fc59b2..9b6d217df 100644
          this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, ItemStack.a);
          this.datawatcher.register(EntityFireworks.b, 0);
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index d84c4c003..cad1c1a17 100644
+index ab6613e57..9b854d64f 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -139,6 +139,28 @@ public class EntityItem extends Entity {
@@ -236,7 +236,7 @@ index 0a52ed375..2ab4b11a8 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index e03ff0d6b..3a9170290 100644
+index d5e4fe0d8..cb10de2a3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -316,6 +316,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {

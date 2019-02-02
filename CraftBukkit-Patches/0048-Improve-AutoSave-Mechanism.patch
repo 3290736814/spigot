@@ -1,4 +1,4 @@
-From 9b14a0f445b30a925def572966735f93024c1145 Mon Sep 17 00:00:00 2001
+From 70c9e061efa8bf96ae3e6c5af1697026a364c3ab Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 21:07:18 +1100
 Subject: [PATCH] Improve AutoSave Mechanism
@@ -37,10 +37,10 @@ index d1868c5d0..3c61aa1f4 100644
                      }
                  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 2f1a6d84e..ddc29fdce 100644
+index a56dffbf6..173c6f10f 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -816,7 +816,17 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
+@@ -817,7 +817,17 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
              SpigotTimings.worldSaveTimer.startTiming(); // Spigot
              this.methodProfiler.enter("save");
              this.playerList.savePlayers();

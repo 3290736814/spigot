@@ -1,14 +1,14 @@
-From 40b904a49cc623e9d9bb34d1fdc18394fc2f839a Mon Sep 17 00:00:00 2001
+From 493b12bca2f646e03896b92aa948afdd7e5c7c20 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 27 Feb 2016 10:07:58 +1100
 Subject: [PATCH] Entity Mount and Dismount Events
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 2be19a0bf..02e338887 100644
+index 31370dc87..7cb13c74d 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -1990,6 +1990,13 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -2006,6 +2006,13 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
                  }
              }
              // CraftBukkit end
@@ -22,7 +22,7 @@ index 2be19a0bf..02e338887 100644
              if (!this.world.isClientSide && entity instanceof EntityHuman && !(this.bO() instanceof EntityHuman)) {
                  this.passengers.add(0, entity);
              } else {
-@@ -2020,6 +2027,13 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -2036,6 +2043,13 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
                  }
              }
              // CraftBukkit end
