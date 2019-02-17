@@ -1,4 +1,4 @@
-From 513670f788946f070a0c6a9167567211ecf13df4 Mon Sep 17 00:00:00 2001
+From f4fdf075c7584182e310c82dc27e88f97a931c26 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 2 Jun 2013 10:42:57 +1000
 Subject: [PATCH] Spigot Timings
@@ -8,7 +8,7 @@ Adds performance tracking timings all around the Minecraft Server, and improves 
 Plugins can track their own timings with CustomTimingsHandler
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 25c5d246..e6c69a22 100644
+index 8f434ea3..41df86a4 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
 @@ -581,6 +581,7 @@ public final class Bukkit {
@@ -20,10 +20,10 @@ index 25c5d246..e6c69a22 100644
  
      /**
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index d713ac8e..65023479 100644
+index a41d00b6..642ccd93 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1188,6 +1188,10 @@ public interface Server extends PluginMessageRecipient {
+@@ -1203,6 +1203,10 @@ public interface Server extends PluginMessageRecipient {
      public class Spigot
      {
  
@@ -249,10 +249,10 @@ index 66ea6345..bba914d7 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/plugin/SimplePluginManager.java b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
-index 60b23995..8b130abb 100644
+index 2fcb56fd..92db0663 100644
 --- a/src/main/java/org/bukkit/plugin/SimplePluginManager.java
 +++ b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
-@@ -293,6 +293,7 @@ public final class SimplePluginManager implements PluginManager {
+@@ -294,6 +294,7 @@ public final class SimplePluginManager implements PluginManager {
              }
          }
  

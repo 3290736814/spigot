@@ -1,4 +1,4 @@
-From c2663a2d8eb14d6d1ba7b8af83638d3aeea6e926 Mon Sep 17 00:00:00 2001
+From 7a4cde3a8e3eec16c8aa1f0c22f075a08cbd8c5c Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sat, 29 Mar 2014 13:44:25 -0400
 Subject: [PATCH] Configurable dragon death and wither spawn sounds
@@ -35,10 +35,10 @@ index 421fa535f..967aae838 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/EntityWither.java b/src/main/java/net/minecraft/server/EntityWither.java
-index 1c91129c2..ff3660b2c 100644
+index 80aa10035..c43a90333 100644
 --- a/src/main/java/net/minecraft/server/EntityWither.java
 +++ b/src/main/java/net/minecraft/server/EntityWither.java
-@@ -204,6 +204,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
+@@ -205,6 +205,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
                      double deltaX = this.locX - player.locX;
                      double deltaZ = this.locZ - player.locZ;
                      double distanceSquared = deltaX * deltaX + deltaZ * deltaZ;
