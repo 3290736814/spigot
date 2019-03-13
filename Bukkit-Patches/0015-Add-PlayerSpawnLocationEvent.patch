@@ -1,4 +1,4 @@
-From 5135e2c73ab0e73c0a0a3332c8260ff831a2633f Mon Sep 17 00:00:00 2001
+From 7ebe57d1bcb034ba6bfd9768b4bac269bc6b3565 Mon Sep 17 00:00:00 2001
 From: ninja <xninja@openmailbox.org>
 Date: Tue, 8 Apr 2014 14:01:32 +0200
 Subject: [PATCH] Add PlayerSpawnLocationEvent.
@@ -6,17 +6,17 @@ Subject: [PATCH] Add PlayerSpawnLocationEvent.
 
 diff --git a/src/main/java/org/spigotmc/event/player/PlayerSpawnLocationEvent.java b/src/main/java/org/spigotmc/event/player/PlayerSpawnLocationEvent.java
 new file mode 100644
-index 00000000..dd3f58ca
+index 00000000..2515887c
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/event/player/PlayerSpawnLocationEvent.java
-@@ -0,0 +1,50 @@
+@@ -0,0 +1,53 @@
 +package org.spigotmc.event.player;
 +
 +import org.bukkit.Location;
-+import org.bukkit.entity.Entity;
 +import org.bukkit.entity.Player;
 +import org.bukkit.event.HandlerList;
 +import org.bukkit.event.player.PlayerEvent;
++import org.jetbrains.annotations.NotNull;
 +
 +/**
 + * Called when player is about to spawn in a world after joining the server.
@@ -25,7 +25,7 @@ index 00000000..dd3f58ca
 +    private static final HandlerList handlers = new HandlerList();
 +    private Location spawnLocation;
 +
-+    public PlayerSpawnLocationEvent(final Player who, Location spawnLocation) {
++    public PlayerSpawnLocationEvent(@NotNull final Player who, @NotNull Location spawnLocation) {
 +        super(who);
 +        this.spawnLocation = spawnLocation;
 +    }
@@ -38,6 +38,7 @@ index 00000000..dd3f58ca
 +     *
 +     * @return the spawn location
 +     */
++    @NotNull
 +    public Location getSpawnLocation() {
 +        return spawnLocation;
 +    }
@@ -47,15 +48,17 @@ index 00000000..dd3f58ca
 +     *
 +     * @param location the spawn location
 +     */
-+    public void setSpawnLocation(Location location) {
++    public void setSpawnLocation(@NotNull Location location) {
 +        this.spawnLocation = location;
 +    }
 +
++    @NotNull
 +    @Override
 +    public HandlerList getHandlers() {
 +        return handlers;
 +    }
 +
++    @NotNull
 +    public static HandlerList getHandlerList() {
 +        return handlers;
 +    }

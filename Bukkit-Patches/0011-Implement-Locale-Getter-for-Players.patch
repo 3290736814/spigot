@@ -1,14 +1,14 @@
-From a46eefee07b3f82db429ba26ddece2892b77e0ff Mon Sep 17 00:00:00 2001
+From c42a826346c0d4ccb6fb22f16a6f18a6813dfc1c Mon Sep 17 00:00:00 2001
 From: Smove <jan@lavasurvival.net>
 Date: Sat, 1 Feb 2014 18:10:49 +1100
 Subject: [PATCH] Implement Locale Getter for Players
 
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index f4b94d38..144ffc04 100644
+index 7c2b09be..ad5322cc 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1501,6 +1501,18 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1514,6 +1514,19 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
          {
              throw new UnsupportedOperationException( "Not supported yet." );
          }
@@ -20,13 +20,14 @@ index f4b94d38..144ffc04 100644
 +         * @deprecated Use {@link Player#getLocale()}
 +         */
 +        @Deprecated
++        @NotNull
 +        public String getLocale()
 +        {
 +            throw new UnsupportedOperationException( "Not supported yet." );
 +        }
      }
  
-     @Override
+     @NotNull
 -- 
 2.19.1
 

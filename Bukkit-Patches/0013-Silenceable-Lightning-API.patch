@@ -1,14 +1,14 @@
-From 2ebfd434d135efa25e35a209b9d583dee0a91592 Mon Sep 17 00:00:00 2001
+From 6b461be37404de63786837e3d49c489663f7dcc1 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sun, 23 Feb 2014 16:16:29 -0400
 Subject: [PATCH] Silenceable Lightning API
 
 
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 5cdd8a1f..d62277de 100644
+index 2769fa90..2416db56 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -1817,6 +1817,29 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -1878,6 +1878,31 @@ public interface World extends PluginMessageRecipient, Metadatable {
      public class Spigot
      {
  
@@ -19,7 +19,8 @@ index 5cdd8a1f..d62277de 100644
 +         * @param isSilent Whether this strike makes no sound
 +         * @return The lightning entity.
 +         */
-+        public LightningStrike strikeLightning(Location loc, boolean isSilent)
++        @NotNull
++        public LightningStrike strikeLightning(@NotNull Location loc, boolean isSilent)
 +        {
 +            throw new UnsupportedOperationException( "Not supported yet." );
 +        }
@@ -31,18 +32,19 @@ index 5cdd8a1f..d62277de 100644
 +         * @param isSilent Whether this strike makes no sound
 +         * @return The lightning entity.
 +         */
-+        public LightningStrike strikeLightningEffect(Location loc, boolean isSilent)
++        @NotNull
++        public LightningStrike strikeLightningEffect(@NotNull Location loc, boolean isSilent)
 +        {
 +            throw new UnsupportedOperationException( "Not supported yet." );
 +        }
      }
  
-     Spigot spigot();
+     @NotNull
 diff --git a/src/main/java/org/bukkit/entity/LightningStrike.java b/src/main/java/org/bukkit/entity/LightningStrike.java
-index ee2218c1..aa809392 100644
+index 627aef0e..cbc5ee8f 100644
 --- a/src/main/java/org/bukkit/entity/LightningStrike.java
 +++ b/src/main/java/org/bukkit/entity/LightningStrike.java
-@@ -16,6 +16,15 @@ public interface LightningStrike extends Weather {
+@@ -18,6 +18,15 @@ public interface LightningStrike extends Weather {
      public class Spigot extends Entity.Spigot
      {
  
@@ -57,7 +59,7 @@ index ee2218c1..aa809392 100644
 +        }
      }
  
-     @Override
+     @NotNull
 -- 
 2.19.1
 

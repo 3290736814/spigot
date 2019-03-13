@@ -1,4 +1,4 @@
-From caa7cd090d32577f63863946ca15008c994d673c Mon Sep 17 00:00:00 2001
+From 2c8b25d708cb88f10f9d051b6c6f1ab9d1719b30 Mon Sep 17 00:00:00 2001
 From: Andy Shulman <andy.shulman@hotmail.com>
 Date: Mon, 15 Apr 2013 20:06:01 -0500
 Subject: [PATCH] Define SpawnerSpawnEvent
@@ -6,14 +6,15 @@ Subject: [PATCH] Define SpawnerSpawnEvent
 
 diff --git a/src/main/java/org/bukkit/event/entity/SpawnerSpawnEvent.java b/src/main/java/org/bukkit/event/entity/SpawnerSpawnEvent.java
 new file mode 100644
-index 00000000..1acb3c40
+index 00000000..9353f0d0
 --- /dev/null
 +++ b/src/main/java/org/bukkit/event/entity/SpawnerSpawnEvent.java
-@@ -0,0 +1,22 @@
+@@ -0,0 +1,24 @@
 +package org.bukkit.event.entity;
 +
 +import org.bukkit.block.CreatureSpawner;
 +import org.bukkit.entity.Entity;
++import org.jetbrains.annotations.NotNull;
 +
 +/**
 + * Called when an entity is spawned into a world by a spawner.
@@ -23,11 +24,12 @@ index 00000000..1acb3c40
 +public class SpawnerSpawnEvent extends EntitySpawnEvent {
 +    private final CreatureSpawner spawner;
 +
-+    public SpawnerSpawnEvent(final Entity spawnee, final CreatureSpawner spawner) {
++    public SpawnerSpawnEvent(@NotNull final Entity spawnee, @NotNull final CreatureSpawner spawner) {
 +        super(spawnee);
 +        this.spawner = spawner;
 +    }
 +
++    @NotNull
 +    public CreatureSpawner getSpawner() {
 +        return spawner;
 +    }

@@ -1,4 +1,4 @@
-From da22504c3734eb61470979a68ecd0933f4096b2c Mon Sep 17 00:00:00 2001
+From 36d4937a005edbfbc7612ae4bb4bed1796bd6d40 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 30 Mar 2014 15:58:22 +1100
 Subject: [PATCH] Remove deprecation on some player lookup methods
@@ -6,10 +6,10 @@ Subject: [PATCH] Remove deprecation on some player lookup methods
 Most of these methods still have plenty of use given that only one player with each name can exist at a time. Deprecating these methods renders even basic functionality such as /msg <name> impossible without causing compiler warnings. We will maintain this API and it should be considered safe and appropriate for most use cases.
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index e6c69a22..58f3efe0 100644
+index d05972ea..27988a66 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -371,12 +371,9 @@ public final class Bukkit {
+@@ -386,12 +386,9 @@ public final class Bukkit {
       * <p>
       * This method may not return objects for offline players.
       *
@@ -19,10 +19,10 @@ index e6c69a22..58f3efe0 100644
       * @return a player if one was found, null otherwise
       */
 -    @Deprecated
-     public static Player getPlayer(String name) {
+     @Nullable
+     public static Player getPlayer(@NotNull String name) {
          return server.getPlayer(name);
-     }
-@@ -384,12 +381,9 @@ public final class Bukkit {
+@@ -400,12 +397,9 @@ public final class Bukkit {
      /**
       * Gets the player with the exact given name, case insensitive.
       *
@@ -32,10 +32,10 @@ index e6c69a22..58f3efe0 100644
       * @return a player object if one was found, null otherwise
       */
 -    @Deprecated
-     public static Player getPlayerExact(String name) {
+     @Nullable
+     public static Player getPlayerExact(@NotNull String name) {
          return server.getPlayerExact(name);
-     }
-@@ -401,12 +395,9 @@ public final class Bukkit {
+@@ -418,12 +412,9 @@ public final class Bukkit {
       * This list is not sorted in any particular order. If an exact match is
       * found, the returned list will only contain a single result.
       *
@@ -45,14 +45,14 @@ index e6c69a22..58f3efe0 100644
       * @return list of all possible players
       */
 -    @Deprecated
-     public static List<Player> matchPlayer(String name) {
+     @NotNull
+     public static List<Player> matchPlayer(@NotNull String name) {
          return server.matchPlayer(name);
-     }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 65023479..d55d7104 100644
+index 24a478f6..4223b66a 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -309,23 +309,17 @@ public interface Server extends PluginMessageRecipient {
+@@ -323,24 +323,18 @@ public interface Server extends PluginMessageRecipient {
       * <p>
       * This method may not return objects for offline players.
       *
@@ -62,7 +62,8 @@ index 65023479..d55d7104 100644
       * @return a player if one was found, null otherwise
       */
 -    @Deprecated
-     public Player getPlayer(String name);
+     @Nullable
+     public Player getPlayer(@NotNull String name);
  
      /**
       * Gets the player with the exact given name, case insensitive.
@@ -73,10 +74,10 @@ index 65023479..d55d7104 100644
       * @return a player object if one was found, null otherwise
       */
 -    @Deprecated
-     public Player getPlayerExact(String name);
+     @Nullable
+     public Player getPlayerExact(@NotNull String name);
  
-     /**
-@@ -335,12 +329,9 @@ public interface Server extends PluginMessageRecipient {
+@@ -351,12 +345,9 @@ public interface Server extends PluginMessageRecipient {
       * This list is not sorted in any particular order. If an exact match is
       * found, the returned list will only contain a single result.
       *
@@ -86,9 +87,9 @@ index 65023479..d55d7104 100644
       * @return list of all possible players
       */
 -    @Deprecated
-     public List<Player> matchPlayer(String name);
+     @NotNull
+     public List<Player> matchPlayer(@NotNull String name);
  
-     /**
 -- 
 2.19.1
 
