@@ -1,4 +1,4 @@
-From 1e8461e1de8bddd3bf9c4ecbb501af9f530fa620 Mon Sep 17 00:00:00 2001
+From ed1337ece74f9fcff57b43bc0fb6840ea85be0f9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Fri, 15 Aug 2014 00:56:41 -0400
 Subject: [PATCH] Fix Corrupted Trapped Chest
@@ -9,7 +9,7 @@ If a Trapped Chest gets its Tile Entity corrupted, it will crash the server ever
 This will now fix Trapped Chests too.
 
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 67f1cbff4..3aa115cc2 100644
+index 5e1d9dbbf..44818b110 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -125,7 +125,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {

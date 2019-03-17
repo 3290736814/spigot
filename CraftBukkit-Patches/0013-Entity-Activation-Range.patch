@@ -1,4 +1,4 @@
-From da73cf5188cf4d8fde9cab1bd657876c664401fb Mon Sep 17 00:00:00 2001
+From b491e2abab5345c7ba029535aebf02c05117a05f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 6fd1db6a1..31370dc87 100644
+index a0bc62907..3c2efede4 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -159,6 +159,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -150,7 +150,7 @@ index ab6613e57..9b854d64f 100644
          if (this.motY < 0.05999999865889549D) {
              this.motY += 5.000000237487257E-4D;
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index ab4dbf2d9..892e1aca7 100644
+index 8ff36be34..d4fe0ab6b 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -128,6 +128,13 @@ public abstract class EntityLiving extends Entity {
@@ -195,7 +195,7 @@ index e6350821f..f8e05b75d 100644
          if (--this.profession <= 0) {
              BlockPosition blockposition = new BlockPosition(this);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 2a9d54008..928d782f8 100644
+index 0cfcb0a8c..9addde473 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1039,6 +1039,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc

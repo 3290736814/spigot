@@ -1,4 +1,4 @@
-From c3575726dc5da5f835788362fb3e3d2315469a23 Mon Sep 17 00:00:00 2001
+From 19d47971972661540bc39d94e3e3d1fad7ffe0df Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Tue, 14 Jan 2014 20:11:25 +0000
 Subject: [PATCH] Fix ConcurrentModificationException while being idle kicked
@@ -6,7 +6,7 @@ Subject: [PATCH] Fix ConcurrentModificationException while being idle kicked
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index df061d5a5..5096e123e 100644
+index 2ba5b5139..d3e8fdae2 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -1,4 +1,4 @@

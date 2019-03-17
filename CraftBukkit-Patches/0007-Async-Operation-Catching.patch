@@ -1,4 +1,4 @@
-From fafcfe1ca4e40f7c83ed1f22f0385c3ef745618f Mon Sep 17 00:00:00 2001
+From d3c4c7320b4138a64054e9c31d819748510c5c8f Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -6,7 +6,7 @@ Subject: [PATCH] Async Operation Catching
 Catch and throw an exception when a potentially unsafe operation occurs on a thread other than the main server thread.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index f6829ff07..c09961be9 100644
+index 15256071e..e89ba3e41 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -373,10 +373,14 @@ public class Block implements IMaterial {
@@ -27,7 +27,7 @@ index f6829ff07..c09961be9 100644
      public int a(IBlockData iblockdata, Random random) {
          return 1;
 diff --git a/src/main/java/net/minecraft/server/CraftingManager.java b/src/main/java/net/minecraft/server/CraftingManager.java
-index 26f161634..577a69105 100644
+index 720684bd7..3186209f3 100644
 --- a/src/main/java/net/minecraft/server/CraftingManager.java
 +++ b/src/main/java/net/minecraft/server/CraftingManager.java
 @@ -81,6 +81,7 @@ public class CraftingManager implements IResourcePackListener {
@@ -39,7 +39,7 @@ index 26f161634..577a69105 100644
              throw new IllegalStateException("Duplicate recipe ignored with ID " + irecipe.getKey());
          } else {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 018144d19..338532fa2 100644
+index 064d0c86c..6843b0cb8 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -725,6 +725,7 @@ public abstract class EntityLiving extends Entity {
@@ -91,7 +91,7 @@ index 40b7d8d06..d00401ce1 100644
              this.trackedPlayers.remove(entityplayer);
              this.tracker.c(entityplayer);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index e5b3c3f0a..010ddbc5e 100644
+index 1e358dc93..9fb7ae9db 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -857,6 +857,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
@@ -127,7 +127,7 @@ index e5b3c3f0a..010ddbc5e 100644
              this.entityList.add(entity);
              this.b(entity);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b9fec3c54..22e271b8d 100644
+index 9da8141df..ae7ee85a6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -680,6 +680,7 @@ public final class CraftServer implements Server {
@@ -175,7 +175,7 @@ index f5fce00ca..88182d21e 100644
          return world.getChunkProvider().getChunkAt(x, z, true, generate) != null;
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index cf5607846..285ec87ce 100644
+index 73c2c7b07..234f41af8 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -291,6 +291,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
