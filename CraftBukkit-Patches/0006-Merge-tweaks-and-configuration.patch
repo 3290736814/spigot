@@ -1,4 +1,4 @@
-From 6fc08853083aa88628e7892b05aa757b60098d1d Mon Sep 17 00:00:00 2001
+From f9428d3a0faa6dd83f5db603a90b0eb916d3e723 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:46:33 +1100
 Subject: [PATCH] Merge tweaks and configuration
@@ -43,7 +43,7 @@ index 4c60017fb..e06cb5ede 100644
                      }
                  } else {
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 365d1525f..35ac909a5 100644
+index b4f66ceaa..d065dafad 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -388,6 +388,23 @@ public class CraftEventFactory {
@@ -67,7 +67,7 @@ index 365d1525f..35ac909a5 100644
 +                }
 +            }
 +        // Spigot end
-         } else {
+         } else if (!(entity instanceof EntityPlayer)) {
              event = CraftEventFactory.callEntitySpawnEvent(entity);
          }
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
