@@ -1,4 +1,4 @@
-From f260c9d4cc57d20835e7b2fcbfa9ee0204423e5a Mon Sep 17 00:00:00 2001
+From 78fde11b28b85be9732afb731d3cc030b4f551cd Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
@@ -58,10 +58,10 @@ index adb21dd24..a0dc5524f 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 99a5e4251..c47697d6e 100644
+index a463c88ac..55d63c045 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -74,6 +74,10 @@ import org.apache.commons.codec.binary.Base64;
+@@ -75,6 +75,10 @@ import org.apache.commons.codec.binary.Base64;
  import javax.annotation.Nonnull;
  import javax.annotation.Nullable;
  
@@ -72,7 +72,7 @@ index 99a5e4251..c47697d6e 100644
  /**
   * Children must include the following:
   *
-@@ -305,7 +309,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
+@@ -306,7 +310,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
  
              if (display.hasKey(NAME.NBT)) {
                  try {
@@ -81,7 +81,7 @@ index 99a5e4251..c47697d6e 100644
                  } catch (JsonParseException ex) {
                      // Ignore (stripped like Vanilla)
                  }
-@@ -313,7 +317,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
+@@ -314,7 +318,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
  
              if (display.hasKey(LOCNAME.NBT)) {
                  try {
@@ -90,7 +90,7 @@ index 99a5e4251..c47697d6e 100644
                  } catch (JsonParseException ex) {
                      // Ignore (stripped like Vanilla)
                  }
-@@ -324,7 +328,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
+@@ -325,7 +329,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
                  lore = new ArrayList<String>(list.size());
  
                  for (int index = 0; index < list.size(); index++) {
