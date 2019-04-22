@@ -1,11 +1,11 @@
-From e9a5c27e91cc08ba9a273914833ae7868542e560 Mon Sep 17 00:00:00 2001
+From 1828d0c68cef1c00f0583081698bf49c3e6a50d5 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Sun, 20 Apr 2014 13:18:55 +0100
 Subject: [PATCH] Convert player skulls async
 
 
 diff --git a/src/main/java/net/minecraft/server/ItemSkullPlayer.java b/src/main/java/net/minecraft/server/ItemSkullPlayer.java
-index 28916b0e3..a21ec22a9 100644
+index 28916b0e..a21ec22a 100644
 --- a/src/main/java/net/minecraft/server/ItemSkullPlayer.java
 +++ b/src/main/java/net/minecraft/server/ItemSkullPlayer.java
 @@ -38,8 +38,16 @@ public class ItemSkullPlayer extends ItemBlockWallable {
@@ -28,7 +28,7 @@ index 28916b0e3..a21ec22a9 100644
          } else {
              // CraftBukkit start
 diff --git a/src/main/java/net/minecraft/server/TileEntitySkull.java b/src/main/java/net/minecraft/server/TileEntitySkull.java
-index 042e84771..48fbcf863 100644
+index 042e8477..48fbcf86 100644
 --- a/src/main/java/net/minecraft/server/TileEntitySkull.java
 +++ b/src/main/java/net/minecraft/server/TileEntitySkull.java
 @@ -7,6 +7,23 @@ import com.mojang.authlib.properties.Property;
@@ -203,7 +203,7 @@ index 042e84771..48fbcf863 100644
      // CraftBukkit start
      public static void a(IBlockAccess iblockaccess, BlockPosition blockposition) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
-index 27f4d7761..210c10b31 100644
+index 27f4d776..210c10b3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
 @@ -80,7 +80,8 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
@@ -217,5 +217,5 @@ index 27f4d7761..210c10b31 100644
              NBTTagCompound owner = new NBTTagCompound();
              GameProfileSerializer.serialize(owner, profile);
 -- 
-2.19.1
+2.20.1
 

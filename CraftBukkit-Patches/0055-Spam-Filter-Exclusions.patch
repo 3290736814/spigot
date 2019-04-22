@@ -1,14 +1,14 @@
-From 08a56fde1ad2c6b49c9dcfeef572f87712459937 Mon Sep 17 00:00:00 2001
+From 9bd75e43958e7db05851d17e1caa41dcaa27f49c Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 8 Feb 2014 08:13:40 +0000
 Subject: [PATCH] Spam Filter Exclusions
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 2429e30ee..0e423dfac 100644
+index 667a2095..44190f03 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1463,9 +1463,20 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+@@ -1464,9 +1464,20 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
                  this.minecraftServer.getPlayerList().sendMessage(chatmessage, false);
              }
  
@@ -31,7 +31,7 @@ index 2429e30ee..0e423dfac 100644
                      Waitable waitable = new Waitable() {
                          @Override
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index cff1da746..20a83a6fc 100644
+index cff1da74..20a83a6f 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -6,6 +6,7 @@ import java.io.IOException;
@@ -57,5 +57,5 @@ index cff1da746..20a83a6fc 100644
 +    }
  }
 -- 
-2.19.1
+2.20.1
 

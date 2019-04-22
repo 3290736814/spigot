@@ -1,11 +1,11 @@
-From 94b6fe2cf689b5e2be74503628d7eb6b76c3e4c1 Mon Sep 17 00:00:00 2001
+From 6682b6a9eaf33e17ac10a80dc42e154409e6662b Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sat, 29 Mar 2014 13:44:25 -0400
 Subject: [PATCH] Configurable dragon death and wither spawn sounds
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityEnderDragon.java b/src/main/java/net/minecraft/server/EntityEnderDragon.java
-index 421fa535f..967aae838 100644
+index 421fa535..967aae83 100644
 --- a/src/main/java/net/minecraft/server/EntityEnderDragon.java
 +++ b/src/main/java/net/minecraft/server/EntityEnderDragon.java
 @@ -571,7 +571,24 @@ public class EntityEnderDragon extends EntityInsentient implements IComplex, IMo
@@ -35,7 +35,7 @@ index 421fa535f..967aae838 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/EntityWither.java b/src/main/java/net/minecraft/server/EntityWither.java
-index 80aa10035..c43a90333 100644
+index 80aa1003..c43a9033 100644
 --- a/src/main/java/net/minecraft/server/EntityWither.java
 +++ b/src/main/java/net/minecraft/server/EntityWither.java
 @@ -205,6 +205,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
@@ -47,7 +47,7 @@ index 80aa10035..c43a90333 100644
                          double deltaLength = Math.sqrt(distanceSquared);
                          double relativeX = player.locX + (deltaX / deltaLength) * viewDistance;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index d2d745dcf..75fc95b23 100644
+index d2d745dc..75fc95b2 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -225,4 +225,16 @@ public class SpigotWorldConfig
@@ -68,5 +68,5 @@ index d2d745dcf..75fc95b23 100644
 +    }
  }
 -- 
-2.19.1
+2.20.1
 

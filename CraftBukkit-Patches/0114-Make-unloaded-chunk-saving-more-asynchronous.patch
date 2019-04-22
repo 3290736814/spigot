@@ -1,11 +1,11 @@
-From 5141aa3c6855cfb79062b59ac38d5697163a57d4 Mon Sep 17 00:00:00 2001
+From 5b5633ac7f450d870d1bfb37a2f458d07a0f3f8b Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Fri, 11 Aug 2017 19:23:58 +0100
 Subject: [PATCH] Make unloaded chunk saving more asynchronous
 
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 4bfaaac93..a8cdcb7da 100644
+index 4bfaaac9..a8cdcb7d 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -205,10 +205,10 @@ public class ChunkProviderServer implements IChunkProvider {
@@ -40,7 +40,7 @@ index 4bfaaac93..a8cdcb7da 100644
              this.chunks.remove(chunk.chunkKey);
              this.lastChunk = null;
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index f86358754..8e5ce6c18 100644
+index f8635875..8e5ce6c1 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -21,16 +21,21 @@ import java.util.function.Function;
@@ -245,7 +245,7 @@ index f86358754..8e5ce6c18 100644
          int i = achunksection.length;
  
 diff --git a/src/main/java/net/minecraft/server/IChunkLoader.java b/src/main/java/net/minecraft/server/IChunkLoader.java
-index a53ce424d..4698ee99f 100644
+index a53ce424..4698ee99 100644
 --- a/src/main/java/net/minecraft/server/IChunkLoader.java
 +++ b/src/main/java/net/minecraft/server/IChunkLoader.java
 @@ -14,5 +14,7 @@ public interface IChunkLoader {
@@ -258,7 +258,7 @@ index a53ce424d..4698ee99f 100644
  }
 diff --git a/src/main/java/org/spigotmc/SupplierUtils.java b/src/main/java/org/spigotmc/SupplierUtils.java
 new file mode 100644
-index 000000000..f63ce98bf
+index 00000000..f63ce98b
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SupplierUtils.java
 @@ -0,0 +1,69 @@
@@ -332,5 +332,5 @@ index 000000000..f63ce98bf
 +    }
 +}
 -- 
-2.19.1
+2.20.1
 

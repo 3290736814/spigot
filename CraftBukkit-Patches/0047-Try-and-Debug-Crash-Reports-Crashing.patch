@@ -1,11 +1,11 @@
-From 0743ca28d30c9f0ba9782ab9fb224a62672fc4ae Mon Sep 17 00:00:00 2001
+From 76594359019459ff725e7bbd2f1beba5486175a2 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 20:56:41 +1100
 Subject: [PATCH] Try and Debug Crash Reports Crashing
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 75e1a3def..a56dffbf6 100644
+index 75e1a3de..a56dffbf 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -911,7 +911,13 @@ public abstract class MinecraftServer implements IAsyncTaskHandler, IMojangStati
@@ -37,5 +37,5 @@ index 75e1a3def..a56dffbf6 100644
                      throw new ReportedException(crashreport);
                  }
 -- 
-2.19.1
+2.20.1
 

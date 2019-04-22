@@ -1,11 +1,11 @@
-From 9a4514b1d892a1e7c17643766b7da074cde71f87 Mon Sep 17 00:00:00 2001
+From d6f6064f2785f3268a4ebd774b715427e149779a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 16 Apr 2014 11:14:38 +1000
 Subject: [PATCH] Correct Ban Expiration
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index d0c96d11e..0e45943af 100644
+index d0c96d11..0e45943a 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -490,7 +490,7 @@ public abstract class PlayerList {
@@ -18,5 +18,5 @@ index d0c96d11e..0e45943af 100644
              chatmessage = new ChatMessage("multiplayer.disconnect.not_whitelisted", new Object[0]);
              event.disallow(PlayerLoginEvent.Result.KICK_WHITELIST, org.spigotmc.SpigotConfig.whitelistMessage); // Spigot
 -- 
-2.19.1
+2.20.1
 

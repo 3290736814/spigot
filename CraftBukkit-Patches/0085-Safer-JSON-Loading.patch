@@ -1,11 +1,11 @@
-From 68f26a3dff9d394ea8b75b053f454a2f54a44783 Mon Sep 17 00:00:00 2001
+From f58eb8fad28b31b2536c71133df7ace397e5f250 Mon Sep 17 00:00:00 2001
 From: Suddenly <suddenly@suddenly.coffee>
 Date: Tue, 8 Jul 2014 09:44:18 +1000
 Subject: [PATCH] Safer JSON Loading
 
 
 diff --git a/src/main/java/net/minecraft/server/JsonList.java b/src/main/java/net/minecraft/server/JsonList.java
-index 20f945071..026ef7939 100644
+index 20f94507..026ef793 100644
 --- a/src/main/java/net/minecraft/server/JsonList.java
 +++ b/src/main/java/net/minecraft/server/JsonList.java
 @@ -189,6 +189,14 @@ public class JsonList<K, V extends JsonListEntry<K>> {
@@ -24,7 +24,7 @@ index 20f945071..026ef7939 100644
                  IOUtils.closeQuietly(bufferedreader);
              }
 diff --git a/src/main/java/net/minecraft/server/UserCache.java b/src/main/java/net/minecraft/server/UserCache.java
-index 7e18291f2..f782ecb82 100644
+index 7e18291f..f782ecb8 100644
 --- a/src/main/java/net/minecraft/server/UserCache.java
 +++ b/src/main/java/net/minecraft/server/UserCache.java
 @@ -207,6 +207,11 @@ public class UserCache {
@@ -40,5 +40,5 @@ index 7e18291f2..f782ecb82 100644
              ;
          } finally {
 -- 
-2.19.1
+2.20.1
 

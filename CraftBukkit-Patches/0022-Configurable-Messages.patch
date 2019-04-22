@@ -1,11 +1,11 @@
-From d8d34ac450bb5d190da9c5271225a5e551212b72 Mon Sep 17 00:00:00 2001
+From 63d8c6ca8abd80a71267baba85c68660df77c78e Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
 
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index f392c68d2..755e78a06 100644
+index f392c68d..755e78a0 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -62,11 +62,11 @@ public class HandshakeListener implements PacketHandshakingInListener {
@@ -23,7 +23,7 @@ index f392c68d2..755e78a06 100644
                  this.b.close(chatmessage);
              } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 22a22b6e4..a0edfdc7b 100644
+index 22a22b6e..a0edfdc7 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -493,7 +493,7 @@ public abstract class PlayerList {
@@ -45,7 +45,7 @@ index 22a22b6e4..a0edfdc7b 100644
          }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 4b022efb3..3ee9d1bcd 100644
+index 79517006..ef2f5efc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -686,11 +686,11 @@ public final class CraftServer implements Server {
@@ -65,7 +65,7 @@ index 4b022efb3..3ee9d1bcd 100644
          return false;
      }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index e53e8013d..cec3c4b24 100644
+index e53e8013..cec3c4b2 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -12,6 +12,7 @@ import java.util.Map;
@@ -106,5 +106,5 @@ index e53e8013d..cec3c4b24 100644
 +    }
  }
 -- 
-2.19.1
+2.20.1
 

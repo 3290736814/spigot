@@ -1,11 +1,11 @@
-From 1ca1ade137284247de792beba2b8b69731e46597 Mon Sep 17 00:00:00 2001
+From 24a819f9f1025a7e78a8846cb976e60b625c643e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 2 Feb 2014 16:55:46 +0000
 Subject: [PATCH] Add Option to Nerf Mobs from Spawners
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index af0db806b..9a8bbeea7 100644
+index af0db806..9a8bbeea 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -163,6 +163,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -17,7 +17,7 @@ index af0db806b..9a8bbeea7 100644
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/server/EntityInsentient.java b/src/main/java/net/minecraft/server/EntityInsentient.java
-index 16df01753..8b2000f68 100644
+index 16df0175..8b2000f6 100644
 --- a/src/main/java/net/minecraft/server/EntityInsentient.java
 +++ b/src/main/java/net/minecraft/server/EntityInsentient.java
 @@ -643,6 +643,12 @@ public abstract class EntityInsentient extends EntityLiving {
@@ -34,7 +34,7 @@ index 16df01753..8b2000f68 100644
          this.bC.a();
          this.world.methodProfiler.exit();
 diff --git a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
-index 08fd43810..e0becc02f 100644
+index 08fd4381..e0becc02 100644
 --- a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 +++ b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 @@ -110,7 +110,12 @@ public abstract class MobSpawnerAbstract {
@@ -52,7 +52,7 @@ index 08fd43810..e0becc02f 100644
                          world.triggerEffect(2004, blockposition, 0);
                          if (entityinsentient != null) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 649f3867a..0828f766a 100644
+index 649f3867..0828f766 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -211,4 +211,11 @@ public class SpigotWorldConfig
@@ -68,5 +68,5 @@ index 649f3867a..0828f766a 100644
 +    }
  }
 -- 
-2.19.1
+2.20.1
 

@@ -1,11 +1,11 @@
-From 010801d91407790a461034a0f682f4d0d67be108 Mon Sep 17 00:00:00 2001
+From df666948117481b073295aa86c05106970520fd5 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 13 Jul 2015 19:05:15 +1000
 Subject: [PATCH] Use Map for getPlayer(String) lookup.
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index d200c4c94..54e44cba3 100644
+index d200c4c9..54e44cba 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -71,6 +71,7 @@ public abstract class PlayerList {
@@ -70,5 +70,5 @@ index d200c4c94..54e44cba3 100644
  
      public void sendPacketNearby(@Nullable EntityHuman entityhuman, double d0, double d1, double d2, double d3, DimensionManager dimensionmanager, Packet<?> packet) {
 -- 
-2.19.1
+2.20.1
 

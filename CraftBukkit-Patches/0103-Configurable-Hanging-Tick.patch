@@ -1,11 +1,11 @@
-From b2ab09636b6694d6ea8cfbdef24425f7d51b7ac3 Mon Sep 17 00:00:00 2001
+From 0e75040e1eaaa7137a51829efd58b39933ba7c23 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoung@mit.edu>
 Date: Sat, 9 Aug 2014 13:56:51 -0400
 Subject: [PATCH] Configurable Hanging Tick
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHanging.java b/src/main/java/net/minecraft/server/EntityHanging.java
-index 2775d6ac2..381140eee 100644
+index 2775d6ac..381140ee 100644
 --- a/src/main/java/net/minecraft/server/EntityHanging.java
 +++ b/src/main/java/net/minecraft/server/EntityHanging.java
 @@ -94,7 +94,7 @@ public abstract class EntityHanging extends Entity {
@@ -18,7 +18,7 @@ index 2775d6ac2..381140eee 100644
              if (!this.dead && !this.survives()) {
                  // CraftBukkit start - fire break events
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 36929d378..3e714be7b 100644
+index 36929d37..3e714be7 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -297,4 +297,10 @@ public class SpigotWorldConfig
@@ -33,5 +33,5 @@ index 36929d378..3e714be7b 100644
 +    }
  }
 -- 
-2.19.1
+2.20.1
 

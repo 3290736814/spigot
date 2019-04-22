@@ -1,14 +1,14 @@
-From c25c76822a7e1934beffa3bf07e96c3908ea03e5 Mon Sep 17 00:00:00 2001
+From a6b27e333b60e5741bade11dd377fcb5c0ec0198 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 515da1e3..78725c49 100644
+index 0da3c3a4..da3b6175 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -1514,4 +1514,10 @@ public final class Bukkit {
+@@ -1512,4 +1512,10 @@ public final class Bukkit {
      public static UnsafeValues getUnsafe() {
          return server.getUnsafe();
      }
@@ -20,10 +20,10 @@ index 515da1e3..78725c49 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 3f3a06a0..7f03b2bb 100644
+index 502a8581..a45fa703 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1276,4 +1276,14 @@ public interface Server extends PluginMessageRecipient {
+@@ -1274,4 +1274,14 @@ public interface Server extends PluginMessageRecipient {
      @Deprecated
      @NotNull
      UnsafeValues getUnsafe();
@@ -99,10 +99,10 @@ index ef6e348b..23a089ec 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 6d32ef71..954a6d9a 100644
+index a1e74cb0..f0833bbf 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -558,4 +558,15 @@ public interface Entity extends Metadatable, CommandSender, Nameable {
+@@ -571,4 +571,15 @@ public interface Entity extends Metadatable, CommandSender, Nameable {
       */
      @NotNull
      BlockFace getFacing();
@@ -204,5 +204,5 @@ index f7008a78..e45de7a4 100644
 +    // Spigot end
  }
 -- 
-2.19.1
+2.20.1
 

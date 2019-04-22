@@ -1,11 +1,11 @@
-From 78fde11b28b85be9732afb731d3cc030b4f551cd Mon Sep 17 00:00:00 2001
+From 5a4ba8f7895347214faa9c0184e38b91cd84619d Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
 
 
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index 440a50feb..7582151ae 100644
+index 440a50fe..7582151a 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
 @@ -247,6 +247,10 @@ public class PacketDataSerializer extends ByteBuf {
@@ -20,7 +20,7 @@ index 440a50feb..7582151ae 100644
              }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index adb21dd24..a0dc5524f 100644
+index adb21dd2..a0dc5524 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 @@ -23,6 +23,10 @@ import net.minecraft.server.IChatBaseComponent;
@@ -58,7 +58,7 @@ index adb21dd24..a0dc5524f 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index a463c88ac..55d63c045 100644
+index a463c88a..55d63c04 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -75,6 +75,10 @@ import org.apache.commons.codec.binary.Base64;
@@ -101,7 +101,7 @@ index a463c88ac..55d63c045 100644
              }
 diff --git a/src/main/java/org/spigotmc/ValidateUtils.java b/src/main/java/org/spigotmc/ValidateUtils.java
 new file mode 100644
-index 000000000..58a953481
+index 00000000..58a95348
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ValidateUtils.java
 @@ -0,0 +1,14 @@
@@ -120,5 +120,5 @@ index 000000000..58a953481
 +    }
 +}
 -- 
-2.19.1
+2.20.1
 

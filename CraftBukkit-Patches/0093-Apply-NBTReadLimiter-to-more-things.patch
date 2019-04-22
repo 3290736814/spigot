@@ -1,11 +1,11 @@
-From c93f13abc1341042cd825f2406d35854322defd1 Mon Sep 17 00:00:00 2001
+From a39a4b80420662857d8c947df0eb407d19a10fa9 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 27 Jul 2014 20:46:04 +1000
 Subject: [PATCH] Apply NBTReadLimiter to more things.
 
 
 diff --git a/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java b/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java
-index 34800456b..12268f87b 100644
+index 34800456..12268f87 100644
 --- a/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java
 +++ b/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java
 @@ -44,6 +44,12 @@ public class NBTCompressedStreamTools {
@@ -23,7 +23,7 @@ index 34800456b..12268f87b 100644
          if (nbtbase instanceof NBTTagCompound) {
 diff --git a/src/main/java/org/spigotmc/LimitStream.java b/src/main/java/org/spigotmc/LimitStream.java
 new file mode 100644
-index 000000000..8c32e8b62
+index 00000000..8c32e8b6
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/LimitStream.java
 @@ -0,0 +1,39 @@
@@ -67,5 +67,5 @@ index 000000000..8c32e8b62
 +    }
 +}
 -- 
-2.19.1
+2.20.1
 

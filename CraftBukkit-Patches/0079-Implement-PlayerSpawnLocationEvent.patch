@@ -1,11 +1,11 @@
-From befaaeecc6c9df1aecd264e78f2889589c897d90 Mon Sep 17 00:00:00 2001
+From eafac01d130b9743f986b5dd1d85ce4d601e631d Mon Sep 17 00:00:00 2001
 From: ninja <xninja@openmailbox.org>
 Date: Tue, 8 Apr 2014 14:05:19 +0200
 Subject: [PATCH] Implement PlayerSpawnLocationEvent.
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 0e45943af..d200c4c94 100644
+index 0e45943a..d200c4c9 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -39,6 +39,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
@@ -37,5 +37,5 @@ index 0e45943af..d200c4c94 100644
          // PlayerList.f.info("{}[{}] logged in with entity id {} at ({}, {}, {})", entityplayer.getDisplayName().getString(), s1, entityplayer.getId(), entityplayer.locX, entityplayer.locY, entityplayer.locZ);
          WorldServer worldserver = this.server.getWorldServer(entityplayer.dimension);
 -- 
-2.19.1
+2.20.1
 
