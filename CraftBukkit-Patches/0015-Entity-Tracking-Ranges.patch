@@ -1,4 +1,4 @@
-From 27ffb10e57968bfb9758b9c90600d3b66b7584e8 Mon Sep 17 00:00:00 2001
+From d2fd6156a38faa8917e263c7655d46c934e27b7b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Feb 2013 11:58:47 -0500
 Subject: [PATCH] Entity Tracking Ranges
@@ -49,7 +49,7 @@ index 2f93d630..79ba906e 100644
  }
 diff --git a/src/main/java/org/spigotmc/TrackingRange.java b/src/main/java/org/spigotmc/TrackingRange.java
 new file mode 100644
-index 00000000..4bf4d2ac
+index 00000000..18d0a92f
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/TrackingRange.java
 @@ -0,0 +1,51 @@
@@ -98,7 +98,7 @@ index 00000000..4bf4d2ac
 +        } else if ( entity instanceof EntityItemFrame || entity instanceof EntityPainting || entity instanceof EntityItem || entity instanceof EntityExperienceOrb )
 +        {
 +            return config.miscTrackingRange;
-+        } else 
++        } else
 +        {
 +            return config.otherTrackingRange;
 +        }

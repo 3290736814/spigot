@@ -1,4 +1,4 @@
-From 11e477325bab4d2ca3c1c35f5dbf213819c77dce Mon Sep 17 00:00:00 2001
+From f44f1686a7ae85d4ed7f3dcb895caf00b03397b1 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Feb 2013 08:58:35 +1100
 Subject: [PATCH] Metrics
@@ -6,7 +6,7 @@ Subject: [PATCH] Metrics
 
 diff --git a/src/main/java/org/spigotmc/Metrics.java b/src/main/java/org/spigotmc/Metrics.java
 new file mode 100644
-index 00000000..e7d5e8ab
+index 00000000..05d2d3d5
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/Metrics.java
 @@ -0,0 +1,645 @@
@@ -82,7 +82,7 @@ index 00000000..e7d5e8ab
 +    /**
 +     * The current revision number
 +     */
-+    private final static int REVISION = 6;
++    private static final int REVISION = 6;
 +    /**
 +     * The base url of the metrics domain
 +     */
@@ -592,7 +592,7 @@ index 00000000..e7d5e8ab
 +    /**
 +     * Interface used to collect custom data for a plugin
 +     */
-+    public static abstract class Plotter {
++    public abstract static class Plotter {
 +
 +        /**
 +         * The plot's name
