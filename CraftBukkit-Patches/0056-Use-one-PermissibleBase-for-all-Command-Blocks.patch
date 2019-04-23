@@ -1,15 +1,15 @@
-From b9f76792a42742a2dbb46264bac2907fa29301b0 Mon Sep 17 00:00:00 2001
+From e4270a517ac72814663c4cbe4bf3593dae7a8c48 Mon Sep 17 00:00:00 2001
 From: FrozenBrain <carstenbamsti@googlemail.com>
 Date: Sun, 2 Mar 2014 21:13:46 +0100
 Subject: [PATCH] Use one PermissibleBase for all Command Blocks
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java b/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
-index a461a935..c10a8445 100644
+index 8668d149..d52b59e0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
 +++ b/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
-@@ -12,9 +12,18 @@ import org.bukkit.plugin.Plugin;
- import java.util.Set;
+@@ -11,9 +11,18 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
+ import org.bukkit.plugin.Plugin;
  
  public abstract class ServerCommandSender implements CommandSender {
 -    private final PermissibleBase perm = new PermissibleBase(this);

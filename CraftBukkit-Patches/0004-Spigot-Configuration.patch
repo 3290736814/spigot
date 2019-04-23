@@ -1,4 +1,4 @@
-From e766362de02fca71d9ceb9193dbb91dc1bddb5f6 Mon Sep 17 00:00:00 2001
+From 9d9a1ac91fd00c84e7d1a3e3038ff07cc964414f Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -51,10 +51,10 @@ index 8241a417..cd7e516f 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 4dd8feba..1334925d 100644
+index 9ee8160a..95606198 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -706,6 +706,7 @@ public final class CraftServer implements Server {
+@@ -728,6 +728,7 @@ public final class CraftServer implements Server {
              logger.log(Level.WARNING, "Failed to load banned-players.json, " + ex.getMessage());
          }
  
@@ -62,7 +62,7 @@ index 4dd8feba..1334925d 100644
          for (WorldServer world : console.getWorlds()) {
              world.worldData.setDifficulty(config.difficulty);
              world.setSpawnFlags(config.spawnMonsters, config.spawnAnimals);
-@@ -720,12 +721,14 @@ public final class CraftServer implements Server {
+@@ -742,12 +743,14 @@ public final class CraftServer implements Server {
              } else {
                  world.ticksPerMonsterSpawns = this.getTicksPerMonsterSpawns();
              }
@@ -78,10 +78,10 @@ index 4dd8feba..1334925d 100644
          ignoreVanillaPermissions = commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index dc420f41..c9668afc 100644
+index a3388d30..b61c06e3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
-@@ -120,6 +120,14 @@ public class Main {
+@@ -119,6 +119,14 @@ public class Main {
                  acceptsAll(asList("v", "version"), "Show the CraftBukkit Version");
  
                  acceptsAll(asList("demo"), "Demo mode");

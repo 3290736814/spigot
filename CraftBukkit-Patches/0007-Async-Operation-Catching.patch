@@ -1,4 +1,4 @@
-From 1786d870e9099c50916d8a4287f5943eebd9bcfd Mon Sep 17 00:00:00 2001
+From 420dc8161257422de271d035e2e338b8f47d1edf Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -37,7 +37,7 @@ index 3eb4750b..40a54905 100644
  
          if (map.containsKey(irecipe.getKey())) {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index b9aac595..1dc3d07a 100644
+index 3621d927..a2e63748 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -815,6 +815,7 @@ public abstract class EntityLiving extends Entity {
@@ -105,10 +105,10 @@ index 6f4bce44..0665f2f0 100644
              throw new IllegalStateException("Removing entity while ticking!");
          } else {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 1334925d..9c645eab 100644
+index 95606198..50f9e079 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -659,6 +659,7 @@ public final class CraftServer implements Server {
+@@ -681,6 +681,7 @@ public final class CraftServer implements Server {
      public boolean dispatchCommand(CommandSender sender, String commandLine) {
          Validate.notNull(sender, "Sender cannot be null");
          Validate.notNull(commandLine, "CommandLine cannot be null");
@@ -117,10 +117,10 @@ index 1334925d..9c645eab 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 390e5acd..be13a12a 100644
+index a4938dd5..c4df3535 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -180,6 +180,7 @@ public class CraftWorld implements World {
+@@ -357,6 +357,7 @@ public class CraftWorld implements World {
      }
  
      public boolean unloadChunkRequest(int x, int z) {
@@ -128,7 +128,7 @@ index 390e5acd..be13a12a 100644
          net.minecraft.server.IChunkAccess chunk = world.getChunkProvider().getChunkAt(x, z, ChunkStatus.FULL, false);
          if (chunk != null) {
              world.getChunkProvider().removeTicket(TicketType.PLUGIN, chunk.getPos(), 1, Unit.INSTANCE);
-@@ -189,6 +190,7 @@ public class CraftWorld implements World {
+@@ -366,6 +367,7 @@ public class CraftWorld implements World {
      }
  
      private boolean unloadChunk0(int x, int z, boolean save) {
@@ -136,7 +136,7 @@ index 390e5acd..be13a12a 100644
          net.minecraft.server.Chunk chunk = (net.minecraft.server.Chunk) world.getChunkProvider().getChunkAt(x, z, ChunkStatus.FULL, false);
          if (chunk == null) {
              return true;
-@@ -202,6 +204,7 @@ public class CraftWorld implements World {
+@@ -379,6 +381,7 @@ public class CraftWorld implements World {
      }
  
      public boolean regenerateChunk(int x, int z) {
@@ -144,7 +144,7 @@ index 390e5acd..be13a12a 100644
          throw new UnsupportedOperationException("Not supported in this Minecraft version! Unless you can fix it, this is not a bug :)");
          /*
          if (!unloadChunk0(x, z, false)) {
-@@ -250,6 +253,7 @@ public class CraftWorld implements World {
+@@ -427,6 +430,7 @@ public class CraftWorld implements World {
      }
  
      public boolean loadChunk(int x, int z, boolean generate) {
@@ -153,10 +153,10 @@ index 390e5acd..be13a12a 100644
  
          // If generate = false, but the chunk already exists, we will get this back.
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 99bfaa76..5d64eaec 100644
+index e3d006fa..f7f4f44d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -290,6 +290,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -295,6 +295,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
      @Override
      public void kickPlayer(String message) {
@@ -165,10 +165,10 @@ index 99bfaa76..5d64eaec 100644
  
          getHandle().playerConnection.disconnect(message == null ? "" : message);
 diff --git a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScoreboardManager.java b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScoreboardManager.java
-index cac87d30..9cce899f 100644
+index afbc1a96..305ef948 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScoreboardManager.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScoreboardManager.java
-@@ -43,6 +43,7 @@ public final class CraftScoreboardManager implements ScoreboardManager {
+@@ -39,6 +39,7 @@ public final class CraftScoreboardManager implements ScoreboardManager {
      }
  
      public CraftScoreboard getNewScoreboard() {

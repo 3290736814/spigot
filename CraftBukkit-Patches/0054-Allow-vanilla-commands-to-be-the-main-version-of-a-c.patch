@@ -1,14 +1,14 @@
-From 03e26374456a73fb6df2d9773f1c33aad749b74d Mon Sep 17 00:00:00 2001
+From 0adaff319dc0e9a1a8386f82da3456a303d0fea1 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Wed, 12 Feb 2014 20:44:14 +0000
 Subject: [PATCH] Allow vanilla commands to be the main version of a command
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 44c3864f..4f20ff6f 100644
+index 4f8ab319..cd52b032 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -349,8 +349,11 @@ public final class CraftServer implements Server {
+@@ -371,8 +371,11 @@ public final class CraftServer implements Server {
          }
  
          if (type == PluginLoadOrder.POSTWORLD) {
@@ -21,7 +21,7 @@ index 44c3864f..4f20ff6f 100644
              commandMap.registerServerAliases();
              DefaultPermissions.registerCorePermissions();
              CraftDefaultPermissions.registerCorePermissions();
-@@ -364,12 +367,21 @@ public final class CraftServer implements Server {
+@@ -386,12 +389,21 @@ public final class CraftServer implements Server {
          pluginManager.disablePlugins();
      }
  

@@ -1,4 +1,4 @@
-From 469d71aaa9244420014984554e80938ae1126534 Mon Sep 17 00:00:00 2001
+From ceee653fd23391570129b7041470e45dcb791945 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
@@ -20,12 +20,12 @@ index bf475303..db2fe836 100644
              }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index adb21dd2..a0dc5524 100644
+index d042ad6e..2053a6c2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-@@ -23,6 +23,10 @@ import net.minecraft.server.IChatBaseComponent;
- import net.minecraft.server.NBTTagString;
- import org.bukkit.craftbukkit.util.CraftChatMessage;
+@@ -19,6 +19,10 @@ import org.bukkit.craftbukkit.util.CraftChatMessage;
+ import org.bukkit.craftbukkit.util.CraftMagicNumbers;
+ import org.bukkit.inventory.meta.BookMeta;
  
 +// Spigot start
 +import static org.spigotmc.ValidateUtils.*;
@@ -34,7 +34,7 @@ index adb21dd2..a0dc5524 100644
  @DelegateDeserialization(SerializableMeta.class)
  public class CraftMetaBook extends CraftMetaItem implements BookMeta {
      static final ItemMetaKey BOOK_TITLE = new ItemMetaKey("title");
-@@ -59,11 +63,11 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+@@ -55,11 +59,11 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
          super(tag);
  
          if (tag.hasKey(BOOK_TITLE.NBT)) {
@@ -48,7 +48,7 @@ index adb21dd2..a0dc5524 100644
          }
  
          boolean resolved = false;
-@@ -88,7 +92,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+@@ -84,7 +88,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
                          // Ignore and treat as an old book
                      }
                  }
@@ -58,12 +58,12 @@ index adb21dd2..a0dc5524 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 30dfc8f2..dafc1e60 100644
+index 5a016a6d..7b9ba432 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -78,6 +78,10 @@ import org.apache.commons.codec.binary.Base64;
- import javax.annotation.Nonnull;
- import javax.annotation.Nullable;
+@@ -74,6 +74,10 @@ import org.bukkit.inventory.meta.ItemMeta;
+ import org.bukkit.inventory.meta.Repairable;
+ import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
  
 +// Spigot start
 +import static org.spigotmc.ValidateUtils.*;
@@ -72,7 +72,7 @@ index 30dfc8f2..dafc1e60 100644
  /**
   * Children must include the following:
   *
-@@ -321,7 +325,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -317,7 +321,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
  
              if (display.hasKey(NAME.NBT)) {
                  try {
@@ -81,7 +81,7 @@ index 30dfc8f2..dafc1e60 100644
                  } catch (JsonParseException ex) {
                      // Ignore (stripped like Vanilla)
                  }
-@@ -329,7 +333,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -325,7 +329,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
  
              if (display.hasKey(LOCNAME.NBT)) {
                  try {
@@ -90,7 +90,7 @@ index 30dfc8f2..dafc1e60 100644
                  } catch (JsonParseException ex) {
                      // Ignore (stripped like Vanilla)
                  }
-@@ -340,7 +344,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -336,7 +340,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
                  lore = new ArrayList<String>(list.size());
  
                  for (int index = 0; index < list.size(); index++) {
