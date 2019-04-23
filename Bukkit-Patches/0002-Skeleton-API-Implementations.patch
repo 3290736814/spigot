@@ -1,14 +1,14 @@
-From 1f5e11ceb3e27100c9ac6a85bd2d25486ba75cc5 Mon Sep 17 00:00:00 2001
+From 3a0b2a362a68d0e4981f8bd67034c9151de8b6d8 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index beca3b49..2bb33094 100644
+index 17d2a6ec..bd97796b 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -1487,4 +1487,10 @@ public final class Bukkit {
+@@ -1484,4 +1484,10 @@ public final class Bukkit {
      public static UnsafeValues getUnsafe() {
          return server.getUnsafe();
      }
@@ -20,10 +20,10 @@ index beca3b49..2bb33094 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index f3aa7aef..142bd809 100644
+index 1b48b8ee..8ae6399a 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1253,4 +1253,14 @@ public interface Server extends PluginMessageRecipient {
+@@ -1250,4 +1250,14 @@ public interface Server extends PluginMessageRecipient {
      @Deprecated
      @NotNull
      UnsafeValues getUnsafe();
@@ -39,10 +39,10 @@ index f3aa7aef..142bd809 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 3abeab09..b2193445 100644
+index 5ac1be9d..e61fe949 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -1845,6 +1845,16 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -1851,6 +1851,16 @@ public interface World extends PluginMessageRecipient, Metadatable {
      @Nullable
      public Location locateNearestStructure(@NotNull Location origin, @NotNull StructureType structureType, int radius, boolean findUnexplored);
  
@@ -99,10 +99,10 @@ index ef6e348b..23a089ec 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index a1e74cb0..f0833bbf 100644
+index 7fdcedf3..8024d446 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -571,4 +571,15 @@ public interface Entity extends Metadatable, CommandSender, Nameable {
+@@ -570,4 +570,15 @@ public interface Entity extends Metadatable, CommandSender, Nameable {
       */
      @NotNull
      BlockFace getFacing();
@@ -146,10 +146,10 @@ index 76aad05f..39ceb444 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index e77eb822..bf114e95 100644
+index ab9045e2..3c7c2565 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1465,4 +1465,15 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1464,4 +1464,15 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       * after permission changes are done.
       */
      public void updateCommands();
@@ -166,10 +166,10 @@ index e77eb822..bf114e95 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/inventory/meta/BookMeta.java b/src/main/java/org/bukkit/inventory/meta/BookMeta.java
-index cb655ae8..8fd14d1b 100644
+index 9775dca7..9e6b4288 100644
 --- a/src/main/java/org/bukkit/inventory/meta/BookMeta.java
 +++ b/src/main/java/org/bukkit/inventory/meta/BookMeta.java
-@@ -185,4 +185,14 @@ public interface BookMeta extends ItemMeta {
+@@ -184,4 +184,14 @@ public interface BookMeta extends ItemMeta {
  
      @NotNull
      BookMeta clone();
@@ -185,10 +185,10 @@ index cb655ae8..8fd14d1b 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-index 4cd8a941..11208796 100644
+index c103599f..2401f0e4 100644
 --- a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
 +++ b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-@@ -385,4 +385,14 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
+@@ -384,4 +384,14 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
      @SuppressWarnings("javadoc")
      @NotNull
      ItemMeta clone();

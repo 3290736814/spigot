@@ -1,14 +1,14 @@
-From 52df63e23860bf4e65566ad94fcdf434f3cebdf9 Mon Sep 17 00:00:00 2001
+From e4a3328e967a0a9f225b5702509e846df71241ed Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:20:49 +1000
 Subject: [PATCH] BungeeCord Support
 
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index bf114e95..18f9b84f 100644
+index 3c7c2565..6a2f5a2e 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1470,6 +1470,17 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1469,6 +1469,17 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
      public class Spigot extends Entity.Spigot
      {
  
@@ -27,10 +27,10 @@ index bf114e95..18f9b84f 100644
  
      @NotNull
 diff --git a/src/main/java/org/bukkit/event/player/PlayerLoginEvent.java b/src/main/java/org/bukkit/event/player/PlayerLoginEvent.java
-index dccffa03..8d4c7003 100644
+index 498f0be8..1ca8de5e 100644
 --- a/src/main/java/org/bukkit/event/player/PlayerLoginEvent.java
 +++ b/src/main/java/org/bukkit/event/player/PlayerLoginEvent.java
-@@ -19,6 +19,7 @@ public class PlayerLoginEvent extends PlayerEvent {
+@@ -18,6 +18,7 @@ public class PlayerLoginEvent extends PlayerEvent {
      private final String hostname;
      private Result result = Result.ALLOWED;
      private String message = "";
@@ -38,7 +38,7 @@ index dccffa03..8d4c7003 100644
  
      /**
       * This constructor defaults message to an empty string, and result to
-@@ -29,10 +30,17 @@ public class PlayerLoginEvent extends PlayerEvent {
+@@ -28,10 +29,17 @@ public class PlayerLoginEvent extends PlayerEvent {
       * @param address The address the player used to connect, provided for
       *     timing issues
       */
@@ -57,7 +57,7 @@ index dccffa03..8d4c7003 100644
      }
  
      /**
-@@ -45,12 +53,24 @@ public class PlayerLoginEvent extends PlayerEvent {
+@@ -44,12 +52,24 @@ public class PlayerLoginEvent extends PlayerEvent {
       * @param result The result status for this event
       * @param message The message to be displayed if result denies login
       */

@@ -1,4 +1,4 @@
-From 77f35cf6d05ac5926119e31883e0f66a43a0d16b Mon Sep 17 00:00:00 2001
+From 55a025edd0ae242f03318b7200ee0d125a9dd621 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 2 Jun 2013 10:42:57 +1000
 Subject: [PATCH] Spigot Timings
@@ -8,10 +8,10 @@ Adds performance tracking timings all around the Minecraft Server, and improves 
 Plugins can track their own timings with CustomTimingsHandler
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 2bb33094..129a0b72 100644
+index bd97796b..c6ac40b3 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -586,6 +586,7 @@ public final class Bukkit {
+@@ -583,6 +583,7 @@ public final class Bukkit {
       */
      public static void reload() {
          server.reload();
@@ -20,10 +20,10 @@ index 2bb33094..129a0b72 100644
  
      /**
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 142bd809..2884c9b2 100644
+index 8ae6399a..11f0393f 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1258,6 +1258,11 @@ public interface Server extends PluginMessageRecipient {
+@@ -1255,6 +1255,11 @@ public interface Server extends PluginMessageRecipient {
      public class Spigot
      {
  
@@ -36,10 +36,10 @@ index 142bd809..2884c9b2 100644
  
      @NotNull
 diff --git a/src/main/java/org/bukkit/command/Command.java b/src/main/java/org/bukkit/command/Command.java
-index b55c514d..dafc4ed9 100644
+index 03d801a9..4bfc2146 100644
 --- a/src/main/java/org/bukkit/command/Command.java
 +++ b/src/main/java/org/bukkit/command/Command.java
-@@ -35,6 +35,7 @@ public abstract class Command {
+@@ -33,6 +33,7 @@ public abstract class Command {
      protected String usageMessage;
      private String permission;
      private String permissionMessage;
@@ -47,7 +47,7 @@ index b55c514d..dafc4ed9 100644
  
      protected Command(@NotNull String name) {
          this(name, "", "/" + name, new ArrayList<String>());
-@@ -48,6 +49,7 @@ public abstract class Command {
+@@ -46,6 +47,7 @@ public abstract class Command {
          this.usageMessage = (usageMessage == null) ? "/" + name : usageMessage;
          this.aliases = aliases;
          this.activeAliases = new ArrayList<String>(aliases);
@@ -55,7 +55,7 @@ index b55c514d..dafc4ed9 100644
      }
  
      /**
-@@ -245,6 +247,7 @@ public abstract class Command {
+@@ -243,6 +245,7 @@ public abstract class Command {
          }
          this.nextLabel = name;
          if (!isRegistered()) {
@@ -64,10 +64,10 @@ index b55c514d..dafc4ed9 100644
              return true;
          }
 diff --git a/src/main/java/org/bukkit/command/SimpleCommandMap.java b/src/main/java/org/bukkit/command/SimpleCommandMap.java
-index aa44e79e..1586f648 100644
+index 906734ec..b3d5a302 100644
 --- a/src/main/java/org/bukkit/command/SimpleCommandMap.java
 +++ b/src/main/java/org/bukkit/command/SimpleCommandMap.java
-@@ -136,11 +136,15 @@ public class SimpleCommandMap implements CommandMap {
+@@ -140,11 +140,15 @@ public class SimpleCommandMap implements CommandMap {
          }
  
          try {
@@ -84,24 +84,24 @@ index aa44e79e..1586f648 100644
          }
  
 diff --git a/src/main/java/org/bukkit/command/defaults/TimingsCommand.java b/src/main/java/org/bukkit/command/defaults/TimingsCommand.java
-index c4f1979a..1e6e7033 100644
+index db27723e..6023e4f6 100644
 --- a/src/main/java/org/bukkit/command/defaults/TimingsCommand.java
 +++ b/src/main/java/org/bukkit/command/defaults/TimingsCommand.java
-@@ -20,23 +20,101 @@ import org.bukkit.util.StringUtil;
- import com.google.common.collect.ImmutableList;
+@@ -18,23 +18,101 @@ import org.bukkit.plugin.TimedRegisteredListener;
+ import org.bukkit.util.StringUtil;
  import org.jetbrains.annotations.NotNull;
  
 +// Spigot start
++// CHECKSTYLE:OFF
 +import java.io.ByteArrayOutputStream;
 +import java.io.OutputStream;
 +import java.net.HttpURLConnection;
 +import java.net.URL;
-+import java.net.URLEncoder;
 +import java.util.logging.Level;
-+
 +import org.bukkit.command.RemoteConsoleCommandSender;
 +import org.bukkit.plugin.SimplePluginManager;
 +import org.spigotmc.CustomTimingsHandler;
++// CHECKSTYLE:ON
 +// Spigot end
 +
  public class TimingsCommand extends BukkitCommand {
@@ -193,7 +193,7 @@ index c4f1979a..1e6e7033 100644
          if (!sender.getServer().getPluginManager().useTimings()) {
              sender.sendMessage("Please enable timings by setting \"settings.plugin-profiling\" to true in bukkit.yml");
              return true;
-@@ -123,4 +201,55 @@ public class TimingsCommand extends BukkitCommand {
+@@ -121,4 +199,55 @@ public class TimingsCommand extends BukkitCommand {
          }
          return ImmutableList.of();
      }
@@ -250,10 +250,10 @@ index c4f1979a..1e6e7033 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/plugin/SimplePluginManager.java b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
-index 657d9692..94663f73 100644
+index 0c4119ae..17ddbe61 100644
 --- a/src/main/java/org/bukkit/plugin/SimplePluginManager.java
 +++ b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
-@@ -297,6 +297,7 @@ public final class SimplePluginManager implements PluginManager {
+@@ -295,6 +295,7 @@ public final class SimplePluginManager implements PluginManager {
              }
          }
  
@@ -262,10 +262,10 @@ index 657d9692..94663f73 100644
      }
  
 diff --git a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
-index de68a038..56f93336 100644
+index 43eee27d..92983c1e 100644
 --- a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
 +++ b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
-@@ -43,6 +43,7 @@ import org.bukkit.plugin.TimedRegisteredListener;
+@@ -42,6 +42,7 @@ import org.bukkit.plugin.TimedRegisteredListener;
  import org.bukkit.plugin.UnknownDependencyException;
  import org.jetbrains.annotations.NotNull;
  import org.jetbrains.annotations.Nullable;
@@ -273,7 +273,7 @@ index de68a038..56f93336 100644
  import org.yaml.snakeyaml.error.YAMLException;
  
  /**
-@@ -53,6 +54,7 @@ public final class JavaPluginLoader implements PluginLoader {
+@@ -52,6 +53,7 @@ public final class JavaPluginLoader implements PluginLoader {
      private final Pattern[] fileFilters = new Pattern[] { Pattern.compile("\\.jar$"), };
      private final Map<String, Class<?>> classes = new ConcurrentHashMap<String, Class<?>>();
      private final List<PluginClassLoader> loaders = new CopyOnWriteArrayList<PluginClassLoader>();
@@ -281,7 +281,7 @@ index de68a038..56f93336 100644
  
      /**
       * This class was not meant to be constructed explicitly
-@@ -297,13 +299,19 @@ public final class JavaPluginLoader implements PluginLoader {
+@@ -296,13 +298,19 @@ public final class JavaPluginLoader implements PluginLoader {
                  }
              }
  
@@ -301,7 +301,7 @@ index de68a038..56f93336 100644
                      } catch (InvocationTargetException ex) {
                          throw new EventException(ex.getCause());
                      } catch (Throwable t) {
-@@ -311,7 +319,7 @@ public final class JavaPluginLoader implements PluginLoader {
+@@ -310,7 +318,7 @@ public final class JavaPluginLoader implements PluginLoader {
                      }
                  }
              };
