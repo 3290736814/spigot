@@ -1,0 +1,44 @@
+From 99ba130a68ea575458f2e342a61d095579090dd1 Mon Sep 17 00:00:00 2001
+From: md_5 <git@md-5.net>
+Date: Fri, 8 Aug 2014 19:57:03 +1000
+Subject: [PATCH] Plug WorldMap Memory Leak
+
+
+diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
+index f586835c..42716ab8 100644
+--- a/src/main/java/net/minecraft/server/WorldServer.java
++++ b/src/main/java/net/minecraft/server/WorldServer.java
+@@ -1137,6 +1137,30 @@ public class WorldServer extends World {
+     }
+ 
+     public void unregisterEntity(Entity entity) {
++        // Spigot start
++        if ( entity instanceof EntityHuman )
++        {
++            this.getMinecraftServer().worldServer.values().stream().map( WorldServer::getWorldPersistentData ).forEach( (worldData) ->
++            {
++                for (Object o : worldData.data.values() )
++                {
++                    if ( o instanceof WorldMap )
++                    {
++                        WorldMap map = (WorldMap) o;
++                        map.humans.remove( (EntityHuman) entity );
++                        for ( Iterator<WorldMap.WorldMapHumanTracker> iter = (Iterator<WorldMap.WorldMapHumanTracker>) map.i.iterator(); iter.hasNext(); )
++                        {
++                            if ( iter.next().trackee == entity )
++                            {
++                                iter.remove();
++                            }
++                        }
++                    }
++                }
++            } );
++        }
++        // Spigot end
++
+         if (entity instanceof EntityEnderDragon) {
+             EntityComplexPart[] aentitycomplexpart = ((EntityEnderDragon) entity).dT();
+             int i = aentitycomplexpart.length;
+-- 
+2.20.1
+

@@ -1,36 +1,23 @@
-From 3db68bf2e28b9d62afe3b9fd2dcf2d66e70509f7 Mon Sep 17 00:00:00 2001
+From 6d91bcfe3b3c8f6e83712cb8c0405317afe9d78d Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
 
 This commit allows the user to select per world view distances, and view distances below 3. Be wary of the issues selecting a view distance of 1 or 2 may cause!
 
-diff --git a/src/main/java/net/minecraft/server/EntityTracker.java b/src/main/java/net/minecraft/server/EntityTracker.java
-index 9237ae20..4eeec21b 100644
---- a/src/main/java/net/minecraft/server/EntityTracker.java
-+++ b/src/main/java/net/minecraft/server/EntityTracker.java
-@@ -18,7 +18,7 @@ public class EntityTracker {
+diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
+index 0665f2f0..67563d85 100644
+--- a/src/main/java/net/minecraft/server/WorldServer.java
++++ b/src/main/java/net/minecraft/server/WorldServer.java
+@@ -87,7 +87,7 @@ public class WorldServer extends World {
+                 chunkGenerator = worldprovider.getChunkGenerator();
+             }
  
-     public EntityTracker(WorldServer worldserver) {
-         this.world = worldserver;
--        this.trackingDistance = worldserver.getMinecraftServer().getPlayerList().getFurthestViewableBlock();
-+        this.trackingDistance = PlayerChunkMap.getFurthestViewableBlock(worldserver.spigotConfig.viewDistance); // Spigot
-     }
- 
-     public static long a(double d0) {
-diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 525c020e..f9c93f7a 100644
---- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
-+++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -40,7 +40,7 @@ public class PlayerChunkMap {
- 
-     public PlayerChunkMap(WorldServer worldserver) {
-         this.world = worldserver;
--        this.a(worldserver.getMinecraftServer().getPlayerList().getViewDistance());
-+        this.a(worldserver.spigotConfig.viewDistance); // Spigot
-     }
- 
-     public WorldServer getWorld() {
+-            return new ChunkProviderServer((WorldServer) world, worldnbtstorage.getDirectory(), worldnbtstorage.getDataFixer(), worldnbtstorage.f(), executor, chunkGenerator, minecraftserver.getPlayerList().getViewDistance(), minecraftserver.getPlayerList().getViewDistance() - 2, worldloadlistener, () -> {
++            return new ChunkProviderServer((WorldServer) world, worldnbtstorage.getDirectory(), worldnbtstorage.getDataFixer(), worldnbtstorage.f(), executor, chunkGenerator, world.spigotConfig.viewDistance, world.spigotConfig.viewDistance - 2, worldloadlistener, () -> { // Spigot
+                 return minecraftserver.getWorldServer(DimensionManager.OVERWORLD).getWorldPersistentData();
+             });
+             // CraftBukkit end
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 index 23ce7243..0dd4b2d3 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java

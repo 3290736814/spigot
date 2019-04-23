@@ -1,14 +1,14 @@
-From 10c0b45a7585bc2a94e02c42df0efb9db433f5a1 Mon Sep 17 00:00:00 2001
+From 08007312ab9c5ca78714a804928697e0d041a53a Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 22 Sep 2013 19:10:53 +1000
 Subject: [PATCH] Item Despawn Rate
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index e06cb5ed..ab6613e5 100644
+index 5dfdd8ab..fb6f944a 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
-@@ -126,7 +126,7 @@ public class EntityItem extends Entity {
+@@ -122,7 +122,7 @@ public class EntityItem extends Entity {
                  }
              }
  
@@ -17,14 +17,15 @@ index e06cb5ed..ab6613e5 100644
                  // CraftBukkit start - fire ItemDespawnEvent
                  if (org.bukkit.craftbukkit.event.CraftEventFactory.callItemDespawnEvent(this).isCancelled()) {
                      this.age = 0;
-@@ -399,6 +399,6 @@ public class EntityItem extends Entity {
+@@ -410,7 +410,7 @@ public class EntityItem extends Entity {
  
-     public void t() {
+     public void u() {
          this.p();
 -        this.age = 5999;
 +        this.age = world.spigotConfig.itemDespawnRate - 1; // Spigot
      }
- }
+ 
+     @Override
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 index bcf5d165..a43131f8 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java

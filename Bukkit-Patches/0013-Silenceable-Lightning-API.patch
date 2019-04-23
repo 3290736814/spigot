@@ -1,14 +1,14 @@
-From fb6f7b1f873b86bfe543fc2af7d3cf6c54df51c2 Mon Sep 17 00:00:00 2001
+From 5036f51479602cd39e6bdb517dc0afd6d88a93ce Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sun, 23 Feb 2014 16:16:29 -0400
 Subject: [PATCH] Silenceable Lightning API
 
 
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 93b1db80..ffae53d6 100644
+index b2193445..ddc8fa30 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -1878,6 +1878,31 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -1849,6 +1849,31 @@ public interface World extends PluginMessageRecipient, Metadatable {
      public class Spigot
      {
  
@@ -41,10 +41,10 @@ index 93b1db80..ffae53d6 100644
  
      @NotNull
 diff --git a/src/main/java/org/bukkit/entity/LightningStrike.java b/src/main/java/org/bukkit/entity/LightningStrike.java
-index 627aef0e..cbc5ee8f 100644
+index 39ceb444..5904ed87 100644
 --- a/src/main/java/org/bukkit/entity/LightningStrike.java
 +++ b/src/main/java/org/bukkit/entity/LightningStrike.java
-@@ -18,6 +18,15 @@ public interface LightningStrike extends Weather {
+@@ -18,6 +18,15 @@ public interface LightningStrike extends Entity {
      public class Spigot extends Entity.Spigot
      {
  

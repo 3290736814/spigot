@@ -1,14 +1,14 @@
-From 37cbe4ba88bde2bbfd62b62528287a2afefb6282 Mon Sep 17 00:00:00 2001
+From ba42de25559d766c8b27e94cb626fdfa2bdd6de7 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 02:59:14 +0100
 Subject: [PATCH] BungeeCord Chat API
 
 
 diff --git a/pom.xml b/pom.xml
-index 1bb3b074..b3369ecf 100644
+index 68fe735e..546e6d5d 100644
 --- a/pom.xml
 +++ b/pom.xml
-@@ -77,6 +77,13 @@
+@@ -71,6 +71,13 @@
              <version>2.8.0</version>
              <scope>compile</scope>
          </dependency>
@@ -23,15 +23,10 @@ index 1bb3b074..b3369ecf 100644
              <groupId>org.yaml</groupId>
              <artifactId>snakeyaml</artifactId>
 diff --git a/src/main/java/org/bukkit/ChatColor.java b/src/main/java/org/bukkit/ChatColor.java
-index de1c60a2..3ab8e941 100644
+index de1c60a2..f96e87b8 100644
 --- a/src/main/java/org/bukkit/ChatColor.java
 +++ b/src/main/java/org/bukkit/ChatColor.java
-@@ -13,95 +13,227 @@ import org.jetbrains.annotations.Nullable;
- /**
-  * All supported color values for chat
-  */
--public enum ChatColor {
-+public enum ChatColor{
+@@ -17,91 +17,223 @@ public enum ChatColor {
      /**
       * Represents black
       */
@@ -47,7 +42,7 @@ index de1c60a2..3ab8e941 100644
       * Represents dark blue
       */
 -    DARK_BLUE('1', 0x1),
-+    DARK_BLUE('1', 0x1){
++    DARK_BLUE('1', 0x1) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -58,7 +53,7 @@ index de1c60a2..3ab8e941 100644
       * Represents dark green
       */
 -    DARK_GREEN('2', 0x2),
-+    DARK_GREEN('2', 0x2){
++    DARK_GREEN('2', 0x2) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -69,7 +64,7 @@ index de1c60a2..3ab8e941 100644
       * Represents dark blue (aqua)
       */
 -    DARK_AQUA('3', 0x3),
-+    DARK_AQUA('3', 0x3){
++    DARK_AQUA('3', 0x3) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -80,7 +75,7 @@ index de1c60a2..3ab8e941 100644
       * Represents dark red
       */
 -    DARK_RED('4', 0x4),
-+    DARK_RED('4', 0x4){
++    DARK_RED('4', 0x4) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -91,7 +86,7 @@ index de1c60a2..3ab8e941 100644
       * Represents dark purple
       */
 -    DARK_PURPLE('5', 0x5),
-+    DARK_PURPLE('5', 0x5){
++    DARK_PURPLE('5', 0x5) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -102,7 +97,7 @@ index de1c60a2..3ab8e941 100644
       * Represents gold
       */
 -    GOLD('6', 0x6),
-+    GOLD('6', 0x6){
++    GOLD('6', 0x6) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -113,7 +108,7 @@ index de1c60a2..3ab8e941 100644
       * Represents gray
       */
 -    GRAY('7', 0x7),
-+    GRAY('7', 0x7){
++    GRAY('7', 0x7) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -124,7 +119,7 @@ index de1c60a2..3ab8e941 100644
       * Represents dark gray
       */
 -    DARK_GRAY('8', 0x8),
-+    DARK_GRAY('8', 0x8){
++    DARK_GRAY('8', 0x8) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -135,7 +130,7 @@ index de1c60a2..3ab8e941 100644
       * Represents blue
       */
 -    BLUE('9', 0x9),
-+    BLUE('9', 0x9){
++    BLUE('9', 0x9) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -146,7 +141,7 @@ index de1c60a2..3ab8e941 100644
       * Represents green
       */
 -    GREEN('a', 0xA),
-+    GREEN('a', 0xA){
++    GREEN('a', 0xA) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -157,7 +152,7 @@ index de1c60a2..3ab8e941 100644
       * Represents aqua
       */
 -    AQUA('b', 0xB),
-+    AQUA('b', 0xB){
++    AQUA('b', 0xB) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -168,7 +163,7 @@ index de1c60a2..3ab8e941 100644
       * Represents red
       */
 -    RED('c', 0xC),
-+    RED('c', 0xC){
++    RED('c', 0xC) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -179,7 +174,7 @@ index de1c60a2..3ab8e941 100644
       * Represents light purple
       */
 -    LIGHT_PURPLE('d', 0xD),
-+    LIGHT_PURPLE('d', 0xD){
++    LIGHT_PURPLE('d', 0xD) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -190,7 +185,7 @@ index de1c60a2..3ab8e941 100644
       * Represents yellow
       */
 -    YELLOW('e', 0xE),
-+    YELLOW('e', 0xE){
++    YELLOW('e', 0xE) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -201,7 +196,7 @@ index de1c60a2..3ab8e941 100644
       * Represents white
       */
 -    WHITE('f', 0xF),
-+    WHITE('f', 0xF){
++    WHITE('f', 0xF) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -212,7 +207,7 @@ index de1c60a2..3ab8e941 100644
       * Represents magical characters that change around randomly
       */
 -    MAGIC('k', 0x10, true),
-+    MAGIC('k', 0x10, true){
++    MAGIC('k', 0x10, true) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -223,7 +218,7 @@ index de1c60a2..3ab8e941 100644
       * Makes the text bold.
       */
 -    BOLD('l', 0x11, true),
-+    BOLD('l', 0x11, true){
++    BOLD('l', 0x11, true) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -234,7 +229,7 @@ index de1c60a2..3ab8e941 100644
       * Makes a line appear through the text.
       */
 -    STRIKETHROUGH('m', 0x12, true),
-+    STRIKETHROUGH('m', 0x12, true){
++    STRIKETHROUGH('m', 0x12, true) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -245,7 +240,7 @@ index de1c60a2..3ab8e941 100644
       * Makes the text appear underlined.
       */
 -    UNDERLINE('n', 0x13, true),
-+    UNDERLINE('n', 0x13, true){
++    UNDERLINE('n', 0x13, true) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -256,7 +251,7 @@ index de1c60a2..3ab8e941 100644
       * Makes the text italic.
       */
 -    ITALIC('o', 0x14, true),
-+    ITALIC('o', 0x14, true){
++    ITALIC('o', 0x14, true) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -267,7 +262,7 @@ index de1c60a2..3ab8e941 100644
       * Resets all previous chat colors or formats.
       */
 -    RESET('r', 0x15);
-+    RESET('r', 0x15){
++    RESET('r', 0x15) {
 +        @NotNull
 +        @Override
 +        public net.md_5.bungee.api.ChatColor asBungee() {
@@ -290,10 +285,10 @@ index de1c60a2..3ab8e941 100644
       * Gets the char value associated with this color
       *
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index e3bda7bd..4e586554 100644
+index 75656f3e..acd0469e 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1275,6 +1275,24 @@ public interface Server extends PluginMessageRecipient {
+@@ -1254,6 +1254,24 @@ public interface Server extends PluginMessageRecipient {
          {
              throw new UnsupportedOperationException( "Not supported yet." );
          }

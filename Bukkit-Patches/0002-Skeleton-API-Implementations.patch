@@ -1,14 +1,14 @@
-From a6b27e333b60e5741bade11dd377fcb5c0ec0198 Mon Sep 17 00:00:00 2001
+From 1f5e11ceb3e27100c9ac6a85bd2d25486ba75cc5 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 0da3c3a4..da3b6175 100644
+index beca3b49..2bb33094 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -1512,4 +1512,10 @@ public final class Bukkit {
+@@ -1487,4 +1487,10 @@ public final class Bukkit {
      public static UnsafeValues getUnsafe() {
          return server.getUnsafe();
      }
@@ -20,10 +20,10 @@ index 0da3c3a4..da3b6175 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 502a8581..a45fa703 100644
+index f3aa7aef..142bd809 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1274,4 +1274,14 @@ public interface Server extends PluginMessageRecipient {
+@@ -1253,4 +1253,14 @@ public interface Server extends PluginMessageRecipient {
      @Deprecated
      @NotNull
      UnsafeValues getUnsafe();
@@ -39,10 +39,10 @@ index 502a8581..a45fa703 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 0c84737a..93b1db80 100644
+index 3abeab09..b2193445 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -1874,6 +1874,16 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -1845,6 +1845,16 @@ public interface World extends PluginMessageRecipient, Metadatable {
      @Nullable
      public Location locateNearestStructure(@NotNull Location origin, @NotNull StructureType structureType, int radius, boolean findUnexplored);
  
@@ -119,7 +119,7 @@ index a1e74cb0..f0833bbf 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/LightningStrike.java b/src/main/java/org/bukkit/entity/LightningStrike.java
-index c8b5154e..627aef0e 100644
+index 76aad05f..39ceb444 100644
 --- a/src/main/java/org/bukkit/entity/LightningStrike.java
 +++ b/src/main/java/org/bukkit/entity/LightningStrike.java
 @@ -1,5 +1,7 @@
@@ -130,7 +130,7 @@ index c8b5154e..627aef0e 100644
  /**
   * Represents an instance of a lightning strike. May or may not do damage.
   */
-@@ -12,4 +14,14 @@ public interface LightningStrike extends Weather {
+@@ -12,4 +14,14 @@ public interface LightningStrike extends Entity {
       */
      public boolean isEffect();
  
@@ -185,10 +185,10 @@ index cb655ae8..8fd14d1b 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-index f7008a78..e45de7a4 100644
+index 4cd8a941..11208796 100644
 --- a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
 +++ b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-@@ -343,4 +343,14 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
+@@ -385,4 +385,14 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
      @SuppressWarnings("javadoc")
      @NotNull
      ItemMeta clone();

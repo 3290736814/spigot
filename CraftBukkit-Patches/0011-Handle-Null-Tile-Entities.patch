@@ -1,14 +1,14 @@
-From 727f2d8a6782bb09a95269888079ccf64d393d11 Mon Sep 17 00:00:00 2001
+From 8a9a18f7312bca013aa2f22c14cefca6dcb927c8 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 3 Feb 2013 09:20:19 +1100
 Subject: [PATCH] Handle Null Tile Entities
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 32d00f15..0cfcb0a8 100644
+index f5bc1d66..6ad9a9b6 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1099,6 +1099,13 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
+@@ -628,6 +628,13 @@ public abstract class World implements IIBlockAccess, GeneratorAccess, AutoClose
  
          while (iterator.hasNext()) {
              TileEntity tileentity = (TileEntity) iterator.next();
@@ -20,7 +20,7 @@ index 32d00f15..0cfcb0a8 100644
 +            }
 +            // Spigot end
  
-             if (!tileentity.x() && tileentity.hasWorld()) {
+             if (!tileentity.isRemoved() && tileentity.hasWorld()) {
                  BlockPosition blockposition = tileentity.getPosition();
 -- 
 2.20.1

@@ -1,4 +1,4 @@
-From 294cf56721c07dc8ade3d488a989d615b075b21d Mon Sep 17 00:00:00 2001
+From 8c6d803c60d4e90837a2accdbcfb30959af956ef Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -7,30 +7,28 @@ Changes the mob spawning algorithm to properly account for view distance and the
 
 Needs better documentation.
 
-diff --git a/src/main/java/net/minecraft/server/SpawnerCreature.java b/src/main/java/net/minecraft/server/SpawnerCreature.java
-index 5f262bc5..6ca0e19c 100644
---- a/src/main/java/net/minecraft/server/SpawnerCreature.java
-+++ b/src/main/java/net/minecraft/server/SpawnerCreature.java
-@@ -42,10 +42,15 @@ public final class SpawnerCreature {
+diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
+index 6d5489a7..86e69460 100644
+--- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
++++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
+@@ -674,8 +674,16 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+     }
  
-                     j = MathHelper.floor(entityhuman.locZ / 16.0D);
-                     boolean flag3 = true;
--
--                    for (int i1 = -8; i1 <= 8; ++i1) {
--                        for (k = -8; k <= 8; ++k) {
--                            boolean flag4 = i1 == -8 || i1 == 8 || k == -8 || k == 8;
-+                    // Spigot Start
-+                    byte b0 = worldserver.spigotConfig.mobSpawnRange;
-+                    b0 = ( b0 > worldserver.spigotConfig.viewDistance ) ? (byte) worldserver.spigotConfig.viewDistance : b0;
-+                    b0 = ( b0 > 8 ) ? 8 : b0;
+     boolean d(ChunkCoordIntPair chunkcoordintpair) {
++        // Spigot Start
++        int chunkRange = world.spigotConfig.mobSpawnRange;
++        chunkRange = (chunkRange > world.spigotConfig.viewDistance) ? (byte) world.spigotConfig.viewDistance : chunkRange;
++        chunkRange = (chunkRange > 8) ? 8 : chunkRange;
 +
-+                    for (int i1 = -b0; i1 <= b0; ++i1) {
-+                        for (k = -b0; k <= b0; ++k) {
-+                            boolean flag4 = i1 == -b0 || i1 == b0 || k == -b0 || k == b0;
-+                            // Spigot End
-                             ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(i1 + l, k + j);
++        double blockRange = Math.pow(chunkRange << 4, 2);
++        // Spigot end
++
+         return this.y.a(chunkcoordintpair.pair()).noneMatch((entityplayer) -> {
+-            return !entityplayer.isSpectator() && a(chunkcoordintpair, (Entity) entityplayer) < 16384.0D;
++            return !entityplayer.isSpectator() && a(chunkcoordintpair, (Entity) entityplayer) < blockRange; // Spigot
+         });
+     }
  
-                             // CraftBukkit start - use LongHash and LongHashSet
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 index 0dd4b2d3..bcf5d165 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java

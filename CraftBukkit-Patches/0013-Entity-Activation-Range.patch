@@ -1,4 +1,4 @@
-From 833a1af37cd7c42fc8cb463ef69de9e3d75358cf Mon Sep 17 00:00:00 2001
+From 8036f6330bbacfa89556e2bd9037fece6dfc9dd5 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,10 +9,10 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index a0bc6290..3c2efede 100644
+index 77ad70f8..e615403e 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -159,6 +159,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -160,6 +160,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
      public org.bukkit.projectiles.ProjectileSource projectileSource; // For projectiles only
      public boolean forceExplosionKnockback; // SPIGOT-949
      public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getEntityTimings(this); // Spigot
@@ -25,7 +25,7 @@ index a0bc6290..3c2efede 100644
  
      public float getBukkitYaw() {
          return this.yaw;
-@@ -185,7 +191,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -187,7 +193,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
          this.setPosition(0.0D, 0.0D, 0.0D);
          if (world != null) {
              this.dimension = world.worldProvider.getDimensionManager();
@@ -37,12 +37,12 @@ index a0bc6290..3c2efede 100644
 +        // Spigot end
  
          this.datawatcher = new DataWatcher(this);
-         this.datawatcher.register(Entity.ac, (byte) 0);
+         this.datawatcher.register(Entity.W, (byte) 0);
 diff --git a/src/main/java/net/minecraft/server/EntityAgeable.java b/src/main/java/net/minecraft/server/EntityAgeable.java
-index 1789ee7f..2af1ac70 100644
+index dfd1a7da..da9740a9 100644
 --- a/src/main/java/net/minecraft/server/EntityAgeable.java
 +++ b/src/main/java/net/minecraft/server/EntityAgeable.java
-@@ -16,6 +16,31 @@ public abstract class EntityAgeable extends EntityCreature {
+@@ -14,6 +14,31 @@ public abstract class EntityAgeable extends EntityCreature {
          super(entitytypes, world);
      }
  
@@ -53,7 +53,7 @@ index 1789ee7f..2af1ac70 100644
 +        super.inactiveTick();
 +        if ( this.world.isClientSide || this.ageLocked )
 +        { // CraftBukkit
-+            this.a( this.isBaby() );
++            this.updateSize();
 +        } else
 +        {
 +            int i = this.getAge();
@@ -75,12 +75,12 @@ index 1789ee7f..2af1ac70 100644
      public abstract EntityAgeable createChild(EntityAgeable entityageable);
  
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index 241c29c0..733ce2ad 100644
+index 33bff879..4767f7b3 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
-@@ -33,6 +33,18 @@ public abstract class EntityArrow extends Entity implements IProjectile {
-     private double damage;
-     public int knockbackStrength;
+@@ -35,6 +35,18 @@ public abstract class EntityArrow extends Entity implements IProjectile {
+     private IntOpenHashSet az;
+     private List<Entity> aA;
  
 +    // Spigot Start
 +    @Override
@@ -94,15 +94,15 @@ index 241c29c0..733ce2ad 100644
 +    }
 +    // Spigot End
 +
-     protected EntityArrow(EntityTypes<?> entitytypes, World world) {
+     protected EntityArrow(EntityTypes<? extends EntityArrow> entitytypes, World world) {
          super(entitytypes, world);
-         this.tileX = -1;
+         this.fromPlayer = EntityArrow.PickupStatus.DISALLOWED;
 diff --git a/src/main/java/net/minecraft/server/EntityFireworks.java b/src/main/java/net/minecraft/server/EntityFireworks.java
-index 3e4fc59b..9b6d217d 100644
+index ffb1b095..d6bde129 100644
 --- a/src/main/java/net/minecraft/server/EntityFireworks.java
 +++ b/src/main/java/net/minecraft/server/EntityFireworks.java
-@@ -17,6 +17,14 @@ public class EntityFireworks extends Entity {
-         this.setSize(0.25F, 0.25F);
+@@ -18,6 +18,14 @@ public class EntityFireworks extends Entity implements IProjectile {
+         super(entitytypes, world);
      }
  
 +    // Spigot Start
@@ -113,14 +113,14 @@ index 3e4fc59b..9b6d217d 100644
 +    }
 +    // Spigot End
 +
-     protected void x_() {
+     @Override
+     protected void initDatawatcher() {
          this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, ItemStack.a);
-         this.datawatcher.register(EntityFireworks.b, 0);
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index ab6613e5..9b854d64 100644
+index fb6f944a..fe70a3a8 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
-@@ -139,6 +139,28 @@ public class EntityItem extends Entity {
+@@ -135,6 +135,28 @@ public class EntityItem extends Entity {
          }
      }
  
@@ -146,14 +146,14 @@ index ab6613e5..9b854d64 100644
 +    }
 +    // Spigot end
 +
-     private void u() {
-         if (this.motY < 0.05999999865889549D) {
-             this.motY += 5.000000237487257E-4D;
+     private void v() {
+         Vec3D vec3d = this.getMot();
+ 
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 8ff36be3..d4fe0ab6 100644
+index 0774bead..2dfa236f 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -128,6 +128,13 @@ public abstract class EntityLiving extends Entity {
+@@ -132,6 +132,13 @@ public abstract class EntityLiving extends Entity {
          return getHeadRotation();
      }
      // CraftBukkit end
@@ -165,67 +165,62 @@ index 8ff36be3..d4fe0ab6 100644
 +    }
 +    // Spigot end
  
-     protected EntityLiving(EntityTypes<?> entitytypes, World world) {
+     protected EntityLiving(EntityTypes<? extends EntityLiving> entitytypes, World world) {
          super(entitytypes, world);
 diff --git a/src/main/java/net/minecraft/server/EntityVillager.java b/src/main/java/net/minecraft/server/EntityVillager.java
-index e6350821..f8e05b75 100644
+index 3a4a40bb..a94cdce2 100644
 --- a/src/main/java/net/minecraft/server/EntityVillager.java
 +++ b/src/main/java/net/minecraft/server/EntityVillager.java
-@@ -99,6 +99,22 @@ public class EntityVillager extends EntityAgeable implements NPC, IMerchant {
-         this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.5D);
+@@ -133,6 +133,17 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
+         this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(48.0D);
      }
  
 +    // Spigot Start
 +    @Override
 +    public void inactiveTick() {
-+        // SPIGOT-3874
++        // SPIGOT-3874, SPIGOT-3894, SPIGOT-3846 :(
 +        if (world.spigotConfig.tickInactiveVillagers) {
-+            // SPIGOT-3894
-+            Chunk startingChunk = this.world.getChunkIfLoaded(MathHelper.floor(this.locX) >> 4, MathHelper.floor(this.locZ) >> 4);
-+            if (!(startingChunk != null && startingChunk.areNeighborsLoaded(1))) {
-+                return;
-+            }
-+            this.mobTick(); // SPIGOT-3846
++            this.mobTick();
 +        }
 +        super.inactiveTick();
 +    }
 +    // Spigot End
 +
+     @Override
      protected void mobTick() {
-         if (--this.profession <= 0) {
-             BlockPosition blockposition = new BlockPosition(this);
-diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 0cfcb0a8..9addde47 100644
---- a/src/main/java/net/minecraft/server/World.java
-+++ b/src/main/java/net/minecraft/server/World.java
-@@ -1039,6 +1039,7 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
-         CrashReport crashreport1;
-         CrashReportSystemDetails crashreportsystemdetails1;
+         this.world.getMethodProfiler().enter("brain");
+diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
+index ae745675..c6dda63d 100644
+--- a/src/main/java/net/minecraft/server/WorldServer.java
++++ b/src/main/java/net/minecraft/server/WorldServer.java
+@@ -440,6 +440,7 @@ public class WorldServer extends World {
+             this.tickingEntities = true;
+             ObjectIterator objectiterator = this.entitiesById.int2ObjectEntrySet().iterator();
  
-+        org.spigotmc.ActivationRange.activateEntities(this); // Spigot
-         timings.entityTick.startTiming(); // Spigot
-         // CraftBukkit start - Use field for loop variable
-         for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
-@@ -1224,8 +1225,12 @@ public abstract class World implements IEntityAccess, GeneratorAccess, IIBlockAc
++            org.spigotmc.ActivationRange.activateEntities(this); // Spigot
+             timings.entityTick.startTiming(); // Spigot
+             while (objectiterator.hasNext()) {
+                 Entry<Entity> entry = (Entry) objectiterator.next();
+@@ -670,6 +671,14 @@ public class WorldServer extends World {
+     }
  
-         // CraftBukkit start - check if chunks are loaded as done in previous versions
-         // TODO: Go back to Vanilla behaviour when comfortable
--        Chunk startingChunk = this.getChunkIfLoaded(MathHelper.floor(entity.locX) >> 4, MathHelper.floor(entity.locZ) >> 4);
--        if (flag && !(startingChunk != null && startingChunk.areNeighborsLoaded(2))) {
+     public void entityJoinedWorld(Entity entity) {
 +        // Spigot start
-+        // Chunk startingChunk = this.getChunkIfLoaded(MathHelper.floor(entity.locX) >> 4, MathHelper.floor(entity.locZ) >> 4);
-+        if (flag && !org.spigotmc.ActivationRange.checkIfActive(entity)) {
++        if (!org.spigotmc.ActivationRange.checkIfActive(entity)) {
 +            entity.ticksLived++;
 +            entity.inactiveTick();
-+            // Spigot end
-             return;
-         }
-         // CraftBukkit end
++            return;
++        }
++        // Spigot end
++
+         if (entity instanceof EntityHuman || this.getChunkProvider().a(entity)) {
+             entity.H = entity.locX;
+             entity.I = entity.locY;
 diff --git a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java b/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
-index 0a52ed37..2ab4b11a 100644
+index 63f63353..4994b631 100644
 --- a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
 +++ b/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
-@@ -41,6 +41,9 @@ public class SpigotTimings {
+@@ -40,6 +40,9 @@ public class SpigotTimings {
  
      public static final CustomTimingsHandler playerCommandTimer = new CustomTimingsHandler("** playerCommand");
  
@@ -236,26 +231,26 @@ index 0a52ed37..2ab4b11a 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index d7f43ec2..c215fe8e 100644
+index 0e2e1a8d..d02266f8 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -332,6 +332,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          entity.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
          // SPIGOT-619: Force sync head rotation also
          entity.setHeadRotation(location.getYaw());
-+        entity.world.entityJoinedWorld(entity, false); // Spigot - register to new chunk
++        ((WorldServer) entity.world).chunkCheck(entity); // Spigot - register to new chunk
  
          return true;
      }
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
 new file mode 100644
-index 00000000..f45e0a34
+index 00000000..28e877a9
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
-@@ -0,0 +1,287 @@
+@@ -0,0 +1,279 @@
 +package org.spigotmc;
 +
-+import java.util.Set;
++import java.util.Collection;
 +import net.minecraft.server.AxisAlignedBB;
 +import net.minecraft.server.Chunk;
 +import net.minecraft.server.Entity;
@@ -270,6 +265,7 @@ index 00000000..f45e0a34
 +import net.minecraft.server.EntityFireball;
 +import net.minecraft.server.EntityFireworks;
 +import net.minecraft.server.EntityHuman;
++import net.minecraft.server.EntityLightning;
 +import net.minecraft.server.EntityLiving;
 +import net.minecraft.server.EntityMonster;
 +import net.minecraft.server.EntityProjectile;
@@ -279,7 +275,6 @@ index 00000000..f45e0a34
 +import net.minecraft.server.EntityTNTPrimed;
 +import net.minecraft.server.EntityThrownTrident;
 +import net.minecraft.server.EntityVillager;
-+import net.minecraft.server.EntityWeather;
 +import net.minecraft.server.EntityWither;
 +import net.minecraft.server.MathHelper;
 +import net.minecraft.server.MinecraftServer;
@@ -333,7 +328,7 @@ index 00000000..f45e0a34
 +                || entity instanceof EntityComplexPart
 +                || entity instanceof EntityWither
 +                || entity instanceof EntityFireball
-+                || entity instanceof EntityWeather
++                || entity instanceof EntityLightning
 +                || entity instanceof EntityTNTPrimed
 +                || entity instanceof EntityEnderCrystal
 +                || entity instanceof EntityFireworks
@@ -362,7 +357,7 @@ index 00000000..f45e0a34
 +        maxRange = Math.max( maxRange, miscActivationRange );
 +        maxRange = Math.min( ( world.spigotConfig.viewDistance << 4 ) - 8, maxRange );
 +
-+        for ( EntityHuman player : world.players )
++        for ( EntityHuman player : world.getPlayers() )
 +        {
 +
 +            player.activatedTick = MinecraftServer.currentTick;
@@ -399,7 +394,7 @@ index 00000000..f45e0a34
 +    {
 +        for ( EntitySlice slice : chunk.entitySlices )
 +        {
-+            for ( Entity entity : (Set<Entity>) slice )
++            for ( Entity entity : (Collection<Entity>) slice )
 +            {
 +                if ( MinecraftServer.currentTick > entity.activatedTick )
 +                {
@@ -470,7 +465,7 @@ index 00000000..f45e0a34
 +            {
 +                return true;
 +            }
-+            if ( entity instanceof EntityVillager && ( (EntityVillager) entity ).isInLove() )
++            if ( entity instanceof EntityVillager && ( (EntityVillager) entity ).canBreed() )
 +            {
 +                return true;
 +            }
@@ -525,14 +520,6 @@ index 00000000..f45e0a34
 +            }
 +            // Add a little performance juice to active entities. Skip 1/4 if not immune.
 +        } else if ( !entity.defaultActivationState && entity.ticksLived % 4 == 0 && !checkEntityImmunities( entity ) )
-+        {
-+            isActive = false;
-+        }
-+        int x = MathHelper.floor( entity.locX );
-+        int z = MathHelper.floor( entity.locZ );
-+        // Make sure not on edge of unloaded chunk
-+        Chunk chunk = entity.world.getChunkIfLoaded( x >> 4, z >> 4 );
-+        if ( isActive && !( chunk != null && chunk.areNeighborsLoaded( 1 ) ) )
 +        {
 +            isActive = false;
 +        }

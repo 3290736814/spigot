@@ -1,4 +1,4 @@
-From f22a980951909c9700aceab04f7094687c5b3abb Mon Sep 17 00:00:00 2001
+From d63c96770c4a60b0b4764189b058411287a0c605 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -6,10 +6,10 @@ Subject: [PATCH] Skeleton API Implementations
 This contains the basic, empty implementations for some Spigot-API extensions. They are included early in the patching progress so that compilation will still succeed midway despite the APIs only being provided by subsequent patches.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 6cc730b1..c53eeb62 100644
+index ae7d413e..4dd8feba 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1919,4 +1919,14 @@ public final class CraftServer implements Server {
+@@ -1855,4 +1855,14 @@ public final class CraftServer implements Server {
      public UnsafeValues getUnsafe() {
          return CraftMagicNumbers.INSTANCE;
      }
@@ -25,13 +25,14 @@ index 6cc730b1..c53eeb62 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 4d20ce99..334dd972 100644
+index 6ee5dbef..390e5acd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1769,4 +1769,14 @@ public class CraftWorld implements World {
-             cps.unload(chunk);
-         }
+@@ -1753,4 +1753,15 @@ public class CraftWorld implements World {
+         BlockPosition nearest = getHandle().getChunkProvider().getChunkGenerator().findNearestMapFeature(getHandle(), structureType.getName(), originPos, radius, findUnexplored);
+         return (nearest == null) ? null : new Location(this, nearest.getX(), nearest.getY(), nearest.getZ());
      }
++
 +    // Spigot start
 +    private final Spigot spigot = new Spigot()
 +    {
@@ -81,12 +82,12 @@ index 1314c744..a461a935 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
-index 75dad21c..4b8e5ab2 100644
+index f5b9d47b..78de5ea9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
-@@ -105,4 +105,15 @@ public class CraftArrow extends AbstractProjectile implements Arrow {
+@@ -106,4 +106,15 @@ public class CraftArrow extends AbstractProjectile implements Arrow {
      public EntityType getType() {
-         return EntityType.ARROW;
+         return EntityType.UNKNOWN;
      }
 +
 +    // Spigot start
@@ -101,7 +102,7 @@ index 75dad21c..4b8e5ab2 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index aca45328..d7f43ec2 100644
+index dc98c464..0e2e1a8d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -782,4 +782,15 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
@@ -141,10 +142,10 @@ index 64e346d8..194d830e 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 23277f40..16e5c03d 100644
+index 57383feb..99bfaa76 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1611,4 +1611,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1631,4 +1631,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
          getHandle().server.getCommandDispatcher().a(getHandle());
      }
@@ -180,10 +181,10 @@ index 0831e13e..adb21dd2 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index df1eb143..a463c88a 100644
+index 6fb4dec0..30dfc8f2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -1283,4 +1283,16 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable {
+@@ -1381,4 +1381,16 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
              return HANDLED_TAGS;
          }
      }
