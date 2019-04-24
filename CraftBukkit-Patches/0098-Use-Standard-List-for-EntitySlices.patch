@@ -1,4 +1,4 @@
-From 1c6f7c0bd01f811f228a4ab2e259a5ca1960ac95 Mon Sep 17 00:00:00 2001
+From b265dff1fee165057122b04647bf88b1307444d6 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:33:36 +1100
 Subject: [PATCH] Use Standard List for EntitySlices.
@@ -87,10 +87,10 @@ index 88a89f38..3da6d92a 100644
  
                          while (iterator.hasNext()) {
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index b55a784c..1ec8272f 100644
+index 556e467a..2f5bbcb9 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -1101,11 +1101,11 @@ public class WorldServer extends World {
+@@ -986,11 +986,11 @@ public class WorldServer extends World {
          }
          // Spigot End
          this.tileEntityListUnload.addAll(chunk.getTileEntities().values());

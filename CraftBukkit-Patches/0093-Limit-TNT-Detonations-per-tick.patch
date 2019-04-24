@@ -1,4 +1,4 @@
-From c054f47ce6a83e3bfa1950f2a15a782d854abc38 Mon Sep 17 00:00:00 2001
+From ccc91efe97179154784b8117dfe6505364ed81bf Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Aug 2014 18:12:32 -0400
 Subject: [PATCH] Limit TNT Detonations per tick
@@ -19,7 +19,7 @@ index 84e3f715..ba86a073 100644
          this.lastY = this.locY;
          this.lastZ = this.locZ;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 1c7eb76b..f9cd0e95 100644
+index 2c7fe4bf..673e31fa 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -718,6 +718,7 @@ public abstract class World implements IIBlockAccess, GeneratorAccess, AutoClose

@@ -1,4 +1,4 @@
-From ca538d7ab540b257d3c98c25d7c81276bf9e0766 Mon Sep 17 00:00:00 2001
+From f82cc9ea407a50fedbf2ed19f39f351c70d47d85 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -10,7 +10,7 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 This feature was commisioned by Chunkr.
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index f9cd0e95..230547e7 100644
+index 673e31fa..f31f407f 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -88,6 +88,9 @@ public abstract class World implements IIBlockAccess, GeneratorAccess, AutoClose

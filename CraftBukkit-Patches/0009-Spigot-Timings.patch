@@ -1,4 +1,4 @@
-From d05b707d5061059396f7f27247953051b30c299f Mon Sep 17 00:00:00 2001
+From 08c4348141ec97430253b27ec70f795e0a57c3fd Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -509,7 +509,7 @@ index cd7e516f..f5bc1d66 100644
  
      public boolean a(AxisAlignedBB axisalignedbb) {
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 67563d85..ae745675 100644
+index f577ba7f..d8c29281 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -37,6 +37,7 @@ import org.bukkit.Bukkit;
@@ -520,7 +520,7 @@ index 67563d85..ae745675 100644
  import org.bukkit.craftbukkit.event.CraftEventFactory;
  import org.bukkit.craftbukkit.util.HashTreeSet;
  
-@@ -379,15 +380,21 @@ public class WorldServer extends World {
+@@ -264,15 +265,21 @@ public class WorldServer extends World {
          gameprofilerfiller.exitEnter("chunkSource");
          this.getChunkProvider().tick(booleansupplier);
          gameprofilerfiller.exitEnter("tickPending");
@@ -542,7 +542,7 @@ index 67563d85..ae745675 100644
          gameprofilerfiller.exitEnter("raid");
          this.c.a();
          if (this.mobSpawnerTrader != null) {
-@@ -395,7 +402,9 @@ public class WorldServer extends World {
+@@ -280,7 +287,9 @@ public class WorldServer extends World {
          }
  
          gameprofilerfiller.exitEnter("blockEvents");
@@ -552,7 +552,7 @@ index 67563d85..ae745675 100644
          this.ticking = false;
          gameprofilerfiller.exitEnter("entities");
          boolean flag3 = true || !this.players.isEmpty() || !this.getForceLoadedChunks().isEmpty(); // CraftBukkit - this prevents entity cleanup, other issues on servers with no players
-@@ -405,6 +414,7 @@ public class WorldServer extends World {
+@@ -290,6 +299,7 @@ public class WorldServer extends World {
          }
  
          if (flag3 || this.emptyTime++ < 300) {
@@ -560,7 +560,7 @@ index 67563d85..ae745675 100644
              this.worldProvider.l();
              gameprofilerfiller.enter("global");
  
-@@ -430,6 +440,7 @@ public class WorldServer extends World {
+@@ -315,6 +325,7 @@ public class WorldServer extends World {
              this.tickingEntities = true;
              ObjectIterator objectiterator = this.entitiesById.int2ObjectEntrySet().iterator();
  
@@ -568,7 +568,7 @@ index 67563d85..ae745675 100644
              while (objectiterator.hasNext()) {
                  Entry<Entity> entry = (Entry) objectiterator.next();
                  Entity entity1 = (Entity) entry.getValue();
-@@ -468,6 +479,7 @@ public class WorldServer extends World {
+@@ -353,6 +364,7 @@ public class WorldServer extends World {
  
                  gameprofilerfiller.exit();
              }
@@ -576,7 +576,7 @@ index 67563d85..ae745675 100644
  
              this.tickingEntities = false;
  
-@@ -476,6 +488,7 @@ public class WorldServer extends World {
+@@ -361,6 +373,7 @@ public class WorldServer extends World {
              }
  
              gameprofilerfiller.exit();

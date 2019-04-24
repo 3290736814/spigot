@@ -1,4 +1,4 @@
-From d946abe8979bf342685d6ce1b4943b171067d365 Mon Sep 17 00:00:00 2001
+From c00818d3e06db3a2439040b0d5cb70cacb5b245b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -190,10 +190,10 @@ index 3a4a40bb..a94cdce2 100644
      protected void mobTick() {
          this.world.getMethodProfiler().enter("brain");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index ae745675..c6dda63d 100644
+index d8c29281..a68fcec3 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -440,6 +440,7 @@ public class WorldServer extends World {
+@@ -325,6 +325,7 @@ public class WorldServer extends World {
              this.tickingEntities = true;
              ObjectIterator objectiterator = this.entitiesById.int2ObjectEntrySet().iterator();
  
@@ -201,7 +201,7 @@ index ae745675..c6dda63d 100644
              timings.entityTick.startTiming(); // Spigot
              while (objectiterator.hasNext()) {
                  Entry<Entity> entry = (Entry) objectiterator.next();
-@@ -670,6 +671,14 @@ public class WorldServer extends World {
+@@ -555,6 +556,14 @@ public class WorldServer extends World {
      }
  
      public void entityJoinedWorld(Entity entity) {

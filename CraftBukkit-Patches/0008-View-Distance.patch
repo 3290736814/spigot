@@ -1,4 +1,4 @@
-From 6d91bcfe3b3c8f6e83712cb8c0405317afe9d78d Mon Sep 17 00:00:00 2001
+From 627b770a8af420a9b799253c795bb6a9c37d0cfa Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,7 +6,7 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances, and view distances below 3. Be wary of the issues selecting a view distance of 1 or 2 may cause!
 
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 0665f2f0..67563d85 100644
+index 37d6370d..f577ba7f 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -87,7 +87,7 @@ public class WorldServer extends World {

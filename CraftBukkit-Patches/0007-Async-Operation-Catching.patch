@@ -1,4 +1,4 @@
-From 953a96ad6874abe369005150ac30ea84bcda3c7a Mon Sep 17 00:00:00 2001
+From 65f60916e96f4d426eaf005d4481effedaead09b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -85,10 +85,10 @@ index 09903128..6d5489a7 100644
                  Vec3D vec3d = (new Vec3D(entityplayer.locX, entityplayer.locY, entityplayer.locZ)).d(this.trackerEntry.b());
                  int i = Math.min(this.trackingDistance, (PlayerChunkMap.this.A - 1) * 16);
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 6f4bce44..0665f2f0 100644
+index 1a68be70..37d6370d 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -1019,6 +1019,7 @@ public class WorldServer extends World {
+@@ -904,6 +904,7 @@ public class WorldServer extends World {
  
      // CraftBukkit start
      private boolean addEntity0(Entity entity, CreatureSpawnEvent.SpawnReason spawnReason) {
@@ -96,7 +96,7 @@ index 6f4bce44..0665f2f0 100644
          if (entity.dead) {
              // WorldServer.v.warn("Tried to add entity {} but it was marked as removed already", EntityTypes.getName(entity.getEntityType())); // CraftBukkit
              return false;
-@@ -1140,6 +1141,7 @@ public class WorldServer extends World {
+@@ -1025,6 +1026,7 @@ public class WorldServer extends World {
      }
  
      public void removeEntity(Entity entity) {
