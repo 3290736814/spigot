@@ -1,4 +1,4 @@
-From ceee653fd23391570129b7041470e45dcb791945 Mon Sep 17 00:00:00 2001
+From 6ecc9aaab2e20ca72ee40e0cff14fff730b9daaf Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
@@ -58,10 +58,10 @@ index d042ad6e..2053a6c2 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 5a016a6d..7b9ba432 100644
+index fa49533c..ac801e4b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -74,6 +74,10 @@ import org.bukkit.inventory.meta.ItemMeta;
+@@ -76,6 +76,10 @@ import org.bukkit.inventory.meta.ItemMeta;
  import org.bukkit.inventory.meta.Repairable;
  import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
  
@@ -72,7 +72,7 @@ index 5a016a6d..7b9ba432 100644
  /**
   * Children must include the following:
   *
-@@ -317,7 +321,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -319,7 +323,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
  
              if (display.hasKey(NAME.NBT)) {
                  try {
@@ -81,7 +81,7 @@ index 5a016a6d..7b9ba432 100644
                  } catch (JsonParseException ex) {
                      // Ignore (stripped like Vanilla)
                  }
-@@ -325,7 +329,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -327,7 +331,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
  
              if (display.hasKey(LOCNAME.NBT)) {
                  try {
@@ -90,15 +90,15 @@ index 5a016a6d..7b9ba432 100644
                  } catch (JsonParseException ex) {
                      // Ignore (stripped like Vanilla)
                  }
-@@ -336,7 +340,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
-                 lore = new ArrayList<String>(list.size());
+@@ -338,7 +342,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+                 lore = new ArrayList<IChatBaseComponent>(list.size());
  
                  for (int index = 0; index < list.size(); index++) {
 -                    String line = list.getString(index);
-+                    String line = limit( list.getString(index), 1024 ); // Spigot
-                     lore.add(line);
-                 }
-             }
++                    String line = limit( list.getString(index), 8192 ); // Spigot
+                     try {
+                         lore.add(IChatBaseComponent.ChatSerializer.a(line));
+                     } catch (JsonParseException ex) {
 diff --git a/src/main/java/org/spigotmc/ValidateUtils.java b/src/main/java/org/spigotmc/ValidateUtils.java
 new file mode 100644
 index 00000000..58a95348

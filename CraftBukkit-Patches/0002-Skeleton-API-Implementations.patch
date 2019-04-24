@@ -1,4 +1,4 @@
-From 04e38a74529e375a5769d2166956e6f250539006 Mon Sep 17 00:00:00 2001
+From cec192f2103a7e128f2e4ca43e364641c789bcd8 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -6,10 +6,10 @@ Subject: [PATCH] Skeleton API Implementations
 This contains the basic, empty implementations for some Spigot-API extensions. They are included early in the patching progress so that compilation will still succeed midway despite the APIs only being provided by subsequent patches.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e19d31a4..9ee8160a 100644
+index 55a874f9..76c2d3f9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1877,4 +1877,14 @@ public final class CraftServer implements Server {
+@@ -1878,4 +1878,14 @@ public final class CraftServer implements Server {
      public UnsafeValues getUnsafe() {
          return CraftMagicNumbers.INSTANCE;
      }
@@ -181,10 +181,10 @@ index 5e3cc48f..d042ad6e 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index b7d393e9..5a016a6d 100644
+index c1b34377..fa49533c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -1377,4 +1377,16 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -1383,4 +1383,16 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
              return HANDLED_TAGS;
          }
      }

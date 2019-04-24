@@ -1,4 +1,4 @@
-From 420dc8161257422de271d035e2e338b8f47d1edf Mon Sep 17 00:00:00 2001
+From 953a96ad6874abe369005150ac30ea84bcda3c7a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -25,7 +25,7 @@ index 64bc840f..c6d53622 100644
              world.removeTileEntity(blockposition);
          }
 diff --git a/src/main/java/net/minecraft/server/CraftingManager.java b/src/main/java/net/minecraft/server/CraftingManager.java
-index 3eb4750b..40a54905 100644
+index eb5de90d..26d2f54b 100644
 --- a/src/main/java/net/minecraft/server/CraftingManager.java
 +++ b/src/main/java/net/minecraft/server/CraftingManager.java
 @@ -88,6 +88,7 @@ public class CraftingManager implements IResourcePackListener {
@@ -105,10 +105,10 @@ index 6f4bce44..0665f2f0 100644
              throw new IllegalStateException("Removing entity while ticking!");
          } else {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 95606198..50f9e079 100644
+index 355eb3d9..dc62768e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -681,6 +681,7 @@ public final class CraftServer implements Server {
+@@ -682,6 +682,7 @@ public final class CraftServer implements Server {
      public boolean dispatchCommand(CommandSender sender, String commandLine) {
          Validate.notNull(sender, "Sender cannot be null");
          Validate.notNull(commandLine, "CommandLine cannot be null");
