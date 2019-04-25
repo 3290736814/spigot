@@ -1,4 +1,4 @@
-From a757157487f21b82086ea8cf9ae53e48ffa19dbb Mon Sep 17 00:00:00 2001
+From 6c79bd1c5f3170df2f1922003354f489168edb9e Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 19 May 2013 18:29:48 +1000
 Subject: [PATCH] Remove -o Option
@@ -6,16 +6,16 @@ Subject: [PATCH] Remove -o Option
 Serves no purpose other than to confuse users.
 
 diff --git a/src/main/java/net/minecraft/server/PropertyManager.java b/src/main/java/net/minecraft/server/PropertyManager.java
-index 3ff81cc98..d42e7503a 100644
+index 5a339e191..d7e81a6d9 100644
 --- a/src/main/java/net/minecraft/server/PropertyManager.java
 +++ b/src/main/java/net/minecraft/server/PropertyManager.java
 @@ -31,7 +31,7 @@ public abstract class PropertyManager<T extends PropertyManager<T>> {
      }
  
-     private <T> T getOverride(String name, T value) {
+     private String getOverride(String name, String value) {
 -        if ((this.options != null) && (this.options.has(name))) {
 +        if ((this.options != null) && (this.options.has(name)) && !name.equals( "online-mode")) { // Spigot
-             return (T) this.options.valueOf(name);
+             return String.valueOf(this.options.valueOf(name));
          }
  
 -- 
