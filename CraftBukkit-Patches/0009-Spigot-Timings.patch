@@ -1,4 +1,4 @@
-From df39f268678a632bce6462afc03ee0eeb4bd7a18 Mon Sep 17 00:00:00 2001
+From 7f304c6bc1c08f8d2f4ea50afebd72d32c242a85 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -136,7 +136,7 @@ index f3fa0bb62..213312b38 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 2c866a144..ad450a266 100644
+index b19a72035..8678ca84b 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -29,6 +29,7 @@ import org.bukkit.command.CommandSender;
@@ -396,22 +396,21 @@ index 0e936a511..887b8a40b 100644
          // this.minecraftServer.getCommandDispatcher().a(this.player.getCommandListener(), s);
          // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/TileEntity.java b/src/main/java/net/minecraft/server/TileEntity.java
-index 639d3d7ac..d3717d3a4 100644
+index d5967b935..7b0a65e36 100644
 --- a/src/main/java/net/minecraft/server/TileEntity.java
 +++ b/src/main/java/net/minecraft/server/TileEntity.java
-@@ -4,10 +4,12 @@ import javax.annotation.Nullable;
- import org.apache.logging.log4j.LogManager;
- import org.apache.logging.log4j.Logger;
- 
+@@ -8,9 +8,11 @@ import org.bukkit.craftbukkit.persistence.CraftPersistentDataContainer;
+ import org.bukkit.craftbukkit.persistence.CraftPersistentDataTypeRegistry;
+ import org.bukkit.inventory.InventoryHolder;
+ // CraftBukkit end
 +import org.spigotmc.CustomTimingsHandler; // Spigot
- import org.bukkit.inventory.InventoryHolder; // CraftBukkit
  
  public abstract class TileEntity {
  
 +    public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getTileEntityTimings(this); // Spigot
-     private static final Logger LOGGER = LogManager.getLogger();
-     private final TileEntityTypes<?> b;
-     @Nullable
+     // CraftBukkit start - data containers
+     private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
+     public final CraftPersistentDataContainer persistentDataContainer = new CraftPersistentDataContainer(DATA_TYPE_REGISTRY);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
 index 7bcf0f401..cf10a89d8 100644
 --- a/src/main/java/net/minecraft/server/World.java

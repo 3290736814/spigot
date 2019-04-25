@@ -1,4 +1,4 @@
-From fc0bbb0447a892fc1bf4fda8abcb1c40984cf771 Mon Sep 17 00:00:00 2001
+From 16f2aab2c4b3b1eee54b5904bb564d5ba1c85022 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
@@ -58,12 +58,12 @@ index d042ad6e6..2053a6c2b 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 57efcb6d1..20301da0b 100644
+index 445b753e9..13f09aeae 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -76,6 +76,10 @@ import org.bukkit.inventory.meta.ItemMeta;
- import org.bukkit.inventory.meta.Repairable;
+@@ -79,6 +79,10 @@ import org.bukkit.inventory.meta.Repairable;
  import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
+ import org.bukkit.persistence.PersistentDataContainer;
  
 +// Spigot start
 +import static org.spigotmc.ValidateUtils.*;
@@ -72,7 +72,7 @@ index 57efcb6d1..20301da0b 100644
  /**
   * Children must include the following:
   *
-@@ -319,7 +323,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -322,7 +326,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
  
              if (display.hasKey(NAME.NBT)) {
                  try {
@@ -81,7 +81,7 @@ index 57efcb6d1..20301da0b 100644
                  } catch (JsonParseException ex) {
                      // Ignore (stripped like Vanilla)
                  }
-@@ -327,7 +331,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -330,7 +334,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
  
              if (display.hasKey(LOCNAME.NBT)) {
                  try {
@@ -90,7 +90,7 @@ index 57efcb6d1..20301da0b 100644
                  } catch (JsonParseException ex) {
                      // Ignore (stripped like Vanilla)
                  }
-@@ -338,7 +342,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -341,7 +345,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
                  lore = new ArrayList<IChatBaseComponent>(list.size());
  
                  for (int index = 0; index < list.size(); index++) {

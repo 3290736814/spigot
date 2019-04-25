@@ -1,4 +1,4 @@
-From bd69efa5e2bfc4b1c6bf124d4766ea506a2c4327 Mon Sep 17 00:00:00 2001
+From 7932515abfa880a887a3a3f226bba73a4fed00a0 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index ad450a266..6be92a50a 100644
+index 8678ca84b..653813d28 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -159,6 +159,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -231,10 +231,10 @@ index 153be935e..38f211526 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 6c2f24fbc..8d4cb2699 100644
+index 70c0e964d..db4673044 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -460,6 +460,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -464,6 +464,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          entity.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
          // SPIGOT-619: Force sync head rotation also
          entity.setHeadRotation(location.getYaw());

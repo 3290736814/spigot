@@ -1,4 +1,4 @@
-From df38b8d57156918a024c6562de066a8ba21a56c8 Mon Sep 17 00:00:00 2001
+From 937e15b8ffd77a8cfaaa406eb74a7f0c96d24fe7 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -99,10 +99,10 @@ index ef6e348b..23a089ec 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 7fdcedf3..8024d446 100644
+index f9460a48..29483a17 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -570,4 +570,15 @@ public interface Entity extends Metadatable, CommandSender, Nameable {
+@@ -571,4 +571,15 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
       */
      @NotNull
      BlockFace getFacing();
@@ -185,10 +185,10 @@ index 9775dca7..9e6b4288 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-index c103599f..2401f0e4 100644
+index 435766a3..68f89afc 100644
 --- a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
 +++ b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-@@ -384,4 +384,14 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable {
+@@ -388,4 +388,14 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable, Persiste
      @SuppressWarnings("javadoc")
      @NotNull
      ItemMeta clone();
