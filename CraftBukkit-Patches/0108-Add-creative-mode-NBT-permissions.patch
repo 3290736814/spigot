@@ -1,11 +1,11 @@
-From 5619855baa7b57a3cba91ffbce072647dc08d71c Mon Sep 17 00:00:00 2001
+From 0b0314a0760a850b2690dd0d2244a77bf2c77786 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 25 Feb 2019 19:26:56 +1100
 Subject: [PATCH] Add creative mode NBT permissions
 
 
 diff --git a/src/main/java/net/minecraft/server/ItemBlock.java b/src/main/java/net/minecraft/server/ItemBlock.java
-index 0e1c98dc..59b1e6ce 100644
+index 0e1c98dcb..59b1e6ce2 100644
 --- a/src/main/java/net/minecraft/server/ItemBlock.java
 +++ b/src/main/java/net/minecraft/server/ItemBlock.java
 @@ -156,7 +156,7 @@ public class ItemBlock extends Item {
@@ -18,7 +18,7 @@ index 0e1c98dc..59b1e6ce 100644
                      }
  
 diff --git a/src/main/java/net/minecraft/server/ItemDebugStick.java b/src/main/java/net/minecraft/server/ItemDebugStick.java
-index a8a647d5..300ff594 100644
+index a8a647d5d..300ff5945 100644
 --- a/src/main/java/net/minecraft/server/ItemDebugStick.java
 +++ b/src/main/java/net/minecraft/server/ItemDebugStick.java
 @@ -33,7 +33,7 @@ public class ItemDebugStick extends Item {
@@ -31,7 +31,7 @@ index a8a647d5..300ff594 100644
              BlockStateList<Block, IBlockData> blockstatelist = block.getStates();
              Collection<IBlockState<?>> collection = blockstatelist.d();
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 419d2571..10ebb23c 100644
+index 419d2571f..10ebb23c6 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -2280,7 +2280,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
@@ -44,7 +44,7 @@ index 419d2571..10ebb23c 100644
                  TileEntity tileentity = this.player.world.getTileEntity(blockposition);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/permissions/CraftDefaultPermissions.java b/src/main/java/org/bukkit/craftbukkit/util/permissions/CraftDefaultPermissions.java
-index 6bea250b..574aee62 100644
+index 6bea250b8..574aee621 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/permissions/CraftDefaultPermissions.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/permissions/CraftDefaultPermissions.java
 @@ -11,6 +11,11 @@ public final class CraftDefaultPermissions {

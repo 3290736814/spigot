@@ -1,11 +1,11 @@
-From fd4085a96c13116ce1481be258b2dad86cea5aa6 Mon Sep 17 00:00:00 2001
+From c87cde42f7bca9bdfe37402ce106b98eabe2957a Mon Sep 17 00:00:00 2001
 From: Suddenly <suddenly@suddenly.coffee>
 Date: Tue, 8 Jul 2014 09:44:18 +1000
 Subject: [PATCH] Safer JSON Loading
 
 
 diff --git a/src/main/java/net/minecraft/server/JsonList.java b/src/main/java/net/minecraft/server/JsonList.java
-index 20f94507..026ef793 100644
+index cd7d579db..04f98167d 100644
 --- a/src/main/java/net/minecraft/server/JsonList.java
 +++ b/src/main/java/net/minecraft/server/JsonList.java
 @@ -189,6 +189,14 @@ public class JsonList<K, V extends JsonListEntry<K>> {
@@ -24,7 +24,7 @@ index 20f94507..026ef793 100644
                  IOUtils.closeQuietly(bufferedreader);
              }
 diff --git a/src/main/java/net/minecraft/server/UserCache.java b/src/main/java/net/minecraft/server/UserCache.java
-index 7e18291f..f782ecb8 100644
+index 7e18291f2..41be5bf64 100644
 --- a/src/main/java/net/minecraft/server/UserCache.java
 +++ b/src/main/java/net/minecraft/server/UserCache.java
 @@ -207,6 +207,11 @@ public class UserCache {
@@ -33,7 +33,7 @@ index 7e18291f..f782ecb8 100644
              ;
 +        // Spigot Start
 +        } catch (com.google.gson.JsonSyntaxException ex) {
-+            JsonList.a.warn( "Usercache.json is corrupted or has bad formatting. Deleting it to prevent further issues." );
++            JsonList.LOGGER.warn( "Usercache.json is corrupted or has bad formatting. Deleting it to prevent further issues." );
 +            this.h.delete();
 +        // Spigot End
          } catch (JsonParseException jsonparseexception) {

@@ -1,4 +1,4 @@
-From af0d2b8ef85e29cb9ad604b9a459751917195391 Mon Sep 17 00:00:00 2001
+From 6f6b47f8caf0d8200fa3b5514cd45983c654c1ee Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 9 Jun 2017 16:29:31 +1000
 Subject: [PATCH] Configurable Advancement Disabling
@@ -6,7 +6,7 @@ Subject: [PATCH] Configurable Advancement Disabling
 Allow disabling any (or all) inbuilt advancements with a configuration option.
 
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
-index 247bceb0..19e5544a 100644
+index d9ad108b5..71158ea8b 100644
 --- a/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
 +++ b/src/main/java/net/minecraft/server/AdvancementDataPlayer.java
 @@ -199,6 +199,7 @@ public class AdvancementDataPlayer {
@@ -18,7 +18,7 @@ index 247bceb0..19e5544a 100644
          Iterator iterator = this.data.entrySet().iterator();
  
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataWorld.java b/src/main/java/net/minecraft/server/AdvancementDataWorld.java
-index 8dde936e..ea8fcff5 100644
+index f3595b000..09f7a84f4 100644
 --- a/src/main/java/net/minecraft/server/AdvancementDataWorld.java
 +++ b/src/main/java/net/minecraft/server/AdvancementDataWorld.java
 @@ -47,6 +47,11 @@ public class AdvancementDataWorld implements IResourcePackListener {
@@ -34,7 +34,7 @@ index 8dde936e..ea8fcff5 100644
                  try {
                      Advancement.SerializedAdvancement advancement_serializedadvancement = (Advancement.SerializedAdvancement) ChatDeserializer.a(AdvancementDataWorld.DESERIALIZER, IOUtils.toString(iresource.b(), StandardCharsets.UTF_8), Advancement.SerializedAdvancement.class);
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 3a8c825f..3fa9d61f 100644
+index 3a8c825ff..3fa9d61fd 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -384,4 +384,11 @@ public class SpigotConfig

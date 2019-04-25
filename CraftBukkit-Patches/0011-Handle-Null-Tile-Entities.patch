@@ -1,11 +1,11 @@
-From a5de0445ee5dcd1dec78fc9d59fc0ac5a2964d2d Mon Sep 17 00:00:00 2001
+From 79828e92f730abd78bfe8bba5f98ad9e76b953c9 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 3 Feb 2013 09:20:19 +1100
 Subject: [PATCH] Handle Null Tile Entities
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index f5bc1d66..6ad9a9b6 100644
+index cf10a89d8..8a295b346 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -628,6 +628,13 @@ public abstract class World implements IIBlockAccess, GeneratorAccess, AutoClose

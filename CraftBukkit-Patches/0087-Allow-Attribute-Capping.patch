@@ -1,4 +1,4 @@
-From d52b5a4748399d44008fecaef38171b5c6953708 Mon Sep 17 00:00:00 2001
+From 358cddbf3b1bef89e6dc453e65206fef5283748b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 28 Jul 2014 16:55:51 +1000
 Subject: [PATCH] Allow Attribute Capping.
@@ -6,7 +6,7 @@ Subject: [PATCH] Allow Attribute Capping.
 Apply some sensible defaults and allow server owners to customize the maximum values of selected common attributes.
 
 diff --git a/src/main/java/net/minecraft/server/AttributeRanged.java b/src/main/java/net/minecraft/server/AttributeRanged.java
-index 2ffa62f2..0cbd75f1 100644
+index 2ffa62f2c..0cbd75f14 100644
 --- a/src/main/java/net/minecraft/server/AttributeRanged.java
 +++ b/src/main/java/net/minecraft/server/AttributeRanged.java
 @@ -5,7 +5,7 @@ import javax.annotation.Nullable;
@@ -19,13 +19,13 @@ index 2ffa62f2..0cbd75f1 100644
  
      public AttributeRanged(@Nullable IAttribute iattribute, String s, double d0, double d1, double d2) {
 diff --git a/src/main/java/net/minecraft/server/GenericAttributes.java b/src/main/java/net/minecraft/server/GenericAttributes.java
-index 76ca8b07..6918e96d 100644
+index 589af605b..908f11f98 100644
 --- a/src/main/java/net/minecraft/server/GenericAttributes.java
 +++ b/src/main/java/net/minecraft/server/GenericAttributes.java
 @@ -10,17 +10,19 @@ import org.apache.logging.log4j.Logger;
  public class GenericAttributes {
  
-     private static final Logger l = LogManager.getLogger();
+     private static final Logger LOGGER = LogManager.getLogger();
 -    public static final IAttribute MAX_HEALTH = (new AttributeRanged((IAttribute) null, "generic.maxHealth", 20.0D, 0.0D, 1024.0D)).a("Max Health").a(true);
 +    // Spigot start
 +    public static final IAttribute MAX_HEALTH = (new AttributeRanged((IAttribute) null, "generic.maxHealth", 20.0D, 0.0D, org.spigotmc.SpigotConfig.maxHealth)).a("Max Health").a(true);
@@ -46,7 +46,7 @@ index 76ca8b07..6918e96d 100644
      public static NBTTagList a(AttributeMapBase attributemapbase) {
          NBTTagList nbttaglist = new NBTTagList();
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 4f3211e8..90911ec9 100644
+index 4f3211e80..90911ec9a 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -13,6 +13,8 @@ import java.util.List;

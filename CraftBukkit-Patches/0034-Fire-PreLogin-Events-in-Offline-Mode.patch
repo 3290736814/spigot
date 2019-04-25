@@ -1,11 +1,11 @@
-From a9ab57f0f4092e5cc7a93c781c29f30bcb08a30a Mon Sep 17 00:00:00 2001
+From 4066cdbd7d938885975389ebac267cd75cf5e0e8 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 18 Dec 2013 13:32:10 +1100
 Subject: [PATCH] Fire PreLogin Events in Offline Mode
 
 
 diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
-index 4dda0334..65e085d4 100644
+index f1831e37e..11a18196d 100644
 --- a/src/main/java/net/minecraft/server/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/LoginListener.java
 @@ -92,10 +92,23 @@ public class LoginListener implements PacketLoginInListener {
@@ -91,11 +91,11 @@ index 4dda0334..65e085d4 100644
 -                                }
 -                            }
 -                            // CraftBukkit end
--                            LoginListener.c.info("UUID of player {} is {}", LoginListener.this.i.getName(), LoginListener.this.i.getId());
+-                            LoginListener.LOGGER.info("UUID of player {} is {}", LoginListener.this.i.getName(), LoginListener.this.i.getId());
 -                            LoginListener.this.g = LoginListener.EnumProtocolState.READY_TO_ACCEPT;
 +                            new LoginHandler().fireEvents();
                          } else if (LoginListener.this.server.isEmbeddedServer()) {
-                             LoginListener.c.warn("Failed to verify username but will let them in anyway!");
+                             LoginListener.LOGGER.warn("Failed to verify username but will let them in anyway!");
                              LoginListener.this.i = LoginListener.this.a(gameprofile);
 @@ -244,7 +238,48 @@ public class LoginListener implements PacketLoginInListener {
          }
@@ -138,7 +138,7 @@ index 4dda0334..65e085d4 100644
 +                                }
 +                            }
 +                            // CraftBukkit end
-+                            LoginListener.c.info("UUID of player {} is {}", LoginListener.this.i.getName(), LoginListener.this.i.getId());
++                            LoginListener.LOGGER.info("UUID of player {} is {}", LoginListener.this.i.getName(), LoginListener.this.i.getId());
 +                            LoginListener.this.g = LoginListener.EnumProtocolState.READY_TO_ACCEPT;
 +                }
 +        }

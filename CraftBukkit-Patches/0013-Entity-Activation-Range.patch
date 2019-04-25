@@ -1,4 +1,4 @@
-From 223ea438c6c6a5754f949319becaa5a1ff2db3df Mon Sep 17 00:00:00 2001
+From bd69efa5e2bfc4b1c6bf124d4766ea506a2c4327 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,10 +9,10 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 77ad70f8d..e615403e4 100644
+index ad450a266..6be92a50a 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -160,6 +160,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -159,6 +159,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
      public org.bukkit.projectiles.ProjectileSource projectileSource; // For projectiles only
      public boolean forceExplosionKnockback; // SPIGOT-949
      public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getEntityTimings(this); // Spigot
@@ -25,7 +25,7 @@ index 77ad70f8d..e615403e4 100644
  
      public float getBukkitYaw() {
          return this.yaw;
-@@ -187,7 +193,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -186,7 +192,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
          this.setPosition(0.0D, 0.0D, 0.0D);
          if (world != null) {
              this.dimension = world.worldProvider.getDimensionManager();
@@ -75,7 +75,7 @@ index dfd1a7da4..da9740a99 100644
      public abstract EntityAgeable createChild(EntityAgeable entityageable);
  
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index 33bff879c..4767f7b36 100644
+index bb0335ddf..c6c9e79fa 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
 @@ -35,6 +35,18 @@ public abstract class EntityArrow extends Entity implements IProjectile {
@@ -150,7 +150,7 @@ index fb6f944a8..fe70a3a8b 100644
          Vec3D vec3d = this.getMot();
  
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 6beb710cb..3e16632e2 100644
+index 904d86292..c1bb7a88a 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -132,6 +132,13 @@ public abstract class EntityLiving extends Entity {
@@ -168,7 +168,7 @@ index 6beb710cb..3e16632e2 100644
      protected EntityLiving(EntityTypes<? extends EntityLiving> entitytypes, World world) {
          super(entitytypes, world);
 diff --git a/src/main/java/net/minecraft/server/EntityVillager.java b/src/main/java/net/minecraft/server/EntityVillager.java
-index 3a4a40bba..a94cdce2a 100644
+index d33faccc9..cc66f565c 100644
 --- a/src/main/java/net/minecraft/server/EntityVillager.java
 +++ b/src/main/java/net/minecraft/server/EntityVillager.java
 @@ -133,6 +133,17 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
@@ -190,7 +190,7 @@ index 3a4a40bba..a94cdce2a 100644
      protected void mobTick() {
          this.world.getMethodProfiler().enter("brain");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index d8c292814..cfdd51323 100644
+index 799881601..18110eecd 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -325,6 +325,7 @@ public class WorldServer extends World {

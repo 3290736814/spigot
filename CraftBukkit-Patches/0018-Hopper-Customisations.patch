@@ -1,4 +1,4 @@
-From 07b41f80db3fb4ac0ce291cf5534ab9bdae69c48 Mon Sep 17 00:00:00 2001
+From c9586bbafed498e02d64ec6fbb550d90270cf222 Mon Sep 17 00:00:00 2001
 From: erocs <github@erocs.org>
 Date: Sun, 8 Sep 2013 12:06:15 -0700
 Subject: [PATCH] Hopper Customisations
@@ -6,26 +6,26 @@ Subject: [PATCH] Hopper Customisations
 Allows editing hopper cooldowns and amount transferred per tick.
 
 diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
-index 40828bc2..6101bc60 100644
+index bb409f323..db6b0ecfe 100644
 --- a/src/main/java/net/minecraft/server/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
-@@ -113,9 +113,14 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
-             this.k = this.world.getTime();
-             if (!this.v()) {
-                 this.setCooldown(0);
--                this.a(() -> {
-+                // Spigot start
-+                boolean result = this.a(() -> {
-                     return a((IHopper) this);
-                 });
-+                if (!result && this.world.spigotConfig.hopperCheck > 1) {
-+                    this.setCooldown(this.world.spigotConfig.hopperCheck);
-+                }
-+                // Spigot end
-             }
+@@ -114,9 +114,14 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+                 this.k = this.world.getTime();
+                 if (!this.v()) {
+                     this.setCooldown(0);
+-                    this.a(() -> {
++                    // Spigot start
++                    boolean result = this.a(() -> {
+                         return a((IHopper) this);
+                     });
++                    if (!result && this.world.spigotConfig.hopperCheck > 1) {
++                        this.setCooldown(this.world.spigotConfig.hopperCheck);
++                    }
++                    // Spigot end
+                 }
  
-         }
-@@ -135,7 +140,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+             }
+@@ -137,7 +142,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                  }
  
                  if (flag) {
@@ -34,7 +34,7 @@ index 40828bc2..6101bc60 100644
                      this.update();
                      return true;
                  }
-@@ -201,7 +206,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -203,7 +208,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                          // ItemStack itemstack1 = addItem(this, iinventory, this.splitStack(i, 1), enumdirection);
  
                          // CraftBukkit start - Call event when pushing items into other inventories
@@ -43,7 +43,7 @@ index 40828bc2..6101bc60 100644
  
                          Inventory destinationInventory;
                          // Have to special case large chests as they work oddly
-@@ -215,9 +220,10 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -217,9 +222,10 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                          this.getWorld().getServer().getPluginManager().callEvent(event);
                          if (event.isCancelled()) {
                              this.setItem(i, itemstack);
@@ -55,7 +55,7 @@ index 40828bc2..6101bc60 100644
                          ItemStack itemstack1 = addItem(this, iinventory, CraftItemStack.asNMSCopy(event.getItem()), enumdirection);
                          // CraftBukkit end
  
-@@ -226,6 +232,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -228,6 +234,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                              return true;
                          }
  
@@ -63,7 +63,7 @@ index 40828bc2..6101bc60 100644
                          this.setItem(i, itemstack);
                      }
                  }
-@@ -286,7 +293,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -288,7 +295,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
              ItemStack itemstack1 = itemstack.cloneItemStack();
              // ItemStack itemstack2 = addItem(iinventory, ihopper, iinventory.splitStack(i, 1), (EnumDirection) null);
              // CraftBukkit start - Call event on collection of items from inventories into the hopper
@@ -72,7 +72,7 @@ index 40828bc2..6101bc60 100644
  
              Inventory sourceInventory;
              // Have to special case large chests as they work oddly
-@@ -303,13 +310,13 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -305,13 +312,13 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                  iinventory.setItem(i, itemstack1);
  
                  if (ihopper instanceof TileEntityHopper) {
@@ -89,7 +89,7 @@ index 40828bc2..6101bc60 100644
              ItemStack itemstack2 = addItem(iinventory, ihopper, CraftItemStack.asNMSCopy(event.getItem()), null);
              // CraftBukkit end
  
-@@ -318,6 +325,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -320,6 +327,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                  return true;
              }
  
@@ -97,7 +97,7 @@ index 40828bc2..6101bc60 100644
              iinventory.setItem(i, itemstack1);
          }
  
-@@ -408,7 +416,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -410,7 +418,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                              }
                          }
  
@@ -107,7 +107,7 @@ index 40828bc2..6101bc60 100644
                  }
  
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 79ba906e..62b75e33 100644
+index 79ba906e2..62b75e33a 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -174,4 +174,20 @@ public class SpigotWorldConfig

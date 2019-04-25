@@ -1,4 +1,4 @@
-From 627b770a8af420a9b799253c795bb6a9c37d0cfa Mon Sep 17 00:00:00 2001
+From d28d76213577c90bfd7552575537874a0da5c4db Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,7 +6,7 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances, and view distances below 3. Be wary of the issues selecting a view distance of 1 or 2 may cause!
 
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 37d6370d..f577ba7f 100644
+index a3950cf4b..c5bdc335f 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -87,7 +87,7 @@ public class WorldServer extends World {
@@ -19,7 +19,7 @@ index 37d6370d..f577ba7f 100644
              });
              // CraftBukkit end
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 23ce7243..0dd4b2d3 100644
+index 23ce7243a..0dd4b2d37 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -125,4 +125,11 @@ public class SpigotWorldConfig

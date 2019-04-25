@@ -1,11 +1,11 @@
-From 5a0bd12302a157918bef73fbd8befaca0ff54310 Mon Sep 17 00:00:00 2001
+From 43309374f9764ad1968e112a7dc58ee96508335c Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 18:01:29 +1000
 Subject: [PATCH] Allow Disabling of Command Logging
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 887b8a40..98322d7e 100644
+index 887b8a40b..98322d7e4 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -1604,6 +1604,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
@@ -17,7 +17,7 @@ index 887b8a40..98322d7e 100644
  
          CraftPlayer player = this.getPlayer();
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index dd02aefc..45e908ed 100644
+index dd02aefc7..45e908ed4 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -150,4 +150,10 @@ public class SpigotConfig

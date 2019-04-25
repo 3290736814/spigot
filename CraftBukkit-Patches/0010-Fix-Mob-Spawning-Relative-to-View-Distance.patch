@@ -1,4 +1,4 @@
-From 2b58894487dbdd53e529879842c050d7debd3501 Mon Sep 17 00:00:00 2001
+From 178449fa25b83a02c1fdd364b86162281068f8fc Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,10 +8,10 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 6d5489a7..86e69460 100644
+index 2dbef282f..042a06a30 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -674,8 +674,16 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -680,8 +680,16 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
      }
  
      boolean d(ChunkCoordIntPair chunkcoordintpair) {
@@ -30,7 +30,7 @@ index 6d5489a7..86e69460 100644
      }
  
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 0dd4b2d3..bcf5d165 100644
+index 0dd4b2d37..bcf5d1653 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -132,4 +132,11 @@ public class SpigotWorldConfig

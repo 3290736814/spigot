@@ -1,4 +1,4 @@
-From 11592378c348c6ce0b3719d66a4c57e1f836e2a6 Mon Sep 17 00:00:00 2001
+From 710311c863700b1131d21fb8a053f4f810ac0736 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 2 Jul 2013 13:07:39 +1000
 Subject: [PATCH] POM Changes
@@ -6,10 +6,10 @@ Subject: [PATCH] POM Changes
 Basic changes to the build system which mark the artifact as Spigot, and the necessary code changes to ensure proper functionality. Also disables the auto updater provided by CraftBukkit as it is useless to us.
 
 diff --git a/pom.xml b/pom.xml
-index 7da4913b..0995afa9 100644
+index 2d444b6a1..982ac22e8 100644
 --- a/pom.xml
 +++ b/pom.xml
-@@ -1,12 +1,12 @@
+@@ -1,11 +1,11 @@
  <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
      <modelVersion>4.0.0</modelVersion>
@@ -18,14 +18,12 @@ index 7da4913b..0995afa9 100644
 +    <groupId>org.spigotmc</groupId>
 +    <artifactId>spigot</artifactId>
      <packaging>jar</packaging>
-     <version>1.14-pre5-SNAPSHOT</version>
+     <version>1.14-R0.1-SNAPSHOT</version>
 -    <name>CraftBukkit</name>
--    <url>http://www.bukkit.org</url>
 +    <name>Spigot</name>
-+    <url>http://www.spigotmc.org</url>
+     <url>https://www.spigotmc.org/</url>
  
      <properties>
-         <skipTests>true</skipTests>
 @@ -21,10 +21,17 @@
          <maven.compiler.target>1.8</maven.compiler.target>
      </properties>
@@ -86,7 +84,7 @@ index 7da4913b..0995afa9 100644
                              <Specification-Title>Bukkit</Specification-Title>
                              <Specification-Version>${api.version}</Specification-Version>
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
-index f905d17b..93046379 100644
+index f905d17b6..93046379d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 @@ -11,7 +11,7 @@ public final class Versioning {

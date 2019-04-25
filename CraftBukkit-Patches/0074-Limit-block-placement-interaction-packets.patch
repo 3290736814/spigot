@@ -1,11 +1,11 @@
-From 734fd808e9e0cc4f1798fa3815dea8ea61992d46 Mon Sep 17 00:00:00 2001
+From 1bbe0cb0d251dc3b34e51f9d8a76ac64c51ae899 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Sun, 29 Jun 2014 21:10:34 +0100
 Subject: [PATCH] Limit block placement/interaction packets
 
 
 diff --git a/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java b/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java
-index bb88f7c1..19457650 100644
+index bb88f7c1a..194576502 100644
 --- a/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java
 +++ b/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java
 @@ -5,6 +5,7 @@ import java.io.IOException;
@@ -25,7 +25,7 @@ index bb88f7c1..19457650 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/PacketPlayInUseItem.java b/src/main/java/net/minecraft/server/PacketPlayInUseItem.java
-index 2f8160ed..5941c3a5 100644
+index 2f8160ed1..5941c3a5e 100644
 --- a/src/main/java/net/minecraft/server/PacketPlayInUseItem.java
 +++ b/src/main/java/net/minecraft/server/PacketPlayInUseItem.java
 @@ -6,11 +6,13 @@ public class PacketPlayInUseItem implements Packet<PacketListenerPlayIn> {
@@ -43,7 +43,7 @@ index 2f8160ed..5941c3a5 100644
          this.a = packetdataserializer.q();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 57a83e02..590f48ba 100644
+index 57a83e02d..590f48ba6 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -1215,10 +1215,30 @@ public class PlayerConnection implements PacketListenerPlayIn {

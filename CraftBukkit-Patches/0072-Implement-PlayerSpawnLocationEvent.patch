@@ -1,14 +1,14 @@
-From 959b2e6bf13e4d665d4992c9bd52e7bd25f22698 Mon Sep 17 00:00:00 2001
+From 1f81777c95c93c20833acb98838fdc7f5dd7cb7f Mon Sep 17 00:00:00 2001
 From: ninja <xninja@openmailbox.org>
 Date: Tue, 8 Apr 2014 14:05:19 +0200
 Subject: [PATCH] Implement PlayerSpawnLocationEvent.
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 06459ccc..baa08abd 100644
+index abe86b502..3fc84c7ed 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -37,6 +37,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
+@@ -38,6 +38,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
  import org.bukkit.event.player.PlayerRespawnEvent;
  import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
  import org.bukkit.util.Vector;
@@ -16,7 +16,7 @@ index 06459ccc..baa08abd 100644
  // CraftBukkit end
  
  public abstract class PlayerList {
-@@ -113,6 +114,19 @@ public abstract class PlayerList {
+@@ -114,6 +115,19 @@ public abstract class PlayerList {
              s1 = networkmanager.getSocketAddress().toString();
          }
  
@@ -34,7 +34,7 @@ index 06459ccc..baa08abd 100644
 +        // Spigot end
 +
          // CraftBukkit - Moved message to after join
-         // PlayerList.f.info("{}[{}] logged in with entity id {} at ({}, {}, {})", entityplayer.getDisplayName().getString(), s1, entityplayer.getId(), entityplayer.locX, entityplayer.locY, entityplayer.locZ);
+         // PlayerList.LOGGER.info("{}[{}] logged in with entity id {} at ({}, {}, {})", entityplayer.getDisplayName().getString(), s1, entityplayer.getId(), entityplayer.locX, entityplayer.locY, entityplayer.locZ);
          WorldData worlddata = worldserver.getWorldData();
 -- 
 2.20.1

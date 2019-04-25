@@ -1,4 +1,4 @@
-From 40e236d9f225288d99577223f35aed67173fbc01 Mon Sep 17 00:00:00 2001
+From ae9f1ab7de1257c5d916e8d09738f84002f07955 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -6,7 +6,7 @@ Subject: [PATCH] Further Seed Customisation
 Allow server admins that really want to to customise the seeds used in world generation even further.
 
 diff --git a/src/main/java/net/minecraft/server/ChunkGenerator.java b/src/main/java/net/minecraft/server/ChunkGenerator.java
-index cea5166a..4b3a823f 100644
+index cea5166a8..4b3a823fa 100644
 --- a/src/main/java/net/minecraft/server/ChunkGenerator.java
 +++ b/src/main/java/net/minecraft/server/ChunkGenerator.java
 @@ -196,4 +196,10 @@ public abstract class ChunkGenerator<C extends GeneratorSettingsDefault> {
@@ -21,7 +21,7 @@ index cea5166a..4b3a823f 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/net/minecraft/server/EntitySlime.java b/src/main/java/net/minecraft/server/EntitySlime.java
-index 54824842..3140a49e 100644
+index 54824842f..3140a49e1 100644
 --- a/src/main/java/net/minecraft/server/EntitySlime.java
 +++ b/src/main/java/net/minecraft/server/EntitySlime.java
 @@ -276,7 +276,7 @@ public class EntitySlime extends EntityInsentient implements IMonster {
@@ -34,7 +34,7 @@ index 54824842..3140a49e 100644
                  if (this.random.nextInt(10) == 0 && flag && this.locY < 40.0D) {
                      return super.a(generatoraccess, enummobspawn);
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java b/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
-index 4f1d57b8..c5448463 100644
+index 4f1d57b8a..c54484631 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
 @@ -25,8 +25,10 @@ public class WorldGenFeatureDesertPyramid extends WorldGenFeatureRandomScattered
@@ -51,7 +51,7 @@ index 4f1d57b8..c5448463 100644
  
      public static class a extends StructureStart {
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java b/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java
-index 0f6ce152..6f8a9794 100644
+index 0f6ce1526..6f8a97942 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java
 @@ -25,8 +25,10 @@ public class WorldGenFeatureIgloo extends WorldGenFeatureRandomScattered<WorldGe
@@ -68,7 +68,7 @@ index 0f6ce152..6f8a9794 100644
  
      public static class a extends StructureStart {
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java b/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java
-index 35458425..ca6b1ee8 100644
+index 354584258..ca6b1ee8a 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java
 @@ -25,8 +25,10 @@ public class WorldGenFeatureJunglePyramid extends WorldGenFeatureRandomScattered
@@ -85,7 +85,7 @@ index 35458425..ca6b1ee8 100644
  
      public static class a extends StructureStart {
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java b/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java
-index 5f847e68..7d553ee4 100644
+index 5f847e68f..7d553ee46 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java
 @@ -39,8 +39,10 @@ public class WorldGenFeatureOceanRuin extends WorldGenFeatureRandomScattered<Wor
@@ -102,7 +102,7 @@ index 5f847e68..7d553ee4 100644
  
      public static enum Temperature {
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeaturePillagerOutpost.java b/src/main/java/net/minecraft/server/WorldGenFeaturePillagerOutpost.java
-index 9a0dd37e..69b3f404 100644
+index 9a0dd37ea..69b3f404e 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeaturePillagerOutpost.java
 +++ b/src/main/java/net/minecraft/server/WorldGenFeaturePillagerOutpost.java
 @@ -67,8 +67,10 @@ public class WorldGenFeaturePillagerOutpost extends WorldGenFeatureRandomScatter
@@ -119,7 +119,7 @@ index 9a0dd37e..69b3f404 100644
  
      public static class a extends StructureAbstract {
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java b/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java
-index ae797325..49ae612b 100644
+index ae7973254..49ae612b1 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java
 @@ -21,7 +21,7 @@ public abstract class WorldGenFeatureRandomScattered<C extends WorldGenFeatureCo
@@ -139,7 +139,7 @@ index ae797325..49ae612b 100644
 +    protected abstract int getSeed(World world); // Spigot
  }
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java b/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java
-index e89dbbcb..061eb256 100644
+index e89dbbcb7..061eb2569 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java
 @@ -25,8 +25,10 @@ public class WorldGenFeatureShipwreck extends WorldGenFeatureRandomScattered<Wor
@@ -156,7 +156,7 @@ index e89dbbcb..061eb256 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
-index a68795c3..e8750d82 100644
+index a68795c30..e8750d827 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
 @@ -30,8 +30,10 @@ public class WorldGenFeatureSwampHut extends WorldGenFeatureRandomScattered<Worl
@@ -173,7 +173,7 @@ index a68795c3..e8750d82 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/WorldGenMonument.java b/src/main/java/net/minecraft/server/WorldGenMonument.java
-index 2a072e07..053004b8 100644
+index 2a072e07a..053004b8a 100644
 --- a/src/main/java/net/minecraft/server/WorldGenMonument.java
 +++ b/src/main/java/net/minecraft/server/WorldGenMonument.java
 @@ -27,7 +27,7 @@ public class WorldGenMonument extends StructureGenerator<WorldGenFeatureEmptyCon
@@ -186,7 +186,7 @@ index 2a072e07..053004b8 100644
          l2 *= i1;
          k2 += (random.nextInt(i1 - j1) + random.nextInt(i1 - j1)) / 2;
 diff --git a/src/main/java/net/minecraft/server/WorldGenVillage.java b/src/main/java/net/minecraft/server/WorldGenVillage.java
-index ead45107..b155a73a 100644
+index ead451073..b155a73a0 100644
 --- a/src/main/java/net/minecraft/server/WorldGenVillage.java
 +++ b/src/main/java/net/minecraft/server/WorldGenVillage.java
 @@ -21,7 +21,7 @@ public class WorldGenVillage extends StructureGenerator<WorldGenFeatureVillageCo
@@ -199,7 +199,7 @@ index ead45107..b155a73a 100644
          l2 *= i1;
          k2 += random.nextInt(i1 - j1);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index c9380a3f..b4fcf25d 100644
+index c9380a3f1..b4fcf25d4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 @@ -148,7 +148,7 @@ public class CraftChunk implements Chunk {
@@ -212,7 +212,7 @@ index c9380a3f..b4fcf25d 100644
  
      public boolean unload(boolean save) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java b/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
-index c9d3f5f4..b474d0bb 100644
+index c9d3f5f41..b474d0bb6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
 +++ b/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
 @@ -164,4 +164,10 @@ public class CustomChunkGenerator extends InternalChunkGenerator<GeneratorSettin
@@ -227,7 +227,7 @@ index c9d3f5f4..b474d0bb 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index ee6c4d56..462d0cfe 100644
+index ee6c4d565..462d0cfeb 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -230,4 +230,29 @@ public class SpigotWorldConfig
