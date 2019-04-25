@@ -1,16 +1,16 @@
-From 0c12b7dc27ea6e4b6e89fd8ca6f818f9be7b8249 Mon Sep 17 00:00:00 2001
+From 9e2e4cb8691fda2c9086215436882d00a54f17fb Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 4fb24a270..ac20ce7d6 100644
+index 157311ad1..d069346d6 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -153,6 +153,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
-     public File bukkitDataPackFolder;
+@@ -154,6 +154,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      public CommandDispatcher vanillaCommandDispatcher;
+     private boolean forceTicks;
      // CraftBukkit end
 +    // Spigot start
 +    public static final int TPS = 20;
@@ -21,7 +21,7 @@ index 4fb24a270..ac20ce7d6 100644
  
      public MinecraftServer(OptionSet options, Proxy proxy, DataFixer datafixer, CommandDispatcher commanddispatcher, YggdrasilAuthenticationService yggdrasilauthenticationservice, MinecraftSessionService minecraftsessionservice, GameProfileRepository gameprofilerepository, UserCache usercache, WorldLoadListenerFactory worldloadlistenerfactory, String s) {
          super("Server");
-@@ -723,6 +729,13 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -732,6 +738,13 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
      }
  
@@ -35,7 +35,7 @@ index 4fb24a270..ac20ce7d6 100644
      public void run() {
          try {
              if (this.init()) {
-@@ -731,8 +744,11 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -740,8 +753,11 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                  this.serverPing.setServerInfo(new ServerPing.ServerData(SharedConstants.a().getName(), SharedConstants.a().getProtocolVersion()));
                  this.a(this.serverPing);
  
@@ -48,7 +48,7 @@ index 4fb24a270..ac20ce7d6 100644
  
                      if (i > 2000L && this.nextTick - this.lastOverloadTime >= 15000L) {
                          long j = i / 50L;
-@@ -743,6 +759,16 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -752,6 +768,16 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                          this.lastOverloadTime = this.nextTick;
                      }
  

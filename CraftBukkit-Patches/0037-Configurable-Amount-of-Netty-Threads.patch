@@ -1,4 +1,4 @@
-From a9aca8765835a16e3a357e07c3fcb47547627258 Mon Sep 17 00:00:00 2001
+From e7597789ba6705fe44374fa3bf2cca2217a1ed72 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 13 Dec 2013 11:58:58 +1100
 Subject: [PATCH] Configurable Amount of Netty Threads
@@ -6,10 +6,10 @@ Subject: [PATCH] Configurable Amount of Netty Threads
 This brings back the option that the Spigot version of netty saw. By default Netty will try and use cores*2 threads, however if running multiple servers on the same machine, this can be too many threads. Additionally some people have 16 core servers. If 32 Netty threads are allowed in this setup, then the lock contention, and thus blocking between threads becomes much greater, leading to decreased performance.
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index d690983c8..9d355d699 100644
+index 4b15aad90..03c331416 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -173,7 +173,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -174,7 +174,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          this.gameProfileRepository = gameprofilerepository;
          this.userCache = usercache;
          // this.universe = file; // CraftBukkit
@@ -18,7 +18,7 @@ index d690983c8..9d355d699 100644
          this.worldLoadListenerFactory = worldloadlistenerfactory;
          // this.convertable = new Convertable(file.toPath(), file.toPath().resolve("../backups"), datafixer); // CraftBukkit - moved to DedicatedServer.init
          this.dataConverterManager = datafixer;
-@@ -1496,7 +1496,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1512,7 +1512,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
      @Nullable
      public ServerConnection getServerConnection() {
