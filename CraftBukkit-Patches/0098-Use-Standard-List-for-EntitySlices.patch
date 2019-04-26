@@ -1,4 +1,4 @@
-From 0f9c45d44cfc4f6b475df3b21c7032e30319fcbb Mon Sep 17 00:00:00 2001
+From 1269e2361f31afbc0fdf3404e06ceeee056b9b0a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:33:36 +1100
 Subject: [PATCH] Use Standard List for EntitySlices.
@@ -69,10 +69,10 @@ index 099e80ba1..fc54888fa 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 21353e389..def3f3d08 100644
+index 9de45bff2..f8f5343d1 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -484,11 +484,11 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -461,11 +461,11 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
                      chunk.c(true);
                      this.world.a(chunk.getTileEntities().values());
                      List<Entity> list = null;
