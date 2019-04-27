@@ -1,4 +1,4 @@
-From 20164713fc935c7081cef409111c20404e0b0327 Mon Sep 17 00:00:00 2001
+From b9fa4306098d0a89253ad2f74cdb1a0c0dee3887 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -136,7 +136,7 @@ index f3fa0bb62..213312b38 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index b19a72035..8678ca84b 100644
+index 939575c65..afacc685b 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -29,6 +29,7 @@ import org.bukkit.command.CommandSender;
@@ -147,7 +147,7 @@ index b19a72035..8678ca84b 100644
  import org.bukkit.event.entity.EntityCombustByEntityEvent;
  import org.bukkit.event.hanging.HangingBreakByEntityEvent;
  import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
-@@ -157,6 +158,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -160,6 +161,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
      public boolean valid;
      public org.bukkit.projectiles.ProjectileSource projectileSource; // For projectiles only
      public boolean forceExplosionKnockback; // SPIGOT-949
@@ -155,7 +155,7 @@ index b19a72035..8678ca84b 100644
  
      public float getBukkitYaw() {
          return this.yaw;
-@@ -460,6 +462,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -464,6 +466,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
      }
  
      public void move(EnumMoveType enummovetype, Vec3D vec3d) {
@@ -163,7 +163,7 @@ index b19a72035..8678ca84b 100644
          if (this.noclip) {
              this.a(this.getBoundingBox().b(vec3d));
              this.recalcPosition();
-@@ -624,6 +627,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -628,6 +631,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
  
              this.world.getMethodProfiler().exit();
          }
@@ -508,7 +508,7 @@ index 7bcf0f401..cf10a89d8 100644
  
      public boolean a(AxisAlignedBB axisalignedbb) {
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index c5bdc335f..799881601 100644
+index 1faa64734..0efb614a2 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -37,6 +37,7 @@ import org.bukkit.Bukkit;

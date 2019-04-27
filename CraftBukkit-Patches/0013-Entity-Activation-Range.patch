@@ -1,4 +1,4 @@
-From 7932515abfa880a887a3a3f226bba73a4fed00a0 Mon Sep 17 00:00:00 2001
+From 414de145a3952b3c3f98e4df871ff40d8d247fcb Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,10 +9,10 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 8678ca84b..653813d28 100644
+index afacc685b..b2388096a 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -159,6 +159,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -162,6 +162,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
      public org.bukkit.projectiles.ProjectileSource projectileSource; // For projectiles only
      public boolean forceExplosionKnockback; // SPIGOT-949
      public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getEntityTimings(this); // Spigot
@@ -25,7 +25,7 @@ index 8678ca84b..653813d28 100644
  
      public float getBukkitYaw() {
          return this.yaw;
-@@ -186,7 +192,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -189,7 +195,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
          this.setPosition(0.0D, 0.0D, 0.0D);
          if (world != null) {
              this.dimension = world.worldProvider.getDimensionManager();
@@ -190,7 +190,7 @@ index d33faccc9..cc66f565c 100644
      protected void mobTick() {
          this.world.getMethodProfiler().enter("brain");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 799881601..18110eecd 100644
+index 0efb614a2..602934cf9 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -325,6 +325,7 @@ public class WorldServer extends World {
@@ -231,10 +231,10 @@ index 153be935e..38f211526 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 70c0e964d..db4673044 100644
+index 2f1b8ece6..f78c14073 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -464,6 +464,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -465,6 +465,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          entity.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
          // SPIGOT-619: Force sync head rotation also
          entity.setHeadRotation(location.getYaw());

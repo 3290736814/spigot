@@ -1,14 +1,14 @@
-From 9128765b365eee6d35802070a4aa1b5cb799a11a Mon Sep 17 00:00:00 2001
+From c34d1aa7b542e5838efcc595a496206cfbc741d2 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 2 Feb 2014 16:55:46 +0000
 Subject: [PATCH] Add Option to Nerf Mobs from Spawners
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index b27d6b2c3..bc9894f84 100644
+index 575715220..2347c7994 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -163,6 +163,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -166,6 +166,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
      public final byte activationType = org.spigotmc.ActivationRange.initializeEntityActivationType(this);
      public final boolean defaultActivationState;
      public long activatedTick = Integer.MIN_VALUE;
