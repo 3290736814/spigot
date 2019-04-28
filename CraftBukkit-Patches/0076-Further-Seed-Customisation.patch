@@ -1,4 +1,4 @@
-From a86b879fb1224e2876f06cc5e3f60425614c635a Mon Sep 17 00:00:00 2001
+From 521ee2e1fc3cebcaa0fb6e5c3da2b0fbbaaedfea Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -199,10 +199,10 @@ index ead451073..b155a73a0 100644
          l2 *= i1;
          k2 += random.nextInt(i1 - j1);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index c9380a3f1..b4fcf25d4 100644
+index 404f51e14..323f5bf28 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-@@ -148,7 +148,7 @@ public class CraftChunk implements Chunk {
+@@ -158,7 +158,7 @@ public class CraftChunk implements Chunk {
      @Override
      public boolean isSlimeChunk() {
          // 987234911L is deterimined in EntitySlime when seeing if a slime can spawn in a chunk
@@ -210,7 +210,7 @@ index c9380a3f1..b4fcf25d4 100644
 +        return SeededRandom.a(getX(), getZ(), getWorld().getSeed(), worldServer.spigotConfig.slimeSeed).nextInt(10) == 0;
      }
  
-     public boolean unload(boolean save) {
+     @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java b/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
 index 0dce0f73e..90edf5e52 100644
 --- a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java

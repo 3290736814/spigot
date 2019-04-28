@@ -1,4 +1,4 @@
-From 16f2aab2c4b3b1eee54b5904bb564d5ba1c85022 Mon Sep 17 00:00:00 2001
+From eef817c0a38cbfb891be20427af6a9ef09d2e0e2 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
@@ -20,7 +20,7 @@ index bf475303b..db2fe836c 100644
              }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index d042ad6e6..2053a6c2b 100644
+index e49fa45e2..62834265c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 @@ -19,6 +19,10 @@ import org.bukkit.craftbukkit.util.CraftChatMessage;
@@ -58,7 +58,7 @@ index d042ad6e6..2053a6c2b 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 445b753e9..13f09aeae 100644
+index e7e5d2562..e9e9f9daa 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -79,6 +79,10 @@ import org.bukkit.inventory.meta.Repairable;
@@ -72,7 +72,7 @@ index 445b753e9..13f09aeae 100644
  /**
   * Children must include the following:
   *
-@@ -322,7 +326,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -323,7 +327,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
  
              if (display.hasKey(NAME.NBT)) {
                  try {
@@ -81,7 +81,7 @@ index 445b753e9..13f09aeae 100644
                  } catch (JsonParseException ex) {
                      // Ignore (stripped like Vanilla)
                  }
-@@ -330,7 +334,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -331,7 +335,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
  
              if (display.hasKey(LOCNAME.NBT)) {
                  try {
@@ -90,7 +90,7 @@ index 445b753e9..13f09aeae 100644
                  } catch (JsonParseException ex) {
                      // Ignore (stripped like Vanilla)
                  }
-@@ -341,7 +345,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -342,7 +346,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
                  lore = new ArrayList<IChatBaseComponent>(list.size());
  
                  for (int index = 0; index < list.size(); index++) {

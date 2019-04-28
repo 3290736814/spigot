@@ -1,4 +1,4 @@
-From 2ada2fc26391c42741c01b7e64708a311657de71 Mon Sep 17 00:00:00 2001
+From 8c4e8bcc2446866758c0aca212f06539930b7b25 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -99,10 +99,10 @@ index ef6e348b..23a089ec 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 0d38a477..16fb7ae1 100644
+index cd6642f5..148c3022 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -583,4 +583,15 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
+@@ -584,4 +584,15 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
       */
      @NotNull
      Pose getPose();
@@ -146,10 +146,10 @@ index 76aad05f..39ceb444 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index ab9045e2..3c7c2565 100644
+index c55abad8..cf65a327 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1464,4 +1464,15 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1465,4 +1465,15 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       * after permission changes are done.
       */
      public void updateCommands();
@@ -166,11 +166,11 @@ index ab9045e2..3c7c2565 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/inventory/meta/BookMeta.java b/src/main/java/org/bukkit/inventory/meta/BookMeta.java
-index 9775dca7..9e6b4288 100644
+index 976a6c82..5f3862bc 100644
 --- a/src/main/java/org/bukkit/inventory/meta/BookMeta.java
 +++ b/src/main/java/org/bukkit/inventory/meta/BookMeta.java
-@@ -184,4 +184,14 @@ public interface BookMeta extends ItemMeta {
- 
+@@ -185,4 +185,14 @@ public interface BookMeta extends ItemMeta {
+     @Override
      @NotNull
      BookMeta clone();
 +

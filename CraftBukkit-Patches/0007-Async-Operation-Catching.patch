@@ -1,4 +1,4 @@
-From f65577592ddd352071d443681a887e5273edbde3 Mon Sep 17 00:00:00 2001
+From 7c5d3c6f55e7a78bd296d6f5a859b139c4da6a70 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -105,7 +105,7 @@ index 182ca2506..32d68b6ab 100644
              throw new IllegalStateException("Removing entity while ticking!");
          } else {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 4f25d45c3..2f3f8cf3a 100644
+index 08c654d57..286379122 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -682,6 +682,7 @@ public final class CraftServer implements Server {
@@ -117,18 +117,18 @@ index 4f25d45c3..2f3f8cf3a 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 67f44976a..d4fd71f22 100644
+index 9332f4035..9dbb8696b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -357,6 +357,7 @@ public class CraftWorld implements World {
-     }
+@@ -370,6 +370,7 @@ public class CraftWorld implements World {
  
+     @Override
      public boolean unloadChunkRequest(int x, int z) {
 +        org.spigotmc.AsyncCatcher.catchOp( "chunk unload"); // Spigot
          net.minecraft.server.IChunkAccess chunk = world.getChunkProvider().getChunkAt(x, z, ChunkStatus.FULL, false);
          if (chunk != null) {
              world.getChunkProvider().removeTicket(TicketType.PLUGIN, chunk.getPos(), 1, Unit.INSTANCE);
-@@ -366,6 +367,7 @@ public class CraftWorld implements World {
+@@ -379,6 +380,7 @@ public class CraftWorld implements World {
      }
  
      private boolean unloadChunk0(int x, int z, boolean save) {
@@ -136,27 +136,27 @@ index 67f44976a..d4fd71f22 100644
          net.minecraft.server.Chunk chunk = (net.minecraft.server.Chunk) world.getChunkProvider().getChunkAt(x, z, ChunkStatus.FULL, false);
          if (chunk == null) {
              return true;
-@@ -379,6 +381,7 @@ public class CraftWorld implements World {
-     }
+@@ -393,6 +395,7 @@ public class CraftWorld implements World {
  
+     @Override
      public boolean regenerateChunk(int x, int z) {
 +        org.spigotmc.AsyncCatcher.catchOp( "chunk regenerate" ); // Spigot
          throw new UnsupportedOperationException("Not supported in this Minecraft version! Unless you can fix it, this is not a bug :)");
          /*
          if (!unloadChunk0(x, z, false)) {
-@@ -427,6 +430,7 @@ public class CraftWorld implements World {
-     }
+@@ -444,6 +447,7 @@ public class CraftWorld implements World {
  
+     @Override
      public boolean loadChunk(int x, int z, boolean generate) {
 +        org.spigotmc.AsyncCatcher.catchOp( "chunk load"); // Spigot
          IChunkAccess chunk = world.getChunkProvider().getChunkAt(x, z, generate ? ChunkStatus.FULL : ChunkStatus.EMPTY, true);
  
          // If generate = false, but the chunk already exists, we will get this back.
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index e3d006fa2..f7f4f44de 100644
+index d77f77c56..64c29e015 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -295,6 +295,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -297,6 +297,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
      @Override
      public void kickPlayer(String message) {
@@ -165,12 +165,12 @@ index e3d006fa2..f7f4f44de 100644
  
          getHandle().playerConnection.disconnect(message == null ? "" : message);
 diff --git a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScoreboardManager.java b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScoreboardManager.java
-index afbc1a960..305ef9480 100644
+index fd9949e1e..3ecc579aa 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScoreboardManager.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftScoreboardManager.java
-@@ -39,6 +39,7 @@ public final class CraftScoreboardManager implements ScoreboardManager {
-     }
+@@ -41,6 +41,7 @@ public final class CraftScoreboardManager implements ScoreboardManager {
  
+     @Override
      public CraftScoreboard getNewScoreboard() {
 +        org.spigotmc.AsyncCatcher.catchOp( "scoreboard creation"); // Spigot
          CraftScoreboard scoreboard = new CraftScoreboard(new ScoreboardServer(server));

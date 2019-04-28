@@ -1,4 +1,4 @@
-From f05fd6b6fd43adab031a59f9f58215100b91220c Mon Sep 17 00:00:00 2001
+From 028e2e337ef2d09d00d734cf0f1064fc71ae74ea Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 2 Jun 2013 10:42:57 +1000
 Subject: [PATCH] Spigot Timings
@@ -64,10 +64,10 @@ index 03d801a9..4bfc2146 100644
              return true;
          }
 diff --git a/src/main/java/org/bukkit/command/SimpleCommandMap.java b/src/main/java/org/bukkit/command/SimpleCommandMap.java
-index 906734ec..b3d5a302 100644
+index 95bfced6..81e4fa57 100644
 --- a/src/main/java/org/bukkit/command/SimpleCommandMap.java
 +++ b/src/main/java/org/bukkit/command/SimpleCommandMap.java
-@@ -140,11 +140,15 @@ public class SimpleCommandMap implements CommandMap {
+@@ -144,11 +144,15 @@ public class SimpleCommandMap implements CommandMap {
          }
  
          try {
@@ -250,10 +250,10 @@ index db27723e..6023e4f6 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/plugin/SimplePluginManager.java b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
-index 0c4119ae..17ddbe61 100644
+index e776c9e0..f648c598 100644
 --- a/src/main/java/org/bukkit/plugin/SimplePluginManager.java
 +++ b/src/main/java/org/bukkit/plugin/SimplePluginManager.java
-@@ -295,6 +295,7 @@ public final class SimplePluginManager implements PluginManager {
+@@ -297,6 +297,7 @@ public final class SimplePluginManager implements PluginManager {
              }
          }
  
@@ -262,7 +262,7 @@ index 0c4119ae..17ddbe61 100644
      }
  
 diff --git a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
-index 43eee27d..92983c1e 100644
+index c241d521..1173e433 100644
 --- a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
 +++ b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
 @@ -42,6 +42,7 @@ import org.bukkit.plugin.TimedRegisteredListener;
@@ -281,14 +281,15 @@ index 43eee27d..92983c1e 100644
  
      /**
       * This class was not meant to be constructed explicitly
-@@ -296,13 +298,19 @@ public final class JavaPluginLoader implements PluginLoader {
+@@ -300,6 +302,7 @@ public final class JavaPluginLoader implements PluginLoader {
                  }
              }
  
 +            final CustomTimingsHandler timings = new CustomTimingsHandler("Plugin: " + plugin.getDescription().getFullName() + " Event: " + listener.getClass().getName() + "::" + method.getName()+"("+eventClass.getSimpleName()+")", pluginParentTimer); // Spigot
              EventExecutor executor = new EventExecutor() {
+                 @Override
                  public void execute(@NotNull Listener listener, @NotNull Event event) throws EventException {
-                     try {
+@@ -307,7 +310,12 @@ public final class JavaPluginLoader implements PluginLoader {
                          if (!eventClass.isAssignableFrom(event.getClass())) {
                              return;
                          }
@@ -301,7 +302,7 @@ index 43eee27d..92983c1e 100644
                      } catch (InvocationTargetException ex) {
                          throw new EventException(ex.getCause());
                      } catch (Throwable t) {
-@@ -310,7 +318,7 @@ public final class JavaPluginLoader implements PluginLoader {
+@@ -315,7 +323,7 @@ public final class JavaPluginLoader implements PluginLoader {
                      }
                  }
              };

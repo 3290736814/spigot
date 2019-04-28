@@ -1,4 +1,4 @@
-From 74cf5d9126c33980cacc3a378af1a9fa5f4cdcff Mon Sep 17 00:00:00 2001
+From 67ce27617fdbaee48465852d0dde882edc8494b4 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
@@ -18,7 +18,7 @@ index 213312b38..3f74c1c1e 100644
  
                  thread1.setUncaughtExceptionHandler(new ThreadNamedUncaughtExceptionHandler(DedicatedServer.LOGGER));
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index ccaa79404..4b15aad90 100644
+index 03eb3b914..8c3b6997a 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -794,6 +794,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
@@ -38,10 +38,10 @@ index ccaa79404..4b15aad90 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f3ef27da2..f483b186f 100644
+index 16be7a70c..96843c215 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1898,6 +1898,11 @@ public final class CraftServer implements Server {
+@@ -1899,6 +1899,11 @@ public final class CraftServer implements Server {
          {
              return org.spigotmc.SpigotConfig.config;
          }
