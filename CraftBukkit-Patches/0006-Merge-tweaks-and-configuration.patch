@@ -1,4 +1,4 @@
-From 1319b1201a9eaf0a618cd9ba9e8d56577ab6d562 Mon Sep 17 00:00:00 2001
+From 35eb100f4dbd16c20a0dca7c516758ecac53571f Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:46:33 +1100
 Subject: [PATCH] Merge tweaks and configuration
@@ -31,10 +31,10 @@ index b3595c8ad..5dfdd8ab3 100644
                          } else {
                              a(entityitem, itemstack1, this, itemstack);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 3eb6a23e3..010c0780c 100644
+index f64c63b1d..b1b8704e2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -491,6 +491,23 @@ public class CraftEventFactory {
+@@ -505,6 +505,23 @@ public class CraftEventFactory {
              event = CraftEventFactory.callProjectileLaunchEvent(entity);
          } else if (entity.getBukkitEntity() instanceof org.bukkit.entity.Vehicle){
              event = CraftEventFactory.callVehicleCreateEvent(entity);
@@ -59,10 +59,10 @@ index 3eb6a23e3..010c0780c 100644
              event = CraftEventFactory.callEntitySpawnEvent(entity);
          }
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 8763048a3..23ce7243a 100644
+index a7a71fec0..b07e6098e 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -111,4 +111,18 @@ public class SpigotWorldConfig
+@@ -116,4 +116,18 @@ public class SpigotWorldConfig
          vineModifier = getAndValidateGrowth( "Vine" );
          cocoaModifier = getAndValidateGrowth( "Cocoa" );
      }

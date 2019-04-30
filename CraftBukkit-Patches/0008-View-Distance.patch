@@ -1,9 +1,9 @@
-From 19ccdbb44e9e3b613058a1952ffe18c79e016c4c Mon Sep 17 00:00:00 2001
+From 1f3eb53c360338d4756fc74a6d6f6f9197326842 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
 
-This commit allows the user to select per world view distances, and view distances below 3. Be wary of the issues selecting a view distance of 1 or 2 may cause!
+This commit allows the user to select per world view distances.
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
 index 021084ee7..1e6137dea 100644
@@ -41,10 +41,10 @@ index 32d68b6ab..1faa64734 100644
              });
              // CraftBukkit end
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 23ce7243a..0dd4b2d37 100644
+index b07e6098e..47e959af0 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -125,4 +125,11 @@ public class SpigotWorldConfig
+@@ -130,4 +130,22 @@ public class SpigotWorldConfig
          expMerge = getDouble("merge-radius.exp", 3.0 );
          log( "Experience Merge Radius: " + expMerge );
      }
@@ -52,7 +52,18 @@ index 23ce7243a..0dd4b2d37 100644
 +    public int viewDistance;
 +    private void viewDistance()
 +    {
-+        viewDistance = getInt( "view-distance", Bukkit.getViewDistance() );
++        if ( SpigotConfig.version < 12 )
++        {
++            set( "view-distance", null );
++        }
++
++        viewDistance = getInt( "view-distance" );
++        if ( viewDistance == 0 )
++        {
++            viewDistance = Bukkit.getViewDistance();
++        }
++
++        viewDistance = Math.max( viewDistance, 3 );
 +        log( "View Distance: " + viewDistance );
 +    }
  }

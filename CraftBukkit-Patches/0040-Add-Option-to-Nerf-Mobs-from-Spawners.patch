@@ -1,11 +1,11 @@
-From c34d1aa7b542e5838efcc595a496206cfbc741d2 Mon Sep 17 00:00:00 2001
+From 96796e87cb3264db1f382dd4ca28321b34ba92fc Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 2 Feb 2014 16:55:46 +0000
 Subject: [PATCH] Add Option to Nerf Mobs from Spawners
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 575715220..2347c7994 100644
+index e5d66e40e..fd8397bd4 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -166,6 +166,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -52,10 +52,10 @@ index cb6d72ece..65bb855bd 100644
                          world.triggerEffect(2004, blockposition, 0);
                          if (entity instanceof EntityInsentient) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index f8f3b8944..cd705235d 100644
+index 7ee2b4cec..8878e1ae0 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -204,4 +204,11 @@ public class SpigotWorldConfig
+@@ -220,4 +220,11 @@ public class SpigotWorldConfig
          zombieAggressiveTowardsVillager = getBoolean( "zombie-aggressive-towards-villager", true );
          log( "Zombie Aggressive Towards Villager: " + zombieAggressiveTowardsVillager );
      }

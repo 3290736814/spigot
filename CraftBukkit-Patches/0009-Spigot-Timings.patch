@@ -1,4 +1,4 @@
-From bc632a05e1407802e7d914e247fed4032a9fdad4 Mon Sep 17 00:00:00 2001
+From bc4f0e90e48d9a0c0049be899df735c3e2455023 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -351,10 +351,10 @@ index 85080affa..a9e5e3659 100644
          this.methodProfiler.exit();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 0e936a511..887b8a40b 100644
+index bc0d742a6..487a56532 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -136,6 +136,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -134,6 +134,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
      // CraftBukkit end
  
      public void tick() {
@@ -362,7 +362,7 @@ index 0e936a511..887b8a40b 100644
          this.syncPosition();
          this.player.playerTick();
          this.player.setLocation(this.l, this.m, this.n, this.player.yaw, this.player.pitch);
-@@ -208,6 +209,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -206,6 +207,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
              this.player.resetIdleTimer(); // CraftBukkit - SPIGOT-854
              this.disconnect(new ChatMessage("multiplayer.disconnect.idling", new Object[0]));
          }
@@ -370,7 +370,7 @@ index 0e936a511..887b8a40b 100644
  
      }
  
-@@ -1600,6 +1602,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -1599,6 +1601,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
      // CraftBukkit end
  
      private void handleCommand(String s) {
@@ -378,7 +378,7 @@ index 0e936a511..887b8a40b 100644
          // CraftBukkit start - whole method
          this.LOGGER.info(this.player.getName() + " issued server command: " + s);
  
-@@ -1609,6 +1612,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -1608,6 +1611,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
          this.server.getPluginManager().callEvent(event);
  
          if (event.isCancelled()) {
@@ -386,7 +386,7 @@ index 0e936a511..887b8a40b 100644
              return;
          }
  
-@@ -1620,6 +1624,8 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -1619,6 +1623,8 @@ public class PlayerConnection implements PacketListenerPlayIn {
              player.sendMessage(org.bukkit.ChatColor.RED + "An internal error occurred while attempting to perform this command");
              java.util.logging.Logger.getLogger(PlayerConnection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
              return;

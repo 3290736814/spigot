@@ -1,4 +1,4 @@
-From eb1cc48cde31195d9cc3f7ae999b88441692b1e1 Mon Sep 17 00:00:00 2001
+From ea89692b41df2757712b29a4b438182cabacfd0d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -159,10 +159,10 @@ index 4f1cfd93e..0870310e6 100644
                  BlockPosition blockposition1 = blockposition.up();
                  BlockPosition blockposition2;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 961ddb428..8763048a3 100644
+index 9b3d0bcd6..a7a71fec0 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -68,4 +68,47 @@ public class SpigotWorldConfig
+@@ -73,4 +73,47 @@ public class SpigotWorldConfig
          config.addDefault( "world-settings.default." + path, def );
          return config.getString( "world-settings." + worldName + "." + path, config.getString( "world-settings.default." + path ) );
      }

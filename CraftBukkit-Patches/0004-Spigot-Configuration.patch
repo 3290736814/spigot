@@ -1,4 +1,4 @@
-From 740cdf164b0020a1ea3ac8a42da0691f7f2ba6b0 Mon Sep 17 00:00:00 2001
+From 99c43b3e607be5879eb59e30fface2c3e31d6aa3 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -51,7 +51,7 @@ index ec84a676c..7bcf0f401 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b1d04af27..4f25d45c3 100644
+index 3fdab1b3d..08c654d57 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -729,6 +729,7 @@ public final class CraftServer implements Server {
@@ -148,7 +148,7 @@ index 000000000..d0be3c3b5
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
 new file mode 100644
-index 000000000..132ab78ce
+index 000000000..7b14d3164
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -0,0 +1,140 @@
@@ -212,8 +212,8 @@ index 000000000..132ab78ce
 +        commands = new HashMap<String, Command>();
 +        commands.put( "spigot", new SpigotCommand( "spigot" ) );
 +
-+        version = getInt( "config-version", 11 );
-+        set( "config-version", 11 );
++        version = getInt( "config-version", 12 );
++        set( "config-version", 12 );
 +        readConfig( SpigotConfig.class, null );
 +    }
 +
@@ -294,10 +294,10 @@ index 000000000..132ab78ce
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 new file mode 100644
-index 000000000..961ddb428
+index 000000000..9b3d0bcd6
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -0,0 +1,71 @@
+@@ -0,0 +1,76 @@
 +package org.spigotmc;
 +
 +import java.util.List;
@@ -349,6 +349,11 @@ index 000000000..961ddb428
 +    {
 +        config.addDefault( "world-settings.default." + path, def );
 +        return config.getDouble( "world-settings." + worldName + "." + path, config.getDouble( "world-settings.default." + path ) );
++    }
++
++    private int getInt(String path)
++    {
++        return config.getInt( "world-settings." + worldName + "." + path );
 +    }
 +
 +    private int getInt(String path, int def)

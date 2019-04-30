@@ -1,4 +1,4 @@
-From 4c8f11cded821f6e5aafbe5da0b0899f1c3c4cea Mon Sep 17 00:00:00 2001
+From 841229915bb0139773a7a4ba47464991d59b459f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Feb 2013 11:58:47 -0500
 Subject: [PATCH] Entity Tracking Ranges
@@ -24,10 +24,10 @@ index 5ee9aad6e..964bf9fe8 100644
  
                  if (this.trackedEntities.containsKey(entity.getId())) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 2f93d630d..79ba906e2 100644
+index 5571b3118..07ae5783f 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -159,4 +159,19 @@ public class SpigotWorldConfig
+@@ -175,4 +175,19 @@ public class SpigotWorldConfig
          tickInactiveVillagers = getBoolean( "entity-activation-range.tick-inactive-villagers", tickInactiveVillagers );
          log( "Entity Activation Range: An " + animalActivationRange + " / Mo " + monsterActivationRange + " / Mi " + miscActivationRange + " / Tiv " + tickInactiveVillagers );
      }

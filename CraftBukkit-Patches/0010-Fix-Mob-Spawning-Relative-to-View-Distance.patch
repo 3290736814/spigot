@@ -1,4 +1,4 @@
-From dfc5fc7e7c89633a50c3673a29e2ea274e28c8be Mon Sep 17 00:00:00 2001
+From 3f9f12017006bdcaa3c0abfeecce21f6c4a1e137 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -30,11 +30,11 @@ index aa263166d..5ee9aad6e 100644
      }
  
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 0dd4b2d37..bcf5d1653 100644
+index 47e959af0..fc592d814 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -132,4 +132,11 @@ public class SpigotWorldConfig
-         viewDistance = getInt( "view-distance", Bukkit.getViewDistance() );
+@@ -148,4 +148,11 @@ public class SpigotWorldConfig
+         viewDistance = Math.max( viewDistance, 3 );
          log( "View Distance: " + viewDistance );
      }
 +
