@@ -1,4 +1,4 @@
-From 761cd79d241d1fc3523410c53fe216f6ae151ba8 Mon Sep 17 00:00:00 2001
+From 57efdfa2d40a6f0f1ac92c1b0012bda45f8c0771 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -25,10 +25,10 @@ index 88a24de2d..3fdab1b3d 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index d74c8a26a..9332f4035 100644
+index 31263b518..8973a2098 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2044,4 +2044,15 @@ public class CraftWorld implements World {
+@@ -2045,4 +2045,15 @@ public class CraftWorld implements World {
          BlockPosition nearest = getHandle().getChunkProvider().getChunkGenerator().findNearestMapFeature(getHandle(), structureType.getName(), originPos, radius, findUnexplored);
          return (nearest == null) ? null : new Location(this, nearest.getX(), nearest.getY(), nearest.getZ());
      }
@@ -76,26 +76,6 @@ index 993b57b8d..0459f5dfb 100644
 +
 +    @Override
 +    public Spigot spigot()
-+    {
-+        return spigot;
-+    }
-+    // Spigot end
- }
-diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
-index a81805dd5..0c5a5d1fd 100644
---- a/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
-+++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftArrow.java
-@@ -112,4 +112,15 @@ public class CraftArrow extends AbstractProjectile implements Arrow {
-     public EntityType getType() {
-         return EntityType.UNKNOWN;
-     }
-+
-+    // Spigot start
-+    private final Arrow.Spigot spigot = new Arrow.Spigot()
-+    {
-+    };
-+
-+    public Arrow.Spigot spigot()
 +    {
 +        return spigot;
 +    }
@@ -162,7 +142,7 @@ index 4732bb82c..d77f77c56 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index 40bf2e861..e49fa45e2 100644
+index f7c4faf29..494f9a672 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 @@ -354,4 +354,14 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {

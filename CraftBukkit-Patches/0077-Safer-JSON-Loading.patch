@@ -1,0 +1,44 @@
+From d4fe691f33f04ee77d6f361176d2e89adeb36fec Mon Sep 17 00:00:00 2001
+From: Suddenly <suddenly@suddenly.coffee>
+Date: Tue, 8 Jul 2014 09:44:18 +1000
+Subject: [PATCH] Safer JSON Loading
+
+
+diff --git a/src/main/java/net/minecraft/server/JsonList.java b/src/main/java/net/minecraft/server/JsonList.java
+index cd7d579db..04f98167d 100644
+--- a/src/main/java/net/minecraft/server/JsonList.java
++++ b/src/main/java/net/minecraft/server/JsonList.java
+@@ -189,6 +189,14 @@ public class JsonList<K, V extends JsonListEntry<K>> {
+                         }
+                     }
+                 }
++            // Spigot Start
++            } catch ( com.google.gson.JsonParseException ex )
++            {
++                org.bukkit.Bukkit.getLogger().log( java.util.logging.Level.WARNING, "Unable to read file " + this.c + ", backing it up to {0}.backup and creating new copy.", ex );
++                File backup = new File( this.c + ".backup" );
++                this.c.renameTo( backup );
++                this.c.delete();
++            // Spigot End
+             } finally {
+                 IOUtils.closeQuietly(bufferedreader);
+             }
+diff --git a/src/main/java/net/minecraft/server/UserCache.java b/src/main/java/net/minecraft/server/UserCache.java
+index 7e18291f2..41be5bf64 100644
+--- a/src/main/java/net/minecraft/server/UserCache.java
++++ b/src/main/java/net/minecraft/server/UserCache.java
+@@ -207,6 +207,11 @@ public class UserCache {
+             }
+         } catch (FileNotFoundException filenotfoundexception) {
+             ;
++        // Spigot Start
++        } catch (com.google.gson.JsonSyntaxException ex) {
++            JsonList.LOGGER.warn( "Usercache.json is corrupted or has bad formatting. Deleting it to prevent further issues." );
++            this.h.delete();
++        // Spigot End
+         } catch (JsonParseException jsonparseexception) {
+             ;
+         } finally {
+-- 
+2.20.1
+

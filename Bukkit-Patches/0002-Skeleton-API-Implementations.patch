@@ -1,4 +1,4 @@
-From 8c4e8bcc2446866758c0aca212f06539930b7b25 Mon Sep 17 00:00:00 2001
+From 5331dce6e4d9e5064bcf6582ff9cc216e78d746b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -39,10 +39,10 @@ index 1b48b8ee..8ae6399a 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 498a0e64..21f77aab 100644
+index c5f559c6..d8cb9d86 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -1863,6 +1863,16 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -1864,6 +1864,16 @@ public interface World extends PluginMessageRecipient, Metadatable {
      @Nullable
      public Location locateNearestStructure(@NotNull Location origin, @NotNull StructureType structureType, int radius, boolean findUnexplored);
  
@@ -75,26 +75,6 @@ index d247b0d8..bf0f8cc4 100644
 +    }
 +
 +    @NotNull
-+    Spigot spigot();
-+    // Spigot end
- }
-diff --git a/src/main/java/org/bukkit/entity/Arrow.java b/src/main/java/org/bukkit/entity/Arrow.java
-index ef6e348b..23a089ec 100644
---- a/src/main/java/org/bukkit/entity/Arrow.java
-+++ b/src/main/java/org/bukkit/entity/Arrow.java
-@@ -111,4 +111,15 @@ public interface Arrow extends Projectile {
-          */
-         CREATIVE_ONLY
-     }
-+
-+    // Spigot start
-+    public class Spigot extends Entity.Spigot
-+    {
-+
-+    }
-+
-+    @NotNull
-+    @Override
 +    Spigot spigot();
 +    // Spigot end
  }

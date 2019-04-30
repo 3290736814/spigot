@@ -1,4 +1,4 @@
-From 7c5d3c6f55e7a78bd296d6f5a859b139c4da6a70 Mon Sep 17 00:00:00 2001
+From 848d094d6e49e007cce627b9b991217c52b6f8b0 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -117,10 +117,10 @@ index 08c654d57..286379122 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 9332f4035..9dbb8696b 100644
+index 8973a2098..ca46bdf15 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -370,6 +370,7 @@ public class CraftWorld implements World {
+@@ -371,6 +371,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean unloadChunkRequest(int x, int z) {
@@ -128,7 +128,7 @@ index 9332f4035..9dbb8696b 100644
          net.minecraft.server.IChunkAccess chunk = world.getChunkProvider().getChunkAt(x, z, ChunkStatus.FULL, false);
          if (chunk != null) {
              world.getChunkProvider().removeTicket(TicketType.PLUGIN, chunk.getPos(), 1, Unit.INSTANCE);
-@@ -379,6 +380,7 @@ public class CraftWorld implements World {
+@@ -380,6 +381,7 @@ public class CraftWorld implements World {
      }
  
      private boolean unloadChunk0(int x, int z, boolean save) {
@@ -136,7 +136,7 @@ index 9332f4035..9dbb8696b 100644
          net.minecraft.server.Chunk chunk = (net.minecraft.server.Chunk) world.getChunkProvider().getChunkAt(x, z, ChunkStatus.FULL, false);
          if (chunk == null) {
              return true;
-@@ -393,6 +395,7 @@ public class CraftWorld implements World {
+@@ -394,6 +396,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean regenerateChunk(int x, int z) {
@@ -144,7 +144,7 @@ index 9332f4035..9dbb8696b 100644
          throw new UnsupportedOperationException("Not supported in this Minecraft version! Unless you can fix it, this is not a bug :)");
          /*
          if (!unloadChunk0(x, z, false)) {
-@@ -444,6 +447,7 @@ public class CraftWorld implements World {
+@@ -445,6 +448,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean loadChunk(int x, int z, boolean generate) {
