@@ -1,4 +1,4 @@
-From 8f9a90418271c8fd74996cd443504df76af91cc3 Mon Sep 17 00:00:00 2001
+From aa0fe2bebd772ab8b5dac28a39e8262093c06f5b Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -31,7 +31,7 @@ index 4eda44506..f3fa0bb62 100644
          server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.STARTUP);
          // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index ec84a676c..7bcf0f401 100644
+index 71ed34157..f7b4f477a 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -83,6 +83,7 @@ public abstract class World implements IIBlockAccess, GeneratorAccess, AutoClose
@@ -51,7 +51,7 @@ index ec84a676c..7bcf0f401 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 3fdab1b3d..08c654d57 100644
+index 0acc7496c..f8e0d99f9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -729,6 +729,7 @@ public final class CraftServer implements Server {
@@ -78,10 +78,10 @@ index 3fdab1b3d..08c654d57 100644
          ignoreVanillaPermissions = commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index c441605f0..ae320c2bb 100644
+index f971d426a..e17d91418 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
-@@ -119,6 +119,14 @@ public class Main {
+@@ -120,6 +120,14 @@ public class Main {
                  acceptsAll(asList("v", "version"), "Show the CraftBukkit Version");
  
                  acceptsAll(asList("demo"), "Demo mode");

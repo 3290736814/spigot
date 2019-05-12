@@ -1,4 +1,4 @@
-From af0065fa90fef16e3d621239f460eb7db8ff7444 Mon Sep 17 00:00:00 2001
+From 54f85091561128cc4340703999d51e29cfced2a1 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -115,10 +115,10 @@ index 6aeea22ae..4f008e472 100644
          this.d = EnumProtocol.a(packetdataserializer.i());
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 71c73f339..220864ada 100644
+index 3af006a71..f3c9f8799 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -457,7 +457,7 @@ public abstract class PlayerList {
+@@ -458,7 +458,7 @@ public abstract class PlayerList {
  
          EntityPlayer entity = new EntityPlayer(this.server, this.server.getWorldServer(DimensionManager.OVERWORLD), gameprofile, new PlayerInteractManager(this.server.getWorldServer(DimensionManager.OVERWORLD)));
          Player player = entity.getBukkitEntity();
@@ -128,7 +128,7 @@ index 71c73f339..220864ada 100644
          if (getProfileBans().isBanned(gameprofile) && !getProfileBans().get(gameprofile).hasExpired()) {
              GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.k.get(gameprofile);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 96843c215..e88ed31ef 100644
+index 464e0642f..73e261c15 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -620,7 +620,13 @@ public final class CraftServer implements Server {
@@ -147,7 +147,7 @@ index 96843c215..e88ed31ef 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 16b01b8f0..715cfd191 100644
+index 79a500934..13cb7f8a4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -1644,6 +1644,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {

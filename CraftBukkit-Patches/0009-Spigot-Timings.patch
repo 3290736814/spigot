@@ -1,4 +1,4 @@
-From 40eb3229ab918729636d10e6824a645550fbeffc Mon Sep 17 00:00:00 2001
+From 959ab3c99bf13573763c4cf1c8b4672c8df03a3b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -136,7 +136,7 @@ index f3fa0bb62..213312b38 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 1258c8a5f..7f779ec93 100644
+index c0563f36b..e0e0a473c 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -29,6 +29,7 @@ import org.bukkit.command.CommandSender;
@@ -247,7 +247,7 @@ index 31abdec9c..904d86292 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 85080affa..a9e5e3659 100644
+index 54b5d76d9..104b889d4 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -54,6 +54,7 @@ import org.bukkit.craftbukkit.CraftServer;
@@ -258,7 +258,7 @@ index 85080affa..a9e5e3659 100644
  
  public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTask> implements IMojangStatistics, ICommandListener, AutoCloseable, Runnable {
  
-@@ -903,6 +904,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -906,6 +907,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      protected void exit() {}
  
      protected void a(BooleanSupplier booleansupplier) {
@@ -266,7 +266,7 @@ index 85080affa..a9e5e3659 100644
          long i = SystemUtils.getMonotonicNanos();
  
          ++this.ticks;
-@@ -922,12 +924,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -925,12 +927,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          }
  
          if (autosavePeriod > 0 && this.ticks % autosavePeriod == 0) { // CraftBukkit
@@ -281,7 +281,7 @@ index 85080affa..a9e5e3659 100644
          }
  
          this.methodProfiler.enter("snooper");
-@@ -948,20 +952,29 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -951,20 +955,29 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
          this.ap.a(i1 - i);
          this.methodProfiler.exit();
@@ -311,7 +311,7 @@ index 85080affa..a9e5e3659 100644
          // Send time updates to everyone, it will get the right time from the world the player is in.
          if (this.ticks % 20 == 0) {
              for (int i = 0; i < this.getPlayerList().players.size(); ++i) {
-@@ -969,6 +982,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -972,6 +985,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                  entityplayer.playerConnection.sendPacket(new PacketPlayOutUpdateTime(entityplayer.world.getTime(), entityplayer.getPlayerTime(), entityplayer.world.getGameRules().getBoolean("doDaylightCycle"))); // Add support for per player time
              }
          }
@@ -319,7 +319,7 @@ index 85080affa..a9e5e3659 100644
  
          // WorldServer worldserver; // CraftBukkit - dropped down
          long i;
-@@ -992,7 +1006,9 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -995,7 +1009,9 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                  this.methodProfiler.enter("tick");
  
                  try {
@@ -329,7 +329,7 @@ index 85080affa..a9e5e3659 100644
                  } catch (Throwable throwable) {
                      CrashReport crashreport = CrashReport.a(throwable, "Exception ticking world");
  
-@@ -1006,14 +1022,20 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1009,14 +1025,20 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          }
  
          this.methodProfiler.exitEnter("connection");
@@ -412,7 +412,7 @@ index d5967b935..7b0a65e36 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
      public final CraftPersistentDataContainer persistentDataContainer = new CraftPersistentDataContainer(DATA_TYPE_REGISTRY);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 7bcf0f401..cf10a89d8 100644
+index f7b4f477a..86d6f8f5a 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -20,6 +20,7 @@ import java.util.ArrayList;
@@ -508,7 +508,7 @@ index 7bcf0f401..cf10a89d8 100644
  
      public boolean a(AxisAlignedBB axisalignedbb) {
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 1faa64734..0efb614a2 100644
+index baad5d3d6..7ac345d43 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -37,6 +37,7 @@ import org.bukkit.Bukkit;
@@ -519,7 +519,7 @@ index 1faa64734..0efb614a2 100644
  import org.bukkit.craftbukkit.event.CraftEventFactory;
  import org.bukkit.craftbukkit.util.HashTreeSet;
  
-@@ -264,15 +265,21 @@ public class WorldServer extends World {
+@@ -262,15 +263,21 @@ public class WorldServer extends World {
          gameprofilerfiller.exitEnter("chunkSource");
          this.getChunkProvider().tick(booleansupplier);
          gameprofilerfiller.exitEnter("tickPending");
@@ -541,7 +541,7 @@ index 1faa64734..0efb614a2 100644
          gameprofilerfiller.exitEnter("raid");
          this.c.a();
          if (this.mobSpawnerTrader != null) {
-@@ -280,7 +287,9 @@ public class WorldServer extends World {
+@@ -278,7 +285,9 @@ public class WorldServer extends World {
          }
  
          gameprofilerfiller.exitEnter("blockEvents");
@@ -551,7 +551,7 @@ index 1faa64734..0efb614a2 100644
          this.ticking = false;
          gameprofilerfiller.exitEnter("entities");
          boolean flag3 = true || !this.players.isEmpty() || !this.getForceLoadedChunks().isEmpty(); // CraftBukkit - this prevents entity cleanup, other issues on servers with no players
-@@ -290,6 +299,7 @@ public class WorldServer extends World {
+@@ -288,6 +297,7 @@ public class WorldServer extends World {
          }
  
          if (flag3 || this.emptyTime++ < 300) {
@@ -559,7 +559,7 @@ index 1faa64734..0efb614a2 100644
              this.worldProvider.l();
              gameprofilerfiller.enter("global");
  
-@@ -315,6 +325,7 @@ public class WorldServer extends World {
+@@ -313,6 +323,7 @@ public class WorldServer extends World {
              this.tickingEntities = true;
              ObjectIterator objectiterator = this.entitiesById.int2ObjectEntrySet().iterator();
  
@@ -567,7 +567,7 @@ index 1faa64734..0efb614a2 100644
              while (objectiterator.hasNext()) {
                  Entry<Entity> entry = (Entry) objectiterator.next();
                  Entity entity1 = (Entity) entry.getValue();
-@@ -353,6 +364,7 @@ public class WorldServer extends World {
+@@ -351,6 +362,7 @@ public class WorldServer extends World {
  
                  gameprofilerfiller.exit();
              }
@@ -575,7 +575,7 @@ index 1faa64734..0efb614a2 100644
  
              this.tickingEntities = false;
  
-@@ -361,6 +373,7 @@ public class WorldServer extends World {
+@@ -359,6 +371,7 @@ public class WorldServer extends World {
              }
  
              gameprofilerfiller.exit();
@@ -584,10 +584,10 @@ index 1faa64734..0efb614a2 100644
          }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 286379122..9cd50e16c 100644
+index 1855d921f..1cffad66b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1887,6 +1887,11 @@ public final class CraftServer implements Server {
+@@ -1890,6 +1890,11 @@ public final class CraftServer implements Server {
      private final Spigot spigot = new Spigot()
      {
  

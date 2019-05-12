@@ -1,11 +1,11 @@
-From 86a7500f4e1795446842706afce6cd77da75f126 Mon Sep 17 00:00:00 2001
+From 04c8eb114f56671f83fa61f4b11c54d7d8daec6f Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 02:59:14 +0100
 Subject: [PATCH] BungeeCord Chat API
 
 
 diff --git a/pom.xml b/pom.xml
-index 733d1855..75681af7 100644
+index 8a93ddda..0bc8d481 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -71,6 +71,13 @@
@@ -23,7 +23,7 @@ index 733d1855..75681af7 100644
              <groupId>org.yaml</groupId>
              <artifactId>snakeyaml</artifactId>
 diff --git a/src/main/java/org/bukkit/ChatColor.java b/src/main/java/org/bukkit/ChatColor.java
-index e1552156..2acf5548 100644
+index 103debd1..b2c82940 100644
 --- a/src/main/java/org/bukkit/ChatColor.java
 +++ b/src/main/java/org/bukkit/ChatColor.java
 @@ -15,91 +15,223 @@ public enum ChatColor {
@@ -285,10 +285,10 @@ index e1552156..2acf5548 100644
       * Gets the char value associated with this color
       *
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 3db93f6c..2d2bc840 100644
+index 8fd006a2..ee177390 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1251,6 +1251,24 @@ public interface Server extends PluginMessageRecipient {
+@@ -1249,6 +1249,24 @@ public interface Server extends PluginMessageRecipient {
          {
              throw new UnsupportedOperationException( "Not supported yet." );
          }

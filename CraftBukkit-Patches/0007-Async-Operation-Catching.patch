@@ -1,4 +1,4 @@
-From 848d094d6e49e007cce627b9b991217c52b6f8b0 Mon Sep 17 00:00:00 2001
+From 885ce5e8c2b71e8b415c851c0be3ae127962a8fc Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -85,10 +85,10 @@ index f552bbd3d..aa263166d 100644
                  Vec3D vec3d = (new Vec3D(entityplayer.locX, entityplayer.locY, entityplayer.locZ)).d(this.trackerEntry.b());
                  int i = Math.min(this.trackingDistance, (PlayerChunkMap.this.A - 1) * 16);
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 182ca2506..32d68b6ab 100644
+index 41c0428c9..2affddbe0 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -904,6 +904,7 @@ public class WorldServer extends World {
+@@ -902,6 +902,7 @@ public class WorldServer extends World {
  
      // CraftBukkit start
      private boolean addEntity0(Entity entity, CreatureSpawnEvent.SpawnReason spawnReason) {
@@ -96,7 +96,7 @@ index 182ca2506..32d68b6ab 100644
          if (entity.dead) {
              // WorldServer.LOGGER.warn("Tried to add entity {} but it was marked as removed already", EntityTypes.getName(entity.getEntityType())); // CraftBukkit
              return false;
-@@ -1026,6 +1027,7 @@ public class WorldServer extends World {
+@@ -1024,6 +1025,7 @@ public class WorldServer extends World {
      }
  
      public void removeEntity(Entity entity) {
@@ -105,7 +105,7 @@ index 182ca2506..32d68b6ab 100644
              throw new IllegalStateException("Removing entity while ticking!");
          } else {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 08c654d57..286379122 100644
+index f8e0d99f9..1855d921f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -682,6 +682,7 @@ public final class CraftServer implements Server {
@@ -117,7 +117,7 @@ index 08c654d57..286379122 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 8973a2098..ca46bdf15 100644
+index 72a31e205..bcea198c7 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -371,6 +371,7 @@ public class CraftWorld implements World {
@@ -153,7 +153,7 @@ index 8973a2098..ca46bdf15 100644
  
          // If generate = false, but the chunk already exists, we will get this back.
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index d77f77c56..64c29e015 100644
+index 5d7d7d6cf..bad4a8c39 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -297,6 +297,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {

@@ -1,4 +1,4 @@
-From 9b094913bd7270ce0f6c30b22a9394745896ff22 Mon Sep 17 00:00:00 2001
+From 8cc6befdaa051100399a09fa2202f6b53e9ca201 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 7f779ec93..a0ae4ed38 100644
+index e0e0a473c..bef092f2c 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -162,6 +162,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -75,7 +75,7 @@ index dfd1a7da4..da9740a99 100644
      public abstract EntityAgeable createChild(EntityAgeable entityageable);
  
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index bb0335ddf..c6c9e79fa 100644
+index 340bcb06c..f1491c5d2 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
 @@ -35,6 +35,18 @@ public abstract class EntityArrow extends Entity implements IProjectile {
@@ -190,10 +190,10 @@ index d33faccc9..cc66f565c 100644
      protected void mobTick() {
          this.world.getMethodProfiler().enter("brain");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 0efb614a2..602934cf9 100644
+index 7ac345d43..9fcbfae32 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -325,6 +325,7 @@ public class WorldServer extends World {
+@@ -323,6 +323,7 @@ public class WorldServer extends World {
              this.tickingEntities = true;
              ObjectIterator objectiterator = this.entitiesById.int2ObjectEntrySet().iterator();
  
@@ -201,7 +201,7 @@ index 0efb614a2..602934cf9 100644
              timings.entityTick.startTiming(); // Spigot
              while (objectiterator.hasNext()) {
                  Entry<Entity> entry = (Entry) objectiterator.next();
-@@ -556,6 +557,14 @@ public class WorldServer extends World {
+@@ -554,6 +555,14 @@ public class WorldServer extends World {
  
      public void entityJoinedWorld(Entity entity) {
          if (entity instanceof EntityHuman || this.getChunkProvider().a(entity)) {
@@ -231,7 +231,7 @@ index 153be935e..38f211526 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 506dfa02e..fe07d639e 100644
+index 863645ce4..fc366fe6b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -473,6 +473,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {

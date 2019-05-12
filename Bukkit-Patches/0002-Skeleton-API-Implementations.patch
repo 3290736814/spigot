@@ -1,14 +1,14 @@
-From 5331dce6e4d9e5064bcf6582ff9cc216e78d746b Mon Sep 17 00:00:00 2001
+From f1b4eb92db7a7b8dc3240a1aa92097015ec5324c Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 17d2a6ec..bd97796b 100644
+index d24d99e7..42c33584 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -1484,4 +1484,10 @@ public final class Bukkit {
+@@ -1482,4 +1482,10 @@ public final class Bukkit {
      public static UnsafeValues getUnsafe() {
          return server.getUnsafe();
      }
@@ -20,10 +20,10 @@ index 17d2a6ec..bd97796b 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 1b48b8ee..8ae6399a 100644
+index b4fb0522..aa7c90cb 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1250,4 +1250,14 @@ public interface Server extends PluginMessageRecipient {
+@@ -1248,4 +1248,14 @@ public interface Server extends PluginMessageRecipient {
      @Deprecated
      @NotNull
      UnsafeValues getUnsafe();
@@ -39,7 +39,7 @@ index 1b48b8ee..8ae6399a 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index c5f559c6..d8cb9d86 100644
+index a25599c3..c4b89ba5 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
 @@ -1864,6 +1864,16 @@ public interface World extends PluginMessageRecipient, Metadatable {
