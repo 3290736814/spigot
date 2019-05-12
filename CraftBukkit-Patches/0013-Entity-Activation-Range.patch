@@ -1,4 +1,4 @@
-From 8cc6befdaa051100399a09fa2202f6b53e9ca201 Mon Sep 17 00:00:00 2001
+From 67fdd57510228cca86fceae45bd9d3a20d5a1fab Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -190,7 +190,7 @@ index d33faccc9..cc66f565c 100644
      protected void mobTick() {
          this.world.getMethodProfiler().enter("brain");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 7ac345d43..9fcbfae32 100644
+index 5ad78dd28..18bca3039 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -323,6 +323,7 @@ public class WorldServer extends World {
@@ -213,9 +213,9 @@ index 7ac345d43..9fcbfae32 100644
 +            }
 +            // Spigot end
 +
+             entity.tickTimer.startTiming(); // Spigot
              entity.H = entity.locX;
              entity.I = entity.locY;
-             entity.J = entity.locZ;
 diff --git a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java b/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
 index 153be935e..38f211526 100644
 --- a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java

@@ -1,4 +1,4 @@
-From 959ab3c99bf13573763c4cf1c8b4672c8df03a3b Mon Sep 17 00:00:00 2001
+From 6e8b204bb4e01e8fa8d92062f37cd339fcba5c3d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -412,7 +412,7 @@ index d5967b935..7b0a65e36 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
      public final CraftPersistentDataContainer persistentDataContainer = new CraftPersistentDataContainer(DATA_TYPE_REGISTRY);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index f7b4f477a..86d6f8f5a 100644
+index f7b4f477a..0f40df3cc 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -20,6 +20,7 @@ import java.util.ArrayList;
@@ -477,7 +477,7 @@ index f7b4f477a..86d6f8f5a 100644
          this.tickingTileEntities = false;
          gameprofilerfiller.exitEnter("pendingBlockEntities");
          if (!this.tileEntityListPending.isEmpty()) {
-@@ -685,11 +698,16 @@ public abstract class World implements IIBlockAccess, GeneratorAccess, AutoClose
+@@ -685,12 +698,15 @@ public abstract class World implements IIBlockAccess, GeneratorAccess, AutoClose
              this.tileEntityListPending.clear();
          }
  
@@ -487,28 +487,14 @@ index f7b4f477a..86d6f8f5a 100644
  
      public void a(Consumer<Entity> consumer, Entity entity) {
          try {
-+            // Spigot start
-+            SpigotTimings.tickEntityTimer.startTiming();
-+            entity.tickTimer.startTiming();
-+            // Spigot end
++            SpigotTimings.tickEntityTimer.startTiming(); // Spigot
              consumer.accept(entity);
++            SpigotTimings.tickEntityTimer.stopTiming(); // Spigot
          } catch (Throwable throwable) {
              CrashReport crashreport = CrashReport.a(throwable, "Ticking entity");
-@@ -698,6 +716,12 @@ public abstract class World implements IIBlockAccess, GeneratorAccess, AutoClose
-             entity.appendEntityCrashDetails(crashreportsystemdetails);
-             throw new ReportedException(crashreport);
-         }
-+        // Spigot start
-+        finally {
-+            entity.tickTimer.stopTiming();
-+            SpigotTimings.tickEntityTimer.startTiming();
-+        }
-+        // Spigot end
-     }
- 
-     public boolean a(AxisAlignedBB axisalignedbb) {
+             CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Entity being ticked");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index baad5d3d6..7ac345d43 100644
+index baad5d3d6..5ad78dd28 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -37,6 +37,7 @@ import org.bukkit.Bukkit;
@@ -583,6 +569,22 @@ index baad5d3d6..7ac345d43 100644
              this.tickBlockEntities();
          }
  
+@@ -541,6 +554,7 @@ public class WorldServer extends World {
+ 
+     public void entityJoinedWorld(Entity entity) {
+         if (entity instanceof EntityHuman || this.getChunkProvider().a(entity)) {
++            entity.tickTimer.startTiming(); // Spigot
+             entity.H = entity.locX;
+             entity.I = entity.locY;
+             entity.J = entity.locZ;
+@@ -566,6 +580,7 @@ public class WorldServer extends World {
+                     this.a(entity, entity1);
+                 }
+             }
++            entity.tickTimer.stopTiming(); // Spigot
+ 
+         }
+     }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 index 1855d921f..1cffad66b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
