@@ -1,4 +1,4 @@
-From 24da0868160b0634342b875016ee3a67f4c5ce0a Mon Sep 17 00:00:00 2001
+From 683aaf6d5f491414b8ac47128a20448e786e2abe Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 22 Jul 2015 19:04:37 +1000
 Subject: [PATCH] Clear Packet Queue on Disconnect
@@ -17,7 +17,7 @@ index 248660da8..fe6854d0e 100644
  
          }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 781ec85c6..ec57c7a49 100644
+index 82d465aea..48a0ebfa7 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -1406,7 +1406,7 @@ public class PlayerConnection implements PacketListenerPlayIn {

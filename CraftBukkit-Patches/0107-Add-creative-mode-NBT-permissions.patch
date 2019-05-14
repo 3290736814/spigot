@@ -1,4 +1,4 @@
-From 70a9727f10789a056e0c728f6f16a890fcd5da42 Mon Sep 17 00:00:00 2001
+From 5db2fe7fec186bd9938aeef56a2b951d8d28b417 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 25 Feb 2019 19:26:56 +1100
 Subject: [PATCH] Add creative mode NBT permissions
@@ -31,7 +31,7 @@ index a8a647d5d..300ff5945 100644
              BlockStateList<Block, IBlockData> blockstatelist = block.getStates();
              Collection<IBlockState<?>> collection = blockstatelist.d();
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 0f83a918c..8080e38b3 100644
+index a87f96d0d..68926d0de 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -2279,7 +2279,7 @@ public class PlayerConnection implements PacketListenerPlayIn {

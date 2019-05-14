@@ -1,4 +1,4 @@
-From 67fdd57510228cca86fceae45bd9d3a20d5a1fab Mon Sep 17 00:00:00 2001
+From 1694a84ea5860f5782cbd2f069f8799963e3da5e Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index e0e0a473c..bef092f2c 100644
+index bfb488464..4092c55d8 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -162,6 +162,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -117,10 +117,10 @@ index ffb1b0950..d6bde129e 100644
      protected void initDatawatcher() {
          this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, ItemStack.a);
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index fb6f944a8..fe70a3a8b 100644
+index abb80a065..ba2ca1185 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
-@@ -135,6 +135,28 @@ public class EntityItem extends Entity {
+@@ -137,6 +137,28 @@ public class EntityItem extends Entity {
          }
      }
  
@@ -150,7 +150,7 @@ index fb6f944a8..fe70a3a8b 100644
          Vec3D vec3d = this.getMot();
  
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 904d86292..c1bb7a88a 100644
+index 3bb70356f..2b856727d 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -132,6 +132,13 @@ public abstract class EntityLiving extends Entity {
@@ -168,7 +168,7 @@ index 904d86292..c1bb7a88a 100644
      protected EntityLiving(EntityTypes<? extends EntityLiving> entitytypes, World world) {
          super(entitytypes, world);
 diff --git a/src/main/java/net/minecraft/server/EntityVillager.java b/src/main/java/net/minecraft/server/EntityVillager.java
-index d33faccc9..cc66f565c 100644
+index c8091c2f3..512d18a2b 100644
 --- a/src/main/java/net/minecraft/server/EntityVillager.java
 +++ b/src/main/java/net/minecraft/server/EntityVillager.java
 @@ -133,6 +133,17 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
@@ -190,10 +190,10 @@ index d33faccc9..cc66f565c 100644
      protected void mobTick() {
          this.world.getMethodProfiler().enter("brain");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 5ad78dd28..18bca3039 100644
+index 65769e667..ddc20a134 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -323,6 +323,7 @@ public class WorldServer extends World {
+@@ -316,6 +316,7 @@ public class WorldServer extends World {
              this.tickingEntities = true;
              ObjectIterator objectiterator = this.entitiesById.int2ObjectEntrySet().iterator();
  
@@ -201,7 +201,7 @@ index 5ad78dd28..18bca3039 100644
              timings.entityTick.startTiming(); // Spigot
              while (objectiterator.hasNext()) {
                  Entry<Entity> entry = (Entry) objectiterator.next();
-@@ -554,6 +555,14 @@ public class WorldServer extends World {
+@@ -547,6 +548,14 @@ public class WorldServer extends World {
  
      public void entityJoinedWorld(Entity entity) {
          if (entity instanceof EntityHuman || this.getChunkProvider().a(entity)) {
@@ -231,7 +231,7 @@ index 153be935e..38f211526 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 863645ce4..fc366fe6b 100644
+index 470dad243..031bbd6ab 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -473,6 +473,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {

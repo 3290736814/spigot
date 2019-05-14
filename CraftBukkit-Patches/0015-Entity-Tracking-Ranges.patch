@@ -1,4 +1,4 @@
-From b5b86d0605ce2c6e61798770bb5d797748f99731 Mon Sep 17 00:00:00 2001
+From f930e639ff1660c6d053f97e1477ac0f55d0464a Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Feb 2013 11:58:47 -0500
 Subject: [PATCH] Entity Tracking Ranges
@@ -12,10 +12,10 @@ This has multiple benefits:
 4) Less client lag - Not trying to render distant item frames and paintings and entities will reduce entity count on the client, which is major for shop/town worlds which may use tons of item frames.
 
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 5ee9aad6e..964bf9fe8 100644
+index 811b618fb..08409e35c 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -807,6 +807,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -844,6 +844,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
              if (!(entity instanceof EntityLightning)) {
                  EntityTypes<?> entitytypes = entity.getEntityType();
                  int i = entitytypes.getChunkRange() * 16;

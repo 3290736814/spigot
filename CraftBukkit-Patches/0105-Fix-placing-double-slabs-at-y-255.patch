@@ -1,4 +1,4 @@
-From 5c6f70babf513ee86d5d2bc8513c3ab57a6ca66d Mon Sep 17 00:00:00 2001
+From 304b66e6cf5863389aa5327753fbe5a2c8b8b856 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 28 Dec 2018 10:11:43 +1100
 Subject: [PATCH] Fix placing double slabs at y = 255
@@ -6,7 +6,7 @@ Subject: [PATCH] Fix placing double slabs at y = 255
 Addresses MC-11211 / SPIGOT-4552
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index ec57c7a49..0f83a918c 100644
+index 48a0ebfa7..a87f96d0d 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -1244,9 +1244,10 @@ public class PlayerConnection implements PacketListenerPlayIn {

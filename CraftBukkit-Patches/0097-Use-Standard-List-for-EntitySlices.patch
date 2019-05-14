@@ -1,11 +1,11 @@
-From 366fa9ca0c61375f2a42245534539c63f9e65a97 Mon Sep 17 00:00:00 2001
+From 986e22f552c3fac4bae58ea958307388c39d6e27 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:33:36 +1100
 Subject: [PATCH] Use Standard List for EntitySlices.
 
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 099e80ba1..fc54888fa 100644
+index 3a58bd270..0fe575349 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -41,7 +41,7 @@ public class Chunk implements IChunkAccess {
@@ -17,7 +17,7 @@ index 099e80ba1..fc54888fa 100644
      private final Map<String, StructureStart> l;
      private final Map<String, LongSet> m;
      private final ShortList[] n;
-@@ -66,7 +66,7 @@ public class Chunk implements IChunkAccess {
+@@ -70,7 +70,7 @@ public class Chunk implements IChunkAccess {
          this.l = Maps.newHashMap();
          this.m = Maps.newHashMap();
          this.n = new ShortList[16];
@@ -26,7 +26,7 @@ index 099e80ba1..fc54888fa 100644
          this.world = world;
          this.loc = chunkcoordintpair;
          this.i = chunkconverter;
-@@ -82,7 +82,7 @@ public class Chunk implements IChunkAccess {
+@@ -86,7 +86,7 @@ public class Chunk implements IChunkAccess {
          }
  
          for (int l = 0; l < this.entitySlices.length; ++l) {
@@ -35,7 +35,7 @@ index 099e80ba1..fc54888fa 100644
          }
  
          this.d = abiomebase;
-@@ -577,7 +577,7 @@ public class Chunk implements IChunkAccess {
+@@ -581,7 +581,7 @@ public class Chunk implements IChunkAccess {
          j = MathHelper.clamp(j, 0, this.entitySlices.length - 1);
  
          for (int k = i; k <= j; ++k) {
@@ -44,7 +44,7 @@ index 099e80ba1..fc54888fa 100644
  
              while (iterator.hasNext()) {
                  Entity entity = (Entity) iterator.next();
-@@ -598,12 +598,12 @@ public class Chunk implements IChunkAccess {
+@@ -602,12 +602,12 @@ public class Chunk implements IChunkAccess {
          j = MathHelper.clamp(j, 0, this.entitySlices.length - 1);
  
          for (int k = i; k <= j; ++k) {
@@ -59,7 +59,7 @@ index 099e80ba1..fc54888fa 100644
                      list.add(t0);
                  }
              }
-@@ -642,7 +642,7 @@ public class Chunk implements IChunkAccess {
+@@ -646,7 +646,7 @@ public class Chunk implements IChunkAccess {
          return this.tileEntities;
      }
  
@@ -69,11 +69,11 @@ index 099e80ba1..fc54888fa 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 964bf9fe8..346e86fee 100644
+index 08409e35c..dfa433620 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -461,11 +461,11 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
-                     chunk.c(true);
+@@ -482,11 +482,11 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+                     chunk.setLoaded(true);
                      this.world.a(chunk.getTileEntities().values());
                      List<Entity> list = null;
 -                    EntitySlice[] aentityslice = chunk.getEntitySlices();
@@ -87,10 +87,10 @@ index 964bf9fe8..346e86fee 100644
  
                          while (iterator.hasNext()) {
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 4370a83b7..ece508b39 100644
+index 2369877bd..36c517d8f 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -986,11 +986,11 @@ public class WorldServer extends World {
+@@ -979,11 +979,11 @@ public class WorldServer extends World {
          }
          // Spigot End
          this.tileEntityListUnload.addAll(chunk.getTileEntities().values());

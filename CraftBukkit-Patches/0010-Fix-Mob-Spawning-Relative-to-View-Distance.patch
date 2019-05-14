@@ -1,4 +1,4 @@
-From 35a541569634bcf9168fe3e229b06173d2903ba9 Mon Sep 17 00:00:00 2001
+From 51ef5d1c235944dde5331de04abe0398b4523f9c Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,10 +8,10 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index aa263166d..5ee9aad6e 100644
+index 112f37ed0..811b618fb 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -654,8 +654,16 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -691,8 +691,16 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
      }
  
      boolean d(ChunkCoordIntPair chunkcoordintpair) {
@@ -23,7 +23,7 @@ index aa263166d..5ee9aad6e 100644
 +        double blockRange = Math.pow(chunkRange << 4, 2);
 +        // Spigot end
 +
-         return this.y.a(chunkcoordintpair.pair()).noneMatch((entityplayer) -> {
+         return this.playerMap.a(chunkcoordintpair.pair()).noneMatch((entityplayer) -> {
 -            return !entityplayer.isSpectator() && a(chunkcoordintpair, (Entity) entityplayer) < 16384.0D;
 +            return !entityplayer.isSpectator() && a(chunkcoordintpair, (Entity) entityplayer) < blockRange; // Spigot
          });

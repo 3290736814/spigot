@@ -1,11 +1,11 @@
-From 8e2318bf7e287a6a13e953b505947a9b3910c17e Mon Sep 17 00:00:00 2001
+From a41a67fe59341b7525e027b21815b1c16ad8fddc Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 2 Feb 2014 16:55:46 +0000
 Subject: [PATCH] Add Option to Nerf Mobs from Spawners
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index e5d66e40e..fd8397bd4 100644
+index d474af52f..36e42f900 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -166,6 +166,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -34,7 +34,7 @@ index 39fdf888d..472063264 100644
          this.bz.a();
          this.world.getMethodProfiler().exit();
 diff --git a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
-index cb6d72ece..65bb855bd 100644
+index aae4d5374..0dcd34b57 100644
 --- a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 +++ b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 @@ -128,7 +128,12 @@ public abstract class MobSpawnerAbstract {
