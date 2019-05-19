@@ -1,4 +1,4 @@
-From a41a67fe59341b7525e027b21815b1c16ad8fddc Mon Sep 17 00:00:00 2001
+From dcc36e0dcccb33d4110a25fa189b97a73b74b8f8 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 2 Feb 2014 16:55:46 +0000
 Subject: [PATCH] Add Option to Nerf Mobs from Spawners
@@ -17,10 +17,10 @@ index d474af52f..36e42f900 100644
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/server/EntityInsentient.java b/src/main/java/net/minecraft/server/EntityInsentient.java
-index 39fdf888d..472063264 100644
+index c7fcfbccb..0ca7cd31f 100644
 --- a/src/main/java/net/minecraft/server/EntityInsentient.java
 +++ b/src/main/java/net/minecraft/server/EntityInsentient.java
-@@ -636,6 +636,12 @@ public abstract class EntityInsentient extends EntityLiving {
+@@ -632,6 +632,12 @@ public abstract class EntityInsentient extends EntityLiving {
          this.world.getMethodProfiler().enter("checkDespawn");
          this.checkDespawn();
          this.world.getMethodProfiler().exit();

@@ -1,11 +1,11 @@
-From 0b31b86734c4e9d66b60b1b069c4c919fc942bcd Mon Sep 17 00:00:00 2001
+From 4178e1b871f8ce314ba7571c0be00be494cc8445 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index f6f0c87ca..809b28f11 100644
+index ec7c2a619..469b8d0bd 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -154,6 +154,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
@@ -46,7 +46,7 @@ index f6f0c87ca..809b28f11 100644
 -                    long i = SystemUtils.getMonotonicMillis() - this.nextTick;
 +                    long i = (curTime = SystemUtils.getMonotonicMillis()) - this.nextTick;
  
-                     if (i > 2000L && this.nextTick - this.lastOverloadTime >= 15000L) {
+                     if (i > 5000L && this.nextTick - this.lastOverloadTime >= 30000L) { // CraftBukkit
                          long j = i / 50L;
 @@ -755,6 +771,16 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                          this.lastOverloadTime = this.nextTick;
