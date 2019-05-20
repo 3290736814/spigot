@@ -1,4 +1,4 @@
-From 1737d09e32d33c5bc53645916f96428adda92adb Mon Sep 17 00:00:00 2001
+From 6a39b31d2f3532794ab2fbf93856e90cd741e802 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -39,10 +39,10 @@ index b4fb0522..aa7c90cb 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index a25599c3..c4b89ba5 100644
+index 2964f9b3..e6f64bb1 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -1864,6 +1864,16 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -1872,6 +1872,16 @@ public interface World extends PluginMessageRecipient, Metadatable {
      @Nullable
      public Location locateNearestStructure(@NotNull Location origin, @NotNull StructureType structureType, int radius, boolean findUnexplored);
  
@@ -126,10 +126,10 @@ index 76aad05f..39ceb444 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index c55abad8..cf65a327 100644
+index d54f57a3..fff7d577 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1465,4 +1465,15 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1471,4 +1471,15 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       * after permission changes are done.
       */
      public void updateCommands();
@@ -165,7 +165,7 @@ index 976a6c82..5f3862bc 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-index 435766a3..68f89afc 100644
+index 1df31be7..0bc410ae 100644
 --- a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
 +++ b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
 @@ -388,4 +388,14 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable, Persiste

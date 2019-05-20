@@ -1,4 +1,4 @@
-From 165bd6fb79dd36c0907f5529ce2c7201ae0c8ff2 Mon Sep 17 00:00:00 2001
+From df4432fd184e23af1415c2c3bd9fe6bce2f9b9a8 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 2 Jun 2013 10:42:57 +1000
 Subject: [PATCH] Spigot Timings
@@ -313,7 +313,7 @@ index c241d521..1173e433 100644
                  eventSet.add(new RegisteredListener(listener, executor, eh.priority(), plugin, eh.ignoreCancelled()));
 diff --git a/src/main/java/org/spigotmc/CustomTimingsHandler.java b/src/main/java/org/spigotmc/CustomTimingsHandler.java
 new file mode 100644
-index 00000000..6a8f7f55
+index 00000000..b71235f6
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/CustomTimingsHandler.java
 @@ -0,0 +1,159 @@
@@ -360,7 +360,7 @@ index 00000000..6a8f7f55
 +    /**
 +     * Prints the timings and extra data to the given stream.
 +     *
-+     * @param printStream
++     * @param printStream output stream
 +     */
 +    public static void printTimings(@NotNull PrintStream printStream)
 +    {
