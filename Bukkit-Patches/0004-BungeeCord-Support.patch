@@ -1,4 +1,4 @@
-From aa8dcc00e9a507b77be3b719010f6351d5395dbb Mon Sep 17 00:00:00 2001
+From d326dcdaa297d5756bee70cdb748906bfefdd305 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:20:49 +1000
 Subject: [PATCH] BungeeCord Support
@@ -27,7 +27,7 @@ index fff7d577..8cb13821 100644
  
      @NotNull
 diff --git a/src/main/java/org/bukkit/event/player/PlayerLoginEvent.java b/src/main/java/org/bukkit/event/player/PlayerLoginEvent.java
-index 498f0be8..4e31c31c 100644
+index 498f0be8..084ca8cf 100644
 --- a/src/main/java/org/bukkit/event/player/PlayerLoginEvent.java
 +++ b/src/main/java/org/bukkit/event/player/PlayerLoginEvent.java
 @@ -18,6 +18,7 @@ public class PlayerLoginEvent extends PlayerEvent {
@@ -42,7 +42,7 @@ index 498f0be8..4e31c31c 100644
       * @param hostname The hostname that was used to connect to the server
       * @param address The address the player used to connect, provided for
       *     timing issues
-+     * @param realAddress the actual, unspoofed connecting address // Spigot
++     * @param realAddress the actual, unspoofed connecting address
       */
 -    public PlayerLoginEvent(@NotNull final Player player, @NotNull final String hostname, @NotNull final InetAddress address) {
 +    public PlayerLoginEvent(@NotNull final Player player, @NotNull final String hostname, @NotNull final InetAddress address, final @NotNull InetAddress realAddress) { // Spigot
@@ -63,7 +63,7 @@ index 498f0be8..4e31c31c 100644
       *     timing issues
       * @param result The result status for this event
       * @param message The message to be displayed if result denies login
-+     * @param realAddress the actual, unspoofed connecting address // Spigot
++     * @param realAddress the actual, unspoofed connecting address
       */
 -    public PlayerLoginEvent(@NotNull final Player player, @NotNull String hostname, @NotNull final InetAddress address, @NotNull final Result result, @NotNull final String message) {
 -        this(player, hostname, address);
