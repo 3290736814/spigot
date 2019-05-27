@@ -1,11 +1,11 @@
-From dabc03570c569dfe7f607bf9ff261d5d730ba22a Mon Sep 17 00:00:00 2001
+From b22ebf8060da386c02b7687a1e837fa113a316ca Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 8 Aug 2014 19:57:03 +1000
 Subject: [PATCH] Plug WorldMap Memory Leak
 
 
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 53e072843..2369877bd 100644
+index f3ec06f2d..3250bbcb3 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -1015,6 +1015,30 @@ public class WorldServer extends World {

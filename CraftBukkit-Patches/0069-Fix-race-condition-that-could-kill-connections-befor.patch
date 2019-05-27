@@ -1,4 +1,4 @@
-From d6e7a8f1fc5525c48bbc029e9d116599773bd43c Mon Sep 17 00:00:00 2001
+From bcfd722eb007992ba38ab0785d3f1a0a51884ee4 Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Fri, 25 Apr 2014 23:46:46 +0200
 Subject: [PATCH] Fix race condition that could kill connections before they
@@ -12,7 +12,7 @@ initialized. The ServerConnection does not remove NetworkManagers with
 this flag.
 
 diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
-index 483186725..248660da8 100644
+index fa6bceb37..ed96a80e0 100644
 --- a/src/main/java/net/minecraft/server/NetworkManager.java
 +++ b/src/main/java/net/minecraft/server/NetworkManager.java
 @@ -50,6 +50,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {

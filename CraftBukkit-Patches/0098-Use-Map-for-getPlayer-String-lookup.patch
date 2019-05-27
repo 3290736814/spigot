@@ -1,11 +1,11 @@
-From 822c05f81de639817de8b5c4bd52622964a930f7 Mon Sep 17 00:00:00 2001
+From 38c2b4bdbdfb12a7edd558af15264731fca75803 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 13 Jul 2015 19:05:15 +1000
 Subject: [PATCH] Use Map for getPlayer(String) lookup.
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index c401c0bda..6171b369c 100644
+index 8f9049b4f..59752dcd4 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -70,6 +70,7 @@ public abstract class PlayerList {
@@ -22,7 +22,7 @@ index c401c0bda..6171b369c 100644
          this.players.add(entityplayer);
 +        this.playersByName.put(entityplayer.getName().toLowerCase(java.util.Locale.ROOT), entityplayer); // Spigot
          this.j.put(entityplayer.getUniqueID(), entityplayer);
-         // this.sendAll(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, new EntityPlayer[] { entityplayer})); // CraftBukkit - replaced with loop below
+         // this.sendAll(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, new EntityPlayer[]{entityplayer})); // CraftBukkit - replaced with loop below
  
 @@ -409,6 +411,7 @@ public abstract class PlayerList {
          worldserver.removePlayer(entityplayer);

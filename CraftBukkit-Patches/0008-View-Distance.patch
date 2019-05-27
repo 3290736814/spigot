@@ -1,4 +1,4 @@
-From 59f33214dc810bddd2b10e67bf24fe4215ae63e7 Mon Sep 17 00:00:00 2001
+From 18bd73a4b6db1b0cda3d040ee38fa469376bb0b5 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,7 +6,7 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances.
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index daa022788..52898ac51 100644
+index 7a12cc114..3f3c810c8 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -122,7 +122,8 @@ public abstract class PlayerList {
@@ -28,7 +28,7 @@ index daa022788..52898ac51 100644
          entityplayer1.dead = false;
          entityplayer1.playerConnection.teleport(new Location(worldserver.getWorld(), entityplayer1.locX, entityplayer1.locY, entityplayer1.locZ, entityplayer1.yaw, entityplayer1.pitch));
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index f60a0bac7..f2593d0e7 100644
+index d90b97748..018aaf4e3 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -79,7 +79,7 @@ public class WorldServer extends World {

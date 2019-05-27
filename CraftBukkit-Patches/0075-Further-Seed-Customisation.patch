@@ -1,4 +1,4 @@
-From 70deae0362a859dbf587f541fc139c54f3367a46 Mon Sep 17 00:00:00 2001
+From 3fb7fb0762d8f25e6ff587c74b2437c118866c2d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -102,7 +102,7 @@ index 5f847e68f..7d553ee46 100644
  
      public static enum Temperature {
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeaturePillagerOutpost.java b/src/main/java/net/minecraft/server/WorldGenFeaturePillagerOutpost.java
-index 9a0dd37ea..69b3f404e 100644
+index a3c6bac32..5da5605cf 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeaturePillagerOutpost.java
 +++ b/src/main/java/net/minecraft/server/WorldGenFeaturePillagerOutpost.java
 @@ -67,8 +67,10 @@ public class WorldGenFeaturePillagerOutpost extends WorldGenFeatureRandomScatter
@@ -156,7 +156,7 @@ index e89dbbcb7..061eb2569 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
-index a68795c30..e8750d827 100644
+index 9c3cbb2b9..69f5f3ef6 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
 @@ -30,8 +30,10 @@ public class WorldGenFeatureSwampHut extends WorldGenFeatureRandomScattered<Worl
@@ -173,7 +173,7 @@ index a68795c30..e8750d827 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/WorldGenMonument.java b/src/main/java/net/minecraft/server/WorldGenMonument.java
-index 2a072e07a..053004b8a 100644
+index 29bf219f1..0f72e94a0 100644
 --- a/src/main/java/net/minecraft/server/WorldGenMonument.java
 +++ b/src/main/java/net/minecraft/server/WorldGenMonument.java
 @@ -27,7 +27,7 @@ public class WorldGenMonument extends StructureGenerator<WorldGenFeatureEmptyCon
@@ -199,10 +199,10 @@ index ead451073..b155a73a0 100644
          l2 *= i1;
          k2 += random.nextInt(i1 - j1);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index 404f51e14..323f5bf28 100644
+index f4dfbf534..08f8d8096 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-@@ -158,7 +158,7 @@ public class CraftChunk implements Chunk {
+@@ -164,7 +164,7 @@ public class CraftChunk implements Chunk {
      @Override
      public boolean isSlimeChunk() {
          // 987234911L is deterimined in EntitySlime when seeing if a slime can spawn in a chunk

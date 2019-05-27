@@ -1,4 +1,4 @@
-From 1694a84ea5860f5782cbd2f069f8799963e3da5e Mon Sep 17 00:00:00 2001
+From 911a52b2bd33fb2922c92955dfedc9f9349f7323 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index bfb488464..4092c55d8 100644
+index 9f095c6de..db6a20391 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -162,6 +162,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -25,7 +25,7 @@ index bfb488464..4092c55d8 100644
  
      public float getBukkitYaw() {
          return this.yaw;
-@@ -189,7 +195,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -193,7 +199,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
          this.setPosition(0.0D, 0.0D, 0.0D);
          if (world != null) {
              this.dimension = world.worldProvider.getDimensionManager();
@@ -150,7 +150,7 @@ index abb80a065..ba2ca1185 100644
          Vec3D vec3d = this.getMot();
  
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 3bb70356f..2b856727d 100644
+index c3125fa43..23e628689 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -132,6 +132,13 @@ public abstract class EntityLiving extends Entity {
@@ -168,7 +168,7 @@ index 3bb70356f..2b856727d 100644
      protected EntityLiving(EntityTypes<? extends EntityLiving> entitytypes, World world) {
          super(entitytypes, world);
 diff --git a/src/main/java/net/minecraft/server/EntityVillager.java b/src/main/java/net/minecraft/server/EntityVillager.java
-index c8091c2f3..512d18a2b 100644
+index 2b85e6363..1400b3f44 100644
 --- a/src/main/java/net/minecraft/server/EntityVillager.java
 +++ b/src/main/java/net/minecraft/server/EntityVillager.java
 @@ -133,6 +133,17 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
@@ -190,7 +190,7 @@ index c8091c2f3..512d18a2b 100644
      protected void mobTick() {
          this.world.getMethodProfiler().enter("brain");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 65769e667..ddc20a134 100644
+index f8023fdcb..c682af4a8 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -316,6 +316,7 @@ public class WorldServer extends World {
@@ -231,7 +231,7 @@ index 153be935e..38f211526 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 470dad243..031bbd6ab 100644
+index d51b158e8..e4d2a8fba 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -473,6 +473,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {

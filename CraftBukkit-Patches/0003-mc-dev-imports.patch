@@ -1,4 +1,4 @@
-From 98adaaec26f6e5ce6cdc214ddd4fb537bf36abc5 Mon Sep 17 00:00:00 2001
+From fab7747e1e6746bd3355fd78e9e1fa3fd344e408 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -333,7 +333,7 @@ index 000000000..cea5166a8
 +}
 diff --git a/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
 new file mode 100644
-index 000000000..4500327ac
+index 000000000..096866b2b
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
 @@ -0,0 +1,428 @@
@@ -461,7 +461,7 @@ index 000000000..4500327ac
 +        int j1 = Math.floorMod(j, this.k);
 +        double d0 = (double) i1 / (double) this.k;
 +        double d1 = (double) j1 / (double) this.k;
-+        double[][] adouble = new double[][] { this.b(k, l), this.b(k, l + 1), this.b(k + 1, l), this.b(k + 1, l + 1)};
++        double[][] adouble = new double[][]{this.b(k, l), this.b(k, l + 1), this.b(k + 1, l), this.b(k + 1, l + 1)};
 +        int k1 = this.getSeaLevel();
 +
 +        for (int l1 = this.m - 1; l1 >= 0; --l1) {
@@ -724,7 +724,7 @@ index 000000000..4500327ac
 +                                if (iblockdata != ChunkGeneratorAbstract.i) {
 +                                    if (iblockdata.h() != 0) {
 +                                        blockposition_mutableblockposition.d(j4, j3, i5);
-+                                        protochunk.j(blockposition_mutableblockposition);
++                                        protochunk.k(blockposition_mutableblockposition);
 +                                    }
 +
 +                                    chunksection.setType(k4, k3, j5, iblockdata, false);
@@ -767,10 +767,10 @@ index 000000000..4500327ac
 +}
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 new file mode 100644
-index 000000000..65358c150
+index 000000000..8ffd89e16
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-@@ -0,0 +1,545 @@
+@@ -0,0 +1,516 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Maps;
@@ -836,6 +836,10 @@ index 000000000..65358c150
 +        boolean flag2 = worldserver.getWorldProvider().g();
 +        ChunkProviderServer chunkproviderserver = worldserver.getChunkProvider();
 +        LightEngine lightengine = chunkproviderserver.getLightEngine();
++
++        if (flag) {
++            lightengine.b(chunkcoordintpair, true);
++        }
 +
 +        for (int k = 0; k < nbttaglist.size(); ++k) {
 +            NBTTagCompound nbttagcompound2 = nbttaglist.getCompound(k);
@@ -917,7 +921,7 @@ index 000000000..65358c150
 +                    BlockPosition blockposition = (BlockPosition) iterator.next();
 +
 +                    if (((IChunkAccess) object).getType(blockposition).h() != 0) {
-+                        protochunk.j(blockposition);
++                        protochunk.k(blockposition);
 +                    }
 +                }
 +            }
@@ -1074,35 +1078,17 @@ index 000000000..65358c150
 +        NBTTagList nbttaglist1 = new NBTTagList();
 +        Iterator iterator = ichunkaccess.c().iterator();
 +
-+        NBTTagCompound nbttagcompound3;
-+
 +        while (iterator.hasNext()) {
 +            BlockPosition blockposition = (BlockPosition) iterator.next();
-+            TileEntity tileentity = ichunkaccess.getTileEntity(blockposition);
 +
-+            if (tileentity != null) {
-+                nbttagcompound3 = new NBTTagCompound();
-+                tileentity.save(nbttagcompound3);
-+                if (ichunkaccess.getChunkStatus().getType() == ChunkStatus.Type.LEVELCHUNK) {
-+                    nbttagcompound3.setBoolean("keepPacked", false);
-+                }
-+
-+                nbttaglist1.add(nbttagcompound3);
-+            } else {
-+                nbttagcompound3 = ichunkaccess.i(blockposition);
-+                if (nbttagcompound3 != null) {
-+                    if (ichunkaccess.getChunkStatus().getType() == ChunkStatus.Type.LEVELCHUNK) {
-+                        nbttagcompound3.setBoolean("keepPacked", true);
-+                    }
-+
-+                    nbttaglist1.add(nbttagcompound3);
-+                }
++            nbttagcompound2 = ichunkaccess.j(blockposition);
++            if (nbttagcompound2 != null) {
++                nbttaglist1.add(nbttagcompound2);
 +            }
 +        }
 +
 +        nbttagcompound1.set("TileEntities", nbttaglist1);
 +        NBTTagList nbttaglist2 = new NBTTagList();
-+        NBTTagCompound nbttagcompound4;
 +
 +        if (ichunkaccess.getChunkStatus().getType() == ChunkStatus.Type.LEVELCHUNK) {
 +            Chunk chunk = (Chunk) ichunkaccess;
@@ -1114,11 +1100,11 @@ index 000000000..65358c150
 +
 +                while (iterator1.hasNext()) {
 +                    Entity entity = (Entity) iterator1.next();
++                    NBTTagCompound nbttagcompound3 = new NBTTagCompound();
 +
-+                    nbttagcompound4 = new NBTTagCompound();
-+                    if (entity.d(nbttagcompound4)) {
++                    if (entity.d(nbttagcompound3)) {
 +                        chunk.d(true);
-+                        nbttaglist2.add(nbttagcompound4);
++                        nbttaglist2.add(nbttagcompound3);
 +                    }
 +                }
 +            }
@@ -1126,21 +1112,6 @@ index 000000000..65358c150
 +            ProtoChunk protochunk = (ProtoChunk) ichunkaccess;
 +
 +            nbttaglist2.addAll(protochunk.y());
-+            Iterator iterator2 = ichunkaccess.c().iterator();
-+
-+            while (iterator2.hasNext()) {
-+                BlockPosition blockposition1 = (BlockPosition) iterator2.next();
-+                TileEntity tileentity1 = ichunkaccess.getTileEntity(blockposition1);
-+
-+                if (tileentity1 != null) {
-+                    nbttagcompound4 = new NBTTagCompound();
-+                    tileentity1.save(nbttagcompound4);
-+                    nbttaglist1.add(nbttagcompound4);
-+                } else {
-+                    nbttaglist1.add(ichunkaccess.i(blockposition1));
-+                }
-+            }
-+
 +            nbttagcompound1.set("Lights", a(protochunk.w()));
 +            nbttagcompound2 = new NBTTagCompound();
 +            WorldGenStage.Features[] aworldgenstage_features = WorldGenStage.Features.values();
@@ -1177,18 +1148,18 @@ index 000000000..65358c150
 +        }
 +
 +        nbttagcompound1.set("PostProcessing", a(ichunkaccess.l()));
-+        nbttagcompound3 = new NBTTagCompound();
-+        Iterator iterator3 = ichunkaccess.f().iterator();
++        NBTTagCompound nbttagcompound4 = new NBTTagCompound();
++        Iterator iterator2 = ichunkaccess.f().iterator();
 +
-+        while (iterator3.hasNext()) {
-+            Entry<HeightMap.Type, HeightMap> entry = (Entry) iterator3.next();
++        while (iterator2.hasNext()) {
++            Entry<HeightMap.Type, HeightMap> entry = (Entry) iterator2.next();
 +
 +            if (ichunkaccess.getChunkStatus().h().contains(entry.getKey())) {
-+                nbttagcompound3.set(((HeightMap.Type) entry.getKey()).a(), new NBTTagLongArray(((HeightMap) entry.getValue()).a()));
++                nbttagcompound4.set(((HeightMap.Type) entry.getKey()).a(), new NBTTagLongArray(((HeightMap) entry.getValue()).a()));
 +            }
 +        }
 +
-+        nbttagcompound1.set("Heightmaps", nbttagcompound3);
++        nbttagcompound1.set("Heightmaps", nbttagcompound4);
 +        nbttagcompound1.set("Structures", a(chunkcoordintpair, ichunkaccess.h(), ichunkaccess.v()));
 +        return nbttagcompound;
 +    }
@@ -1791,7 +1762,7 @@ index 000000000..589af605b
 +}
 diff --git a/src/main/java/net/minecraft/server/ItemDebugStick.java b/src/main/java/net/minecraft/server/ItemDebugStick.java
 new file mode 100644
-index 000000000..a8a647d5d
+index 000000000..40d141cd6
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ItemDebugStick.java
 @@ -0,0 +1,85 @@
@@ -1837,7 +1808,7 @@ index 000000000..a8a647d5d
 +            String s = IRegistry.BLOCK.getKey(block).toString();
 +
 +            if (collection.isEmpty()) {
-+                a(entityhuman, (IChatBaseComponent) (new ChatMessage(this.getName() + ".empty", new Object[] { s})));
++                a(entityhuman, (IChatBaseComponent) (new ChatMessage(this.getName() + ".empty", new Object[]{s})));
 +            } else {
 +                NBTTagCompound nbttagcompound = itemstack.a("DebugProperty");
 +                String s1 = nbttagcompound.getString(s);
@@ -1851,13 +1822,13 @@ index 000000000..a8a647d5d
 +                    IBlockData iblockdata1 = a(iblockdata, iblockstate, entityhuman.isSneaking());
 +
 +                    generatoraccess.setTypeAndData(blockposition, iblockdata1, 18);
-+                    a(entityhuman, (IChatBaseComponent) (new ChatMessage(this.getName() + ".update", new Object[] { iblockstate.a(), a(iblockdata1, iblockstate)})));
++                    a(entityhuman, (IChatBaseComponent) (new ChatMessage(this.getName() + ".update", new Object[]{iblockstate.a(), a(iblockdata1, iblockstate)})));
 +                } else {
 +                    iblockstate = (IBlockState) a((Iterable) collection, (Object) iblockstate, entityhuman.isSneaking());
 +                    String s2 = iblockstate.a();
 +
 +                    nbttagcompound.setString(s, s2);
-+                    a(entityhuman, (IChatBaseComponent) (new ChatMessage(this.getName() + ".select", new Object[] { s2, a(iblockdata, iblockstate)})));
++                    a(entityhuman, (IChatBaseComponent) (new ChatMessage(this.getName() + ".select", new Object[]{s2, a(iblockdata, iblockstate)})));
 +                }
 +
 +            }
@@ -3344,7 +3315,7 @@ index 000000000..aa9bbfd1c
 +}
 diff --git a/src/main/java/net/minecraft/server/TileEntitySkull.java b/src/main/java/net/minecraft/server/TileEntitySkull.java
 new file mode 100644
-index 000000000..0ad0c183c
+index 000000000..895a8dfb8
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/TileEntitySkull.java
 @@ -0,0 +1,119 @@
@@ -3433,10 +3404,10 @@ index 000000000..0ad0c183c
 +
 +    public void setGameProfile(@Nullable GameProfile gameprofile) {
 +        this.gameProfile = gameprofile;
-+        this.d();
++        this.f();
 +    }
 +
-+    private void d() {
++    private void f() {
 +        this.gameProfile = b(this.gameProfile);
 +        this.update();
 +    }
@@ -3721,7 +3692,7 @@ index 000000000..5f847e68f
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeaturePillagerOutpost.java b/src/main/java/net/minecraft/server/WorldGenFeaturePillagerOutpost.java
 new file mode 100644
-index 000000000..9a0dd37ea
+index 000000000..a3c6bac32
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeaturePillagerOutpost.java
 @@ -0,0 +1,88 @@
@@ -3735,7 +3706,7 @@ index 000000000..9a0dd37ea
 +
 +public class WorldGenFeaturePillagerOutpost extends WorldGenFeatureRandomScattered<WorldGenFeaturePillagerOutpostConfiguration> {
 +
-+    private static final List<BiomeBase.BiomeMeta> a = Lists.newArrayList(new BiomeBase.BiomeMeta[] { new BiomeBase.BiomeMeta(EntityTypes.PILLAGER, 1, 1, 1)});
++    private static final List<BiomeBase.BiomeMeta> a = Lists.newArrayList(new BiomeBase.BiomeMeta[]{new BiomeBase.BiomeMeta(EntityTypes.PILLAGER, 1, 1, 1)});
 +
 +    public WorldGenFeaturePillagerOutpost(Function<Dynamic<?>, ? extends WorldGenFeaturePillagerOutpostConfiguration> function) {
 +        super(function);
@@ -3941,7 +3912,7 @@ index 000000000..e89dbbcb7
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
 new file mode 100644
-index 000000000..a68795c30
+index 000000000..9c3cbb2b9
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
 @@ -0,0 +1,73 @@
@@ -3954,8 +3925,8 @@ index 000000000..a68795c30
 +
 +public class WorldGenFeatureSwampHut extends WorldGenFeatureRandomScattered<WorldGenFeatureEmptyConfiguration> {
 +
-+    private static final List<BiomeBase.BiomeMeta> a = Lists.newArrayList(new BiomeBase.BiomeMeta[] { new BiomeBase.BiomeMeta(EntityTypes.WITCH, 1, 1, 1)});
-+    private static final List<BiomeBase.BiomeMeta> aS = Lists.newArrayList(new BiomeBase.BiomeMeta[] { new BiomeBase.BiomeMeta(EntityTypes.CAT, 1, 1, 1)});
++    private static final List<BiomeBase.BiomeMeta> a = Lists.newArrayList(new BiomeBase.BiomeMeta[]{new BiomeBase.BiomeMeta(EntityTypes.WITCH, 1, 1, 1)});
++    private static final List<BiomeBase.BiomeMeta> aS = Lists.newArrayList(new BiomeBase.BiomeMeta[]{new BiomeBase.BiomeMeta(EntityTypes.CAT, 1, 1, 1)});
 +
 +    public WorldGenFeatureSwampHut(Function<Dynamic<?>, ? extends WorldGenFeatureEmptyConfiguration> function) {
 +        super(function);
@@ -4020,7 +3991,7 @@ index 000000000..a68795c30
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenMonument.java b/src/main/java/net/minecraft/server/WorldGenMonument.java
 new file mode 100644
-index 000000000..2a072e07a
+index 000000000..29bf219f1
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenMonument.java
 @@ -0,0 +1,128 @@
@@ -4036,7 +4007,7 @@ index 000000000..2a072e07a
 +
 +public class WorldGenMonument extends StructureGenerator<WorldGenFeatureEmptyConfiguration> {
 +
-+    private static final List<BiomeBase.BiomeMeta> a = Lists.newArrayList(new BiomeBase.BiomeMeta[] { new BiomeBase.BiomeMeta(EntityTypes.GUARDIAN, 1, 2, 4)});
++    private static final List<BiomeBase.BiomeMeta> a = Lists.newArrayList(new BiomeBase.BiomeMeta[]{new BiomeBase.BiomeMeta(EntityTypes.GUARDIAN, 1, 2, 4)});
 +
 +    public WorldGenMonument(Function<Dynamic<?>, ? extends WorldGenFeatureEmptyConfiguration> function) {
 +        super(function);

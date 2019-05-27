@@ -1,4 +1,4 @@
-From a950126c64611cdd9ab2a126ca82bdbfea6909e0 Mon Sep 17 00:00:00 2001
+From a6dd4143c14622c05851b250537f045aa04b5473 Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Thu, 26 Jan 2017 20:54:55 +0000
 Subject: [PATCH] Replace chunk loading / unloading rate throttling.
@@ -7,7 +7,7 @@ Uses a scheme based on estimated tick slack time.
 See https://hub.spigotmc.org/stash/projects/SPIGOT/repos/spigot/pull-requests/71/overview
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 0fea11d46..25972072f 100644
+index 58bf80795..64318e6e7 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -55,6 +55,7 @@ import org.bukkit.craftbukkit.Main;
@@ -43,10 +43,10 @@ index 0fea11d46..25972072f 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index dfa433620..2e17358ed 100644
+index 7f87b2edd..c186d2778 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -297,6 +297,9 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -301,6 +301,9 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
          }
  
      }
@@ -56,38 +56,38 @@ index dfa433620..2e17358ed 100644
      protected void unloadChunks(BooleanSupplier booleansupplier) {
          GameProfilerFiller gameprofilerfiller = this.world.getMethodProfiler();
  
-@@ -305,18 +308,28 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
-         gameprofilerfiller.exitEnter("chunk_unload");
-         if (!this.world.isSavingDisabled()) {
-             LongIterator longiterator = this.unloadQueue.iterator();
+@@ -316,18 +319,28 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+ 
+     private void b(BooleanSupplier booleansupplier) {
+         LongIterator longiterator = this.unloadQueue.iterator();
 -
--            for (int i = 0; longiterator.hasNext() && (booleansupplier.getAsBoolean() || i < 200 || this.unloadQueue.size() > 2000); longiterator.remove()) {
-+            // Spigot start
-+            org.spigotmc.SlackActivityAccountant activityAccountant = this.world.getMinecraftServer().slackActivityAccountant;
-+            activityAccountant.startActivity(0.5);
-+            int targetSize = (int) (this.unloadQueue.size() * UNLOAD_QUEUE_RESIZE_FACTOR);
-+            // Spigot end
-+            while (longiterator.hasNext()) { // Spigot
-                 long j = longiterator.nextLong();
-+                longiterator.remove(); // Spigot
-                 PlayerChunk playerchunk = (PlayerChunk) this.updatingChunks.remove(j);
+-        for (int i = 0; longiterator.hasNext() && (booleansupplier.getAsBoolean() || i < 200 || this.unloadQueue.size() > 2000); longiterator.remove()) {
++        // Spigot start
++        org.spigotmc.SlackActivityAccountant activityAccountant = this.world.getMinecraftServer().slackActivityAccountant;
++        activityAccountant.startActivity(0.5);
++        int targetSize = (int) (this.unloadQueue.size() * UNLOAD_QUEUE_RESIZE_FACTOR);
++        // Spigot end
++        while (longiterator.hasNext()) { // Spigot
+             long j = longiterator.nextLong();
++            longiterator.remove(); // Spigot
+             PlayerChunk playerchunk = (PlayerChunk) this.updatingChunks.remove(j);
  
-                 if (playerchunk != null) {
-                     this.pendingUnload.put(j, playerchunk);
-                     this.updatingChunksModified = true;
--                    ++i;
-+                    // Spigot start
-+                    if (!booleansupplier.getAsBoolean() && this.unloadQueue.size() <= targetSize && activityAccountant.activityTimeIsExhausted()) {
-+                        break;
-+                    }
-+                    // Spigot end
-                     this.a(j, playerchunk);
-                 }
+             if (playerchunk != null) {
+                 this.pendingUnload.put(j, playerchunk);
+                 this.updatingChunksModified = true;
+-                ++i;
++                // Spigot start
++                if (!booleansupplier.getAsBoolean() && this.unloadQueue.size() <= targetSize && activityAccountant.activityTimeIsExhausted()) {
++                    break;
++                }
++                // Spigot end
+                 this.a(j, playerchunk);
              }
-+            activityAccountant.endActivity(); // Spigot
          }
++        activityAccountant.endActivity(); // Spigot
  
-         gameprofilerfiller.exit();
+         Runnable runnable;
+ 
 diff --git a/src/main/java/org/spigotmc/SlackActivityAccountant.java b/src/main/java/org/spigotmc/SlackActivityAccountant.java
 new file mode 100644
 index 000000000..aabc7ad20
