@@ -1,4 +1,4 @@
-From 4cb47d83fc9d7ab055fdc4d4476fa2087c5629d8 Mon Sep 17 00:00:00 2001
+From c72e7946f79ee96f8890b76578acfc757d790826 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -7,20 +7,38 @@ Changes the mob spawning algorithm to properly account for view distance and the
 
 Needs better documentation.
 
+diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
+index e278dc636..ea142d76a 100644
+--- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
++++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
+@@ -319,9 +319,9 @@ public class ChunkProviderServer extends IChunkProvider {
+                     this.world.getMethodProfiler().exit();
+                     ChunkCoordIntPair chunkcoordintpair = playerchunk.h();
+ 
+-                    if (!this.playerChunkMap.d(chunkcoordintpair)) {
++                    if (!this.playerChunkMap.d(chunkcoordintpair, false)) { // Spigot
+                         chunk.b(chunk.q() + j);
+-                        if (flag1 && (this.allowMonsters || this.allowAnimals) && this.world.getWorldBorder().isInBounds(chunk.getPos())) {
++                        if (flag1 && (this.allowMonsters || this.allowAnimals) && this.world.getWorldBorder().isInBounds(chunk.getPos()) && !this.playerChunkMap.d(chunkcoordintpair, true)) { // Spigot
+                             this.world.getMethodProfiler().enter("spawner");
+                             this.world.timings.mobSpawn.startTiming(); // Spigot
+                             EnumCreatureType[] aenumcreaturetype1 = aenumcreaturetype;
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index cfb6b679b..bf6801bae 100644
+index cfb6b679b..9e189ccdf 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -740,8 +740,16 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -739,9 +739,17 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+         return nbttagcompound == null ? null : this.getChunkData(this.world.getWorldProvider().getDimensionManager(), this.m, nbttagcompound, chunkcoordintpair, world); // CraftBukkit
      }
  
-     boolean d(ChunkCoordIntPair chunkcoordintpair) {
-+        // Spigot Start
+-    boolean d(ChunkCoordIntPair chunkcoordintpair) {
++    // Spigot Start
++    boolean d(ChunkCoordIntPair chunkcoordintpair, boolean reducedRange) {
 +        int chunkRange = world.spigotConfig.mobSpawnRange;
 +        chunkRange = (chunkRange > world.spigotConfig.viewDistance) ? (byte) world.spigotConfig.viewDistance : chunkRange;
 +        chunkRange = (chunkRange > 8) ? 8 : chunkRange;
 +
-+        double blockRange = Math.pow(chunkRange << 4, 2);
++        double blockRange = (reducedRange) ? Math.pow(chunkRange << 4, 2) : 16384.0D;
 +        // Spigot end
 +
          return this.playerMap.a(chunkcoordintpair.pair()).noneMatch((entityplayer) -> {
