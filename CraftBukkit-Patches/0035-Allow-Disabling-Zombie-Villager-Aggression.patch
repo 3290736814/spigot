@@ -1,4 +1,4 @@
-From d6219dda6d428b3e29e77e4301e3d204c2670038 Mon Sep 17 00:00:00 2001
+From 43ac5741843717db084df277f59e649f4119fe40 Mon Sep 17 00:00:00 2001
 From: Dylan Xaldin <Puremin0rez515@gmail.com>
 Date: Thu, 12 Dec 2013 18:05:03 -0600
 Subject: [PATCH] Allow Disabling Zombie Villager Aggression
@@ -19,10 +19,10 @@ index 0d374ebad..9cea262c8 100644
          this.targetSelector.a(5, new PathfinderGoalNearestAttackableTarget<>(this, EntityTurtle.class, 10, true, false, EntityTurtle.bz));
      }
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index b05f25e99..7ee2b4cec 100644
+index 58e7bbd98..40d16fc8f 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -213,4 +213,11 @@ public class SpigotWorldConfig
+@@ -215,4 +215,11 @@ public class SpigotWorldConfig
          arrowDespawnRate = getInt( "arrow-despawn-rate", 1200  );
          log( "Arrow Despawn Rate: " + arrowDespawnRate );
      }

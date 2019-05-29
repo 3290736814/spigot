@@ -1,4 +1,4 @@
-From ed33d163b4af686647c96999aa7f0aa127c388a2 Mon Sep 17 00:00:00 2001
+From 78de951c63fcc80d0e9aec1dc987926c15980678 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Feb 2013 11:58:47 -0500
 Subject: [PATCH] Entity Tracking Ranges
@@ -12,7 +12,7 @@ This has multiple benefits:
 4) Less client lag - Not trying to render distant item frames and paintings and entities will reduce entity count on the client, which is major for shop/town worlds which may use tons of item frames.
 
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index bf6801bae..48f96f8ab 100644
+index 9e189ccdf..684063ce3 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -893,6 +893,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -24,12 +24,12 @@ index bf6801bae..48f96f8ab 100644
  
                  if (this.trackedEntities.containsKey(entity.getId())) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 5571b3118..07ae5783f 100644
+index b3f67f9fe..af8108a5a 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -175,4 +175,19 @@ public class SpigotWorldConfig
+@@ -177,4 +177,19 @@ public class SpigotWorldConfig
          tickInactiveVillagers = getBoolean( "entity-activation-range.tick-inactive-villagers", tickInactiveVillagers );
-         log( "Entity Activation Range: An " + animalActivationRange + " / Mo " + monsterActivationRange + " / Mi " + miscActivationRange + " / Tiv " + tickInactiveVillagers );
+         log( "Entity Activation Range: An " + animalActivationRange + " / Mo " + monsterActivationRange + " / Ra " + raiderActivationRange + " / Mi " + miscActivationRange + " / Tiv " + tickInactiveVillagers );
      }
 +
 +    public int playerTrackingRange = 48;
@@ -49,7 +49,7 @@ index 5571b3118..07ae5783f 100644
  }
 diff --git a/src/main/java/org/spigotmc/TrackingRange.java b/src/main/java/org/spigotmc/TrackingRange.java
 new file mode 100644
-index 000000000..18d0a92f8
+index 000000000..6f8e6c1d0
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/TrackingRange.java
 @@ -0,0 +1,51 @@
@@ -80,7 +80,7 @@ index 000000000..18d0a92f8
 +        if ( entity instanceof EntityPlayer )
 +        {
 +            return config.playerTrackingRange;
-+        }  else if ( entity.activationType == 1 )
++        }  else if ( entity.activationType == ActivationRange.ActivationType.MONSTER || entity.activationType == ActivationRange.ActivationType.RAIDER )
 +        {
 +            return config.monsterTrackingRange;
 +        } else if ( entity instanceof EntityGhast )
@@ -92,7 +92,7 @@ index 000000000..18d0a92f8
 +            {
 +                return config.monsterActivationRange;
 +            }
-+        } else if ( entity.activationType == 2 )
++        } else if ( entity.activationType == ActivationRange.ActivationType.ANIMAL )
 +        {
 +            return config.animalTrackingRange;
 +        } else if ( entity instanceof EntityItemFrame || entity instanceof EntityPainting || entity instanceof EntityItem || entity instanceof EntityExperienceOrb )

@@ -1,4 +1,4 @@
-From 2970443663ede3998ee5cdcee4178781e8f74c58 Mon Sep 17 00:00:00 2001
+From 4f3c3e80592e37ade8832c76100e3c8fcc630f68 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:33:36 +1100
 Subject: [PATCH] Use Standard List for EntitySlices.
@@ -69,7 +69,7 @@ index dd061fb08..bdda2e63a 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 48f96f8ab..7f87b2edd 100644
+index 684063ce3..3d95523bf 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -537,11 +537,11 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -105,7 +105,7 @@ index 3250bbcb3..508cdc6a0 100644
  
              while (iterator.hasNext()) {
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index 28e877a94..76b060a12 100644
+index d0b6c9b73..4c947a935 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -1,6 +1,7 @@
@@ -116,7 +116,7 @@ index 28e877a94..76b060a12 100644
  import net.minecraft.server.AxisAlignedBB;
  import net.minecraft.server.Chunk;
  import net.minecraft.server.Entity;
-@@ -142,7 +143,7 @@ public class ActivationRange
+@@ -157,7 +158,7 @@ public class ActivationRange
       */
      private static void activateChunkEntities(Chunk chunk)
      {
