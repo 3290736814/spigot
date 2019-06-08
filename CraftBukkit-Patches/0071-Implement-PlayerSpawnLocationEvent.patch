@@ -1,11 +1,11 @@
-From 7e579d85157d7fae3a68c26e06223912e7759a2a Mon Sep 17 00:00:00 2001
+From e7d55cda93722260a38195882f1aaa50ecd2d5a4 Mon Sep 17 00:00:00 2001
 From: ninja <xninja@openmailbox.org>
 Date: Tue, 8 Apr 2014 14:05:19 +0200
 Subject: [PATCH] Implement PlayerSpawnLocationEvent.
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index e9293e932..8f9049b4f 100644
+index e9293e932..e1e3f2915 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -38,6 +38,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
@@ -26,9 +26,9 @@ index e9293e932..8f9049b4f 100644
 +        Bukkit.getPluginManager().callEvent(ev);
 +
 +        Location loc = ev.getSpawnLocation();
-+        WorldServer world = ((CraftWorld) loc.getWorld()).getHandle();
++        worldserver = ((CraftWorld) loc.getWorld()).getHandle();
 +
-+        entityplayer.spawnIn(world);
++        entityplayer.spawnIn(worldserver);
 +        entityplayer.setPosition(loc.getX(), loc.getY(), loc.getZ());
 +        entityplayer.setYawPitch(loc.getYaw(), loc.getPitch());
 +        // Spigot end
