@@ -1,4 +1,4 @@
-From caca527fe6391f6ab82e90bbc21de79373a41914 Mon Sep 17 00:00:00 2001
+From ede10364c1fab7716797120b716fc481039ad9c6 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -126,13 +126,13 @@ index 76aad05f..39ceb444 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index d54f57a3..fff7d577 100644
+index 8f137539..92461175 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1471,4 +1471,15 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
-      * after permission changes are done.
+@@ -1479,4 +1479,15 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+      * @param book The book to open for this player
       */
-     public void updateCommands();
+     public void openBook(@NotNull ItemStack book);
 +
 +    // Spigot start
 +    public class Spigot extends Entity.Spigot

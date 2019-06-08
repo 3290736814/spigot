@@ -1,4 +1,4 @@
-From c44a49892b515848f6f4eb4e9c290284513a3b01 Mon Sep 17 00:00:00 2001
+From ce3fe406a3c92cd943f9da87d91f0975b65a27b4 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -6,7 +6,7 @@ Subject: [PATCH] Skeleton API Implementations
 This contains the basic, empty implementations for some Spigot-API extensions. They are included early in the patching progress so that compilation will still succeed midway despite the APIs only being provided by subsequent patches.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 82a789732..f06e5fd6b 100644
+index e36a4cbf7..d120479f7 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1882,4 +1882,14 @@ public final class CraftServer implements Server {
@@ -25,7 +25,7 @@ index 82a789732..f06e5fd6b 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 8b95301c3..0231dc645 100644
+index b5052e1a1..d2f21edea 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -2019,4 +2019,15 @@ public class CraftWorld implements World {
@@ -122,12 +122,12 @@ index cb1efe969..1d4ba473a 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 4c5c78dd5..5d7d7d6cf 100644
+index 8b5b22e92..f3a96a524 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1638,4 +1638,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
- 
-         getHandle().server.getCommandDispatcher().a(getHandle());
+@@ -1650,4 +1650,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+         getHandle().a(org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(book), net.minecraft.server.EnumHand.MAIN_HAND); // PAIL rename openBook
+         getInventory().setItemInMainHand(hand);
      }
 +
 +    // Spigot start

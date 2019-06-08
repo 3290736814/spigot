@@ -1,4 +1,4 @@
-From 59b22b293cf8c914ab5fc3bbe9d20cb05de85995 Mon Sep 17 00:00:00 2001
+From a6b5319f328d90889511bd261ac7b71130f5ed8b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -37,7 +37,7 @@ index 15dbaeb19..0086d3fd8 100644
  
          if (map.containsKey(irecipe.getKey())) {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 560474d19..8c62d68d1 100644
+index b6e8ca199..f9fa4131f 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -821,6 +821,7 @@ public abstract class EntityLiving extends Entity {
@@ -49,7 +49,7 @@ index 560474d19..8c62d68d1 100644
              effectsToProcess.add(new ProcessableEffect(mobeffect, cause));
              return true;
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 61128f72d..cfb6b679b 100644
+index fd6705102..19de8c19f 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -880,6 +880,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -105,7 +105,7 @@ index 39af8b631..d90b97748 100644
              throw new IllegalStateException("Removing entity while ticking!");
          } else {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 00f5d9de1..ccb445468 100644
+index 2f2778e39..73172cf32 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -682,6 +682,7 @@ public final class CraftServer implements Server {
@@ -117,7 +117,7 @@ index 00f5d9de1..ccb445468 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 0231dc645..44072b648 100644
+index d2f21edea..ab305733d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -370,6 +370,7 @@ public class CraftWorld implements World {
@@ -153,10 +153,10 @@ index 0231dc645..44072b648 100644
  
          // If generate = false, but the chunk already exists, we will get this back.
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 5d7d7d6cf..bad4a8c39 100644
+index f3a96a524..8e9abf558 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -297,6 +297,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -298,6 +298,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
      @Override
      public void kickPlayer(String message) {
