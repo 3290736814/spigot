@@ -1,11 +1,11 @@
-From 8833d2adcd2d7c5724584fb84c90dda059f307a5 Mon Sep 17 00:00:00 2001
+From 8b1f219b0fcd4227415d52a7ab8bc7df1ec8a56e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 3 Mar 2016 19:45:46 +1100
 Subject: [PATCH] Implement SpawnerSpawnEvent.
 
 
 diff --git a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
-index 0dcd34b57..a2140cb6c 100644
+index 2e96a3661..dc0e93926 100644
 --- a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 +++ b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 @@ -133,6 +133,16 @@ public abstract class MobSpawnerAbstract {
@@ -26,7 +26,7 @@ index 0dcd34b57..a2140cb6c 100644
                          this.a(entity);
                          world.triggerEffect(2004, blockposition, 0);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index a652757bd..1a9e5b4b3 100644
+index 78a2639d3..bb5c5aa3d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -193,6 +193,8 @@ import org.bukkit.inventory.InventoryView;
@@ -38,7 +38,7 @@ index a652757bd..1a9e5b4b3 100644
  public class CraftEventFactory {
      public static final DamageSource MELTING = CraftDamageSource.copyOf(DamageSource.BURN);
      public static final DamageSource POISON = CraftDamageSource.copyOf(DamageSource.MAGIC);
-@@ -1338,6 +1340,21 @@ public class CraftEventFactory {
+@@ -1342,6 +1344,21 @@ public class CraftEventFactory {
          return event;
      }
  

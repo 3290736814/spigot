@@ -1,4 +1,4 @@
-From fab7747e1e6746bd3355fd78e9e1fa3fd344e408 Mon Sep 17 00:00:00 2001
+From 611d587baea56020d87b488a5f8a32e2945de627 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -7,10 +7,10 @@ Imported files which are only modified by Spigot, not upstream. Files here shoul
 
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataWorld.java b/src/main/java/net/minecraft/server/AdvancementDataWorld.java
 new file mode 100644
-index 000000000..f3595b000
+index 000000000..e2f8a0e01
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/AdvancementDataWorld.java
-@@ -0,0 +1,115 @@
+@@ -0,0 +1,69 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Maps;
@@ -20,18 +20,15 @@ index 000000000..f3595b000
 +import com.google.gson.JsonElement;
 +import com.google.gson.JsonObject;
 +import com.google.gson.JsonParseException;
-+import java.io.IOException;
 +import java.lang.reflect.Type;
-+import java.nio.charset.StandardCharsets;
 +import java.util.Collection;
 +import java.util.Iterator;
 +import java.util.Map;
 +import javax.annotation.Nullable;
-+import org.apache.commons.io.IOUtils;
 +import org.apache.logging.log4j.LogManager;
 +import org.apache.logging.log4j.Logger;
 +
-+public class AdvancementDataWorld implements IResourcePackListener {
++public class AdvancementDataWorld extends ResourceDataJson {
 +
 +    private static final Logger LOGGER = LogManager.getLogger();
 +    public static final Gson DESERIALIZER = (new GsonBuilder()).registerTypeHierarchyAdapter(Advancement.SerializedAdvancement.class, (com.google.gson.JsonDeserializer) (jsonelement, type, jsondeserializationcontext) -> {
@@ -39,82 +36,29 @@ index 000000000..f3595b000
 +
 +        return Advancement.SerializedAdvancement.a(jsonobject, jsondeserializationcontext);
 +    }).registerTypeAdapter(AdvancementRewards.class, new AdvancementRewards.b()).registerTypeHierarchyAdapter(IChatBaseComponent.class, new IChatBaseComponent.ChatSerializer()).registerTypeHierarchyAdapter(ChatModifier.class, new ChatModifier.ChatModifierSerializer()).registerTypeAdapterFactory(new ChatTypeAdapterFactory()).create();
-+    public static final Advancements REGISTRY = new Advancements();
-+    public static final int a = "advancements/".length();
-+    public static final int b = ".json".length();
-+    private boolean f;
++    public Advancements REGISTRY = new Advancements();
 +
-+    public AdvancementDataWorld() {}
++    public AdvancementDataWorld() {
++        super(AdvancementDataWorld.DESERIALIZER, "advancements");
++    }
 +
-+    private Map<MinecraftKey, Advancement.SerializedAdvancement> b(IResourceManager iresourcemanager) {
-+        Map<MinecraftKey, Advancement.SerializedAdvancement> map = Maps.newHashMap();
-+        Iterator iterator = iresourcemanager.a("advancements", (s) -> {
-+            return s.endsWith(".json");
-+        }).iterator();
++    protected void a(Map<MinecraftKey, JsonObject> map, IResourceManager iresourcemanager, GameProfilerFiller gameprofilerfiller) {
++        Map<MinecraftKey, Advancement.SerializedAdvancement> map1 = Maps.newHashMap();
 +
-+        while (iterator.hasNext()) {
-+            MinecraftKey minecraftkey = (MinecraftKey) iterator.next();
-+            String s = minecraftkey.getKey();
-+            MinecraftKey minecraftkey1 = new MinecraftKey(minecraftkey.b(), s.substring(AdvancementDataWorld.a, s.length() - AdvancementDataWorld.b));
-+
++        map.forEach((minecraftkey, jsonobject) -> {
 +            try {
-+                IResource iresource = iresourcemanager.a(minecraftkey);
-+                Throwable throwable = null;
++                Advancement.SerializedAdvancement advancement_serializedadvancement = (Advancement.SerializedAdvancement) AdvancementDataWorld.DESERIALIZER.fromJson(jsonobject, Advancement.SerializedAdvancement.class);
 +
-+                try {
-+                    Advancement.SerializedAdvancement advancement_serializedadvancement = (Advancement.SerializedAdvancement) ChatDeserializer.a(AdvancementDataWorld.DESERIALIZER, IOUtils.toString(iresource.b(), StandardCharsets.UTF_8), Advancement.SerializedAdvancement.class);
-+
-+                    if (advancement_serializedadvancement == null) {
-+                        AdvancementDataWorld.LOGGER.error("Couldn't load custom advancement {} from {} as it's empty or null", minecraftkey1, minecraftkey);
-+                    } else {
-+                        map.put(minecraftkey1, advancement_serializedadvancement);
-+                    }
-+                } catch (Throwable throwable1) {
-+                    throwable = throwable1;
-+                    throw throwable1;
-+                } finally {
-+                    if (iresource != null) {
-+                        if (throwable != null) {
-+                            try {
-+                                iresource.close();
-+                            } catch (Throwable throwable2) {
-+                                throwable.addSuppressed(throwable2);
-+                            }
-+                        } else {
-+                            iresource.close();
-+                        }
-+                    }
-+
-+                }
-+            } catch (IllegalArgumentException | ResourceKeyInvalidException | JsonParseException jsonparseexception) {
-+                AdvancementDataWorld.LOGGER.error("Parsing error loading custom advancement {}: {}", minecraftkey1, jsonparseexception.getMessage());
-+                this.f = true;
-+            } catch (IOException ioexception) {
-+                AdvancementDataWorld.LOGGER.error("Couldn't read custom advancement {} from {}", minecraftkey1, minecraftkey, ioexception);
-+                this.f = true;
++                map1.put(minecraftkey, advancement_serializedadvancement);
++            } catch (IllegalArgumentException | JsonParseException jsonparseexception) {
++                AdvancementDataWorld.LOGGER.error("Parsing error loading custom advancement {}: {}", minecraftkey, jsonparseexception.getMessage());
 +            }
-+        }
 +
-+        return map;
-+    }
++        });
++        Advancements advancements = new Advancements();
 +
-+    @Nullable
-+    public Advancement a(MinecraftKey minecraftkey) {
-+        return AdvancementDataWorld.REGISTRY.a(minecraftkey);
-+    }
-+
-+    public Collection<Advancement> b() {
-+        return AdvancementDataWorld.REGISTRY.c();
-+    }
-+
-+    @Override
-+    public void a(IResourceManager iresourcemanager) {
-+        this.f = false;
-+        AdvancementDataWorld.REGISTRY.a();
-+        Map<MinecraftKey, Advancement.SerializedAdvancement> map = this.b(iresourcemanager);
-+
-+        AdvancementDataWorld.REGISTRY.a(map);
-+        Iterator iterator = AdvancementDataWorld.REGISTRY.b().iterator();
++        advancements.a((Map) map1);
++        Iterator iterator = advancements.b().iterator();
 +
 +        while (iterator.hasNext()) {
 +            Advancement advancement = (Advancement) iterator.next();
@@ -124,6 +68,16 @@ index 000000000..f3595b000
 +            }
 +        }
 +
++        this.REGISTRY = advancements;
++    }
++
++    @Nullable
++    public Advancement a(MinecraftKey minecraftkey) {
++        return this.REGISTRY.a(minecraftkey);
++    }
++
++    public Collection<Advancement> a() {
++        return this.REGISTRY.c();
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/ChunkGenerator.java b/src/main/java/net/minecraft/server/ChunkGenerator.java
@@ -767,10 +721,10 @@ index 000000000..096866b2b
 +}
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 new file mode 100644
-index 000000000..8ffd89e16
+index 000000000..7814efa60
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-@@ -0,0 +1,516 @@
+@@ -0,0 +1,517 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Maps;
@@ -1030,6 +984,7 @@ index 000000000..8ffd89e16
 +        ChunkSection[] achunksection = ichunkaccess.getSections();
 +        NBTTagList nbttaglist = new NBTTagList();
 +        LightEngineThreaded lightenginethreaded = worldserver.getChunkProvider().getLightEngine();
++        boolean flag = ichunkaccess.r();
 +
 +        NBTTagCompound nbttagcompound2;
 +
@@ -1061,7 +1016,7 @@ index 000000000..8ffd89e16
 +        }
 +
 +        nbttagcompound1.set("Sections", nbttaglist);
-+        if (ichunkaccess.r()) {
++        if (flag) {
 +            nbttagcompound1.setBoolean("isLightOn", true);
 +        }
 +
@@ -1289,11 +1244,13 @@ index 000000000..8ffd89e16
 +}
 diff --git a/src/main/java/net/minecraft/server/EntitySquid.java b/src/main/java/net/minecraft/server/EntitySquid.java
 new file mode 100644
-index 000000000..345f798a7
+index 000000000..acb20c610
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/EntitySquid.java
-@@ -0,0 +1,275 @@
+@@ -0,0 +1,276 @@
 +package net.minecraft.server;
++
++import java.util.Random;
 +
 +public class EntitySquid extends EntityWaterAnimal {
 +
@@ -1381,7 +1338,7 @@ index 000000000..345f798a7
 +            }
 +        }
 +
-+        if (this.au()) {
++        if (this.av()) {
 +            if (this.bA < 3.1415927F) {
 +                float f = this.bA / 3.1415927F;
 +
@@ -1431,7 +1388,7 @@ index 000000000..345f798a7
 +    @Override
 +    public boolean damageEntity(DamageSource damagesource, float f) {
 +        if (super.damageEntity(damagesource, f) && this.getLastDamager() != null) {
-+            this.dV();
++            this.dW();
 +            return true;
 +        } else {
 +            return false;
@@ -1445,8 +1402,8 @@ index 000000000..345f798a7
 +        return vec3d1;
 +    }
 +
-+    private void dV() {
-+        this.a(SoundEffects.ENTITY_SQUID_SQUIRT, this.getSoundVolume(), this.cU());
++    private void dW() {
++        this.a(SoundEffects.ENTITY_SQUID_SQUIRT, this.getSoundVolume(), this.cV());
 +        Vec3D vec3d = this.f(new Vec3D(0.0D, -1.0D, 0.0D)).add(this.locX, this.locY, this.locZ);
 +
 +        for (int i = 0; i < 30; ++i) {
@@ -1463,9 +1420,8 @@ index 000000000..345f798a7
 +        this.move(EnumMoveType.SELF, this.getMot());
 +    }
 +
-+    @Override
-+    public boolean a(GeneratorAccess generatoraccess, EnumMobSpawn enummobspawn) {
-+        return this.locY > 45.0D && this.locY < (double) generatoraccess.getSeaLevel();
++    public static boolean b(EntityTypes<EntitySquid> entitytypes, GeneratorAccess generatoraccess, EnumMobSpawn enummobspawn, BlockPosition blockposition, Random random) {
++        return blockposition.getY() > 45 && blockposition.getY() < generatoraccess.getSeaLevel();
 +    }
 +
 +    public void a(float f, float f1, float f2) {
@@ -1552,7 +1508,7 @@ index 000000000..345f798a7
 +
 +        @Override
 +        public void e() {
-+            int i = this.b.cv();
++            int i = this.b.cw();
 +
 +            if (i > 100) {
 +                this.b.a(0.0F, 0.0F, 0.0F);
@@ -2320,7 +2276,7 @@ index 000000000..36a9edd2e
 +}
 diff --git a/src/main/java/net/minecraft/server/NibbleArray.java b/src/main/java/net/minecraft/server/NibbleArray.java
 new file mode 100644
-index 000000000..ed6672713
+index 000000000..89f2beb4b
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NibbleArray.java
 @@ -0,0 +1,100 @@
@@ -2347,7 +2303,7 @@ index 000000000..ed6672713
 +    }
 +
 +    public int a(int i, int j, int k) {
-+        return this.a(this.b(i, j, k));
++        return this.b(this.b(i, j, k));
 +    }
 +
 +    public void a(int i, int j, int k, int l) {
@@ -2358,13 +2314,13 @@ index 000000000..ed6672713
 +        return j << 8 | k << 4 | i;
 +    }
 +
-+    private int a(int i) {
++    private int b(int i) {
 +        if (this.a == null) {
 +            return 0;
 +        } else {
-+            int j = this.c(i);
++            int j = this.d(i);
 +
-+            return this.b(i) ? this.a[j] & 15 : this.a[j] >> 4 & 15;
++            return this.c(i) ? this.a[j] & 15 : this.a[j] >> 4 & 15;
 +        }
 +    }
 +
@@ -2373,9 +2329,9 @@ index 000000000..ed6672713
 +            this.a = new byte[2048];
 +        }
 +
-+        int k = this.c(i);
++        int k = this.d(i);
 +
-+        if (this.b(i)) {
++        if (this.c(i)) {
 +            this.a[k] = (byte) (this.a[k] & 240 | j & 15);
 +        } else {
 +            this.a[k] = (byte) (this.a[k] & 15 | (j & 15) << 4);
@@ -2383,11 +2339,11 @@ index 000000000..ed6672713
 +
 +    }
 +
-+    private boolean b(int i) {
++    private boolean c(int i) {
 +        return (i & 1) == 0;
 +    }
 +
-+    private int c(int i) {
++    private int d(int i) {
 +        return i >> 1;
 +    }
 +
@@ -2407,7 +2363,7 @@ index 000000000..ed6672713
 +        StringBuilder stringbuilder = new StringBuilder();
 +
 +        for (int i = 0; i < 4096; ++i) {
-+            stringbuilder.append(Integer.toHexString(this.a(i)));
++            stringbuilder.append(Integer.toHexString(this.b(i)));
 +            if ((i & 15) == 15) {
 +                stringbuilder.append("\n");
 +            }

@@ -1,19 +1,19 @@
-From ac14e1c47e10e724fc9ea909b12b7f92ed250171 Mon Sep 17 00:00:00 2001
+From b52fba370b20ae7609d65614236aef7bf207c466 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 11 Jan 2018 08:23:43 +1100
 Subject: [PATCH] Allow changing minimum squid spawn range
 
 
 diff --git a/src/main/java/net/minecraft/server/EntitySquid.java b/src/main/java/net/minecraft/server/EntitySquid.java
-index 345f798a7..815844dab 100644
+index acb20c610..338c203b3 100644
 --- a/src/main/java/net/minecraft/server/EntitySquid.java
 +++ b/src/main/java/net/minecraft/server/EntitySquid.java
-@@ -170,7 +170,7 @@ public class EntitySquid extends EntityWaterAnimal {
+@@ -171,7 +171,7 @@ public class EntitySquid extends EntityWaterAnimal {
+     }
  
-     @Override
-     public boolean a(GeneratorAccess generatoraccess, EnumMobSpawn enummobspawn) {
--        return this.locY > 45.0D && this.locY < (double) generatoraccess.getSeaLevel();
-+        return this.locY > this.world.spigotConfig.squidSpawnRangeMin && this.locY < (double) generatoraccess.getSeaLevel(); // Spigot
+     public static boolean b(EntityTypes<EntitySquid> entitytypes, GeneratorAccess generatoraccess, EnumMobSpawn enummobspawn, BlockPosition blockposition, Random random) {
+-        return blockposition.getY() > 45 && blockposition.getY() < generatoraccess.getSeaLevel();
++        return blockposition.getY() > generatoraccess.getMinecraftWorld().spigotConfig.squidSpawnRangeMin && blockposition.getY() < generatoraccess.getSeaLevel(); // Spigot
      }
  
      public void a(float f, float f1, float f2) {

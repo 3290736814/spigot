@@ -1,4 +1,4 @@
-From 3b5de39a288c1cc630a19bc40267b89fa91910db Mon Sep 17 00:00:00 2001
+From e3b3ac2989cb5e1a90e24577e3cf3422ae094458 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -21,18 +21,18 @@ index cea5166a8..4b3a823fa 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/net/minecraft/server/EntitySlime.java b/src/main/java/net/minecraft/server/EntitySlime.java
-index 537fcee6f..30bc933c2 100644
+index 9f7ff62ba..c3d4d0048 100644
 --- a/src/main/java/net/minecraft/server/EntitySlime.java
 +++ b/src/main/java/net/minecraft/server/EntitySlime.java
-@@ -276,7 +276,7 @@ public class EntitySlime extends EntityInsentient implements IMonster {
+@@ -274,7 +274,7 @@ public class EntitySlime extends EntityInsentient implements IMonster {
                  }
  
                  ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(blockposition);
 -                boolean flag = SeededRandom.a(chunkcoordintpair.x, chunkcoordintpair.z, generatoraccess.getSeed(), 987234911L).nextInt(10) == 0;
-+                boolean flag = SeededRandom.a(chunkcoordintpair.x, chunkcoordintpair.z, generatoraccess.getSeed(), world.spigotConfig.slimeSeed).nextInt(10) == 0; // Spigot
++                boolean flag = SeededRandom.a(chunkcoordintpair.x, chunkcoordintpair.z, generatoraccess.getSeed(), generatoraccess.getMinecraftWorld().spigotConfig.slimeSeed).nextInt(10) == 0; // Spigot
  
-                 if (this.random.nextInt(10) == 0 && flag && this.locY < 40.0D) {
-                     return super.a(generatoraccess, enummobspawn);
+                 if (random.nextInt(10) == 0 && flag && blockposition.getY() < 40) {
+                     return a(entitytypes, generatoraccess, enummobspawn, blockposition, random);
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java b/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
 index 4f1d57b8a..c54484631 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
@@ -212,10 +212,10 @@ index f4dfbf534..08f8d8096 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java b/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
-index 0dce0f73e..90edf5e52 100644
+index 947374862..f7d22543d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
 +++ b/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
-@@ -172,4 +172,10 @@ public class CustomChunkGenerator extends InternalChunkGenerator<GeneratorSettin
+@@ -181,4 +181,10 @@ public class CustomChunkGenerator extends InternalChunkGenerator<GeneratorSettin
      public int getGenerationDepth() {
          return world.getHeight();
      }

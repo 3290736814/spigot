@@ -1,25 +1,25 @@
-From dd2445bba6eb3b3445973b1b1ce1e31efdb504f6 Mon Sep 17 00:00:00 2001
+From 26555479e32e1cf2d2ba01439652142e7e42e968 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 30 Jul 2016 11:29:14 +1000
 Subject: [PATCH] Branchless NibbleArray
 
 
 diff --git a/src/main/java/net/minecraft/server/NibbleArray.java b/src/main/java/net/minecraft/server/NibbleArray.java
-index ed6672713..f58c8f7cf 100644
+index 89f2beb4b..90c096876 100644
 --- a/src/main/java/net/minecraft/server/NibbleArray.java
 +++ b/src/main/java/net/minecraft/server/NibbleArray.java
 @@ -32,29 +32,27 @@ public class NibbleArray {
          return j << 8 | k << 4 | i;
      }
  
--    private int a(int i) {
-+    public int a(int i) { // PAIL: private -> public
+-    private int b(int i) {
++    public int b(int i) { // PAIL: private -> public
          if (this.a == null) {
              return 0;
          } else {
-             int j = this.c(i);
+             int j = this.d(i);
  
--            return this.b(i) ? this.a[j] & 15 : this.a[j] >> 4 & 15;
+-            return this.c(i) ? this.a[j] & 15 : this.a[j] >> 4 & 15;
 +            return this.a[j] >> ((i & 1) << 2) & 15; // Spigot
          }
      }
@@ -30,9 +30,9 @@ index ed6672713..f58c8f7cf 100644
              this.a = new byte[2048];
          }
  
-         int k = this.c(i);
+         int k = this.d(i);
  
--        if (this.b(i)) {
+-        if (this.c(i)) {
 -            this.a[k] = (byte) (this.a[k] & 240 | j & 15);
 -        } else {
 -            this.a[k] = (byte) (this.a[k] & 15 | (j & 15) << 4);
@@ -44,10 +44,10 @@ index ed6672713..f58c8f7cf 100644
 +        // Spigot end
      }
  
-     private boolean b(int i) {
+     private boolean c(int i) {
 diff --git a/src/test/java/org/bukkit/NibbleArrayTest.java b/src/test/java/org/bukkit/NibbleArrayTest.java
 new file mode 100644
-index 000000000..0131ff04a
+index 000000000..40ba97fb7
 --- /dev/null
 +++ b/src/test/java/org/bukkit/NibbleArrayTest.java
 @@ -0,0 +1,29 @@
@@ -76,7 +76,7 @@ index 000000000..0131ff04a
 +        }
 +
 +        for (int i = 0; i < classic.length; i++) {
-+            Assert.assertEquals("Nibble array mismatch", classic[i], nibble.a(i));
++            Assert.assertEquals("Nibble array mismatch", classic[i], nibble.b(i));
 +        }
 +    }
 +}

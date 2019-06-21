@@ -1,4 +1,4 @@
-From 08402796889970f21cc411b489f64da9ee2ebde0 Mon Sep 17 00:00:00 2001
+From ee4da2bbc1c795a7e2c93d8643550d6d8465f913 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,12 +8,12 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 417704a77..dcf2d38df 100644
+index 289f95c00..f1e807296 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -319,9 +319,9 @@ public class ChunkProviderServer extends IChunkProvider {
                      this.world.getMethodProfiler().exit();
-                     ChunkCoordIntPair chunkcoordintpair = playerchunk.h();
+                     ChunkCoordIntPair chunkcoordintpair = playerchunk.i();
  
 -                    if (!this.playerChunkMap.isOutsideOfRange(chunkcoordintpair)) {
 +                    if (!this.playerChunkMap.isOutsideOfRange(chunkcoordintpair, false)) { // Spigot
@@ -24,10 +24,10 @@ index 417704a77..dcf2d38df 100644
                              this.world.timings.mobSpawn.startTiming(); // Spigot
                              EnumCreatureType[] aenumcreaturetype1 = aenumcreaturetype;
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 19de8c19f..9b9f70182 100644
+index 260efac2b..55c88f49a 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -739,9 +739,17 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -730,11 +730,18 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
          return nbttagcompound == null ? null : this.getChunkData(this.world.getWorldProvider().getDimensionManager(), this.m, nbttagcompound, chunkcoordintpair, world); // CraftBukkit
      }
  
@@ -40,8 +40,9 @@ index 19de8c19f..9b9f70182 100644
 +
 +        double blockRange = (reducedRange) ? Math.pow(chunkRange << 4, 2) : 16384.0D;
 +        // Spigot end
-+
-         return this.playerMap.a(chunkcoordintpair.pair()).noneMatch((entityplayer) -> {
+         long i = chunkcoordintpair.pair();
+ 
+         return !this.u.d(i) ? true : this.playerMap.a(i).noneMatch((entityplayer) -> {
 -            return !entityplayer.isSpectator() && a(chunkcoordintpair, (Entity) entityplayer) < 16384.0D;
 +            return !entityplayer.isSpectator() && a(chunkcoordintpair, (Entity) entityplayer) < blockRange; // Spigot
          });

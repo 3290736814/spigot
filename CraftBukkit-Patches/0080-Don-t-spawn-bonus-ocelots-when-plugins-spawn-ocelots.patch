@@ -1,17 +1,17 @@
-From 1679657c6338d5aafb52dcedfcfc412561156d00 Mon Sep 17 00:00:00 2001
+From c84b41b6261cb2b599741a2687b2387a6c808e0f Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Sat, 19 Jul 2014 12:49:48 +0100
 Subject: [PATCH] Don't spawn bonus ocelots when plugins spawn ocelots
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityOcelot.java b/src/main/java/net/minecraft/server/EntityOcelot.java
-index a9963031f..af1ff9518 100644
+index b21c25a43..f50efe782 100644
 --- a/src/main/java/net/minecraft/server/EntityOcelot.java
 +++ b/src/main/java/net/minecraft/server/EntityOcelot.java
-@@ -9,6 +9,7 @@ public class EntityOcelot extends EntityAnimal {
+@@ -10,6 +10,7 @@ public class EntityOcelot extends EntityAnimal {
      private static final DataWatcherObject<Boolean> bA = DataWatcher.a(EntityOcelot.class, DataWatcherRegistry.i);
      private EntityOcelot.a<EntityHuman> bB;
-     private EntityOcelot.b bD;
+     private EntityOcelot.b bC;
 +    public boolean spawnBonus = true; // Spigot
  
      public EntityOcelot(EntityTypes<? extends EntityOcelot> entitytypes, World world) {
@@ -22,14 +22,14 @@ index a9963031f..af1ff9518 100644
          groupdataentity = super.prepare(generatoraccess, difficultydamagescaler, enummobspawn, groupdataentity, nbttagcompound);
 -        if (generatoraccess.getRandom().nextInt(7) == 0) {
 +        if (spawnBonus && generatoraccess.getRandom().nextInt(7) == 0) { // Spigot
-             this.dW();
+             this.dX();
          }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index b12c6c141..d000d595b 100644
+index 9c37f1b28..0bae2577e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1591,6 +1591,12 @@ public class CraftWorld implements World {
+@@ -1592,6 +1592,12 @@ public class CraftWorld implements World {
          }
  
          if (entity != null) {

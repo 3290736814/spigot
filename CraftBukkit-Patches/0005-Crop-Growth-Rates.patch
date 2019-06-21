@@ -1,4 +1,4 @@
-From ed2e8f2a8c53ddcf94b66e5cabe9057eb41f280b Mon Sep 17 00:00:00 2001
+From 5d0073d7dd1928bbfb7e793b268ba9216ced3dc8 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -6,7 +6,7 @@ Subject: [PATCH] Crop Growth Rates
 Allows configuring the growth rates of crops as a percentage of their normal growth rate.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 6a881c7a1..5c0d7f31b 100644
+index 78f240154..b6318c503 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -698,6 +698,18 @@ public class Block implements IMaterial {
@@ -55,7 +55,7 @@ index 769fe75b1..ee9f294f4 100644
  
              if (i < 2) {
 diff --git a/src/main/java/net/minecraft/server/BlockCrops.java b/src/main/java/net/minecraft/server/BlockCrops.java
-index 4f0f29200..bb884e94d 100644
+index 40e2da9e2..9b0c8cd0f 100644
 --- a/src/main/java/net/minecraft/server/BlockCrops.java
 +++ b/src/main/java/net/minecraft/server/BlockCrops.java
 @@ -53,7 +53,20 @@ public class BlockCrops extends BlockPlant implements IBlockFragilePlantElement

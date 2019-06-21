@@ -1,4 +1,4 @@
-From a03b7060d01dffaf9da68ada71a89729b83eb6d8 Mon Sep 17 00:00:00 2001
+From 2e4f732f817acc44422ca72fc3bdaaeb0e89281f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 9f095c6de..2856ab36c 100644
+index e5fc177d7..6e05759c5 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -162,6 +162,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -75,7 +75,7 @@ index dfd1a7da4..da9740a99 100644
      public abstract EntityAgeable createChild(EntityAgeable entityageable);
  
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index 340bcb06c..f1491c5d2 100644
+index fc01606c5..b27d81a2b 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
 @@ -35,6 +35,18 @@ public abstract class EntityArrow extends Entity implements IProjectile {
@@ -98,7 +98,7 @@ index 340bcb06c..f1491c5d2 100644
          super(entitytypes, world);
          this.fromPlayer = EntityArrow.PickupStatus.DISALLOWED;
 diff --git a/src/main/java/net/minecraft/server/EntityFireworks.java b/src/main/java/net/minecraft/server/EntityFireworks.java
-index ffb1b0950..d6bde129e 100644
+index 3075d461d..25851b70c 100644
 --- a/src/main/java/net/minecraft/server/EntityFireworks.java
 +++ b/src/main/java/net/minecraft/server/EntityFireworks.java
 @@ -18,6 +18,14 @@ public class EntityFireworks extends Entity implements IProjectile {
@@ -117,7 +117,7 @@ index ffb1b0950..d6bde129e 100644
      protected void initDatawatcher() {
          this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, ItemStack.a);
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index abb80a065..ba2ca1185 100644
+index 2dcdcc30b..0569ad9af 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -137,6 +137,28 @@ public class EntityItem extends Entity {
@@ -150,7 +150,7 @@ index abb80a065..ba2ca1185 100644
          Vec3D vec3d = this.getMot();
  
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index c3125fa43..23e628689 100644
+index 5caa8d93f..f115d0b93 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -132,6 +132,13 @@ public abstract class EntityLiving extends Entity {
@@ -168,10 +168,10 @@ index c3125fa43..23e628689 100644
      protected EntityLiving(EntityTypes<? extends EntityLiving> entitytypes, World world) {
          super(entitytypes, world);
 diff --git a/src/main/java/net/minecraft/server/EntityVillager.java b/src/main/java/net/minecraft/server/EntityVillager.java
-index 2b85e6363..1400b3f44 100644
+index e731bf5b2..14125f519 100644
 --- a/src/main/java/net/minecraft/server/EntityVillager.java
 +++ b/src/main/java/net/minecraft/server/EntityVillager.java
-@@ -133,6 +133,17 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
+@@ -129,6 +129,17 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
          this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(48.0D);
      }
  
@@ -190,7 +190,7 @@ index 2b85e6363..1400b3f44 100644
      protected void mobTick() {
          this.world.getMethodProfiler().enter("brain");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index f8023fdcb..c682af4a8 100644
+index 006a25a2e..4a912c4d5 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -316,6 +316,7 @@ public class WorldServer extends World {

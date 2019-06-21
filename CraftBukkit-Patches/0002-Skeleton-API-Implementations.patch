@@ -1,4 +1,4 @@
-From ce3fe406a3c92cd943f9da87d91f0975b65a27b4 Mon Sep 17 00:00:00 2001
+From eb61f04b177f836abcc3025e7467d70a3f0819a5 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -6,7 +6,7 @@ Subject: [PATCH] Skeleton API Implementations
 This contains the basic, empty implementations for some Spigot-API extensions. They are included early in the patching progress so that compilation will still succeed midway despite the APIs only being provided by subsequent patches.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e36a4cbf7..d120479f7 100644
+index a94b5c43a..6a408f2bb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1882,4 +1882,14 @@ public final class CraftServer implements Server {
@@ -25,10 +25,10 @@ index e36a4cbf7..d120479f7 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index b5052e1a1..d2f21edea 100644
+index 57ddf51fd..645a075d3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2019,4 +2019,15 @@ public class CraftWorld implements World {
+@@ -2053,4 +2053,15 @@ public class CraftWorld implements World {
          BlockPosition nearest = getHandle().getChunkProvider().getChunkGenerator().findNearestMapFeature(getHandle(), structureType.getName(), originPos, radius, findUnexplored);
          return (nearest == null) ? null : new Location(this, nearest.getX(), nearest.getY(), nearest.getZ());
      }

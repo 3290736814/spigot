@@ -1,11 +1,11 @@
-From 372d0171703dc2aff7f440276f652e06f0cc7264 Mon Sep 17 00:00:00 2001
+From 589c0a82264a39be879266295c5dfb55f4fa8989 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 2 Feb 2014 16:55:46 +0000
 Subject: [PATCH] Add Option to Nerf Mobs from Spawners
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 6ce0fd038..703fb0c66 100644
+index d1b0e352e..61ec7fca7 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -166,6 +166,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -17,10 +17,10 @@ index 6ce0fd038..703fb0c66 100644
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/server/EntityInsentient.java b/src/main/java/net/minecraft/server/EntityInsentient.java
-index 1206f0996..d4fff5b72 100644
+index 7f1dcf0a8..01ce81068 100644
 --- a/src/main/java/net/minecraft/server/EntityInsentient.java
 +++ b/src/main/java/net/minecraft/server/EntityInsentient.java
-@@ -632,6 +632,12 @@ public abstract class EntityInsentient extends EntityLiving {
+@@ -633,6 +633,12 @@ public abstract class EntityInsentient extends EntityLiving {
          this.world.getMethodProfiler().enter("checkDespawn");
          this.checkDespawn();
          this.world.getMethodProfiler().exit();
@@ -34,7 +34,7 @@ index 1206f0996..d4fff5b72 100644
          this.bz.a();
          this.world.getMethodProfiler().exit();
 diff --git a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
-index aae4d5374..0dcd34b57 100644
+index df83e0260..2e96a3661 100644
 --- a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 +++ b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 @@ -128,7 +128,12 @@ public abstract class MobSpawnerAbstract {
