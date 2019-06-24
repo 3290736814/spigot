@@ -1,4 +1,4 @@
-From eb61f04b177f836abcc3025e7467d70a3f0819a5 Mon Sep 17 00:00:00 2001
+From 2b2b399eb1f17ee334cb3bac13d393a5c13b26a2 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -6,7 +6,7 @@ Subject: [PATCH] Skeleton API Implementations
 This contains the basic, empty implementations for some Spigot-API extensions. They are included early in the patching progress so that compilation will still succeed midway despite the APIs only being provided by subsequent patches.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index a94b5c43a..6a408f2bb 100644
+index a6a6fba26..0b6a1596a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1882,4 +1882,14 @@ public final class CraftServer implements Server {
@@ -25,10 +25,10 @@ index a94b5c43a..6a408f2bb 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 57ddf51fd..645a075d3 100644
+index b9cf66715..53b583aaa 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2053,4 +2053,15 @@ public class CraftWorld implements World {
+@@ -2057,4 +2057,15 @@ public class CraftWorld implements World {
          BlockPosition nearest = getHandle().getChunkProvider().getChunkGenerator().findNearestMapFeature(getHandle(), structureType.getName(), originPos, radius, findUnexplored);
          return (nearest == null) ? null : new Location(this, nearest.getX(), nearest.getY(), nearest.getZ());
      }
@@ -122,10 +122,10 @@ index cb1efe969..1d4ba473a 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 8b5b22e92..f3a96a524 100644
+index 220130fd2..67037f442 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1650,4 +1650,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1659,4 +1659,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          getHandle().a(org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(book), net.minecraft.server.EnumHand.MAIN_HAND); // PAIL rename openBook
          getInventory().setItemInMainHand(hand);
      }

@@ -1,14 +1,14 @@
-From 3284b1282bcac1c950ac3d8b2775e6bd20c15da6 Mon Sep 17 00:00:00 2001
+From 051e4812658de8bb648f8dc385405ce8dcb2eaee Mon Sep 17 00:00:00 2001
 From: Smove <jan@lavasurvival.net>
 Date: Sat, 1 Feb 2014 18:10:49 +1100
 Subject: [PATCH] Implement Locale Getter for Players
 
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 996f9bf3..43ca3386 100644
+index 87aeb073..77b578ee 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1528,6 +1528,19 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1549,6 +1549,19 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
          {
              throw new UnsupportedOperationException( "Not supported yet." );
          }

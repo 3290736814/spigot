@@ -1,4 +1,4 @@
-From 0169bffcfea5f7bfc0decc314a38c249246d794c Mon Sep 17 00:00:00 2001
+From dc9fad4141b246de037a53186aac2722bd36d122 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -128,7 +128,7 @@ index e55aff329..b57d408bb 100644
          if (getProfileBans().isBanned(gameprofile) && !getProfileBans().get(gameprofile).hasExpired()) {
              GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.k.get(gameprofile);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 5d0b4934e..6f4b962d5 100644
+index 502cc0eb7..804641cfb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -620,7 +620,13 @@ public final class CraftServer implements Server {
@@ -147,10 +147,10 @@ index 5d0b4934e..6f4b962d5 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index eca393eae..0becbb252 100644
+index a1e56d3c2..3a7048b6e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1656,6 +1656,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1665,6 +1665,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      private final Player.Spigot spigot = new Player.Spigot()
      {
  

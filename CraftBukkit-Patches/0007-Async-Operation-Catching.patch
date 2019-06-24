@@ -1,4 +1,4 @@
-From eeebac1ef716e34ab7ae0538da2a3582ea0159f9 Mon Sep 17 00:00:00 2001
+From 41f2222836becf9d72a08b6740338d5ef7a79fa2 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -25,7 +25,7 @@ index b6318c503..ee9a571bf 100644
              world.removeTileEntity(blockposition);
          }
 diff --git a/src/main/java/net/minecraft/server/CraftingManager.java b/src/main/java/net/minecraft/server/CraftingManager.java
-index 60ea8fd37..2d50167cb 100644
+index 29a79be72..d0b4bf8b7 100644
 --- a/src/main/java/net/minecraft/server/CraftingManager.java
 +++ b/src/main/java/net/minecraft/server/CraftingManager.java
 @@ -65,6 +65,7 @@ public class CraftingManager extends ResourceDataJson {
@@ -105,7 +105,7 @@ index b5566b267..e1dbd5e1c 100644
              throw new IllegalStateException("Removing entity while ticking!");
          } else {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 889056407..0bb8bd68f 100644
+index c8987389b..f2818157e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -682,6 +682,7 @@ public final class CraftServer implements Server {
@@ -117,7 +117,7 @@ index 889056407..0bb8bd68f 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 645a075d3..114bcbf4c 100644
+index 53b583aaa..62e3a316e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -369,6 +369,7 @@ public class CraftWorld implements World {
@@ -153,10 +153,10 @@ index 645a075d3..114bcbf4c 100644
  
          // If generate = false, but the chunk already exists, we will get this back.
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index f3a96a524..8e9abf558 100644
+index 67037f442..d774822fb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -298,6 +298,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -300,6 +300,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
      @Override
      public void kickPlayer(String message) {
