@@ -1,4 +1,4 @@
-From da99a1c1bd09d6ccb901b29ecb5ed4247eb9acd2 Mon Sep 17 00:00:00 2001
+From 449b803946bde9b40ed7fb816bbb74a65b7717c7 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -190,7 +190,7 @@ index e731bf5b2..14125f519 100644
      protected void mobTick() {
          this.world.getMethodProfiler().enter("brain");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 006a25a2e..4a912c4d5 100644
+index 03b576c4a..d119a5b19 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -316,6 +316,7 @@ public class WorldServer extends World {
@@ -526,10 +526,10 @@ index 000000000..d0b6c9b73
 +    }
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 1df7667c1..b3f67f9fe 100644
+index e05cf1d4b..4d1f66eb3 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -162,4 +162,19 @@ public class SpigotWorldConfig
+@@ -168,4 +168,19 @@ public class SpigotWorldConfig
          itemDespawnRate = getInt( "item-despawn-rate", 6000 );
          log( "Item Despawn Rate: " + itemDespawnRate );
      }

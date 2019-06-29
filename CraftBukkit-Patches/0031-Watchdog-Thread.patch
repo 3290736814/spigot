@@ -1,4 +1,4 @@
-From ec6dff80022c9fe85a86f87263e28a0485705c01 Mon Sep 17 00:00:00 2001
+From 3e610906e9dcc813322df7bad17cb1c06b389a11 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
@@ -18,10 +18,10 @@ index 7b9586ed0..5986f655e 100644
  
                  thread1.setUncaughtExceptionHandler(new ThreadNamedUncaughtExceptionHandler(DedicatedServer.LOGGER));
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 707321754..6555ae03b 100644
+index b01191458..ed5ec9bab 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -796,6 +796,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -800,6 +800,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
              this.a(crashreport);
          } finally {
              try {
@@ -29,7 +29,7 @@ index 707321754..6555ae03b 100644
                  this.isStopped = true;
                  this.stop();
              } catch (Throwable throwable1) {
-@@ -954,6 +955,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -958,6 +959,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
          this.ao.a(i1 - i);
          this.methodProfiler.exit();

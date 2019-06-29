@@ -1,4 +1,4 @@
-From 093dc864636786070003fd287cd8f1afa1e68422 Mon Sep 17 00:00:00 2001
+From 8fbe41e193e9b0df9b850551db0ad23ac4eb4181 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -28,6 +28,19 @@ index 78f240154..b6318c503 100644
      public static enum EnumRandomOffset {
  
          NONE, XZ, XYZ;
+diff --git a/src/main/java/net/minecraft/server/BlockBamboo.java b/src/main/java/net/minecraft/server/BlockBamboo.java
+index 49d97f044..92f00c8c5 100644
+--- a/src/main/java/net/minecraft/server/BlockBamboo.java
++++ b/src/main/java/net/minecraft/server/BlockBamboo.java
+@@ -80,7 +80,7 @@ public class BlockBamboo extends Block implements IBlockFragilePlantElement {
+         if (!iblockdata.canPlace(world, blockposition)) {
+             world.b(blockposition, true);
+         } else if ((Integer) iblockdata.get(BlockBamboo.f) == 0) {
+-            if (random.nextInt(3) == 0 && world.isEmpty(blockposition.up()) && world.getLightLevel(blockposition.up(), 0) >= 9) {
++            if (world.random.nextInt(Math.max(1, (int) (100.0F / world.spigotConfig.bambooModifier) * 3)) == 0 && world.isEmpty(blockposition.up()) && world.getLightLevel(blockposition.up(), 0) >= 9) { // Spigot
+                 int i = this.b((IBlockAccess) world, blockposition) + 1;
+ 
+                 if (i < 16) {
 diff --git a/src/main/java/net/minecraft/server/BlockCactus.java b/src/main/java/net/minecraft/server/BlockCactus.java
 index 0405815b8..a26e79412 100644
 --- a/src/main/java/net/minecraft/server/BlockCactus.java
@@ -80,6 +93,19 @@ index 40e2da9e2..9b0c8cd0f 100644
                      CraftEventFactory.handleBlockGrowEvent(world, blockposition, this.setAge(i + 1), 2); // CraftBukkit
                  }
              }
+diff --git a/src/main/java/net/minecraft/server/BlockKelp.java b/src/main/java/net/minecraft/server/BlockKelp.java
+index 5971a5132..6af2aa991 100644
+--- a/src/main/java/net/minecraft/server/BlockKelp.java
++++ b/src/main/java/net/minecraft/server/BlockKelp.java
+@@ -48,7 +48,7 @@ public class BlockKelp extends Block implements IFluidContainer {
+             BlockPosition blockposition1 = blockposition.up();
+             IBlockData iblockdata1 = world.getType(blockposition1);
+ 
+-            if (iblockdata1.getBlock() == Blocks.WATER && (Integer) iblockdata.get(BlockKelp.a) < 25 && random.nextDouble() < 0.14D) {
++            if (iblockdata1.getBlock() == Blocks.WATER && (Integer) iblockdata.get(BlockKelp.a) < 25 && random.nextDouble() < (100.0D / world.spigotConfig.kelpModifier) * 0.14D) { // Spigot
+                 org.bukkit.craftbukkit.event.CraftEventFactory.handleBlockSpreadEvent(world, blockposition, blockposition1, (IBlockData) iblockdata.a((IBlockState) BlockKelp.a)); // CraftBukkit
+             }
+ 
 diff --git a/src/main/java/net/minecraft/server/BlockMushroom.java b/src/main/java/net/minecraft/server/BlockMushroom.java
 index f47912c48..9a260cbaa 100644
 --- a/src/main/java/net/minecraft/server/BlockMushroom.java
@@ -145,6 +171,19 @@ index 5f2077664..f67b0c3ef 100644
                  int i = (Integer) iblockdata.get(BlockStem.AGE);
  
                  if (i < 7) {
+diff --git a/src/main/java/net/minecraft/server/BlockSweetBerryBush.java b/src/main/java/net/minecraft/server/BlockSweetBerryBush.java
+index 13a9a7046..f4fd936b6 100644
+--- a/src/main/java/net/minecraft/server/BlockSweetBerryBush.java
++++ b/src/main/java/net/minecraft/server/BlockSweetBerryBush.java
+@@ -27,7 +27,7 @@ public class BlockSweetBerryBush extends BlockPlant implements IBlockFragilePlan
+         super.tick(iblockdata, world, blockposition, random);
+         int i = (Integer) iblockdata.get(BlockSweetBerryBush.a);
+ 
+-        if (i < 3 && random.nextInt(5) == 0 && world.getLightLevel(blockposition.up(), 0) >= 9) {
++        if (i < 3 && world.random.nextInt(Math.max(1, (int) (100.0F / world.spigotConfig.sweetBerryModifier) * 5)) == 0 && world.getLightLevel(blockposition.up(), 0) >= 9) { // Spigot
+             CraftEventFactory.handleBlockGrowEvent(world, blockposition, (IBlockData) iblockdata.set(BlockSweetBerryBush.a, i + 1), 2); // CraftBukkit
+         }
+ 
 diff --git a/src/main/java/net/minecraft/server/BlockVine.java b/src/main/java/net/minecraft/server/BlockVine.java
 index baaa87b94..455dae92a 100644
 --- a/src/main/java/net/minecraft/server/BlockVine.java
@@ -159,10 +198,10 @@ index baaa87b94..455dae92a 100644
                  BlockPosition blockposition1 = blockposition.up();
                  BlockPosition blockposition2;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 9b3d0bcd6..a7a71fec0 100644
+index 9b3d0bcd6..1ece3d7e3 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -73,4 +73,47 @@ public class SpigotWorldConfig
+@@ -73,4 +73,53 @@ public class SpigotWorldConfig
          config.addDefault( "world-settings.default." + path, def );
          return config.getString( "world-settings." + worldName + "." + path, config.getString( "world-settings.default." + path ) );
      }
@@ -181,6 +220,9 @@ index 9b3d0bcd6..a7a71fec0 100644
 +    public int wartModifier;
 +    public int vineModifier;
 +    public int cocoaModifier;
++    public int bambooModifier;
++    public int sweetBerryModifier;
++    public int kelpModifier;
 +    private int getAndValidateGrowth(String crop)
 +    {
 +        int modifier = getInt( "growth." + crop.toLowerCase(java.util.Locale.ENGLISH) + "-modifier", 100 );
@@ -208,6 +250,9 @@ index 9b3d0bcd6..a7a71fec0 100644
 +        wartModifier = getAndValidateGrowth( "NetherWart" );
 +        vineModifier = getAndValidateGrowth( "Vine" );
 +        cocoaModifier = getAndValidateGrowth( "Cocoa" );
++        bambooModifier = getAndValidateGrowth( "Bamboo" );
++        sweetBerryModifier = getAndValidateGrowth( "SweetBerry" );
++        kelpModifier = getAndValidateGrowth( "Kelp" );
 +    }
  }
 -- 

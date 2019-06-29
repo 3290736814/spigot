@@ -1,4 +1,4 @@
-From 457684fc8168a3f61bb37c8988800acf013a984d Mon Sep 17 00:00:00 2001
+From 1732c86ae1553d9b0859611bf86e61dc5bd9d7b8 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -239,7 +239,7 @@ index d3b3bcea4..5caa8d93f 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 0ef49ec98..f1a8453b3 100644
+index 38dde3fa6..e8c5c55f1 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -54,6 +54,7 @@ import org.bukkit.craftbukkit.CraftServer;
@@ -250,7 +250,7 @@ index 0ef49ec98..f1a8453b3 100644
  
  public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTask> implements IMojangStatistics, ICommandListener, AutoCloseable, Runnable {
  
-@@ -905,6 +906,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -909,6 +910,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      protected void exit() {}
  
      protected void a(BooleanSupplier booleansupplier) {
@@ -258,7 +258,7 @@ index 0ef49ec98..f1a8453b3 100644
          long i = SystemUtils.getMonotonicNanos();
  
          ++this.ticks;
-@@ -924,12 +926,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -928,12 +930,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          }
  
          if (autosavePeriod > 0 && this.ticks % autosavePeriod == 0) { // CraftBukkit
@@ -273,7 +273,7 @@ index 0ef49ec98..f1a8453b3 100644
          }
  
          this.methodProfiler.enter("snooper");
-@@ -950,21 +954,30 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -954,21 +958,30 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
          this.ao.a(i1 - i);
          this.methodProfiler.exit();
@@ -304,7 +304,7 @@ index 0ef49ec98..f1a8453b3 100644
          // Send time updates to everyone, it will get the right time from the world the player is in.
          if (this.ticks % 20 == 0) {
              for (int i = 0; i < this.getPlayerList().players.size(); ++i) {
-@@ -972,6 +985,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -976,6 +989,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                  entityplayer.playerConnection.sendPacket(new PacketPlayOutUpdateTime(entityplayer.world.getTime(), entityplayer.getPlayerTime(), entityplayer.world.getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE))); // Add support for per player time
              }
          }
@@ -312,7 +312,7 @@ index 0ef49ec98..f1a8453b3 100644
  
          while (iterator.hasNext()) {
              WorldServer worldserver = (WorldServer) iterator.next();
-@@ -991,7 +1005,9 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -995,7 +1009,9 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                  this.methodProfiler.enter("tick");
  
                  try {
@@ -322,7 +322,7 @@ index 0ef49ec98..f1a8453b3 100644
                  } catch (Throwable throwable) {
                      CrashReport crashreport = CrashReport.a(throwable, "Exception ticking world");
  
-@@ -1005,14 +1021,20 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1009,14 +1025,20 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          }
  
          this.methodProfiler.exitEnter("connection");
@@ -487,7 +487,7 @@ index 3c4e09426..031c24bf7 100644
              CrashReport crashreport = CrashReport.a(throwable, "Ticking entity");
              CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Entity being ticked");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 99dafc1da..006a25a2e 100644
+index b71cc720a..03b576c4a 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -33,6 +33,7 @@ import org.apache.logging.log4j.Logger;

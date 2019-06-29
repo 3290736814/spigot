@@ -1,11 +1,11 @@
-From dcf85a914212cd69c703327bfeceba1d3111a78b Mon Sep 17 00:00:00 2001
+From 41197e0bebc0cfa213e748df1622016ed8492cfc Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 51744c245..b1e063278 100644
+index d411d179a..dc8661d17 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -153,6 +153,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
@@ -21,7 +21,7 @@ index 51744c245..b1e063278 100644
  
      public MinecraftServer(OptionSet options, Proxy proxy, DataFixer datafixer, CommandDispatcher commanddispatcher, YggdrasilAuthenticationService yggdrasilauthenticationservice, MinecraftSessionService minecraftsessionservice, GameProfileRepository gameprofilerepository, UserCache usercache, WorldLoadListenerFactory worldloadlistenerfactory, String s) {
          super("Server");
-@@ -734,6 +740,13 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -738,6 +744,13 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
      }
  
@@ -35,7 +35,7 @@ index 51744c245..b1e063278 100644
      public void run() {
          try {
              if (this.init()) {
-@@ -742,8 +755,11 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -746,8 +759,11 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                  this.serverPing.setServerInfo(new ServerPing.ServerData(SharedConstants.a().getName(), SharedConstants.a().getProtocolVersion()));
                  this.a(this.serverPing);
  
@@ -48,7 +48,7 @@ index 51744c245..b1e063278 100644
  
                      if (i > 5000L && this.nextTick - this.lastOverloadTime >= 30000L) { // CraftBukkit
                          long j = i / 50L;
-@@ -754,6 +770,16 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -758,6 +774,16 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                          this.lastOverloadTime = this.nextTick;
                      }
  

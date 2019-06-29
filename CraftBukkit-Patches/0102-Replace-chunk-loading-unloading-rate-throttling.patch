@@ -1,4 +1,4 @@
-From 0a3c8c48a6a71447be6d12cdfabcf492221e35bc Mon Sep 17 00:00:00 2001
+From cc3abe0cb35b4a8491730b170fa97b6e2a3cff4c Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Thu, 26 Jan 2017 20:54:55 +0000
 Subject: [PATCH] Replace chunk loading / unloading rate throttling.
@@ -7,7 +7,7 @@ Uses a scheme based on estimated tick slack time.
 See https://hub.spigotmc.org/stash/projects/SPIGOT/repos/spigot/pull-requests/71/overview
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 2a8150a41..41638b680 100644
+index 403f77a25..f9ec2b068 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -55,6 +55,7 @@ import org.bukkit.craftbukkit.Main;
@@ -26,7 +26,7 @@ index 2a8150a41..41638b680 100644
      // Spigot end
  
      public MinecraftServer(OptionSet options, Proxy proxy, DataFixer datafixer, CommandDispatcher commanddispatcher, YggdrasilAuthenticationService yggdrasilauthenticationservice, MinecraftSessionService minecraftsessionservice, GameProfileRepository gameprofilerepository, UserCache usercache, WorldLoadListenerFactory worldloadlistenerfactory, String s) {
-@@ -946,6 +948,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -950,6 +952,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
      protected void a(BooleanSupplier booleansupplier) {
          SpigotTimings.serverTickTimer.startTiming(); // Spigot
@@ -34,7 +34,7 @@ index 2a8150a41..41638b680 100644
          long i = SystemUtils.getMonotonicNanos();
  
          ++this.ticks;
-@@ -994,6 +997,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -998,6 +1001,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          this.ao.a(i1 - i);
          this.methodProfiler.exit();
          org.spigotmc.WatchdogThread.tick(); // Spigot

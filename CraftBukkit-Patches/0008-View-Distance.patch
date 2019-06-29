@@ -1,4 +1,4 @@
-From f706faf95daab2952093f8186de42592dc235527 Mon Sep 17 00:00:00 2001
+From 2d7df70f61bd033a1de200a22ede6f72e79e86b6 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -28,7 +28,7 @@ index 1b4ebc133..6a6cd9471 100644
          entityplayer1.dead = false;
          entityplayer1.playerConnection.teleport(new Location(worldserver.getWorld(), entityplayer1.locX, entityplayer1.locY, entityplayer1.locZ, entityplayer1.yaw, entityplayer1.pitch));
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index e1dbd5e1c..99dafc1da 100644
+index 52f05f1f7..b71cc720a 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -79,7 +79,7 @@ public class WorldServer extends World {
@@ -41,10 +41,10 @@ index e1dbd5e1c..99dafc1da 100644
              });
              // CraftBukkit end
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index b07e6098e..47e959af0 100644
+index dec1513e7..d5b481881 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -130,4 +130,22 @@ public class SpigotWorldConfig
+@@ -136,4 +136,22 @@ public class SpigotWorldConfig
          expMerge = getDouble("merge-radius.exp", 3.0 );
          log( "Experience Merge Radius: " + expMerge );
      }
