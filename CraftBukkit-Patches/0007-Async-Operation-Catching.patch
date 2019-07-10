@@ -1,4 +1,4 @@
-From 403bf51a1c1ebc8f9bbef16a833403347b55ee1e Mon Sep 17 00:00:00 2001
+From c5dfa2269f30629ac974643cc6a068176a349d23 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -49,7 +49,7 @@ index d1e23ecd0..d3b3bcea4 100644
              effectsToProcess.add(new ProcessableEffect(mobeffect, cause));
              return true;
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 4bed4234f..2839d17a3 100644
+index fce2456b7..9e1161e15 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -883,6 +883,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -82,7 +82,7 @@ index 4bed4234f..2839d17a3 100644
          public void updatePlayer(EntityPlayer entityplayer) {
 +            org.spigotmc.AsyncCatcher.catchOp( "player tracker update"); // Spigot
              if (entityplayer != this.tracker) {
-                 Vec3D vec3d = (new Vec3D(entityplayer.locX, entityplayer.locY, entityplayer.locZ)).d(this.trackerEntry.b());
+                 Vec3D vec3d = (new Vec3D(entityplayer.locX, entityplayer.locY, entityplayer.locZ)).d(this.tracker.ci()); // MC-155077, SPIGOT-5113 // PAIL getPositionVector
                  int i = Math.min(this.trackingDistance, (PlayerChunkMap.this.viewDistance - 1) * 16);
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
 index fea9736b6..52f05f1f7 100644

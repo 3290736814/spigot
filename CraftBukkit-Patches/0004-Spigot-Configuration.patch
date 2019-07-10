@@ -1,4 +1,4 @@
-From c7c16d46c72248260e263f91cf7283b3c82cf453 Mon Sep 17 00:00:00 2001
+From 9c382fb603a81f2712c7c85aa92334efbb39dfe1 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -51,7 +51,7 @@ index 406a35970..3c4e09426 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index a5254c748..21b901474 100644
+index fc96c0d75..6c5ccd2a9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -734,6 +734,7 @@ public final class CraftServer implements Server {
@@ -78,7 +78,7 @@ index a5254c748..21b901474 100644
          ignoreVanillaPermissions = commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index f971d426a..e17d91418 100644
+index b4cf53334..87088cf69 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -120,6 +120,14 @@ public class Main {

@@ -1,4 +1,4 @@
-From 89388b3be7b25617ab96fa493b334f2794f798c7 Mon Sep 17 00:00:00 2001
+From 05ef394b4b8ae2eead89c8b8990f8075484c1716 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Feb 2013 11:58:47 -0500
 Subject: [PATCH] Entity Tracking Ranges
@@ -12,7 +12,7 @@ This has multiple benefits:
 4) Less client lag - Not trying to render distant item frames and paintings and entities will reduce entity count on the client, which is major for shop/town worlds which may use tons of item frames.
 
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 55c88f49a..1da4a3dcb 100644
+index a8e0e8f74..7037d680a 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -895,6 +895,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {

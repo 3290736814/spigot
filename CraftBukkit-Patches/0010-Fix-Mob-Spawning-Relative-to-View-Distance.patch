@@ -1,4 +1,4 @@
-From 1abaeb4e714859683f5b5b2986e23de9aa82e151 Mon Sep 17 00:00:00 2001
+From 884f06149d04fe78062fb55060f07490f85f1a19 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -24,7 +24,7 @@ index 289f95c00..f1e807296 100644
                              this.world.timings.mobSpawn.startTiming(); // Spigot
                              EnumCreatureType[] aenumcreaturetype1 = aenumcreaturetype;
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 260efac2b..55c88f49a 100644
+index 9e1161e15..a8e0e8f74 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -730,11 +730,18 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
