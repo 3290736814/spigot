@@ -1,4 +1,4 @@
-From ed0b91dc5178665eedabf4f045119181b5ef9587 Mon Sep 17 00:00:00 2001
+From 6e98fcfd70fa81448ba805f591abccd99984fc26 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sun, 23 Feb 2014 16:16:59 -0400
 Subject: [PATCH] Implement Silenceable Lightning API
@@ -41,10 +41,10 @@ index a444a21d4..0169f261c 100644
              // this.world.a((EntityHuman) null, this.locX, this.locY, this.locZ, SoundEffects.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.WEATHER, 10000.0F, 0.8F + this.random.nextFloat() * 0.2F);
              float pitch = 0.8F + this.random.nextFloat() * 0.2F;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 62e3a316e..0a50bb72b 100644
+index de188bfc3..5049a1d1c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2065,6 +2065,22 @@ public class CraftWorld implements World {
+@@ -2151,6 +2151,22 @@ public class CraftWorld implements World {
      // Spigot start
      private final Spigot spigot = new Spigot()
      {

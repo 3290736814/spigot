@@ -1,4 +1,4 @@
-From 449b803946bde9b40ed7fb816bbb74a65b7717c7 Mon Sep 17 00:00:00 2001
+From 9bffad4e3bdc95c2c4e742e216b7216dbc1c1480 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index e5fc177d7..6e05759c5 100644
+index ebf616e21..6af5f60be 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -162,6 +162,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -244,7 +244,7 @@ index d51b158e8..e4d2a8fba 100644
      }
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
 new file mode 100644
-index 000000000..d0b6c9b73
+index 000000000..5f31b1a8f
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -0,0 +1,277 @@
@@ -306,15 +306,15 @@ index 000000000..d0b6c9b73
 +     */
 +    public static ActivationType initializeEntityActivationType(Entity entity)
 +    {
-+        if ( entity instanceof EntityMonster || entity instanceof EntitySlime )
++        if ( entity instanceof EntityRaider )
++        {
++            return ActivationType.RAIDER;
++        } else if ( entity instanceof EntityMonster || entity instanceof EntitySlime )
 +        {
 +            return ActivationType.MONSTER;
 +        } else if ( entity instanceof EntityCreature || entity instanceof EntityAmbient )
 +        {
 +            return ActivationType.ANIMAL;
-+        } else if ( entity instanceof EntityRaider )
-+        {
-+            return ActivationType.RAIDER;
 +        } else
 +        {
 +            return ActivationType.MISC;

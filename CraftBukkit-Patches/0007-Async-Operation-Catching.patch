@@ -1,4 +1,4 @@
-From 2f63ab55fb3975464e9af59ef61e50f3cf165cbc Mon Sep 17 00:00:00 2001
+From 403bf51a1c1ebc8f9bbef16a833403347b55ee1e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -49,7 +49,7 @@ index d1e23ecd0..d3b3bcea4 100644
              effectsToProcess.add(new ProcessableEffect(mobeffect, cause));
              return true;
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 6437cf8b8..260efac2b 100644
+index 4bed4234f..2839d17a3 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -883,6 +883,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -105,7 +105,7 @@ index fea9736b6..52f05f1f7 100644
              throw new IllegalStateException("Removing entity while ticking!");
          } else {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 21b901474..37cd0d7b5 100644
+index 6c5ccd2a9..ca334db9a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -685,6 +685,7 @@ public final class CraftServer implements Server {
@@ -117,10 +117,10 @@ index 21b901474..37cd0d7b5 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 53b583aaa..62e3a316e 100644
+index 232988dc4..de188bfc3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -369,6 +369,7 @@ public class CraftWorld implements World {
+@@ -376,6 +376,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean unloadChunkRequest(int x, int z) {
@@ -128,7 +128,7 @@ index 53b583aaa..62e3a316e 100644
          net.minecraft.server.IChunkAccess chunk = world.getChunkProvider().getChunkAt(x, z, ChunkStatus.FULL, false);
          if (chunk != null) {
              world.getChunkProvider().removeTicket(TicketType.PLUGIN, chunk.getPos(), 1, Unit.INSTANCE);
-@@ -378,6 +379,7 @@ public class CraftWorld implements World {
+@@ -385,6 +386,7 @@ public class CraftWorld implements World {
      }
  
      private boolean unloadChunk0(int x, int z, boolean save) {
@@ -136,7 +136,7 @@ index 53b583aaa..62e3a316e 100644
          net.minecraft.server.Chunk chunk = (net.minecraft.server.Chunk) world.getChunkProvider().getChunkAt(x, z, ChunkStatus.FULL, false);
          if (chunk == null) {
              return true;
-@@ -392,6 +394,7 @@ public class CraftWorld implements World {
+@@ -399,6 +401,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean regenerateChunk(int x, int z) {
@@ -144,7 +144,7 @@ index 53b583aaa..62e3a316e 100644
          throw new UnsupportedOperationException("Not supported in this Minecraft version! Unless you can fix it, this is not a bug :)");
          /*
          if (!unloadChunk0(x, z, false)) {
-@@ -443,6 +446,7 @@ public class CraftWorld implements World {
+@@ -450,6 +453,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean loadChunk(int x, int z, boolean generate) {

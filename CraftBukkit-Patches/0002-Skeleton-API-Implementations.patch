@@ -1,4 +1,4 @@
-From e0606cb598b1f1b4d18913f7963d7398458ec8ca Mon Sep 17 00:00:00 2001
+From 49e61e03f6a451b1a6598fe8edf919f5cce8ba7f Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -6,7 +6,7 @@ Subject: [PATCH] Skeleton API Implementations
 This contains the basic, empty implementations for some Spigot-API extensions. They are included early in the patching progress so that compilation will still succeed midway despite the APIs only being provided by subsequent patches.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 14aa8ad55..a5254c748 100644
+index 3eb989657..fc96c0d75 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1887,4 +1887,14 @@ public final class CraftServer implements Server {
@@ -25,10 +25,10 @@ index 14aa8ad55..a5254c748 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index b9cf66715..53b583aaa 100644
+index 161bed298..232988dc4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2057,4 +2057,15 @@ public class CraftWorld implements World {
+@@ -2143,4 +2143,15 @@ public class CraftWorld implements World {
          BlockPosition nearest = getHandle().getChunkProvider().getChunkGenerator().findNearestMapFeature(getHandle(), structureType.getName(), originPos, radius, findUnexplored);
          return (nearest == null) ? null : new Location(this, nearest.getX(), nearest.getY(), nearest.getZ());
      }
@@ -161,10 +161,10 @@ index f7c4faf29..494f9a672 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 2a513bd96..2ce976cf7 100644
+index d13a9f729..d367836f1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -1412,4 +1412,16 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -1413,4 +1413,16 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
              return HANDLED_TAGS;
          }
      }
