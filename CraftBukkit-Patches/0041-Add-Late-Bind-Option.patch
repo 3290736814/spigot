@@ -1,4 +1,4 @@
-From 9262883b15338b588e338e568bfab7dfe5ba8a09 Mon Sep 17 00:00:00 2001
+From 023396c9b2946b6bbd85c72a2cf1a2ec33d238ba Mon Sep 17 00:00:00 2001
 From: slide23 <me@slide.ws>
 Date: Fri, 20 Dec 2013 20:15:33 -0600
 Subject: [PATCH] Add Late Bind Option
@@ -6,7 +6,7 @@ Subject: [PATCH] Add Late Bind Option
 Add late-bind config option to delay binding until loading is done.
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 5986f655e..2987d8536 100644
+index 68549b840..e9aed77bc 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -178,6 +178,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer

@@ -1,14 +1,14 @@
-From a473c1ad45e5d6a9baffa6b09bb6463a5dd3ceec Mon Sep 17 00:00:00 2001
+From a3aa001eae16bf0fef46f8e6cca48efb136e328f Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 18 Dec 2013 13:32:10 +1100
 Subject: [PATCH] Fire PreLogin Events in Offline Mode
 
 
 diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
-index f1831e37e..11a18196d 100644
+index da19f3988..9ebb3f07e 100644
 --- a/src/main/java/net/minecraft/server/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/LoginListener.java
-@@ -92,10 +92,23 @@ public class LoginListener implements PacketLoginInListener {
+@@ -97,10 +97,23 @@ public class LoginListener implements PacketLoginInListener {
  
      }
  
@@ -32,7 +32,7 @@ index f1831e37e..11a18196d 100644
  
          // CraftBukkit start - fire PlayerLoginEvent
          EntityPlayer s = this.server.getPlayerList().attemptLogin(this, this.i, hostname);
-@@ -141,7 +154,21 @@ public class LoginListener implements PacketLoginInListener {
+@@ -146,7 +159,21 @@ public class LoginListener implements PacketLoginInListener {
              this.g = LoginListener.EnumProtocolState.KEY;
              this.networkManager.sendPacket(new PacketLoginOutEncryptionBegin("", this.server.getKeyPair().getPublic(), this.e));
          } else {
@@ -55,7 +55,7 @@ index f1831e37e..11a18196d 100644
          }
  
      }
-@@ -171,40 +198,7 @@ public class LoginListener implements PacketLoginInListener {
+@@ -176,40 +203,7 @@ public class LoginListener implements PacketLoginInListener {
                                  return;
                              }
  
@@ -97,7 +97,7 @@ index f1831e37e..11a18196d 100644
                          } else if (LoginListener.this.server.isEmbeddedServer()) {
                              LoginListener.LOGGER.warn("Failed to verify username but will let them in anyway!");
                              LoginListener.this.i = LoginListener.this.a(gameprofile);
-@@ -244,7 +238,48 @@ public class LoginListener implements PacketLoginInListener {
+@@ -249,7 +243,48 @@ public class LoginListener implements PacketLoginInListener {
          }
      }
  

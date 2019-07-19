@@ -1,4 +1,4 @@
-From bfac116e617e69cd4a217a9d8622ff26f1141235 Mon Sep 17 00:00:00 2001
+From 4723508bdca02b861d2fe779dc968a69833afdef Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 9 Jul 2014 10:35:44 +1000
 Subject: [PATCH] Add CommandLine EULA Flag
@@ -8,10 +8,10 @@ This flag contains the same message as eula.txt (albeit with proper grammar for 
 This feature only exists for hosting companies and people who manage servers in bulk who wish to agree to the terms by setting a flag in a script.
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 5f775cf52..403f77a25 100644
+index 7a1956739..29fa90c2e 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1137,7 +1137,16 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1149,7 +1149,16 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                  return;
              }
  

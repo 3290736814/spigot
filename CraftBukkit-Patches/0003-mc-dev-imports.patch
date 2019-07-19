@@ -1,4 +1,4 @@
-From 5ef477d4d57e63104bdd7d806417ffb21e06e78b Mon Sep 17 00:00:00 2001
+From 51c4ef65bc238c7e406e4984629476198dc83e2f Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -82,10 +82,10 @@ index 000000000..e2f8a0e01
 +}
 diff --git a/src/main/java/net/minecraft/server/ChunkGenerator.java b/src/main/java/net/minecraft/server/ChunkGenerator.java
 new file mode 100644
-index 000000000..cea5166a8
+index 000000000..b54d5d2b9
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ChunkGenerator.java
-@@ -0,0 +1,199 @@
+@@ -0,0 +1,206 @@
 +package net.minecraft.server;
 +
 +import java.util.BitSet;
@@ -176,7 +176,14 @@ index 000000000..cea5166a8
 +        for (int k1 = 0; k1 < j1; ++k1) {
 +            WorldGenStage.Decoration worldgenstage_decoration = aworldgenstage_decoration[k1];
 +
-+            biomebase.a(worldgenstage_decoration, this, regionlimitedworldaccess, i1, seededrandom, blockposition);
++            try {
++                biomebase.a(worldgenstage_decoration, this, regionlimitedworldaccess, i1, seededrandom, blockposition);
++            } catch (Exception exception) {
++                CrashReport crashreport = CrashReport.a(exception, "Biome decoration");
++
++                crashreport.a("Generation").a("CenterX", (Object) i).a("CenterZ", (Object) j).a("Step", (Object) worldgenstage_decoration).a("Seed", (Object) i1).a("Biome", (Object) IRegistry.BIOME.getKey(biomebase));
++                throw new ReportedException(crashreport);
++            }
 +        }
 +
 +    }
@@ -721,7 +728,7 @@ index 000000000..096866b2b
 +}
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 new file mode 100644
-index 000000000..7814efa60
+index 000000000..93bee851b
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -0,0 +1,517 @@
@@ -1085,7 +1092,7 @@ index 000000000..7814efa60
 +        TickList<Block> ticklist = ichunkaccess.n();
 +
 +        if (ticklist instanceof ProtoChunkTickList) {
-+            nbttagcompound1.set("ToBeTicked", ((ProtoChunkTickList) ticklist).a());
++            nbttagcompound1.set("ToBeTicked", ((ProtoChunkTickList) ticklist).b());
 +        } else if (ticklist instanceof TickListChunk) {
 +            nbttagcompound1.set("TileTicks", ((TickListChunk) ticklist).a(worldserver.getTime()));
 +        } else {
@@ -1095,7 +1102,7 @@ index 000000000..7814efa60
 +        TickList<FluidType> ticklist1 = ichunkaccess.o();
 +
 +        if (ticklist1 instanceof ProtoChunkTickList) {
-+            nbttagcompound1.set("LiquidsToBeTicked", ((ProtoChunkTickList) ticklist1).a());
++            nbttagcompound1.set("LiquidsToBeTicked", ((ProtoChunkTickList) ticklist1).b());
 +        } else if (ticklist1 instanceof TickListChunk) {
 +            nbttagcompound1.set("LiquidTicks", ((TickListChunk) ticklist1).a(worldserver.getTime()));
 +        } else {
@@ -1244,7 +1251,7 @@ index 000000000..7814efa60
 +}
 diff --git a/src/main/java/net/minecraft/server/EntitySquid.java b/src/main/java/net/minecraft/server/EntitySquid.java
 new file mode 100644
-index 000000000..acb20c610
+index 000000000..389b32147
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/EntitySquid.java
 @@ -0,0 +1,276 @@
@@ -1388,7 +1395,7 @@ index 000000000..acb20c610
 +    @Override
 +    public boolean damageEntity(DamageSource damagesource, float f) {
 +        if (super.damageEntity(damagesource, f) && this.getLastDamager() != null) {
-+            this.dW();
++            this.dV();
 +            return true;
 +        } else {
 +            return false;
@@ -1402,7 +1409,7 @@ index 000000000..acb20c610
 +        return vec3d1;
 +    }
 +
-+    private void dW() {
++    private void dV() {
 +        this.a(SoundEffects.ENTITY_SQUID_SQUIRT, this.getSoundVolume(), this.cV());
 +        Vec3D vec3d = this.f(new Vec3D(0.0D, -1.0D, 0.0D)).add(this.locX, this.locY, this.locZ);
 +
@@ -1589,7 +1596,7 @@ index 000000000..0cc701042
 +}
 diff --git a/src/main/java/net/minecraft/server/GenericAttributes.java b/src/main/java/net/minecraft/server/GenericAttributes.java
 new file mode 100644
-index 000000000..589af605b
+index 000000000..4ef2ae57e
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/GenericAttributes.java
 @@ -0,0 +1,123 @@
@@ -1635,8 +1642,8 @@ index 000000000..589af605b
 +        IAttribute iattribute = attributeinstance.getAttribute();
 +
 +        nbttagcompound.setString("Name", iattribute.getName());
-+        nbttagcompound.setDouble("Base", attributeinstance.b());
-+        Collection<AttributeModifier> collection = attributeinstance.c();
++        nbttagcompound.setDouble("Base", attributeinstance.getBaseValue());
++        Collection<AttributeModifier> collection = attributeinstance.getModifiers();
 +
 +        if (collection != null && !collection.isEmpty()) {
 +            NBTTagList nbttaglist = new NBTTagList();
@@ -1659,10 +1666,10 @@ index 000000000..589af605b
 +    public static NBTTagCompound a(AttributeModifier attributemodifier) {
 +        NBTTagCompound nbttagcompound = new NBTTagCompound();
 +
-+        nbttagcompound.setString("Name", attributemodifier.b());
-+        nbttagcompound.setDouble("Amount", attributemodifier.d());
-+        nbttagcompound.setInt("Operation", attributemodifier.c().a());
-+        nbttagcompound.a("UUID", attributemodifier.a());
++        nbttagcompound.setString("Name", attributemodifier.getName());
++        nbttagcompound.setDouble("Amount", attributemodifier.getAmount());
++        nbttagcompound.setInt("Operation", attributemodifier.getOperation().a());
++        nbttagcompound.a("UUID", attributemodifier.getUniqueId());
 +        return nbttagcompound;
 +    }
 +
@@ -1689,13 +1696,13 @@ index 000000000..589af605b
 +                AttributeModifier attributemodifier = a(nbttaglist.getCompound(i));
 +
 +                if (attributemodifier != null) {
-+                    AttributeModifier attributemodifier1 = attributeinstance.a(attributemodifier.a());
++                    AttributeModifier attributemodifier1 = attributeinstance.a(attributemodifier.getUniqueId());
 +
 +                    if (attributemodifier1 != null) {
-+                        attributeinstance.c(attributemodifier1);
++                        attributeinstance.removeModifier(attributemodifier1);
 +                    }
 +
-+                    attributeinstance.b(attributemodifier);
++                    attributeinstance.addModifier(attributemodifier);
 +                }
 +            }
 +        }
@@ -1718,7 +1725,7 @@ index 000000000..589af605b
 +}
 diff --git a/src/main/java/net/minecraft/server/ItemDebugStick.java b/src/main/java/net/minecraft/server/ItemDebugStick.java
 new file mode 100644
-index 000000000..40d141cd6
+index 000000000..1ea133f67
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ItemDebugStick.java
 @@ -0,0 +1,85 @@
@@ -1792,7 +1799,7 @@ index 000000000..40d141cd6
 +    }
 +
 +    private static <T extends Comparable<T>> IBlockData a(IBlockData iblockdata, IBlockState<T> iblockstate, boolean flag) {
-+        return (IBlockData) iblockdata.set(iblockstate, a(iblockstate.d(), iblockdata.get(iblockstate), flag));
++        return (IBlockData) iblockdata.set(iblockstate, a(iblockstate.getValues(), iblockdata.get(iblockstate), flag));
 +    }
 +
 +    private static <T> T a(Iterable<T> iterable, @Nullable T t0, boolean flag) {
@@ -2882,7 +2889,7 @@ index 000000000..abb6fcd0e
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerConnection.java b/src/main/java/net/minecraft/server/ServerConnection.java
 new file mode 100644
-index 000000000..e64f8115c
+index 000000000..db3485d63
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerConnection.java
 @@ -0,0 +1,143 @@
@@ -2940,7 +2947,7 @@ index 000000000..e64f8115c
 +            Class oclass;
 +            LazyInitVar lazyinitvar;
 +
-+            if (Epoll.isAvailable() && this.e.W()) {
++            if (Epoll.isAvailable() && this.e.X()) {
 +                oclass = EpollServerSocketChannel.class;
 +                lazyinitvar = ServerConnection.b;
 +                ServerConnection.LOGGER.info("Using epoll channel type");
@@ -3031,7 +3038,7 @@ index 000000000..e64f8115c
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerStatisticManager.java b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 new file mode 100644
-index 000000000..aa9bbfd1c
+index 000000000..f59b85ccb
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 @@ -0,0 +1,234 @@
@@ -3073,7 +3080,7 @@ index 000000000..aa9bbfd1c
 +        this.d = file;
 +        if (file.isFile()) {
 +            try {
-+                this.a(minecraftserver.aA(), org.apache.commons.io.FileUtils.readFileToString(file));
++                this.a(minecraftserver.aB(), org.apache.commons.io.FileUtils.readFileToString(file));
 +            } catch (IOException ioexception) {
 +                ServerStatisticManager.LOGGER.error("Couldn't read statistics file {}", file, ioexception);
 +            } catch (JsonParseException jsonparseexception) {
@@ -3184,7 +3191,7 @@ index 000000000..aa9bbfd1c
 +
 +    private <T> Optional<Statistic<T>> a(StatisticWrapper<T> statisticwrapper, String s) {
 +        Optional<MinecraftKey> optional = Optional.ofNullable(MinecraftKey.a(s));
-+        IRegistry<T> iregistry = statisticwrapper.a();
++        IRegistry<T> iregistry = statisticwrapper.getRegistry();
 +
 +        iregistry.getClass();
 +        Optional<T> optional2 = optional.flatMap(iregistry::getOptional);
@@ -3222,7 +3229,7 @@ index 000000000..aa9bbfd1c
 +            it.unimi.dsi.fastutil.objects.Object2IntMap.Entry<Statistic<?>> it_unimi_dsi_fastutil_objects_object2intmap_entry = (it.unimi.dsi.fastutil.objects.Object2IntMap.Entry) objectiterator.next();
 +            Statistic<?> statistic = (Statistic) it_unimi_dsi_fastutil_objects_object2intmap_entry.getKey();
 +
-+            ((JsonObject) map.computeIfAbsent(statistic.a(), (statisticwrapper) -> {
++            ((JsonObject) map.computeIfAbsent(statistic.getWrapper(), (statisticwrapper) -> {
 +                return new JsonObject();
 +            })).addProperty(b(statistic).toString(), it_unimi_dsi_fastutil_objects_object2intmap_entry.getIntValue());
 +        }
@@ -3244,7 +3251,7 @@ index 000000000..aa9bbfd1c
 +    }
 +
 +    private static <T> MinecraftKey b(Statistic<T> statistic) {
-+        return statistic.a().a().getKey(statistic.b());
++        return statistic.getWrapper().getRegistry().getKey(statistic.b());
 +    }
 +
 +    public void c() {
@@ -3252,7 +3259,7 @@ index 000000000..aa9bbfd1c
 +    }
 +
 +    public void a(EntityPlayer entityplayer) {
-+        int i = this.c.ai();
++        int i = this.c.aj();
 +        Object2IntMap<Statistic<?>> object2intmap = new Object2IntOpenHashMap();
 +
 +        if (i - this.f > 300) {

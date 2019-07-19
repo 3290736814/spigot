@@ -1,11 +1,11 @@
-From 4519ee93a6c6d6d1e5a0c23f16abd6f9c2b1c0ff Mon Sep 17 00:00:00 2001
+From 18ed92febf090bbd1756f780913513cd480e8b97 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 7b9586ed0..5986f655e 100644
+index e1a4d08b9..68549b840 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -268,7 +268,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -18,10 +18,10 @@ index 7b9586ed0..5986f655e 100644
  
                  thread1.setUncaughtExceptionHandler(new ThreadNamedUncaughtExceptionHandler(DedicatedServer.LOGGER));
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index b01191458..ed5ec9bab 100644
+index 2c4f84d85..a8b0a428a 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -800,6 +800,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -812,6 +812,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
              this.a(crashreport);
          } finally {
              try {
@@ -29,16 +29,16 @@ index b01191458..ed5ec9bab 100644
                  this.isStopped = true;
                  this.stop();
              } catch (Throwable throwable1) {
-@@ -958,6 +959,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -970,6 +971,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
-         this.ao.a(i1 - i);
+         this.ap.a(i1 - i);
          this.methodProfiler.exit();
 +        org.spigotmc.WatchdogThread.tick(); // Spigot
          SpigotTimings.serverTickTimer.stopTiming(); // Spigot
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index aa2f7d7d1..d9323cedc 100644
+index 8570dc563..3717b5963 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1561,7 +1561,7 @@ public final class CraftServer implements Server {

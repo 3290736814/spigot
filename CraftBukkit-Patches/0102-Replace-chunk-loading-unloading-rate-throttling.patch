@@ -1,4 +1,4 @@
-From e8d0f0e7d1cb73e7f4821f5adcb6187353929184 Mon Sep 17 00:00:00 2001
+From 74bde9af0d9dac21125d91652c94fe5d1b425164 Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Thu, 26 Jan 2017 20:54:55 +0000
 Subject: [PATCH] Replace chunk loading / unloading rate throttling.
@@ -7,10 +7,10 @@ Uses a scheme based on estimated tick slack time.
 See https://hub.spigotmc.org/stash/projects/SPIGOT/repos/spigot/pull-requests/71/overview
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 403f77a25..f9ec2b068 100644
+index 29fa90c2e..b397fd344 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -55,6 +55,7 @@ import org.bukkit.craftbukkit.Main;
+@@ -64,6 +64,7 @@ import org.bukkit.craftbukkit.Main;
  import org.bukkit.event.server.ServerLoadEvent;
  // CraftBukkit end
  import org.bukkit.craftbukkit.SpigotTimings; // Spigot
@@ -18,7 +18,7 @@ index 403f77a25..f9ec2b068 100644
  
  public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTask> implements IMojangStatistics, ICommandListener, AutoCloseable, Runnable {
  
-@@ -158,6 +159,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -168,6 +169,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      public static final int TICK_TIME = 1000000000 / TPS;
      private static final int SAMPLE_INTERVAL = 100;
      public final double[] recentTps = new double[ 3 ];
@@ -26,7 +26,7 @@ index 403f77a25..f9ec2b068 100644
      // Spigot end
  
      public MinecraftServer(OptionSet options, Proxy proxy, DataFixer datafixer, CommandDispatcher commanddispatcher, YggdrasilAuthenticationService yggdrasilauthenticationservice, MinecraftSessionService minecraftsessionservice, GameProfileRepository gameprofilerepository, UserCache usercache, WorldLoadListenerFactory worldloadlistenerfactory, String s) {
-@@ -950,6 +952,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -962,6 +964,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
      protected void a(BooleanSupplier booleansupplier) {
          SpigotTimings.serverTickTimer.startTiming(); // Spigot
@@ -34,8 +34,8 @@ index 403f77a25..f9ec2b068 100644
          long i = SystemUtils.getMonotonicNanos();
  
          ++this.ticks;
-@@ -998,6 +1001,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
-         this.ao.a(i1 - i);
+@@ -1010,6 +1013,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+         this.ap.a(i1 - i);
          this.methodProfiler.exit();
          org.spigotmc.WatchdogThread.tick(); // Spigot
 +        this.slackActivityAccountant.tickEnded(l); // Spigot
@@ -43,10 +43,10 @@ index 403f77a25..f9ec2b068 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index f026c87a8..b5ba3fcb0 100644
+index aea22fef9..119a3be36 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -299,6 +299,9 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -331,6 +331,9 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
          }
  
      }
@@ -56,7 +56,7 @@ index f026c87a8..b5ba3fcb0 100644
      protected void unloadChunks(BooleanSupplier booleansupplier) {
          GameProfilerFiller gameprofilerfiller = this.world.getMethodProfiler();
  
-@@ -314,18 +317,28 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -346,18 +349,28 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
  
      private void b(BooleanSupplier booleansupplier) {
          LongIterator longiterator = this.unloadQueue.iterator();

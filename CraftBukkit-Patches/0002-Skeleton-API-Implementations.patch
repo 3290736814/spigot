@@ -1,4 +1,4 @@
-From 206b943d18083c14aaafebeb2edd42d637bb7ada Mon Sep 17 00:00:00 2001
+From 6306731261d37a804215696c78b1e7bcfc11d9a8 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -6,7 +6,7 @@ Subject: [PATCH] Skeleton API Implementations
 This contains the basic, empty implementations for some Spigot-API extensions. They are included early in the patching progress so that compilation will still succeed midway despite the APIs only being provided by subsequent patches.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 3eb989657..fc96c0d75 100644
+index 7c32c967f..9b231a1e3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1887,4 +1887,14 @@ public final class CraftServer implements Server {
@@ -25,7 +25,7 @@ index 3eb989657..fc96c0d75 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 161bed298..232988dc4 100644
+index 3c77c2b49..3a0e6fd38 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -2143,4 +2143,15 @@ public class CraftWorld implements World {
@@ -122,11 +122,11 @@ index cb1efe969..1d4ba473a 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 220130fd2..67037f442 100644
+index 0f9fa9222..ed4e0b280 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -1659,4 +1659,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
-         getHandle().a(org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(book), net.minecraft.server.EnumHand.MAIN_HAND); // PAIL rename openBook
+         getHandle().openBook(org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(book), net.minecraft.server.EnumHand.MAIN_HAND);
          getInventory().setItemInMainHand(hand);
      }
 +

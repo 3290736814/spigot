@@ -1,14 +1,14 @@
-From 235fc26dfaf311e012471712518464073c3fdff1 Mon Sep 17 00:00:00 2001
+From b9c090af391ecd6233ed61d792501accd3d6be45 Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Fri, 4 Jul 2014 23:03:13 +0200
 Subject: [PATCH] Make "moved wrongly" limit configurable
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 2ecc699a2..98589ac16 100644
+index fe4d48475..b65506e21 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -360,7 +360,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -361,7 +361,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
                  d10 = d6 * d6 + d7 * d7 + d8 * d8;
                  boolean flag1 = false;
  
@@ -17,7 +17,7 @@ index 2ecc699a2..98589ac16 100644
                      flag1 = true;
                      PlayerConnection.LOGGER.warn("{} moved wrongly!", entity.getDisplayName().getString());
                  }
-@@ -930,7 +930,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -931,7 +931,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
                              d11 = d7 * d7 + d8 * d8 + d9 * d9;
                              boolean flag1 = false;
  

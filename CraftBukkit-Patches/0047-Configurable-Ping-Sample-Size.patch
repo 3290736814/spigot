@@ -1,14 +1,14 @@
-From 0034e0c683d1a6398f0c0c50a9995828b9e5f1ff Mon Sep 17 00:00:00 2001
+From 25d047361fee057f824e412ab3fb688dc19c0929 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 26 Jan 2014 21:48:34 +1100
 Subject: [PATCH] Configurable Ping Sample Size
 
 
 diff --git a/src/main/java/net/minecraft/server/PacketStatusListener.java b/src/main/java/net/minecraft/server/PacketStatusListener.java
-index a5336a2c8..b247a18b9 100644
+index 53d1150cf..2b08f285d 100644
 --- a/src/main/java/net/minecraft/server/PacketStatusListener.java
 +++ b/src/main/java/net/minecraft/server/PacketStatusListener.java
-@@ -110,6 +110,13 @@ public class PacketStatusListener implements PacketStatusInListener {
+@@ -115,6 +115,13 @@ public class PacketStatusListener implements PacketStatusInListener {
              }
  
              ServerPing.ServerPingPlayerSample playerSample = new ServerPing.ServerPingPlayerSample(event.getMaxPlayers(), profiles.size());

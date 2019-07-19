@@ -1,4 +1,4 @@
-From 9288821b555737a5886d421d84c5ce9edd49ad27 Mon Sep 17 00:00:00 2001
+From d164c3def01faf49599c50dc91ce9b896c3891b2 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -6,7 +6,7 @@ Subject: [PATCH] Crop Growth Rates
 Allows configuring the growth rates of crops as a percentage of their normal growth rate.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index 78f240154..b6318c503 100644
+index 8f95d3822..f13a0be05 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -698,6 +698,18 @@ public class Block implements IMaterial {
@@ -29,10 +29,10 @@ index 78f240154..b6318c503 100644
  
          NONE, XZ, XYZ;
 diff --git a/src/main/java/net/minecraft/server/BlockBamboo.java b/src/main/java/net/minecraft/server/BlockBamboo.java
-index 49d97f044..92f00c8c5 100644
+index 5a59bae3b..ffb65776c 100644
 --- a/src/main/java/net/minecraft/server/BlockBamboo.java
 +++ b/src/main/java/net/minecraft/server/BlockBamboo.java
-@@ -80,7 +80,7 @@ public class BlockBamboo extends Block implements IBlockFragilePlantElement {
+@@ -85,7 +85,7 @@ public class BlockBamboo extends Block implements IBlockFragilePlantElement {
          if (!iblockdata.canPlace(world, blockposition)) {
              world.b(blockposition, true);
          } else if ((Integer) iblockdata.get(BlockBamboo.f) == 0) {
@@ -94,7 +94,7 @@ index 40e2da9e2..9b0c8cd0f 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/server/BlockKelp.java b/src/main/java/net/minecraft/server/BlockKelp.java
-index 5971a5132..6af2aa991 100644
+index 98e12daec..29c7d291f 100644
 --- a/src/main/java/net/minecraft/server/BlockKelp.java
 +++ b/src/main/java/net/minecraft/server/BlockKelp.java
 @@ -48,7 +48,7 @@ public class BlockKelp extends Block implements IFluidContainer {
@@ -172,7 +172,7 @@ index 5f2077664..f67b0c3ef 100644
  
                  if (i < 7) {
 diff --git a/src/main/java/net/minecraft/server/BlockSweetBerryBush.java b/src/main/java/net/minecraft/server/BlockSweetBerryBush.java
-index 13a9a7046..f4fd936b6 100644
+index 522d40306..e16b477e8 100644
 --- a/src/main/java/net/minecraft/server/BlockSweetBerryBush.java
 +++ b/src/main/java/net/minecraft/server/BlockSweetBerryBush.java
 @@ -27,7 +27,7 @@ public class BlockSweetBerryBush extends BlockPlant implements IBlockFragilePlan

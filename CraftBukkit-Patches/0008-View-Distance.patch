@@ -1,4 +1,4 @@
-From e5809ab26a3b919744fd0dfe6a27b20d0757d51b Mon Sep 17 00:00:00 2001
+From 37a3a975a35aeb493b2698eeb81ba57bd38289f0 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -28,10 +28,10 @@ index 1b4ebc133..6a6cd9471 100644
          entityplayer1.dead = false;
          entityplayer1.playerConnection.teleport(new Location(worldserver.getWorld(), entityplayer1.locX, entityplayer1.locY, entityplayer1.locZ, entityplayer1.yaw, entityplayer1.pitch));
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 52f05f1f7..b71cc720a 100644
+index 506658c3d..f7434dfd6 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -79,7 +79,7 @@ public class WorldServer extends World {
+@@ -82,7 +82,7 @@ public class WorldServer extends World {
                  chunkGenerator = worldprovider.getChunkGenerator();
              }
  

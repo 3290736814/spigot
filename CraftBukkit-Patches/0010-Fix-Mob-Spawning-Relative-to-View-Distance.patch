@@ -1,4 +1,4 @@
-From 884f06149d04fe78062fb55060f07490f85f1a19 Mon Sep 17 00:00:00 2001
+From c43ff665a8d40a27af6c1fb8f88778ccc491368d Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,15 +8,12 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 289f95c00..f1e807296 100644
+index 54152c9e8..36a89817f 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -319,9 +319,9 @@ public class ChunkProviderServer extends IChunkProvider {
-                     this.world.getMethodProfiler().exit();
-                     ChunkCoordIntPair chunkcoordintpair = playerchunk.i();
+@@ -366,7 +366,7 @@ public class ChunkProviderServer extends IChunkProvider {
  
--                    if (!this.playerChunkMap.isOutsideOfRange(chunkcoordintpair)) {
-+                    if (!this.playerChunkMap.isOutsideOfRange(chunkcoordintpair, false)) { // Spigot
+                     if (!this.playerChunkMap.isOutsideOfRange(chunkcoordintpair)) {
                          chunk.b(chunk.q() + j);
 -                        if (flag1 && (this.allowMonsters || this.allowAnimals) && this.world.getWorldBorder().isInBounds(chunk.getPos())) {
 +                        if (flag1 && (this.allowMonsters || this.allowAnimals) && this.world.getWorldBorder().isInBounds(chunk.getPos()) && !this.playerChunkMap.isOutsideOfRange(chunkcoordintpair, true)) { // Spigot
@@ -24,15 +21,17 @@ index 289f95c00..f1e807296 100644
                              this.world.timings.mobSpawn.startTiming(); // Spigot
                              EnumCreatureType[] aenumcreaturetype1 = aenumcreaturetype;
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 9e1161e15..a8e0e8f74 100644
+index f72c187ea..f83ba02bd 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -730,11 +730,18 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
-         return nbttagcompound == null ? null : this.getChunkData(this.world.getWorldProvider().getDimensionManager(), this.m, nbttagcompound, chunkcoordintpair, world); // CraftBukkit
+@@ -802,10 +802,21 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
      }
  
--    boolean isOutsideOfRange(ChunkCoordIntPair chunkcoordintpair) {
-+    // Spigot Start
+     boolean isOutsideOfRange(ChunkCoordIntPair chunkcoordintpair) {
++        // Spigot start
++        return isOutsideOfRange(chunkcoordintpair, false);
++    }
++
 +    boolean isOutsideOfRange(ChunkCoordIntPair chunkcoordintpair, boolean reducedRange) {
 +        int chunkRange = world.spigotConfig.mobSpawnRange;
 +        chunkRange = (chunkRange > world.spigotConfig.viewDistance) ? (byte) world.spigotConfig.viewDistance : chunkRange;
@@ -42,7 +41,7 @@ index 9e1161e15..a8e0e8f74 100644
 +        // Spigot end
          long i = chunkcoordintpair.pair();
  
-         return !this.u.d(i) ? true : this.playerMap.a(i).noneMatch((entityplayer) -> {
+         return !this.chunkDistanceManager.d(i) ? true : this.playerMap.a(i).noneMatch((entityplayer) -> {
 -            return !entityplayer.isSpectator() && a(chunkcoordintpair, (Entity) entityplayer) < 16384.0D;
 +            return !entityplayer.isSpectator() && a(chunkcoordintpair, (Entity) entityplayer) < blockRange; // Spigot
          });

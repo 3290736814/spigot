@@ -1,4 +1,4 @@
-From 38111b80030736325944d7935342b30b3320e5cf Mon Sep 17 00:00:00 2001
+From 406f559e4c7c6d3e5f0d49330f43f94b979d13a3 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Thu, 27 Jun 2013 17:26:09 +1000
 Subject: [PATCH] Properly Close Inventories
@@ -6,10 +6,10 @@ Subject: [PATCH] Properly Close Inventories
 Properly close inventories when unloading and switching worlds.
 
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index d119a5b19..24d8b2a6a 100644
+index 149f37ff6..4deee8300 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -971,6 +971,21 @@ public class WorldServer extends World {
+@@ -968,6 +968,21 @@ public class WorldServer extends World {
      }
  
      public void unloadChunk(Chunk chunk) {
@@ -31,7 +31,7 @@ index d119a5b19..24d8b2a6a 100644
          this.tileEntityListUnload.addAll(chunk.getTileEntities().values());
          EntitySlice[] aentityslice = chunk.getEntitySlices();
          int i = aentityslice.length;
-@@ -981,6 +996,18 @@ public class WorldServer extends World {
+@@ -978,6 +993,18 @@ public class WorldServer extends World {
  
              while (iterator.hasNext()) {
                  Entity entity = (Entity) iterator.next();

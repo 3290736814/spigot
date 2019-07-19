@@ -1,4 +1,4 @@
-From 59396ee69fd759635ded84089dd282568df3f721 Mon Sep 17 00:00:00 2001
+From d84506749f8252a4246c71efff0dfe944ea5cd6b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -6,10 +6,10 @@ Subject: [PATCH] Further Seed Customisation
 Allow server admins that really want to to customise the seeds used in world generation even further.
 
 diff --git a/src/main/java/net/minecraft/server/ChunkGenerator.java b/src/main/java/net/minecraft/server/ChunkGenerator.java
-index cea5166a8..4b3a823fa 100644
+index b54d5d2b9..35b9490cd 100644
 --- a/src/main/java/net/minecraft/server/ChunkGenerator.java
 +++ b/src/main/java/net/minecraft/server/ChunkGenerator.java
-@@ -196,4 +196,10 @@ public abstract class ChunkGenerator<C extends GeneratorSettingsDefault> {
+@@ -203,4 +203,10 @@ public abstract class ChunkGenerator<C extends GeneratorSettingsDefault> {
      public int c(int i, int j, HeightMap.Type heightmap_type) {
          return this.getBaseHeight(i, j, heightmap_type) - 1;
      }
@@ -21,7 +21,7 @@ index cea5166a8..4b3a823fa 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/net/minecraft/server/EntitySlime.java b/src/main/java/net/minecraft/server/EntitySlime.java
-index 9f7ff62ba..c3d4d0048 100644
+index e07157fb2..87c37c0d6 100644
 --- a/src/main/java/net/minecraft/server/EntitySlime.java
 +++ b/src/main/java/net/minecraft/server/EntitySlime.java
 @@ -274,7 +274,7 @@ public class EntitySlime extends EntityInsentient implements IMonster {
@@ -212,10 +212,10 @@ index 9f70019d2..acba08308 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java b/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
-index 947374862..f7d22543d 100644
+index f9411d9d5..68d38655f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
 +++ b/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
-@@ -181,4 +181,10 @@ public class CustomChunkGenerator extends InternalChunkGenerator<GeneratorSettin
+@@ -184,4 +184,10 @@ public class CustomChunkGenerator extends InternalChunkGenerator<GeneratorSettin
      public int getGenerationDepth() {
          return world.getHeight();
      }

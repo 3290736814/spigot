@@ -1,11 +1,11 @@
-From 50cafeac89c130d6b27d1d270757f352cd5634fc Mon Sep 17 00:00:00 2001
+From d2fa2c9a88e4fcf6a2f0451b2b05216607acd55a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 2 Feb 2014 16:55:46 +0000
 Subject: [PATCH] Add Option to Nerf Mobs from Spawners
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 6a2a552e4..f949ace59 100644
+index 4e4e88d8f..a635b9449 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -166,6 +166,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -17,7 +17,7 @@ index 6a2a552e4..f949ace59 100644
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/server/EntityInsentient.java b/src/main/java/net/minecraft/server/EntityInsentient.java
-index 7f1dcf0a8..01ce81068 100644
+index f8a7957c0..613d534ae 100644
 --- a/src/main/java/net/minecraft/server/EntityInsentient.java
 +++ b/src/main/java/net/minecraft/server/EntityInsentient.java
 @@ -633,6 +633,12 @@ public abstract class EntityInsentient extends EntityLiving {
