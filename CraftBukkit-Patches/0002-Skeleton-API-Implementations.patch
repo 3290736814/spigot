@@ -1,4 +1,4 @@
-From 6306731261d37a804215696c78b1e7bcfc11d9a8 Mon Sep 17 00:00:00 2001
+From f664bc60ded3bf4125de967f81b5fdc87fa24cb7 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -25,10 +25,10 @@ index 7c32c967f..9b231a1e3 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 3c77c2b49..3a0e6fd38 100644
+index 6fd242b13..2f3941db6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2143,4 +2143,15 @@ public class CraftWorld implements World {
+@@ -2145,4 +2145,15 @@ public class CraftWorld implements World {
          BlockPosition nearest = getHandle().getChunkProvider().getChunkGenerator().findNearestMapFeature(getHandle(), structureType.getName(), originPos, radius, findUnexplored);
          return (nearest == null) ? null : new Location(this, nearest.getX(), nearest.getY(), nearest.getZ());
      }
@@ -142,7 +142,7 @@ index 0f9fa9222..ed4e0b280 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index f7c4faf29..494f9a672 100644
+index b927b802a..2e91ebac0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 @@ -354,4 +354,14 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
