@@ -1,14 +1,14 @@
-From a444cfd0817fb3e408bb491d7709d77d5270c649 Mon Sep 17 00:00:00 2001
+From e5f46110019dd907f209fe38778bfa9452ac00ce Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Fri, 23 May 2014 18:05:10 -0400
 Subject: [PATCH] Configurable save-on-stop-only for UserCache
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 7ba6f5045..7a1956739 100644
+index 10aa903e6..f9158559e 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -730,6 +730,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -728,6 +728,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
              this.snooper.e();
          }
  

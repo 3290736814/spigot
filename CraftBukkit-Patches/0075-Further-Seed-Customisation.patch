@@ -1,4 +1,4 @@
-From d84506749f8252a4246c71efff0dfe944ea5cd6b Mon Sep 17 00:00:00 2001
+From 3ec697f63e1fcd7788ce8e7575138944970cd69b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -6,10 +6,10 @@ Subject: [PATCH] Further Seed Customisation
 Allow server admins that really want to to customise the seeds used in world generation even further.
 
 diff --git a/src/main/java/net/minecraft/server/ChunkGenerator.java b/src/main/java/net/minecraft/server/ChunkGenerator.java
-index b54d5d2b9..35b9490cd 100644
+index 8ada7773c..701b214bf 100644
 --- a/src/main/java/net/minecraft/server/ChunkGenerator.java
 +++ b/src/main/java/net/minecraft/server/ChunkGenerator.java
-@@ -203,4 +203,10 @@ public abstract class ChunkGenerator<C extends GeneratorSettingsDefault> {
+@@ -216,4 +216,10 @@ public abstract class ChunkGenerator<C extends GeneratorSettingsDefault> {
      public int c(int i, int j, HeightMap.Type heightmap_type) {
          return this.getBaseHeight(i, j, heightmap_type) - 1;
      }
