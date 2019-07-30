@@ -1,14 +1,14 @@
-From 2f16e3826dedee8c5debe3ff50f5aaa632318c3e Mon Sep 17 00:00:00 2001
+From efba667fb7283ffbd9fdd984dc36b36700ce0ce6 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 18 Dec 2013 13:39:14 +1100
 Subject: [PATCH] Log Cause of Unexpected Exceptions
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 16d02c8fa..75e1555de 100644
+index d1a2398f4..4fece68f9 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -791,6 +791,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -792,6 +792,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
              }
          } catch (Throwable throwable) {
              MinecraftServer.LOGGER.error("Encountered an unexpected exception", throwable);

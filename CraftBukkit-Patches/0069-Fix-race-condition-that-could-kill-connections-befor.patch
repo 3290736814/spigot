@@ -1,4 +1,4 @@
-From 5512b9ff2abe44455c18b240904f7c227266bea6 Mon Sep 17 00:00:00 2001
+From 85df5dfef4e394b41c50f9ca4de1c7be6da69a8f Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Fri, 25 Apr 2014 23:46:46 +0200
 Subject: [PATCH] Fix race condition that could kill connections before they
@@ -44,10 +44,10 @@ index 25be87cf4..8fd86c935 100644
              this.channel.close(); // We can't wait as this may be called from an event loop.
              this.m = ichatbasecomponent;
 diff --git a/src/main/java/net/minecraft/server/ServerConnection.java b/src/main/java/net/minecraft/server/ServerConnection.java
-index ba0f6128c..416bbedcd 100644
+index 77c0eec56..7de96ae69 100644
 --- a/src/main/java/net/minecraft/server/ServerConnection.java
 +++ b/src/main/java/net/minecraft/server/ServerConnection.java
-@@ -135,6 +135,10 @@ public class ServerConnection {
+@@ -145,6 +145,10 @@ public class ServerConnection {
                              networkmanager.stopReading();
                          }
                      } else {

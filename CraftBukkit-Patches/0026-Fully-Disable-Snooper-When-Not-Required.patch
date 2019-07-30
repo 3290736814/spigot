@@ -1,14 +1,14 @@
-From 288a2e93d415366f96497e290696a664f8d988de Mon Sep 17 00:00:00 2001
+From 18c3a7542b0aa9863176a62e6d45abcff489a767 Mon Sep 17 00:00:00 2001
 From: agentk20 <agentkid20@gmail.com>
 Date: Sat, 3 Aug 2013 19:28:48 +1000
 Subject: [PATCH] Fully Disable Snooper When Not Required
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 4fda27481..e36bcce67 100644
+index cb9ef5629..4b714ea45 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -951,11 +951,11 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -952,11 +952,11 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          }
  
          this.methodProfiler.enter("snooper");

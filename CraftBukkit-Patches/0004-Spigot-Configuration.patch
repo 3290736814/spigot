@@ -1,4 +1,4 @@
-From 663a48c92f7bb29e08abd8905ed6a3421145a7db Mon Sep 17 00:00:00 2001
+From 9e3d1171db51e52a846a98a998dca64ad644e2d2 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -6,10 +6,10 @@ Subject: [PATCH] Spigot Configuration
 Provides the basic infrastructure to load and save the Spigot configuration file, spigot.yml
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 9640f5c49..2f61c9ad9 100644
+index 57de8a70e..9c97b7719 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -146,6 +146,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -156,6 +156,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              this.h(dedicatedserverproperties.preventProxyConnections);
              this.b(dedicatedserverproperties.serverIp);
          }
@@ -21,7 +21,7 @@ index 9640f5c49..2f61c9ad9 100644
  
          this.setSpawnAnimals(dedicatedserverproperties.spawnAnimals);
          this.setSpawnNPCs(dedicatedserverproperties.spawnNpcs);
-@@ -182,7 +187,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -192,7 +197,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
          }
  
          // CraftBukkit start
@@ -51,7 +51,7 @@ index fba6272ec..7c6ae570c 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 9b231a1e3..e4e1f7b69 100644
+index ac381ae6a..580fce0f3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -734,6 +734,7 @@ public final class CraftServer implements Server {

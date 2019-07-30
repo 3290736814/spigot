@@ -1,4 +1,4 @@
-From 8dd75abe4478fcac75eb21f8758759de664e7da1 Mon Sep 17 00:00:00 2001
+From 869b835e5c8bbd08b3e8f0cbd4b3e69146f08fea Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Thu, 26 Jan 2017 20:54:55 +0000
 Subject: [PATCH] Replace chunk loading / unloading rate throttling.
@@ -7,7 +7,7 @@ Uses a scheme based on estimated tick slack time.
 See https://hub.spigotmc.org/stash/projects/SPIGOT/repos/spigot/pull-requests/71/overview
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 8948b3697..1701d39ea 100644
+index 6f16c4523..cec3794cd 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -64,6 +64,7 @@ import org.bukkit.craftbukkit.Main;
@@ -26,7 +26,7 @@ index 8948b3697..1701d39ea 100644
      // Spigot end
  
      public MinecraftServer(OptionSet options, Proxy proxy, DataFixer datafixer, CommandDispatcher commanddispatcher, YggdrasilAuthenticationService yggdrasilauthenticationservice, MinecraftSessionService minecraftsessionservice, GameProfileRepository gameprofilerepository, UserCache usercache, WorldLoadListenerFactory worldloadlistenerfactory, String s) {
-@@ -960,6 +962,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -961,6 +963,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
      protected void a(BooleanSupplier booleansupplier) {
          SpigotTimings.serverTickTimer.startTiming(); // Spigot
@@ -34,7 +34,7 @@ index 8948b3697..1701d39ea 100644
          long i = SystemUtils.getMonotonicNanos();
  
          ++this.ticks;
-@@ -1008,6 +1011,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1009,6 +1012,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          this.ap.a(i1 - i);
          this.methodProfiler.exit();
          org.spigotmc.WatchdogThread.tick(); // Spigot
@@ -43,7 +43,7 @@ index 8948b3697..1701d39ea 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index aea22fef9..119a3be36 100644
+index 8838c5440..e41d21f91 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -331,6 +331,9 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {

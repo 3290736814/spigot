@@ -1,4 +1,4 @@
-From c2430974486645b83f4e865fd4d25c47abcef9a4 Mon Sep 17 00:00:00 2001
+From eb82508eb120d9651d611f7b630f7c9c3b28b9cf Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -32,7 +32,7 @@ index 417c26775..fa4eab5b0 100644
      }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 33c992e02..8465a9108 100644
+index 431ee1ce5..305b6eaa9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -193,6 +193,8 @@ import org.yaml.snakeyaml.Yaml;
@@ -44,7 +44,7 @@ index 33c992e02..8465a9108 100644
  public final class CraftServer implements Server {
      private final String serverName = "CraftBukkit";
      private final String serverVersion;
-@@ -1936,6 +1938,20 @@ public final class CraftServer implements Server {
+@@ -1937,6 +1939,20 @@ public final class CraftServer implements Server {
          public void restart() {
              org.spigotmc.RestartCommand.restart();
          }
@@ -109,7 +109,7 @@ index 0b1569057..f22959ee1 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 9d5cac666..184802803 100644
+index 25d176117..e434738cb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -118,6 +118,8 @@ import org.bukkit.plugin.Plugin;
@@ -161,7 +161,7 @@ index 9d5cac666..184802803 100644
  
      public Player.Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index c88204ff0..fe8e6dcb7 100644
+index 044317910..804fe9499 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 @@ -21,6 +21,9 @@ import org.bukkit.inventory.meta.BookMeta;

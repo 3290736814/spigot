@@ -1,14 +1,14 @@
-From 8a0f5cd64dc827e2deb95fbf86dcde80e43cd971 Mon Sep 17 00:00:00 2001
+From c42cc2a9baf7768168de5c330388a704616743d2 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 12 Apr 2014 21:23:58 +1000
 Subject: [PATCH] Treat Bungee as Online Mode
 
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index e9aed77bc..d88c9b6f6 100644
+index dee41a404..2622eb99f 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -198,7 +198,14 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -208,7 +208,14 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
          if (!this.getOnlineMode()) {
              DedicatedServer.LOGGER.warn("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
              DedicatedServer.LOGGER.warn("The server will make no attempt to authenticate usernames. Beware.");
