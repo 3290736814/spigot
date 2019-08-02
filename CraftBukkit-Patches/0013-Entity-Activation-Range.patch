@@ -1,4 +1,4 @@
-From 27b415826b3f5ba5f702c9dc727c2e563135edf3 Mon Sep 17 00:00:00 2001
+From 98b31b74b722409c1beffff7732ba1e7da620270 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -74,6 +74,29 @@ index dfd1a7da4..da9740a99 100644
      @Nullable
      public abstract EntityAgeable createChild(EntityAgeable entityageable);
  
+diff --git a/src/main/java/net/minecraft/server/EntityAreaEffectCloud.java b/src/main/java/net/minecraft/server/EntityAreaEffectCloud.java
+index 91b434aff..3a8e10533 100644
+--- a/src/main/java/net/minecraft/server/EntityAreaEffectCloud.java
++++ b/src/main/java/net/minecraft/server/EntityAreaEffectCloud.java
+@@ -158,6 +158,18 @@ public class EntityAreaEffectCloud extends Entity {
+         this.at = i;
+     }
+ 
++    // Spigot start - copied from below
++    @Override
++    public void inactiveTick() {
++        super.inactiveTick();
++
++        if (this.ticksLived >= this.waitTime + this.at) {
++            this.die();
++            return;
++        }
++    }
++    // Spigot end
++
+     @Override
+     public void tick() {
+         super.tick();
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
 index 4ef5c40c7..14ca024e2 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
@@ -98,17 +121,25 @@ index 4ef5c40c7..14ca024e2 100644
          super(entitytypes, world);
          this.fromPlayer = EntityArrow.PickupStatus.DISALLOWED;
 diff --git a/src/main/java/net/minecraft/server/EntityFireworks.java b/src/main/java/net/minecraft/server/EntityFireworks.java
-index 426a10c05..020562cd3 100644
+index 426a10c05..40cc62dce 100644
 --- a/src/main/java/net/minecraft/server/EntityFireworks.java
 +++ b/src/main/java/net/minecraft/server/EntityFireworks.java
-@@ -18,6 +18,14 @@ public class EntityFireworks extends Entity implements IProjectile {
+@@ -18,6 +18,22 @@ public class EntityFireworks extends Entity implements IProjectile {
          super(entitytypes, world);
      }
  
-+    // Spigot Start
++    // Spigot Start - copied from tick
 +    @Override
 +    public void inactiveTick() {
 +        this.ticksFlown += 1;
++
++        if (!this.world.isClientSide && this.ticksFlown > this.expectedLifespan) {
++            // CraftBukkit start
++            if (!org.bukkit.craftbukkit.event.CraftEventFactory.callFireworkExplodeEvent(this).isCancelled()) {
++                this.explode();
++            }
++            // CraftBukkit end
++        }
 +        super.inactiveTick();
 +    }
 +    // Spigot End
@@ -150,7 +181,7 @@ index 2dcdcc30b..0569ad9af 100644
          Vec3D vec3d = this.getMot();
  
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 8798d7d70..35a67665a 100644
+index a20a3308f..9c3e95bbb 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -132,6 +132,13 @@ public abstract class EntityLiving extends Entity {
@@ -190,7 +221,7 @@ index dca1bf090..ba0386ad4 100644
      protected void mobTick() {
          this.world.getMethodProfiler().enter("brain");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 7f5d3a3e9..149f37ff6 100644
+index 1b0ae63d4..6509ea1aa 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -314,6 +314,7 @@ public class WorldServer extends World {
