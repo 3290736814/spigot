@@ -1,4 +1,4 @@
-From 8c456495925ceea9e78d81f71b87572b3dd1f4cf Mon Sep 17 00:00:00 2001
+From 2896568b9787af88a9183c88ccc2557e40dc7433 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -70,10 +70,10 @@ index 68c5b061e..bec64d7f2 100644
                  if (this.isLoaded(tileentity.getPosition())) {
                      this.getChunkAtWorldCoords(tileentity.getPosition()).removeTileEntity(tileentity.getPosition());
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index eedac6078..060687c12 100644
+index a832f08fa..e7c3d6182 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -322,4 +322,13 @@ public class SpigotWorldConfig
+@@ -329,4 +329,13 @@ public class SpigotWorldConfig
      {
          hangingTickFrequency = getInt( "hanging-tick-frequency", 100 );
      }

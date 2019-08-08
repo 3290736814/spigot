@@ -1,4 +1,4 @@
-From a909d9caf8980eb78f9603e4d1dcc56649ec6667 Mon Sep 17 00:00:00 2001
+From 0959aaf46ccbbd8c502ffdebdffe203b6438eec9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Aug 2014 18:12:32 -0400
 Subject: [PATCH] Limit TNT Detonations per tick
@@ -31,10 +31,10 @@ index 51e98b6c4..68c5b061e 100644
  
      public void a(Consumer<Entity> consumer, Entity entity) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 59f99b355..db88d5667 100644
+index e424bd91f..1d4352410 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -305,4 +305,15 @@ public class SpigotWorldConfig
+@@ -312,4 +312,15 @@ public class SpigotWorldConfig
          sprintMultiplier = (float) getDouble( "hunger.sprint-multiplier", 0.1 );
          otherMultiplier = (float) getDouble( "hunger.other-multiplier", 0.0 );
      }

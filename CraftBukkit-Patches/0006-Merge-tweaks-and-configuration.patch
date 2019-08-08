@@ -1,4 +1,4 @@
-From f8d8d92ec0f117246239104e66214e0e0f1589f5 Mon Sep 17 00:00:00 2001
+From 9561b0531d4becf7c4412db26082dbfce64150cf Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:46:33 +1100
 Subject: [PATCH] Merge tweaks and configuration
@@ -31,7 +31,7 @@ index cd31e3c73..cc831fca8 100644
                          } else {
                              a(entityitem, itemstack1, this, itemstack);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 3cf0053bb..ab128ee6d 100644
+index 61f93251b..b4ce7e08e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -521,6 +521,23 @@ public class CraftEventFactory {
@@ -59,10 +59,10 @@ index 3cf0053bb..ab128ee6d 100644
              event = CraftEventFactory.callEntitySpawnEvent(entity);
          }
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 1ece3d7e3..dec1513e7 100644
+index fb9c4fc78..8c855cf9b 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -122,4 +122,18 @@ public class SpigotWorldConfig
+@@ -128,4 +128,18 @@ public class SpigotWorldConfig
          sweetBerryModifier = getAndValidateGrowth( "SweetBerry" );
          kelpModifier = getAndValidateGrowth( "Kelp" );
      }

@@ -1,4 +1,4 @@
-From 37a3a975a35aeb493b2698eeb81ba57bd38289f0 Mon Sep 17 00:00:00 2001
+From 00d48f35f3814f7acdcaa58df1a375c3f51e4bee Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -28,7 +28,7 @@ index 1b4ebc133..6a6cd9471 100644
          entityplayer1.dead = false;
          entityplayer1.playerConnection.teleport(new Location(worldserver.getWorld(), entityplayer1.locX, entityplayer1.locY, entityplayer1.locZ, entityplayer1.yaw, entityplayer1.pitch));
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 506658c3d..f7434dfd6 100644
+index a749179f7..742d5e8eb 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -82,7 +82,7 @@ public class WorldServer extends World {
@@ -40,11 +40,29 @@ index 506658c3d..f7434dfd6 100644
                  return minecraftserver.getWorldServer(DimensionManager.OVERWORLD).getWorldPersistentData();
              });
              // CraftBukkit end
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
+index a4630c421..6133b11f3 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
+@@ -2150,6 +2150,13 @@ public class CraftWorld implements World {
+         return (nearest == null) ? null : new Location(this, nearest.getX(), nearest.getY(), nearest.getZ());
+     }
+ 
++    // Spigot start
++    @Override
++    public int getViewDistance() {
++        return world.spigotConfig.viewDistance;
++    }
++    // Spigot end
++
+     // Spigot start
+     private final Spigot spigot = new Spigot()
+     {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index dec1513e7..d5b481881 100644
+index 8c855cf9b..be0540352 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -136,4 +136,22 @@ public class SpigotWorldConfig
+@@ -142,4 +142,23 @@ public class SpigotWorldConfig
          expMerge = getDouble("merge-radius.exp", 3.0 );
          log( "Experience Merge Radius: " + expMerge );
      }
@@ -57,13 +75,14 @@ index dec1513e7..d5b481881 100644
 +            set( "view-distance", null );
 +        }
 +
-+        viewDistance = getInt( "view-distance" );
-+        if ( viewDistance == 0 )
++        Object viewDistanceObject = get( "view-distance", "default" );
++        viewDistance = ( viewDistanceObject ) instanceof Number ? ( (Number) viewDistanceObject ).intValue() : -1;
++        if ( viewDistance <= 0 )
 +        {
 +            viewDistance = Bukkit.getViewDistance();
 +        }
 +
-+        viewDistance = Math.max( viewDistance, 3 );
++        viewDistance = Math.max( Math.min( viewDistance,  32 ), 3 );
 +        log( "View Distance: " + viewDistance );
 +    }
  }

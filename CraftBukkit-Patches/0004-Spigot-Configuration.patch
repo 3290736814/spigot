@@ -1,4 +1,4 @@
-From 9e3d1171db51e52a846a98a998dca64ad644e2d2 Mon Sep 17 00:00:00 2001
+From 3efc533145ff82890eee346b88e1ae6e80b3954a Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -294,10 +294,10 @@ index 000000000..7b14d3164
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 new file mode 100644
-index 000000000..9b3d0bcd6
+index 000000000..1cce14866
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -0,0 +1,76 @@
+@@ -0,0 +1,82 @@
 +package org.spigotmc;
 +
 +import java.util.List;
@@ -372,6 +372,12 @@ index 000000000..9b3d0bcd6
 +    {
 +        config.addDefault( "world-settings.default." + path, def );
 +        return config.getString( "world-settings." + worldName + "." + path, config.getString( "world-settings.default." + path ) );
++    }
++
++    private Object get(String path, Object def)
++    {
++        config.addDefault( "world-settings.default." + path, def );
++        return config.get( "world-settings." + worldName + "." + path, config.get( "world-settings.default." + path ) );
 +    }
 +}
 -- 

@@ -1,4 +1,4 @@
-From f8a2cbf05b205b62e8d184b475c1c0cfb0241d35 Mon Sep 17 00:00:00 2001
+From ddd316b33d73d5a1f9f0e6897b90cf9ccaf495a1 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Feb 2013 11:58:47 -0500
 Subject: [PATCH] Entity Tracking Ranges
@@ -12,7 +12,7 @@ This has multiple benefits:
 4) Less client lag - Not trying to render distant item frames and paintings and entities will reduce entity count on the client, which is major for shop/town worlds which may use tons of item frames.
 
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index f83ba02bd..1ab0b363c 100644
+index eca0a1458..b0b09261c 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -970,6 +970,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -24,10 +24,10 @@ index f83ba02bd..1ab0b363c 100644
  
                  if (this.trackedEntities.containsKey(entity.getId())) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 4d1f66eb3..a59c99d71 100644
+index d873b32b9..48bda1ed0 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -183,4 +183,19 @@ public class SpigotWorldConfig
+@@ -190,4 +190,19 @@ public class SpigotWorldConfig
          tickInactiveVillagers = getBoolean( "entity-activation-range.tick-inactive-villagers", tickInactiveVillagers );
          log( "Entity Activation Range: An " + animalActivationRange + " / Mo " + monsterActivationRange + " / Ra " + raiderActivationRange + " / Mi " + miscActivationRange + " / Tiv " + tickInactiveVillagers );
      }

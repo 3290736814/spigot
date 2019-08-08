@@ -1,4 +1,4 @@
-From 6378d2af015cbd2a9cb0a55e9bd21187820f016e Mon Sep 17 00:00:00 2001
+From 38dbf814e1bed70d149cd801835962c55ebf4b41 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sat, 29 Mar 2014 13:44:25 -0400
 Subject: [PATCH] Configurable dragon death and wither spawn sounds
@@ -47,10 +47,10 @@ index a6528d536..f9ed705a5 100644
                          double deltaLength = Math.sqrt(distanceSquared);
                          double relativeX = player.locX + (deltaX / deltaLength) * viewDistance;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index e328ba389..b98f78fa5 100644
+index 2ff2293c2..aecab481f 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -242,4 +242,16 @@ public class SpigotWorldConfig
+@@ -249,4 +249,16 @@ public class SpigotWorldConfig
          enableZombiePigmenPortalSpawns = getBoolean( "enable-zombie-pigmen-portal-spawns", true );
          log( "Allow Zombie Pigmen to spawn from portal blocks: " + enableZombiePigmenPortalSpawns );
      }

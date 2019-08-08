@@ -1,4 +1,4 @@
-From 81b4aec5ca936cad666bb96d2d2a3c4bf5d3fee2 Mon Sep 17 00:00:00 2001
+From 22e4bc07a2835034832bf25b36b6d0a3b63ac9a2 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -164,7 +164,7 @@ index e09a5684c..ad25d45ea 100644
  
      protected Vec3D a(Vec3D vec3d, EnumMoveType enummovetype) {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index eb2f274a7..a20a3308f 100644
+index 3bc4dd9d1..1a3e6b2fa 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -35,6 +35,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
@@ -176,7 +176,7 @@ index eb2f274a7..a20a3308f 100644
  public abstract class EntityLiving extends Entity {
  
      private static final UUID b = UUID.fromString("662A6B8D-DA3E-4C1C-8813-96EA6097278D");
-@@ -2204,6 +2206,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2205,6 +2207,7 @@ public abstract class EntityLiving extends Entity {
  
      @Override
      public void tick() {
@@ -184,7 +184,7 @@ index eb2f274a7..a20a3308f 100644
          super.tick();
          this.o();
          this.p();
-@@ -2278,7 +2281,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2279,7 +2282,9 @@ public abstract class EntityLiving extends Entity {
              }
          }
  
@@ -194,7 +194,7 @@ index eb2f274a7..a20a3308f 100644
          double d0 = this.locX - this.lastX;
          double d1 = this.locZ - this.lastZ;
          float f = (float) (d0 * d0 + d1 * d1);
-@@ -2359,6 +2364,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2360,6 +2365,7 @@ public abstract class EntityLiving extends Entity {
              this.pitch = 0.0F;
          }
  
@@ -202,7 +202,7 @@ index eb2f274a7..a20a3308f 100644
      }
  
      protected float e(float f, float f1) {
-@@ -2432,6 +2438,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2433,6 +2439,7 @@ public abstract class EntityLiving extends Entity {
  
          this.setMot(d4, d5, d6);
          this.world.getMethodProfiler().enter("ai");
@@ -210,7 +210,7 @@ index eb2f274a7..a20a3308f 100644
          if (this.isFrozen()) {
              this.jumping = false;
              this.bb = 0.0F;
-@@ -2442,6 +2449,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2443,6 +2450,7 @@ public abstract class EntityLiving extends Entity {
              this.doTick();
              this.world.getMethodProfiler().exit();
          }
@@ -218,7 +218,7 @@ index eb2f274a7..a20a3308f 100644
  
          this.world.getMethodProfiler().exit();
          this.world.getMethodProfiler().enter("jump");
-@@ -2466,7 +2474,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2467,7 +2475,9 @@ public abstract class EntityLiving extends Entity {
          this.n();
          AxisAlignedBB axisalignedbb = this.getBoundingBox();
  
@@ -228,7 +228,7 @@ index eb2f274a7..a20a3308f 100644
          this.world.getMethodProfiler().exit();
          this.world.getMethodProfiler().enter("push");
          if (this.bq > 0) {
-@@ -2474,7 +2484,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2475,7 +2485,9 @@ public abstract class EntityLiving extends Entity {
              this.a(axisalignedbb, this.getBoundingBox());
          }
  
