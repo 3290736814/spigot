@@ -1,4 +1,4 @@
-From 4e6f3b27aefbd037320338fe53a47f89458da098 Mon Sep 17 00:00:00 2001
+From 0c3fddb3a255a8c920226e662639ab0fab45512d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -199,7 +199,7 @@ index 1a3e6b2fa..bd8480ae3 100644
      protected EntityLiving(EntityTypes<? extends EntityLiving> entitytypes, World world) {
          super(entitytypes, world);
 diff --git a/src/main/java/net/minecraft/server/EntityVillager.java b/src/main/java/net/minecraft/server/EntityVillager.java
-index dca1bf090..ba0386ad4 100644
+index dca1bf090..89065deb4 100644
 --- a/src/main/java/net/minecraft/server/EntityVillager.java
 +++ b/src/main/java/net/minecraft/server/EntityVillager.java
 @@ -131,6 +131,17 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
@@ -209,8 +209,8 @@ index dca1bf090..ba0386ad4 100644
 +    // Spigot Start
 +    @Override
 +    public void inactiveTick() {
-+        // SPIGOT-3874, SPIGOT-3894, SPIGOT-3846 :(
-+        if (world.spigotConfig.tickInactiveVillagers) {
++        // SPIGOT-3874, SPIGOT-3894, SPIGOT-3846, SPIGOT-5286 :(
++        if (world.spigotConfig.tickInactiveVillagers && this.df()) {
 +            this.mobTick();
 +        }
 +        super.inactiveTick();
