@@ -1,4 +1,4 @@
-From 432ea7c02b77293e6920b7864a8f7bab9a4bac31 Mon Sep 17 00:00:00 2001
+From 111d25677baa99bc99e3a18fd1e7b50d786cd3bf Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -28,7 +28,7 @@ index 1b4ebc133..6a6cd9471 100644
          entityplayer1.dead = false;
          entityplayer1.playerConnection.teleport(new Location(worldserver.getWorld(), entityplayer1.locX, entityplayer1.locY, entityplayer1.locZ, entityplayer1.yaw, entityplayer1.pitch));
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index a749179f7..742d5e8eb 100644
+index 968e07133..f033e23b5 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -82,7 +82,7 @@ public class WorldServer extends World {
@@ -41,11 +41,11 @@ index a749179f7..742d5e8eb 100644
              });
              // CraftBukkit end
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index b1055e1f4..388f6043a 100644
+index b6034fb00..9ae40e78f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2151,6 +2151,13 @@ public class CraftWorld implements World {
-         return (nearest == null) ? null : new Location(this, nearest.getX(), nearest.getY(), nearest.getZ());
+@@ -2169,6 +2169,13 @@ public class CraftWorld implements World {
+         return persistentRaid.a.values().stream().map(CraftRaid::new).collect(Collectors.toList());
      }
  
 +    // Spigot start
