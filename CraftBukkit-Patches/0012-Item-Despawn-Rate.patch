@@ -1,11 +1,11 @@
-From b751e5081bd5bd54f0aa00e9c370139c666bcbb2 Mon Sep 17 00:00:00 2001
+From f8c1fb45795190b27568046c1c76c54025935f6d Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 22 Sep 2013 19:10:53 +1000
 Subject: [PATCH] Item Despawn Rate
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index cc831fca8..2dcdcc30b 100644
+index ea0e03a83..ccbb81bdb 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -124,7 +124,7 @@ public class EntityItem extends Entity {
@@ -17,7 +17,7 @@ index cc831fca8..2dcdcc30b 100644
                  // CraftBukkit start - fire ItemDespawnEvent
                  if (org.bukkit.craftbukkit.event.CraftEventFactory.callItemDespawnEvent(this).isCancelled()) {
                      this.age = 0;
-@@ -415,7 +415,7 @@ public class EntityItem extends Entity {
+@@ -417,7 +417,7 @@ public class EntityItem extends Entity {
  
      public void u() {
          this.p();
