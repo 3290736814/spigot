@@ -1,4 +1,4 @@
-From 22e4bc07a2835034832bf25b36b6d0a3b63ac9a2 Mon Sep 17 00:00:00 2001
+From 666d0e5198225060b499e341772d0b9e3a0e146d Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -487,18 +487,18 @@ index 7c6ae570c..cc7021a7f 100644
              CrashReport crashreport = CrashReport.a(throwable, "Ticking entity");
              CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Entity being ticked");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 742d5e8eb..1b0ae63d4 100644
+index e12174f59..070a5be16 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -37,6 +37,7 @@ import org.apache.logging.log4j.Logger;
- // CraftBukkit start
+@@ -38,6 +38,7 @@ import org.apache.logging.log4j.Logger;
+ import java.util.logging.Level;
  import org.bukkit.Bukkit;
  import org.bukkit.WeatherType;
 +import org.bukkit.craftbukkit.SpigotTimings; // Spigot
  import org.bukkit.craftbukkit.event.CraftEventFactory;
  import org.bukkit.event.entity.CreatureSpawnEvent;
  import org.bukkit.event.server.MapInitializeEvent;
-@@ -257,13 +258,17 @@ public class WorldServer extends World {
+@@ -289,13 +290,17 @@ public class WorldServer extends World {
          gameprofilerfiller.exitEnter("chunkSource");
          this.getChunkProvider().tick(booleansupplier);
          gameprofilerfiller.exitEnter("tickPending");
@@ -516,7 +516,7 @@ index 742d5e8eb..1b0ae63d4 100644
          gameprofilerfiller.exitEnter("raid");
          this.c.a();
          if (this.mobSpawnerTrader != null) {
-@@ -271,7 +276,9 @@ public class WorldServer extends World {
+@@ -303,7 +308,9 @@ public class WorldServer extends World {
          }
  
          gameprofilerfiller.exitEnter("blockEvents");
@@ -526,7 +526,7 @@ index 742d5e8eb..1b0ae63d4 100644
          this.ticking = false;
          gameprofilerfiller.exitEnter("entities");
          boolean flag3 = true || !this.players.isEmpty() || !this.getForceLoadedChunks().isEmpty(); // CraftBukkit - this prevents entity cleanup, other issues on servers with no players
-@@ -281,6 +288,7 @@ public class WorldServer extends World {
+@@ -313,6 +320,7 @@ public class WorldServer extends World {
          }
  
          if (flag3 || this.emptyTime++ < 300) {
@@ -534,7 +534,7 @@ index 742d5e8eb..1b0ae63d4 100644
              this.worldProvider.l();
              gameprofilerfiller.enter("global");
  
-@@ -306,6 +314,7 @@ public class WorldServer extends World {
+@@ -338,6 +346,7 @@ public class WorldServer extends World {
              this.tickingEntities = true;
              ObjectIterator objectiterator = this.entitiesById.int2ObjectEntrySet().iterator();
  
@@ -542,7 +542,7 @@ index 742d5e8eb..1b0ae63d4 100644
              while (objectiterator.hasNext()) {
                  Entry<Entity> entry = (Entry) objectiterator.next();
                  Entity entity1 = (Entity) entry.getValue();
-@@ -344,6 +353,7 @@ public class WorldServer extends World {
+@@ -376,6 +385,7 @@ public class WorldServer extends World {
  
                  gameprofilerfiller.exit();
              }
@@ -550,7 +550,7 @@ index 742d5e8eb..1b0ae63d4 100644
  
              this.tickingEntities = false;
  
-@@ -352,6 +362,7 @@ public class WorldServer extends World {
+@@ -384,6 +394,7 @@ public class WorldServer extends World {
              }
  
              gameprofilerfiller.exit();
@@ -558,7 +558,7 @@ index 742d5e8eb..1b0ae63d4 100644
              this.tickBlockEntities();
          }
  
-@@ -534,6 +545,7 @@ public class WorldServer extends World {
+@@ -566,6 +577,7 @@ public class WorldServer extends World {
  
      public void entityJoinedWorld(Entity entity) {
          if (entity instanceof EntityHuman || this.getChunkProvider().a(entity)) {
@@ -566,7 +566,7 @@ index 742d5e8eb..1b0ae63d4 100644
              entity.H = entity.locX;
              entity.I = entity.locY;
              entity.J = entity.locZ;
-@@ -559,6 +571,7 @@ public class WorldServer extends World {
+@@ -591,6 +603,7 @@ public class WorldServer extends World {
                      this.a(entity, entity1);
                  }
              }

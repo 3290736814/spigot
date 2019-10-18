@@ -1,4 +1,4 @@
-From a29f3ee909d680bce0527213280ba4e8791b8736 Mon Sep 17 00:00:00 2001
+From ab7d10c3d219cbb28a24cad89705d587540eb7dc Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Sat, 19 Jul 2014 12:49:48 +0100
 Subject: [PATCH] Don't spawn bonus ocelots when plugins spawn ocelots
@@ -26,10 +26,10 @@ index 3b84f60a7..a6b15efd5 100644
          }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 6369afb44..0ed0b6af4 100644
+index 1ddfdddf5..253177d1b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1684,6 +1684,12 @@ public class CraftWorld implements World {
+@@ -1703,6 +1703,12 @@ public class CraftWorld implements World {
          }
  
          if (entity != null) {

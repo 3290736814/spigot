@@ -1,4 +1,4 @@
-From 95e81b49824bf41fe3bfd3d67f7ed7c59bd8bc5f Mon Sep 17 00:00:00 2001
+From bbc70ba97fc34c04625ed14dc08c7dfb0b334ca4 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -39,10 +39,10 @@ index b4fb0522..aa7c90cb 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 0f93b251..42a4bc13 100644
+index ffaf8f55..bfc7b513 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -1961,6 +1961,16 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -2001,6 +2001,16 @@ public interface World extends PluginMessageRecipient, Metadatable {
      @Nullable
      public Location locateNearestStructure(@NotNull Location origin, @NotNull StructureType structureType, int radius, boolean findUnexplored);
  
@@ -79,10 +79,10 @@ index d247b0d8..bf0f8cc4 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index cd6642f5..148c3022 100644
+index 8928586f..e65b90c7 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -584,4 +584,15 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
+@@ -590,4 +590,15 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
       */
      @NotNull
      Pose getPose();

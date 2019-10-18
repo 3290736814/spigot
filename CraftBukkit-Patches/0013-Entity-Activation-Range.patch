@@ -1,4 +1,4 @@
-From 0c3fddb3a255a8c920226e662639ab0fab45512d Mon Sep 17 00:00:00 2001
+From 8108d1a322a2cf6460819d824a9aa11365ecc11e Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -121,7 +121,7 @@ index 4ef5c40c7..14ca024e2 100644
          super(entitytypes, world);
          this.fromPlayer = EntityArrow.PickupStatus.DISALLOWED;
 diff --git a/src/main/java/net/minecraft/server/EntityFireworks.java b/src/main/java/net/minecraft/server/EntityFireworks.java
-index 37f863a97..fd3897c05 100644
+index a7e239a22..8f4116cde 100644
 --- a/src/main/java/net/minecraft/server/EntityFireworks.java
 +++ b/src/main/java/net/minecraft/server/EntityFireworks.java
 @@ -18,6 +18,22 @@ public class EntityFireworks extends Entity implements IProjectile {
@@ -148,7 +148,7 @@ index 37f863a97..fd3897c05 100644
      protected void initDatawatcher() {
          this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, ItemStack.a);
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 2dcdcc30b..0569ad9af 100644
+index ccbb81bdb..87158dc85 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -137,6 +137,28 @@ public class EntityItem extends Entity {
@@ -221,10 +221,10 @@ index dca1bf090..89065deb4 100644
      protected void mobTick() {
          this.world.getMethodProfiler().enter("brain");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 1b0ae63d4..6509ea1aa 100644
+index 070a5be16..85efa839c 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -314,6 +314,7 @@ public class WorldServer extends World {
+@@ -346,6 +346,7 @@ public class WorldServer extends World {
              this.tickingEntities = true;
              ObjectIterator objectiterator = this.entitiesById.int2ObjectEntrySet().iterator();
  
@@ -232,7 +232,7 @@ index 1b0ae63d4..6509ea1aa 100644
              timings.entityTick.startTiming(); // Spigot
              while (objectiterator.hasNext()) {
                  Entry<Entity> entry = (Entry) objectiterator.next();
-@@ -545,6 +546,14 @@ public class WorldServer extends World {
+@@ -577,6 +578,14 @@ public class WorldServer extends World {
  
      public void entityJoinedWorld(Entity entity) {
          if (entity instanceof EntityHuman || this.getChunkProvider().a(entity)) {
@@ -262,7 +262,7 @@ index 86f2d6b5c..b98a7b56a 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index d51b158e8..e4d2a8fba 100644
+index 747994464..9d85fafbf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -473,6 +473,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {

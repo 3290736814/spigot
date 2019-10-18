@@ -1,4 +1,4 @@
-From 0812797d50fbf3d5842e90a0730702f9f50a17a8 Mon Sep 17 00:00:00 2001
+From 49acee4143a1567723b73b3a4c2ac4c834e2c36a Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -25,10 +25,10 @@ index ef62a9ffe..ac381ae6a 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 7c895609d..75dbe7894 100644
+index 3c3da751a..ceefa9bf2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2163,4 +2163,15 @@ public class CraftWorld implements World {
+@@ -2182,4 +2182,15 @@ public class CraftWorld implements World {
          PersistentRaid persistentRaid = world.C(); // PAIL rename getPersistentRaid
          return persistentRaid.a.values().stream().map(CraftRaid::new).collect(Collectors.toList());
      }
@@ -161,10 +161,10 @@ index b927b802a..2e91ebac0 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 3a93e202b..c6dda3dec 100644
+index a96df7718..40420cd85 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -1418,4 +1418,16 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -1420,4 +1420,16 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
              return HANDLED_TAGS;
          }
      }

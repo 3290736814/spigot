@@ -1,4 +1,4 @@
-From cf4ea79629db02290283d25f212f23089220f2e8 Mon Sep 17 00:00:00 2001
+From bcd654e96e22e44c561bfd2065724495716098be Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
@@ -58,7 +58,7 @@ index 2e91ebac0..044317910 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index c6dda3dec..1f7d26045 100644
+index 40420cd85..56004326c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -80,6 +80,10 @@ import org.bukkit.inventory.meta.Repairable;
@@ -72,7 +72,7 @@ index c6dda3dec..1f7d26045 100644
  /**
   * Children must include the following:
   *
-@@ -326,7 +330,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -327,7 +331,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
  
              if (display.hasKey(NAME.NBT)) {
                  try {
@@ -81,7 +81,7 @@ index c6dda3dec..1f7d26045 100644
                  } catch (JsonParseException ex) {
                      // Ignore (stripped like Vanilla)
                  }
-@@ -334,7 +338,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -335,7 +339,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
  
              if (display.hasKey(LOCNAME.NBT)) {
                  try {
@@ -90,7 +90,7 @@ index c6dda3dec..1f7d26045 100644
                  } catch (JsonParseException ex) {
                      // Ignore (stripped like Vanilla)
                  }
-@@ -345,7 +349,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -346,7 +350,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
                  lore = new ArrayList<IChatBaseComponent>(list.size());
  
                  for (int index = 0; index < list.size(); index++) {
