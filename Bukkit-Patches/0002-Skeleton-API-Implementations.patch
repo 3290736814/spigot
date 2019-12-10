@@ -1,14 +1,14 @@
-From bbc70ba97fc34c04625ed14dc08c7dfb0b334ca4 Mon Sep 17 00:00:00 2001
+From 182787f2e99d0c26425f05ba7a1e0b91aff12613 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index d24d99e7..42c33584 100644
+index 4eecd555..940c643d 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -1482,4 +1482,10 @@ public final class Bukkit {
+@@ -1473,4 +1473,10 @@ public final class Bukkit {
      public static UnsafeValues getUnsafe() {
          return server.getUnsafe();
      }
@@ -20,10 +20,10 @@ index d24d99e7..42c33584 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index b4fb0522..aa7c90cb 100644
+index 7a03e93e..baa1edac 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1248,4 +1248,14 @@ public interface Server extends PluginMessageRecipient {
+@@ -1239,4 +1239,14 @@ public interface Server extends PluginMessageRecipient {
      @Deprecated
      @NotNull
      UnsafeValues getUnsafe();
@@ -79,10 +79,10 @@ index d247b0d8..bf0f8cc4 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 8928586f..e65b90c7 100644
+index dd3b7606..d708d62b 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -590,4 +590,15 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
+@@ -588,4 +588,15 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
       */
      @NotNull
      Pose getPose();
@@ -126,10 +126,10 @@ index 76aad05f..39ceb444 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index ea112e45..6d68515c 100644
+index 89d05d9f..b28e03b4 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1500,4 +1500,15 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1466,4 +1466,15 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       * @param book The book to open for this player
       */
      public void openBook(@NotNull ItemStack book);
@@ -146,36 +146,16 @@ index ea112e45..6d68515c 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/inventory/meta/BookMeta.java b/src/main/java/org/bukkit/inventory/meta/BookMeta.java
-index 976a6c82..5f3862bc 100644
+index 976a6c82..5a1acbf1 100644
 --- a/src/main/java/org/bukkit/inventory/meta/BookMeta.java
 +++ b/src/main/java/org/bukkit/inventory/meta/BookMeta.java
-@@ -185,4 +185,14 @@ public interface BookMeta extends ItemMeta {
+@@ -185,4 +185,13 @@ public interface BookMeta extends ItemMeta {
      @Override
      @NotNull
      BookMeta clone();
 +
 +    // Spigot start
-+    public class Spigot extends ItemMeta.Spigot {
-+
-+    }
-+
-+    @NotNull
-+    @Override
-+    Spigot spigot();
-+    // Spigot end
- }
-diff --git a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-index 1df31be7..0bc410ae 100644
---- a/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-+++ b/src/main/java/org/bukkit/inventory/meta/ItemMeta.java
-@@ -388,4 +388,14 @@ public interface ItemMeta extends Cloneable, ConfigurationSerializable, Persiste
-     @SuppressWarnings("javadoc")
-     @NotNull
-     ItemMeta clone();
-+
-+    // Spigot start
-+    public class Spigot
-+    {
++    public class Spigot {
 +
 +    }
 +

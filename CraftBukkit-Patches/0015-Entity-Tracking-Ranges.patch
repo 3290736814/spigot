@@ -1,4 +1,4 @@
-From ddd316b33d73d5a1f9f0e6897b90cf9ccaf495a1 Mon Sep 17 00:00:00 2001
+From 63449f2fc291fb74bddb6ce7a43e332c476771c8 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Feb 2013 11:58:47 -0500
 Subject: [PATCH] Entity Tracking Ranges
@@ -12,10 +12,10 @@ This has multiple benefits:
 4) Less client lag - Not trying to render distant item frames and paintings and entities will reduce entity count on the client, which is major for shop/town worlds which may use tons of item frames.
 
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index eca0a1458..b0b09261c 100644
+index 7c5eace1..bbb1abf3 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -970,6 +970,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -979,6 +979,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
              if (!(entity instanceof EntityLightning)) {
                  EntityTypes<?> entitytypes = entity.getEntityType();
                  int i = entitytypes.getChunkRange() * 16;
@@ -24,7 +24,7 @@ index eca0a1458..b0b09261c 100644
  
                  if (this.trackedEntities.containsKey(entity.getId())) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index d873b32b9..48bda1ed0 100644
+index d873b32b..48bda1ed 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -190,4 +190,19 @@ public class SpigotWorldConfig
@@ -49,7 +49,7 @@ index d873b32b9..48bda1ed0 100644
  }
 diff --git a/src/main/java/org/spigotmc/TrackingRange.java b/src/main/java/org/spigotmc/TrackingRange.java
 new file mode 100644
-index 000000000..6f8e6c1d0
+index 00000000..6f8e6c1d
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/TrackingRange.java
 @@ -0,0 +1,51 @@

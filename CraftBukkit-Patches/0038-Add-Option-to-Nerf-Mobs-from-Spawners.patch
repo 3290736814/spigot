@@ -1,0 +1,72 @@
+From 0ab00f2402cca4fdd4f42d4ac5c0a864555b2f3c Mon Sep 17 00:00:00 2001
+From: md_5 <git@md-5.net>
+Date: Sun, 2 Feb 2014 16:55:46 +0000
+Subject: [PATCH] Add Option to Nerf Mobs from Spawners
+
+
+diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
+index fe9f3bf2..b3282876 100644
+--- a/src/main/java/net/minecraft/server/Entity.java
++++ b/src/main/java/net/minecraft/server/Entity.java
+@@ -170,6 +170,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+     public final org.spigotmc.ActivationRange.ActivationType activationType = org.spigotmc.ActivationRange.initializeEntityActivationType(this);
+     public final boolean defaultActivationState;
+     public long activatedTick = Integer.MIN_VALUE;
++    public boolean fromMobSpawner;
+     public void inactiveTick() { }
+     // Spigot end
+ 
+diff --git a/src/main/java/net/minecraft/server/EntityInsentient.java b/src/main/java/net/minecraft/server/EntityInsentient.java
+index 3c4db1d2..39d7df1d 100644
+--- a/src/main/java/net/minecraft/server/EntityInsentient.java
++++ b/src/main/java/net/minecraft/server/EntityInsentient.java
+@@ -639,6 +639,12 @@ public abstract class EntityInsentient extends EntityLiving {
+     @Override
+     protected final void doTick() {
+         ++this.ticksFarFromPlayer;
++        // Spigot Start
++        if ( this.fromMobSpawner )
++        {
++            return;
++        }
++        // Spigot End
+         this.world.getMethodProfiler().enter("sensing");
+         this.bw.a();
+         this.world.getMethodProfiler().exit();
+diff --git a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
+index 5ccb976a..e0b2a1b8 100644
+--- a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
++++ b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
+@@ -129,7 +129,12 @@ public abstract class MobSpawnerAbstract {
+                                 ((EntityInsentient) entity).prepare(world, world.getDamageScaler(new BlockPosition(entity)), EnumMobSpawn.SPAWNER, (GroupDataEntity) null, (NBTTagCompound) null);
+                             }
+                         }
+-
++                        // Spigot Start
++                        if ( entity.world.spigotConfig.nerfSpawnerMobs )
++                        {
++                            entity.fromMobSpawner = true;
++                        }
++                        // Spigot End
+                         this.a(entity);
+                         world.triggerEffect(2004, blockposition, 0);
+                         if (entity instanceof EntityInsentient) {
+diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+index 6a3932ee..90a80e71 100644
+--- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
++++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+@@ -235,4 +235,11 @@ public class SpigotWorldConfig
+         zombieAggressiveTowardsVillager = getBoolean( "zombie-aggressive-towards-villager", true );
+         log( "Zombie Aggressive Towards Villager: " + zombieAggressiveTowardsVillager );
+     }
++
++    public boolean nerfSpawnerMobs;
++    private void nerfSpawnerMobs()
++    {
++        nerfSpawnerMobs = getBoolean( "nerf-spawner-mobs", false );
++        log( "Nerfing mobs spawned from spawners: " + nerfSpawnerMobs );
++    }
+ }
+-- 
+2.20.1
+

@@ -1,4 +1,4 @@
-From 31fae6d0908973a9e43331137902c15a192f8433 Mon Sep 17 00:00:00 2001
+From 2eb608a540287da6ace45a28e84c411991f14380 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,23 +8,23 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 1ce51bea3..508bec4b9 100644
+index 2b9a4659..2e8a087b 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -374,7 +374,7 @@ public class ChunkProviderServer extends IChunkProvider {
  
                      if (!this.playerChunkMap.isOutsideOfRange(chunkcoordintpair)) {
-                         chunk.b(chunk.q() + j);
+                         chunk.setInhabitedTime(chunk.getInhabitedTime() + j);
 -                        if (flag1 && (this.allowMonsters || this.allowAnimals) && this.world.getWorldBorder().isInBounds(chunk.getPos())) {
 +                        if (flag1 && (this.allowMonsters || this.allowAnimals) && this.world.getWorldBorder().isInBounds(chunk.getPos()) && !this.playerChunkMap.isOutsideOfRange(chunkcoordintpair, true)) { // Spigot
                              this.world.getMethodProfiler().enter("spawner");
                              this.world.timings.mobSpawn.startTiming(); // Spigot
                              EnumCreatureType[] aenumcreaturetype1 = aenumcreaturetype;
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 6cc87c423..eca0a1458 100644
+index 6a9bc039..7c5eace1 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -802,10 +802,21 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -811,10 +811,21 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
      }
  
      boolean isOutsideOfRange(ChunkCoordIntPair chunkcoordintpair) {
@@ -48,7 +48,7 @@ index 6cc87c423..eca0a1458 100644
      }
  
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index be0540352..03deec359 100644
+index be054035..03deec35 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -161,4 +161,11 @@ public class SpigotWorldConfig

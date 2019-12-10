@@ -1,4 +1,4 @@
-From d68d02d908db07982518a9a7f113ed77a73e5e81 Mon Sep 17 00:00:00 2001
+From 6e76bf7b5c81aeeca9d7c78065cfd74971afb35d Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -7,7 +7,7 @@ Imported files which are only modified by Spigot, not upstream. Files here shoul
 
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataWorld.java b/src/main/java/net/minecraft/server/AdvancementDataWorld.java
 new file mode 100644
-index 000000000..e2f8a0e01
+index 00000000..6f9eb26d
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/AdvancementDataWorld.java
 @@ -0,0 +1,69 @@
@@ -76,16 +76,16 @@ index 000000000..e2f8a0e01
 +        return this.REGISTRY.a(minecraftkey);
 +    }
 +
-+    public Collection<Advancement> a() {
++    public Collection<Advancement> getAdvancements() {
 +        return this.REGISTRY.c();
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
 new file mode 100644
-index 000000000..096866b2b
+index 00000000..af81a841
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
-@@ -0,0 +1,428 @@
+@@ -0,0 +1,441 @@
 +package net.minecraft.server;
 +
 +import it.unimi.dsi.fastutil.longs.LongIterator;
@@ -131,10 +131,10 @@ index 000000000..096866b2b
 +        this.m = k / this.j;
 +        this.n = 16 / this.k;
 +        this.e = new SeededRandom(this.seed);
-+        this.o = new NoiseGeneratorOctaves(this.e, 16);
-+        this.p = new NoiseGeneratorOctaves(this.e, 16);
-+        this.q = new NoiseGeneratorOctaves(this.e, 8);
-+        this.r = (NoiseGenerator) (flag ? new NoiseGenerator3(this.e, 4) : new NoiseGeneratorOctaves(this.e, 4));
++        this.o = new NoiseGeneratorOctaves(this.e, 15, 0);
++        this.p = new NoiseGeneratorOctaves(this.e, 15, 0);
++        this.q = new NoiseGeneratorOctaves(this.e, 7, 0);
++        this.r = (NoiseGenerator) (flag ? new NoiseGenerator3(this.e, 3, 0) : new NoiseGeneratorOctaves(this.e, 3, 0));
 +    }
 +
 +    private double a(int i, int j, int k, double d0, double d1, double d2, double d3) {
@@ -148,11 +148,24 @@ index 000000000..096866b2b
 +            double d9 = NoiseGeneratorOctaves.a((double) j * d1 * d7);
 +            double d10 = NoiseGeneratorOctaves.a((double) k * d0 * d7);
 +            double d11 = d1 * d7;
++            NoiseGeneratorPerlin noisegeneratorperlin = this.o.a(l);
 +
-+            d4 += this.o.a(l).a(d8, d9, d10, d11, (double) j * d11) / d7;
-+            d5 += this.p.a(l).a(d8, d9, d10, d11, (double) j * d11) / d7;
++            if (noisegeneratorperlin != null) {
++                d4 += noisegeneratorperlin.a(d8, d9, d10, d11, (double) j * d11) / d7;
++            }
++
++            NoiseGeneratorPerlin noisegeneratorperlin1 = this.p.a(l);
++
++            if (noisegeneratorperlin1 != null) {
++                d5 += noisegeneratorperlin1.a(d8, d9, d10, d11, (double) j * d11) / d7;
++            }
++
 +            if (l < 8) {
-+                d6 += this.q.a(l).a(NoiseGeneratorOctaves.a((double) i * d2 * d7), NoiseGeneratorOctaves.a((double) j * d3 * d7), NoiseGeneratorOctaves.a((double) k * d2 * d7), d3 * d7, (double) j * d3 * d7) / d7;
++                NoiseGeneratorPerlin noisegeneratorperlin2 = this.q.a(l);
++
++                if (noisegeneratorperlin2 != null) {
++                    d6 += noisegeneratorperlin2.a(NoiseGeneratorOctaves.a((double) i * d2 * d7), NoiseGeneratorOctaves.a((double) j * d3 * d7), NoiseGeneratorOctaves.a((double) k * d2 * d7), d3 * d7, (double) j * d3 * d7) / d7;
++                }
 +            }
 +
 +            d7 /= 2.0D;
@@ -254,7 +267,7 @@ index 000000000..096866b2b
 +    }
 +
 +    @Override
-+    public void buildBase(IChunkAccess ichunkaccess) {
++    public void buildBase(RegionLimitedWorldAccess regionlimitedworldaccess, IChunkAccess ichunkaccess) {
 +        ChunkCoordIntPair chunkcoordintpair = ichunkaccess.getPos();
 +        int i = chunkcoordintpair.x;
 +        int j = chunkcoordintpair.z;
@@ -265,16 +278,16 @@ index 000000000..096866b2b
 +        int k = chunkcoordintpair1.d();
 +        int l = chunkcoordintpair1.e();
 +        double d0 = 0.0625D;
-+        BiomeBase[] abiomebase = ichunkaccess.getBiomeIndex();
++        BlockPosition.MutableBlockPosition blockposition_mutableblockposition = new BlockPosition.MutableBlockPosition();
 +
 +        for (int i1 = 0; i1 < 16; ++i1) {
 +            for (int j1 = 0; j1 < 16; ++j1) {
 +                int k1 = k + i1;
 +                int l1 = l + j1;
 +                int i2 = ichunkaccess.a(HeightMap.Type.WORLD_SURFACE_WG, i1, j1) + 1;
-+                double d1 = this.r.a((double) k1 * 0.0625D, (double) l1 * 0.0625D, 0.0625D, (double) i1 * 0.0625D);
++                double d1 = this.r.a((double) k1 * 0.0625D, (double) l1 * 0.0625D, 0.0625D, (double) i1 * 0.0625D) * 15.0D;
 +
-+                abiomebase[j1 * 16 + i1].a(seededrandom, ichunkaccess, k1, l1, i2, d1, this.getSettings().r(), this.getSettings().s(), this.getSeaLevel(), this.a.getSeed());
++                regionlimitedworldaccess.getBiome(blockposition_mutableblockposition.d(k + i1, i2, l + j1)).a(seededrandom, ichunkaccess, k1, l1, i2, d1, this.getSettings().r(), this.getSettings().s(), this.getSeaLevel(), this.a.getSeed());
 +            }
 +        }
 +
@@ -323,7 +336,7 @@ index 000000000..096866b2b
 +        int k = chunkcoordintpair.z;
 +        int l = j << 4;
 +        int i1 = k << 4;
-+        Iterator iterator = WorldGenerator.aQ.iterator();
++        Iterator iterator = WorldGenerator.ap.iterator();
 +
 +        while (iterator.hasNext()) {
 +            StructureGenerator<?> structuregenerator = (StructureGenerator) iterator.next();
@@ -376,8 +389,8 @@ index 000000000..096866b2b
 +        }
 +
 +        ProtoChunk protochunk = (ProtoChunk) ichunkaccess;
-+        HeightMap heightmap = protochunk.b(HeightMap.Type.OCEAN_FLOOR_WG);
-+        HeightMap heightmap1 = protochunk.b(HeightMap.Type.WORLD_SURFACE_WG);
++        HeightMap heightmap = protochunk.a(HeightMap.Type.OCEAN_FLOOR_WG);
++        HeightMap heightmap1 = protochunk.a(HeightMap.Type.WORLD_SURFACE_WG);
 +        BlockPosition.MutableBlockPosition blockposition_mutableblockposition = new BlockPosition.MutableBlockPosition();
 +        ObjectListIterator<WorldGenFeaturePillagerOutpostPoolPiece> objectlistiterator = objectlist.iterator();
 +        ObjectListIterator<WorldGenFeatureDefinedStructureJigsawJunction> objectlistiterator1 = objectlist1.iterator();
@@ -473,7 +486,7 @@ index 000000000..096866b2b
 +                                if (iblockdata != ChunkGeneratorAbstract.i) {
 +                                    if (iblockdata.h() != 0) {
 +                                        blockposition_mutableblockposition.d(j4, j3, i5);
-+                                        protochunk.k(blockposition_mutableblockposition);
++                                        protochunk.j(blockposition_mutableblockposition);
 +                                    }
 +
 +                                    chunksection.setType(k4, k3, j5, iblockdata, false);
@@ -516,10 +529,10 @@ index 000000000..096866b2b
 +}
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 new file mode 100644
-index 000000000..93bee851b
+index 00000000..7e6c3e0c
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-@@ -0,0 +1,517 @@
+@@ -0,0 +1,507 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Maps;
@@ -553,24 +566,7 @@ index 000000000..93bee851b
 +            ChunkRegionLoader.LOGGER.error("Chunk file at {} is in the wrong location; relocating. (Expected {}, got {})", chunkcoordintpair, chunkcoordintpair, chunkcoordintpair1);
 +        }
 +
-+        BiomeBase[] abiomebase = new BiomeBase[256];
-+        BlockPosition.MutableBlockPosition blockposition_mutableblockposition = new BlockPosition.MutableBlockPosition();
-+
-+        if (nbttagcompound1.hasKeyOfType("Biomes", 11)) {
-+            int[] aint = nbttagcompound1.getIntArray("Biomes");
-+
-+            for (int i = 0; i < aint.length; ++i) {
-+                abiomebase[i] = (BiomeBase) IRegistry.BIOME.fromId(aint[i]);
-+                if (abiomebase[i] == null) {
-+                    abiomebase[i] = worldchunkmanager.getBiome(blockposition_mutableblockposition.d((i & 15) + chunkcoordintpair.d(), 0, (i >> 4 & 15) + chunkcoordintpair.e()));
-+                }
-+            }
-+        } else {
-+            for (int j = 0; j < abiomebase.length; ++j) {
-+                abiomebase[j] = worldchunkmanager.getBiome(blockposition_mutableblockposition.d((j & 15) + chunkcoordintpair.d(), 0, (j >> 4 & 15) + chunkcoordintpair.e()));
-+            }
-+        }
-+
++        BiomeStorage biomestorage = new BiomeStorage(chunkcoordintpair, worldchunkmanager, nbttagcompound1.hasKeyOfType("Biomes", 11) ? nbttagcompound1.getIntArray("Biomes") : null);
 +        ChunkConverter chunkconverter = nbttagcompound1.hasKeyOfType("UpgradeData", 10) ? new ChunkConverter(nbttagcompound1.getCompound("UpgradeData")) : ChunkConverter.a;
 +        ProtoChunkTickList<Block> protochunkticklist = new ProtoChunkTickList<>((block) -> {
 +            return block == null || block.getBlockData().isAir();
@@ -582,7 +578,7 @@ index 000000000..93bee851b
 +        NBTTagList nbttaglist = nbttagcompound1.getList("Sections", 10);
 +        boolean flag1 = true;
 +        ChunkSection[] achunksection = new ChunkSection[16];
-+        boolean flag2 = worldserver.getWorldProvider().g();
++        boolean flag2 = worldserver.getWorldProvider().f();
 +        ChunkProviderServer chunkproviderserver = worldserver.getChunkProvider();
 +        LightEngine lightengine = chunkproviderserver.getLightEngine();
 +
@@ -590,8 +586,8 @@ index 000000000..93bee851b
 +            lightengine.b(chunkcoordintpair, true);
 +        }
 +
-+        for (int k = 0; k < nbttaglist.size(); ++k) {
-+            NBTTagCompound nbttagcompound2 = nbttaglist.getCompound(k);
++        for (int i = 0; i < nbttaglist.size(); ++i) {
++            NBTTagCompound nbttagcompound2 = nbttaglist.getCompound(i);
 +            byte b0 = nbttagcompound2.getByte("Y");
 +
 +            if (nbttagcompound2.hasKeyOfType("Palette", 9) && nbttagcompound2.hasKeyOfType("BlockStates", 12)) {
@@ -617,7 +613,7 @@ index 000000000..93bee851b
 +            }
 +        }
 +
-+        long l = nbttagcompound1.getLong("InhabitedTime");
++        long j = nbttagcompound1.getLong("InhabitedTime");
 +        ChunkStatus.Type chunkstatus_type = a(nbttagcompound);
 +        Object object;
 +
@@ -649,15 +645,15 @@ index 000000000..93bee851b
 +                object2 = protochunkticklist1;
 +            }
 +
-+            object = new Chunk(worldserver.getMinecraftWorld(), chunkcoordintpair, abiomebase, chunkconverter, (TickList) object1, (TickList) object2, l, achunksection, (chunk) -> {
++            object = new Chunk(worldserver.getMinecraftWorld(), chunkcoordintpair, biomestorage, chunkconverter, (TickList) object1, (TickList) object2, j, achunksection, (chunk) -> {
 +                loadEntities(nbttagcompound1, chunk);
 +            });
 +        } else {
 +            ProtoChunk protochunk = new ProtoChunk(chunkcoordintpair, chunkconverter, achunksection, protochunkticklist, protochunkticklist1);
 +
++            protochunk.a(biomestorage);
 +            object = protochunk;
-+            protochunk.a(abiomebase);
-+            protochunk.b(l);
++            protochunk.setInhabitedTime(j);
 +            protochunk.a(ChunkStatus.a(nbttagcompound1.getString("Status")));
 +            if (protochunk.getChunkStatus().b(ChunkStatus.FEATURES)) {
 +                protochunk.a(lightengine);
@@ -670,7 +666,7 @@ index 000000000..93bee851b
 +                    BlockPosition blockposition = (BlockPosition) iterator.next();
 +
 +                    if (((IChunkAccess) object).getType(blockposition).h() != 0) {
-+                        protochunk.k(blockposition);
++                        protochunk.j(blockposition);
 +                    }
 +                }
 +            }
@@ -695,8 +691,8 @@ index 000000000..93bee851b
 +        HeightMap.a((IChunkAccess) object, enumset);
 +        NBTTagCompound nbttagcompound4 = nbttagcompound1.getCompound("Structures");
 +
-+        ((IChunkAccess) object).a(a(chunkgenerator, definedstructuremanager, worldchunkmanager, nbttagcompound4));
-+        ((IChunkAccess) object).b(b(nbttagcompound4));
++        ((IChunkAccess) object).a(a(chunkgenerator, definedstructuremanager, nbttagcompound4));
++        ((IChunkAccess) object).b(a(chunkcoordintpair, nbttagcompound4));
 +        if (nbttagcompound1.getBoolean("shouldSave")) {
 +            ((IChunkAccess) object).setNeedsSaving(true);
 +        }
@@ -704,13 +700,13 @@ index 000000000..93bee851b
 +        NBTTagList nbttaglist2 = nbttagcompound1.getList("PostProcessing", 9);
 +
 +        NBTTagList nbttaglist3;
-+        int i1;
++        int k;
 +
-+        for (int j1 = 0; j1 < nbttaglist2.size(); ++j1) {
-+            nbttaglist3 = nbttaglist2.b(j1);
++        for (int l = 0; l < nbttaglist2.size(); ++l) {
++            nbttaglist3 = nbttaglist2.b(l);
 +
-+            for (i1 = 0; i1 < nbttaglist3.size(); ++i1) {
-+                ((IChunkAccess) object).a(nbttaglist3.d(i1), j1);
++            for (k = 0; k < nbttaglist3.size(); ++k) {
++                ((IChunkAccess) object).a(nbttaglist3.d(k), l);
 +            }
 +        }
 +
@@ -721,26 +717,26 @@ index 000000000..93bee851b
 +
 +            nbttaglist3 = nbttagcompound1.getList("Entities", 10);
 +
-+            for (i1 = 0; i1 < nbttaglist3.size(); ++i1) {
-+                protochunk1.b(nbttaglist3.getCompound(i1));
++            for (k = 0; k < nbttaglist3.size(); ++k) {
++                protochunk1.b(nbttaglist3.getCompound(k));
 +            }
 +
 +            NBTTagList nbttaglist4 = nbttagcompound1.getList("TileEntities", 10);
 +
 +            NBTTagCompound nbttagcompound5;
 +
-+            for (int k1 = 0; k1 < nbttaglist4.size(); ++k1) {
-+                nbttagcompound5 = nbttaglist4.getCompound(k1);
++            for (int i1 = 0; i1 < nbttaglist4.size(); ++i1) {
++                nbttagcompound5 = nbttaglist4.getCompound(i1);
 +                ((IChunkAccess) object).a(nbttagcompound5);
 +            }
 +
 +            NBTTagList nbttaglist5 = nbttagcompound1.getList("Lights", 9);
 +
-+            for (int l1 = 0; l1 < nbttaglist5.size(); ++l1) {
-+                NBTTagList nbttaglist6 = nbttaglist5.b(l1);
++            for (int j1 = 0; j1 < nbttaglist5.size(); ++j1) {
++                NBTTagList nbttaglist6 = nbttaglist5.b(j1);
 +
-+                for (int i2 = 0; i2 < nbttaglist6.size(); ++i2) {
-+                    protochunk1.b(nbttaglist6.d(i2), l1);
++                for (int k1 = 0; k1 < nbttaglist6.size(); ++k1) {
++                    protochunk1.b(nbttaglist6.d(k1), j1);
 +                }
 +            }
 +
@@ -763,12 +759,12 @@ index 000000000..93bee851b
 +        NBTTagCompound nbttagcompound = new NBTTagCompound();
 +        NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 +
-+        nbttagcompound.setInt("DataVersion", SharedConstants.a().getWorldVersion());
++        nbttagcompound.setInt("DataVersion", SharedConstants.getGameVersion().getWorldVersion());
 +        nbttagcompound.set("Level", nbttagcompound1);
 +        nbttagcompound1.setInt("xPos", chunkcoordintpair.x);
 +        nbttagcompound1.setInt("zPos", chunkcoordintpair.z);
 +        nbttagcompound1.setLong("LastUpdate", worldserver.getTime());
-+        nbttagcompound1.setLong("InhabitedTime", ichunkaccess.q());
++        nbttagcompound1.setLong("InhabitedTime", ichunkaccess.getInhabitedTime());
 +        nbttagcompound1.setString("Status", ichunkaccess.getChunkStatus().d());
 +        ChunkConverter chunkconverter = ichunkaccess.p();
 +
@@ -815,25 +811,23 @@ index 000000000..93bee851b
 +            nbttagcompound1.setBoolean("isLightOn", true);
 +        }
 +
-+        BiomeBase[] abiomebase = ichunkaccess.getBiomeIndex();
-+        int[] aint = abiomebase != null ? new int[abiomebase.length] : new int[0];
++        BiomeStorage biomestorage = ichunkaccess.getBiomeIndex();
 +
-+        if (abiomebase != null) {
-+            for (int j = 0; j < abiomebase.length; ++j) {
-+                aint[j] = IRegistry.BIOME.a(abiomebase[j]);
-+            }
++        if (biomestorage != null) {
++            nbttagcompound1.setIntArray("Biomes", biomestorage.a());
 +        }
 +
-+        nbttagcompound1.setIntArray("Biomes", aint);
 +        NBTTagList nbttaglist1 = new NBTTagList();
 +        Iterator iterator = ichunkaccess.c().iterator();
++
++        NBTTagCompound nbttagcompound3;
 +
 +        while (iterator.hasNext()) {
 +            BlockPosition blockposition = (BlockPosition) iterator.next();
 +
-+            nbttagcompound2 = ichunkaccess.j(blockposition);
-+            if (nbttagcompound2 != null) {
-+                nbttaglist1.add(nbttagcompound2);
++            nbttagcompound3 = ichunkaccess.i(blockposition);
++            if (nbttagcompound3 != null) {
++                nbttaglist1.add(nbttagcompound3);
 +            }
 +        }
 +
@@ -845,16 +839,16 @@ index 000000000..93bee851b
 +
 +            chunk.d(false);
 +
-+            for (int k = 0; k < chunk.getEntitySlices().length; ++k) {
-+                Iterator iterator1 = chunk.getEntitySlices()[k].iterator();
++            for (int j = 0; j < chunk.getEntitySlices().length; ++j) {
++                Iterator iterator1 = chunk.getEntitySlices()[j].iterator();
 +
 +                while (iterator1.hasNext()) {
 +                    Entity entity = (Entity) iterator1.next();
-+                    NBTTagCompound nbttagcompound3 = new NBTTagCompound();
++                    NBTTagCompound nbttagcompound4 = new NBTTagCompound();
 +
-+                    if (entity.d(nbttagcompound3)) {
++                    if (entity.d(nbttagcompound4)) {
 +                        chunk.d(true);
-+                        nbttaglist2.add(nbttagcompound3);
++                        nbttaglist2.add(nbttagcompound4);
 +                    }
 +                }
 +            }
@@ -863,17 +857,17 @@ index 000000000..93bee851b
 +
 +            nbttaglist2.addAll(protochunk.y());
 +            nbttagcompound1.set("Lights", a(protochunk.w()));
-+            nbttagcompound2 = new NBTTagCompound();
++            nbttagcompound3 = new NBTTagCompound();
 +            WorldGenStage.Features[] aworldgenstage_features = WorldGenStage.Features.values();
-+            int l = aworldgenstage_features.length;
++            int k = aworldgenstage_features.length;
 +
-+            for (int i1 = 0; i1 < l; ++i1) {
-+                WorldGenStage.Features worldgenstage_features = aworldgenstage_features[i1];
++            for (int l = 0; l < k; ++l) {
++                WorldGenStage.Features worldgenstage_features = aworldgenstage_features[l];
 +
-+                nbttagcompound2.setByteArray(worldgenstage_features.toString(), ichunkaccess.a(worldgenstage_features).toByteArray());
++                nbttagcompound3.setByteArray(worldgenstage_features.toString(), ichunkaccess.a(worldgenstage_features).toByteArray());
 +            }
 +
-+            nbttagcompound1.set("CarvingMasks", nbttagcompound2);
++            nbttagcompound1.set("CarvingMasks", nbttagcompound3);
 +        }
 +
 +        nbttagcompound1.set("Entities", nbttaglist2);
@@ -898,18 +892,18 @@ index 000000000..93bee851b
 +        }
 +
 +        nbttagcompound1.set("PostProcessing", a(ichunkaccess.l()));
-+        NBTTagCompound nbttagcompound4 = new NBTTagCompound();
++        nbttagcompound2 = new NBTTagCompound();
 +        Iterator iterator2 = ichunkaccess.f().iterator();
 +
 +        while (iterator2.hasNext()) {
 +            Entry<HeightMap.Type, HeightMap> entry = (Entry) iterator2.next();
 +
 +            if (ichunkaccess.getChunkStatus().h().contains(entry.getKey())) {
-+                nbttagcompound4.set(((HeightMap.Type) entry.getKey()).a(), new NBTTagLongArray(((HeightMap) entry.getValue()).a()));
++                nbttagcompound2.set(((HeightMap.Type) entry.getKey()).a(), new NBTTagLongArray(((HeightMap) entry.getValue()).a()));
 +            }
 +        }
 +
-+        nbttagcompound1.set("Heightmaps", nbttagcompound4);
++        nbttagcompound1.set("Heightmaps", nbttagcompound2);
 +        nbttagcompound1.set("Structures", a(chunkcoordintpair, ichunkaccess.h(), ichunkaccess.v()));
 +        return nbttagcompound;
 +    }
@@ -984,7 +978,7 @@ index 000000000..93bee851b
 +        return nbttagcompound;
 +    }
 +
-+    private static Map<String, StructureStart> a(ChunkGenerator<?> chunkgenerator, DefinedStructureManager definedstructuremanager, WorldChunkManager worldchunkmanager, NBTTagCompound nbttagcompound) {
++    private static Map<String, StructureStart> a(ChunkGenerator<?> chunkgenerator, DefinedStructureManager definedstructuremanager, NBTTagCompound nbttagcompound) {
 +        Map<String, StructureStart> map = Maps.newHashMap();
 +        NBTTagCompound nbttagcompound1 = nbttagcompound.getCompound("Starts");
 +        Iterator iterator = nbttagcompound1.getKeys().iterator();
@@ -992,13 +986,13 @@ index 000000000..93bee851b
 +        while (iterator.hasNext()) {
 +            String s = (String) iterator.next();
 +
-+            map.put(s, WorldGenFactory.a(chunkgenerator, definedstructuremanager, worldchunkmanager, nbttagcompound1.getCompound(s)));
++            map.put(s, WorldGenFactory.a(chunkgenerator, definedstructuremanager, nbttagcompound1.getCompound(s)));
 +        }
 +
 +        return map;
 +    }
 +
-+    private static Map<String, LongSet> b(NBTTagCompound nbttagcompound) {
++    private static Map<String, LongSet> a(ChunkCoordIntPair chunkcoordintpair, NBTTagCompound nbttagcompound) {
 +        Map<String, LongSet> map = Maps.newHashMap();
 +        NBTTagCompound nbttagcompound1 = nbttagcompound.getCompound("References");
 +        Iterator iterator = nbttagcompound1.getKeys().iterator();
@@ -1006,7 +1000,16 @@ index 000000000..93bee851b
 +        while (iterator.hasNext()) {
 +            String s = (String) iterator.next();
 +
-+            map.put(s, new LongOpenHashSet(nbttagcompound1.getLongArray(s)));
++            map.put(s, new LongOpenHashSet(Arrays.stream(nbttagcompound1.getLongArray(s)).filter((i) -> {
++                ChunkCoordIntPair chunkcoordintpair1 = new ChunkCoordIntPair(i);
++
++                if (chunkcoordintpair1.a(chunkcoordintpair) > 8) {
++                    ChunkRegionLoader.LOGGER.warn("Found invalid structure reference [ {} @ {} ] for chunk {}.", s, chunkcoordintpair1, chunkcoordintpair);
++                    return false;
++                } else {
++                    return true;
++                }
++            }).toArray()));
 +        }
 +
 +        return map;
@@ -1027,7 +1030,7 @@ index 000000000..93bee851b
 +                while (shortlistiterator.hasNext()) {
 +                    Short oshort = (Short) shortlistiterator.next();
 +
-+                    nbttaglist1.add(new NBTTagShort(oshort));
++                    nbttaglist1.add(NBTTagShort.a(oshort));
 +                }
 +            }
 +
@@ -1039,7 +1042,7 @@ index 000000000..93bee851b
 +}
 diff --git a/src/main/java/net/minecraft/server/EntitySquid.java b/src/main/java/net/minecraft/server/EntitySquid.java
 new file mode 100644
-index 000000000..389b32147
+index 00000000..6bcea493
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/EntitySquid.java
 @@ -0,0 +1,276 @@
@@ -1052,22 +1055,22 @@ index 000000000..389b32147
 +    public float b;
 +    public float c;
 +    public float d;
++    public float bw;
++    public float bx;
++    public float by;
 +    public float bz;
 +    public float bA;
-+    public float bB;
-+    public float bC;
-+    public float bD;
++    private float bB;
++    private float bC;
++    private float bD;
 +    private float bE;
 +    private float bF;
 +    private float bG;
-+    private float bH;
-+    private float bI;
-+    private float bJ;
 +
 +    public EntitySquid(EntityTypes<? extends EntitySquid> entitytypes, World world) {
 +        super(entitytypes, world);
 +        this.random.setSeed((long) this.getId());
-+        this.bF = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
++        this.bC = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
 +    }
 +
 +    @Override
@@ -1116,53 +1119,53 @@ index 000000000..389b32147
 +    public void movementTick() {
 +        super.movementTick();
 +        this.c = this.b;
-+        this.bz = this.d;
-+        this.bB = this.bA;
-+        this.bD = this.bC;
-+        this.bA += this.bF;
-+        if ((double) this.bA > 6.283185307179586D) {
++        this.bw = this.d;
++        this.by = this.bx;
++        this.bA = this.bz;
++        this.bx += this.bC;
++        if ((double) this.bx > 6.283185307179586D) {
 +            if (this.world.isClientSide) {
-+                this.bA = 6.2831855F;
++                this.bx = 6.2831855F;
 +            } else {
-+                this.bA = (float) ((double) this.bA - 6.283185307179586D);
++                this.bx = (float) ((double) this.bx - 6.283185307179586D);
 +                if (this.random.nextInt(10) == 0) {
-+                    this.bF = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
++                    this.bC = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
 +                }
 +
 +                this.world.broadcastEntityEffect(this, (byte) 19);
 +            }
 +        }
 +
-+        if (this.av()) {
-+            if (this.bA < 3.1415927F) {
-+                float f = this.bA / 3.1415927F;
++        if (this.az()) {
++            if (this.bx < 3.1415927F) {
++                float f = this.bx / 3.1415927F;
 +
-+                this.bC = MathHelper.sin(f * f * 3.1415927F) * 3.1415927F * 0.25F;
++                this.bz = MathHelper.sin(f * f * 3.1415927F) * 3.1415927F * 0.25F;
 +                if ((double) f > 0.75D) {
-+                    this.bE = 1.0F;
-+                    this.bG = 1.0F;
++                    this.bB = 1.0F;
++                    this.bD = 1.0F;
 +                } else {
-+                    this.bG *= 0.8F;
++                    this.bD *= 0.8F;
 +                }
 +            } else {
-+                this.bC = 0.0F;
-+                this.bE *= 0.9F;
-+                this.bG *= 0.99F;
++                this.bz = 0.0F;
++                this.bB *= 0.9F;
++                this.bD *= 0.99F;
 +            }
 +
 +            if (!this.world.isClientSide) {
-+                this.setMot((double) (this.bH * this.bE), (double) (this.bI * this.bE), (double) (this.bJ * this.bE));
++                this.setMot((double) (this.bE * this.bB), (double) (this.bF * this.bB), (double) (this.bG * this.bB));
 +            }
 +
 +            Vec3D vec3d = this.getMot();
 +            float f1 = MathHelper.sqrt(b(vec3d));
 +
-+            this.aK += (-((float) MathHelper.d(vec3d.x, vec3d.z)) * 57.295776F - this.aK) * 0.1F;
-+            this.yaw = this.aK;
-+            this.d = (float) ((double) this.d + 3.141592653589793D * (double) this.bG * 1.5D);
++            this.aI += (-((float) MathHelper.d(vec3d.x, vec3d.z)) * 57.295776F - this.aI) * 0.1F;
++            this.yaw = this.aI;
++            this.d = (float) ((double) this.d + 3.141592653589793D * (double) this.bD * 1.5D);
 +            this.b += (-((float) MathHelper.d((double) f1, vec3d.y)) * 57.295776F - this.b) * 0.1F;
 +        } else {
-+            this.bC = MathHelper.e(MathHelper.sin(this.bA)) * 3.1415927F * 0.25F;
++            this.bz = MathHelper.e(MathHelper.sin(this.bx)) * 3.1415927F * 0.25F;
 +            if (!this.world.isClientSide) {
 +                double d0 = this.getMot().y;
 +
@@ -1183,7 +1186,7 @@ index 000000000..389b32147
 +    @Override
 +    public boolean damageEntity(DamageSource damagesource, float f) {
 +        if (super.damageEntity(damagesource, f) && this.getLastDamager() != null) {
-+            this.dV();
++            this.eq();
 +            return true;
 +        } else {
 +            return false;
@@ -1193,13 +1196,13 @@ index 000000000..389b32147
 +    private Vec3D f(Vec3D vec3d) {
 +        Vec3D vec3d1 = vec3d.a(this.c * 0.017453292F);
 +
-+        vec3d1 = vec3d1.b(-this.aL * 0.017453292F);
++        vec3d1 = vec3d1.b(-this.aJ * 0.017453292F);
 +        return vec3d1;
 +    }
 +
-+    private void dV() {
-+        this.a(SoundEffects.ENTITY_SQUID_SQUIRT, this.getSoundVolume(), this.cV());
-+        Vec3D vec3d = this.f(new Vec3D(0.0D, -1.0D, 0.0D)).add(this.locX, this.locY, this.locZ);
++    private void eq() {
++        this.a(SoundEffects.ENTITY_SQUID_SQUIRT, this.getSoundVolume(), this.dn());
++        Vec3D vec3d = this.f(new Vec3D(0.0D, -1.0D, 0.0D)).add(this.locX(), this.locY(), this.locZ());
 +
 +        for (int i = 0; i < 30; ++i) {
 +            Vec3D vec3d1 = this.f(new Vec3D((double) this.random.nextFloat() * 0.6D - 0.3D, -1.0D, (double) this.random.nextFloat() * 0.6D - 0.3D));
@@ -1220,13 +1223,13 @@ index 000000000..389b32147
 +    }
 +
 +    public void a(float f, float f1, float f2) {
-+        this.bH = f;
-+        this.bI = f1;
-+        this.bJ = f2;
++        this.bE = f;
++        this.bF = f1;
++        this.bG = f2;
 +    }
 +
 +    public boolean l() {
-+        return this.bH != 0.0F || this.bI != 0.0F || this.bJ != 0.0F;
++        return this.bE != 0.0F || this.bF != 0.0F || this.bG != 0.0F;
 +    }
 +
 +    class a extends PathfinderGoal {
@@ -1253,9 +1256,9 @@ index 000000000..389b32147
 +            EntityLiving entityliving = EntitySquid.this.getLastDamager();
 +
 +            if (entityliving != null) {
-+                Vec3D vec3d = new Vec3D(EntitySquid.this.locX - entityliving.locX, EntitySquid.this.locY - entityliving.locY, EntitySquid.this.locZ - entityliving.locZ);
-+                IBlockData iblockdata = EntitySquid.this.world.getType(new BlockPosition(EntitySquid.this.locX + vec3d.x, EntitySquid.this.locY + vec3d.y, EntitySquid.this.locZ + vec3d.z));
-+                Fluid fluid = EntitySquid.this.world.getFluid(new BlockPosition(EntitySquid.this.locX + vec3d.x, EntitySquid.this.locY + vec3d.y, EntitySquid.this.locZ + vec3d.z));
++                Vec3D vec3d = new Vec3D(EntitySquid.this.locX() - entityliving.locX(), EntitySquid.this.locY() - entityliving.locY(), EntitySquid.this.locZ() - entityliving.locZ());
++                IBlockData iblockdata = EntitySquid.this.world.getType(new BlockPosition(EntitySquid.this.locX() + vec3d.x, EntitySquid.this.locY() + vec3d.y, EntitySquid.this.locZ() + vec3d.z));
++                Fluid fluid = EntitySquid.this.world.getFluid(new BlockPosition(EntitySquid.this.locX() + vec3d.x, EntitySquid.this.locY() + vec3d.y, EntitySquid.this.locZ() + vec3d.z));
 +
 +                if (fluid.a(TagsFluid.WATER) || iblockdata.isAir()) {
 +                    double d0 = vec3d.f();
@@ -1281,7 +1284,7 @@ index 000000000..389b32147
 +                }
 +
 +                if (this.b % 10 == 5) {
-+                    EntitySquid.this.world.addParticle(Particles.BUBBLE, EntitySquid.this.locX, EntitySquid.this.locY, EntitySquid.this.locZ, 0.0D, 0.0D, 0.0D);
++                    EntitySquid.this.world.addParticle(Particles.BUBBLE, EntitySquid.this.locX(), EntitySquid.this.locY(), EntitySquid.this.locZ(), 0.0D, 0.0D, 0.0D);
 +                }
 +
 +            }
@@ -1303,7 +1306,7 @@ index 000000000..389b32147
 +
 +        @Override
 +        public void e() {
-+            int i = this.b.cw();
++            int i = this.b.cL();
 +
 +            if (i > 100) {
 +                this.b.a(0.0F, 0.0F, 0.0F);
@@ -1321,7 +1324,7 @@ index 000000000..389b32147
 +}
 diff --git a/src/main/java/net/minecraft/server/GameProfileBanEntry.java b/src/main/java/net/minecraft/server/GameProfileBanEntry.java
 new file mode 100644
-index 000000000..0cc701042
+index 00000000..0cc70104
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/GameProfileBanEntry.java
 @@ -0,0 +1,57 @@
@@ -1384,7 +1387,7 @@ index 000000000..0cc701042
 +}
 diff --git a/src/main/java/net/minecraft/server/GenericAttributes.java b/src/main/java/net/minecraft/server/GenericAttributes.java
 new file mode 100644
-index 000000000..4ef2ae57e
+index 00000000..4ef2ae57
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/GenericAttributes.java
 @@ -0,0 +1,123 @@
@@ -1513,10 +1516,10 @@ index 000000000..4ef2ae57e
 +}
 diff --git a/src/main/java/net/minecraft/server/ItemDebugStick.java b/src/main/java/net/minecraft/server/ItemDebugStick.java
 new file mode 100644
-index 000000000..1ea133f67
+index 00000000..a67f89bc
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ItemDebugStick.java
-@@ -0,0 +1,85 @@
+@@ -0,0 +1,90 @@
 +package net.minecraft.server;
 +
 +import java.util.Collection;
@@ -1526,6 +1529,11 @@ index 000000000..1ea133f67
 +
 +    public ItemDebugStick(Item.Info item_info) {
 +        super(item_info);
++    }
++
++    @Override
++    public boolean d_(ItemStack itemstack) {
++        return true;
 +    }
 +
 +    @Override
@@ -1570,12 +1578,12 @@ index 000000000..1ea133f67
 +                        iblockstate = (IBlockState) collection.iterator().next();
 +                    }
 +
-+                    IBlockData iblockdata1 = a(iblockdata, iblockstate, entityhuman.isSneaking());
++                    IBlockData iblockdata1 = a(iblockdata, iblockstate, entityhuman.dT());
 +
 +                    generatoraccess.setTypeAndData(blockposition, iblockdata1, 18);
 +                    a(entityhuman, (IChatBaseComponent) (new ChatMessage(this.getName() + ".update", new Object[]{iblockstate.a(), a(iblockdata1, iblockstate)})));
 +                } else {
-+                    iblockstate = (IBlockState) a((Iterable) collection, (Object) iblockstate, entityhuman.isSneaking());
++                    iblockstate = (IBlockState) a((Iterable) collection, (Object) iblockstate, entityhuman.dT());
 +                    String s2 = iblockstate.a();
 +
 +                    nbttagcompound.setString(s, s2);
@@ -1604,10 +1612,10 @@ index 000000000..1ea133f67
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java b/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java
 new file mode 100644
-index 000000000..ad06a856f
+index 00000000..1514aebf
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java
-@@ -0,0 +1,119 @@
+@@ -0,0 +1,117 @@
 +package net.minecraft.server;
 +
 +import java.io.BufferedInputStream;
@@ -1709,14 +1717,12 @@ index 000000000..ad06a856f
 +        byte b0 = datainput.readByte();
 +
 +        if (b0 == 0) {
-+            return new NBTTagEnd();
++            return NBTTagEnd.b;
 +        } else {
 +            datainput.readUTF();
-+            NBTBase nbtbase = NBTBase.createTag(b0);
 +
 +            try {
-+                nbtbase.load(datainput, i, nbtreadlimiter);
-+                return nbtbase;
++                return NBTTagTypes.a(b0).b(datainput, i, nbtreadlimiter);
 +            } catch (IOException ioexception) {
 +                CrashReport crashreport = CrashReport.a(ioexception, "Loading NBT data");
 +                CrashReportSystemDetails crashreportsystemdetails = crashreport.a("NBT Tag");
@@ -1729,10 +1735,10 @@ index 000000000..ad06a856f
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTTagByteArray.java b/src/main/java/net/minecraft/server/NBTTagByteArray.java
 new file mode 100644
-index 000000000..cd5314121
+index 00000000..d631544a
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NBTTagByteArray.java
-@@ -0,0 +1,160 @@
+@@ -0,0 +1,176 @@
 +package net.minecraft.server;
 +
 +import java.io.DataInput;
@@ -1744,9 +1750,30 @@ index 000000000..cd5314121
 +
 +public class NBTTagByteArray extends NBTList<NBTTagByte> {
 +
-+    private byte[] data;
++    public static final NBTTagType<NBTTagByteArray> a = new NBTTagType<NBTTagByteArray>() {
++        @Override
++        public NBTTagByteArray b(DataInput datainput, int i, NBTReadLimiter nbtreadlimiter) throws IOException {
++            nbtreadlimiter.a(192L);
++            int j = datainput.readInt();
 +
-+    NBTTagByteArray() {}
++            nbtreadlimiter.a(8L * (long) j);
++            byte[] abyte = new byte[j];
++
++            datainput.readFully(abyte);
++            return new NBTTagByteArray(abyte);
++        }
++
++        @Override
++        public String a() {
++            return "BYTE[]";
++        }
++
++        @Override
++        public String b() {
++            return "TAG_Byte_Array";
++        }
++    };
++    private byte[] data;
 +
 +    public NBTTagByteArray(byte[] abyte) {
 +        this.data = abyte;
@@ -1775,18 +1802,13 @@ index 000000000..cd5314121
 +    }
 +
 +    @Override
-+    public void load(DataInput datainput, int i, NBTReadLimiter nbtreadlimiter) throws IOException {
-+        nbtreadlimiter.a(192L);
-+        int j = datainput.readInt();
-+
-+        nbtreadlimiter.a((long) (8 * j));
-+        this.data = new byte[j];
-+        datainput.readFully(this.data);
++    public byte getTypeId() {
++        return 7;
 +    }
 +
 +    @Override
-+    public byte getTypeId() {
-+        return 7;
++    public NBTTagType<NBTTagByteArray> b() {
++        return NBTTagByteArray.a;
 +    }
 +
 +    @Override
@@ -1822,11 +1844,11 @@ index 000000000..cd5314121
 +
 +    @Override
 +    public IChatBaseComponent a(String s, int i) {
-+        IChatBaseComponent ichatbasecomponent = (new ChatComponentText("B")).a(NBTTagByteArray.e);
++        IChatBaseComponent ichatbasecomponent = (new ChatComponentText("B")).a(NBTTagByteArray.g);
 +        IChatBaseComponent ichatbasecomponent1 = (new ChatComponentText("[")).addSibling(ichatbasecomponent).a(";");
 +
 +        for (int j = 0; j < this.data.length; ++j) {
-+            IChatBaseComponent ichatbasecomponent2 = (new ChatComponentText(String.valueOf(this.data[j]))).a(NBTTagByteArray.d);
++            IChatBaseComponent ichatbasecomponent2 = (new ChatComponentText(String.valueOf(this.data[j]))).a(NBTTagByteArray.f);
 +
 +            ichatbasecomponent1.a(" ").addSibling(ichatbasecomponent2).addSibling(ichatbasecomponent);
 +            if (j != this.data.length - 1) {
@@ -1847,14 +1869,14 @@ index 000000000..cd5314121
 +    }
 +
 +    public NBTTagByte get(int i) {
-+        return new NBTTagByte(this.data[i]);
++        return NBTTagByte.a(this.data[i]);
 +    }
 +
 +    public NBTTagByte set(int i, NBTTagByte nbttagbyte) {
 +        byte b0 = this.data[i];
 +
 +        this.data[i] = nbttagbyte.asByte();
-+        return new NBTTagByte(b0);
++        return NBTTagByte.a(b0);
 +    }
 +
 +    public void add(int i, NBTTagByte nbttagbyte) {
@@ -1886,7 +1908,7 @@ index 000000000..cd5314121
 +        byte b0 = this.data[i];
 +
 +        this.data = ArrayUtils.remove(this.data, i);
-+        return new NBTTagByte(b0);
++        return NBTTagByte.a(b0);
 +    }
 +
 +    public void clear() {
@@ -1895,10 +1917,10 @@ index 000000000..cd5314121
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTTagIntArray.java b/src/main/java/net/minecraft/server/NBTTagIntArray.java
 new file mode 100644
-index 000000000..36a9edd2e
+index 00000000..6e46754f
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NBTTagIntArray.java
-@@ -0,0 +1,170 @@
+@@ -0,0 +1,185 @@
 +package net.minecraft.server;
 +
 +import java.io.DataInput;
@@ -1910,9 +1932,33 @@ index 000000000..36a9edd2e
 +
 +public class NBTTagIntArray extends NBTList<NBTTagInt> {
 +
-+    private int[] data;
++    public static final NBTTagType<NBTTagIntArray> a = new NBTTagType<NBTTagIntArray>() {
++        @Override
++        public NBTTagIntArray b(DataInput datainput, int i, NBTReadLimiter nbtreadlimiter) throws IOException {
++            nbtreadlimiter.a(192L);
++            int j = datainput.readInt();
 +
-+    NBTTagIntArray() {}
++            nbtreadlimiter.a(32L * (long) j);
++            int[] aint = new int[j];
++
++            for (int k = 0; k < j; ++k) {
++                aint[k] = datainput.readInt();
++            }
++
++            return new NBTTagIntArray(aint);
++        }
++
++        @Override
++        public String a() {
++            return "INT[]";
++        }
++
++        @Override
++        public String b() {
++            return "TAG_Int_Array";
++        }
++    };
++    private int[] data;
 +
 +    public NBTTagIntArray(int[] aint) {
 +        this.data = aint;
@@ -1949,22 +1995,13 @@ index 000000000..36a9edd2e
 +    }
 +
 +    @Override
-+    public void load(DataInput datainput, int i, NBTReadLimiter nbtreadlimiter) throws IOException {
-+        nbtreadlimiter.a(192L);
-+        int j = datainput.readInt();
-+
-+        nbtreadlimiter.a((long) (32 * j));
-+        this.data = new int[j];
-+
-+        for (int k = 0; k < j; ++k) {
-+            this.data[k] = datainput.readInt();
-+        }
-+
++    public byte getTypeId() {
++        return 11;
 +    }
 +
 +    @Override
-+    public byte getTypeId() {
-+        return 11;
++    public NBTTagType<NBTTagIntArray> b() {
++        return NBTTagIntArray.a;
 +    }
 +
 +    @Override
@@ -2004,11 +2041,11 @@ index 000000000..36a9edd2e
 +
 +    @Override
 +    public IChatBaseComponent a(String s, int i) {
-+        IChatBaseComponent ichatbasecomponent = (new ChatComponentText("I")).a(NBTTagIntArray.e);
++        IChatBaseComponent ichatbasecomponent = (new ChatComponentText("I")).a(NBTTagIntArray.g);
 +        IChatBaseComponent ichatbasecomponent1 = (new ChatComponentText("[")).addSibling(ichatbasecomponent).a(";");
 +
 +        for (int j = 0; j < this.data.length; ++j) {
-+            ichatbasecomponent1.a(" ").addSibling((new ChatComponentText(String.valueOf(this.data[j]))).a(NBTTagIntArray.d));
++            ichatbasecomponent1.a(" ").addSibling((new ChatComponentText(String.valueOf(this.data[j]))).a(NBTTagIntArray.f));
 +            if (j != this.data.length - 1) {
 +                ichatbasecomponent1.a(",");
 +            }
@@ -2023,14 +2060,14 @@ index 000000000..36a9edd2e
 +    }
 +
 +    public NBTTagInt get(int i) {
-+        return new NBTTagInt(this.data[i]);
++        return NBTTagInt.a(this.data[i]);
 +    }
 +
 +    public NBTTagInt set(int i, NBTTagInt nbttagint) {
 +        int j = this.data[i];
 +
 +        this.data[i] = nbttagint.asInt();
-+        return new NBTTagInt(j);
++        return NBTTagInt.a(j);
 +    }
 +
 +    public void add(int i, NBTTagInt nbttagint) {
@@ -2062,7 +2099,7 @@ index 000000000..36a9edd2e
 +        int j = this.data[i];
 +
 +        this.data = ArrayUtils.remove(this.data, i);
-+        return new NBTTagInt(j);
++        return NBTTagInt.a(j);
 +    }
 +
 +    public void clear() {
@@ -2071,7 +2108,7 @@ index 000000000..36a9edd2e
 +}
 diff --git a/src/main/java/net/minecraft/server/NibbleArray.java b/src/main/java/net/minecraft/server/NibbleArray.java
 new file mode 100644
-index 000000000..89f2beb4b
+index 00000000..87c672cb
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NibbleArray.java
 @@ -0,0 +1,100 @@
@@ -2089,7 +2126,7 @@ index 000000000..89f2beb4b
 +    public NibbleArray(byte[] abyte) {
 +        this.a = abyte;
 +        if (abyte.length != 2048) {
-+            throw new IllegalArgumentException("ChunkNibbleArrays should be 2048 bytes not: " + abyte.length);
++            throw (IllegalArgumentException) SystemUtils.c(new IllegalArgumentException("ChunkNibbleArrays should be 2048 bytes not: " + abyte.length));
 +        }
 +    }
 +
@@ -2177,7 +2214,7 @@ index 000000000..89f2beb4b
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java b/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java
 new file mode 100644
-index 000000000..6aeea22ae
+index 00000000..6aeea22a
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PacketHandshakingInSetProtocol.java
 @@ -0,0 +1,41 @@
@@ -2224,7 +2261,7 @@ index 000000000..6aeea22ae
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java b/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java
 new file mode 100644
-index 000000000..bb88f7c1a
+index 00000000..bb88f7c1
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java
 @@ -0,0 +1,32 @@
@@ -2262,7 +2299,7 @@ index 000000000..bb88f7c1a
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayInChat.java b/src/main/java/net/minecraft/server/PacketPlayInChat.java
 new file mode 100644
-index 000000000..699815b3d
+index 00000000..699815b3
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PacketPlayInChat.java
 @@ -0,0 +1,36 @@
@@ -2304,7 +2341,7 @@ index 000000000..699815b3d
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayInUseItem.java b/src/main/java/net/minecraft/server/PacketPlayInUseItem.java
 new file mode 100644
-index 000000000..2f8160ed1
+index 00000000..2f8160ed
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PacketPlayInUseItem.java
 @@ -0,0 +1,35 @@
@@ -2345,7 +2382,7 @@ index 000000000..2f8160ed1
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayOutChat.java b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
 new file mode 100644
-index 000000000..417c26775
+index 00000000..417c2677
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
 @@ -0,0 +1,49 @@
@@ -2400,13 +2437,12 @@ index 000000000..417c26775
 +}
 diff --git a/src/main/java/net/minecraft/server/RegionFile.java b/src/main/java/net/minecraft/server/RegionFile.java
 new file mode 100644
-index 000000000..abb6fcd0e
+index 00000000..295ecaf5
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/RegionFile.java
-@@ -0,0 +1,271 @@
+@@ -0,0 +1,386 @@
 +package net.minecraft.server;
 +
-+import com.google.common.collect.Lists;
 +import java.io.BufferedInputStream;
 +import java.io.BufferedOutputStream;
 +import java.io.ByteArrayInputStream;
@@ -2415,110 +2451,175 @@ index 000000000..abb6fcd0e
 +import java.io.DataOutputStream;
 +import java.io.File;
 +import java.io.IOException;
-+import java.io.RandomAccessFile;
-+import java.util.List;
-+import java.util.zip.DeflaterOutputStream;
-+import java.util.zip.GZIPInputStream;
-+import java.util.zip.InflaterInputStream;
++import java.io.InputStream;
++import java.io.OutputStream;
++import java.nio.ByteBuffer;
++import java.nio.IntBuffer;
++import java.nio.channels.FileChannel;
++import java.nio.file.Files;
++import java.nio.file.LinkOption;
++import java.nio.file.StandardCopyOption;
++import java.nio.file.StandardOpenOption;
 +import javax.annotation.Nullable;
++import org.apache.logging.log4j.LogManager;
++import org.apache.logging.log4j.Logger;
 +
 +public class RegionFile implements AutoCloseable {
 +
-+    private static final byte[] a = new byte[4096];
-+    private final RandomAccessFile b;
-+    private final int[] c = new int[1024];
-+    private final int[] d = new int[1024];
-+    private final List<Boolean> e;
++    private static final Logger LOGGER = LogManager.getLogger();
++    private static final ByteBuffer b = ByteBuffer.allocateDirect(1);
++    private final FileChannel dataFile;
++    private final java.nio.file.Path d;
++    private final RegionFileCompression e;
++    private final ByteBuffer f;
++    private final IntBuffer g;
++    private final IntBuffer h;
++    private final RegionFileBitSet freeSectors;
 +
-+    public RegionFile(File file) throws IOException {
-+        this.b = new RandomAccessFile(file, "rw");
-+        if (this.b.length() < 4096L) {
-+            this.b.write(RegionFile.a);
-+            this.b.write(RegionFile.a);
-+        }
-+
-+        int i;
-+
-+        if ((this.b.length() & 4095L) != 0L) {
-+            for (i = 0; (long) i < (this.b.length() & 4095L); ++i) {
-+                this.b.write(0);
-+            }
-+        }
-+
-+        i = (int) this.b.length() / 4096;
-+        this.e = Lists.newArrayListWithCapacity(i);
-+
-+        int j;
-+
-+        for (j = 0; j < i; ++j) {
-+            this.e.add(true);
-+        }
-+
-+        this.e.set(0, false);
-+        this.e.set(1, false);
-+        this.b.seek(0L);
-+
-+        int k;
-+
-+        for (j = 0; j < 1024; ++j) {
-+            k = this.b.readInt();
-+            this.c[j] = k;
-+            if (k != 0 && (k >> 8) + (k & 255) <= this.e.size()) {
-+                for (int l = 0; l < (k & 255); ++l) {
-+                    this.e.set((k >> 8) + l, false);
-+                }
-+            }
-+        }
-+
-+        for (j = 0; j < 1024; ++j) {
-+            k = this.b.readInt();
-+            this.d[j] = k;
-+        }
-+
++    public RegionFile(File file, File file1) throws IOException {
++        this(file.toPath(), file1.toPath(), RegionFileCompression.b);
 +    }
 +
-+    @Nullable
-+    public synchronized DataInputStream a(ChunkCoordIntPair chunkcoordintpair) {
-+        try {
-+            int i = this.getOffset(chunkcoordintpair);
++    public RegionFile(java.nio.file.Path java_nio_file_path, java.nio.file.Path java_nio_file_path1, RegionFileCompression regionfilecompression) throws IOException {
++        this.f = ByteBuffer.allocateDirect(8192);
++        this.freeSectors = new RegionFileBitSet();
++        this.e = regionfilecompression;
++        if (!Files.isDirectory(java_nio_file_path1, new LinkOption[0])) {
++            throw new IllegalArgumentException("Expected directory, got " + java_nio_file_path1.toAbsolutePath());
++        } else {
++            this.d = java_nio_file_path1;
++            this.g = this.f.asIntBuffer();
++            this.g.limit(1024);
++            this.f.position(4096);
++            this.h = this.f.asIntBuffer();
++            this.dataFile = FileChannel.open(java_nio_file_path, StandardOpenOption.CREATE, StandardOpenOption.READ, StandardOpenOption.WRITE);
++            this.freeSectors.a(0, 2);
++            this.f.position(0);
++            int i = this.dataFile.read(this.f, 0L);
 +
-+            if (i == 0) {
-+                return null;
-+            } else {
-+                int j = i >> 8;
-+                int k = i & 255;
++            if (i != -1) {
++                if (i != 8192) {
++                    RegionFile.LOGGER.warn("Region file {} has truncated header: {}", java_nio_file_path, i);
++                }
 +
-+                if (j + k > this.e.size()) {
-+                    return null;
-+                } else {
-+                    this.b.seek((long) (j * 4096));
-+                    int l = this.b.readInt();
++                for (int j = 0; j < 1024; ++j) {
++                    int k = this.g.get(j);
 +
-+                    if (l > 4096 * k) {
-+                        return null;
-+                    } else if (l <= 0) {
-+                        return null;
-+                    } else {
-+                        byte b0 = this.b.readByte();
-+                        byte[] abyte;
++                    if (k != 0) {
++                        int l = b(k);
++                        int i1 = a(k);
 +
-+                        if (b0 == 1) {
-+                            abyte = new byte[l - 1];
-+                            this.b.read(abyte);
-+                            return new DataInputStream(new BufferedInputStream(new GZIPInputStream(new ByteArrayInputStream(abyte))));
-+                        } else if (b0 == 2) {
-+                            abyte = new byte[l - 1];
-+                            this.b.read(abyte);
-+                            return new DataInputStream(new BufferedInputStream(new InflaterInputStream(new ByteArrayInputStream(abyte))));
-+                        } else {
-+                            return null;
-+                        }
++                        this.freeSectors.a(l, i1);
 +                    }
 +                }
 +            }
-+        } catch (IOException ioexception) {
-+            return null;
++
 +        }
++    }
++
++    private java.nio.file.Path e(ChunkCoordIntPair chunkcoordintpair) {
++        String s = "c." + chunkcoordintpair.x + "." + chunkcoordintpair.z + ".mcc";
++
++        return this.d.resolve(s);
++    }
++
++    @Nullable
++    public synchronized DataInputStream a(ChunkCoordIntPair chunkcoordintpair) throws IOException {
++        int i = this.getOffset(chunkcoordintpair);
++
++        if (i == 0) {
++            return null;
++        } else {
++            int j = b(i);
++            int k = a(i);
++            int l = k * 4096;
++            ByteBuffer bytebuffer = ByteBuffer.allocate(l);
++
++            this.dataFile.read(bytebuffer, (long) (j * 4096));
++            bytebuffer.flip();
++            if (bytebuffer.remaining() < 5) {
++                RegionFile.LOGGER.error("Chunk {} header is truncated: expected {} but read {}", chunkcoordintpair, l, bytebuffer.remaining());
++                return null;
++            } else {
++                int i1 = bytebuffer.getInt();
++                byte b0 = bytebuffer.get();
++
++                if (i1 == 0) {
++                    RegionFile.LOGGER.warn("Chunk {} is allocated, but stream is missing", chunkcoordintpair);
++                    return null;
++                } else {
++                    int j1 = i1 - 1;
++
++                    if (a(b0)) {
++                        if (j1 != 0) {
++                            RegionFile.LOGGER.warn("Chunk has both internal and external streams");
++                        }
++
++                        return this.a(chunkcoordintpair, b(b0));
++                    } else if (j1 > bytebuffer.remaining()) {
++                        RegionFile.LOGGER.error("Chunk {} stream is truncated: expected {} but read {}", chunkcoordintpair, j1, bytebuffer.remaining());
++                        return null;
++                    } else if (j1 < 0) {
++                        RegionFile.LOGGER.error("Declared size {} of chunk {} is negative", i1, chunkcoordintpair);
++                        return null;
++                    } else {
++                        return this.a(chunkcoordintpair, b0, a(bytebuffer, j1));
++                    }
++                }
++            }
++        }
++    }
++
++    private static boolean a(byte b0) {
++        return (b0 & 128) != 0;
++    }
++
++    private static byte b(byte b0) {
++        return (byte) (b0 & -129);
++    }
++
++    @Nullable
++    private DataInputStream a(ChunkCoordIntPair chunkcoordintpair, byte b0, InputStream inputstream) throws IOException {
++        RegionFileCompression regionfilecompression = RegionFileCompression.a(b0);
++
++        if (regionfilecompression == null) {
++            RegionFile.LOGGER.error("Chunk {} has invalid chunk stream version {}", chunkcoordintpair, b0);
++            return null;
++        } else {
++            return new DataInputStream(new BufferedInputStream(regionfilecompression.a(inputstream)));
++        }
++    }
++
++    @Nullable
++    private DataInputStream a(ChunkCoordIntPair chunkcoordintpair, byte b0) throws IOException {
++        java.nio.file.Path java_nio_file_path = this.e(chunkcoordintpair);
++
++        if (!Files.isRegularFile(java_nio_file_path, new LinkOption[0])) {
++            RegionFile.LOGGER.error("External chunk path {} is not file", java_nio_file_path);
++            return null;
++        } else {
++            return this.a(chunkcoordintpair, b0, Files.newInputStream(java_nio_file_path));
++        }
++    }
++
++    private static ByteArrayInputStream a(ByteBuffer bytebuffer, int i) {
++        return new ByteArrayInputStream(bytebuffer.array(), bytebuffer.position(), i);
++    }
++
++    private int a(int i, int j) {
++        return i << 8 | j;
++    }
++
++    private static int a(int i) {
++        return i & 255;
++    }
++
++    private static int b(int i) {
++        return i >> 8;
++    }
++
++    private static int c(int i) {
++        return (i + 4096 - 1) / 4096;
 +    }
 +
 +    public boolean b(ChunkCoordIntPair chunkcoordintpair) {
@@ -2527,138 +2628,181 @@ index 000000000..abb6fcd0e
 +        if (i == 0) {
 +            return false;
 +        } else {
-+            int j = i >> 8;
-+            int k = i & 255;
++            int j = b(i);
++            int k = a(i);
++            ByteBuffer bytebuffer = ByteBuffer.allocate(5);
 +
-+            if (j + k > this.e.size()) {
-+                return false;
-+            } else {
-+                try {
-+                    this.b.seek((long) (j * 4096));
-+                    int l = this.b.readInt();
-+
-+                    return l > 4096 * k ? false : l > 0;
-+                } catch (IOException ioexception) {
++            try {
++                this.dataFile.read(bytebuffer, (long) (j * 4096));
++                bytebuffer.flip();
++                if (bytebuffer.remaining() != 5) {
 +                    return false;
-+                }
-+            }
-+        }
-+    }
-+
-+    public DataOutputStream c(ChunkCoordIntPair chunkcoordintpair) {
-+        return new DataOutputStream(new BufferedOutputStream(new DeflaterOutputStream(new RegionFile.ChunkBuffer(chunkcoordintpair))));
-+    }
-+
-+    protected synchronized void a(ChunkCoordIntPair chunkcoordintpair, byte[] abyte, int i) {
-+        try {
-+            int j = this.getOffset(chunkcoordintpair);
-+            int k = j >> 8;
-+            int l = j & 255;
-+            int i1 = (i + 5) / 4096 + 1;
-+
-+            if (i1 >= 256) {
-+                throw new RuntimeException(String.format("Too big to save, %d > 1048576", i));
-+            }
-+
-+            if (k != 0 && l == i1) {
-+                this.a(k, abyte, i);
-+            } else {
-+                int j1;
-+
-+                for (j1 = 0; j1 < l; ++j1) {
-+                    this.e.set(k + j1, true);
-+                }
-+
-+                j1 = this.e.indexOf(true);
-+                int k1 = 0;
-+                int l1;
-+
-+                if (j1 != -1) {
-+                    for (l1 = j1; l1 < this.e.size(); ++l1) {
-+                        if (k1 != 0) {
-+                            if ((Boolean) this.e.get(l1)) {
-+                                ++k1;
-+                            } else {
-+                                k1 = 0;
-+                            }
-+                        } else if ((Boolean) this.e.get(l1)) {
-+                            j1 = l1;
-+                            k1 = 1;
-+                        }
-+
-+                        if (k1 >= i1) {
-+                            break;
-+                        }
-+                    }
-+                }
-+
-+                if (k1 >= i1) {
-+                    k = j1;
-+                    this.a(chunkcoordintpair, j1 << 8 | i1);
-+
-+                    for (l1 = 0; l1 < i1; ++l1) {
-+                        this.e.set(k + l1, false);
-+                    }
-+
-+                    this.a(k, abyte, i);
 +                } else {
-+                    this.b.seek(this.b.length());
-+                    k = this.e.size();
++                    int l = bytebuffer.getInt();
++                    byte b0 = bytebuffer.get();
 +
-+                    for (l1 = 0; l1 < i1; ++l1) {
-+                        this.b.write(RegionFile.a);
-+                        this.e.add(false);
++                    if (a(b0)) {
++                        if (!RegionFileCompression.b(b(b0))) {
++                            return false;
++                        }
++
++                        if (!Files.isRegularFile(this.e(chunkcoordintpair), new LinkOption[0])) {
++                            return false;
++                        }
++                    } else {
++                        if (!RegionFileCompression.b(b0)) {
++                            return false;
++                        }
++
++                        if (l == 0) {
++                            return false;
++                        }
++
++                        int i1 = l - 1;
++
++                        if (i1 < 0 || i1 > 4096 * k) {
++                            return false;
++                        }
 +                    }
 +
-+                    this.a(k, abyte, i);
-+                    this.a(chunkcoordintpair, k << 8 | i1);
++                    return true;
 +                }
++            } catch (IOException ioexception) {
++                return false;
 +            }
++        }
++    }
 +
-+            this.b(chunkcoordintpair, (int) (SystemUtils.getTimeMillis() / 1000L));
-+        } catch (IOException ioexception) {
-+            ioexception.printStackTrace();
++    public DataOutputStream c(ChunkCoordIntPair chunkcoordintpair) throws IOException {
++        return new DataOutputStream(new BufferedOutputStream(this.e.a((OutputStream) (new RegionFile.ChunkBuffer(chunkcoordintpair)))));
++    }
++
++    protected synchronized void a(ChunkCoordIntPair chunkcoordintpair, ByteBuffer bytebuffer) throws IOException {
++        int i = g(chunkcoordintpair);
++        int j = this.g.get(i);
++        int k = b(j);
++        int l = a(j);
++        int i1 = bytebuffer.remaining();
++        int j1 = c(i1);
++        int k1;
++        RegionFile.b regionfile_b;
++
++        if (j1 >= 256) {
++            java.nio.file.Path java_nio_file_path = this.e(chunkcoordintpair);
++
++            RegionFile.LOGGER.warn("Saving oversized chunk {} ({} bytes} to external file {}", chunkcoordintpair, i1, java_nio_file_path);
++            j1 = 1;
++            k1 = this.freeSectors.a(j1);
++            regionfile_b = this.a(java_nio_file_path, bytebuffer);
++            ByteBuffer bytebuffer1 = this.a();
++
++            this.dataFile.write(bytebuffer1, (long) (k1 * 4096));
++        } else {
++            k1 = this.freeSectors.a(j1);
++            regionfile_b = () -> {
++                Files.deleteIfExists(this.e(chunkcoordintpair));
++            };
++            this.dataFile.write(bytebuffer, (long) (k1 * 4096));
++        }
++
++        int l1 = (int) (SystemUtils.getTimeMillis() / 1000L);
++
++        this.g.put(i, this.a(k1, j1));
++        this.h.put(i, l1);
++        this.b();
++        regionfile_b.run();
++        if (k != 0) {
++            this.freeSectors.b(k, l);
 +        }
 +
 +    }
 +
-+    private void a(int i, byte[] abyte, int j) throws IOException {
-+        this.b.seek((long) (i * 4096));
-+        this.b.writeInt(j + 1);
-+        this.b.writeByte(2);
-+        this.b.write(abyte, 0, j);
++    private ByteBuffer a() {
++        ByteBuffer bytebuffer = ByteBuffer.allocate(5);
++
++        bytebuffer.putInt(1);
++        bytebuffer.put((byte) (this.e.a() | 128));
++        bytebuffer.flip();
++        return bytebuffer;
++    }
++
++    private RegionFile.b a(java.nio.file.Path java_nio_file_path, ByteBuffer bytebuffer) throws IOException {
++        java.nio.file.Path java_nio_file_path1 = Files.createTempFile(this.d, "tmp", (String) null);
++        FileChannel filechannel = FileChannel.open(java_nio_file_path1, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
++        Throwable throwable = null;
++
++        try {
++            bytebuffer.position(5);
++            filechannel.write(bytebuffer);
++        } catch (Throwable throwable1) {
++            throwable = throwable1;
++            throw throwable1;
++        } finally {
++            if (filechannel != null) {
++                if (throwable != null) {
++                    try {
++                        filechannel.close();
++                    } catch (Throwable throwable2) {
++                        throwable.addSuppressed(throwable2);
++                    }
++                } else {
++                    filechannel.close();
++                }
++            }
++
++        }
++
++        return () -> {
++            Files.move(java_nio_file_path1, java_nio_file_path, StandardCopyOption.REPLACE_EXISTING);
++        };
++    }
++
++    private void b() throws IOException {
++        this.f.position(0);
++        this.dataFile.write(this.f, 0L);
 +    }
 +
 +    private int getOffset(ChunkCoordIntPair chunkcoordintpair) {
-+        return this.c[this.f(chunkcoordintpair)];
++        return this.g.get(g(chunkcoordintpair));
 +    }
 +
-+    public boolean d(ChunkCoordIntPair chunkcoordintpair) {
++    public boolean chunkExists(ChunkCoordIntPair chunkcoordintpair) {
 +        return this.getOffset(chunkcoordintpair) != 0;
 +    }
 +
-+    private void a(ChunkCoordIntPair chunkcoordintpair, int i) throws IOException {
-+        int j = this.f(chunkcoordintpair);
-+
-+        this.c[j] = i;
-+        this.b.seek((long) (j * 4));
-+        this.b.writeInt(i);
-+    }
-+
-+    private int f(ChunkCoordIntPair chunkcoordintpair) {
++    private static int g(ChunkCoordIntPair chunkcoordintpair) {
 +        return chunkcoordintpair.j() + chunkcoordintpair.k() * 32;
 +    }
 +
-+    private void b(ChunkCoordIntPair chunkcoordintpair, int i) throws IOException {
-+        int j = this.f(chunkcoordintpair);
++    public void close() throws IOException {
++        try {
++            this.c();
++        } finally {
++            try {
++                this.b();
++            } finally {
++                this.dataFile.close();
++            }
++        }
 +
-+        this.d[j] = i;
-+        this.b.seek((long) (4096 + j * 4));
-+        this.b.writeInt(i);
 +    }
 +
-+    public void close() throws IOException {
-+        this.b.close();
++    private void c() throws IOException {
++        int i = (int) this.dataFile.size();
++        int j = c(i) * 4096;
++
++        if (i != j) {
++            ByteBuffer bytebuffer = RegionFile.b.duplicate();
++
++            bytebuffer.position(0);
++            this.dataFile.write(bytebuffer, (long) (j - 1));
++        }
++
++    }
++
++    interface b {
++
++        void run() throws IOException;
 +    }
 +
 +    class ChunkBuffer extends ByteArrayOutputStream {
@@ -2667,17 +2811,25 @@ index 000000000..abb6fcd0e
 +
 +        public ChunkBuffer(ChunkCoordIntPair chunkcoordintpair) {
 +            super(8096);
++            super.write(0);
++            super.write(0);
++            super.write(0);
++            super.write(0);
++            super.write(RegionFile.this.e.a());
 +            this.b = chunkcoordintpair;
 +        }
 +
-+        public void close() {
-+            RegionFile.this.a(this.b, this.buf, this.count);
++        public void close() throws IOException {
++            ByteBuffer bytebuffer = ByteBuffer.wrap(this.buf, 0, this.count);
++
++            bytebuffer.putInt(0, this.count - 5 + 1);
++            RegionFile.this.a(this.b, bytebuffer);
 +        }
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerStatisticManager.java b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 new file mode 100644
-index 000000000..f59b85ccb
+index 00000000..7d576bfe
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 @@ -0,0 +1,234 @@
@@ -2885,7 +3037,7 @@ index 000000000..f59b85ccb
 +        JsonObject jsonobject1 = new JsonObject();
 +
 +        jsonobject1.add("stats", jsonobject);
-+        jsonobject1.addProperty("DataVersion", SharedConstants.a().getWorldVersion());
++        jsonobject1.addProperty("DataVersion", SharedConstants.getGameVersion().getWorldVersion());
 +        return jsonobject1.toString();
 +    }
 +
@@ -2917,7 +3069,7 @@ index 000000000..f59b85ccb
 +}
 diff --git a/src/main/java/net/minecraft/server/TileEntitySkull.java b/src/main/java/net/minecraft/server/TileEntitySkull.java
 new file mode 100644
-index 000000000..895a8dfb8
+index 00000000..895a8dfb
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/TileEntitySkull.java
 @@ -0,0 +1,119 @@
@@ -3042,7 +3194,7 @@ index 000000000..895a8dfb8
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java b/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
 new file mode 100644
-index 000000000..4f1d57b8a
+index 00000000..3a51d5cc
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
 @@ -0,0 +1,46 @@
@@ -3079,8 +3231,8 @@ index 000000000..4f1d57b8a
 +
 +    public static class a extends StructureStart {
 +
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, BiomeBase biomebase, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, biomebase, structureboundingbox, k, l);
++        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
++            super(structuregenerator, i, j, structureboundingbox, k, l);
 +        }
 +
 +        @Override
@@ -3094,7 +3246,7 @@ index 000000000..4f1d57b8a
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java b/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java
 new file mode 100644
-index 000000000..0f6ce1526
+index 00000000..4adc569d
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java
 @@ -0,0 +1,50 @@
@@ -3131,8 +3283,8 @@ index 000000000..0f6ce1526
 +
 +    public static class a extends StructureStart {
 +
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, BiomeBase biomebase, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, biomebase, structureboundingbox, k, l);
++        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
++            super(structuregenerator, i, j, structureboundingbox, k, l);
 +        }
 +
 +        @Override
@@ -3150,7 +3302,7 @@ index 000000000..0f6ce1526
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java b/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java
 new file mode 100644
-index 000000000..354584258
+index 00000000..130a2e92
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java
 @@ -0,0 +1,46 @@
@@ -3187,8 +3339,8 @@ index 000000000..354584258
 +
 +    public static class a extends StructureStart {
 +
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, BiomeBase biomebase, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, biomebase, structureboundingbox, k, l);
++        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
++            super(structuregenerator, i, j, structureboundingbox, k, l);
 +        }
 +
 +        @Override
@@ -3202,7 +3354,7 @@ index 000000000..354584258
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java b/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java
 new file mode 100644
-index 000000000..5f847e68f
+index 00000000..547c9302
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java
 @@ -0,0 +1,86 @@
@@ -3275,8 +3427,8 @@ index 000000000..5f847e68f
 +
 +    public static class a extends StructureStart {
 +
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, BiomeBase biomebase, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, biomebase, structureboundingbox, k, l);
++        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
++            super(structuregenerator, i, j, structureboundingbox, k, l);
 +        }
 +
 +        @Override
@@ -3294,10 +3446,10 @@ index 000000000..5f847e68f
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeaturePillagerOutpost.java b/src/main/java/net/minecraft/server/WorldGenFeaturePillagerOutpost.java
 new file mode 100644
-index 000000000..a3c6bac32
+index 00000000..ed809c98
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeaturePillagerOutpost.java
-@@ -0,0 +1,88 @@
+@@ -0,0 +1,86 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Lists;
@@ -3306,11 +3458,11 @@ index 000000000..a3c6bac32
 +import java.util.Random;
 +import java.util.function.Function;
 +
-+public class WorldGenFeaturePillagerOutpost extends WorldGenFeatureRandomScattered<WorldGenFeaturePillagerOutpostConfiguration> {
++public class WorldGenFeaturePillagerOutpost extends WorldGenFeatureRandomScattered<WorldGenFeatureEmptyConfiguration> {
 +
 +    private static final List<BiomeBase.BiomeMeta> a = Lists.newArrayList(new BiomeBase.BiomeMeta[]{new BiomeBase.BiomeMeta(EntityTypes.PILLAGER, 1, 1, 1)});
 +
-+    public WorldGenFeaturePillagerOutpost(Function<Dynamic<?>, ? extends WorldGenFeaturePillagerOutpostConfiguration> function) {
++    public WorldGenFeaturePillagerOutpost(Function<Dynamic<?>, ? extends WorldGenFeatureEmptyConfiguration> function) {
 +        super(function);
 +    }
 +
@@ -3330,7 +3482,7 @@ index 000000000..a3c6bac32
 +    }
 +
 +    @Override
-+    public boolean a(ChunkGenerator<?> chunkgenerator, Random random, int i, int j) {
++    public boolean a(BiomeManager biomemanager, ChunkGenerator<?> chunkgenerator, Random random, int i, int j, BiomeBase biomebase) {
 +        ChunkCoordIntPair chunkcoordintpair = this.a(chunkgenerator, random, i, j, 0, 0);
 +
 +        if (i == chunkcoordintpair.x && j == chunkcoordintpair.z) {
@@ -3343,12 +3495,10 @@ index 000000000..a3c6bac32
 +                return false;
 +            }
 +
-+            BiomeBase biomebase = chunkgenerator.getWorldChunkManager().getBiome(new BlockPosition((i << 4) + 9, 0, (j << 4) + 9));
-+
-+            if (chunkgenerator.canSpawnStructure(biomebase, WorldGenerator.PILLAGER_OUTPOST)) {
++            if (chunkgenerator.canSpawnStructure(biomebase, this)) {
 +                for (int i1 = i - 10; i1 <= i + 10; ++i1) {
 +                    for (int j1 = j - 10; j1 <= j + 10; ++j1) {
-+                        if (WorldGenerator.VILLAGE.a(chunkgenerator, random, i1, j1)) {
++                        if (WorldGenerator.VILLAGE.a(biomemanager, chunkgenerator, random, i1, j1, biomemanager.a(new BlockPosition((i1 << 4) + 9, 0, (j1 << 4) + 9)))) {
 +                            return false;
 +                        }
 +                    }
@@ -3373,8 +3523,8 @@ index 000000000..a3c6bac32
 +
 +    public static class a extends StructureAbstract {
 +
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, BiomeBase biomebase, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, biomebase, structureboundingbox, k, l);
++        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
++            super(structuregenerator, i, j, structureboundingbox, k, l);
 +        }
 +
 +        @Override
@@ -3388,10 +3538,10 @@ index 000000000..a3c6bac32
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java b/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java
 new file mode 100644
-index 000000000..ae7973254
+index 00000000..05dfb4cc
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java
-@@ -0,0 +1,56 @@
+@@ -0,0 +1,48 @@
 +package net.minecraft.server;
 +
 +import com.mojang.datafixers.Dynamic;
@@ -3424,18 +3574,10 @@ index 000000000..ae7973254
 +    }
 +
 +    @Override
-+    public boolean a(ChunkGenerator<?> chunkgenerator, Random random, int i, int j) {
++    public boolean a(BiomeManager biomemanager, ChunkGenerator<?> chunkgenerator, Random random, int i, int j, BiomeBase biomebase) {
 +        ChunkCoordIntPair chunkcoordintpair = this.a(chunkgenerator, random, i, j, 0, 0);
 +
-+        if (i == chunkcoordintpair.x && j == chunkcoordintpair.z) {
-+            BiomeBase biomebase = chunkgenerator.getWorldChunkManager().getBiome(new BlockPosition(i * 16 + 9, 0, j * 16 + 9));
-+
-+            if (chunkgenerator.canSpawnStructure(biomebase, this)) {
-+                return true;
-+            }
-+        }
-+
-+        return false;
++        return i == chunkcoordintpair.x && j == chunkcoordintpair.z && chunkgenerator.canSpawnStructure(biomebase, this);
 +    }
 +
 +    protected int a(ChunkGenerator<?> chunkgenerator) {
@@ -3450,7 +3592,7 @@ index 000000000..ae7973254
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java b/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java
 new file mode 100644
-index 000000000..e89dbbcb7
+index 00000000..97d72c0c
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java
 @@ -0,0 +1,58 @@
@@ -3497,8 +3639,8 @@ index 000000000..e89dbbcb7
 +
 +    public static class a extends StructureStart {
 +
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, BiomeBase biomebase, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, biomebase, structureboundingbox, k, l);
++        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
++            super(structuregenerator, i, j, structureboundingbox, k, l);
 +        }
 +
 +        @Override
@@ -3514,7 +3656,7 @@ index 000000000..e89dbbcb7
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
 new file mode 100644
-index 000000000..9c3cbb2b9
+index 00000000..f698f8bf
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
 @@ -0,0 +1,73 @@
@@ -3528,7 +3670,7 @@ index 000000000..9c3cbb2b9
 +public class WorldGenFeatureSwampHut extends WorldGenFeatureRandomScattered<WorldGenFeatureEmptyConfiguration> {
 +
 +    private static final List<BiomeBase.BiomeMeta> a = Lists.newArrayList(new BiomeBase.BiomeMeta[]{new BiomeBase.BiomeMeta(EntityTypes.WITCH, 1, 1, 1)});
-+    private static final List<BiomeBase.BiomeMeta> aS = Lists.newArrayList(new BiomeBase.BiomeMeta[]{new BiomeBase.BiomeMeta(EntityTypes.CAT, 1, 1, 1)});
++    private static final List<BiomeBase.BiomeMeta> aq = Lists.newArrayList(new BiomeBase.BiomeMeta[]{new BiomeBase.BiomeMeta(EntityTypes.CAT, 1, 1, 1)});
 +
 +    public WorldGenFeatureSwampHut(Function<Dynamic<?>, ? extends WorldGenFeatureEmptyConfiguration> function) {
 +        super(function);
@@ -3561,7 +3703,7 @@ index 000000000..9c3cbb2b9
 +
 +    @Override
 +    public List<BiomeBase.BiomeMeta> f() {
-+        return WorldGenFeatureSwampHut.aS;
++        return WorldGenFeatureSwampHut.aq;
 +    }
 +
 +    public boolean c(GeneratorAccess generatoraccess, BlockPosition blockposition) {
@@ -3578,8 +3720,8 @@ index 000000000..9c3cbb2b9
 +
 +    public static class a extends StructureStart {
 +
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, BiomeBase biomebase, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, biomebase, structureboundingbox, k, l);
++        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
++            super(structuregenerator, i, j, structureboundingbox, k, l);
 +        }
 +
 +        @Override
@@ -3593,7 +3735,7 @@ index 000000000..9c3cbb2b9
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenMonument.java b/src/main/java/net/minecraft/server/WorldGenMonument.java
 new file mode 100644
-index 000000000..29bf219f1
+index 00000000..3e428882
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenMonument.java
 @@ -0,0 +1,128 @@
@@ -3635,35 +3777,35 @@ index 000000000..29bf219f1
 +    }
 +
 +    @Override
-+    public boolean a(ChunkGenerator<?> chunkgenerator, Random random, int i, int j) {
++    public boolean a(BiomeManager biomemanager, ChunkGenerator<?> chunkgenerator, Random random, int i, int j, BiomeBase biomebase) {
 +        ChunkCoordIntPair chunkcoordintpair = this.a(chunkgenerator, random, i, j, 0, 0);
 +
 +        if (i == chunkcoordintpair.x && j == chunkcoordintpair.z) {
-+            Set<BiomeBase> set = chunkgenerator.getWorldChunkManager().a(i * 16 + 9, j * 16 + 9, 16);
++            Set<BiomeBase> set = chunkgenerator.getWorldChunkManager().a(i * 16 + 9, chunkgenerator.getSeaLevel(), j * 16 + 9, 16);
 +            Iterator iterator = set.iterator();
 +
-+            BiomeBase biomebase;
++            BiomeBase biomebase1;
 +
 +            do {
 +                if (!iterator.hasNext()) {
-+                    Set<BiomeBase> set1 = chunkgenerator.getWorldChunkManager().a(i * 16 + 9, j * 16 + 9, 29);
++                    Set<BiomeBase> set1 = chunkgenerator.getWorldChunkManager().a(i * 16 + 9, chunkgenerator.getSeaLevel(), j * 16 + 9, 29);
 +                    Iterator iterator1 = set1.iterator();
 +
-+                    BiomeBase biomebase1;
++                    BiomeBase biomebase2;
 +
 +                    do {
 +                        if (!iterator1.hasNext()) {
 +                            return true;
 +                        }
 +
-+                        biomebase1 = (BiomeBase) iterator1.next();
-+                    } while (biomebase1.o() == BiomeBase.Geography.OCEAN || biomebase1.o() == BiomeBase.Geography.RIVER);
++                        biomebase2 = (BiomeBase) iterator1.next();
++                    } while (biomebase2.q() == BiomeBase.Geography.OCEAN || biomebase2.q() == BiomeBase.Geography.RIVER);
 +
 +                    return false;
 +                }
 +
-+                biomebase = (BiomeBase) iterator.next();
-+            } while (chunkgenerator.canSpawnStructure(biomebase, WorldGenerator.OCEAN_MONUMENT));
++                biomebase1 = (BiomeBase) iterator.next();
++            } while (chunkgenerator.canSpawnStructure(biomebase1, this));
 +
 +            return false;
 +        } else {
@@ -3695,8 +3837,8 @@ index 000000000..29bf219f1
 +
 +        private boolean e;
 +
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, BiomeBase biomebase, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, biomebase, structureboundingbox, k, l);
++        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
++            super(structuregenerator, i, j, structureboundingbox, k, l);
 +        }
 +
 +        @Override
@@ -3715,22 +3857,22 @@ index 000000000..29bf219f1
 +        }
 +
 +        @Override
-+        public void a(GeneratorAccess generatoraccess, Random random, StructureBoundingBox structureboundingbox, ChunkCoordIntPair chunkcoordintpair) {
++        public void a(GeneratorAccess generatoraccess, ChunkGenerator<?> chunkgenerator, Random random, StructureBoundingBox structureboundingbox, ChunkCoordIntPair chunkcoordintpair) {
 +            if (!this.e) {
 +                this.b.clear();
 +                this.b(this.f(), this.g());
 +            }
 +
-+            super.a(generatoraccess, random, structureboundingbox, chunkcoordintpair);
++            super.a(generatoraccess, chunkgenerator, random, structureboundingbox, chunkcoordintpair);
 +        }
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/WorldGenVillage.java b/src/main/java/net/minecraft/server/WorldGenVillage.java
 new file mode 100644
-index 000000000..ead451073
+index 00000000..9f74e708
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/WorldGenVillage.java
-@@ -0,0 +1,75 @@
+@@ -0,0 +1,69 @@
 +package net.minecraft.server;
 +
 +import com.mojang.datafixers.Dynamic;
@@ -3763,16 +3905,10 @@ index 000000000..ead451073
 +    }
 +
 +    @Override
-+    public boolean a(ChunkGenerator<?> chunkgenerator, Random random, int i, int j) {
++    public boolean a(BiomeManager biomemanager, ChunkGenerator<?> chunkgenerator, Random random, int i, int j, BiomeBase biomebase) {
 +        ChunkCoordIntPair chunkcoordintpair = this.a(chunkgenerator, random, i, j, 0, 0);
 +
-+        if (i == chunkcoordintpair.x && j == chunkcoordintpair.z) {
-+            BiomeBase biomebase = chunkgenerator.getWorldChunkManager().getBiome(new BlockPosition((i << 4) + 9, 0, (j << 4) + 9));
-+
-+            return chunkgenerator.canSpawnStructure(biomebase, WorldGenerator.VILLAGE);
-+        } else {
-+            return false;
-+        }
++        return i == chunkcoordintpair.x && j == chunkcoordintpair.z ? chunkgenerator.canSpawnStructure(biomebase, this) : false;
 +    }
 +
 +    @Override
@@ -3792,8 +3928,8 @@ index 000000000..ead451073
 +
 +    public static class a extends StructureAbstract {
 +
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, BiomeBase biomebase, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, biomebase, structureboundingbox, k, l);
++        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
++            super(structuregenerator, i, j, structureboundingbox, k, l);
 +        }
 +
 +        @Override
