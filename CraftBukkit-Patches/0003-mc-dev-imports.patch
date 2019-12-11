@@ -1,4 +1,4 @@
-From 6e76bf7b5c81aeeca9d7c78065cfd74971afb35d Mon Sep 17 00:00:00 2001
+From a4130ad7722834480cc4432d945fafa0334029db Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -2437,7 +2437,7 @@ index 00000000..417c2677
 +}
 diff --git a/src/main/java/net/minecraft/server/RegionFile.java b/src/main/java/net/minecraft/server/RegionFile.java
 new file mode 100644
-index 00000000..295ecaf5
+index 00000000..f049ca60
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/RegionFile.java
 @@ -0,0 +1,386 @@
@@ -2489,12 +2489,12 @@ index 00000000..295ecaf5
 +        } else {
 +            this.d = java_nio_file_path1;
 +            this.g = this.f.asIntBuffer();
-+            this.g.limit(1024);
-+            this.f.position(4096);
++            ((java.nio.Buffer) this.g).limit(1024);
++            ((java.nio.Buffer) this.f).position(4096);
 +            this.h = this.f.asIntBuffer();
 +            this.dataFile = FileChannel.open(java_nio_file_path, StandardOpenOption.CREATE, StandardOpenOption.READ, StandardOpenOption.WRITE);
 +            this.freeSectors.a(0, 2);
-+            this.f.position(0);
++            ((java.nio.Buffer) this.f).position(0);
 +            int i = this.dataFile.read(this.f, 0L);
 +
 +            if (i != -1) {
@@ -2536,7 +2536,7 @@ index 00000000..295ecaf5
 +            ByteBuffer bytebuffer = ByteBuffer.allocate(l);
 +
 +            this.dataFile.read(bytebuffer, (long) (j * 4096));
-+            bytebuffer.flip();
++            ((java.nio.Buffer) bytebuffer).flip();
 +            if (bytebuffer.remaining() < 5) {
 +                RegionFile.LOGGER.error("Chunk {} header is truncated: expected {} but read {}", chunkcoordintpair, l, bytebuffer.remaining());
 +                return null;
@@ -2634,7 +2634,7 @@ index 00000000..295ecaf5
 +
 +            try {
 +                this.dataFile.read(bytebuffer, (long) (j * 4096));
-+                bytebuffer.flip();
++                ((java.nio.Buffer) bytebuffer).flip();
 +                if (bytebuffer.remaining() != 5) {
 +                    return false;
 +                } else {
@@ -2722,7 +2722,7 @@ index 00000000..295ecaf5
 +
 +        bytebuffer.putInt(1);
 +        bytebuffer.put((byte) (this.e.a() | 128));
-+        bytebuffer.flip();
++        ((java.nio.Buffer) bytebuffer).flip();
 +        return bytebuffer;
 +    }
 +
@@ -2732,7 +2732,7 @@ index 00000000..295ecaf5
 +        Throwable throwable = null;
 +
 +        try {
-+            bytebuffer.position(5);
++            ((java.nio.Buffer) bytebuffer).position(5);
 +            filechannel.write(bytebuffer);
 +        } catch (Throwable throwable1) {
 +            throwable = throwable1;
@@ -2758,7 +2758,7 @@ index 00000000..295ecaf5
 +    }
 +
 +    private void b() throws IOException {
-+        this.f.position(0);
++        ((java.nio.Buffer) this.f).position(0);
 +        this.dataFile.write(this.f, 0L);
 +    }
 +
@@ -2794,7 +2794,7 @@ index 00000000..295ecaf5
 +        if (i != j) {
 +            ByteBuffer bytebuffer = RegionFile.b.duplicate();
 +
-+            bytebuffer.position(0);
++            ((java.nio.Buffer) bytebuffer).position(0);
 +            this.dataFile.write(bytebuffer, (long) (j - 1));
 +        }
 +
