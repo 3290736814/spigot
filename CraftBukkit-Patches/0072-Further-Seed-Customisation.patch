@@ -1,4 +1,4 @@
-From 2194a6317a245dc9dd61d8fc205891c22c972b3c Mon Sep 17 00:00:00 2001
+From 405288a297ad51e8931dc63141bd4bef87a5eaa2 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -199,10 +199,10 @@ index 9f74e708..d3dfb786 100644
          l2 *= i1;
          k2 += random.nextInt(i1 - j1);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index e423bc8e..3a21d2cd 100644
+index fe95c7bd..29952379 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-@@ -168,7 +168,7 @@ public class CraftChunk implements Chunk {
+@@ -170,7 +170,7 @@ public class CraftChunk implements Chunk {
      @Override
      public boolean isSlimeChunk() {
          // 987234911L is deterimined in EntitySlime when seeing if a slime can spawn in a chunk
@@ -212,10 +212,10 @@ index e423bc8e..3a21d2cd 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java b/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
-index 0986eca0..ab74c248 100644
+index fbc9b946..2378aa7e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
 +++ b/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
-@@ -187,4 +187,10 @@ public class CustomChunkGenerator extends InternalChunkGenerator<GeneratorSettin
+@@ -203,4 +203,10 @@ public class CustomChunkGenerator extends InternalChunkGenerator<GeneratorSettin
      public int getGenerationDepth() {
          return world.getHeight();
      }
