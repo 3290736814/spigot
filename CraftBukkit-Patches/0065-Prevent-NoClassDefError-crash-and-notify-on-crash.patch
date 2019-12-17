@@ -1,11 +1,11 @@
-From c0cf299b32cedcb11202669455098069ac49f36d Mon Sep 17 00:00:00 2001
+From 6b5820b97d4628e01f5f3e8beb30a204b8a13a14 Mon Sep 17 00:00:00 2001
 From: David <dmck2b@gmail.com>
 Date: Mon, 21 Apr 2014 12:43:08 +0100
 Subject: [PATCH] Prevent NoClassDefError crash and notify on crash
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index e90331b0..a88b4d58 100644
+index feb08990..fe1778da 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -86,6 +86,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
