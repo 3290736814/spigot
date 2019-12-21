@@ -1,11 +1,11 @@
-From aafad426f66121b7345dda199466bae5df5b4cdb Mon Sep 17 00:00:00 2001
+From b51dae96ea900fa021e7a6e5b9bb28aaf9398a13 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:33:36 +1100
 Subject: [PATCH] Use Standard List for EntitySlices.
 
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 8b9652fc..55373cae 100644
+index 8b9652fc4..55373cae0 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -34,7 +34,7 @@ public class Chunk implements IChunkAccess {
@@ -69,7 +69,7 @@ index 8b9652fc..55373cae 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 74737ed8..8f84c832 100644
+index 74737ed8d..8f84c8328 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -573,11 +573,11 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -96,10 +96,10 @@ index 74737ed8..8f84c832 100644
                  return chunk.getTileEntities().size();
              }).orElse(0));
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index e47b0e68..ecb35601 100644
+index 3f5cbab18..464d5b3fc 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -1018,11 +1018,11 @@ public class WorldServer extends World {
+@@ -1027,11 +1027,11 @@ public class WorldServer extends World {
          }
          // Spigot End
          this.tileEntityListUnload.addAll(chunk.getTileEntities().values());
@@ -114,7 +114,7 @@ index e47b0e68..ecb35601 100644
  
              while (iterator.hasNext()) {
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index 5f31b1a8..ca7789b5 100644
+index 5f31b1a8f..ca7789b5e 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -1,6 +1,7 @@

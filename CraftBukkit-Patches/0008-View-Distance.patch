@@ -1,4 +1,4 @@
-From ce9063caa969d12a80289b9078de1b148aef6ede Mon Sep 17 00:00:00 2001
+From cada2d4fb22ab9e93fcac1705b94f9a1e5dd6599 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,7 +6,7 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances.
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 71314e63..b97e1f30 100644
+index 71314e630..b97e1f30a 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -125,7 +125,8 @@ public abstract class PlayerList {
@@ -28,10 +28,10 @@ index 71314e63..b97e1f30 100644
          entityplayer1.dead = false;
          entityplayer1.playerConnection.teleport(new Location(worldserver.getWorld(), entityplayer1.locX(), entityplayer1.locY(), entityplayer1.locZ(), entityplayer1.yaw, entityplayer1.pitch));
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index e1de04ce..3ae13cc5 100644
+index dbc96c17a..d8614e77e 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -85,7 +85,7 @@ public class WorldServer extends World {
+@@ -86,7 +86,7 @@ public class WorldServer extends World {
                  chunkGenerator = worldprovider.getChunkGenerator();
              }
  
@@ -41,10 +41,10 @@ index e1de04ce..3ae13cc5 100644
              });
              // CraftBukkit end
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index f01effd1..39213058 100644
+index 0d67c3b39..3f996fce9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2229,6 +2229,13 @@ public class CraftWorld implements World {
+@@ -2237,6 +2237,13 @@ public class CraftWorld implements World {
          return persistentRaid.raids.values().stream().map(CraftRaid::new).collect(Collectors.toList());
      }
  
@@ -59,7 +59,7 @@ index f01effd1..39213058 100644
      private final Spigot spigot = new Spigot()
      {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 8c855cf9..be054035 100644
+index 8c855cf9b..be0540352 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -142,4 +142,23 @@ public class SpigotWorldConfig
