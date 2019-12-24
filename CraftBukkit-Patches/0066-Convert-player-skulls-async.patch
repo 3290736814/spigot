@@ -1,4 +1,4 @@
-From 3b2a8f43c8ff0ae1b322df9d5a3ac50923bd5793 Mon Sep 17 00:00:00 2001
+From a7f02ffdf0b75e997b728dd40028e375516fdfdc Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Sun, 20 Apr 2014 13:18:55 +0100
 Subject: [PATCH] Convert player skulls async
@@ -201,19 +201,19 @@ index 895a8dfb8..99442bb13 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
-index abc9f6ddb..c83bebe70 100644
+index bb48da605..a6e95a909 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
-@@ -77,7 +77,8 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
+@@ -81,7 +81,8 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
  
          if (profile != null) {
              // Fill in textures
--            profile = TileEntitySkull.b(profile);
+-            setProfile(TileEntitySkull.b(profile));
 +            // Must be done sync due to way client handles textures
-+            profile = com.google.common.util.concurrent.Futures.getUnchecked(TileEntitySkull.b(profile, com.google.common.base.Predicates.alwaysTrue(), true)); // Spigot
++            setProfile(com.google.common.util.concurrent.Futures.getUnchecked(TileEntitySkull.b(profile, com.google.common.base.Predicates.alwaysTrue(), true))); // Spigot
  
-             NBTTagCompound owner = new NBTTagCompound();
-             GameProfileSerializer.serialize(owner, profile);
+             tag.set(SKULL_OWNER.NBT, serializedProfile);
+         }
 -- 
 2.20.1
 
