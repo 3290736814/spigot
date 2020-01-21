@@ -1,4 +1,4 @@
-From a216f74c88e63124ddda669a77985859976fffc6 Mon Sep 17 00:00:00 2001
+From cb28825fe2d976bc29ae7a3dc77a705105bb2b8a Mon Sep 17 00:00:00 2001
 From: Minecrell <dev@minecrell.net>
 Date: Sun, 17 Aug 2014 12:42:53 +0200
 Subject: [PATCH] Make debug logging togglable.
@@ -47,10 +47,10 @@ index eb975a3c9..bba2b7adb 100644
 +    }
  }
 diff --git a/src/main/resources/log4j2.xml b/src/main/resources/log4j2.xml
-index 3893c8849..c9582e106 100644
+index 40be2a968..722ca8496 100644
 --- a/src/main/resources/log4j2.xml
 +++ b/src/main/resources/log4j2.xml
-@@ -21,9 +21,9 @@
+@@ -24,10 +24,10 @@
              <filters>
                  <MarkerFilter marker="NETWORK_PACKETS" onMatch="DENY" onMismatch="NEUTRAL" />
              </filters>
@@ -58,7 +58,9 @@ index 3893c8849..c9582e106 100644
 +            <AppenderRef ref="SysOut" level="info"/>
              <AppenderRef ref="File"/>
 -            <AppenderRef ref="ServerGuiConsole"/>
+-            <AppenderRef ref="TerminalConsole"/>
 +            <AppenderRef ref="ServerGuiConsole" level="info"/>
++            <AppenderRef ref="TerminalConsole" level="info"/>
          </Root>
      </Loggers>
  </Configuration>
