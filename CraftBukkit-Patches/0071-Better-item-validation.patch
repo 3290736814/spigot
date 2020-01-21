@@ -1,11 +1,11 @@
-From 17f56f834adeca4312f78fc8c4764746b85cb9f1 Mon Sep 17 00:00:00 2001
+From d5738244784b7ecc5b0aacf2ef9b64db02de2855 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
 
 
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index b79a0d2b..81b6f458 100644
+index b79a0d2b1..81b6f4581 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
 @@ -247,6 +247,10 @@ public class PacketDataSerializer extends ByteBuf {
@@ -20,7 +20,7 @@ index b79a0d2b..81b6f458 100644
              }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index 025b10ea..b4ddf209 100644
+index 7eeccddf0..f214e0fc9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 @@ -19,6 +19,10 @@ import org.bukkit.craftbukkit.util.CraftChatMessage;
@@ -58,7 +58,7 @@ index 025b10ea..b4ddf209 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 9bfbb905..63a67ea9 100644
+index 9bfbb9057..63a67ea93 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -80,6 +80,10 @@ import org.bukkit.inventory.meta.Repairable;
@@ -101,7 +101,7 @@ index 9bfbb905..63a67ea9 100644
                      } catch (JsonParseException ex) {
 diff --git a/src/main/java/org/spigotmc/ValidateUtils.java b/src/main/java/org/spigotmc/ValidateUtils.java
 new file mode 100644
-index 00000000..58a95348
+index 000000000..58a953481
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ValidateUtils.java
 @@ -0,0 +1,14 @@

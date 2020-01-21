@@ -1,11 +1,11 @@
-From a6bd6cbcfd685af88def2f90c781c20dc891bb54 Mon Sep 17 00:00:00 2001
+From 5765cb4e6d94feef192d9213590cb9b1352f623c Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 8 Feb 2014 08:13:40 +0000
 Subject: [PATCH] Spam Filter Exclusions
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index d8a2e558..0ba8579d 100644
+index d8a2e5582..0ba8579de 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -1500,9 +1500,20 @@ public class PlayerConnection implements PacketListenerPlayIn {
@@ -31,7 +31,7 @@ index d8a2e558..0ba8579d 100644
                      Waitable waitable = new Waitable() {
                          @Override
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 3ce9fa74..fb489775 100644
+index 3ce9fa744..fb4897757 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -6,6 +6,7 @@ import java.io.IOException;

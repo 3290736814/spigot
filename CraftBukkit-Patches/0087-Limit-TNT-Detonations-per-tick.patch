@@ -1,4 +1,4 @@
-From 08e6fc666c5544f6d1aa7e1ff7de133e4dca42f9 Mon Sep 17 00:00:00 2001
+From 2dfd772c323100f1020e2dfefaf735a3d064d72e Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Aug 2014 18:12:32 -0400
 Subject: [PATCH] Limit TNT Detonations per tick
@@ -7,7 +7,7 @@ This gives a per-world control on how much TNT will be processed per-tick,
 preventing a massive TNT detonation from lagging out the server.
 
 diff --git a/src/main/java/net/minecraft/server/EntityTNTPrimed.java b/src/main/java/net/minecraft/server/EntityTNTPrimed.java
-index ec238b05..d0421243 100644
+index ec238b051..d04212436 100644
 --- a/src/main/java/net/minecraft/server/EntityTNTPrimed.java
 +++ b/src/main/java/net/minecraft/server/EntityTNTPrimed.java
 @@ -48,6 +48,7 @@ public class EntityTNTPrimed extends Entity {
@@ -19,7 +19,7 @@ index ec238b05..d0421243 100644
              this.setMot(this.getMot().add(0.0D, -0.04D, 0.0D));
          }
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index fe1778da..81ff3789 100644
+index f6f21e122..60e9e11b1 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -696,6 +696,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -31,7 +31,7 @@ index fe1778da..81ff3789 100644
  
      public void a(Consumer<Entity> consumer, Entity entity) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 7eada4df..291f0cfe 100644
+index 7eada4dfa..291f0cfec 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -314,4 +314,15 @@ public class SpigotWorldConfig

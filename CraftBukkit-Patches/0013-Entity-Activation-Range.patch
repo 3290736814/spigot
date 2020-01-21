@@ -1,4 +1,4 @@
-From 45903f4db3ea37e5766954a6a55eeda69e34a0fe Mon Sep 17 00:00:00 2001
+From 755dae34376e6c0615157850dac43ed68bd30e61 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 61600eb0d..43b14ebb7 100644
+index ab1665cbd..54ab3fe9a 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -166,6 +166,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -181,7 +181,7 @@ index 0595fb3e1..f657607a1 100644
          Vec3D vec3d = this.getMot();
  
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index af6e16aba..0f6fd2d70 100644
+index 6e9eed0bb..3b1bcf349 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -135,6 +135,13 @@ public abstract class EntityLiving extends Entity {
@@ -199,7 +199,7 @@ index af6e16aba..0f6fd2d70 100644
      protected EntityLiving(EntityTypes<? extends EntityLiving> entitytypes, World world) {
          super(entitytypes, world);
 diff --git a/src/main/java/net/minecraft/server/EntityVillager.java b/src/main/java/net/minecraft/server/EntityVillager.java
-index 1c4e370a6..5280b66f2 100644
+index 45ce1d5a4..b6c5e711a 100644
 --- a/src/main/java/net/minecraft/server/EntityVillager.java
 +++ b/src/main/java/net/minecraft/server/EntityVillager.java
 @@ -131,6 +131,17 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
@@ -221,7 +221,7 @@ index 1c4e370a6..5280b66f2 100644
      protected void mobTick() {
          this.world.getMethodProfiler().enter("brain");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 5219eeaa9..ed585a06c 100644
+index 9ffba4b3f..101ee0287 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -359,6 +359,7 @@ public class WorldServer extends World {

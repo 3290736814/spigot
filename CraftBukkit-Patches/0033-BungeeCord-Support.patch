@@ -1,4 +1,4 @@
-From eeca414ba93c66cf1f060b201c3d65f412f16051 Mon Sep 17 00:00:00 2001
+From f7ee3d6be282fdf5f23861a422debd1cd52c3089 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -45,7 +45,7 @@ index aec42c066..963dbd064 100644
                  }
                  break;
 diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
-index 8ecde614b..2480bc64b 100644
+index aea85fd72..c6fd50daa 100644
 --- a/src/main/java/net/minecraft/server/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/LoginListener.java
 @@ -100,9 +100,24 @@ public class LoginListener implements PacketLoginInListener {
@@ -147,10 +147,10 @@ index 55e69372c..3f6067727 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 0463e5820..0bacb65b3 100644
+index 701ee301b..f87d992cc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1654,6 +1654,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1675,6 +1675,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      private final Player.Spigot spigot = new Player.Spigot()
      {
  

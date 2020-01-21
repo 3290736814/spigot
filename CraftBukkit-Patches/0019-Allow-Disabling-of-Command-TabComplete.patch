@@ -1,14 +1,14 @@
-From 467e1714547c7a77535c9ea5869302ae3f5aa0a3 Mon Sep 17 00:00:00 2001
+From dc98136c9625db655c6341319a7113badf341873 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 18:05:54 +1000
 Subject: [PATCH] Allow Disabling of Command TabComplete
 
 
 diff --git a/src/main/java/net/minecraft/server/CommandDispatcher.java b/src/main/java/net/minecraft/server/CommandDispatcher.java
-index 84f85437..3599552b 100644
+index 37df72320..37b1a7947 100644
 --- a/src/main/java/net/minecraft/server/CommandDispatcher.java
 +++ b/src/main/java/net/minecraft/server/CommandDispatcher.java
-@@ -245,6 +245,7 @@ public class CommandDispatcher {
+@@ -238,6 +238,7 @@ public class CommandDispatcher {
      }
  
      public void a(EntityPlayer entityplayer) {
@@ -16,7 +16,7 @@ index 84f85437..3599552b 100644
          // CraftBukkit start
          // Register Vanilla commands into builtRoot as before
          Map<CommandNode<CommandListenerWrapper>, CommandNode<ICompletionProvider>> map = Maps.newIdentityHashMap(); // Use identity to prevent aliasing issues
-@@ -283,6 +284,7 @@ public class CommandDispatcher {
+@@ -276,6 +277,7 @@ public class CommandDispatcher {
  
          while (iterator.hasNext()) {
              CommandNode<CommandListenerWrapper> commandnode2 = (CommandNode) iterator.next();
@@ -25,7 +25,7 @@ index 84f85437..3599552b 100644
              if (commandnode2.canUse(commandlistenerwrapper)) {
                  ArgumentBuilder argumentbuilder = commandnode2.createBuilder(); // CraftBukkit - decompile error
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index d401babf..8ba49123 100644
+index 09856ce48..0a35d5bc4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1598,6 +1598,13 @@ public final class CraftServer implements Server {
@@ -43,7 +43,7 @@ index d401babf..8ba49123 100644
          try {
              if (message.startsWith("/")) {
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 1e393421..fed02c9b 100644
+index 1e393421c..fed02c9b1 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -156,4 +156,23 @@ public class SpigotConfig

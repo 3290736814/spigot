@@ -1,11 +1,11 @@
-From 6b5820b97d4628e01f5f3e8beb30a204b8a13a14 Mon Sep 17 00:00:00 2001
+From 1dbd05293adc2a599260b469cafb3138244d8cad Mon Sep 17 00:00:00 2001
 From: David <dmck2b@gmail.com>
 Date: Mon, 21 Apr 2014 12:43:08 +0100
 Subject: [PATCH] Prevent NoClassDefError crash and notify on crash
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index feb08990..fe1778da 100644
+index d112750bd..f6f21e122 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -86,6 +86,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -43,7 +43,7 @@ index feb08990..fe1778da 100644
                  CrashReport crashreport = CrashReport.a(throwable, "Exception while updating neighbours");
                  CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Block being updated");
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index df33e151..27297204 100644
+index 8b3732202..54fa83c12 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
 @@ -70,6 +70,13 @@ public class WatchdogThread extends Thread

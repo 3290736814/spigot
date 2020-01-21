@@ -1,4 +1,4 @@
-From c6c67084d4471a303f89d02880bc5343f9267544 Mon Sep 17 00:00:00 2001
+From bb3ede9f94fb1808ed7b1e6c73844861fa65d471 Mon Sep 17 00:00:00 2001
 From: Spottedleaf <Spottedleaf@users.noreply.github.com>
 Date: Tue, 9 Jul 2019 02:18:54 -0700
 Subject: [PATCH] Remove DataWatcher Locking
@@ -17,7 +17,7 @@ This patch also changes the entries map to be fastutil
 int2objectopenhashmap for performance.
 
 diff --git a/src/main/java/net/minecraft/server/DataWatcher.java b/src/main/java/net/minecraft/server/DataWatcher.java
-index 211b8bea..be8e705f 100644
+index 211b8beaf..be8e705fc 100644
 --- a/src/main/java/net/minecraft/server/DataWatcher.java
 +++ b/src/main/java/net/minecraft/server/DataWatcher.java
 @@ -21,8 +21,8 @@ public class DataWatcher {
@@ -124,7 +124,7 @@ index 211b8bea..be8e705f 100644
  
      public static class Item<T> {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index b3282876..5c495688 100644
+index 3fa90cc91..4c802459d 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -220,6 +220,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {

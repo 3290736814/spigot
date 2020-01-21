@@ -1,11 +1,11 @@
-From e88929e697d7424c0c535b8b797faae3f885a2b4 Mon Sep 17 00:00:00 2001
+From c142b7ef71d7a6a4a452d3307ddaf9622ba830f1 Mon Sep 17 00:00:00 2001
 From: FrozenBrain <carstenbamsti@googlemail.com>
 Date: Sun, 2 Mar 2014 21:13:46 +0100
 Subject: [PATCH] Use one PermissibleBase for all Command Blocks
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java b/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
-index 0459f5df..c914c027 100644
+index 0459f5dfb..c914c027f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
 +++ b/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
 @@ -11,9 +11,18 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
