@@ -1,16 +1,16 @@
-From c855e0de324f3b50b40a8103c080ca0ee711c772 Mon Sep 17 00:00:00 2001
+From 9e0ea722eac16af4d7d538393c5d5d5f2937a4b1 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:20:49 +1000
 Subject: [PATCH] BungeeCord Support
 
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 685cf791..78de4cf9 100644
+index 3b5f9169..e24f7b6b 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1496,6 +1496,17 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
-     public class Spigot extends Entity.Spigot
-     {
+@@ -1495,6 +1495,16 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+     // Spigot start
+     public class Spigot extends Entity.Spigot {
  
 +        /**
 +         * Gets the connection address of this player, regardless of whether it
@@ -19,9 +19,8 @@ index 685cf791..78de4cf9 100644
 +         * @return the player's connection address
 +         */
 +        @NotNull
-+        public InetSocketAddress getRawAddress()
-+        {
-+            throw new UnsupportedOperationException( "Not supported yet." );
++        public InetSocketAddress getRawAddress() {
++            throw new UnsupportedOperationException("Not supported yet.");
 +        }
      }
  

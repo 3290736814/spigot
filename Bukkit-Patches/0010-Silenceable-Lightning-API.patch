@@ -1,16 +1,16 @@
-From 17ab2ac09d1ff7c58bca43ff66619dedb0f4239b Mon Sep 17 00:00:00 2001
+From 3c6a3f7c605ccc7261d9a185c80bd84c6b849ccb Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sun, 23 Feb 2014 16:16:29 -0400
 Subject: [PATCH] Silenceable Lightning API
 
 
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index f3726cef..d22f48c0 100644
+index c15a3b40..77ef9789 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -2078,6 +2078,31 @@ public interface World extends PluginMessageRecipient, Metadatable {
-     public class Spigot
-     {
+@@ -2077,6 +2077,29 @@ public interface World extends PluginMessageRecipient, Metadatable {
+     // Spigot start
+     public class Spigot {
  
 +        /**
 +         * Strikes lightning at the given {@link Location} and possibly without sound
@@ -20,9 +20,8 @@ index f3726cef..d22f48c0 100644
 +         * @return The lightning entity.
 +         */
 +        @NotNull
-+        public LightningStrike strikeLightning(@NotNull Location loc, boolean isSilent)
-+        {
-+            throw new UnsupportedOperationException( "Not supported yet." );
++        public LightningStrike strikeLightning(@NotNull Location loc, boolean isSilent) {
++            throw new UnsupportedOperationException("Not supported yet.");
 +        }
 +
 +        /**
@@ -33,29 +32,27 @@ index f3726cef..d22f48c0 100644
 +         * @return The lightning entity.
 +         */
 +        @NotNull
-+        public LightningStrike strikeLightningEffect(@NotNull Location loc, boolean isSilent)
-+        {
-+            throw new UnsupportedOperationException( "Not supported yet." );
++        public LightningStrike strikeLightningEffect(@NotNull Location loc, boolean isSilent) {
++            throw new UnsupportedOperationException("Not supported yet.");
 +        }
      }
  
      @NotNull
 diff --git a/src/main/java/org/bukkit/entity/LightningStrike.java b/src/main/java/org/bukkit/entity/LightningStrike.java
-index 39ceb444..5904ed87 100644
+index 4d308c5a..be347c3d 100644
 --- a/src/main/java/org/bukkit/entity/LightningStrike.java
 +++ b/src/main/java/org/bukkit/entity/LightningStrike.java
-@@ -18,6 +18,15 @@ public interface LightningStrike extends Entity {
-     public class Spigot extends Entity.Spigot
-     {
+@@ -17,6 +17,14 @@ public interface LightningStrike extends Entity {
+     // Spigot start
+     public class Spigot extends Entity.Spigot {
  
 +        /*
 +         * Returns whether the strike is silent.
 +         *
 +         * @return whether the strike is silent.
 +         */
-+        public boolean isSilent()
-+        {
-+            throw new UnsupportedOperationException( "Not supported yet." );
++        public boolean isSilent() {
++            throw new UnsupportedOperationException("Not supported yet.");
 +        }
      }
  

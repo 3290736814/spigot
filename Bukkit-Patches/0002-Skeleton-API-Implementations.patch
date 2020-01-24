@@ -1,36 +1,34 @@
-From 522c096dc969ab26e6de9eb20ef27879a3d258e0 Mon Sep 17 00:00:00 2001
+From 97d3dcca3f539d345d271b78086c105787a400b4 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 4eecd555..940c643d 100644
+index 4eecd555..a85b8b86 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -1473,4 +1473,10 @@ public final class Bukkit {
+@@ -1473,4 +1473,9 @@ public final class Bukkit {
      public static UnsafeValues getUnsafe() {
          return server.getUnsafe();
      }
 +
 +    @NotNull
-+    public static Server.Spigot spigot()
-+    {
++    public static Server.Spigot spigot() {
 +        return server.spigot();
 +    }
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 7a03e93e..baa1edac 100644
+index 7a03e93e..eed28d0d 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1239,4 +1239,14 @@ public interface Server extends PluginMessageRecipient {
+@@ -1239,4 +1239,13 @@ public interface Server extends PluginMessageRecipient {
      @Deprecated
      @NotNull
      UnsafeValues getUnsafe();
 +
 +    // Spigot start
-+    public class Spigot
-+    {
++    public class Spigot {
 +
 +    }
 +
@@ -39,16 +37,15 @@ index 7a03e93e..baa1edac 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 9ed0ec3a..f3726cef 100644
+index 9ed0ec3a..c15a3b40 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -2074,6 +2074,16 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -2074,6 +2074,15 @@ public interface World extends PluginMessageRecipient, Metadatable {
      @Nullable
      public Location locateNearestStructure(@NotNull Location origin, @NotNull StructureType structureType, int radius, boolean findUnexplored);
  
 +    // Spigot start
-+    public class Spigot
-+    {
++    public class Spigot {
 +
 +    }
 +
@@ -60,17 +57,16 @@ index 9ed0ec3a..f3726cef 100644
       * Finds the nearest raid close to the given location.
       *
 diff --git a/src/main/java/org/bukkit/command/CommandSender.java b/src/main/java/org/bukkit/command/CommandSender.java
-index d247b0d8..bf0f8cc4 100644
+index d247b0d8..8e42cb9d 100644
 --- a/src/main/java/org/bukkit/command/CommandSender.java
 +++ b/src/main/java/org/bukkit/command/CommandSender.java
-@@ -35,4 +35,14 @@ public interface CommandSender extends Permissible {
+@@ -35,4 +35,13 @@ public interface CommandSender extends Permissible {
       */
      @NotNull
      public String getName();
 +
 +    // Spigot start
-+    public class Spigot
-+    {
++    public class Spigot {
 +
 +    }
 +
@@ -79,17 +75,16 @@ index d247b0d8..bf0f8cc4 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index dd3b7606..d708d62b 100644
+index dd3b7606..6b550dda 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -588,4 +588,15 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
+@@ -588,4 +588,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
       */
      @NotNull
      Pose getPose();
 +
 +    // Spigot start
-+    public class Spigot extends CommandSender.Spigot
-+    {
++    public class Spigot extends CommandSender.Spigot {
 +
 +    }
 +
@@ -99,7 +94,7 @@ index dd3b7606..d708d62b 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/LightningStrike.java b/src/main/java/org/bukkit/entity/LightningStrike.java
-index 76aad05f..39ceb444 100644
+index 76aad05f..4d308c5a 100644
 --- a/src/main/java/org/bukkit/entity/LightningStrike.java
 +++ b/src/main/java/org/bukkit/entity/LightningStrike.java
 @@ -1,5 +1,7 @@
@@ -110,13 +105,12 @@ index 76aad05f..39ceb444 100644
  /**
   * Represents an instance of a lightning strike. May or may not do damage.
   */
-@@ -12,4 +14,14 @@ public interface LightningStrike extends Entity {
+@@ -12,4 +14,13 @@ public interface LightningStrike extends Entity {
       */
      public boolean isEffect();
  
 +    // Spigot start
-+    public class Spigot extends Entity.Spigot
-+    {
++    public class Spigot extends Entity.Spigot {
 +
 +    }
 +
@@ -126,17 +120,16 @@ index 76aad05f..39ceb444 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 9dfe70a0..685cf791 100644
+index 9dfe70a0..3b5f9169 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1491,4 +1491,15 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1491,4 +1491,14 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       * @param book The book to open for this player
       */
      public void openBook(@NotNull ItemStack book);
 +
 +    // Spigot start
-+    public class Spigot extends Entity.Spigot
-+    {
++    public class Spigot extends Entity.Spigot {
 +
 +    }
 +

@@ -1,11 +1,11 @@
-From 7b527cbe6c94e019de020a8586b9e355e34a2cde Mon Sep 17 00:00:00 2001
+From f2bfaee1e998c941fe50c19a95485faa07e346b5 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 02:59:14 +0100
 Subject: [PATCH] BungeeCord Chat API
 
 
 diff --git a/pom.xml b/pom.xml
-index 17633770..8b072096 100644
+index 4d345c45..044afc49 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -71,6 +71,13 @@
@@ -23,7 +23,7 @@ index 17633770..8b072096 100644
              <groupId>org.yaml</groupId>
              <artifactId>snakeyaml</artifactId>
 diff --git a/src/main/java/org/bukkit/ChatColor.java b/src/main/java/org/bukkit/ChatColor.java
-index 103debd1..b2c82940 100644
+index 930f109a..a0ef2a82 100644
 --- a/src/main/java/org/bukkit/ChatColor.java
 +++ b/src/main/java/org/bukkit/ChatColor.java
 @@ -15,91 +15,223 @@ public enum ChatColor {
@@ -285,12 +285,12 @@ index 103debd1..b2c82940 100644
       * Gets the char value associated with this color
       *
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 8fd006a2..ee177390 100644
+index addc459a..f05b5bd3 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1249,6 +1249,24 @@ public interface Server extends PluginMessageRecipient {
-         {
-             throw new UnsupportedOperationException( "Not supported yet." );
+@@ -1247,6 +1247,24 @@ public interface Server extends PluginMessageRecipient {
+         public org.bukkit.configuration.file.YamlConfiguration getConfig() {
+             throw new UnsupportedOperationException("Not supported yet.");
          }
 +
 +        /**
@@ -314,12 +314,12 @@ index 8fd006a2..ee177390 100644
  
      @NotNull
 diff --git a/src/main/java/org/bukkit/command/CommandSender.java b/src/main/java/org/bukkit/command/CommandSender.java
-index bf0f8cc4..74816c63 100644
+index 8e42cb9d..a9020ecc 100644
 --- a/src/main/java/org/bukkit/command/CommandSender.java
 +++ b/src/main/java/org/bukkit/command/CommandSender.java
-@@ -40,6 +40,23 @@ public interface CommandSender extends Permissible {
-     public class Spigot
-     {
+@@ -39,6 +39,23 @@ public interface CommandSender extends Permissible {
+     // Spigot start
+     public class Spigot {
  
 +        /**
 +         * Sends this sender a chat component.
@@ -342,12 +342,12 @@ index bf0f8cc4..74816c63 100644
  
      @NotNull
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index bae415e0..0052cc71 100644
+index efaff909..9b0153f7 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1549,6 +1549,36 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
-         {
-             throw new UnsupportedOperationException( "Not supported yet." );
+@@ -1543,6 +1543,36 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+         public java.util.Set<Player> getHiddenPlayers() {
+             throw new UnsupportedOperationException("Not supported yet.");
          }
 +
 +        @Override
