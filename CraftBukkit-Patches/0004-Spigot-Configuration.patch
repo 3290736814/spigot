@@ -1,4 +1,4 @@
-From 061ef81c29b302868b609dcebb8cdb6732b94f30 Mon Sep 17 00:00:00 2001
+From d0e80290617a44663ecfe080bb57b2dc78ec3c14 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -31,10 +31,10 @@ index dfaa54c0a..99e8d6310 100644
          server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.STARTUP);
          // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 2a74becc9..5ee1ea293 100644
+index 3e9af5b42..f63c9a4ef 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -82,6 +82,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -65,6 +65,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      public long ticksPerAnimalSpawns;
      public long ticksPerMonsterSpawns;
      public boolean populating;
@@ -42,7 +42,7 @@ index 2a74becc9..5ee1ea293 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -96,6 +97,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -79,6 +80,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      }
  
      protected World(WorldData worlddata, DimensionManager dimensionmanager, BiFunction<World, WorldProvider, IChunkProvider> bifunction, GameProfilerFiller gameprofilerfiller, boolean flag, org.bukkit.generator.ChunkGenerator gen, org.bukkit.World.Environment env) {

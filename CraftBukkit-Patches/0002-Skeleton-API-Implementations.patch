@@ -1,4 +1,4 @@
-From ee0db55184c78c3a14bcbbb679ae21110f46ca8c Mon Sep 17 00:00:00 2001
+From 7a3170c153b2893e876e90f6bbda34f582a92b74 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -25,10 +25,10 @@ index 0dfe176b4..a4d84a4ff 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 3b78900c1..ea2dea3b0 100644
+index b38a9c5c7..15a70ebe8 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2239,4 +2239,15 @@ public class CraftWorld implements World {
+@@ -2234,4 +2234,15 @@ public class CraftWorld implements World {
          PersistentRaid persistentRaid = world.getPersistentRaid();
          return persistentRaid.raids.values().stream().map(CraftRaid::new).collect(Collectors.toList());
      }

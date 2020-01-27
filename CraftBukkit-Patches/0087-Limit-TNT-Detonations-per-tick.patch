@@ -1,4 +1,4 @@
-From 2dfd772c323100f1020e2dfefaf735a3d064d72e Mon Sep 17 00:00:00 2001
+From 7b4a60e547b9fb5159c8bc110d836c79e397c8be Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Aug 2014 18:12:32 -0400
 Subject: [PATCH] Limit TNT Detonations per tick
@@ -19,10 +19,10 @@ index ec238b051..d04212436 100644
              this.setMot(this.getMot().add(0.0D, -0.04D, 0.0D));
          }
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index f6f21e122..60e9e11b1 100644
+index 4613d8b67..ce3af4471 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -696,6 +696,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -666,6 +666,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
  
          timings.tileEntityPending.stopTiming(); // Spigot
          gameprofilerfiller.exit();

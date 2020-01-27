@@ -1,4 +1,4 @@
-From 7959c5bd3d3609598b9a36f60ed1c669dc1c1e78 Mon Sep 17 00:00:00 2001
+From 457c54a5c3c78afacf810b9fd1a0236241af4ed5 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -146,10 +146,10 @@ index 0e3dc265b..2106b0b49 100644
                      worldserver.setTypeAndData(blockposition, (IBlockData) iblockdata.set(BlockReed.AGE, 0), 4);
                  } else {
 diff --git a/src/main/java/net/minecraft/server/BlockSapling.java b/src/main/java/net/minecraft/server/BlockSapling.java
-index cc32f8e57..54c49e9ef 100644
+index d1a7ca7d1..908e8dd33 100644
 --- a/src/main/java/net/minecraft/server/BlockSapling.java
 +++ b/src/main/java/net/minecraft/server/BlockSapling.java
-@@ -32,7 +32,7 @@ public class BlockSapling extends BlockPlant implements IBlockFragilePlantElemen
+@@ -30,7 +30,7 @@ public class BlockSapling extends BlockPlant implements IBlockFragilePlantElemen
      @Override
      public void tick(IBlockData iblockdata, WorldServer worldserver, BlockPosition blockposition, Random random) {
          super.tick(iblockdata, worldserver, blockposition, random);

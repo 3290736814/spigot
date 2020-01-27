@@ -1,4 +1,4 @@
-From 4309dee56731c12ee0800ee3dff36eb4a30dbc9b Mon Sep 17 00:00:00 2001
+From ceedc5b5e85b284a1405ce3398589c643ca3f0a2 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -125,7 +125,7 @@ index 0eb3b16be..89ca00739 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index ea2dea3b0..dbb58ed87 100644
+index 15a70ebe8..2f873eff6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -380,6 +380,7 @@ public class CraftWorld implements World {
@@ -160,7 +160,7 @@ index ea2dea3b0..dbb58ed87 100644
          IChunkAccess chunk = world.getChunkProvider().getChunkAt(x, z, generate ? ChunkStatus.FULL : ChunkStatus.EMPTY, true);
  
          // If generate = false, but the chunk already exists, we will get this back.
-@@ -1070,6 +1074,7 @@ public class CraftWorld implements World {
+@@ -1065,6 +1069,7 @@ public class CraftWorld implements World {
  
      @Override
      public Collection<Entity> getNearbyEntities(BoundingBox boundingBox, Predicate<Entity> filter) {
@@ -168,7 +168,7 @@ index ea2dea3b0..dbb58ed87 100644
          Validate.notNull(boundingBox, "Bounding box is null!");
  
          AxisAlignedBB bb = new AxisAlignedBB(boundingBox.getMinX(), boundingBox.getMinY(), boundingBox.getMinZ(), boundingBox.getMaxX(), boundingBox.getMaxY(), boundingBox.getMaxZ());
-@@ -1224,6 +1229,7 @@ public class CraftWorld implements World {
+@@ -1219,6 +1224,7 @@ public class CraftWorld implements World {
  
      @Override
      public void save() {
