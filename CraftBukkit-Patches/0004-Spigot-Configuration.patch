@@ -1,4 +1,4 @@
-From d0e80290617a44663ecfe080bb57b2dc78ec3c14 Mon Sep 17 00:00:00 2001
+From 397f9439d5f6f92033d771278b6a1fdb3683d99a Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -6,10 +6,10 @@ Subject: [PATCH] Spigot Configuration
 Provides the basic infrastructure to load and save the Spigot configuration file, spigot.yml
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index dfaa54c0a..99e8d6310 100644
+index ed6b39dcd..1b15e3270 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -157,6 +157,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -164,6 +164,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              this.h(dedicatedserverproperties.preventProxyConnections);
              this.b(dedicatedserverproperties.serverIp);
          }
@@ -21,7 +21,7 @@ index dfaa54c0a..99e8d6310 100644
  
          this.setSpawnAnimals(dedicatedserverproperties.spawnAnimals);
          this.setSpawnNPCs(dedicatedserverproperties.spawnNpcs);
-@@ -193,7 +198,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -200,7 +205,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
          }
  
          // CraftBukkit start

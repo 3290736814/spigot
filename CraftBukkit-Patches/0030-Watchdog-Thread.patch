@@ -1,14 +1,14 @@
-From a753ed790faf86ccade6d1ddc3ba3ba8f76173d4 Mon Sep 17 00:00:00 2001
+From 779177bbfc68b7307fd92404f6bf90f1e39e37f9 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 305de2720..a496f6405 100644
+index 6c016f4eb..1a189a01b 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -279,7 +279,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -286,7 +286,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                  this.remoteConsole = new org.bukkit.craftbukkit.command.CraftRemoteConsoleCommandSender(this.remoteControlCommandListener); // CraftBukkit
              }
  
@@ -18,7 +18,7 @@ index 305de2720..a496f6405 100644
  
                  thread1.setUncaughtExceptionHandler(new ThreadNamedUncaughtExceptionHandler(DedicatedServer.LOGGER));
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 344b8b94c..3feb2a24e 100644
+index 493aa24c4..ba13b1723 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -825,6 +825,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas

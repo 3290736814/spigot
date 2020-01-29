@@ -1,4 +1,4 @@
-From 20dacc524bd8eac2c5449f1be75efd3459ca4715 Mon Sep 17 00:00:00 2001
+From 3cf29182916f20bca9b152168ec75182033d2fdb Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -100,7 +100,7 @@ index 7e6c3e0c7..e16d30f2c 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 99e8d6310..305de2720 100644
+index 1b15e3270..6c016f4eb 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -32,6 +32,7 @@ import org.apache.logging.log4j.Level;
@@ -111,7 +111,7 @@ index 99e8d6310..305de2720 100644
  import org.bukkit.event.server.ServerCommandEvent;
  import org.bukkit.craftbukkit.util.Waitable;
  import org.bukkit.event.server.RemoteServerCommandEvent;
-@@ -414,6 +415,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -421,6 +422,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
      }
  
      public void handleCommandQueue() {
@@ -119,7 +119,7 @@ index 99e8d6310..305de2720 100644
          while (!this.serverCommandQueue.isEmpty()) {
              ServerCommand servercommand = (ServerCommand) this.serverCommandQueue.remove(0);
  
-@@ -428,6 +430,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -435,6 +437,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              // CraftBukkit end
          }
  
