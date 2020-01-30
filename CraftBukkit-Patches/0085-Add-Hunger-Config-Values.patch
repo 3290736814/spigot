@@ -1,11 +1,11 @@
-From a3cd8df1899a39b3ec5874265b894bfa668738f6 Mon Sep 17 00:00:00 2001
+From fcbebaf939e9a5eb38a29e84bf908cf226848a8d Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 157d51d88..1adeeb9c4 100644
+index d18b14369..242129ae4 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -1199,7 +1199,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -76,12 +76,12 @@ index 4fec836e0..01d702d5c 100644
              }
          } else if (this.foodLevel <= 0) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index b87da3137..7eada4dfa 100644
+index 512618cc6..03203f220 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -288,4 +288,30 @@ public class SpigotWorldConfig
          slimeSeed = getInt( "seed-slime", 987234911 );
-         log( "Custom Map Seeds:  Village: " + villageSeed + " Desert: " + desertSeed + " Igloo: " + iglooSeed + " Jungle: " + jungleSeed + " Swamp: " + swampSeed + " Monument: " + monumentSeed + "Ocean: " + oceanSeed + " Shipwreck: " + shipwreckSeed + " Slime: " + slimeSeed );
+         log( "Custom Map Seeds:  Village: " + villageSeed + " Desert: " + desertSeed + " Igloo: " + iglooSeed + " Jungle: " + jungleSeed + " Swamp: " + swampSeed + " Monument: " + monumentSeed + " Ocean: " + oceanSeed + " Shipwreck: " + shipwreckSeed + " Slime: " + slimeSeed );
      }
 +
 +    public float jumpWalkExhaustion;
