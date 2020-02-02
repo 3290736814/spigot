@@ -1,4 +1,4 @@
-From ceedc5b5e85b284a1405ce3398589c643ca3f0a2 Mon Sep 17 00:00:00 2001
+From 4bf2e654e0ed2b97d19d5f1b4c3a9f716104c89e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -49,7 +49,7 @@ index 1e6bc4a42..16938a198 100644
              effectsToProcess.add(new ProcessableEffect(mobeffect, cause));
              return true;
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 6ee9144ac..b2486dc47 100644
+index 70cf38177..381738798 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -972,6 +972,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -113,10 +113,10 @@ index 1ffcd4429..7adc3cf1d 100644
              this.entitiesToAdd.add(entity);
          } else {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 0eb3b16be..89ca00739 100644
+index 5dce1c677..19d5efe90 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -686,6 +686,7 @@ public final class CraftServer implements Server {
+@@ -688,6 +688,7 @@ public final class CraftServer implements Server {
      public boolean dispatchCommand(CommandSender sender, String commandLine) {
          Validate.notNull(sender, "Sender cannot be null");
          Validate.notNull(commandLine, "CommandLine cannot be null");
@@ -125,7 +125,7 @@ index 0eb3b16be..89ca00739 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 15a70ebe8..2f873eff6 100644
+index 9c6cece8d..b62f209c1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -380,6 +380,7 @@ public class CraftWorld implements World {

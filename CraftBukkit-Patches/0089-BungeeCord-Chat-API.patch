@@ -1,4 +1,4 @@
-From 1623312c28e00a10a8c17d94fabb14b8592d1f32 Mon Sep 17 00:00:00 2001
+From e88500debe53c94516d4a47892f4f0b0e11d28f4 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -32,10 +32,10 @@ index 417c26775..fa4eab5b0 100644
      }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 28843e1ff..4243460e4 100644
+index 84a2f33cc..5a6142eb7 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -194,6 +194,8 @@ import org.yaml.snakeyaml.Yaml;
+@@ -196,6 +196,8 @@ import org.yaml.snakeyaml.Yaml;
  import org.yaml.snakeyaml.constructor.SafeConstructor;
  import org.yaml.snakeyaml.error.MarkedYAMLException;
  
@@ -44,7 +44,7 @@ index 28843e1ff..4243460e4 100644
  public final class CraftServer implements Server {
      private final String serverName = "CraftBukkit";
      private final String serverVersion;
-@@ -1940,6 +1942,20 @@ public final class CraftServer implements Server {
+@@ -1956,6 +1958,20 @@ public final class CraftServer implements Server {
          public void restart() {
              org.spigotmc.RestartCommand.restart();
          }
