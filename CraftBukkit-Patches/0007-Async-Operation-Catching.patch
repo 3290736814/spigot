@@ -1,4 +1,4 @@
-From 314174529eea7a9b2c1a45378f6c6bf16543960a Mon Sep 17 00:00:00 2001
+From 144a1f0af3032223005ed82a8d9096c8ae55e9db Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -113,10 +113,10 @@ index 26248d91c..bbe5a08f2 100644
              this.entitiesToAdd.add(entity);
          } else {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 5dce1c677..19d5efe90 100644
+index b605d0c3c..6771f90c3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -688,6 +688,7 @@ public final class CraftServer implements Server {
+@@ -698,6 +698,7 @@ public final class CraftServer implements Server {
      public boolean dispatchCommand(CommandSender sender, String commandLine) {
          Validate.notNull(sender, "Sender cannot be null");
          Validate.notNull(commandLine, "CommandLine cannot be null");
@@ -125,7 +125,7 @@ index 5dce1c677..19d5efe90 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 54f244fd9..42a35b859 100644
+index 15deccd36..a7cc7ffe1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -375,6 +375,7 @@ public class CraftWorld implements World {

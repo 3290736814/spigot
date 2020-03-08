@@ -1,4 +1,4 @@
-From 77ed31b6abd6d05f2a16a599f80b886a3ec7e84e Mon Sep 17 00:00:00 2001
+From e0b5417d1e17e95aa1c6e520811f805f00d22038 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -31,18 +31,18 @@ index ed6b39dcd..1b15e3270 100644
          server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.STARTUP);
          // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 3e9af5b42..f63c9a4ef 100644
+index 0a274e209..6f05e3a3b 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -65,6 +65,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
-     public long ticksPerAnimalSpawns;
-     public long ticksPerMonsterSpawns;
+@@ -67,6 +67,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+     public long ticksPerWaterSpawns;
+     public long ticksPerAmbientSpawns;
      public boolean populating;
 +    public final org.spigotmc.SpigotWorldConfig spigotConfig; // Spigot
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -79,6 +80,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -81,6 +82,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      }
  
      protected World(WorldData worlddata, DimensionManager dimensionmanager, BiFunction<World, WorldProvider, IChunkProvider> bifunction, GameProfilerFiller gameprofilerfiller, boolean flag, org.bukkit.generator.ChunkGenerator gen, org.bukkit.World.Environment env) {
@@ -51,10 +51,10 @@ index 3e9af5b42..f63c9a4ef 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 717e34d10..5dce1c677 100644
+index 52ce4b649..b605d0c3c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -737,6 +737,7 @@ public final class CraftServer implements Server {
+@@ -747,6 +747,7 @@ public final class CraftServer implements Server {
              logger.log(Level.WARNING, "Failed to load banned-players.json, " + ex.getMessage());
          }
  
@@ -62,9 +62,9 @@ index 717e34d10..5dce1c677 100644
          for (WorldServer world : console.getWorlds()) {
              world.worldData.setDifficulty(config.difficulty);
              world.setSpawnFlags(config.spawnMonsters, config.spawnAnimals);
-@@ -751,12 +752,14 @@ public final class CraftServer implements Server {
+@@ -773,12 +774,14 @@ public final class CraftServer implements Server {
              } else {
-                 world.ticksPerMonsterSpawns = this.getTicksPerMonsterSpawns();
+                 world.ticksPerAmbientSpawns = this.getTicksPerAmbientSpawns();
              }
 +            world.spigotConfig.init(); // Spigot
          }
@@ -78,7 +78,7 @@ index 717e34d10..5dce1c677 100644
          ignoreVanillaPermissions = commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 4101ced01..766e0f6b1 100644
+index 7253b1a3a..7d9a1851d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -121,6 +121,14 @@ public class Main {

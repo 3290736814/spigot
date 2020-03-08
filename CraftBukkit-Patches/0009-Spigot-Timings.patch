@@ -1,4 +1,4 @@
-From d1e92a2dc7ef9633ae6ae3c6ace7a363b0547bd8 Mon Sep 17 00:00:00 2001
+From 11e1a4936401bf6fe09f92aaec70ee43283881b8 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -6,7 +6,7 @@ Subject: [PATCH] Spigot Timings
 Overhauls the Timings System adding performance tracking all around the Minecraft Server
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 39d6b64b0..b3681ed0a 100644
+index 63e991695..27a94fc46 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -102,9 +102,11 @@ public class ChunkProviderServer extends IChunkProvider {
@@ -38,7 +38,7 @@ index 39d6b64b0..b3681ed0a 100644
          this.world.getMethodProfiler().exit();
          this.clearCache();
      }
-@@ -375,6 +381,7 @@ public class ChunkProviderServer extends IChunkProvider {
+@@ -381,6 +387,7 @@ public class ChunkProviderServer extends IChunkProvider {
                          chunk.setInhabitedTime(chunk.getInhabitedTime() + j);
                          if (flag1 && (this.allowMonsters || this.allowAnimals) && this.world.getWorldBorder().isInBounds(chunk.getPos())) {
                              this.world.getMethodProfiler().enter("spawner");
@@ -46,7 +46,7 @@ index 39d6b64b0..b3681ed0a 100644
                              EnumCreatureType[] aenumcreaturetype1 = aenumcreaturetype;
                              int i1 = aenumcreaturetype.length;
  
-@@ -412,10 +419,13 @@ public class ChunkProviderServer extends IChunkProvider {
+@@ -423,10 +430,13 @@ public class ChunkProviderServer extends IChunkProvider {
                                  }
                              }
  
@@ -60,7 +60,7 @@ index 39d6b64b0..b3681ed0a 100644
                      }
                  }
              });
-@@ -428,7 +438,9 @@ public class ChunkProviderServer extends IChunkProvider {
+@@ -439,7 +449,9 @@ public class ChunkProviderServer extends IChunkProvider {
              this.world.getMethodProfiler().exit();
          }
  
@@ -409,7 +409,7 @@ index 68e220bef..b7175ee6a 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
      public CraftPersistentDataContainer persistentDataContainer;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index f63c9a4ef..c250be53d 100644
+index 6f05e3a3b..71bf7a0cc 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -18,6 +18,7 @@ import org.apache.logging.log4j.util.Supplier;
@@ -420,7 +420,7 @@ index f63c9a4ef..c250be53d 100644
  import org.bukkit.craftbukkit.CraftServer;
  import org.bukkit.craftbukkit.CraftWorld;
  import org.bukkit.craftbukkit.block.CapturedBlockState;
-@@ -67,6 +68,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -69,6 +70,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      public boolean populating;
      public final org.spigotmc.SpigotWorldConfig spigotConfig; // Spigot
  
@@ -429,7 +429,7 @@ index f63c9a4ef..c250be53d 100644
      public CraftWorld getWorld() {
          return this.world;
      }
-@@ -123,6 +126,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -127,6 +130,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
              public void c(WorldBorder worldborder, double d0) {}
          });
          // CraftBukkit end
@@ -437,7 +437,7 @@ index f63c9a4ef..c250be53d 100644
      }
  
      @Override
-@@ -555,6 +559,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -559,6 +563,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
          GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
  
          gameprofilerfiller.enter("blockEntities");
@@ -445,7 +445,7 @@ index f63c9a4ef..c250be53d 100644
          if (!this.tileEntityListUnload.isEmpty()) {
              this.tileEntityListTick.removeAll(this.tileEntityListUnload);
              this.tileEntityList.removeAll(this.tileEntityListUnload);
-@@ -575,6 +580,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -579,6 +584,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                          gameprofilerfiller.a(() -> {
                              return String.valueOf(TileEntityTypes.a(tileentity.getTileType()));
                          });
@@ -453,7 +453,7 @@ index f63c9a4ef..c250be53d 100644
                          if (tileentity.getTileType().isValidBlock(this.getType(blockposition).getBlock())) {
                              ((ITickable) tileentity).tick();
                          } else {
-@@ -589,6 +595,11 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -593,6 +599,11 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                          tileentity.a(crashreportsystemdetails);
                          throw new ReportedException(crashreport);
                      }
@@ -465,7 +465,7 @@ index f63c9a4ef..c250be53d 100644
                  }
              }
  
-@@ -601,6 +612,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -605,6 +616,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
              }
          }
  
@@ -474,7 +474,7 @@ index f63c9a4ef..c250be53d 100644
          this.tickingTileEntities = false;
          gameprofilerfiller.exitEnter("pendingBlockEntities");
          if (!this.tileEntityListPending.isEmpty()) {
-@@ -633,12 +646,15 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -637,12 +650,15 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
              this.tileEntityListPending.clear();
          }
  
@@ -574,10 +574,10 @@ index 9fc569a14..30a5342ce 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 19d5efe90..97e843009 100644
+index 6771f90c3..9c958eee5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1915,6 +1915,11 @@ public final class CraftServer implements Server {
+@@ -1937,6 +1937,11 @@ public final class CraftServer implements Server {
      private final Spigot spigot = new Spigot()
      {
  

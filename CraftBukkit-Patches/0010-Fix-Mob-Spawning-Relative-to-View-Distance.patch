@@ -1,4 +1,4 @@
-From 73f3dedb60d2b5b82ca98fee67a8d1718f60b8b0 Mon Sep 17 00:00:00 2001
+From 7d18ef8beaee2e198f4be314956683cca04bda4b Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,10 +8,10 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 6b1a1c2bb..e8b7cc06c 100644
+index 27a94fc46..41eac3588 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -379,7 +379,7 @@ public class ChunkProviderServer extends IChunkProvider {
+@@ -385,7 +385,7 @@ public class ChunkProviderServer extends IChunkProvider {
  
                      if (!this.playerChunkMap.isOutsideOfRange(chunkcoordintpair)) {
                          chunk.setInhabitedTime(chunk.getInhabitedTime() + j);
@@ -21,7 +21,7 @@ index 6b1a1c2bb..e8b7cc06c 100644
                              this.world.timings.mobSpawn.startTiming(); // Spigot
                              EnumCreatureType[] aenumcreaturetype1 = aenumcreaturetype;
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index b2486dc47..ccb22fdcc 100644
+index 381738798..30b2b2c47 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -820,10 +820,21 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
