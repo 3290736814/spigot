@@ -1,4 +1,4 @@
-From 144a1f0af3032223005ed82a8d9096c8ae55e9db Mon Sep 17 00:00:00 2001
+From 0987ad8c530e3d210bcd40e5df6f838aeef9c6cc Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -125,10 +125,10 @@ index b605d0c3c..6771f90c3 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 15deccd36..a7cc7ffe1 100644
+index 580915d68..ff5d0565f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -375,6 +375,7 @@ public class CraftWorld implements World {
+@@ -379,6 +379,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean unloadChunkRequest(int x, int z) {
@@ -136,7 +136,7 @@ index 15deccd36..a7cc7ffe1 100644
          net.minecraft.server.IChunkAccess chunk = world.getChunkProvider().getChunkAt(x, z, ChunkStatus.FULL, false);
          if (chunk != null) {
              world.getChunkProvider().removeTicket(TicketType.PLUGIN, chunk.getPos(), 1, Unit.INSTANCE);
-@@ -384,6 +385,7 @@ public class CraftWorld implements World {
+@@ -388,6 +389,7 @@ public class CraftWorld implements World {
      }
  
      private boolean unloadChunk0(int x, int z, boolean save) {
@@ -144,7 +144,7 @@ index 15deccd36..a7cc7ffe1 100644
          net.minecraft.server.Chunk chunk = (net.minecraft.server.Chunk) world.getChunkProvider().getChunkAt(x, z, ChunkStatus.FULL, false);
          if (chunk == null) {
              return true;
-@@ -398,6 +400,7 @@ public class CraftWorld implements World {
+@@ -402,6 +404,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean regenerateChunk(int x, int z) {
@@ -152,7 +152,7 @@ index 15deccd36..a7cc7ffe1 100644
          throw new UnsupportedOperationException("Not supported in this Minecraft version! Unless you can fix it, this is not a bug :)");
          /*
          if (!unloadChunk0(x, z, false)) {
-@@ -449,6 +452,7 @@ public class CraftWorld implements World {
+@@ -453,6 +456,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean loadChunk(int x, int z, boolean generate) {
@@ -160,7 +160,7 @@ index 15deccd36..a7cc7ffe1 100644
          IChunkAccess chunk = world.getChunkProvider().getChunkAt(x, z, generate ? ChunkStatus.FULL : ChunkStatus.EMPTY, true);
  
          // If generate = false, but the chunk already exists, we will get this back.
-@@ -1081,6 +1085,7 @@ public class CraftWorld implements World {
+@@ -1085,6 +1089,7 @@ public class CraftWorld implements World {
  
      @Override
      public Collection<Entity> getNearbyEntities(BoundingBox boundingBox, Predicate<Entity> filter) {
@@ -168,7 +168,7 @@ index 15deccd36..a7cc7ffe1 100644
          Validate.notNull(boundingBox, "Bounding box is null!");
  
          AxisAlignedBB bb = new AxisAlignedBB(boundingBox.getMinX(), boundingBox.getMinY(), boundingBox.getMinZ(), boundingBox.getMaxX(), boundingBox.getMaxY(), boundingBox.getMaxZ());
-@@ -1235,6 +1240,7 @@ public class CraftWorld implements World {
+@@ -1239,6 +1244,7 @@ public class CraftWorld implements World {
  
      @Override
      public void save() {

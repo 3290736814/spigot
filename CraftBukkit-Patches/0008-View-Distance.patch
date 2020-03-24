@@ -1,4 +1,4 @@
-From 1fb30c1c776ae028460a43c205df952fc375dd23 Mon Sep 17 00:00:00 2001
+From 6786be174669f22327d695f026ed69d321dba71f Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -41,11 +41,11 @@ index bbe5a08f2..9fc569a14 100644
              });
              // CraftBukkit end
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index a7cc7ffe1..b0cee6ebd 100644
+index ff5d0565f..d68979e7d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2277,6 +2277,13 @@ public class CraftWorld implements World {
-         return persistentRaid.raids.values().stream().map(CraftRaid::new).collect(Collectors.toList());
+@@ -2291,6 +2291,13 @@ public class CraftWorld implements World {
+         return new CraftDragonBattle(((WorldProviderTheEnd) worldProvider).o()); // PAIL rename getDragonBattle
      }
  
 +    // Spigot start

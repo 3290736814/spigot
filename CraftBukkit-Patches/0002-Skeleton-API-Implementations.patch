@@ -1,4 +1,4 @@
-From 585aa75a6399add688fa0e4c386ad1c6ef22834a Mon Sep 17 00:00:00 2001
+From 6878019f03ffa6a75c7dcb6d4f4fe43b1f83ea5d Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -25,12 +25,12 @@ index e3d5b7bd2..52ce4b649 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index eea897495..15deccd36 100644
+index b8e040837..580915d68 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2270,4 +2270,15 @@ public class CraftWorld implements World {
-         PersistentRaid persistentRaid = world.getPersistentRaid();
-         return persistentRaid.raids.values().stream().map(CraftRaid::new).collect(Collectors.toList());
+@@ -2284,4 +2284,15 @@ public class CraftWorld implements World {
+ 
+         return new CraftDragonBattle(((WorldProviderTheEnd) worldProvider).o()); // PAIL rename getDragonBattle
      }
 +
 +    // Spigot start
