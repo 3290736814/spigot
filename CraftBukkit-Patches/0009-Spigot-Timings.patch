@@ -1,4 +1,4 @@
-From 11e1a4936401bf6fe09f92aaec70ee43283881b8 Mon Sep 17 00:00:00 2001
+From deb24cd352468dfe6bc7d2273eca7390d13328ee Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -409,7 +409,7 @@ index 68e220bef..b7175ee6a 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
      public CraftPersistentDataContainer persistentDataContainer;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 6f05e3a3b..71bf7a0cc 100644
+index 74f6b92ef..3717444bc 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -18,6 +18,7 @@ import org.apache.logging.log4j.util.Supplier;
@@ -437,7 +437,7 @@ index 6f05e3a3b..71bf7a0cc 100644
      }
  
      @Override
-@@ -559,6 +563,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -561,6 +565,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
          GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
  
          gameprofilerfiller.enter("blockEntities");
@@ -445,7 +445,7 @@ index 6f05e3a3b..71bf7a0cc 100644
          if (!this.tileEntityListUnload.isEmpty()) {
              this.tileEntityListTick.removeAll(this.tileEntityListUnload);
              this.tileEntityList.removeAll(this.tileEntityListUnload);
-@@ -579,6 +584,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -581,6 +586,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                          gameprofilerfiller.a(() -> {
                              return String.valueOf(TileEntityTypes.a(tileentity.getTileType()));
                          });
@@ -453,7 +453,7 @@ index 6f05e3a3b..71bf7a0cc 100644
                          if (tileentity.getTileType().isValidBlock(this.getType(blockposition).getBlock())) {
                              ((ITickable) tileentity).tick();
                          } else {
-@@ -593,6 +599,11 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -595,6 +601,11 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                          tileentity.a(crashreportsystemdetails);
                          throw new ReportedException(crashreport);
                      }
@@ -465,7 +465,7 @@ index 6f05e3a3b..71bf7a0cc 100644
                  }
              }
  
-@@ -605,6 +616,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -607,6 +618,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
              }
          }
  
@@ -474,7 +474,7 @@ index 6f05e3a3b..71bf7a0cc 100644
          this.tickingTileEntities = false;
          gameprofilerfiller.exitEnter("pendingBlockEntities");
          if (!this.tileEntityListPending.isEmpty()) {
-@@ -637,12 +650,15 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -639,12 +652,15 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
              this.tileEntityListPending.clear();
          }
  

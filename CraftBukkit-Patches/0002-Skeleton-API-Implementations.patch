@@ -1,4 +1,4 @@
-From 6878019f03ffa6a75c7dcb6d4f4fe43b1f83ea5d Mon Sep 17 00:00:00 2001
+From 1de397eaf8d2c42e54e8df8d71d1fa6ca1951929 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -122,10 +122,10 @@ index cb1efe969..1d4ba473a 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 4109e6b0b..5c60a52e0 100644
+index 405c8ba10..97a25ec41 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1669,4 +1669,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1634,4 +1634,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          getHandle().openBook(org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(book), net.minecraft.server.EnumHand.MAIN_HAND);
          getInventory().setItemInMainHand(hand);
      }

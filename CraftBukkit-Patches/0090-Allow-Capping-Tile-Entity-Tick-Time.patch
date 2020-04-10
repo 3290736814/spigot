@@ -1,4 +1,4 @@
-From 818871cfacd1fbaa36c7926b24b7fc6b6ae9cf28 Mon Sep 17 00:00:00 2001
+From c7257447cbc62c435f6713f6a350a85cae3d7911 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -10,7 +10,7 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 This feature was commisioned by Chunkr.
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index fc7ee00f4..487346ce8 100644
+index bb7514190..ad43b4807 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -72,6 +72,9 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -32,7 +32,7 @@ index fc7ee00f4..487346ce8 100644
      }
  
      @Override
-@@ -582,14 +587,19 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -584,14 +589,19 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
          }
  
          this.tickingTileEntities = true;
@@ -57,7 +57,7 @@ index fc7ee00f4..487346ce8 100644
                  continue;
              }
              // Spigot end
-@@ -626,7 +636,10 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -628,7 +638,10 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
              }
  
              if (tileentity.isRemoved()) {
@@ -70,10 +70,10 @@ index fc7ee00f4..487346ce8 100644
                  if (this.isLoaded(tileentity.getPosition())) {
                      this.getChunkAtWorldCoords(tileentity.getPosition()).removeTileEntity(tileentity.getPosition());
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 3b0e86096..9cad3c261 100644
+index 9e1d82568..d41ae7180 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -331,4 +331,13 @@ public class SpigotWorldConfig
+@@ -333,4 +333,13 @@ public class SpigotWorldConfig
      {
          hangingTickFrequency = getInt( "hanging-tick-frequency", 100 );
      }

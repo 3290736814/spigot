@@ -1,4 +1,4 @@
-From 587d5d0711bc0933bedde0d882c6dc44f2e3cb4b Mon Sep 17 00:00:00 2001
+From 0ac73134c88db8cce0bcfde0062dab5d48727a33 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -33,6 +33,19 @@ index 5c96f83e9..8e8526f37 100644
  
                  if (random.nextInt(10) == 0 && flag && blockposition.getY() < 40) {
                      return a(entitytypes, generatoraccess, enummobspawn, blockposition, random);
+diff --git a/src/main/java/net/minecraft/server/WorldGenEndCity.java b/src/main/java/net/minecraft/server/WorldGenEndCity.java
+index 99ae7ea9f..ead7167d1 100644
+--- a/src/main/java/net/minecraft/server/WorldGenEndCity.java
++++ b/src/main/java/net/minecraft/server/WorldGenEndCity.java
+@@ -21,7 +21,7 @@ public class WorldGenEndCity extends StructureGenerator<WorldGenFeatureEmptyConf
+         int k2 = i2 / i1;
+         int l2 = j2 / i1;
+ 
+-        ((SeededRandom) random).a(chunkgenerator.getSeed(), k2, l2, 10387313);
++        ((SeededRandom) random).a(chunkgenerator.getSeed(), k2, l2, chunkgenerator.getWorld().spigotConfig.endCitySeed); // Spigot
+         k2 *= i1;
+         l2 *= i1;
+         k2 += (random.nextInt(i1 - j1) + random.nextInt(i1 - j1)) / 2;
 diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java b/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
 index 3a51d5cc4..c71b59a10 100644
 --- a/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
@@ -227,10 +240,10 @@ index 79a0513ac..8feacd61e 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 0f9d5cb4f..512618cc6 100644
+index 0f9d5cb4f..ed560ae77 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -263,4 +263,29 @@ public class SpigotWorldConfig
+@@ -263,4 +263,31 @@ public class SpigotWorldConfig
      {
          witherSpawnSoundRadius = getInt( "wither-spawn-sound-radius", 0 );
      }
@@ -245,6 +258,7 @@ index 0f9d5cb4f..512618cc6 100644
 +    public int outpostSeed;
 +    public int shipwreckSeed;
 +    public int slimeSeed;
++    public int endCitySeed;
 +    private void initWorldGenSeeds()
 +    {
 +        villageSeed = getInt( "seed-village", 10387312 );
@@ -256,8 +270,9 @@ index 0f9d5cb4f..512618cc6 100644
 +        shipwreckSeed = getInt( "seed-shipwreck", 165745295 );
 +        oceanSeed = getInt( "seed-ocean", 14357621 );
 +        outpostSeed = getInt( "seed-outpost", 165745296 );
++        endCitySeed = getInt( "seed-endcity", 10387313 );
 +        slimeSeed = getInt( "seed-slime", 987234911 );
-+        log( "Custom Map Seeds:  Village: " + villageSeed + " Desert: " + desertSeed + " Igloo: " + iglooSeed + " Jungle: " + jungleSeed + " Swamp: " + swampSeed + " Monument: " + monumentSeed + " Ocean: " + oceanSeed + " Shipwreck: " + shipwreckSeed + " Slime: " + slimeSeed );
++        log( "Custom Map Seeds:  Village: " + villageSeed + " Desert: " + desertSeed + " Igloo: " + iglooSeed + " Jungle: " + jungleSeed + " Swamp: " + swampSeed + " Monument: " + monumentSeed + " Ocean: " + oceanSeed + " Shipwreck: " + shipwreckSeed + " End City: " + endCitySeed + " Slime: " + slimeSeed );
 +    }
  }
 -- 
