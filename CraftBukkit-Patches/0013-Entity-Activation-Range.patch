@@ -1,4 +1,4 @@
-From 755dae34376e6c0615157850dac43ed68bd30e61 Mon Sep 17 00:00:00 2001
+From 746d3eba7ded7ce786ef6719f59cbe4bd532e2e1 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index ab1665cbd..54ab3fe9a 100644
+index 9ae74680c..416e4da81 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -166,6 +166,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -148,7 +148,7 @@ index 320817736..4f51b9b65 100644
      protected void initDatawatcher() {
          this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, ItemStack.a);
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 0595fb3e1..f657607a1 100644
+index fc662b5d6..208dad2a3 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -138,6 +138,28 @@ public class EntityItem extends Entity {
@@ -221,7 +221,7 @@ index 45ce1d5a4..b6c5e711a 100644
      protected void mobTick() {
          this.world.getMethodProfiler().enter("brain");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 9ffba4b3f..101ee0287 100644
+index 30a5342ce..c3a6848ef 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -359,6 +359,7 @@ public class WorldServer extends World {
@@ -262,10 +262,10 @@ index 24d4a488d..2bd22a369 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index b48d81e51..c781f548b 100644
+index 978c32b50..0a67a57f6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -475,6 +475,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -477,6 +477,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          entity.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
          // SPIGOT-619: Force sync head rotation also
          entity.setHeadRotation(location.getYaw());

@@ -1,4 +1,4 @@
-From deb24cd352468dfe6bc7d2273eca7390d13328ee Mon Sep 17 00:00:00 2001
+From 9d6c14b4f982bd050bbf0e56cfc36ab0e577af4f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -574,7 +574,7 @@ index 9fc569a14..30a5342ce 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 6771f90c3..9c958eee5 100644
+index 6446de65f..a57715832 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1937,6 +1937,11 @@ public final class CraftServer implements Server {
@@ -755,10 +755,10 @@ index 000000000..24d4a488d
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
-index d694a2a24..b90979c7b 100644
+index ce2e3d282..9ad17c560 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
-@@ -390,7 +390,9 @@ public class CraftScheduler implements BukkitScheduler {
+@@ -396,7 +396,9 @@ public class CraftScheduler implements BukkitScheduler {
              if (task.isSync()) {
                  currentTask = task;
                  try {

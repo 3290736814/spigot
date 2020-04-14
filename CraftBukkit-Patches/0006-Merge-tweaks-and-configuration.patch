@@ -1,4 +1,4 @@
-From 640839cf2c2a913ed6f4e2246238644e588cdc2e Mon Sep 17 00:00:00 2001
+From e37e8703a89baae7c974ea9c182401978cf2e2de Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:46:33 +1100
 Subject: [PATCH] Merge tweaks and configuration
@@ -6,7 +6,7 @@ Subject: [PATCH] Merge tweaks and configuration
 This allows the merging of Experience orbs, as well as the configuration of the merge radius of items. Additionally it refactors the merge algorithm to be a better experience for players.
 
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 67ce547fa..7402a094c 100644
+index 128672792..6cf9455a4 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -146,7 +146,10 @@ public class EntityItem extends Entity {
@@ -31,12 +31,12 @@ index 67ce547fa..7402a094c 100644
              } else {
                  a(entityitem, itemstack1, this, itemstack);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 2021f4bdc..c289d5325 100644
+index 4602d978a..a9861b4ef 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -534,6 +534,23 @@ public class CraftEventFactory {
              event = CraftEventFactory.callProjectileLaunchEvent(entity);
-         } else if (entity.getBukkitEntity() instanceof org.bukkit.entity.Vehicle){
+         } else if (entity.getBukkitEntity() instanceof org.bukkit.entity.Vehicle) {
              event = CraftEventFactory.callVehicleCreateEvent(entity);
 +        // Spigot start
 +        } else if (entity instanceof EntityExperienceOrb) {
