@@ -1,4 +1,4 @@
-From 86ab085896c2d6265a9f25c8073e76a179be2f6f Mon Sep 17 00:00:00 2001
+From 3c69cff0a573deb7d410001d2bbcacb5ad8ca547 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 2 Jul 2013 13:07:39 +1000
 Subject: [PATCH] POM Changes
@@ -6,7 +6,7 @@ Subject: [PATCH] POM Changes
 Basic changes to the build system which mark the artifact as Spigot, and the necessary code changes to ensure proper functionality. Also disables the auto updater provided by CraftBukkit as it is useless to us.
 
 diff --git a/pom.xml b/pom.xml
-index d3a99b076..8837c6074 100644
+index fde4cdc0d..fdfe3bf1d 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,11 +1,11 @@
@@ -24,7 +24,7 @@ index d3a99b076..8837c6074 100644
      <url>https://www.spigotmc.org/</url>
  
      <properties>
-@@ -21,10 +21,17 @@
+@@ -18,10 +18,17 @@
          <maven.compiler.target>1.8</maven.compiler.target>
      </properties>
  
@@ -44,10 +44,10 @@ index d3a99b076..8837c6074 100644
              <version>${project.version}</version>
              <scope>compile</scope>
          </dependency>
-@@ -107,11 +114,26 @@
+@@ -104,11 +111,26 @@
                  <groupId>net.md-5</groupId>
                  <artifactId>scriptus</artifactId>
-                 <version>0.3.2</version>
+                 <version>0.4.1</version>
 -                <configuration>
 -                    <format>git-Bukkit-%s</format>
 -                </configuration>
@@ -80,7 +80,7 @@ index d3a99b076..8837c6074 100644
                              <Implementation-Title>CraftBukkit</Implementation-Title>
 -                            <Implementation-Version>${describe}</Implementation-Version>
 +                            <Implementation-Version>${spigot.desc}${craftbukkit.desc}</Implementation-Version>
-                             <Implementation-Vendor>${maven.build.timestamp}</Implementation-Vendor>
+                             <Implementation-Vendor>${project.build.outputTimestamp}</Implementation-Vendor>
                              <Specification-Title>Bukkit</Specification-Title>
                              <Specification-Version>${api.version}</Specification-Version>
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
