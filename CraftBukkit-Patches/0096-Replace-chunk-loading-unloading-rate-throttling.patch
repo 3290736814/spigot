@@ -1,4 +1,4 @@
-From 674757e63f3b4457b63a2d3a475e5487ea5fcf68 Mon Sep 17 00:00:00 2001
+From 33f991280697f332e4587789a75a7c9786923ed0 Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Thu, 26 Jan 2017 20:54:55 +0000
 Subject: [PATCH] Replace chunk loading / unloading rate throttling.
@@ -7,7 +7,7 @@ Uses a scheme based on estimated tick slack time.
 See https://hub.spigotmc.org/stash/projects/SPIGOT/repos/spigot/pull-requests/71/overview
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index ca94ff318..4a74e4f44 100644
+index c0371515b..b4a0bd795 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -64,6 +64,7 @@ import org.bukkit.craftbukkit.Main;
@@ -43,7 +43,7 @@ index ca94ff318..4a74e4f44 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 250943e7d..b5a3b1001 100644
+index 5feb9e517..7ad30548e 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -337,6 +337,9 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -173,5 +173,5 @@ index 000000000..aabc7ad20
 +    }
 +}
 -- 
-2.20.1
+2.25.1
 

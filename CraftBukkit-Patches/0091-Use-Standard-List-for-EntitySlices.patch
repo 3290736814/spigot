@@ -1,4 +1,4 @@
-From d139fa76c9acef6f7ad32a6f4b48a52eeb4902c7 Mon Sep 17 00:00:00 2001
+From 4c23ca5d6c1a3118beb5d3ea6e9d856396dde214 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:33:36 +1100
 Subject: [PATCH] Use Standard List for EntitySlices.
@@ -96,7 +96,7 @@ index 8a8abe1bb..5feb9e517 100644
                  return chunk.getTileEntities().size();
              }).orElse(0));
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 0492e4bc6..32f8f2aed 100644
+index 1c72b5423..d5014abc9 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -1037,11 +1037,11 @@ public class WorldServer extends World {
@@ -135,5 +135,5 @@ index 5f31b1a8f..ca7789b5e 100644
              for ( Entity entity : (Collection<Entity>) slice )
              {
 -- 
-2.20.1
+2.25.1
 

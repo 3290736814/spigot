@@ -1,11 +1,11 @@
-From 00dcb34cd92788a3fea4d90528798f6bf047fbce Mon Sep 17 00:00:00 2001
+From 39a9768ba5952b208ec48f40afad2cd1f51dbf4a Mon Sep 17 00:00:00 2001
 From: DerFlash <bte@freenet.de>
 Date: Tue, 9 Jul 2013 00:11:12 +0200
 Subject: [PATCH] Save ticks lived to nbttag
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index f439e808e..7cc7c2169 100644
+index 5eaaff75a..d691b9b7a 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -1515,6 +1515,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -26,5 +26,5 @@ index f439e808e..7cc7c2169 100644
                  if (entity instanceof EntityTameableAnimal && !isLevelAtLeast(nbttagcompound, 2) && !nbttagcompound.getBoolean("PersistenceRequired")) {
                      EntityInsentient entityinsentient = (EntityInsentient) entity;
 -- 
-2.20.1
+2.25.1
 

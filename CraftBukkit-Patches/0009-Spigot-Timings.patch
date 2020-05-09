@@ -1,4 +1,4 @@
-From 9d6c14b4f982bd050bbf0e56cfc36ab0e577af4f Mon Sep 17 00:00:00 2001
+From 2cef96af8755932d08dc0b5fa82966bd0c40e66b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -164,7 +164,7 @@ index 0d66ff2c7..9ae74680c 100644
  
      protected BlockPosition ag() {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 16938a198..6e9eed0bb 100644
+index c05fa2682..fa6efb644 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -37,6 +37,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
@@ -176,7 +176,7 @@ index 16938a198..6e9eed0bb 100644
  public abstract class EntityLiving extends Entity {
  
      private static final UUID b = UUID.fromString("662A6B8D-DA3E-4C1C-8813-96EA6097278D");
-@@ -2252,6 +2254,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2255,6 +2257,7 @@ public abstract class EntityLiving extends Entity {
  
      @Override
      public void tick() {
@@ -184,7 +184,7 @@ index 16938a198..6e9eed0bb 100644
          super.tick();
          this.o();
          this.r();
-@@ -2339,7 +2342,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2342,7 +2345,9 @@ public abstract class EntityLiving extends Entity {
              }
          }
  
@@ -194,7 +194,7 @@ index 16938a198..6e9eed0bb 100644
          double d0 = this.locX() - this.lastX;
          double d1 = this.locZ() - this.lastZ;
          float f = (float) (d0 * d0 + d1 * d1);
-@@ -2420,6 +2425,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2423,6 +2428,7 @@ public abstract class EntityLiving extends Entity {
              this.pitch = 0.0F;
          }
  
@@ -202,7 +202,7 @@ index 16938a198..6e9eed0bb 100644
      }
  
      protected float f(float f, float f1) {
-@@ -2498,6 +2504,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2501,6 +2507,7 @@ public abstract class EntityLiving extends Entity {
  
          this.setMot(d4, d5, d6);
          this.world.getMethodProfiler().enter("ai");
@@ -210,7 +210,7 @@ index 16938a198..6e9eed0bb 100644
          if (this.isFrozen()) {
              this.jumping = false;
              this.aZ = 0.0F;
-@@ -2507,6 +2514,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2510,6 +2517,7 @@ public abstract class EntityLiving extends Entity {
              this.doTick();
              this.world.getMethodProfiler().exit();
          }
@@ -218,7 +218,7 @@ index 16938a198..6e9eed0bb 100644
  
          this.world.getMethodProfiler().exit();
          this.world.getMethodProfiler().enter("jump");
-@@ -2530,7 +2538,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2533,7 +2541,9 @@ public abstract class EntityLiving extends Entity {
          this.n();
          AxisAlignedBB axisalignedbb = this.getBoundingBox();
  
@@ -228,7 +228,7 @@ index 16938a198..6e9eed0bb 100644
          this.world.getMethodProfiler().exit();
          this.world.getMethodProfiler().enter("push");
          if (this.bn > 0) {
-@@ -2538,7 +2548,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2541,7 +2551,9 @@ public abstract class EntityLiving extends Entity {
              this.a(axisalignedbb, this.getBoundingBox());
          }
  
@@ -815,5 +815,5 @@ index a85fbbb69..3f55381c1 100644
 +    // Spigot end
  }
 -- 
-2.20.1
+2.25.1
 

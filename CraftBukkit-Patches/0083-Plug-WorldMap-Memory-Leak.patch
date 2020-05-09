@@ -1,11 +1,11 @@
-From febf4ea4250c460a9f4660d3d95cf4cd94fc2ae5 Mon Sep 17 00:00:00 2001
+From 68ab8cb1f8886170ad95e4c60cca35b5f27a4c4b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 8 Aug 2014 19:57:03 +1000
 Subject: [PATCH] Plug WorldMap Memory Leak
 
 
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index baaa0e311..0492e4bc6 100644
+index 568f879a6..1c72b5423 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -1074,6 +1074,30 @@ public class WorldServer extends World {
@@ -40,5 +40,5 @@ index baaa0e311..0492e4bc6 100644
              EntityComplexPart[] aentitycomplexpart = ((EntityEnderDragon) entity).eo();
              int i = aentitycomplexpart.length;
 -- 
-2.20.1
+2.25.1
 

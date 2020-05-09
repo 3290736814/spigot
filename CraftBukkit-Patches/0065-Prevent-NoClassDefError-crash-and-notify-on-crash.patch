@@ -1,4 +1,4 @@
-From e7f19d886573cc1b9e8cf3c57b6fe7d520d85661 Mon Sep 17 00:00:00 2001
+From ce351bc768e9aaaa9470920d49c88a2f5917b2de Mon Sep 17 00:00:00 2001
 From: David <dmck2b@gmail.com>
 Date: Mon, 21 Apr 2014 12:43:08 +0100
 Subject: [PATCH] Prevent NoClassDefError crash and notify on crash
@@ -61,5 +61,5 @@ index 8b3732202..54fa83c12 100644
                  log.log( Level.SEVERE, "Server thread dump (Look for plugins here before reporting to Spigot!):" );
                  dumpThread( ManagementFactory.getThreadMXBean().getThreadInfo( MinecraftServer.getServer().serverThread.getId(), Integer.MAX_VALUE ), log );
 -- 
-2.20.1
+2.25.1
 

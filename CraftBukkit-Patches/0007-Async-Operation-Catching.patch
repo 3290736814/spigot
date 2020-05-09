@@ -1,4 +1,4 @@
-From 7f06616f08eb73f0891ec87f61186be7048db9a2 Mon Sep 17 00:00:00 2001
+From 8a7f85758da06bc53fca5bc1e4d609611d7bb6c9 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -37,7 +37,7 @@ index f047e024b..ca9ed5739 100644
  
          if (map.containsKey(irecipe.getKey())) {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 1e6bc4a42..16938a198 100644
+index 25ee7f327..c05fa2682 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -776,6 +776,7 @@ public abstract class EntityLiving extends Entity {
@@ -125,7 +125,7 @@ index 8b039899a..6446de65f 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index c6f2c70c8..923b46bc5 100644
+index d387bf11c..99cf42026 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -381,6 +381,7 @@ public class CraftWorld implements World {
@@ -160,7 +160,7 @@ index c6f2c70c8..923b46bc5 100644
          IChunkAccess chunk = world.getChunkProvider().getChunkAt(x, z, generate ? ChunkStatus.FULL : ChunkStatus.EMPTY, true);
  
          // If generate = false, but the chunk already exists, we will get this back.
-@@ -1091,6 +1095,7 @@ public class CraftWorld implements World {
+@@ -1089,6 +1093,7 @@ public class CraftWorld implements World {
  
      @Override
      public Collection<Entity> getNearbyEntities(BoundingBox boundingBox, Predicate<Entity> filter) {
@@ -168,7 +168,7 @@ index c6f2c70c8..923b46bc5 100644
          Validate.notNull(boundingBox, "Bounding box is null!");
  
          AxisAlignedBB bb = new AxisAlignedBB(boundingBox.getMinX(), boundingBox.getMinY(), boundingBox.getMinZ(), boundingBox.getMaxX(), boundingBox.getMaxY(), boundingBox.getMaxZ());
-@@ -1245,6 +1250,7 @@ public class CraftWorld implements World {
+@@ -1243,6 +1248,7 @@ public class CraftWorld implements World {
  
      @Override
      public void save() {
@@ -248,5 +248,5 @@ index 000000000..aeed76972
 +    }
 +}
 -- 
-2.20.1
+2.25.1
 

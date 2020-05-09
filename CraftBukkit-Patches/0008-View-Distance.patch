@@ -1,4 +1,4 @@
-From d210b7e571a295dad1cb39f808a3ab03298bf52e Mon Sep 17 00:00:00 2001
+From 61251313dad916199bab66f87bbca3a108cd3cc1 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,7 +6,7 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances.
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index f0bf4fd62..13f989cd5 100644
+index f999f3b83..46fbf941c 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -125,7 +125,8 @@ public abstract class PlayerList {
@@ -41,10 +41,10 @@ index bbe5a08f2..9fc569a14 100644
              });
              // CraftBukkit end
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 923b46bc5..56b53d51d 100644
+index 99cf42026..aceb9712d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2297,6 +2297,13 @@ public class CraftWorld implements World {
+@@ -2295,6 +2295,13 @@ public class CraftWorld implements World {
          return new CraftDragonBattle(((WorldProviderTheEnd) worldProvider).o()); // PAIL rename getDragonBattle
      }
  
@@ -87,5 +87,5 @@ index 8c855cf9b..be0540352 100644
 +    }
  }
 -- 
-2.20.1
+2.25.1
 

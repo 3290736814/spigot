@@ -1,4 +1,4 @@
-From e0b5417d1e17e95aa1c6e520811f805f00d22038 Mon Sep 17 00:00:00 2001
+From 1a69f0111586d17a6078aa45b970205f843e1c15 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -31,7 +31,7 @@ index ed6b39dcd..1b15e3270 100644
          server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.STARTUP);
          // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 0a274e209..6f05e3a3b 100644
+index cd9601608..74f6b92ef 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -67,6 +67,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -51,7 +51,7 @@ index 0a274e209..6f05e3a3b 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 52ce4b649..b605d0c3c 100644
+index 9c9c046e3..8b039899a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -747,6 +747,7 @@ public final class CraftServer implements Server {
@@ -78,7 +78,7 @@ index 52ce4b649..b605d0c3c 100644
          ignoreVanillaPermissions = commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 7253b1a3a..7d9a1851d 100644
+index ec97b815c..88223a53c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -121,6 +121,14 @@ public class Main {
@@ -381,5 +381,5 @@ index 000000000..1cce14866
 +    }
 +}
 -- 
-2.20.1
+2.25.1
 
