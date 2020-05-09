@@ -1,14 +1,14 @@
-From 68ab8cb1f8886170ad95e4c60cca35b5f27a4c4b Mon Sep 17 00:00:00 2001
+From 66ddf582423c2bbec53c1bb2539848dadb84b544 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 8 Aug 2014 19:57:03 +1000
 Subject: [PATCH] Plug WorldMap Memory Leak
 
 
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 568f879a6..1c72b5423 100644
+index cbbef96e5..47888e1ee 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -1074,6 +1074,30 @@ public class WorldServer extends World {
+@@ -1056,6 +1056,29 @@ public class WorldServer extends World {
  
      public void unregisterEntity(Entity entity) {
          org.spigotmc.AsyncCatcher.catchOp("entity unregister"); // Spigot
@@ -35,10 +35,9 @@ index 568f879a6..1c72b5423 100644
 +            } );
 +        }
 +        // Spigot end
-+
-         if (entity instanceof EntityEnderDragon) {
-             EntityComplexPart[] aentitycomplexpart = ((EntityEnderDragon) entity).eo();
-             int i = aentitycomplexpart.length;
+         // Spigot Start
+         if (entity.getBukkitEntity() instanceof org.bukkit.inventory.InventoryHolder) {
+             for (org.bukkit.entity.HumanEntity h : Lists.newArrayList(((org.bukkit.inventory.InventoryHolder) entity.getBukkitEntity()).getInventory().getViewers())) {
 -- 
 2.25.1
 
