@@ -1,4 +1,4 @@
-From 85123bba02de99adc11ab1a497779ec815ab3e5c Mon Sep 17 00:00:00 2001
+From e9872e2c5691af3fad7b00ad5f727097e6f5212b Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,10 +8,10 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 27a94fc46..41eac3588 100644
+index dfc56bf7b..87c4b4c6b 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -385,7 +385,7 @@ public class ChunkProviderServer extends IChunkProvider {
+@@ -395,7 +395,7 @@ public class ChunkProviderServer extends IChunkProvider {
  
                      if (!this.playerChunkMap.isOutsideOfRange(chunkcoordintpair)) {
                          chunk.setInhabitedTime(chunk.getInhabitedTime() + j);

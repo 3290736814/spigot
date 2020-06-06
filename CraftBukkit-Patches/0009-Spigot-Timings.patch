@@ -1,4 +1,4 @@
-From 2cef96af8755932d08dc0b5fa82966bd0c40e66b Mon Sep 17 00:00:00 2001
+From a714f1d75d16f8a0113812d588599abaf1cd15e7 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -6,10 +6,10 @@ Subject: [PATCH] Spigot Timings
 Overhauls the Timings System adding performance tracking all around the Minecraft Server
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 63e991695..27a94fc46 100644
+index a3e654531..dfc56bf7b 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -102,9 +102,11 @@ public class ChunkProviderServer extends IChunkProvider {
+@@ -112,9 +112,11 @@ public class ChunkProviderServer extends IChunkProvider {
              }
  
              gameprofilerfiller.c("getChunkCacheMiss");
@@ -21,7 +21,7 @@ index 63e991695..27a94fc46 100644
              ichunkaccess = (IChunkAccess) ((Either) completablefuture.join()).map((ichunkaccess1) -> {
                  return ichunkaccess1;
              }, (playerchunk_failure) -> {
-@@ -329,12 +331,16 @@ public class ChunkProviderServer extends IChunkProvider {
+@@ -339,12 +341,16 @@ public class ChunkProviderServer extends IChunkProvider {
  
      public void tick(BooleanSupplier booleansupplier) {
          this.world.getMethodProfiler().enter("purge");
@@ -38,7 +38,7 @@ index 63e991695..27a94fc46 100644
          this.world.getMethodProfiler().exit();
          this.clearCache();
      }
-@@ -381,6 +387,7 @@ public class ChunkProviderServer extends IChunkProvider {
+@@ -391,6 +397,7 @@ public class ChunkProviderServer extends IChunkProvider {
                          chunk.setInhabitedTime(chunk.getInhabitedTime() + j);
                          if (flag1 && (this.allowMonsters || this.allowAnimals) && this.world.getWorldBorder().isInBounds(chunk.getPos())) {
                              this.world.getMethodProfiler().enter("spawner");
@@ -46,7 +46,7 @@ index 63e991695..27a94fc46 100644
                              EnumCreatureType[] aenumcreaturetype1 = aenumcreaturetype;
                              int i1 = aenumcreaturetype.length;
  
-@@ -423,10 +430,13 @@ public class ChunkProviderServer extends IChunkProvider {
+@@ -433,10 +440,13 @@ public class ChunkProviderServer extends IChunkProvider {
                                  }
                              }
  
@@ -60,7 +60,7 @@ index 63e991695..27a94fc46 100644
                      }
                  }
              });
-@@ -439,7 +449,9 @@ public class ChunkProviderServer extends IChunkProvider {
+@@ -449,7 +459,9 @@ public class ChunkProviderServer extends IChunkProvider {
              this.world.getMethodProfiler().exit();
          }
  
@@ -348,7 +348,7 @@ index bdf18b7ce..f97e507e1 100644
          this.methodProfiler.exit();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 13b57c764..3fb0662bd 100644
+index 8c41bfb7d..9943c9956 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -134,6 +134,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
