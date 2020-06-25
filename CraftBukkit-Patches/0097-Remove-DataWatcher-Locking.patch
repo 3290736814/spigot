@@ -1,4 +1,4 @@
-From 6ba4020d0b8198b1ffa1b14c29ed78529cbf6d5f Mon Sep 17 00:00:00 2001
+From 96f97ef4390138a304218cf893fc54311b11da00 Mon Sep 17 00:00:00 2001
 From: Spottedleaf <Spottedleaf@users.noreply.github.com>
 Date: Tue, 9 Jul 2019 02:18:54 -0700
 Subject: [PATCH] Remove DataWatcher Locking
@@ -124,10 +124,10 @@ index 211b8beaf..be8e705fc 100644
  
      public static class Item<T> {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 1fdfbc195..afbee5b8f 100644
+index dab96e7bf..6bf9d59de 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -221,6 +221,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -220,6 +220,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
          this.datawatcher.register(Entity.aA, false);
          this.datawatcher.register(Entity.POSE, EntityPose.STANDING);
          this.initDatawatcher();

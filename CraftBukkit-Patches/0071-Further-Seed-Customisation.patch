@@ -1,4 +1,4 @@
-From bfc3e8c323f895629aac1537c46af3fb888aab1e Mon Sep 17 00:00:00 2001
+From 28018d7e7b026ba5c96ff79c18efb59d7f3b64a7 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -135,6 +135,19 @@ index f5c5597b9..c434427ce 100644
 +    }
 +    // Spigot end
  }
+diff --git a/src/main/java/net/minecraft/server/StructureSettings.java b/src/main/java/net/minecraft/server/StructureSettings.java
+index be5facc78..7bd9fa481 100644
+--- a/src/main/java/net/minecraft/server/StructureSettings.java
++++ b/src/main/java/net/minecraft/server/StructureSettings.java
+@@ -26,7 +26,7 @@ public class StructureSettings {
+ 
+     public StructureSettings(Optional<StructureSettingsStronghold> optional, Map<StructureGenerator<?>, StructureSettingsFeature> map) {
+         this.e = (StructureSettingsStronghold) optional.orElse(null);
+-        this.d = map;
++        this.d = Maps.newHashMap(map); // Spigot
+     }
+ 
+     public StructureSettings(boolean flag) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 index ffdaff29a..e34ecdeb2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java

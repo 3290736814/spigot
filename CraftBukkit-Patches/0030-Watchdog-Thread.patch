@@ -1,4 +1,4 @@
-From 07a39ea52365bb2e11d27a9c526de3b29cc4fa93 Mon Sep 17 00:00:00 2001
+From e19c41f8066bf0454a3bbf4dcd6b289fba308acf Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
@@ -18,10 +18,10 @@ index c78e6c21d..f93c04888 100644
  
                  thread1.setUncaughtExceptionHandler(new ThreadNamedUncaughtExceptionHandler(DedicatedServer.LOGGER));
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 2c4d596ab..84ea87cae 100644
+index baa85bfd2..d13202d05 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -848,6 +848,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -851,6 +851,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
              } catch (Throwable throwable1) {
                  MinecraftServer.LOGGER.error("Exception stopping the server", throwable1);
              } finally {
@@ -29,7 +29,7 @@ index 2c4d596ab..84ea87cae 100644
                  // CraftBukkit start - Restore terminal to original settings
                  try {
                      reader.getTerminal().restore();
-@@ -1006,6 +1007,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1009,6 +1010,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
          this.circularTimer.a(i1 - i);
          this.methodProfiler.exit();
@@ -38,10 +38,10 @@ index 2c4d596ab..84ea87cae 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 713ed32bd..7c3eb9e25 100644
+index bceca116f..3b449216f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1654,7 +1654,7 @@ public final class CraftServer implements Server {
+@@ -1658,7 +1658,7 @@ public final class CraftServer implements Server {
  
      @Override
      public boolean isPrimaryThread() {
@@ -50,7 +50,7 @@ index 713ed32bd..7c3eb9e25 100644
      }
  
      @Override
-@@ -2000,6 +2000,11 @@ public final class CraftServer implements Server {
+@@ -2004,6 +2004,11 @@ public final class CraftServer implements Server {
          {
              return org.spigotmc.SpigotConfig.config;
          }

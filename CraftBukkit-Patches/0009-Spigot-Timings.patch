@@ -1,4 +1,4 @@
-From 13b4249d696b43723738146f3413e9110850546d Mon Sep 17 00:00:00 2001
+From 4a6dfb1a27130c59a1debf77ffae9fbf052d39ed Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -116,10 +116,10 @@ index f49d8a741..c78e6c21d 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 12fbc7420..d98b15520 100644
+index b0f8eda1e..3e7976a0a 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -30,6 +30,7 @@ import org.bukkit.command.CommandSender;
+@@ -29,6 +29,7 @@ import org.bukkit.command.CommandSender;
  import org.bukkit.entity.Hanging;
  import org.bukkit.entity.LivingEntity;
  import org.bukkit.entity.Vehicle;
@@ -127,7 +127,7 @@ index 12fbc7420..d98b15520 100644
  import org.bukkit.event.entity.EntityCombustByEntityEvent;
  import org.bukkit.event.hanging.HangingBreakByEntityEvent;
  import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
-@@ -165,6 +166,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -164,6 +165,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
      public boolean valid;
      public org.bukkit.projectiles.ProjectileSource projectileSource; // For projectiles only
      public boolean forceExplosionKnockback; // SPIGOT-949
@@ -135,7 +135,7 @@ index 12fbc7420..d98b15520 100644
  
      public float getBukkitYaw() {
          return this.yaw;
-@@ -511,6 +513,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -510,6 +512,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
      }
  
      public void move(EnumMoveType enummovetype, Vec3D vec3d) {
@@ -143,7 +143,7 @@ index 12fbc7420..d98b15520 100644
          if (this.noclip) {
              this.a(this.getBoundingBox().c(vec3d));
              this.recalcPosition();
-@@ -647,6 +650,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -646,6 +649,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
  
              this.world.getMethodProfiler().exit();
          }
@@ -227,10 +227,10 @@ index da69271c0..f837685ca 100644
          if (!this.world.isClientSide && this.dN() && this.aC()) {
              this.damageEntity(DamageSource.DROWN, 1.0F);
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index de304305b..ec459e58c 100644
+index cdf7c1416..ff948e108 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -64,6 +64,7 @@ import org.bukkit.craftbukkit.CraftServer;
+@@ -65,6 +65,7 @@ import org.bukkit.craftbukkit.CraftServer;
  import org.bukkit.craftbukkit.Main;
  import org.bukkit.event.server.ServerLoadEvent;
  // CraftBukkit end
@@ -238,7 +238,7 @@ index de304305b..ec459e58c 100644
  
  public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTask> implements IMojangStatistics, ICommandListener, AutoCloseable {
  
-@@ -957,6 +958,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -960,6 +961,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      protected void exit() {}
  
      protected void a(BooleanSupplier booleansupplier) {
@@ -246,7 +246,7 @@ index de304305b..ec459e58c 100644
          long i = SystemUtils.getMonotonicNanos();
  
          ++this.ticks;
-@@ -976,12 +978,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -979,12 +981,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          }
  
          if (autosavePeriod > 0 && this.ticks % autosavePeriod == 0) { // CraftBukkit
@@ -261,7 +261,7 @@ index de304305b..ec459e58c 100644
          }
  
          this.methodProfiler.enter("snooper");
-@@ -1002,21 +1006,30 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1005,21 +1009,30 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
          this.circularTimer.a(i1 - i);
          this.methodProfiler.exit();
@@ -292,7 +292,7 @@ index de304305b..ec459e58c 100644
          // Send time updates to everyone, it will get the right time from the world the player is in.
          if (this.ticks % 20 == 0) {
              for (int i = 0; i < this.getPlayerList().players.size(); ++i) {
-@@ -1024,6 +1037,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1027,6 +1040,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                  entityplayer.playerConnection.sendPacket(new PacketPlayOutUpdateTime(entityplayer.world.getTime(), entityplayer.getPlayerTime(), entityplayer.world.getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE))); // Add support for per player time
              }
          }
@@ -300,7 +300,7 @@ index de304305b..ec459e58c 100644
  
          while (iterator.hasNext()) {
              WorldServer worldserver = (WorldServer) iterator.next();
-@@ -1042,7 +1056,9 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1045,7 +1059,9 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
              this.methodProfiler.enter("tick");
  
              try {
@@ -310,7 +310,7 @@ index de304305b..ec459e58c 100644
              } catch (Throwable throwable) {
                  CrashReport crashreport = CrashReport.a(throwable, "Exception ticking world");
  
-@@ -1055,18 +1071,24 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1058,18 +1074,24 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          }
  
          this.methodProfiler.exitEnter("connection");
@@ -579,10 +579,10 @@ index 64aca46ca..e7c82df7e 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index ce4e92206..a0d41dd00 100644
+index f9fb2498e..e9f861104 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1988,6 +1988,11 @@ public final class CraftServer implements Server {
+@@ -1992,6 +1992,11 @@ public final class CraftServer implements Server {
      private final Spigot spigot = new Spigot()
      {
  
