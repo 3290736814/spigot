@@ -1,4 +1,4 @@
-From deaa2e80934abf970e058783598d02bd11231b80 Mon Sep 17 00:00:00 2001
+From a4c5b411291b7c17f6095afb100288f9cc522948 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -7,20 +7,18 @@ Imported files which are only modified by Spigot, not upstream. Files here shoul
 
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataWorld.java b/src/main/java/net/minecraft/server/AdvancementDataWorld.java
 new file mode 100644
-index 000000000..6f9eb26d9
+index 000000000..3817ebb8b
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/AdvancementDataWorld.java
-@@ -0,0 +1,69 @@
+@@ -0,0 +1,66 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Maps;
 +import com.google.gson.Gson;
 +import com.google.gson.GsonBuilder;
-+import com.google.gson.JsonDeserializationContext;
 +import com.google.gson.JsonElement;
 +import com.google.gson.JsonObject;
 +import com.google.gson.JsonParseException;
-+import java.lang.reflect.Type;
 +import java.util.Collection;
 +import java.util.Iterator;
 +import java.util.Map;
@@ -31,23 +29,22 @@ index 000000000..6f9eb26d9
 +public class AdvancementDataWorld extends ResourceDataJson {
 +
 +    private static final Logger LOGGER = LogManager.getLogger();
-+    public static final Gson DESERIALIZER = (new GsonBuilder()).registerTypeHierarchyAdapter(Advancement.SerializedAdvancement.class, (com.google.gson.JsonDeserializer) (jsonelement, type, jsondeserializationcontext) -> {
-+        JsonObject jsonobject = ChatDeserializer.m(jsonelement, "advancement");
-+
-+        return Advancement.SerializedAdvancement.a(jsonobject, jsondeserializationcontext);
-+    }).registerTypeAdapter(AdvancementRewards.class, new AdvancementRewards.b()).registerTypeHierarchyAdapter(IChatBaseComponent.class, new IChatBaseComponent.ChatSerializer()).registerTypeHierarchyAdapter(ChatModifier.class, new ChatModifier.ChatModifierSerializer()).registerTypeAdapterFactory(new ChatTypeAdapterFactory()).create();
++    public static final Gson DESERIALIZER = (new GsonBuilder()).create();
 +    public Advancements REGISTRY = new Advancements();
++    private final LootPredicateManager d;
 +
-+    public AdvancementDataWorld() {
++    public AdvancementDataWorld(LootPredicateManager lootpredicatemanager) {
 +        super(AdvancementDataWorld.DESERIALIZER, "advancements");
++        this.d = lootpredicatemanager;
 +    }
 +
-+    protected void a(Map<MinecraftKey, JsonObject> map, IResourceManager iresourcemanager, GameProfilerFiller gameprofilerfiller) {
++    protected void a(Map<MinecraftKey, JsonElement> map, IResourceManager iresourcemanager, GameProfilerFiller gameprofilerfiller) {
 +        Map<MinecraftKey, Advancement.SerializedAdvancement> map1 = Maps.newHashMap();
 +
-+        map.forEach((minecraftkey, jsonobject) -> {
++        map.forEach((minecraftkey, jsonelement) -> {
 +            try {
-+                Advancement.SerializedAdvancement advancement_serializedadvancement = (Advancement.SerializedAdvancement) AdvancementDataWorld.DESERIALIZER.fromJson(jsonobject, Advancement.SerializedAdvancement.class);
++                JsonObject jsonobject = ChatDeserializer.m(jsonelement, "advancement");
++                Advancement.SerializedAdvancement advancement_serializedadvancement = Advancement.SerializedAdvancement.a(jsonobject, new LootDeserializationContext(minecraftkey, this.d));
 +
 +                map1.put(minecraftkey, advancement_serializedadvancement);
 +            } catch (IllegalArgumentException | JsonParseException jsonparseexception) {
@@ -80,459 +77,927 @@ index 000000000..6f9eb26d9
 +        return this.REGISTRY.c();
 +    }
 +}
-diff --git a/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
+diff --git a/src/main/java/net/minecraft/server/BlockBase.java b/src/main/java/net/minecraft/server/BlockBase.java
 new file mode 100644
-index 000000000..af81a8414
+index 000000000..5d51fd8f3
 --- /dev/null
-+++ b/src/main/java/net/minecraft/server/ChunkGeneratorAbstract.java
-@@ -0,0 +1,441 @@
++++ b/src/main/java/net/minecraft/server/BlockBase.java
+@@ -0,0 +1,909 @@
 +package net.minecraft.server;
 +
-+import it.unimi.dsi.fastutil.longs.LongIterator;
-+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-+import it.unimi.dsi.fastutil.objects.ObjectList;
-+import it.unimi.dsi.fastutil.objects.ObjectListIterator;
-+import java.util.Iterator;
++import com.google.common.collect.ImmutableMap;
++import com.mojang.serialization.MapCodec;
++import java.util.Arrays;
++import java.util.Collections;
++import java.util.List;
 +import java.util.Random;
++import java.util.function.Function;
++import java.util.function.Predicate;
++import java.util.function.ToIntFunction;
++import javax.annotation.Nullable;
 +
-+public abstract class ChunkGeneratorAbstract<T extends GeneratorSettingsDefault> extends ChunkGenerator<T> {
++public abstract class BlockBase {
 +
-+    private static final float[] h = (float[]) SystemUtils.a((new float[13824]), (afloat) -> {
-+        for (int i = 0; i < 24; ++i) {
-+            for (int j = 0; j < 24; ++j) {
-+                for (int k = 0; k < 24; ++k) {
-+                    afloat[i * 24 * 24 + j * 24 + k] = (float) b(j - 12, k - 12, i - 12);
-+                }
-+            }
++    protected static final EnumDirection[] ar = new EnumDirection[]{EnumDirection.WEST, EnumDirection.EAST, EnumDirection.NORTH, EnumDirection.SOUTH, EnumDirection.DOWN, EnumDirection.UP};
++    protected final Material material;
++    protected final boolean at;
++    protected final float durability;
++    protected final boolean av;
++    protected final SoundEffectType stepSound;
++    protected final float frictionFactor;
++    protected final float speedFactor;
++    protected final float jumpFactor;
++    protected final boolean aA;
++    protected final BlockBase.Info aB;
++    @Nullable
++    protected MinecraftKey aC;
++
++    public BlockBase(BlockBase.Info blockbase_info) {
++        this.material = blockbase_info.a;
++        this.at = blockbase_info.c;
++        this.aC = blockbase_info.m;
++        this.durability = blockbase_info.f;
++        this.av = blockbase_info.i;
++        this.stepSound = blockbase_info.d;
++        this.frictionFactor = blockbase_info.j;
++        this.speedFactor = blockbase_info.k;
++        this.jumpFactor = blockbase_info.l;
++        this.aA = blockbase_info.v;
++        this.aB = blockbase_info;
++    }
++
++    @Deprecated
++    public void a(IBlockData iblockdata, GeneratorAccess generatoraccess, BlockPosition blockposition, int i, int j) {}
++
++    @Deprecated
++    public boolean a(IBlockData iblockdata, IBlockAccess iblockaccess, BlockPosition blockposition, PathMode pathmode) {
++        switch (pathmode) {
++            case LAND:
++                return !iblockdata.r(iblockaccess, blockposition);
++            case WATER:
++                return iblockaccess.getFluid(blockposition).a((Tag) TagsFluid.WATER);
++            case AIR:
++                return !iblockdata.r(iblockaccess, blockposition);
++            default:
++                return false;
 +        }
-+
-+    });
-+    private static final IBlockData i = Blocks.AIR.getBlockData();
-+    private final int j;
-+    private final int k;
-+    private final int l;
-+    private final int m;
-+    private final int n;
-+    protected final SeededRandom e;
-+    private final NoiseGeneratorOctaves o;
-+    private final NoiseGeneratorOctaves p;
-+    private final NoiseGeneratorOctaves q;
-+    private final NoiseGenerator r;
-+    protected final IBlockData f;
-+    protected final IBlockData g;
-+
-+    public ChunkGeneratorAbstract(GeneratorAccess generatoraccess, WorldChunkManager worldchunkmanager, int i, int j, int k, T t0, boolean flag) {
-+        super(generatoraccess, worldchunkmanager, t0);
-+        this.j = j;
-+        this.k = i;
-+        this.f = t0.r();
-+        this.g = t0.s();
-+        this.l = 16 / this.k;
-+        this.m = k / this.j;
-+        this.n = 16 / this.k;
-+        this.e = new SeededRandom(this.seed);
-+        this.o = new NoiseGeneratorOctaves(this.e, 15, 0);
-+        this.p = new NoiseGeneratorOctaves(this.e, 15, 0);
-+        this.q = new NoiseGeneratorOctaves(this.e, 7, 0);
-+        this.r = (NoiseGenerator) (flag ? new NoiseGenerator3(this.e, 3, 0) : new NoiseGeneratorOctaves(this.e, 3, 0));
 +    }
 +
-+    private double a(int i, int j, int k, double d0, double d1, double d2, double d3) {
-+        double d4 = 0.0D;
-+        double d5 = 0.0D;
-+        double d6 = 0.0D;
-+        double d7 = 1.0D;
-+
-+        for (int l = 0; l < 16; ++l) {
-+            double d8 = NoiseGeneratorOctaves.a((double) i * d0 * d7);
-+            double d9 = NoiseGeneratorOctaves.a((double) j * d1 * d7);
-+            double d10 = NoiseGeneratorOctaves.a((double) k * d0 * d7);
-+            double d11 = d1 * d7;
-+            NoiseGeneratorPerlin noisegeneratorperlin = this.o.a(l);
-+
-+            if (noisegeneratorperlin != null) {
-+                d4 += noisegeneratorperlin.a(d8, d9, d10, d11, (double) j * d11) / d7;
-+            }
-+
-+            NoiseGeneratorPerlin noisegeneratorperlin1 = this.p.a(l);
-+
-+            if (noisegeneratorperlin1 != null) {
-+                d5 += noisegeneratorperlin1.a(d8, d9, d10, d11, (double) j * d11) / d7;
-+            }
-+
-+            if (l < 8) {
-+                NoiseGeneratorPerlin noisegeneratorperlin2 = this.q.a(l);
-+
-+                if (noisegeneratorperlin2 != null) {
-+                    d6 += noisegeneratorperlin2.a(NoiseGeneratorOctaves.a((double) i * d2 * d7), NoiseGeneratorOctaves.a((double) j * d3 * d7), NoiseGeneratorOctaves.a((double) k * d2 * d7), d3 * d7, (double) j * d3 * d7) / d7;
-+                }
-+            }
-+
-+            d7 /= 2.0D;
-+        }
-+
-+        return MathHelper.b(d4 / 512.0D, d5 / 512.0D, (d6 / 10.0D + 1.0D) / 2.0D);
++    @Deprecated
++    public IBlockData updateState(IBlockData iblockdata, EnumDirection enumdirection, IBlockData iblockdata1, GeneratorAccess generatoraccess, BlockPosition blockposition, BlockPosition blockposition1) {
++        return iblockdata;
 +    }
 +
-+    protected double[] b(int i, int j) {
-+        double[] adouble = new double[this.m + 1];
-+
-+        this.a(adouble, i, j);
-+        return adouble;
++    @Deprecated
++    public void doPhysics(IBlockData iblockdata, World world, BlockPosition blockposition, Block block, BlockPosition blockposition1, boolean flag) {
++        PacketDebug.a(world, blockposition);
 +    }
 +
-+    protected void a(double[] adouble, int i, int j, double d0, double d1, double d2, double d3, int k, int l) {
-+        double[] adouble1 = this.a(i, j);
-+        double d4 = adouble1[0];
-+        double d5 = adouble1[1];
-+        double d6 = this.g();
-+        double d7 = this.h();
++    @Deprecated
++    public void onPlace(IBlockData iblockdata, World world, BlockPosition blockposition, IBlockData iblockdata1, boolean flag) {}
 +
-+        for (int i1 = 0; i1 < this.i(); ++i1) {
-+            double d8 = this.a(i, i1, j, d0, d1, d2, d3);
-+
-+            d8 -= this.a(d4, d5, i1);
-+            if ((double) i1 > d6) {
-+                d8 = MathHelper.b(d8, (double) l, ((double) i1 - d6) / (double) k);
-+            } else if ((double) i1 < d7) {
-+                d8 = MathHelper.b(d8, -30.0D, (d7 - (double) i1) / (d7 - 1.0D));
-+            }
-+
-+            adouble[i1] = d8;
++    @Deprecated
++    public void remove(IBlockData iblockdata, World world, BlockPosition blockposition, IBlockData iblockdata1, boolean flag) {
++        if (this.isTileEntity() && !iblockdata.a(iblockdata1.getBlock())) {
++            world.removeTileEntity(blockposition);
 +        }
 +
 +    }
 +
-+    protected abstract double[] a(int i, int j);
-+
-+    protected abstract double a(double d0, double d1, int i);
-+
-+    protected double g() {
-+        return (double) (this.i() - 4);
++    @Deprecated
++    public EnumInteractionResult interact(IBlockData iblockdata, World world, BlockPosition blockposition, EntityHuman entityhuman, EnumHand enumhand, MovingObjectPositionBlock movingobjectpositionblock) {
++        return EnumInteractionResult.PASS;
 +    }
 +
-+    protected double h() {
-+        return 0.0D;
++    @Deprecated
++    public boolean a(IBlockData iblockdata, World world, BlockPosition blockposition, int i, int j) {
++        return false;
 +    }
 +
-+    @Override
-+    public int getBaseHeight(int i, int j, HeightMap.Type heightmap_type) {
-+        int k = Math.floorDiv(i, this.k);
-+        int l = Math.floorDiv(j, this.k);
-+        int i1 = Math.floorMod(i, this.k);
-+        int j1 = Math.floorMod(j, this.k);
-+        double d0 = (double) i1 / (double) this.k;
-+        double d1 = (double) j1 / (double) this.k;
-+        double[][] adouble = new double[][]{this.b(k, l), this.b(k, l + 1), this.b(k + 1, l), this.b(k + 1, l + 1)};
-+        int k1 = this.getSeaLevel();
++    @Deprecated
++    public EnumRenderType b(IBlockData iblockdata) {
++        return EnumRenderType.MODEL;
++    }
 +
-+        for (int l1 = this.m - 1; l1 >= 0; --l1) {
-+            double d2 = adouble[0][l1];
-+            double d3 = adouble[1][l1];
-+            double d4 = adouble[2][l1];
-+            double d5 = adouble[3][l1];
-+            double d6 = adouble[0][l1 + 1];
-+            double d7 = adouble[1][l1 + 1];
-+            double d8 = adouble[2][l1 + 1];
-+            double d9 = adouble[3][l1 + 1];
++    @Deprecated
++    public boolean c_(IBlockData iblockdata) {
++        return false;
++    }
 +
-+            for (int i2 = this.j - 1; i2 >= 0; --i2) {
-+                double d10 = (double) i2 / (double) this.j;
-+                double d11 = MathHelper.a(d10, d0, d1, d2, d6, d4, d8, d3, d7, d5, d9);
-+                int j2 = l1 * this.j + i2;
++    @Deprecated
++    public boolean isPowerSource(IBlockData iblockdata) {
++        return false;
++    }
 +
-+                if (d11 > 0.0D || j2 < k1) {
-+                    IBlockData iblockdata;
++    @Deprecated
++    public EnumPistonReaction getPushReaction(IBlockData iblockdata) {
++        return this.material.getPushReaction();
++    }
 +
-+                    if (d11 > 0.0D) {
-+                        iblockdata = this.f;
-+                    } else {
-+                        iblockdata = this.g;
-+                    }
++    @Deprecated
++    public Fluid d(IBlockData iblockdata) {
++        return FluidTypes.EMPTY.h();
++    }
 +
-+                    if (heightmap_type.d().test(iblockdata)) {
-+                        return j2 + 1;
-+                    }
-+                }
-+            }
++    @Deprecated
++    public boolean isComplexRedstone(IBlockData iblockdata) {
++        return false;
++    }
++
++    public BlockBase.EnumRandomOffset aj_() {
++        return BlockBase.EnumRandomOffset.NONE;
++    }
++
++    @Deprecated
++    public IBlockData a(IBlockData iblockdata, EnumBlockRotation enumblockrotation) {
++        return iblockdata;
++    }
++
++    @Deprecated
++    public IBlockData a(IBlockData iblockdata, EnumBlockMirror enumblockmirror) {
++        return iblockdata;
++    }
++
++    @Deprecated
++    public boolean a(IBlockData iblockdata, BlockActionContext blockactioncontext) {
++        return this.material.isReplaceable() && (blockactioncontext.getItemStack().isEmpty() || blockactioncontext.getItemStack().getItem() != this.getItem());
++    }
++
++    @Deprecated
++    public boolean a(IBlockData iblockdata, FluidType fluidtype) {
++        return this.material.isReplaceable() || !this.material.isBuildable();
++    }
++
++    @Deprecated
++    public List<ItemStack> a(IBlockData iblockdata, LootTableInfo.Builder loottableinfo_builder) {
++        MinecraftKey minecraftkey = this.r();
++
++        if (minecraftkey == LootTables.a) {
++            return Collections.emptyList();
++        } else {
++            LootTableInfo loottableinfo = loottableinfo_builder.set(LootContextParameters.BLOCK_STATE, iblockdata).build(LootContextParameterSets.BLOCK);
++            WorldServer worldserver = loottableinfo.getWorld();
++            LootTable loottable = worldserver.getMinecraftServer().getLootTableRegistry().getLootTable(minecraftkey);
++
++            return loottable.populateLoot(loottableinfo);
 +        }
++    }
 +
++    @Deprecated
++    public VoxelShape d(IBlockData iblockdata, IBlockAccess iblockaccess, BlockPosition blockposition) {
++        return iblockdata.getShape(iblockaccess, blockposition);
++    }
++
++    @Deprecated
++    public VoxelShape e(IBlockData iblockdata, IBlockAccess iblockaccess, BlockPosition blockposition) {
++        return this.c(iblockdata, iblockaccess, blockposition, VoxelShapeCollision.a());
++    }
++
++    @Deprecated
++    public VoxelShape a_(IBlockData iblockdata, IBlockAccess iblockaccess, BlockPosition blockposition) {
++        return VoxelShapes.a();
++    }
++
++    @Deprecated
++    public int f(IBlockData iblockdata, IBlockAccess iblockaccess, BlockPosition blockposition) {
++        return iblockdata.i(iblockaccess, blockposition) ? iblockaccess.H() : (iblockdata.a(iblockaccess, blockposition) ? 0 : 1);
++    }
++
++    @Nullable
++    @Deprecated
++    public ITileInventory getInventory(IBlockData iblockdata, World world, BlockPosition blockposition) {
++        return null;
++    }
++
++    @Deprecated
++    public boolean canPlace(IBlockData iblockdata, IWorldReader iworldreader, BlockPosition blockposition) {
++        return true;
++    }
++
++    @Deprecated
++    public int a(IBlockData iblockdata, World world, BlockPosition blockposition) {
 +        return 0;
 +    }
 +
-+    protected abstract void a(double[] adouble, int i, int j);
-+
-+    public int i() {
-+        return this.m + 1;
++    @Deprecated
++    public VoxelShape b(IBlockData iblockdata, IBlockAccess iblockaccess, BlockPosition blockposition, VoxelShapeCollision voxelshapecollision) {
++        return VoxelShapes.b();
 +    }
 +
-+    @Override
-+    public void buildBase(RegionLimitedWorldAccess regionlimitedworldaccess, IChunkAccess ichunkaccess) {
-+        ChunkCoordIntPair chunkcoordintpair = ichunkaccess.getPos();
-+        int i = chunkcoordintpair.x;
-+        int j = chunkcoordintpair.z;
-+        SeededRandom seededrandom = new SeededRandom();
++    @Deprecated
++    public VoxelShape c(IBlockData iblockdata, IBlockAccess iblockaccess, BlockPosition blockposition, VoxelShapeCollision voxelshapecollision) {
++        return this.at ? iblockdata.getShape(iblockaccess, blockposition) : VoxelShapes.a();
++    }
 +
-+        seededrandom.a(i, j);
-+        ChunkCoordIntPair chunkcoordintpair1 = ichunkaccess.getPos();
-+        int k = chunkcoordintpair1.d();
-+        int l = chunkcoordintpair1.e();
-+        double d0 = 0.0625D;
-+        BlockPosition.MutableBlockPosition blockposition_mutableblockposition = new BlockPosition.MutableBlockPosition();
++    @Deprecated
++    public VoxelShape a(IBlockData iblockdata, IBlockAccess iblockaccess, BlockPosition blockposition, VoxelShapeCollision voxelshapecollision) {
++        return this.c(iblockdata, iblockaccess, blockposition, voxelshapecollision);
++    }
 +
-+        for (int i1 = 0; i1 < 16; ++i1) {
-+            for (int j1 = 0; j1 < 16; ++j1) {
-+                int k1 = k + i1;
-+                int l1 = l + j1;
-+                int i2 = ichunkaccess.a(HeightMap.Type.WORLD_SURFACE_WG, i1, j1) + 1;
-+                double d1 = this.r.a((double) k1 * 0.0625D, (double) l1 * 0.0625D, 0.0625D, (double) i1 * 0.0625D) * 15.0D;
++    @Deprecated
++    public void tick(IBlockData iblockdata, WorldServer worldserver, BlockPosition blockposition, Random random) {
++        this.tickAlways(iblockdata, worldserver, blockposition, random);
++    }
 +
-+                regionlimitedworldaccess.getBiome(blockposition_mutableblockposition.d(k + i1, i2, l + j1)).a(seededrandom, ichunkaccess, k1, l1, i2, d1, this.getSettings().r(), this.getSettings().s(), this.getSeaLevel(), this.a.getSeed());
++    @Deprecated
++    public void tickAlways(IBlockData iblockdata, WorldServer worldserver, BlockPosition blockposition, Random random) {}
++
++    @Deprecated
++    public float getDamage(IBlockData iblockdata, EntityHuman entityhuman, IBlockAccess iblockaccess, BlockPosition blockposition) {
++        float f = iblockdata.h(iblockaccess, blockposition);
++
++        if (f == -1.0F) {
++            return 0.0F;
++        } else {
++            int i = entityhuman.hasBlock(iblockdata) ? 30 : 100;
++
++            return entityhuman.c(iblockdata) / f / (float) i;
++        }
++    }
++
++    @Deprecated
++    public void dropNaturally(IBlockData iblockdata, World world, BlockPosition blockposition, ItemStack itemstack) {}
++
++    @Deprecated
++    public void attack(IBlockData iblockdata, World world, BlockPosition blockposition, EntityHuman entityhuman) {}
++
++    @Deprecated
++    public int a(IBlockData iblockdata, IBlockAccess iblockaccess, BlockPosition blockposition, EnumDirection enumdirection) {
++        return 0;
++    }
++
++    @Deprecated
++    public void a(IBlockData iblockdata, World world, BlockPosition blockposition, Entity entity) {}
++
++    @Deprecated
++    public int b(IBlockData iblockdata, IBlockAccess iblockaccess, BlockPosition blockposition, EnumDirection enumdirection) {
++        return 0;
++    }
++
++    public final boolean isTileEntity() {
++        return this instanceof ITileEntity;
++    }
++
++    public final MinecraftKey r() {
++        if (this.aC == null) {
++            MinecraftKey minecraftkey = IRegistry.BLOCK.getKey(this.p());
++
++            this.aC = new MinecraftKey(minecraftkey.getNamespace(), "blocks/" + minecraftkey.getKey());
++        }
++
++        return this.aC;
++    }
++
++    @Deprecated
++    public void a(World world, IBlockData iblockdata, MovingObjectPositionBlock movingobjectpositionblock, IProjectile iprojectile) {}
++
++    public abstract Item getItem();
++
++    protected abstract Block p();
++
++    public MaterialMapColor s() {
++        return (MaterialMapColor) this.aB.b.apply(this.p().getBlockData());
++    }
++
++    public interface d<A> {
++
++        boolean test(IBlockData iblockdata, IBlockAccess iblockaccess, BlockPosition blockposition, A a0);
++    }
++
++    public interface e {
++
++        boolean test(IBlockData iblockdata, IBlockAccess iblockaccess, BlockPosition blockposition);
++    }
++
++    public abstract static class BlockData extends IBlockDataHolder<Block, IBlockData> {
++
++        private final int b;
++        private final boolean e;
++        private final boolean f;
++        private final Material g;
++        private final MaterialMapColor h;
++        public final float strength;
++        private final boolean j;
++        private final boolean k;
++        private final BlockBase.e l;
++        private final BlockBase.e m;
++        private final BlockBase.e n;
++        private final BlockBase.e o;
++        private final BlockBase.e p;
++        @Nullable
++        protected BlockBase.BlockData.a a;
++
++        protected BlockData(Block block, ImmutableMap<IBlockState<?>, Comparable<?>> immutablemap, MapCodec<IBlockData> mapcodec) {
++            super(block, immutablemap, mapcodec);
++            BlockBase.Info blockbase_info = block.aB;
++
++            this.b = blockbase_info.e.applyAsInt(this.p());
++            this.e = block.c_(this.p());
++            this.f = blockbase_info.o;
++            this.g = blockbase_info.a;
++            this.h = (MaterialMapColor) blockbase_info.b.apply(this.p());
++            this.strength = blockbase_info.g;
++            this.j = blockbase_info.h;
++            this.k = blockbase_info.n;
++            this.l = blockbase_info.q;
++            this.m = blockbase_info.r;
++            this.n = blockbase_info.s;
++            this.o = blockbase_info.t;
++            this.p = blockbase_info.u;
++        }
++
++        public void a() {
++            if (!this.getBlock().o()) {
++                this.a = new BlockBase.BlockData.a(this.p());
++            }
++
++        }
++
++        public Block getBlock() {
++            return (Block) this.c;
++        }
++
++        public Material getMaterial() {
++            return this.g;
++        }
++
++        public boolean a(IBlockAccess iblockaccess, BlockPosition blockposition, EntityTypes<?> entitytypes) {
++            return this.getBlock().aB.p.test(this.p(), iblockaccess, blockposition, entitytypes);
++        }
++
++        public boolean a(IBlockAccess iblockaccess, BlockPosition blockposition) {
++            return this.a != null ? this.a.g : this.getBlock().b(this.p(), iblockaccess, blockposition);
++        }
++
++        public int b(IBlockAccess iblockaccess, BlockPosition blockposition) {
++            return this.a != null ? this.a.h : this.getBlock().f(this.p(), iblockaccess, blockposition);
++        }
++
++        public VoxelShape a(IBlockAccess iblockaccess, BlockPosition blockposition, EnumDirection enumdirection) {
++            return this.a != null && this.a.i != null ? this.a.i[enumdirection.ordinal()] : VoxelShapes.a(this.c(iblockaccess, blockposition), enumdirection);
++        }
++
++        public VoxelShape c(IBlockAccess iblockaccess, BlockPosition blockposition) {
++            return this.getBlock().d(this.p(), iblockaccess, blockposition);
++        }
++
++        public boolean d() {
++            return this.a == null || this.a.c;
++        }
++
++        public boolean e() {
++            return this.e;
++        }
++
++        public int f() {
++            return this.b;
++        }
++
++        public boolean isAir() {
++            return this.f;
++        }
++
++        public MaterialMapColor d(IBlockAccess iblockaccess, BlockPosition blockposition) {
++            return this.h;
++        }
++
++        public IBlockData a(EnumBlockRotation enumblockrotation) {
++            return this.getBlock().a(this.p(), enumblockrotation);
++        }
++
++        public IBlockData a(EnumBlockMirror enumblockmirror) {
++            return this.getBlock().a(this.p(), enumblockmirror);
++        }
++
++        public EnumRenderType h() {
++            return this.getBlock().b(this.p());
++        }
++
++        public boolean isOccluding(IBlockAccess iblockaccess, BlockPosition blockposition) {
++            return this.l.test(this.p(), iblockaccess, blockposition);
++        }
++
++        public boolean isPowerSource() {
++            return this.getBlock().isPowerSource(this.p());
++        }
++
++        public int b(IBlockAccess iblockaccess, BlockPosition blockposition, EnumDirection enumdirection) {
++            return this.getBlock().a(this.p(), iblockaccess, blockposition, enumdirection);
++        }
++
++        public boolean isComplexRedstone() {
++            return this.getBlock().isComplexRedstone(this.p());
++        }
++
++        public int a(World world, BlockPosition blockposition) {
++            return this.getBlock().a(this.p(), world, blockposition);
++        }
++
++        public float h(IBlockAccess iblockaccess, BlockPosition blockposition) {
++            return this.strength;
++        }
++
++        public float getDamage(EntityHuman entityhuman, IBlockAccess iblockaccess, BlockPosition blockposition) {
++            return this.getBlock().getDamage(this.p(), entityhuman, iblockaccess, blockposition);
++        }
++
++        public int c(IBlockAccess iblockaccess, BlockPosition blockposition, EnumDirection enumdirection) {
++            return this.getBlock().b(this.p(), iblockaccess, blockposition, enumdirection);
++        }
++
++        public EnumPistonReaction getPushReaction() {
++            return this.getBlock().getPushReaction(this.p());
++        }
++
++        public boolean i(IBlockAccess iblockaccess, BlockPosition blockposition) {
++            if (this.a != null) {
++                return this.a.a;
++            } else {
++                IBlockData iblockdata = this.p();
++
++                return iblockdata.l() ? Block.a(iblockdata.c(iblockaccess, blockposition)) : false;
 +            }
 +        }
 +
-+        this.a(ichunkaccess, seededrandom);
-+    }
++        public boolean l() {
++            return this.k;
++        }
 +
-+    protected void a(IChunkAccess ichunkaccess, Random random) {
-+        BlockPosition.MutableBlockPosition blockposition_mutableblockposition = new BlockPosition.MutableBlockPosition();
-+        int i = ichunkaccess.getPos().d();
-+        int j = ichunkaccess.getPos().e();
-+        T t0 = this.getSettings();
-+        int k = t0.u();
-+        int l = t0.t();
-+        Iterator iterator = BlockPosition.b(i, 0, j, i + 15, 0, j + 15).iterator();
++        public VoxelShape getShape(IBlockAccess iblockaccess, BlockPosition blockposition) {
++            return this.a(iblockaccess, blockposition, VoxelShapeCollision.a());
++        }
 +
-+        while (iterator.hasNext()) {
-+            BlockPosition blockposition = (BlockPosition) iterator.next();
-+            int i1;
++        public VoxelShape a(IBlockAccess iblockaccess, BlockPosition blockposition, VoxelShapeCollision voxelshapecollision) {
++            return this.getBlock().b(this.p(), iblockaccess, blockposition, voxelshapecollision);
++        }
 +
-+            if (l > 0) {
-+                for (i1 = l; i1 >= l - 4; --i1) {
-+                    if (i1 >= l - random.nextInt(5)) {
-+                        ichunkaccess.setType(blockposition_mutableblockposition.d(blockposition.getX(), i1, blockposition.getZ()), Blocks.BEDROCK.getBlockData(), false);
++        public VoxelShape getCollisionShape(IBlockAccess iblockaccess, BlockPosition blockposition) {
++            return this.a != null ? this.a.b : this.b(iblockaccess, blockposition, VoxelShapeCollision.a());
++        }
++
++        public VoxelShape b(IBlockAccess iblockaccess, BlockPosition blockposition, VoxelShapeCollision voxelshapecollision) {
++            return this.getBlock().c(this.p(), iblockaccess, blockposition, voxelshapecollision);
++        }
++
++        public VoxelShape l(IBlockAccess iblockaccess, BlockPosition blockposition) {
++            return this.getBlock().e(this.p(), iblockaccess, blockposition);
++        }
++
++        public VoxelShape c(IBlockAccess iblockaccess, BlockPosition blockposition, VoxelShapeCollision voxelshapecollision) {
++            return this.getBlock().a(this.p(), iblockaccess, blockposition, voxelshapecollision);
++        }
++
++        public VoxelShape m(IBlockAccess iblockaccess, BlockPosition blockposition) {
++            return this.getBlock().a_(this.p(), iblockaccess, blockposition);
++        }
++
++        public final boolean a(IBlockAccess iblockaccess, BlockPosition blockposition, Entity entity) {
++            return this.a(iblockaccess, blockposition, entity, EnumDirection.UP);
++        }
++
++        public final boolean a(IBlockAccess iblockaccess, BlockPosition blockposition, Entity entity, EnumDirection enumdirection) {
++            return Block.a(this.b(iblockaccess, blockposition, VoxelShapeCollision.a(entity)), enumdirection);
++        }
++
++        public Vec3D n(IBlockAccess iblockaccess, BlockPosition blockposition) {
++            BlockBase.EnumRandomOffset blockbase_enumrandomoffset = this.getBlock().aj_();
++
++            if (blockbase_enumrandomoffset == BlockBase.EnumRandomOffset.NONE) {
++                return Vec3D.a;
++            } else {
++                long i = MathHelper.c(blockposition.getX(), 0, blockposition.getZ());
++
++                return new Vec3D(((double) ((float) (i & 15L) / 15.0F) - 0.5D) * 0.5D, blockbase_enumrandomoffset == BlockBase.EnumRandomOffset.XYZ ? ((double) ((float) (i >> 4 & 15L) / 15.0F) - 1.0D) * 0.2D : 0.0D, ((double) ((float) (i >> 8 & 15L) / 15.0F) - 0.5D) * 0.5D);
++            }
++        }
++
++        public boolean a(World world, BlockPosition blockposition, int i, int j) {
++            return this.getBlock().a(this.p(), world, blockposition, i, j);
++        }
++
++        public void doPhysics(World world, BlockPosition blockposition, Block block, BlockPosition blockposition1, boolean flag) {
++            this.getBlock().doPhysics(this.p(), world, blockposition, block, blockposition1, flag);
++        }
++
++        public final void a(GeneratorAccess generatoraccess, BlockPosition blockposition, int i) {
++            this.a(generatoraccess, blockposition, i, 512);
++        }
++
++        public final void a(GeneratorAccess generatoraccess, BlockPosition blockposition, int i, int j) {
++            this.getBlock();
++            BlockPosition.MutableBlockPosition blockposition_mutableblockposition = new BlockPosition.MutableBlockPosition();
++            EnumDirection[] aenumdirection = BlockBase.ar;
++            int k = aenumdirection.length;
++
++            for (int l = 0; l < k; ++l) {
++                EnumDirection enumdirection = aenumdirection[l];
++
++                blockposition_mutableblockposition.a((BaseBlockPosition) blockposition, enumdirection);
++                IBlockData iblockdata = generatoraccess.getType(blockposition_mutableblockposition);
++                IBlockData iblockdata1 = iblockdata.updateState(enumdirection.opposite(), this.p(), generatoraccess, blockposition_mutableblockposition, blockposition);
++
++                Block.a(iblockdata, iblockdata1, generatoraccess, blockposition_mutableblockposition, i, j);
++            }
++
++        }
++
++        public final void b(GeneratorAccess generatoraccess, BlockPosition blockposition, int i) {
++            this.b(generatoraccess, blockposition, i, 512);
++        }
++
++        public void b(GeneratorAccess generatoraccess, BlockPosition blockposition, int i, int j) {
++            this.getBlock().a(this.p(), generatoraccess, blockposition, i, j);
++        }
++
++        public void onPlace(World world, BlockPosition blockposition, IBlockData iblockdata, boolean flag) {
++            this.getBlock().onPlace(this.p(), world, blockposition, iblockdata, flag);
++        }
++
++        public void remove(World world, BlockPosition blockposition, IBlockData iblockdata, boolean flag) {
++            this.getBlock().remove(this.p(), world, blockposition, iblockdata, flag);
++        }
++
++        public void a(WorldServer worldserver, BlockPosition blockposition, Random random) {
++            this.getBlock().tickAlways(this.p(), worldserver, blockposition, random);
++        }
++
++        public void b(WorldServer worldserver, BlockPosition blockposition, Random random) {
++            this.getBlock().tick(this.p(), worldserver, blockposition, random);
++        }
++
++        public void a(World world, BlockPosition blockposition, Entity entity) {
++            this.getBlock().a(this.p(), world, blockposition, entity);
++        }
++
++        public void dropNaturally(World world, BlockPosition blockposition, ItemStack itemstack) {
++            this.getBlock().dropNaturally(this.p(), world, blockposition, itemstack);
++        }
++
++        public List<ItemStack> a(LootTableInfo.Builder loottableinfo_builder) {
++            return this.getBlock().a(this.p(), loottableinfo_builder);
++        }
++
++        public EnumInteractionResult interact(World world, EntityHuman entityhuman, EnumHand enumhand, MovingObjectPositionBlock movingobjectpositionblock) {
++            return this.getBlock().interact(this.p(), world, movingobjectpositionblock.getBlockPosition(), entityhuman, enumhand, movingobjectpositionblock);
++        }
++
++        public void attack(World world, BlockPosition blockposition, EntityHuman entityhuman) {
++            this.getBlock().attack(this.p(), world, blockposition, entityhuman);
++        }
++
++        public boolean o(IBlockAccess iblockaccess, BlockPosition blockposition) {
++            return this.m.test(this.p(), iblockaccess, blockposition);
++        }
++
++        public IBlockData updateState(EnumDirection enumdirection, IBlockData iblockdata, GeneratorAccess generatoraccess, BlockPosition blockposition, BlockPosition blockposition1) {
++            return this.getBlock().updateState(this.p(), enumdirection, iblockdata, generatoraccess, blockposition, blockposition1);
++        }
++
++        public boolean a(IBlockAccess iblockaccess, BlockPosition blockposition, PathMode pathmode) {
++            return this.getBlock().a(this.p(), iblockaccess, blockposition, pathmode);
++        }
++
++        public boolean a(BlockActionContext blockactioncontext) {
++            return this.getBlock().a(this.p(), blockactioncontext);
++        }
++
++        public boolean a(FluidType fluidtype) {
++            return this.getBlock().a(this.p(), fluidtype);
++        }
++
++        public boolean canPlace(IWorldReader iworldreader, BlockPosition blockposition) {
++            return this.getBlock().canPlace(this.p(), iworldreader, blockposition);
++        }
++
++        public boolean q(IBlockAccess iblockaccess, BlockPosition blockposition) {
++            return this.o.test(this.p(), iblockaccess, blockposition);
++        }
++
++        @Nullable
++        public ITileInventory b(World world, BlockPosition blockposition) {
++            return this.getBlock().getInventory(this.p(), world, blockposition);
++        }
++
++        public boolean a(Tag<Block> tag) {
++            return this.getBlock().a(tag);
++        }
++
++        public boolean a(Tag<Block> tag, Predicate<BlockBase.BlockData> predicate) {
++            return this.getBlock().a(tag) && predicate.test(this);
++        }
++
++        public boolean a(Block block) {
++            return this.getBlock().a(block);
++        }
++
++        public Fluid getFluid() {
++            return this.getBlock().d(this.p());
++        }
++
++        public boolean isTicking() {
++            return this.getBlock().isTicking(this.p());
++        }
++
++        public SoundEffectType getStepSound() {
++            return this.getBlock().getStepSound(this.p());
++        }
++
++        public void a(World world, IBlockData iblockdata, MovingObjectPositionBlock movingobjectpositionblock, IProjectile iprojectile) {
++            this.getBlock().a(world, iblockdata, movingobjectpositionblock, iprojectile);
++        }
++
++        public boolean d(IBlockAccess iblockaccess, BlockPosition blockposition, EnumDirection enumdirection) {
++            return this.a != null ? this.a.d[enumdirection.ordinal()] : Block.d(this.p(), iblockaccess, blockposition, enumdirection);
++        }
++
++        public boolean r(IBlockAccess iblockaccess, BlockPosition blockposition) {
++            return this.a != null ? this.a.e : Block.a(this.getCollisionShape(iblockaccess, blockposition));
++        }
++
++        protected abstract IBlockData p();
++
++        public boolean isAlwaysDestroyable() {
++            return this.j;
++        }
++
++        static final class a {
++
++            private static final EnumDirection[] f = EnumDirection.values();
++            protected final boolean a;
++            private final boolean g;
++            private final int h;
++            @Nullable
++            private final VoxelShape[] i;
++            protected final VoxelShape b;
++            protected final boolean c;
++            protected final boolean[] d;
++            protected final boolean e;
++
++            private a(IBlockData iblockdata) {
++                Block block = iblockdata.getBlock();
++
++                this.a = iblockdata.i(BlockAccessAir.INSTANCE, BlockPosition.ZERO);
++                this.g = block.b(iblockdata, (IBlockAccess) BlockAccessAir.INSTANCE, BlockPosition.ZERO);
++                this.h = block.f(iblockdata, BlockAccessAir.INSTANCE, BlockPosition.ZERO);
++                int i;
++
++                if (!iblockdata.l()) {
++                    this.i = null;
++                } else {
++                    this.i = new VoxelShape[f.length];
++                    VoxelShape voxelshape = block.d(iblockdata, (IBlockAccess) BlockAccessAir.INSTANCE, BlockPosition.ZERO);
++                    EnumDirection[] aenumdirection = f;
++
++                    i = aenumdirection.length;
++
++                    for (int j = 0; j < i; ++j) {
++                        EnumDirection enumdirection = aenumdirection[j];
++
++                        this.i[enumdirection.ordinal()] = VoxelShapes.a(voxelshape, enumdirection);
 +                    }
 +                }
-+            }
 +
-+            if (k < 256) {
-+                for (i1 = k + 4; i1 >= k; --i1) {
-+                    if (i1 <= k + random.nextInt(5)) {
-+                        ichunkaccess.setType(blockposition_mutableblockposition.d(blockposition.getX(), i1, blockposition.getZ()), Blocks.BEDROCK.getBlockData(), false);
-+                    }
-+                }
-+            }
-+        }
++                this.b = block.c(iblockdata, BlockAccessAir.INSTANCE, BlockPosition.ZERO, VoxelShapeCollision.a());
++                this.c = Arrays.stream(EnumDirection.EnumAxis.values()).anyMatch((enumdirection_enumaxis) -> {
++                    return this.b.b(enumdirection_enumaxis) < 0.0D || this.b.c(enumdirection_enumaxis) > 1.0D;
++                });
++                this.d = new boolean[6];
++                EnumDirection[] aenumdirection1 = f;
++                int k = aenumdirection1.length;
 +
-+    }
++                for (i = 0; i < k; ++i) {
++                    EnumDirection enumdirection1 = aenumdirection1[i];
 +
-+    @Override
-+    public void buildNoise(GeneratorAccess generatoraccess, IChunkAccess ichunkaccess) {
-+        int i = this.getSeaLevel();
-+        ObjectList<WorldGenFeaturePillagerOutpostPoolPiece> objectlist = new ObjectArrayList(10);
-+        ObjectList<WorldGenFeatureDefinedStructureJigsawJunction> objectlist1 = new ObjectArrayList(32);
-+        ChunkCoordIntPair chunkcoordintpair = ichunkaccess.getPos();
-+        int j = chunkcoordintpair.x;
-+        int k = chunkcoordintpair.z;
-+        int l = j << 4;
-+        int i1 = k << 4;
-+        Iterator iterator = WorldGenerator.ap.iterator();
-+
-+        while (iterator.hasNext()) {
-+            StructureGenerator<?> structuregenerator = (StructureGenerator) iterator.next();
-+            String s = structuregenerator.b();
-+            LongIterator longiterator = ichunkaccess.b(s).iterator();
-+
-+            while (longiterator.hasNext()) {
-+                long j1 = longiterator.nextLong();
-+                ChunkCoordIntPair chunkcoordintpair1 = new ChunkCoordIntPair(j1);
-+                IChunkAccess ichunkaccess1 = generatoraccess.getChunkAt(chunkcoordintpair1.x, chunkcoordintpair1.z);
-+                StructureStart structurestart = ichunkaccess1.a(s);
-+
-+                if (structurestart != null && structurestart.e()) {
-+                    Iterator iterator1 = structurestart.d().iterator();
-+
-+                    while (iterator1.hasNext()) {
-+                        StructurePiece structurepiece = (StructurePiece) iterator1.next();
-+
-+                        if (structurepiece.a(chunkcoordintpair, 12) && structurepiece instanceof WorldGenFeaturePillagerOutpostPoolPiece) {
-+                            WorldGenFeaturePillagerOutpostPoolPiece worldgenfeaturepillageroutpostpoolpiece = (WorldGenFeaturePillagerOutpostPoolPiece) structurepiece;
-+                            WorldGenFeatureDefinedStructurePoolTemplate.Matching worldgenfeaturedefinedstructurepooltemplate_matching = worldgenfeaturepillageroutpostpoolpiece.b().c();
-+
-+                            if (worldgenfeaturedefinedstructurepooltemplate_matching == WorldGenFeatureDefinedStructurePoolTemplate.Matching.RIGID) {
-+                                objectlist.add(worldgenfeaturepillageroutpostpoolpiece);
-+                            }
-+
-+                            Iterator iterator2 = worldgenfeaturepillageroutpostpoolpiece.e().iterator();
-+
-+                            while (iterator2.hasNext()) {
-+                                WorldGenFeatureDefinedStructureJigsawJunction worldgenfeaturedefinedstructurejigsawjunction = (WorldGenFeatureDefinedStructureJigsawJunction) iterator2.next();
-+                                int k1 = worldgenfeaturedefinedstructurejigsawjunction.a();
-+                                int l1 = worldgenfeaturedefinedstructurejigsawjunction.c();
-+
-+                                if (k1 > l - 12 && l1 > i1 - 12 && k1 < l + 15 + 12 && l1 < i1 + 15 + 12) {
-+                                    objectlist1.add(worldgenfeaturedefinedstructurejigsawjunction);
-+                                }
-+                            }
-+                        }
-+                    }
-+                }
-+            }
-+        }
-+
-+        double[][][] adouble = new double[2][this.n + 1][this.m + 1];
-+
-+        for (int i2 = 0; i2 < this.n + 1; ++i2) {
-+            adouble[0][i2] = new double[this.m + 1];
-+            this.a(adouble[0][i2], j * this.l, k * this.n + i2);
-+            adouble[1][i2] = new double[this.m + 1];
-+        }
-+
-+        ProtoChunk protochunk = (ProtoChunk) ichunkaccess;
-+        HeightMap heightmap = protochunk.a(HeightMap.Type.OCEAN_FLOOR_WG);
-+        HeightMap heightmap1 = protochunk.a(HeightMap.Type.WORLD_SURFACE_WG);
-+        BlockPosition.MutableBlockPosition blockposition_mutableblockposition = new BlockPosition.MutableBlockPosition();
-+        ObjectListIterator<WorldGenFeaturePillagerOutpostPoolPiece> objectlistiterator = objectlist.iterator();
-+        ObjectListIterator<WorldGenFeatureDefinedStructureJigsawJunction> objectlistiterator1 = objectlist1.iterator();
-+
-+        for (int j2 = 0; j2 < this.l; ++j2) {
-+            int k2;
-+
-+            for (k2 = 0; k2 < this.n + 1; ++k2) {
-+                this.a(adouble[1][k2], j * this.l + j2 + 1, k * this.n + k2);
-+            }
-+
-+            for (k2 = 0; k2 < this.n; ++k2) {
-+                ChunkSection chunksection = protochunk.a(15);
-+
-+                chunksection.a();
-+
-+                for (int l2 = this.m - 1; l2 >= 0; --l2) {
-+                    double d0 = adouble[0][k2][l2];
-+                    double d1 = adouble[0][k2 + 1][l2];
-+                    double d2 = adouble[1][k2][l2];
-+                    double d3 = adouble[1][k2 + 1][l2];
-+                    double d4 = adouble[0][k2][l2 + 1];
-+                    double d5 = adouble[0][k2 + 1][l2 + 1];
-+                    double d6 = adouble[1][k2][l2 + 1];
-+                    double d7 = adouble[1][k2 + 1][l2 + 1];
-+
-+                    for (int i3 = this.j - 1; i3 >= 0; --i3) {
-+                        int j3 = l2 * this.j + i3;
-+                        int k3 = j3 & 15;
-+                        int l3 = j3 >> 4;
-+
-+                        if (chunksection.getYPosition() >> 4 != l3) {
-+                            chunksection.b();
-+                            chunksection = protochunk.a(l3);
-+                            chunksection.a();
-+                        }
-+
-+                        double d8 = (double) i3 / (double) this.j;
-+                        double d9 = MathHelper.d(d8, d0, d4);
-+                        double d10 = MathHelper.d(d8, d2, d6);
-+                        double d11 = MathHelper.d(d8, d1, d5);
-+                        double d12 = MathHelper.d(d8, d3, d7);
-+
-+                        for (int i4 = 0; i4 < this.k; ++i4) {
-+                            int j4 = l + j2 * this.k + i4;
-+                            int k4 = j4 & 15;
-+                            double d13 = (double) i4 / (double) this.k;
-+                            double d14 = MathHelper.d(d13, d9, d10);
-+                            double d15 = MathHelper.d(d13, d11, d12);
-+
-+                            for (int l4 = 0; l4 < this.k; ++l4) {
-+                                int i5 = i1 + k2 * this.k + l4;
-+                                int j5 = i5 & 15;
-+                                double d16 = (double) l4 / (double) this.k;
-+                                double d17 = MathHelper.d(d16, d14, d15);
-+                                double d18 = MathHelper.a(d17 / 200.0D, -1.0D, 1.0D);
-+
-+                                int k5;
-+                                int l5;
-+                                int i6;
-+
-+                                for (d18 = d18 / 2.0D - d18 * d18 * d18 / 24.0D; objectlistiterator.hasNext(); d18 += a(k5, l5, i6) * 0.8D) {
-+                                    WorldGenFeaturePillagerOutpostPoolPiece worldgenfeaturepillageroutpostpoolpiece1 = (WorldGenFeaturePillagerOutpostPoolPiece) objectlistiterator.next();
-+                                    StructureBoundingBox structureboundingbox = worldgenfeaturepillageroutpostpoolpiece1.g();
-+
-+                                    k5 = Math.max(0, Math.max(structureboundingbox.a - j4, j4 - structureboundingbox.d));
-+                                    l5 = j3 - (structureboundingbox.b + worldgenfeaturepillageroutpostpoolpiece1.d());
-+                                    i6 = Math.max(0, Math.max(structureboundingbox.c - i5, i5 - structureboundingbox.f));
-+                                }
-+
-+                                objectlistiterator.back(objectlist.size());
-+
-+                                while (objectlistiterator1.hasNext()) {
-+                                    WorldGenFeatureDefinedStructureJigsawJunction worldgenfeaturedefinedstructurejigsawjunction1 = (WorldGenFeatureDefinedStructureJigsawJunction) objectlistiterator1.next();
-+                                    int j6 = j4 - worldgenfeaturedefinedstructurejigsawjunction1.a();
-+
-+                                    k5 = j3 - worldgenfeaturedefinedstructurejigsawjunction1.b();
-+                                    l5 = i5 - worldgenfeaturedefinedstructurejigsawjunction1.c();
-+                                    d18 += a(j6, k5, l5) * 0.4D;
-+                                }
-+
-+                                objectlistiterator1.back(objectlist1.size());
-+                                IBlockData iblockdata;
-+
-+                                if (d18 > 0.0D) {
-+                                    iblockdata = this.f;
-+                                } else if (j3 < i) {
-+                                    iblockdata = this.g;
-+                                } else {
-+                                    iblockdata = ChunkGeneratorAbstract.i;
-+                                }
-+
-+                                if (iblockdata != ChunkGeneratorAbstract.i) {
-+                                    if (iblockdata.h() != 0) {
-+                                        blockposition_mutableblockposition.d(j4, j3, i5);
-+                                        protochunk.j(blockposition_mutableblockposition);
-+                                    }
-+
-+                                    chunksection.setType(k4, k3, j5, iblockdata, false);
-+                                    heightmap.a(k4, j3, j5, iblockdata);
-+                                    heightmap1.a(k4, j3, j5, iblockdata);
-+                                }
-+                            }
-+                        }
-+                    }
++                    this.d[enumdirection1.ordinal()] = Block.d(iblockdata, BlockAccessAir.INSTANCE, BlockPosition.ZERO, enumdirection1);
 +                }
 +
-+                chunksection.b();
++                this.e = Block.a(iblockdata.getCollisionShape(BlockAccessAir.INSTANCE, BlockPosition.ZERO));
 +            }
++        }
++    }
 +
-+            double[][] adouble1 = adouble[0];
++    public static class Info {
 +
-+            adouble[0] = adouble[1];
-+            adouble[1] = adouble1;
++        private Material a;
++        private Function<IBlockData, MaterialMapColor> b;
++        private boolean c;
++        private SoundEffectType d;
++        private ToIntFunction<IBlockData> e;
++        private float f;
++        private float g;
++        private boolean h;
++        private boolean i;
++        private float j;
++        private float k;
++        private float l;
++        private MinecraftKey m;
++        private boolean n;
++        private boolean o;
++        private BlockBase.d<EntityTypes<?>> p;
++        private BlockBase.e q;
++        private BlockBase.e r;
++        private BlockBase.e s;
++        private BlockBase.e t;
++        private BlockBase.e u;
++        private boolean v;
++
++        private Info(Material material, MaterialMapColor materialmapcolor) {
++            this(material, (iblockdata) -> {
++                return materialmapcolor;
++            });
 +        }
 +
++        private Info(Material material, Function<IBlockData, MaterialMapColor> function) {
++            this.c = true;
++            this.d = SoundEffectType.e;
++            this.e = (iblockdata) -> {
++                return 0;
++            };
++            this.j = 0.6F;
++            this.k = 1.0F;
++            this.l = 1.0F;
++            this.n = true;
++            this.p = (iblockdata, iblockaccess, blockposition, entitytypes) -> {
++                return iblockdata.d(iblockaccess, blockposition, EnumDirection.UP) && iblockdata.f() < 14;
++            };
++            this.q = (iblockdata, iblockaccess, blockposition) -> {
++                return iblockdata.getMaterial().f() && iblockdata.r(iblockaccess, blockposition);
++            };
++            this.r = (iblockdata, iblockaccess, blockposition) -> {
++                return this.a.isSolid() && iblockdata.r(iblockaccess, blockposition);
++            };
++            this.s = this.r;
++            this.t = (iblockdata, iblockaccess, blockposition) -> {
++                return false;
++            };
++            this.u = (iblockdata, iblockaccess, blockposition) -> {
++                return false;
++            };
++            this.a = material;
++            this.b = function;
++        }
++
++        public static BlockBase.Info a(Material material) {
++            return a(material, material.h());
++        }
++
++        public static BlockBase.Info a(Material material, EnumColor enumcolor) {
++            return a(material, enumcolor.f());
++        }
++
++        public static BlockBase.Info a(Material material, MaterialMapColor materialmapcolor) {
++            return new BlockBase.Info(material, materialmapcolor);
++        }
++
++        public static BlockBase.Info a(Material material, Function<IBlockData, MaterialMapColor> function) {
++            return new BlockBase.Info(material, function);
++        }
++
++        public static BlockBase.Info a(BlockBase blockbase) {
++            BlockBase.Info blockbase_info = new BlockBase.Info(blockbase.material, blockbase.aB.b);
++
++            blockbase_info.a = blockbase.aB.a;
++            blockbase_info.g = blockbase.aB.g;
++            blockbase_info.f = blockbase.aB.f;
++            blockbase_info.c = blockbase.aB.c;
++            blockbase_info.i = blockbase.aB.i;
++            blockbase_info.e = blockbase.aB.e;
++            blockbase_info.b = blockbase.aB.b;
++            blockbase_info.d = blockbase.aB.d;
++            blockbase_info.j = blockbase.aB.j;
++            blockbase_info.k = blockbase.aB.k;
++            blockbase_info.v = blockbase.aB.v;
++            blockbase_info.n = blockbase.aB.n;
++            blockbase_info.o = blockbase.aB.o;
++            blockbase_info.h = blockbase.aB.h;
++            return blockbase_info;
++        }
++
++        public BlockBase.Info a() {
++            this.c = false;
++            this.n = false;
++            return this;
++        }
++
++        public BlockBase.Info b() {
++            this.n = false;
++            return this;
++        }
++
++        public BlockBase.Info a(float f) {
++            this.j = f;
++            return this;
++        }
++
++        public BlockBase.Info b(float f) {
++            this.k = f;
++            return this;
++        }
++
++        public BlockBase.Info c(float f) {
++            this.l = f;
++            return this;
++        }
++
++        public BlockBase.Info a(SoundEffectType soundeffecttype) {
++            this.d = soundeffecttype;
++            return this;
++        }
++
++        public BlockBase.Info a(ToIntFunction<IBlockData> tointfunction) {
++            this.e = tointfunction;
++            return this;
++        }
++
++        public BlockBase.Info a(float f, float f1) {
++            this.g = f;
++            this.f = Math.max(0.0F, f1);
++            return this;
++        }
++
++        public BlockBase.Info c() {
++            return this.d(0.0F);
++        }
++
++        public BlockBase.Info d(float f) {
++            this.a(f, f);
++            return this;
++        }
++
++        public BlockBase.Info d() {
++            this.i = true;
++            return this;
++        }
++
++        public BlockBase.Info e() {
++            this.v = true;
++            return this;
++        }
++
++        public BlockBase.Info f() {
++            this.m = LootTables.a;
++            return this;
++        }
++
++        public BlockBase.Info a(Block block) {
++            this.m = block.r();
++            return this;
++        }
++
++        public BlockBase.Info g() {
++            this.o = true;
++            return this;
++        }
++
++        public BlockBase.Info a(BlockBase.d<EntityTypes<?>> blockbase_d) {
++            this.p = blockbase_d;
++            return this;
++        }
++
++        public BlockBase.Info a(BlockBase.e blockbase_e) {
++            this.q = blockbase_e;
++            return this;
++        }
++
++        public BlockBase.Info b(BlockBase.e blockbase_e) {
++            this.r = blockbase_e;
++            return this;
++        }
++
++        public BlockBase.Info c(BlockBase.e blockbase_e) {
++            this.s = blockbase_e;
++            return this;
++        }
++
++        public BlockBase.Info d(BlockBase.e blockbase_e) {
++            this.t = blockbase_e;
++            return this;
++        }
++
++        public BlockBase.Info e(BlockBase.e blockbase_e) {
++            this.u = blockbase_e;
++            return this;
++        }
++
++        public BlockBase.Info h() {
++            this.h = true;
++            return this;
++        }
 +    }
 +
-+    private static double a(int i, int j, int k) {
-+        int l = i + 12;
-+        int i1 = j + 12;
-+        int j1 = k + 12;
++    public static enum EnumRandomOffset {
 +
-+        return l >= 0 && l < 24 ? (i1 >= 0 && i1 < 24 ? (j1 >= 0 && j1 < 24 ? (double) ChunkGeneratorAbstract.h[j1 * 24 * 24 + l * 24 + i1] : 0.0D) : 0.0D) : 0.0D;
-+    }
++        NONE, XZ, XYZ;
 +
-+    private static double b(int i, int j, int k) {
-+        double d0 = (double) (i * i + k * k);
-+        double d1 = (double) j + 0.5D;
-+        double d2 = d1 * d1;
-+        double d3 = Math.pow(2.718281828459045D, -(d2 / 16.0D + d0 / 16.0D));
-+        double d4 = -d1 * MathHelper.i(d2 / 2.0D + d0 / 2.0D) / 2.0D;
-+
-+        return d4 * d3;
++        private EnumRandomOffset() {}
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 new file mode 100644
-index 000000000..7e6c3e0c7
+index 000000000..e8fbd9f48
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-@@ -0,0 +1,507 @@
+@@ -0,0 +1,522 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Maps;
@@ -544,9 +1009,10 @@ index 000000000..7e6c3e0c7
 +import java.util.BitSet;
 +import java.util.EnumSet;
 +import java.util.Iterator;
++import java.util.Locale;
 +import java.util.Map;
-+import java.util.Objects;
 +import java.util.Map.Entry;
++import java.util.Objects;
 +import java.util.function.Function;
 +import javax.annotation.Nullable;
 +import org.apache.logging.log4j.LogManager;
@@ -557,7 +1023,7 @@ index 000000000..7e6c3e0c7
 +    private static final Logger LOGGER = LogManager.getLogger();
 +
 +    public static ProtoChunk loadChunk(WorldServer worldserver, DefinedStructureManager definedstructuremanager, VillagePlace villageplace, ChunkCoordIntPair chunkcoordintpair, NBTTagCompound nbttagcompound) {
-+        ChunkGenerator<?> chunkgenerator = worldserver.getChunkProvider().getChunkGenerator();
++        ChunkGenerator chunkgenerator = worldserver.getChunkProvider().getChunkGenerator();
 +        WorldChunkManager worldchunkmanager = chunkgenerator.getWorldChunkManager();
 +        NBTTagCompound nbttagcompound1 = nbttagcompound.getCompound("Level");
 +        ChunkCoordIntPair chunkcoordintpair1 = new ChunkCoordIntPair(nbttagcompound1.getInt("xPos"), nbttagcompound1.getInt("zPos"));
@@ -578,7 +1044,7 @@ index 000000000..7e6c3e0c7
 +        NBTTagList nbttaglist = nbttagcompound1.getList("Sections", 10);
 +        boolean flag1 = true;
 +        ChunkSection[] achunksection = new ChunkSection[16];
-+        boolean flag2 = worldserver.getWorldProvider().f();
++        boolean flag2 = worldserver.getDimensionManager().hasSkyLight();
 +        ChunkProviderServer chunkproviderserver = worldserver.getChunkProvider();
 +        LightEngine lightengine = chunkproviderserver.getLightEngine();
 +
@@ -604,11 +1070,11 @@ index 000000000..7e6c3e0c7
 +
 +            if (flag) {
 +                if (nbttagcompound2.hasKeyOfType("BlockLight", 7)) {
-+                    lightengine.a(EnumSkyBlock.BLOCK, SectionPosition.a(chunkcoordintpair, b0), new NibbleArray(nbttagcompound2.getByteArray("BlockLight")));
++                    lightengine.a(EnumSkyBlock.BLOCK, SectionPosition.a(chunkcoordintpair, b0), new NibbleArray(nbttagcompound2.getByteArray("BlockLight")), true);
 +                }
 +
 +                if (flag2 && nbttagcompound2.hasKeyOfType("SkyLight", 7)) {
-+                    lightengine.a(EnumSkyBlock.SKY, SectionPosition.a(chunkcoordintpair, b0), new NibbleArray(nbttagcompound2.getByteArray("SkyLight")));
++                    lightengine.a(EnumSkyBlock.SKY, SectionPosition.a(chunkcoordintpair, b0), new NibbleArray(nbttagcompound2.getByteArray("SkyLight")), true);
 +                }
 +            }
 +        }
@@ -665,7 +1131,7 @@ index 000000000..7e6c3e0c7
 +                while (iterator.hasNext()) {
 +                    BlockPosition blockposition = (BlockPosition) iterator.next();
 +
-+                    if (((IChunkAccess) object).getType(blockposition).h() != 0) {
++                    if (((IChunkAccess) object).getType(blockposition).f() != 0) {
 +                        protochunk.j(blockposition);
 +                    }
 +                }
@@ -679,7 +1145,7 @@ index 000000000..7e6c3e0c7
 +
 +        while (iterator1.hasNext()) {
 +            HeightMap.Type heightmap_type = (HeightMap.Type) iterator1.next();
-+            String s = heightmap_type.a();
++            String s = heightmap_type.b();
 +
 +            if (nbttagcompound3.hasKeyOfType(s, 12)) {
 +                ((IChunkAccess) object).a(heightmap_type, nbttagcompound3.getLongArray(s));
@@ -691,7 +1157,7 @@ index 000000000..7e6c3e0c7
 +        HeightMap.a((IChunkAccess) object, enumset);
 +        NBTTagCompound nbttagcompound4 = nbttagcompound1.getCompound("Structures");
 +
-+        ((IChunkAccess) object).a(a(chunkgenerator, definedstructuremanager, nbttagcompound4));
++        ((IChunkAccess) object).a(a(definedstructuremanager, nbttagcompound4, worldserver.getSeed()));
 +        ((IChunkAccess) object).b(a(chunkcoordintpair, nbttagcompound4));
 +        if (nbttagcompound1.getBoolean("shouldSave")) {
 +            ((IChunkAccess) object).setNeedsSaving(true);
@@ -863,8 +1329,11 @@ index 000000000..7e6c3e0c7
 +
 +            for (int l = 0; l < k; ++l) {
 +                WorldGenStage.Features worldgenstage_features = aworldgenstage_features[l];
++                BitSet bitset = protochunk.a(worldgenstage_features);
 +
-+                nbttagcompound3.setByteArray(worldgenstage_features.toString(), ichunkaccess.a(worldgenstage_features).toByteArray());
++                if (bitset != null) {
++                    nbttagcompound3.setByteArray(worldgenstage_features.toString(), bitset.toByteArray());
++                }
 +            }
 +
 +            nbttagcompound1.set("CarvingMasks", nbttagcompound3);
@@ -876,7 +1345,7 @@ index 000000000..7e6c3e0c7
 +        if (ticklist instanceof ProtoChunkTickList) {
 +            nbttagcompound1.set("ToBeTicked", ((ProtoChunkTickList) ticklist).b());
 +        } else if (ticklist instanceof TickListChunk) {
-+            nbttagcompound1.set("TileTicks", ((TickListChunk) ticklist).a(worldserver.getTime()));
++            nbttagcompound1.set("TileTicks", ((TickListChunk) ticklist).b());
 +        } else {
 +            nbttagcompound1.set("TileTicks", worldserver.getBlockTickList().a(chunkcoordintpair));
 +        }
@@ -886,7 +1355,7 @@ index 000000000..7e6c3e0c7
 +        if (ticklist1 instanceof ProtoChunkTickList) {
 +            nbttagcompound1.set("LiquidsToBeTicked", ((ProtoChunkTickList) ticklist1).b());
 +        } else if (ticklist1 instanceof TickListChunk) {
-+            nbttagcompound1.set("LiquidTicks", ((TickListChunk) ticklist1).a(worldserver.getTime()));
++            nbttagcompound1.set("LiquidTicks", ((TickListChunk) ticklist1).b());
 +        } else {
 +            nbttagcompound1.set("LiquidTicks", worldserver.getFluidTickList().a(chunkcoordintpair));
 +        }
@@ -899,7 +1368,7 @@ index 000000000..7e6c3e0c7
 +            Entry<HeightMap.Type, HeightMap> entry = (Entry) iterator2.next();
 +
 +            if (ichunkaccess.getChunkStatus().h().contains(entry.getKey())) {
-+                nbttagcompound2.set(((HeightMap.Type) entry.getKey()).a(), new NBTTagLongArray(((HeightMap) entry.getValue()).a()));
++                nbttagcompound2.set(((HeightMap.Type) entry.getKey()).b(), new NBTTagLongArray(((HeightMap) entry.getValue()).a()));
 +            }
 +        }
 +
@@ -943,7 +1412,8 @@ index 000000000..7e6c3e0c7
 +            if (flag) {
 +                chunk.a(nbttagcompound2);
 +            } else {
-+                TileEntity tileentity = TileEntity.create(nbttagcompound2);
++                BlockPosition blockposition = new BlockPosition(nbttagcompound2.getInt("x"), nbttagcompound2.getInt("y"), nbttagcompound2.getInt("z"));
++                TileEntity tileentity = TileEntity.create(chunk.getType(blockposition), nbttagcompound2);
 +
 +                if (tileentity != null) {
 +                    chunk.a(tileentity);
@@ -953,15 +1423,15 @@ index 000000000..7e6c3e0c7
 +
 +    }
 +
-+    private static NBTTagCompound a(ChunkCoordIntPair chunkcoordintpair, Map<String, StructureStart> map, Map<String, LongSet> map1) {
++    private static NBTTagCompound a(ChunkCoordIntPair chunkcoordintpair, Map<StructureGenerator<?>, StructureStart<?>> map, Map<StructureGenerator<?>, LongSet> map1) {
 +        NBTTagCompound nbttagcompound = new NBTTagCompound();
 +        NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 +        Iterator iterator = map.entrySet().iterator();
 +
 +        while (iterator.hasNext()) {
-+            Entry<String, StructureStart> entry = (Entry) iterator.next();
++            Entry<StructureGenerator<?>, StructureStart<?>> entry = (Entry) iterator.next();
 +
-+            nbttagcompound1.set((String) entry.getKey(), ((StructureStart) entry.getValue()).a(chunkcoordintpair.x, chunkcoordintpair.z));
++            nbttagcompound1.set(((StructureGenerator) entry.getKey()).i(), ((StructureStart) entry.getValue()).a(chunkcoordintpair.x, chunkcoordintpair.z));
 +        }
 +
 +        nbttagcompound.set("Starts", nbttagcompound1);
@@ -969,38 +1439,48 @@ index 000000000..7e6c3e0c7
 +        Iterator iterator1 = map1.entrySet().iterator();
 +
 +        while (iterator1.hasNext()) {
-+            Entry<String, LongSet> entry1 = (Entry) iterator1.next();
++            Entry<StructureGenerator<?>, LongSet> entry1 = (Entry) iterator1.next();
 +
-+            nbttagcompound2.set((String) entry1.getKey(), new NBTTagLongArray((LongSet) entry1.getValue()));
++            nbttagcompound2.set(((StructureGenerator) entry1.getKey()).i(), new NBTTagLongArray((LongSet) entry1.getValue()));
 +        }
 +
 +        nbttagcompound.set("References", nbttagcompound2);
 +        return nbttagcompound;
 +    }
 +
-+    private static Map<String, StructureStart> a(ChunkGenerator<?> chunkgenerator, DefinedStructureManager definedstructuremanager, NBTTagCompound nbttagcompound) {
-+        Map<String, StructureStart> map = Maps.newHashMap();
++    private static Map<StructureGenerator<?>, StructureStart<?>> a(DefinedStructureManager definedstructuremanager, NBTTagCompound nbttagcompound, long i) {
++        Map<StructureGenerator<?>, StructureStart<?>> map = Maps.newHashMap();
 +        NBTTagCompound nbttagcompound1 = nbttagcompound.getCompound("Starts");
 +        Iterator iterator = nbttagcompound1.getKeys().iterator();
 +
 +        while (iterator.hasNext()) {
 +            String s = (String) iterator.next();
++            String s1 = s.toLowerCase(Locale.ROOT);
++            StructureGenerator<?> structuregenerator = (StructureGenerator) StructureGenerator.a.get(s1);
 +
-+            map.put(s, WorldGenFactory.a(chunkgenerator, definedstructuremanager, nbttagcompound1.getCompound(s)));
++            if (structuregenerator == null) {
++                ChunkRegionLoader.LOGGER.error("Unknown structure start: {}", s1);
++            } else {
++                StructureStart<?> structurestart = StructureGenerator.a(definedstructuremanager, nbttagcompound1.getCompound(s), i);
++
++                if (structurestart != null) {
++                    map.put(structuregenerator, structurestart);
++                }
++            }
 +        }
 +
 +        return map;
 +    }
 +
-+    private static Map<String, LongSet> a(ChunkCoordIntPair chunkcoordintpair, NBTTagCompound nbttagcompound) {
-+        Map<String, LongSet> map = Maps.newHashMap();
++    private static Map<StructureGenerator<?>, LongSet> a(ChunkCoordIntPair chunkcoordintpair, NBTTagCompound nbttagcompound) {
++        Map<StructureGenerator<?>, LongSet> map = Maps.newHashMap();
 +        NBTTagCompound nbttagcompound1 = nbttagcompound.getCompound("References");
 +        Iterator iterator = nbttagcompound1.getKeys().iterator();
 +
 +        while (iterator.hasNext()) {
 +            String s = (String) iterator.next();
 +
-+            map.put(s, new LongOpenHashSet(Arrays.stream(nbttagcompound1.getLongArray(s)).filter((i) -> {
++            map.put(StructureGenerator.a.get(s.toLowerCase(Locale.ROOT)), new LongOpenHashSet(Arrays.stream(nbttagcompound1.getLongArray(s)).filter((i) -> {
 +                ChunkCoordIntPair chunkcoordintpair1 = new ChunkCoordIntPair(i);
 +
 +                if (chunkcoordintpair1.a(chunkcoordintpair) > 8) {
@@ -1042,10 +1522,10 @@ index 000000000..7e6c3e0c7
 +}
 diff --git a/src/main/java/net/minecraft/server/EntitySquid.java b/src/main/java/net/minecraft/server/EntitySquid.java
 new file mode 100644
-index 000000000..6bcea493b
+index 000000000..77c5593a2
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/EntitySquid.java
-@@ -0,0 +1,276 @@
+@@ -0,0 +1,274 @@
 +package net.minecraft.server;
 +
 +import java.util.Random;
@@ -1055,22 +1535,22 @@ index 000000000..6bcea493b
 +    public float b;
 +    public float c;
 +    public float d;
++    public float bv;
 +    public float bw;
 +    public float bx;
 +    public float by;
 +    public float bz;
-+    public float bA;
++    private float bA;
 +    private float bB;
 +    private float bC;
 +    private float bD;
 +    private float bE;
 +    private float bF;
-+    private float bG;
 +
 +    public EntitySquid(EntityTypes<? extends EntitySquid> entitytypes, World world) {
 +        super(entitytypes, world);
 +        this.random.setSeed((long) this.getId());
-+        this.bC = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
++        this.bB = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
 +    }
 +
 +    @Override
@@ -1079,10 +1559,8 @@ index 000000000..6bcea493b
 +        this.goalSelector.a(1, new EntitySquid.a());
 +    }
 +
-+    @Override
-+    protected void initAttributes() {
-+        super.initAttributes();
-+        this.getAttributeInstance(GenericAttributes.MAX_HEALTH).setValue(10.0D);
++    public static AttributeProvider.Builder m() {
++        return EntityInsentient.p().a(GenericAttributes.MAX_HEALTH, 10.0D);
 +    }
 +
 +    @Override
@@ -1119,53 +1597,53 @@ index 000000000..6bcea493b
 +    public void movementTick() {
 +        super.movementTick();
 +        this.c = this.b;
-+        this.bw = this.d;
-+        this.by = this.bx;
-+        this.bA = this.bz;
-+        this.bx += this.bC;
-+        if ((double) this.bx > 6.283185307179586D) {
++        this.bv = this.d;
++        this.bx = this.bw;
++        this.bz = this.by;
++        this.bw += this.bB;
++        if ((double) this.bw > 6.283185307179586D) {
 +            if (this.world.isClientSide) {
-+                this.bx = 6.2831855F;
++                this.bw = 6.2831855F;
 +            } else {
-+                this.bx = (float) ((double) this.bx - 6.283185307179586D);
++                this.bw = (float) ((double) this.bw - 6.283185307179586D);
 +                if (this.random.nextInt(10) == 0) {
-+                    this.bC = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
++                    this.bB = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
 +                }
 +
 +                this.world.broadcastEntityEffect(this, (byte) 19);
 +            }
 +        }
 +
-+        if (this.az()) {
-+            if (this.bx < 3.1415927F) {
-+                float f = this.bx / 3.1415927F;
++        if (this.aD()) {
++            if (this.bw < 3.1415927F) {
++                float f = this.bw / 3.1415927F;
 +
-+                this.bz = MathHelper.sin(f * f * 3.1415927F) * 3.1415927F * 0.25F;
++                this.by = MathHelper.sin(f * f * 3.1415927F) * 3.1415927F * 0.25F;
 +                if ((double) f > 0.75D) {
-+                    this.bB = 1.0F;
-+                    this.bD = 1.0F;
++                    this.bA = 1.0F;
++                    this.bC = 1.0F;
 +                } else {
-+                    this.bD *= 0.8F;
++                    this.bC *= 0.8F;
 +                }
 +            } else {
-+                this.bz = 0.0F;
-+                this.bB *= 0.9F;
-+                this.bD *= 0.99F;
++                this.by = 0.0F;
++                this.bA *= 0.9F;
++                this.bC *= 0.99F;
 +            }
 +
 +            if (!this.world.isClientSide) {
-+                this.setMot((double) (this.bE * this.bB), (double) (this.bF * this.bB), (double) (this.bG * this.bB));
++                this.setMot((double) (this.bD * this.bA), (double) (this.bE * this.bA), (double) (this.bF * this.bA));
 +            }
 +
 +            Vec3D vec3d = this.getMot();
 +            float f1 = MathHelper.sqrt(b(vec3d));
 +
-+            this.aI += (-((float) MathHelper.d(vec3d.x, vec3d.z)) * 57.295776F - this.aI) * 0.1F;
-+            this.yaw = this.aI;
-+            this.d = (float) ((double) this.d + 3.141592653589793D * (double) this.bD * 1.5D);
++            this.aH += (-((float) MathHelper.d(vec3d.x, vec3d.z)) * 57.295776F - this.aH) * 0.1F;
++            this.yaw = this.aH;
++            this.d = (float) ((double) this.d + 3.141592653589793D * (double) this.bC * 1.5D);
 +            this.b += (-((float) MathHelper.d((double) f1, vec3d.y)) * 57.295776F - this.b) * 0.1F;
 +        } else {
-+            this.bz = MathHelper.e(MathHelper.sin(this.bx)) * 3.1415927F * 0.25F;
++            this.by = MathHelper.e(MathHelper.sin(this.bw)) * 3.1415927F * 0.25F;
 +            if (!this.world.isClientSide) {
 +                double d0 = this.getMot().y;
 +
@@ -1186,26 +1664,26 @@ index 000000000..6bcea493b
 +    @Override
 +    public boolean damageEntity(DamageSource damagesource, float f) {
 +        if (super.damageEntity(damagesource, f) && this.getLastDamager() != null) {
-+            this.eq();
++            this.eM();
 +            return true;
 +        } else {
 +            return false;
 +        }
 +    }
 +
-+    private Vec3D f(Vec3D vec3d) {
++    private Vec3D g(Vec3D vec3d) {
 +        Vec3D vec3d1 = vec3d.a(this.c * 0.017453292F);
 +
-+        vec3d1 = vec3d1.b(-this.aJ * 0.017453292F);
++        vec3d1 = vec3d1.b(-this.aI * 0.017453292F);
 +        return vec3d1;
 +    }
 +
-+    private void eq() {
-+        this.a(SoundEffects.ENTITY_SQUID_SQUIRT, this.getSoundVolume(), this.dn());
-+        Vec3D vec3d = this.f(new Vec3D(0.0D, -1.0D, 0.0D)).add(this.locX(), this.locY(), this.locZ());
++    private void eM() {
++        this.playSound(SoundEffects.ENTITY_SQUID_SQUIRT, this.getSoundVolume(), this.dG());
++        Vec3D vec3d = this.g(new Vec3D(0.0D, -1.0D, 0.0D)).add(this.locX(), this.locY(), this.locZ());
 +
 +        for (int i = 0; i < 30; ++i) {
-+            Vec3D vec3d1 = this.f(new Vec3D((double) this.random.nextFloat() * 0.6D - 0.3D, -1.0D, (double) this.random.nextFloat() * 0.6D - 0.3D));
++            Vec3D vec3d1 = this.g(new Vec3D((double) this.random.nextFloat() * 0.6D - 0.3D, -1.0D, (double) this.random.nextFloat() * 0.6D - 0.3D));
 +            Vec3D vec3d2 = vec3d1.a(0.3D + (double) (this.random.nextFloat() * 2.0F));
 +
 +            ((WorldServer) this.world).a(Particles.SQUID_INK, vec3d.x, vec3d.y + 0.5D, vec3d.z, 0, vec3d2.x, vec3d2.y, vec3d2.z, 0.10000000149011612D);
@@ -1214,7 +1692,7 @@ index 000000000..6bcea493b
 +    }
 +
 +    @Override
-+    public void e(Vec3D vec3d) {
++    public void f(Vec3D vec3d) {
 +        this.move(EnumMoveType.SELF, this.getMot());
 +    }
 +
@@ -1223,13 +1701,13 @@ index 000000000..6bcea493b
 +    }
 +
 +    public void a(float f, float f1, float f2) {
-+        this.bE = f;
-+        this.bF = f1;
-+        this.bG = f2;
++        this.bD = f;
++        this.bE = f1;
++        this.bF = f2;
 +    }
 +
-+    public boolean l() {
-+        return this.bE != 0.0F || this.bF != 0.0F || this.bG != 0.0F;
++    public boolean eL() {
++        return this.bD != 0.0F || this.bE != 0.0F || this.bF != 0.0F;
 +    }
 +
 +    class a extends PathfinderGoal {
@@ -1260,7 +1738,7 @@ index 000000000..6bcea493b
 +                IBlockData iblockdata = EntitySquid.this.world.getType(new BlockPosition(EntitySquid.this.locX() + vec3d.x, EntitySquid.this.locY() + vec3d.y, EntitySquid.this.locZ() + vec3d.z));
 +                Fluid fluid = EntitySquid.this.world.getFluid(new BlockPosition(EntitySquid.this.locX() + vec3d.x, EntitySquid.this.locY() + vec3d.y, EntitySquid.this.locZ() + vec3d.z));
 +
-+                if (fluid.a(TagsFluid.WATER) || iblockdata.isAir()) {
++                if (fluid.a((Tag) TagsFluid.WATER) || iblockdata.isAir()) {
 +                    double d0 = vec3d.f();
 +
 +                    if (d0 > 0.0D) {
@@ -1306,11 +1784,11 @@ index 000000000..6bcea493b
 +
 +        @Override
 +        public void e() {
-+            int i = this.b.cL();
++            int i = this.b.dc();
 +
 +            if (i > 100) {
 +                this.b.a(0.0F, 0.0F, 0.0F);
-+            } else if (this.b.getRandom().nextInt(50) == 0 || !this.b.inWater || !this.b.l()) {
++            } else if (this.b.getRandom().nextInt(50) == 0 || !this.b.inWater || !this.b.eL()) {
 +                float f = this.b.getRandom().nextFloat() * 6.2831855F;
 +                float f1 = MathHelper.cos(f) * 0.2F;
 +                float f2 = -0.1F + this.b.getRandom().nextFloat() * 0.2F;
@@ -1387,136 +1865,35 @@ index 000000000..0cc701042
 +}
 diff --git a/src/main/java/net/minecraft/server/GenericAttributes.java b/src/main/java/net/minecraft/server/GenericAttributes.java
 new file mode 100644
-index 000000000..4ef2ae57e
+index 000000000..67365b99f
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/GenericAttributes.java
-@@ -0,0 +1,123 @@
+@@ -0,0 +1,22 @@
 +package net.minecraft.server;
-+
-+import java.util.Collection;
-+import java.util.Iterator;
-+import java.util.UUID;
-+import javax.annotation.Nullable;
-+import org.apache.logging.log4j.LogManager;
-+import org.apache.logging.log4j.Logger;
 +
 +public class GenericAttributes {
 +
-+    private static final Logger LOGGER = LogManager.getLogger();
-+    public static final IAttribute MAX_HEALTH = (new AttributeRanged((IAttribute) null, "generic.maxHealth", 20.0D, 0.0D, 1024.0D)).a("Max Health").a(true);
-+    public static final IAttribute FOLLOW_RANGE = (new AttributeRanged((IAttribute) null, "generic.followRange", 32.0D, 0.0D, 2048.0D)).a("Follow Range");
-+    public static final IAttribute KNOCKBACK_RESISTANCE = (new AttributeRanged((IAttribute) null, "generic.knockbackResistance", 0.0D, 0.0D, 1.0D)).a("Knockback Resistance");
-+    public static final IAttribute MOVEMENT_SPEED = (new AttributeRanged((IAttribute) null, "generic.movementSpeed", 0.699999988079071D, 0.0D, 1024.0D)).a("Movement Speed").a(true);
-+    public static final IAttribute FLYING_SPEED = (new AttributeRanged((IAttribute) null, "generic.flyingSpeed", 0.4000000059604645D, 0.0D, 1024.0D)).a("Flying Speed").a(true);
-+    public static final IAttribute ATTACK_DAMAGE = new AttributeRanged((IAttribute) null, "generic.attackDamage", 2.0D, 0.0D, 2048.0D);
-+    public static final IAttribute ATTACK_KNOCKBACK = new AttributeRanged((IAttribute) null, "generic.attackKnockback", 0.0D, 0.0D, 5.0D);
-+    public static final IAttribute ATTACK_SPEED = (new AttributeRanged((IAttribute) null, "generic.attackSpeed", 4.0D, 0.0D, 1024.0D)).a(true);
-+    public static final IAttribute ARMOR = (new AttributeRanged((IAttribute) null, "generic.armor", 0.0D, 0.0D, 30.0D)).a(true);
-+    public static final IAttribute ARMOR_TOUGHNESS = (new AttributeRanged((IAttribute) null, "generic.armorToughness", 0.0D, 0.0D, 20.0D)).a(true);
-+    public static final IAttribute LUCK = (new AttributeRanged((IAttribute) null, "generic.luck", 0.0D, -1024.0D, 1024.0D)).a(true);
++    public static final AttributeBase MAX_HEALTH = a("generic.max_health", (new AttributeRanged("attribute.name.generic.max_health", 20.0D, 1.0D, 1024.0D)).a(true));
++    public static final AttributeBase FOLLOW_RANGE = a("generic.follow_range", new AttributeRanged("attribute.name.generic.follow_range", 32.0D, 0.0D, 2048.0D));
++    public static final AttributeBase KNOCKBACK_RESISTANCE = a("generic.knockback_resistance", new AttributeRanged("attribute.name.generic.knockback_resistance", 0.0D, 0.0D, 1.0D));
++    public static final AttributeBase MOVEMENT_SPEED = a("generic.movement_speed", (new AttributeRanged("attribute.name.generic.movement_speed", 0.699999988079071D, 0.0D, 1024.0D)).a(true));
++    public static final AttributeBase FLYING_SPEED = a("generic.flying_speed", (new AttributeRanged("attribute.name.generic.flying_speed", 0.4000000059604645D, 0.0D, 1024.0D)).a(true));
++    public static final AttributeBase ATTACK_DAMAGE = a("generic.attack_damage", new AttributeRanged("attribute.name.generic.attack_damage", 2.0D, 0.0D, 2048.0D));
++    public static final AttributeBase ATTACK_KNOCKBACK = a("generic.attack_knockback", new AttributeRanged("attribute.name.generic.attack_knockback", 0.0D, 0.0D, 5.0D));
++    public static final AttributeBase ATTACK_SPEED = a("generic.attack_speed", (new AttributeRanged("attribute.name.generic.attack_speed", 4.0D, 0.0D, 1024.0D)).a(true));
++    public static final AttributeBase ARMOR = a("generic.armor", (new AttributeRanged("attribute.name.generic.armor", 0.0D, 0.0D, 30.0D)).a(true));
++    public static final AttributeBase ARMOR_TOUGHNESS = a("generic.armor_toughness", (new AttributeRanged("attribute.name.generic.armor_toughness", 0.0D, 0.0D, 20.0D)).a(true));
++    public static final AttributeBase LUCK = a("generic.luck", (new AttributeRanged("attribute.name.generic.luck", 0.0D, -1024.0D, 1024.0D)).a(true));
++    public static final AttributeBase SPAWN_REINFORCEMENTS = a("zombie.spawn_reinforcements", new AttributeRanged("attribute.name.zombie.spawn_reinforcements", 0.0D, 0.0D, 1.0D));
++    public static final AttributeBase JUMP_STRENGTH = a("horse.jump_strength", (new AttributeRanged("attribute.name.horse.jump_strength", 0.7D, 0.0D, 2.0D)).a(true));
 +
-+    public static NBTTagList a(AttributeMapBase attributemapbase) {
-+        NBTTagList nbttaglist = new NBTTagList();
-+        Iterator iterator = attributemapbase.a().iterator();
-+
-+        while (iterator.hasNext()) {
-+            AttributeInstance attributeinstance = (AttributeInstance) iterator.next();
-+
-+            nbttaglist.add(a(attributeinstance));
-+        }
-+
-+        return nbttaglist;
-+    }
-+
-+    private static NBTTagCompound a(AttributeInstance attributeinstance) {
-+        NBTTagCompound nbttagcompound = new NBTTagCompound();
-+        IAttribute iattribute = attributeinstance.getAttribute();
-+
-+        nbttagcompound.setString("Name", iattribute.getName());
-+        nbttagcompound.setDouble("Base", attributeinstance.getBaseValue());
-+        Collection<AttributeModifier> collection = attributeinstance.getModifiers();
-+
-+        if (collection != null && !collection.isEmpty()) {
-+            NBTTagList nbttaglist = new NBTTagList();
-+            Iterator iterator = collection.iterator();
-+
-+            while (iterator.hasNext()) {
-+                AttributeModifier attributemodifier = (AttributeModifier) iterator.next();
-+
-+                if (attributemodifier.e()) {
-+                    nbttaglist.add(a(attributemodifier));
-+                }
-+            }
-+
-+            nbttagcompound.set("Modifiers", nbttaglist);
-+        }
-+
-+        return nbttagcompound;
-+    }
-+
-+    public static NBTTagCompound a(AttributeModifier attributemodifier) {
-+        NBTTagCompound nbttagcompound = new NBTTagCompound();
-+
-+        nbttagcompound.setString("Name", attributemodifier.getName());
-+        nbttagcompound.setDouble("Amount", attributemodifier.getAmount());
-+        nbttagcompound.setInt("Operation", attributemodifier.getOperation().a());
-+        nbttagcompound.a("UUID", attributemodifier.getUniqueId());
-+        return nbttagcompound;
-+    }
-+
-+    public static void a(AttributeMapBase attributemapbase, NBTTagList nbttaglist) {
-+        for (int i = 0; i < nbttaglist.size(); ++i) {
-+            NBTTagCompound nbttagcompound = nbttaglist.getCompound(i);
-+            AttributeInstance attributeinstance = attributemapbase.a(nbttagcompound.getString("Name"));
-+
-+            if (attributeinstance == null) {
-+                GenericAttributes.LOGGER.warn("Ignoring unknown attribute '{}'", nbttagcompound.getString("Name"));
-+            } else {
-+                a(attributeinstance, nbttagcompound);
-+            }
-+        }
-+
-+    }
-+
-+    private static void a(AttributeInstance attributeinstance, NBTTagCompound nbttagcompound) {
-+        attributeinstance.setValue(nbttagcompound.getDouble("Base"));
-+        if (nbttagcompound.hasKeyOfType("Modifiers", 9)) {
-+            NBTTagList nbttaglist = nbttagcompound.getList("Modifiers", 10);
-+
-+            for (int i = 0; i < nbttaglist.size(); ++i) {
-+                AttributeModifier attributemodifier = a(nbttaglist.getCompound(i));
-+
-+                if (attributemodifier != null) {
-+                    AttributeModifier attributemodifier1 = attributeinstance.a(attributemodifier.getUniqueId());
-+
-+                    if (attributemodifier1 != null) {
-+                        attributeinstance.removeModifier(attributemodifier1);
-+                    }
-+
-+                    attributeinstance.addModifier(attributemodifier);
-+                }
-+            }
-+        }
-+
-+    }
-+
-+    @Nullable
-+    public static AttributeModifier a(NBTTagCompound nbttagcompound) {
-+        UUID uuid = nbttagcompound.a("UUID");
-+
-+        try {
-+            AttributeModifier.Operation attributemodifier_operation = AttributeModifier.Operation.a(nbttagcompound.getInt("Operation"));
-+
-+            return new AttributeModifier(uuid, nbttagcompound.getString("Name"), nbttagcompound.getDouble("Amount"), attributemodifier_operation);
-+        } catch (Exception exception) {
-+            GenericAttributes.LOGGER.warn("Unable to create attribute: {}", exception.getMessage());
-+            return null;
-+        }
++    private static AttributeBase a(String s, AttributeBase attributebase) {
++        return (AttributeBase) IRegistry.a(IRegistry.ATTRIBUTE, s, attributebase);
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/ItemDebugStick.java b/src/main/java/net/minecraft/server/ItemDebugStick.java
 new file mode 100644
-index 000000000..a67f89bc3
+index 000000000..bc74453c8
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ItemDebugStick.java
 @@ -0,0 +1,90 @@
@@ -1532,7 +1909,7 @@ index 000000000..a67f89bc3
 +    }
 +
 +    @Override
-+    public boolean d_(ItemStack itemstack) {
++    public boolean e(ItemStack itemstack) {
 +        return true;
 +    }
 +
@@ -1556,7 +1933,7 @@ index 000000000..a67f89bc3
 +            this.a(entityhuman, world.getType(blockposition), world, blockposition, true, itemactioncontext.getItemStack());
 +        }
 +
-+        return EnumInteractionResult.SUCCESS;
++        return EnumInteractionResult.a(world.isClientSide);
 +    }
 +
 +    private void a(EntityHuman entityhuman, IBlockData iblockdata, GeneratorAccess generatoraccess, BlockPosition blockposition, boolean flag, ItemStack itemstack) {
@@ -1578,13 +1955,13 @@ index 000000000..a67f89bc3
 +                        iblockstate = (IBlockState) collection.iterator().next();
 +                    }
 +
-+                    IBlockData iblockdata1 = a(iblockdata, iblockstate, entityhuman.dT());
++                    IBlockData iblockdata1 = a(iblockdata, iblockstate, entityhuman.ep());
 +
 +                    generatoraccess.setTypeAndData(blockposition, iblockdata1, 18);
-+                    a(entityhuman, (IChatBaseComponent) (new ChatMessage(this.getName() + ".update", new Object[]{iblockstate.a(), a(iblockdata1, iblockstate)})));
++                    a(entityhuman, (IChatBaseComponent) (new ChatMessage(this.getName() + ".update", new Object[]{iblockstate.getName(), a(iblockdata1, iblockstate)})));
 +                } else {
-+                    iblockstate = (IBlockState) a((Iterable) collection, (Object) iblockstate, entityhuman.dT());
-+                    String s2 = iblockstate.a();
++                    iblockstate = (IBlockState) a((Iterable) collection, (Object) iblockstate, entityhuman.ep());
++                    String s2 = iblockstate.getName();
 +
 +                    nbttagcompound.setString(s, s2);
 +                    a(entityhuman, (IChatBaseComponent) (new ChatMessage(this.getName() + ".select", new Object[]{s2, a(iblockdata, iblockstate)})));
@@ -1603,7 +1980,7 @@ index 000000000..a67f89bc3
 +    }
 +
 +    private static void a(EntityHuman entityhuman, IChatBaseComponent ichatbasecomponent) {
-+        ((EntityPlayer) entityhuman).a(ichatbasecomponent, ChatMessageType.GAME_INFO);
++        ((EntityPlayer) entityhuman).a(ichatbasecomponent, ChatMessageType.GAME_INFO, SystemUtils.b);
 +    }
 +
 +    private static <T extends Comparable<T>> String a(IBlockData iblockdata, IBlockState<T> iblockstate) {
@@ -1735,10 +2112,10 @@ index 000000000..1514aebf5
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTTagByteArray.java b/src/main/java/net/minecraft/server/NBTTagByteArray.java
 new file mode 100644
-index 000000000..d631544a3
+index 000000000..de8bd9b3c
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NBTTagByteArray.java
-@@ -0,0 +1,176 @@
+@@ -0,0 +1,181 @@
 +package net.minecraft.server;
 +
 +import java.io.DataInput;
@@ -1844,20 +2221,20 @@ index 000000000..d631544a3
 +
 +    @Override
 +    public IChatBaseComponent a(String s, int i) {
-+        IChatBaseComponent ichatbasecomponent = (new ChatComponentText("B")).a(NBTTagByteArray.g);
-+        IChatBaseComponent ichatbasecomponent1 = (new ChatComponentText("[")).addSibling(ichatbasecomponent).a(";");
++        IChatMutableComponent ichatmutablecomponent = (new ChatComponentText("B")).a(NBTTagByteArray.g);
++        IChatMutableComponent ichatmutablecomponent1 = (new ChatComponentText("[")).addSibling(ichatmutablecomponent).c(";");
 +
 +        for (int j = 0; j < this.data.length; ++j) {
-+            IChatBaseComponent ichatbasecomponent2 = (new ChatComponentText(String.valueOf(this.data[j]))).a(NBTTagByteArray.f);
++            IChatMutableComponent ichatmutablecomponent2 = (new ChatComponentText(String.valueOf(this.data[j]))).a(NBTTagByteArray.f);
 +
-+            ichatbasecomponent1.a(" ").addSibling(ichatbasecomponent2).addSibling(ichatbasecomponent);
++            ichatmutablecomponent1.c(" ").addSibling(ichatmutablecomponent2).addSibling(ichatmutablecomponent);
 +            if (j != this.data.length - 1) {
-+                ichatbasecomponent1.a(",");
++                ichatmutablecomponent1.c(",");
 +            }
 +        }
 +
-+        ichatbasecomponent1.a("]");
-+        return ichatbasecomponent1;
++        ichatmutablecomponent1.c("]");
++        return ichatmutablecomponent1;
 +    }
 +
 +    public byte[] getBytes() {
@@ -1911,16 +2288,21 @@ index 000000000..d631544a3
 +        return NBTTagByte.a(b0);
 +    }
 +
++    @Override
++    public byte d_() {
++        return 1;
++    }
++
 +    public void clear() {
 +        this.data = new byte[0];
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/server/NBTTagIntArray.java b/src/main/java/net/minecraft/server/NBTTagIntArray.java
 new file mode 100644
-index 000000000..6e46754f1
+index 000000000..98f589514
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/NBTTagIntArray.java
-@@ -0,0 +1,185 @@
+@@ -0,0 +1,190 @@
 +package net.minecraft.server;
 +
 +import java.io.DataInput;
@@ -2041,18 +2423,18 @@ index 000000000..6e46754f1
 +
 +    @Override
 +    public IChatBaseComponent a(String s, int i) {
-+        IChatBaseComponent ichatbasecomponent = (new ChatComponentText("I")).a(NBTTagIntArray.g);
-+        IChatBaseComponent ichatbasecomponent1 = (new ChatComponentText("[")).addSibling(ichatbasecomponent).a(";");
++        IChatMutableComponent ichatmutablecomponent = (new ChatComponentText("I")).a(NBTTagIntArray.g);
++        IChatMutableComponent ichatmutablecomponent1 = (new ChatComponentText("[")).addSibling(ichatmutablecomponent).c(";");
 +
 +        for (int j = 0; j < this.data.length; ++j) {
-+            ichatbasecomponent1.a(" ").addSibling((new ChatComponentText(String.valueOf(this.data[j]))).a(NBTTagIntArray.f));
++            ichatmutablecomponent1.c(" ").addSibling((new ChatComponentText(String.valueOf(this.data[j]))).a(NBTTagIntArray.f));
 +            if (j != this.data.length - 1) {
-+                ichatbasecomponent1.a(",");
++                ichatmutablecomponent1.c(",");
 +            }
 +        }
 +
-+        ichatbasecomponent1.a("]");
-+        return ichatbasecomponent1;
++        ichatmutablecomponent1.c("]");
++        return ichatmutablecomponent1;
 +    }
 +
 +    public int size() {
@@ -2100,6 +2482,11 @@ index 000000000..6e46754f1
 +
 +        this.data = ArrayUtils.remove(this.data, i);
 +        return NBTTagInt.a(j);
++    }
++
++    @Override
++    public byte d_() {
++        return 3;
 +    }
 +
 +    public void clear() {
@@ -2382,40 +2769,41 @@ index 000000000..2f8160ed1
 +}
 diff --git a/src/main/java/net/minecraft/server/PacketPlayOutChat.java b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
 new file mode 100644
-index 000000000..417c26775
+index 000000000..40e0ea5bc
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
-@@ -0,0 +1,49 @@
+@@ -0,0 +1,50 @@
 +package net.minecraft.server;
 +
 +import java.io.IOException;
++import java.util.UUID;
 +
 +public class PacketPlayOutChat implements Packet<PacketListenerPlayOut> {
 +
 +    private IChatBaseComponent a;
 +    private ChatMessageType b;
++    private UUID c;
 +
 +    public PacketPlayOutChat() {}
 +
-+    public PacketPlayOutChat(IChatBaseComponent ichatbasecomponent) {
-+        this(ichatbasecomponent, ChatMessageType.SYSTEM);
-+    }
-+
-+    public PacketPlayOutChat(IChatBaseComponent ichatbasecomponent, ChatMessageType chatmessagetype) {
++    public PacketPlayOutChat(IChatBaseComponent ichatbasecomponent, ChatMessageType chatmessagetype, UUID uuid) {
 +        this.a = ichatbasecomponent;
 +        this.b = chatmessagetype;
++        this.c = uuid;
 +    }
 +
 +    @Override
 +    public void a(PacketDataSerializer packetdataserializer) throws IOException {
 +        this.a = packetdataserializer.h();
 +        this.b = ChatMessageType.a(packetdataserializer.readByte());
++        this.c = packetdataserializer.k();
 +    }
 +
 +    @Override
 +    public void b(PacketDataSerializer packetdataserializer) throws IOException {
 +        packetdataserializer.a(this.a);
 +        packetdataserializer.writeByte(this.b.a());
++        packetdataserializer.a(this.c);
 +    }
 +
 +    public void a(PacketListenerPlayOut packetlistenerplayout) {
@@ -2437,10 +2825,10 @@ index 000000000..417c26775
 +}
 diff --git a/src/main/java/net/minecraft/server/RegionFile.java b/src/main/java/net/minecraft/server/RegionFile.java
 new file mode 100644
-index 000000000..e81000007
+index 000000000..e48c39fd2
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/RegionFile.java
-@@ -0,0 +1,390 @@
+@@ -0,0 +1,395 @@
 +package net.minecraft.server;
 +
 +import java.io.BufferedInputStream;
@@ -2476,11 +2864,11 @@ index 000000000..e81000007
 +    private final IntBuffer h;
 +    private final RegionFileBitSet freeSectors;
 +
-+    public RegionFile(File file, File file1) throws IOException {
-+        this(file.toPath(), file1.toPath(), RegionFileCompression.b);
++    public RegionFile(File file, File file1, boolean flag) throws IOException {
++        this(file.toPath(), file1.toPath(), RegionFileCompression.b, flag);
 +    }
 +
-+    public RegionFile(java.nio.file.Path java_nio_file_path, java.nio.file.Path java_nio_file_path1, RegionFileCompression regionfilecompression) throws IOException {
++    public RegionFile(java.nio.file.Path java_nio_file_path, java.nio.file.Path java_nio_file_path1, RegionFileCompression regionfilecompression, boolean flag) throws IOException {
 +        this.f = ByteBuffer.allocateDirect(8192);
 +        this.freeSectors = new RegionFileBitSet();
 +        this.e = regionfilecompression;
@@ -2492,7 +2880,12 @@ index 000000000..e81000007
 +            ((java.nio.Buffer) this.g).limit(1024);
 +            ((java.nio.Buffer) this.f).position(4096);
 +            this.h = this.f.asIntBuffer();
-+            this.dataFile = FileChannel.open(java_nio_file_path, StandardOpenOption.CREATE, StandardOpenOption.READ, StandardOpenOption.WRITE);
++            if (flag) {
++                this.dataFile = FileChannel.open(java_nio_file_path, StandardOpenOption.CREATE, StandardOpenOption.READ, StandardOpenOption.WRITE, StandardOpenOption.DSYNC);
++            } else {
++                this.dataFile = FileChannel.open(java_nio_file_path, StandardOpenOption.CREATE, StandardOpenOption.READ, StandardOpenOption.WRITE);
++            }
++
 +            this.freeSectors.a(0, 2);
 +            ((java.nio.Buffer) this.f).position(0);
 +            int i = this.dataFile.read(this.f, 0L);
@@ -2677,6 +3070,10 @@ index 000000000..e81000007
 +        return new DataOutputStream(new BufferedOutputStream(this.e.a((OutputStream) (new RegionFile.ChunkBuffer(chunkcoordintpair)))));
 +    }
 +
++    public void a() throws IOException {
++        this.dataFile.force(true);
++    }
++
 +    protected synchronized void a(ChunkCoordIntPair chunkcoordintpair, ByteBuffer bytebuffer) throws IOException {
 +        int i = g(chunkcoordintpair);
 +        int j = this.g.get(i);
@@ -2694,7 +3091,7 @@ index 000000000..e81000007
 +            j1 = 1;
 +            k1 = this.freeSectors.a(j1);
 +            regionfile_b = this.a(java_nio_file_path, bytebuffer);
-+            ByteBuffer bytebuffer1 = this.a();
++            ByteBuffer bytebuffer1 = this.b();
 +
 +            this.dataFile.write(bytebuffer1, (long) (k1 * 4096));
 +        } else {
@@ -2709,7 +3106,7 @@ index 000000000..e81000007
 +
 +        this.g.put(i, this.a(k1, j1));
 +        this.h.put(i, l1);
-+        this.b();
++        this.c();
 +        regionfile_b.run();
 +        if (k != 0) {
 +            this.freeSectors.b(k, l);
@@ -2717,7 +3114,7 @@ index 000000000..e81000007
 +
 +    }
 +
-+    private ByteBuffer a() {
++    private ByteBuffer b() {
 +        ByteBuffer bytebuffer = ByteBuffer.allocate(5);
 +
 +        bytebuffer.putInt(1);
@@ -2757,7 +3154,7 @@ index 000000000..e81000007
 +        };
 +    }
 +
-+    private void b() throws IOException {
++    private void c() throws IOException {
 +        ((java.nio.Buffer) this.f).position(0);
 +        this.dataFile.write(this.f, 0L);
 +    }
@@ -2776,22 +3173,18 @@ index 000000000..e81000007
 +
 +    public void close() throws IOException {
 +        try {
-+            this.c();
++            this.d();
 +        } finally {
 +            try {
-+                this.b();
++                this.dataFile.force(true);
 +            } finally {
-+                try {
-+                    this.dataFile.force(true);
-+                } finally {
-+                    this.dataFile.close();
-+                }
++                this.dataFile.close();
 +            }
 +        }
 +
 +    }
 +
-+    private void c() throws IOException {
++    private void d() throws IOException {
 +        int i = (int) this.dataFile.size();
 +        int j = c(i) * 4096;
 +
@@ -2833,7 +3226,7 @@ index 000000000..e81000007
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerStatisticManager.java b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 new file mode 100644
-index 000000000..126ff29e9
+index 000000000..690861ba5
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 @@ -0,0 +1,234 @@
@@ -2856,9 +3249,9 @@ index 000000000..126ff29e9
 +import java.io.StringReader;
 +import java.util.Iterator;
 +import java.util.Map;
++import java.util.Map.Entry;
 +import java.util.Optional;
 +import java.util.Set;
-+import java.util.Map.Entry;
 +import org.apache.logging.log4j.LogManager;
 +import org.apache.logging.log4j.Logger;
 +
@@ -2875,7 +3268,7 @@ index 000000000..126ff29e9
 +        this.d = file;
 +        if (file.isFile()) {
 +            try {
-+                this.a(minecraftserver.aC(), org.apache.commons.io.FileUtils.readFileToString(file));
++                this.a(minecraftserver.getDataFixer(), org.apache.commons.io.FileUtils.readFileToString(file));
 +            } catch (IOException ioexception) {
 +                ServerStatisticManager.LOGGER.error("Couldn't read statistics file {}", file, ioexception);
 +            } catch (JsonParseException jsonparseexception) {
@@ -2885,7 +3278,7 @@ index 000000000..126ff29e9
 +
 +    }
 +
-+    public void a() {
++    public void save() {
 +        try {
 +            org.apache.commons.io.FileUtils.writeStringToFile(this.d, this.b());
 +        } catch (IOException ioexception) {
@@ -3054,7 +3447,7 @@ index 000000000..126ff29e9
 +    }
 +
 +    public void a(EntityPlayer entityplayer) {
-+        int i = this.c.ak();
++        int i = this.c.ag();
 +        Object2IntMap<Statistic<?>> object2intmap = new Object2IntOpenHashMap();
 +
 +        if (i - this.f > 300) {
@@ -3071,12 +3464,79 @@ index 000000000..126ff29e9
 +        entityplayer.playerConnection.sendPacket(new PacketPlayOutStatistic(object2intmap));
 +    }
 +}
+diff --git a/src/main/java/net/minecraft/server/StructureManager.java b/src/main/java/net/minecraft/server/StructureManager.java
+new file mode 100644
+index 000000000..f5c5597b9
+--- /dev/null
++++ b/src/main/java/net/minecraft/server/StructureManager.java
+@@ -0,0 +1,61 @@
++package net.minecraft.server;
++
++import com.mojang.datafixers.DataFixUtils;
++import java.util.stream.Stream;
++import javax.annotation.Nullable;
++
++public class StructureManager {
++
++    private final GeneratorAccess a;
++    private final GeneratorSettings b;
++
++    public StructureManager(GeneratorAccess generatoraccess, GeneratorSettings generatorsettings) {
++        this.a = generatoraccess;
++        this.b = generatorsettings;
++    }
++
++    public StructureManager a(RegionLimitedWorldAccess regionlimitedworldaccess) {
++        if (regionlimitedworldaccess.getMinecraftWorld() != this.a) {
++            throw new IllegalStateException("Using invalid feature manager (source level: " + regionlimitedworldaccess.getMinecraftWorld() + ", region: " + regionlimitedworldaccess);
++        } else {
++            return new StructureManager(regionlimitedworldaccess, this.b);
++        }
++    }
++
++    public Stream<? extends StructureStart<?>> a(SectionPosition sectionposition, StructureGenerator<?> structuregenerator) {
++        return this.a.getChunkAt(sectionposition.a(), sectionposition.c(), ChunkStatus.STRUCTURE_REFERENCES).b(structuregenerator).stream().map((olong) -> {
++            return SectionPosition.a(new ChunkCoordIntPair(olong), 0);
++        }).map((sectionposition1) -> {
++            return this.a(sectionposition1, structuregenerator, this.a.getChunkAt(sectionposition1.a(), sectionposition1.c(), ChunkStatus.STRUCTURE_STARTS));
++        }).filter((structurestart) -> {
++            return structurestart != null && structurestart.e();
++        });
++    }
++
++    @Nullable
++    public StructureStart<?> a(SectionPosition sectionposition, StructureGenerator<?> structuregenerator, IStructureAccess istructureaccess) {
++        return istructureaccess.a(structuregenerator);
++    }
++
++    public void a(SectionPosition sectionposition, StructureGenerator<?> structuregenerator, StructureStart<?> structurestart, IStructureAccess istructureaccess) {
++        istructureaccess.a(structuregenerator, structurestart);
++    }
++
++    public void a(SectionPosition sectionposition, StructureGenerator<?> structuregenerator, long i, IStructureAccess istructureaccess) {
++        istructureaccess.a(structuregenerator, i);
++    }
++
++    public boolean a() {
++        return this.b.shouldGenerateMapFeatures();
++    }
++
++    public StructureStart<?> a(BlockPosition blockposition, boolean flag, StructureGenerator<?> structuregenerator) {
++        return (StructureStart) DataFixUtils.orElse(this.a(SectionPosition.a(blockposition), structuregenerator).filter((structurestart) -> {
++            return structurestart.c().b((BaseBlockPosition) blockposition);
++        }).filter((structurestart) -> {
++            return !flag || structurestart.d().stream().anyMatch((structurepiece) -> {
++                return structurepiece.g().b((BaseBlockPosition) blockposition);
++            });
++        }).findFirst(), StructureStart.a);
++    }
++}
 diff --git a/src/main/java/net/minecraft/server/TileEntitySkull.java b/src/main/java/net/minecraft/server/TileEntitySkull.java
 new file mode 100644
-index 000000000..895a8dfb8
+index 000000000..6cc7519d9
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/TileEntitySkull.java
-@@ -0,0 +1,119 @@
+@@ -0,0 +1,123 @@
 +package net.minecraft.server;
 +
 +import com.google.common.collect.Iterables;
@@ -3088,11 +3548,14 @@ index 000000000..895a8dfb8
 +
 +public class TileEntitySkull extends TileEntity implements ITickable {
 +
-+    public GameProfile gameProfile;
-+    private int b;
-+    private boolean c;
++    @Nullable
 +    private static UserCache userCache;
++    @Nullable
 +    private static MinecraftSessionService sessionService;
++    @Nullable
++    public GameProfile gameProfile;
++    private int g;
++    private boolean h;
 +
 +    public TileEntitySkull() {
 +        super(TileEntityTypes.SKULL);
@@ -3113,17 +3576,17 @@ index 000000000..895a8dfb8
 +            NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 +
 +            GameProfileSerializer.serialize(nbttagcompound1, this.gameProfile);
-+            nbttagcompound.set("Owner", nbttagcompound1);
++            nbttagcompound.set("SkullOwner", nbttagcompound1);
 +        }
 +
 +        return nbttagcompound;
 +    }
 +
 +    @Override
-+    public void load(NBTTagCompound nbttagcompound) {
-+        super.load(nbttagcompound);
-+        if (nbttagcompound.hasKeyOfType("Owner", 10)) {
-+            this.setGameProfile(GameProfileSerializer.deserialize(nbttagcompound.getCompound("Owner")));
++    public void load(IBlockData iblockdata, NBTTagCompound nbttagcompound) {
++        super.load(iblockdata, nbttagcompound);
++        if (nbttagcompound.hasKeyOfType("SkullOwner", 10)) {
++            this.setGameProfile(GameProfileSerializer.deserialize(nbttagcompound.getCompound("SkullOwner")));
 +        } else if (nbttagcompound.hasKeyOfType("ExtraType", 8)) {
 +            String s = nbttagcompound.getString("ExtraType");
 +
@@ -3136,14 +3599,14 @@ index 000000000..895a8dfb8
 +
 +    @Override
 +    public void tick() {
-+        Block block = this.getBlock().getBlock();
++        IBlockData iblockdata = this.getBlock();
 +
-+        if (block == Blocks.DRAGON_HEAD || block == Blocks.DRAGON_WALL_HEAD) {
++        if (iblockdata.a(Blocks.DRAGON_HEAD) || iblockdata.a(Blocks.DRAGON_WALL_HEAD)) {
 +            if (this.world.isBlockIndirectlyPowered(this.position)) {
-+                this.c = true;
-+                ++this.b;
++                this.h = true;
++                ++this.g;
 +            } else {
-+                this.c = false;
++                this.h = false;
 +            }
 +        }
 +
@@ -3170,7 +3633,8 @@ index 000000000..895a8dfb8
 +        this.update();
 +    }
 +
-+    public static GameProfile b(GameProfile gameprofile) {
++    @Nullable
++    public static GameProfile b(@Nullable GameProfile gameprofile) {
 +        if (gameprofile != null && !UtilColor.b(gameprofile.getName())) {
 +            if (gameprofile.isComplete() && gameprofile.getProperties().containsKey("textures")) {
 +                return gameprofile;
@@ -3193,870 +3657,6 @@ index 000000000..895a8dfb8
 +            }
 +        } else {
 +            return gameprofile;
-+        }
-+    }
-+}
-diff --git a/src/main/java/net/minecraft/server/WorldGenEndCity.java b/src/main/java/net/minecraft/server/WorldGenEndCity.java
-new file mode 100644
-index 000000000..99ae7ea9f
---- /dev/null
-+++ b/src/main/java/net/minecraft/server/WorldGenEndCity.java
-@@ -0,0 +1,108 @@
-+package net.minecraft.server;
-+
-+import com.mojang.datafixers.Dynamic;
-+import java.util.Random;
-+import java.util.function.Function;
-+
-+public class WorldGenEndCity extends StructureGenerator<WorldGenFeatureEmptyConfiguration> {
-+
-+    public WorldGenEndCity(Function<Dynamic<?>, ? extends WorldGenFeatureEmptyConfiguration> function) {
-+        super(function);
-+    }
-+
-+    @Override
-+    protected ChunkCoordIntPair a(ChunkGenerator<?> chunkgenerator, Random random, int i, int j, int k, int l) {
-+        int i1 = chunkgenerator.getSettings().n();
-+        int j1 = chunkgenerator.getSettings().o();
-+        int k1 = i + i1 * k;
-+        int l1 = j + i1 * l;
-+        int i2 = k1 < 0 ? k1 - i1 + 1 : k1;
-+        int j2 = l1 < 0 ? l1 - i1 + 1 : l1;
-+        int k2 = i2 / i1;
-+        int l2 = j2 / i1;
-+
-+        ((SeededRandom) random).a(chunkgenerator.getSeed(), k2, l2, 10387313);
-+        k2 *= i1;
-+        l2 *= i1;
-+        k2 += (random.nextInt(i1 - j1) + random.nextInt(i1 - j1)) / 2;
-+        l2 += (random.nextInt(i1 - j1) + random.nextInt(i1 - j1)) / 2;
-+        return new ChunkCoordIntPair(k2, l2);
-+    }
-+
-+    @Override
-+    public boolean a(BiomeManager biomemanager, ChunkGenerator<?> chunkgenerator, Random random, int i, int j, BiomeBase biomebase) {
-+        ChunkCoordIntPair chunkcoordintpair = this.a(chunkgenerator, random, i, j, 0, 0);
-+
-+        if (i == chunkcoordintpair.x && j == chunkcoordintpair.z) {
-+            if (!chunkgenerator.canSpawnStructure(biomebase, this)) {
-+                return false;
-+            } else {
-+                int k = b(i, j, chunkgenerator);
-+
-+                return k >= 60;
-+            }
-+        } else {
-+            return false;
-+        }
-+    }
-+
-+    @Override
-+    public StructureGenerator.a a() {
-+        return WorldGenEndCity.a::new;
-+    }
-+
-+    @Override
-+    public String b() {
-+        return "EndCity";
-+    }
-+
-+    @Override
-+    public int c() {
-+        return 8;
-+    }
-+
-+    private static int b(int i, int j, ChunkGenerator<?> chunkgenerator) {
-+        Random random = new Random((long) (i + j * 10387313));
-+        EnumBlockRotation enumblockrotation = EnumBlockRotation.values()[random.nextInt(EnumBlockRotation.values().length)];
-+        byte b0 = 5;
-+        byte b1 = 5;
-+
-+        if (enumblockrotation == EnumBlockRotation.CLOCKWISE_90) {
-+            b0 = -5;
-+        } else if (enumblockrotation == EnumBlockRotation.CLOCKWISE_180) {
-+            b0 = -5;
-+            b1 = -5;
-+        } else if (enumblockrotation == EnumBlockRotation.COUNTERCLOCKWISE_90) {
-+            b1 = -5;
-+        }
-+
-+        int k = (i << 4) + 7;
-+        int l = (j << 4) + 7;
-+        int i1 = chunkgenerator.c(k, l, HeightMap.Type.WORLD_SURFACE_WG);
-+        int j1 = chunkgenerator.c(k, l + b1, HeightMap.Type.WORLD_SURFACE_WG);
-+        int k1 = chunkgenerator.c(k + b0, l, HeightMap.Type.WORLD_SURFACE_WG);
-+        int l1 = chunkgenerator.c(k + b0, l + b1, HeightMap.Type.WORLD_SURFACE_WG);
-+
-+        return Math.min(Math.min(i1, j1), Math.min(k1, l1));
-+    }
-+
-+    public static class a extends StructureStart {
-+
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, structureboundingbox, k, l);
-+        }
-+
-+        @Override
-+        public void a(ChunkGenerator<?> chunkgenerator, DefinedStructureManager definedstructuremanager, int i, int j, BiomeBase biomebase) {
-+            EnumBlockRotation enumblockrotation = EnumBlockRotation.values()[this.d.nextInt(EnumBlockRotation.values().length)];
-+            int k = WorldGenEndCity.b(i, j, chunkgenerator);
-+
-+            if (k >= 60) {
-+                BlockPosition blockposition = new BlockPosition(i * 16 + 8, k, j * 16 + 8);
-+
-+                WorldGenEndCityPieces.a(definedstructuremanager, blockposition, enumblockrotation, this.b, this.d);
-+                this.b();
-+            }
-+        }
-+    }
-+}
-diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java b/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
-new file mode 100644
-index 000000000..3a51d5cc4
---- /dev/null
-+++ b/src/main/java/net/minecraft/server/WorldGenFeatureDesertPyramid.java
-@@ -0,0 +1,46 @@
-+package net.minecraft.server;
-+
-+import com.mojang.datafixers.Dynamic;
-+import java.util.function.Function;
-+
-+public class WorldGenFeatureDesertPyramid extends WorldGenFeatureRandomScattered<WorldGenFeatureEmptyConfiguration> {
-+
-+    public WorldGenFeatureDesertPyramid(Function<Dynamic<?>, ? extends WorldGenFeatureEmptyConfiguration> function) {
-+        super(function);
-+    }
-+
-+    @Override
-+    public String b() {
-+        return "Desert_Pyramid";
-+    }
-+
-+    @Override
-+    public int c() {
-+        return 3;
-+    }
-+
-+    @Override
-+    public StructureGenerator.a a() {
-+        return WorldGenFeatureDesertPyramid.a::new;
-+    }
-+
-+    @Override
-+    protected int getSeed() {
-+        return 14357617;
-+    }
-+
-+    public static class a extends StructureStart {
-+
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, structureboundingbox, k, l);
-+        }
-+
-+        @Override
-+        public void a(ChunkGenerator<?> chunkgenerator, DefinedStructureManager definedstructuremanager, int i, int j, BiomeBase biomebase) {
-+            WorldGenDesertPyramidPiece worldgendesertpyramidpiece = new WorldGenDesertPyramidPiece(this.d, i * 16, j * 16);
-+
-+            this.b.add(worldgendesertpyramidpiece);
-+            this.b();
-+        }
-+    }
-+}
-diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java b/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java
-new file mode 100644
-index 000000000..4adc569df
---- /dev/null
-+++ b/src/main/java/net/minecraft/server/WorldGenFeatureIgloo.java
-@@ -0,0 +1,50 @@
-+package net.minecraft.server;
-+
-+import com.mojang.datafixers.Dynamic;
-+import java.util.function.Function;
-+
-+public class WorldGenFeatureIgloo extends WorldGenFeatureRandomScattered<WorldGenFeatureEmptyConfiguration> {
-+
-+    public WorldGenFeatureIgloo(Function<Dynamic<?>, ? extends WorldGenFeatureEmptyConfiguration> function) {
-+        super(function);
-+    }
-+
-+    @Override
-+    public String b() {
-+        return "Igloo";
-+    }
-+
-+    @Override
-+    public int c() {
-+        return 3;
-+    }
-+
-+    @Override
-+    public StructureGenerator.a a() {
-+        return WorldGenFeatureIgloo.a::new;
-+    }
-+
-+    @Override
-+    protected int getSeed() {
-+        return 14357618;
-+    }
-+
-+    public static class a extends StructureStart {
-+
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, structureboundingbox, k, l);
-+        }
-+
-+        @Override
-+        public void a(ChunkGenerator<?> chunkgenerator, DefinedStructureManager definedstructuremanager, int i, int j, BiomeBase biomebase) {
-+            WorldGenFeatureEmptyConfiguration worldgenfeatureemptyconfiguration = (WorldGenFeatureEmptyConfiguration) chunkgenerator.getFeatureConfiguration(biomebase, WorldGenerator.IGLOO);
-+            int k = i * 16;
-+            int l = j * 16;
-+            BlockPosition blockposition = new BlockPosition(k, 90, l);
-+            EnumBlockRotation enumblockrotation = EnumBlockRotation.values()[this.d.nextInt(EnumBlockRotation.values().length)];
-+
-+            WorldGenIglooPiece.a(definedstructuremanager, blockposition, enumblockrotation, this.b, this.d, worldgenfeatureemptyconfiguration);
-+            this.b();
-+        }
-+    }
-+}
-diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java b/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java
-new file mode 100644
-index 000000000..130a2e92b
---- /dev/null
-+++ b/src/main/java/net/minecraft/server/WorldGenFeatureJunglePyramid.java
-@@ -0,0 +1,46 @@
-+package net.minecraft.server;
-+
-+import com.mojang.datafixers.Dynamic;
-+import java.util.function.Function;
-+
-+public class WorldGenFeatureJunglePyramid extends WorldGenFeatureRandomScattered<WorldGenFeatureEmptyConfiguration> {
-+
-+    public WorldGenFeatureJunglePyramid(Function<Dynamic<?>, ? extends WorldGenFeatureEmptyConfiguration> function) {
-+        super(function);
-+    }
-+
-+    @Override
-+    public String b() {
-+        return "Jungle_Pyramid";
-+    }
-+
-+    @Override
-+    public int c() {
-+        return 3;
-+    }
-+
-+    @Override
-+    public StructureGenerator.a a() {
-+        return WorldGenFeatureJunglePyramid.a::new;
-+    }
-+
-+    @Override
-+    protected int getSeed() {
-+        return 14357619;
-+    }
-+
-+    public static class a extends StructureStart {
-+
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, structureboundingbox, k, l);
-+        }
-+
-+        @Override
-+        public void a(ChunkGenerator<?> chunkgenerator, DefinedStructureManager definedstructuremanager, int i, int j, BiomeBase biomebase) {
-+            WorldGenJunglePyramidPiece worldgenjunglepyramidpiece = new WorldGenJunglePyramidPiece(this.d, i * 16, j * 16);
-+
-+            this.b.add(worldgenjunglepyramidpiece);
-+            this.b();
-+        }
-+    }
-+}
-diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java b/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java
-new file mode 100644
-index 000000000..547c93028
---- /dev/null
-+++ b/src/main/java/net/minecraft/server/WorldGenFeatureOceanRuin.java
-@@ -0,0 +1,86 @@
-+package net.minecraft.server;
-+
-+import com.mojang.datafixers.Dynamic;
-+import java.util.Arrays;
-+import java.util.Map;
-+import java.util.Random;
-+import java.util.function.Function;
-+import java.util.stream.Collectors;
-+
-+public class WorldGenFeatureOceanRuin extends WorldGenFeatureRandomScattered<WorldGenFeatureOceanRuinConfiguration> {
-+
-+    public WorldGenFeatureOceanRuin(Function<Dynamic<?>, ? extends WorldGenFeatureOceanRuinConfiguration> function) {
-+        super(function);
-+    }
-+
-+    @Override
-+    public String b() {
-+        return "Ocean_Ruin";
-+    }
-+
-+    @Override
-+    public int c() {
-+        return 3;
-+    }
-+
-+    @Override
-+    protected int a(ChunkGenerator<?> chunkgenerator) {
-+        return chunkgenerator.getSettings().l();
-+    }
-+
-+    @Override
-+    protected int b(ChunkGenerator<?> chunkgenerator) {
-+        return chunkgenerator.getSettings().m();
-+    }
-+
-+    @Override
-+    public StructureGenerator.a a() {
-+        return WorldGenFeatureOceanRuin.a::new;
-+    }
-+
-+    @Override
-+    protected int getSeed() {
-+        return 14357621;
-+    }
-+
-+    public static enum Temperature {
-+
-+        WARM("warm"), COLD("cold");
-+
-+        private static final Map<String, WorldGenFeatureOceanRuin.Temperature> c = (Map) Arrays.stream(values()).collect(Collectors.toMap(WorldGenFeatureOceanRuin.Temperature::a, (worldgenfeatureoceanruin_temperature) -> {
-+            return worldgenfeatureoceanruin_temperature;
-+        }));
-+        private final String d;
-+
-+        private Temperature(String s) {
-+            this.d = s;
-+        }
-+
-+        public String a() {
-+            return this.d;
-+        }
-+
-+        public static WorldGenFeatureOceanRuin.Temperature a(String s) {
-+            return (WorldGenFeatureOceanRuin.Temperature) WorldGenFeatureOceanRuin.Temperature.c.get(s);
-+        }
-+    }
-+
-+    public static class a extends StructureStart {
-+
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, structureboundingbox, k, l);
-+        }
-+
-+        @Override
-+        public void a(ChunkGenerator<?> chunkgenerator, DefinedStructureManager definedstructuremanager, int i, int j, BiomeBase biomebase) {
-+            WorldGenFeatureOceanRuinConfiguration worldgenfeatureoceanruinconfiguration = (WorldGenFeatureOceanRuinConfiguration) chunkgenerator.getFeatureConfiguration(biomebase, WorldGenerator.OCEAN_RUIN);
-+            int k = i * 16;
-+            int l = j * 16;
-+            BlockPosition blockposition = new BlockPosition(k, 90, l);
-+            EnumBlockRotation enumblockrotation = EnumBlockRotation.values()[this.d.nextInt(EnumBlockRotation.values().length)];
-+
-+            WorldGenFeatureOceanRuinPieces.a(definedstructuremanager, blockposition, enumblockrotation, this.b, (Random) this.d, worldgenfeatureoceanruinconfiguration);
-+            this.b();
-+        }
-+    }
-+}
-diff --git a/src/main/java/net/minecraft/server/WorldGenFeaturePillagerOutpost.java b/src/main/java/net/minecraft/server/WorldGenFeaturePillagerOutpost.java
-new file mode 100644
-index 000000000..ed809c982
---- /dev/null
-+++ b/src/main/java/net/minecraft/server/WorldGenFeaturePillagerOutpost.java
-@@ -0,0 +1,86 @@
-+package net.minecraft.server;
-+
-+import com.google.common.collect.Lists;
-+import com.mojang.datafixers.Dynamic;
-+import java.util.List;
-+import java.util.Random;
-+import java.util.function.Function;
-+
-+public class WorldGenFeaturePillagerOutpost extends WorldGenFeatureRandomScattered<WorldGenFeatureEmptyConfiguration> {
-+
-+    private static final List<BiomeBase.BiomeMeta> a = Lists.newArrayList(new BiomeBase.BiomeMeta[]{new BiomeBase.BiomeMeta(EntityTypes.PILLAGER, 1, 1, 1)});
-+
-+    public WorldGenFeaturePillagerOutpost(Function<Dynamic<?>, ? extends WorldGenFeatureEmptyConfiguration> function) {
-+        super(function);
-+    }
-+
-+    @Override
-+    public String b() {
-+        return "Pillager_Outpost";
-+    }
-+
-+    @Override
-+    public int c() {
-+        return 3;
-+    }
-+
-+    @Override
-+    public List<BiomeBase.BiomeMeta> e() {
-+        return WorldGenFeaturePillagerOutpost.a;
-+    }
-+
-+    @Override
-+    public boolean a(BiomeManager biomemanager, ChunkGenerator<?> chunkgenerator, Random random, int i, int j, BiomeBase biomebase) {
-+        ChunkCoordIntPair chunkcoordintpair = this.a(chunkgenerator, random, i, j, 0, 0);
-+
-+        if (i == chunkcoordintpair.x && j == chunkcoordintpair.z) {
-+            int k = i >> 4;
-+            int l = j >> 4;
-+
-+            random.setSeed((long) (k ^ l << 4) ^ chunkgenerator.getSeed());
-+            random.nextInt();
-+            if (random.nextInt(5) != 0) {
-+                return false;
-+            }
-+
-+            if (chunkgenerator.canSpawnStructure(biomebase, this)) {
-+                for (int i1 = i - 10; i1 <= i + 10; ++i1) {
-+                    for (int j1 = j - 10; j1 <= j + 10; ++j1) {
-+                        if (WorldGenerator.VILLAGE.a(biomemanager, chunkgenerator, random, i1, j1, biomemanager.a(new BlockPosition((i1 << 4) + 9, 0, (j1 << 4) + 9)))) {
-+                            return false;
-+                        }
-+                    }
-+                }
-+
-+                return true;
-+            }
-+        }
-+
-+        return false;
-+    }
-+
-+    @Override
-+    public StructureGenerator.a a() {
-+        return WorldGenFeaturePillagerOutpost.a::new;
-+    }
-+
-+    @Override
-+    protected int getSeed() {
-+        return 165745296;
-+    }
-+
-+    public static class a extends StructureAbstract {
-+
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, structureboundingbox, k, l);
-+        }
-+
-+        @Override
-+        public void a(ChunkGenerator<?> chunkgenerator, DefinedStructureManager definedstructuremanager, int i, int j, BiomeBase biomebase) {
-+            BlockPosition blockposition = new BlockPosition(i * 16, 90, j * 16);
-+
-+            WorldGenFeaturePillagerOutpostPieces.a(chunkgenerator, definedstructuremanager, blockposition, this.b, this.d);
-+            this.b();
-+        }
-+    }
-+}
-diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java b/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java
-new file mode 100644
-index 000000000..05dfb4cce
---- /dev/null
-+++ b/src/main/java/net/minecraft/server/WorldGenFeatureRandomScattered.java
-@@ -0,0 +1,48 @@
-+package net.minecraft.server;
-+
-+import com.mojang.datafixers.Dynamic;
-+import java.util.Random;
-+import java.util.function.Function;
-+
-+public abstract class WorldGenFeatureRandomScattered<C extends WorldGenFeatureConfiguration> extends StructureGenerator<C> {
-+
-+    public WorldGenFeatureRandomScattered(Function<Dynamic<?>, ? extends C> function) {
-+        super(function);
-+    }
-+
-+    @Override
-+    protected ChunkCoordIntPair a(ChunkGenerator<?> chunkgenerator, Random random, int i, int j, int k, int l) {
-+        int i1 = this.a(chunkgenerator);
-+        int j1 = this.b(chunkgenerator);
-+        int k1 = i + i1 * k;
-+        int l1 = j + i1 * l;
-+        int i2 = k1 < 0 ? k1 - i1 + 1 : k1;
-+        int j2 = l1 < 0 ? l1 - i1 + 1 : l1;
-+        int k2 = i2 / i1;
-+        int l2 = j2 / i1;
-+
-+        ((SeededRandom) random).a(chunkgenerator.getSeed(), k2, l2, this.getSeed());
-+        k2 *= i1;
-+        l2 *= i1;
-+        k2 += random.nextInt(i1 - j1);
-+        l2 += random.nextInt(i1 - j1);
-+        return new ChunkCoordIntPair(k2, l2);
-+    }
-+
-+    @Override
-+    public boolean a(BiomeManager biomemanager, ChunkGenerator<?> chunkgenerator, Random random, int i, int j, BiomeBase biomebase) {
-+        ChunkCoordIntPair chunkcoordintpair = this.a(chunkgenerator, random, i, j, 0, 0);
-+
-+        return i == chunkcoordintpair.x && j == chunkcoordintpair.z && chunkgenerator.canSpawnStructure(biomebase, this);
-+    }
-+
-+    protected int a(ChunkGenerator<?> chunkgenerator) {
-+        return chunkgenerator.getSettings().h();
-+    }
-+
-+    protected int b(ChunkGenerator<?> chunkgenerator) {
-+        return chunkgenerator.getSettings().i();
-+    }
-+
-+    protected abstract int getSeed();
-+}
-diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java b/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java
-new file mode 100644
-index 000000000..97d72c0ca
---- /dev/null
-+++ b/src/main/java/net/minecraft/server/WorldGenFeatureShipwreck.java
-@@ -0,0 +1,58 @@
-+package net.minecraft.server;
-+
-+import com.mojang.datafixers.Dynamic;
-+import java.util.function.Function;
-+
-+public class WorldGenFeatureShipwreck extends WorldGenFeatureRandomScattered<WorldGenFeatureShipwreckConfiguration> {
-+
-+    public WorldGenFeatureShipwreck(Function<Dynamic<?>, ? extends WorldGenFeatureShipwreckConfiguration> function) {
-+        super(function);
-+    }
-+
-+    @Override
-+    public String b() {
-+        return "Shipwreck";
-+    }
-+
-+    @Override
-+    public int c() {
-+        return 3;
-+    }
-+
-+    @Override
-+    public StructureGenerator.a a() {
-+        return WorldGenFeatureShipwreck.a::new;
-+    }
-+
-+    @Override
-+    protected int getSeed() {
-+        return 165745295;
-+    }
-+
-+    @Override
-+    protected int a(ChunkGenerator<?> chunkgenerator) {
-+        return chunkgenerator.getSettings().j();
-+    }
-+
-+    @Override
-+    protected int b(ChunkGenerator<?> chunkgenerator) {
-+        return chunkgenerator.getSettings().k();
-+    }
-+
-+    public static class a extends StructureStart {
-+
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, structureboundingbox, k, l);
-+        }
-+
-+        @Override
-+        public void a(ChunkGenerator<?> chunkgenerator, DefinedStructureManager definedstructuremanager, int i, int j, BiomeBase biomebase) {
-+            WorldGenFeatureShipwreckConfiguration worldgenfeatureshipwreckconfiguration = (WorldGenFeatureShipwreckConfiguration) chunkgenerator.getFeatureConfiguration(biomebase, WorldGenerator.SHIPWRECK);
-+            EnumBlockRotation enumblockrotation = EnumBlockRotation.values()[this.d.nextInt(EnumBlockRotation.values().length)];
-+            BlockPosition blockposition = new BlockPosition(i * 16, 90, j * 16);
-+
-+            WorldGenShipwreck.a(definedstructuremanager, blockposition, enumblockrotation, this.b, this.d, worldgenfeatureshipwreckconfiguration);
-+            this.b();
-+        }
-+    }
-+}
-diff --git a/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
-new file mode 100644
-index 000000000..f698f8bfe
---- /dev/null
-+++ b/src/main/java/net/minecraft/server/WorldGenFeatureSwampHut.java
-@@ -0,0 +1,73 @@
-+package net.minecraft.server;
-+
-+import com.google.common.collect.Lists;
-+import com.mojang.datafixers.Dynamic;
-+import java.util.List;
-+import java.util.function.Function;
-+
-+public class WorldGenFeatureSwampHut extends WorldGenFeatureRandomScattered<WorldGenFeatureEmptyConfiguration> {
-+
-+    private static final List<BiomeBase.BiomeMeta> a = Lists.newArrayList(new BiomeBase.BiomeMeta[]{new BiomeBase.BiomeMeta(EntityTypes.WITCH, 1, 1, 1)});
-+    private static final List<BiomeBase.BiomeMeta> aq = Lists.newArrayList(new BiomeBase.BiomeMeta[]{new BiomeBase.BiomeMeta(EntityTypes.CAT, 1, 1, 1)});
-+
-+    public WorldGenFeatureSwampHut(Function<Dynamic<?>, ? extends WorldGenFeatureEmptyConfiguration> function) {
-+        super(function);
-+    }
-+
-+    @Override
-+    public String b() {
-+        return "Swamp_Hut";
-+    }
-+
-+    @Override
-+    public int c() {
-+        return 3;
-+    }
-+
-+    @Override
-+    public StructureGenerator.a a() {
-+        return WorldGenFeatureSwampHut.a::new;
-+    }
-+
-+    @Override
-+    protected int getSeed() {
-+        return 14357620;
-+    }
-+
-+    @Override
-+    public List<BiomeBase.BiomeMeta> e() {
-+        return WorldGenFeatureSwampHut.a;
-+    }
-+
-+    @Override
-+    public List<BiomeBase.BiomeMeta> f() {
-+        return WorldGenFeatureSwampHut.aq;
-+    }
-+
-+    public boolean c(GeneratorAccess generatoraccess, BlockPosition blockposition) {
-+        StructureStart structurestart = this.a(generatoraccess, blockposition, true);
-+
-+        if (structurestart != StructureStart.a && structurestart instanceof WorldGenFeatureSwampHut.a && !structurestart.d().isEmpty()) {
-+            StructurePiece structurepiece = (StructurePiece) structurestart.d().get(0);
-+
-+            return structurepiece instanceof WorldGenWitchHut;
-+        } else {
-+            return false;
-+        }
-+    }
-+
-+    public static class a extends StructureStart {
-+
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, structureboundingbox, k, l);
-+        }
-+
-+        @Override
-+        public void a(ChunkGenerator<?> chunkgenerator, DefinedStructureManager definedstructuremanager, int i, int j, BiomeBase biomebase) {
-+            WorldGenWitchHut worldgenwitchhut = new WorldGenWitchHut(this.d, i * 16, j * 16);
-+
-+            this.b.add(worldgenwitchhut);
-+            this.b();
-+        }
-+    }
-+}
-diff --git a/src/main/java/net/minecraft/server/WorldGenMonument.java b/src/main/java/net/minecraft/server/WorldGenMonument.java
-new file mode 100644
-index 000000000..3e4288828
---- /dev/null
-+++ b/src/main/java/net/minecraft/server/WorldGenMonument.java
-@@ -0,0 +1,128 @@
-+package net.minecraft.server;
-+
-+import com.google.common.collect.Lists;
-+import com.mojang.datafixers.Dynamic;
-+import java.util.Iterator;
-+import java.util.List;
-+import java.util.Random;
-+import java.util.Set;
-+import java.util.function.Function;
-+
-+public class WorldGenMonument extends StructureGenerator<WorldGenFeatureEmptyConfiguration> {
-+
-+    private static final List<BiomeBase.BiomeMeta> a = Lists.newArrayList(new BiomeBase.BiomeMeta[]{new BiomeBase.BiomeMeta(EntityTypes.GUARDIAN, 1, 2, 4)});
-+
-+    public WorldGenMonument(Function<Dynamic<?>, ? extends WorldGenFeatureEmptyConfiguration> function) {
-+        super(function);
-+    }
-+
-+    @Override
-+    protected ChunkCoordIntPair a(ChunkGenerator<?> chunkgenerator, Random random, int i, int j, int k, int l) {
-+        int i1 = chunkgenerator.getSettings().c();
-+        int j1 = chunkgenerator.getSettings().d();
-+        int k1 = i + i1 * k;
-+        int l1 = j + i1 * l;
-+        int i2 = k1 < 0 ? k1 - i1 + 1 : k1;
-+        int j2 = l1 < 0 ? l1 - i1 + 1 : l1;
-+        int k2 = i2 / i1;
-+        int l2 = j2 / i1;
-+
-+        ((SeededRandom) random).a(chunkgenerator.getSeed(), k2, l2, 10387313);
-+        k2 *= i1;
-+        l2 *= i1;
-+        k2 += (random.nextInt(i1 - j1) + random.nextInt(i1 - j1)) / 2;
-+        l2 += (random.nextInt(i1 - j1) + random.nextInt(i1 - j1)) / 2;
-+        return new ChunkCoordIntPair(k2, l2);
-+    }
-+
-+    @Override
-+    public boolean a(BiomeManager biomemanager, ChunkGenerator<?> chunkgenerator, Random random, int i, int j, BiomeBase biomebase) {
-+        ChunkCoordIntPair chunkcoordintpair = this.a(chunkgenerator, random, i, j, 0, 0);
-+
-+        if (i == chunkcoordintpair.x && j == chunkcoordintpair.z) {
-+            Set<BiomeBase> set = chunkgenerator.getWorldChunkManager().a(i * 16 + 9, chunkgenerator.getSeaLevel(), j * 16 + 9, 16);
-+            Iterator iterator = set.iterator();
-+
-+            BiomeBase biomebase1;
-+
-+            do {
-+                if (!iterator.hasNext()) {
-+                    Set<BiomeBase> set1 = chunkgenerator.getWorldChunkManager().a(i * 16 + 9, chunkgenerator.getSeaLevel(), j * 16 + 9, 29);
-+                    Iterator iterator1 = set1.iterator();
-+
-+                    BiomeBase biomebase2;
-+
-+                    do {
-+                        if (!iterator1.hasNext()) {
-+                            return true;
-+                        }
-+
-+                        biomebase2 = (BiomeBase) iterator1.next();
-+                    } while (biomebase2.q() == BiomeBase.Geography.OCEAN || biomebase2.q() == BiomeBase.Geography.RIVER);
-+
-+                    return false;
-+                }
-+
-+                biomebase1 = (BiomeBase) iterator.next();
-+            } while (chunkgenerator.canSpawnStructure(biomebase1, this));
-+
-+            return false;
-+        } else {
-+            return false;
-+        }
-+    }
-+
-+    @Override
-+    public StructureGenerator.a a() {
-+        return WorldGenMonument.a::new;
-+    }
-+
-+    @Override
-+    public String b() {
-+        return "Monument";
-+    }
-+
-+    @Override
-+    public int c() {
-+        return 8;
-+    }
-+
-+    @Override
-+    public List<BiomeBase.BiomeMeta> e() {
-+        return WorldGenMonument.a;
-+    }
-+
-+    public static class a extends StructureStart {
-+
-+        private boolean e;
-+
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, structureboundingbox, k, l);
-+        }
-+
-+        @Override
-+        public void a(ChunkGenerator<?> chunkgenerator, DefinedStructureManager definedstructuremanager, int i, int j, BiomeBase biomebase) {
-+            this.b(i, j);
-+        }
-+
-+        private void b(int i, int j) {
-+            int k = i * 16 - 29;
-+            int l = j * 16 - 29;
-+            EnumDirection enumdirection = EnumDirection.EnumDirectionLimit.HORIZONTAL.a(this.d);
-+
-+            this.b.add(new WorldGenMonumentPieces.WorldGenMonumentPiece1(this.d, k, l, enumdirection));
-+            this.b();
-+            this.e = true;
-+        }
-+
-+        @Override
-+        public void a(GeneratorAccess generatoraccess, ChunkGenerator<?> chunkgenerator, Random random, StructureBoundingBox structureboundingbox, ChunkCoordIntPair chunkcoordintpair) {
-+            if (!this.e) {
-+                this.b.clear();
-+                this.b(this.f(), this.g());
-+            }
-+
-+            super.a(generatoraccess, chunkgenerator, random, structureboundingbox, chunkcoordintpair);
-+        }
-+    }
-+}
-diff --git a/src/main/java/net/minecraft/server/WorldGenVillage.java b/src/main/java/net/minecraft/server/WorldGenVillage.java
-new file mode 100644
-index 000000000..9f74e708a
---- /dev/null
-+++ b/src/main/java/net/minecraft/server/WorldGenVillage.java
-@@ -0,0 +1,69 @@
-+package net.minecraft.server;
-+
-+import com.mojang.datafixers.Dynamic;
-+import java.util.Random;
-+import java.util.function.Function;
-+
-+public class WorldGenVillage extends StructureGenerator<WorldGenFeatureVillageConfiguration> {
-+
-+    public WorldGenVillage(Function<Dynamic<?>, ? extends WorldGenFeatureVillageConfiguration> function) {
-+        super(function);
-+    }
-+
-+    @Override
-+    protected ChunkCoordIntPair a(ChunkGenerator<?> chunkgenerator, Random random, int i, int j, int k, int l) {
-+        int i1 = chunkgenerator.getSettings().a();
-+        int j1 = chunkgenerator.getSettings().b();
-+        int k1 = i + i1 * k;
-+        int l1 = j + i1 * l;
-+        int i2 = k1 < 0 ? k1 - i1 + 1 : k1;
-+        int j2 = l1 < 0 ? l1 - i1 + 1 : l1;
-+        int k2 = i2 / i1;
-+        int l2 = j2 / i1;
-+
-+        ((SeededRandom) random).a(chunkgenerator.getSeed(), k2, l2, 10387312);
-+        k2 *= i1;
-+        l2 *= i1;
-+        k2 += random.nextInt(i1 - j1);
-+        l2 += random.nextInt(i1 - j1);
-+        return new ChunkCoordIntPair(k2, l2);
-+    }
-+
-+    @Override
-+    public boolean a(BiomeManager biomemanager, ChunkGenerator<?> chunkgenerator, Random random, int i, int j, BiomeBase biomebase) {
-+        ChunkCoordIntPair chunkcoordintpair = this.a(chunkgenerator, random, i, j, 0, 0);
-+
-+        return i == chunkcoordintpair.x && j == chunkcoordintpair.z ? chunkgenerator.canSpawnStructure(biomebase, this) : false;
-+    }
-+
-+    @Override
-+    public StructureGenerator.a a() {
-+        return WorldGenVillage.a::new;
-+    }
-+
-+    @Override
-+    public String b() {
-+        return "Village";
-+    }
-+
-+    @Override
-+    public int c() {
-+        return 8;
-+    }
-+
-+    public static class a extends StructureAbstract {
-+
-+        public a(StructureGenerator<?> structuregenerator, int i, int j, StructureBoundingBox structureboundingbox, int k, long l) {
-+            super(structuregenerator, i, j, structureboundingbox, k, l);
-+        }
-+
-+        @Override
-+        public void a(ChunkGenerator<?> chunkgenerator, DefinedStructureManager definedstructuremanager, int i, int j, BiomeBase biomebase) {
-+            WorldGenFeatureVillageConfiguration worldgenfeaturevillageconfiguration = (WorldGenFeatureVillageConfiguration) chunkgenerator.getFeatureConfiguration(biomebase, WorldGenerator.VILLAGE);
-+            BlockPosition blockposition = new BlockPosition(i * 16, 0, j * 16);
-+
-+            NewVillagePieces.a(chunkgenerator, definedstructuremanager, blockposition, this.b, this.d, worldgenfeaturevillageconfiguration);
-+            this.b();
 +        }
 +    }
 +}

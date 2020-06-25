@@ -1,11 +1,11 @@
-From 13282f89243170c51493b96ede05a37fcb0f2c25 Mon Sep 17 00:00:00 2001
+From 9cc3be564b916849bd632a39ad2acae44ca79471 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Tue, 7 Jan 2014 15:56:26 +0000
 Subject: [PATCH] Allow statistics to be disabled/forced
 
 
 diff --git a/src/main/java/net/minecraft/server/ServerStatisticManager.java b/src/main/java/net/minecraft/server/ServerStatisticManager.java
-index 126ff29e9..449e4ec8c 100644
+index 690861ba5..18725272f 100644
 --- a/src/main/java/net/minecraft/server/ServerStatisticManager.java
 +++ b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 @@ -34,6 +34,13 @@ public class ServerStatisticManager extends StatisticManager {
@@ -21,11 +21,11 @@ index 126ff29e9..449e4ec8c 100644
 +        // Spigot end
          if (file.isFile()) {
              try {
-                 this.a(minecraftserver.aC(), org.apache.commons.io.FileUtils.readFileToString(file));
+                 this.a(minecraftserver.getDataFixer(), org.apache.commons.io.FileUtils.readFileToString(file));
 @@ -47,6 +54,7 @@ public class ServerStatisticManager extends StatisticManager {
      }
  
-     public void a() {
+     public void save() {
 +        if ( org.spigotmc.SpigotConfig.disableStatSaving ) return; // Spigot
          try {
              org.apache.commons.io.FileUtils.writeStringToFile(this.d, this.b());

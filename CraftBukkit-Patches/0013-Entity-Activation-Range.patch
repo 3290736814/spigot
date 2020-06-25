@@ -1,4 +1,4 @@
-From 4b3281d00e2563c6e2898d6b0da8b4bd49abb1d7 Mon Sep 17 00:00:00 2001
+From e43386115b3a4a1e73b42c84b06ac5991d41c4e3 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,10 +9,10 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 9ae74680c..416e4da81 100644
+index d98b15520..24fba9abf 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -166,6 +166,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -167,6 +167,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
      public org.bukkit.projectiles.ProjectileSource projectileSource; // For projectiles only
      public boolean forceExplosionKnockback; // SPIGOT-949
      public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getEntityTimings(this); // Spigot
@@ -25,21 +25,22 @@ index 9ae74680c..416e4da81 100644
  
      public float getBukkitYaw() {
          return this.yaw;
-@@ -197,7 +203,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -199,6 +205,13 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+         this.loc = Vec3D.a;
+         this.locBlock = BlockPosition.ZERO;
          this.setPosition(0.0D, 0.0D, 0.0D);
-         if (world != null) {
-             this.dimension = world.worldProvider.getDimensionManager();
-+            // Spigot start
++        // Spigot start
++        if (world != null) {
 +            this.defaultActivationState = org.spigotmc.ActivationRange.initializeEntityActivationState(this, world.spigotConfig);
 +        } else {
 +            this.defaultActivationState = false;
-         }
++        }
 +        // Spigot end
- 
          this.datawatcher = new DataWatcher(this);
          this.datawatcher.register(Entity.T, (byte) 0);
+         this.datawatcher.register(Entity.AIR_TICKS, this.bD());
 diff --git a/src/main/java/net/minecraft/server/EntityAgeable.java b/src/main/java/net/minecraft/server/EntityAgeable.java
-index b87f472cc..cec938436 100644
+index 17559e41c..8665ac06c 100644
 --- a/src/main/java/net/minecraft/server/EntityAgeable.java
 +++ b/src/main/java/net/minecraft/server/EntityAgeable.java
 @@ -14,6 +14,31 @@ public abstract class EntityAgeable extends EntityCreature {
@@ -75,7 +76,7 @@ index b87f472cc..cec938436 100644
      public GroupDataEntity prepare(GeneratorAccess generatoraccess, DifficultyDamageScaler difficultydamagescaler, EnumMobSpawn enummobspawn, @Nullable GroupDataEntity groupdataentity, @Nullable NBTTagCompound nbttagcompound) {
          if (groupdataentity == null) {
 diff --git a/src/main/java/net/minecraft/server/EntityAreaEffectCloud.java b/src/main/java/net/minecraft/server/EntityAreaEffectCloud.java
-index 33326c664..e8f3e55fd 100644
+index fb38344d7..65ea440e7 100644
 --- a/src/main/java/net/minecraft/server/EntityAreaEffectCloud.java
 +++ b/src/main/java/net/minecraft/server/EntityAreaEffectCloud.java
 @@ -158,6 +158,18 @@ public class EntityAreaEffectCloud extends Entity {
@@ -98,12 +99,12 @@ index 33326c664..e8f3e55fd 100644
      public void tick() {
          super.tick();
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index 19cf72123..8f46a6b7f 100644
+index c2ba877ee..0b396190f 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
-@@ -35,6 +35,18 @@ public abstract class EntityArrow extends Entity implements IProjectile {
-     private IntOpenHashSet aw;
-     private List<Entity> ax;
+@@ -30,6 +30,18 @@ public abstract class EntityArrow extends IProjectile {
+     private IntOpenHashSet as;
+     private List<Entity> at;
  
 +    // Spigot Start
 +    @Override
@@ -121,11 +122,11 @@ index 19cf72123..8f46a6b7f 100644
          super(entitytypes, world);
          this.fromPlayer = EntityArrow.PickupStatus.DISALLOWED;
 diff --git a/src/main/java/net/minecraft/server/EntityFireworks.java b/src/main/java/net/minecraft/server/EntityFireworks.java
-index 320817736..4f51b9b65 100644
+index e00977310..fd34a0f2d 100644
 --- a/src/main/java/net/minecraft/server/EntityFireworks.java
 +++ b/src/main/java/net/minecraft/server/EntityFireworks.java
-@@ -18,6 +18,22 @@ public class EntityFireworks extends Entity implements IProjectile {
-         super(entitytypes, world);
+@@ -55,6 +55,22 @@ public class EntityFireworks extends IProjectile {
+         this.setShooter(entity);
      }
  
 +    // Spigot Start - copied from tick
@@ -146,12 +147,12 @@ index 320817736..4f51b9b65 100644
 +
      @Override
      protected void initDatawatcher() {
-         this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, ItemStack.a);
+         this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, ItemStack.b);
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index fc662b5d6..208dad2a3 100644
+index 1d88bcd1b..ca1cc67fe 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
-@@ -138,6 +138,28 @@ public class EntityItem extends Entity {
+@@ -139,6 +139,28 @@ public class EntityItem extends Entity {
          }
      }
  
@@ -181,10 +182,10 @@ index fc662b5d6..208dad2a3 100644
          Vec3D vec3d = this.getMot();
  
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index fa6efb644..9d1adaaa2 100644
+index f837685ca..8ff295ed3 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -135,6 +135,13 @@ public abstract class EntityLiving extends Entity {
+@@ -143,6 +143,13 @@ public abstract class EntityLiving extends Entity {
          return getHeadRotation();
      }
      // CraftBukkit end
@@ -199,11 +200,11 @@ index fa6efb644..9d1adaaa2 100644
      protected EntityLiving(EntityTypes<? extends EntityLiving> entitytypes, World world) {
          super(entitytypes, world);
 diff --git a/src/main/java/net/minecraft/server/EntityVillager.java b/src/main/java/net/minecraft/server/EntityVillager.java
-index 45ce1d5a4..b6c5e711a 100644
+index 9ea471b4a..ea38d92a6 100644
 --- a/src/main/java/net/minecraft/server/EntityVillager.java
 +++ b/src/main/java/net/minecraft/server/EntityVillager.java
-@@ -131,6 +131,17 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
-         this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(48.0D);
+@@ -140,6 +140,17 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
+         return this.bM;
      }
  
 +    // Spigot Start
@@ -219,12 +220,12 @@ index 45ce1d5a4..b6c5e711a 100644
 +
      @Override
      protected void mobTick() {
-         this.world.getMethodProfiler().enter("brain");
+         this.world.getMethodProfiler().enter("villagerBrain");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 30a5342ce..c3a6848ef 100644
+index e7c82df7e..95373e0a4 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -359,6 +359,7 @@ public class WorldServer extends World {
+@@ -358,6 +358,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
              this.tickingEntities = true;
              ObjectIterator objectiterator = this.entitiesById.int2ObjectEntrySet().iterator();
  
@@ -232,10 +233,10 @@ index 30a5342ce..c3a6848ef 100644
              timings.entityTick.startTiming(); // Spigot
              while (objectiterator.hasNext()) {
                  Entry<Entity> entry = (Entry) objectiterator.next();
-@@ -602,6 +603,14 @@ public class WorldServer extends World {
- 
-     public void entityJoinedWorld(Entity entity) {
-         if (entity instanceof EntityHuman || this.getChunkProvider().a(entity)) {
+@@ -636,6 +637,13 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+         if (!(entity instanceof EntityHuman) && !this.getChunkProvider().a(entity)) {
+             this.chunkCheck(entity);
+         } else {
 +            // Spigot start
 +            if (!org.spigotmc.ActivationRange.checkIfActive(entity)) {
 +                entity.ticksLived++;
@@ -243,15 +244,14 @@ index 30a5342ce..c3a6848ef 100644
 +                return;
 +            }
 +            // Spigot end
-+
              entity.tickTimer.startTiming(); // Spigot
              entity.f(entity.locX(), entity.locY(), entity.locZ());
              entity.lastYaw = entity.yaw;
 diff --git a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java b/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
-index 24d4a488d..2bd22a369 100644
+index a0bf97314..7f435847a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
 +++ b/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
-@@ -38,6 +38,9 @@ public class SpigotTimings {
+@@ -39,6 +39,9 @@ public class SpigotTimings {
  
      public static final CustomTimingsHandler playerCommandTimer = new CustomTimingsHandler("** playerCommand");
  
@@ -262,10 +262,10 @@ index 24d4a488d..2bd22a369 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 6644fde0b..997357f7a 100644
+index a48ea7d7c..039e1ccb9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -476,6 +476,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -484,6 +484,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          entity.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
          // SPIGOT-619: Force sync head rotation also
          entity.setHeadRotation(location.getYaw());
@@ -275,7 +275,7 @@ index 6644fde0b..997357f7a 100644
      }
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
 new file mode 100644
-index 000000000..5f31b1a8f
+index 000000000..4abbe516e
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -0,0 +1,277 @@
@@ -474,7 +474,7 @@ index 000000000..5f31b1a8f
 +        }
 +        if ( !( entity instanceof EntityArrow ) )
 +        {
-+            if ( !entity.onGround || !entity.passengers.isEmpty() || entity.isPassenger() )
++            if ( !entity.isOnGround() || !entity.passengers.isEmpty() || entity.isPassenger() )
 +            {
 +                return true;
 +            }

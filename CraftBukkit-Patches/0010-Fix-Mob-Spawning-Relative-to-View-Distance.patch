@@ -1,4 +1,4 @@
-From e9872e2c5691af3fad7b00ad5f727097e6f5212b Mon Sep 17 00:00:00 2001
+From f8e808f6965d5266e3203a0363cb7228692c68a3 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,23 +8,23 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index dfc56bf7b..87c4b4c6b 100644
+index 613d3d840..062a82c37 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -395,7 +395,7 @@ public class ChunkProviderServer extends IChunkProvider {
+@@ -390,7 +390,7 @@ public class ChunkProviderServer extends IChunkProvider {
  
-                     if (!this.playerChunkMap.isOutsideOfRange(chunkcoordintpair)) {
-                         chunk.setInhabitedTime(chunk.getInhabitedTime() + j);
--                        if (flag1 && (this.allowMonsters || this.allowAnimals) && this.world.getWorldBorder().isInBounds(chunk.getPos())) {
-+                        if (flag1 && (this.allowMonsters || this.allowAnimals) && this.world.getWorldBorder().isInBounds(chunk.getPos()) && !this.playerChunkMap.isOutsideOfRange(chunkcoordintpair, true)) { // Spigot
-                             this.world.getMethodProfiler().enter("spawner");
-                             this.world.timings.mobSpawn.startTiming(); // Spigot
-                             EnumCreatureType[] aenumcreaturetype1 = aenumcreaturetype;
+                         if (!this.playerChunkMap.isOutsideOfRange(chunkcoordintpair)) {
+                             chunk.setInhabitedTime(chunk.getInhabitedTime() + j);
+-                            if (flag1 && (this.allowMonsters || this.allowAnimals) && this.world.getWorldBorder().isInBounds(chunk.getPos())) {
++                            if (flag1 && (this.allowMonsters || this.allowAnimals) && this.world.getWorldBorder().isInBounds(chunk.getPos()) && !this.playerChunkMap.isOutsideOfRange(chunkcoordintpair, true)) { // Spigot
+                                 SpawnerCreature.a(this.world, chunk, spawnercreature_d, this.allowAnimals, this.allowMonsters, flag2);
+                             }
+ 
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 381738798..30b2b2c47 100644
+index e4443f7d3..faa13e403 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -820,10 +820,21 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -853,10 +853,21 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
      }
  
      boolean isOutsideOfRange(ChunkCoordIntPair chunkcoordintpair) {

@@ -1,11 +1,11 @@
-From 79f070aa23c2f385a68e63527fe20258eb7075e3 Mon Sep 17 00:00:00 2001
+From 9155af5b76682b5b69313ff0bc619aeb68b5e81a Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 6 Oct 2013 17:36:28 +1100
 Subject: [PATCH] Don't Special Case X Move Value
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index d8f758ee1..a8051821a 100644
+index 9620069bb..ad349a432 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -127,6 +127,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
@@ -18,7 +18,7 @@ index d8f758ee1..a8051821a 100644
          return (this.player == null) ? null : (CraftPlayer) this.player.getBukkitEntity();
 @@ -367,6 +368,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
                      flag1 = true;
-                     PlayerConnection.LOGGER.warn("{} moved wrongly!", entity.getDisplayName().getString());
+                     PlayerConnection.LOGGER.warn("{} (vehicle of {}) moved wrongly! {}", entity.getDisplayName().getString(), this.player.getDisplayName().getString(), Math.sqrt(d10));
                  }
 +                Location curPos = this.getPlayer().getLocation(); // Spigot
  

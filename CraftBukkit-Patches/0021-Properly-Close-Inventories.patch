@@ -1,4 +1,4 @@
-From 4da48f3cafb99cd8b4a36d3c5823cf64e6546e97 Mon Sep 17 00:00:00 2001
+From 7b7210290f1837231a1bce3da41a4f07659c94ff Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Thu, 27 Jun 2013 17:26:09 +1000
 Subject: [PATCH] Properly Close Inventories
@@ -6,10 +6,10 @@ Subject: [PATCH] Properly Close Inventories
 Properly close inventories when unloading and switching worlds.
 
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index c3a6848ef..cbbef96e5 100644
+index 95373e0a4..86bcc60e3 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -1021,6 +1021,15 @@ public class WorldServer extends World {
+@@ -945,6 +945,15 @@ public class WorldServer extends World implements GeneratorAccessSeed {
      }
  
      public void unloadChunk(Chunk chunk) {
@@ -25,7 +25,7 @@ index c3a6848ef..cbbef96e5 100644
          this.tileEntityListUnload.addAll(chunk.getTileEntities().values());
          EntitySlice[] aentityslice = chunk.getEntitySlices();
          int i = aentityslice.length;
-@@ -1047,6 +1056,13 @@ public class WorldServer extends World {
+@@ -971,6 +980,13 @@ public class WorldServer extends World implements GeneratorAccessSeed {
  
      public void unregisterEntity(Entity entity) {
          org.spigotmc.AsyncCatcher.catchOp("entity unregister"); // Spigot
@@ -37,7 +37,7 @@ index c3a6848ef..cbbef96e5 100644
 +        }
 +        // Spigot End
          if (entity instanceof EntityEnderDragon) {
-             EntityComplexPart[] aentitycomplexpart = ((EntityEnderDragon) entity).eo();
+             EntityComplexPart[] aentitycomplexpart = ((EntityEnderDragon) entity).eK();
              int i = aentitycomplexpart.length;
 -- 
 2.25.1

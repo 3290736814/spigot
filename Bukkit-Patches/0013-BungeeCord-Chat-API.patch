@@ -1,11 +1,11 @@
-From c03c58d11418db95add2fdbabd8ee1d97433da86 Mon Sep 17 00:00:00 2001
+From 185a1556ea697857b1ccbe1b2ddb44d2db147f44 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 02:59:14 +0100
 Subject: [PATCH] BungeeCord Chat API
 
 
 diff --git a/pom.xml b/pom.xml
-index 87977e2f..186405ba 100644
+index 10436f10..82b370b7 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -71,6 +71,13 @@
@@ -15,7 +15,7 @@ index 87977e2f..186405ba 100644
 +        <dependency>
 +            <groupId>net.md-5</groupId>
 +            <artifactId>bungeecord-chat</artifactId>
-+            <version>1.15-SNAPSHOT</version>
++            <version>1.16-R0.1</version>
 +            <type>jar</type>
 +            <scope>compile</scope>
 +        </dependency>
@@ -23,7 +23,7 @@ index 87977e2f..186405ba 100644
              <groupId>org.yaml</groupId>
              <artifactId>snakeyaml</artifactId>
 diff --git a/src/main/java/org/bukkit/ChatColor.java b/src/main/java/org/bukkit/ChatColor.java
-index 930f109a..a0ef2a82 100644
+index 427368a7..44d597d7 100644
 --- a/src/main/java/org/bukkit/ChatColor.java
 +++ b/src/main/java/org/bukkit/ChatColor.java
 @@ -15,91 +15,223 @@ public enum ChatColor {
@@ -342,10 +342,10 @@ index 8e42cb9d..a9020ecc 100644
  
      @NotNull
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index e2a38451..92bafd63 100644
+index ced9a100..87e23bd6 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1299,6 +1299,36 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1325,6 +1325,36 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
          public java.util.Set<Player> getHiddenPlayers() {
              throw new UnsupportedOperationException("Not supported yet.");
          }

@@ -1,14 +1,14 @@
-From 145b711949e7088f020f34e41707973cd8b3d50b Mon Sep 17 00:00:00 2001
+From 8ce1bbd2640fd1e7ab87c25ea0a8739034385345 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 18 Dec 2013 13:32:10 +1100
 Subject: [PATCH] Fire PreLogin Events in Offline Mode
 
 
 diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
-index 47b6343f3..aea85fd72 100644
+index abfc5c72d..5bba37bb0 100644
 --- a/src/main/java/net/minecraft/server/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/LoginListener.java
-@@ -97,10 +97,23 @@ public class LoginListener implements PacketLoginInListener {
+@@ -96,10 +96,23 @@ public class LoginListener implements PacketLoginInListener {
  
      }
  
@@ -32,7 +32,7 @@ index 47b6343f3..aea85fd72 100644
  
          // CraftBukkit start - fire PlayerLoginEvent
          EntityPlayer s = this.server.getPlayerList().attemptLogin(this, this.i, hostname);
-@@ -146,7 +159,21 @@ public class LoginListener implements PacketLoginInListener {
+@@ -145,7 +158,21 @@ public class LoginListener implements PacketLoginInListener {
              this.g = LoginListener.EnumProtocolState.KEY;
              this.networkManager.sendPacket(new PacketLoginOutEncryptionBegin("", this.server.getKeyPair().getPublic(), this.e));
          } else {
@@ -55,7 +55,7 @@ index 47b6343f3..aea85fd72 100644
          }
  
      }
-@@ -176,40 +203,7 @@ public class LoginListener implements PacketLoginInListener {
+@@ -175,40 +202,7 @@ public class LoginListener implements PacketLoginInListener {
                                  return;
                              }
  
@@ -97,7 +97,7 @@ index 47b6343f3..aea85fd72 100644
                          } else if (LoginListener.this.server.isEmbeddedServer()) {
                              LoginListener.LOGGER.warn("Failed to verify username but will let them in anyway!");
                              LoginListener.this.i = LoginListener.this.a(gameprofile);
-@@ -249,7 +243,48 @@ public class LoginListener implements PacketLoginInListener {
+@@ -248,7 +242,48 @@ public class LoginListener implements PacketLoginInListener {
          }
      }
  
@@ -145,7 +145,7 @@ index 47b6343f3..aea85fd72 100644
 +    // Spigot end
 +
      public void a(PacketLoginInCustomPayload packetloginincustompayload) {
-         this.disconnect(new ChatMessage("multiplayer.disconnect.unexpected_query_response", new Object[0]));
+         this.disconnect(new ChatMessage("multiplayer.disconnect.unexpected_query_response"));
      }
 -- 
 2.25.1
