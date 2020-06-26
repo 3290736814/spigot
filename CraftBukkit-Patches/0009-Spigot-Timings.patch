@@ -1,4 +1,4 @@
-From 4a6dfb1a27130c59a1debf77ffae9fbf052d39ed Mon Sep 17 00:00:00 2001
+From 0445ec2f5aeea606bd33f3915071552092ffa794 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -227,7 +227,7 @@ index da69271c0..f837685ca 100644
          if (!this.world.isClientSide && this.dN() && this.aC()) {
              this.damageEntity(DamageSource.DROWN, 1.0F);
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index cdf7c1416..ff948e108 100644
+index 26f1fa378..c6b4c020a 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -65,6 +65,7 @@ import org.bukkit.craftbukkit.CraftServer;
@@ -238,7 +238,7 @@ index cdf7c1416..ff948e108 100644
  
  public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTask> implements IMojangStatistics, ICommandListener, AutoCloseable {
  
-@@ -960,6 +961,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -959,6 +960,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      protected void exit() {}
  
      protected void a(BooleanSupplier booleansupplier) {
@@ -246,7 +246,7 @@ index cdf7c1416..ff948e108 100644
          long i = SystemUtils.getMonotonicNanos();
  
          ++this.ticks;
-@@ -979,12 +981,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -978,12 +980,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          }
  
          if (autosavePeriod > 0 && this.ticks % autosavePeriod == 0) { // CraftBukkit
@@ -261,7 +261,7 @@ index cdf7c1416..ff948e108 100644
          }
  
          this.methodProfiler.enter("snooper");
-@@ -1005,21 +1009,30 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1004,21 +1008,30 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
          this.circularTimer.a(i1 - i);
          this.methodProfiler.exit();
@@ -292,7 +292,7 @@ index cdf7c1416..ff948e108 100644
          // Send time updates to everyone, it will get the right time from the world the player is in.
          if (this.ticks % 20 == 0) {
              for (int i = 0; i < this.getPlayerList().players.size(); ++i) {
-@@ -1027,6 +1040,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1026,6 +1039,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                  entityplayer.playerConnection.sendPacket(new PacketPlayOutUpdateTime(entityplayer.world.getTime(), entityplayer.getPlayerTime(), entityplayer.world.getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE))); // Add support for per player time
              }
          }
@@ -300,7 +300,7 @@ index cdf7c1416..ff948e108 100644
  
          while (iterator.hasNext()) {
              WorldServer worldserver = (WorldServer) iterator.next();
-@@ -1045,7 +1059,9 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1044,7 +1058,9 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
              this.methodProfiler.enter("tick");
  
              try {
@@ -310,7 +310,7 @@ index cdf7c1416..ff948e108 100644
              } catch (Throwable throwable) {
                  CrashReport crashreport = CrashReport.a(throwable, "Exception ticking world");
  
-@@ -1058,18 +1074,24 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1057,18 +1073,24 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          }
  
          this.methodProfiler.exitEnter("connection");
@@ -381,7 +381,7 @@ index 51ccdb5d4..9522c1051 100644
          // this.minecraftServer.getCommandDispatcher().a(this.player.getCommandListener(), s);
          // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/server/SpawnerCreature.java b/src/main/java/net/minecraft/server/SpawnerCreature.java
-index 09eda6243..c3632b260 100644
+index 12c4f23bb..f27ffc56d 100644
 --- a/src/main/java/net/minecraft/server/SpawnerCreature.java
 +++ b/src/main/java/net/minecraft/server/SpawnerCreature.java
 @@ -72,6 +72,7 @@ public final class SpawnerCreature {
@@ -392,7 +392,7 @@ index 09eda6243..c3632b260 100644
          EnumCreatureType[] aenumcreaturetype = SpawnerCreature.c;
          int i = aenumcreaturetype.length;
  
-@@ -121,6 +122,7 @@ public final class SpawnerCreature {
+@@ -126,6 +127,7 @@ public final class SpawnerCreature {
              }
          }
  
@@ -417,7 +417,7 @@ index df81d0d55..d75f6d7df 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
      public CraftPersistentDataContainer persistentDataContainer;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 4e59f1cde..d395cbbbb 100644
+index 7e9c22351..72119ba1b 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
@@ -428,7 +428,7 @@ index 4e59f1cde..d395cbbbb 100644
  import org.bukkit.craftbukkit.CraftServer;
  import org.bukkit.craftbukkit.CraftWorld;
  import org.bukkit.craftbukkit.block.CapturedBlockState;
-@@ -75,6 +76,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -76,6 +77,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      public boolean populating;
      public final org.spigotmc.SpigotWorldConfig spigotConfig; // Spigot
  
@@ -437,7 +437,7 @@ index 4e59f1cde..d395cbbbb 100644
      public CraftWorld getWorld() {
          return this.world;
      }
-@@ -146,6 +149,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -148,6 +151,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
              public void c(WorldBorder worldborder, double d0) {}
          });
          // CraftBukkit end
@@ -445,7 +445,7 @@ index 4e59f1cde..d395cbbbb 100644
      }
  
      @Override
-@@ -618,6 +622,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -620,6 +624,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
          GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
  
          gameprofilerfiller.enter("blockEntities");
@@ -453,7 +453,7 @@ index 4e59f1cde..d395cbbbb 100644
          if (!this.tileEntityListUnload.isEmpty()) {
              this.tileEntityListTick.removeAll(this.tileEntityListUnload);
              this.tileEntityList.removeAll(this.tileEntityListUnload);
-@@ -638,6 +643,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -640,6 +645,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                          gameprofilerfiller.a(() -> {
                              return String.valueOf(TileEntityTypes.a(tileentity.getTileType()));
                          });
@@ -461,7 +461,7 @@ index 4e59f1cde..d395cbbbb 100644
                          if (tileentity.getTileType().isValidBlock(this.getType(blockposition).getBlock())) {
                              ((ITickable) tileentity).tick();
                          } else {
-@@ -652,6 +658,11 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -654,6 +660,11 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                          tileentity.a(crashreportsystemdetails);
                          throw new ReportedException(crashreport);
                      }
@@ -473,7 +473,7 @@ index 4e59f1cde..d395cbbbb 100644
                  }
              }
  
-@@ -664,6 +675,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -666,6 +677,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
              }
          }
  
@@ -482,7 +482,7 @@ index 4e59f1cde..d395cbbbb 100644
          this.tickingTileEntities = false;
          gameprofilerfiller.exitEnter("pendingBlockEntities");
          if (!this.tileEntityListPending.isEmpty()) {
-@@ -696,12 +709,15 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -698,12 +711,15 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
              this.tileEntityListPending.clear();
          }
  
@@ -579,10 +579,10 @@ index 64aca46ca..e7c82df7e 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f9fb2498e..e9f861104 100644
+index e5c67ec30..1a1e0669c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1992,6 +1992,11 @@ public final class CraftServer implements Server {
+@@ -2011,6 +2011,11 @@ public final class CraftServer implements Server {
      private final Spigot spigot = new Spigot()
      {
  

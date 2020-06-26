@@ -1,4 +1,4 @@
-From ec505a169415ece7cd2dd9c8914680ca545a523d Mon Sep 17 00:00:00 2001
+From 7a5e7aa8669a201c0ad80c936dede40e0c0f18ee Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -113,10 +113,10 @@ index e9221dbe2..e24e70ed3 100644
              this.entitiesToAdd.add(entity);
          } else {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 6bafbf97d..f9fb2498e 100644
+index d0e13c9a3..e5c67ec30 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -723,6 +723,7 @@ public final class CraftServer implements Server {
+@@ -730,6 +730,7 @@ public final class CraftServer implements Server {
      public boolean dispatchCommand(CommandSender sender, String commandLine) {
          Validate.notNull(sender, "Sender cannot be null");
          Validate.notNull(commandLine, "CommandLine cannot be null");
@@ -125,10 +125,10 @@ index 6bafbf97d..f9fb2498e 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 04415472e..41368c355 100644
+index 058cbbc29..fc2477fe9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -381,6 +381,7 @@ public class CraftWorld implements World {
+@@ -382,6 +382,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean unloadChunkRequest(int x, int z) {
@@ -136,7 +136,7 @@ index 04415472e..41368c355 100644
          if (isChunkLoaded(x, z)) {
              world.getChunkProvider().removeTicket(TicketType.PLUGIN, new ChunkCoordIntPair(x, z), 1, Unit.INSTANCE);
          }
-@@ -389,6 +390,7 @@ public class CraftWorld implements World {
+@@ -390,6 +391,7 @@ public class CraftWorld implements World {
      }
  
      private boolean unloadChunk0(int x, int z, boolean save) {
@@ -144,7 +144,7 @@ index 04415472e..41368c355 100644
          if (!isChunkLoaded(x, z)) {
              return true;
          }
-@@ -403,6 +405,7 @@ public class CraftWorld implements World {
+@@ -404,6 +406,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean regenerateChunk(int x, int z) {
@@ -152,7 +152,7 @@ index 04415472e..41368c355 100644
          throw new UnsupportedOperationException("Not supported in this Minecraft version! Unless you can fix it, this is not a bug :)");
          /*
          if (!unloadChunk0(x, z, false)) {
-@@ -454,6 +457,7 @@ public class CraftWorld implements World {
+@@ -455,6 +458,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean loadChunk(int x, int z, boolean generate) {
@@ -160,7 +160,7 @@ index 04415472e..41368c355 100644
          IChunkAccess chunk = world.getChunkProvider().getChunkAt(x, z, generate ? ChunkStatus.FULL : ChunkStatus.EMPTY, true);
  
          // If generate = false, but the chunk already exists, we will get this back.
-@@ -1091,6 +1095,7 @@ public class CraftWorld implements World {
+@@ -1092,6 +1096,7 @@ public class CraftWorld implements World {
  
      @Override
      public Collection<Entity> getNearbyEntities(BoundingBox boundingBox, Predicate<Entity> filter) {
@@ -168,7 +168,7 @@ index 04415472e..41368c355 100644
          Validate.notNull(boundingBox, "Bounding box is null!");
  
          AxisAlignedBB bb = new AxisAlignedBB(boundingBox.getMinX(), boundingBox.getMinY(), boundingBox.getMinZ(), boundingBox.getMaxX(), boundingBox.getMaxY(), boundingBox.getMaxZ());
-@@ -1245,6 +1250,7 @@ public class CraftWorld implements World {
+@@ -1246,6 +1251,7 @@ public class CraftWorld implements World {
  
      @Override
      public void save() {
@@ -189,7 +189,7 @@ index dc9dbbf88..a48ea7d7c 100644
          List<org.bukkit.entity.Entity> bukkitEntityList = new java.util.ArrayList<org.bukkit.entity.Entity>(notchEntityList.size());
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index bddc1448b..170ebb2b7 100644
+index 68c775b0b..212562d60 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -302,6 +302,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
