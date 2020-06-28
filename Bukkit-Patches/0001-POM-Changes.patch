@@ -1,11 +1,26 @@
-From 4a76a175f1905c2a18330bd34582b6cf7c3a15b5 Mon Sep 17 00:00:00 2001
+From 9e05bfbb47ae58a1b9cb9028b5446210c92182f2 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 10:36:24 +1000
 Subject: [PATCH] POM Changes
 
 
+diff --git a/checkstyle.xml b/checkstyle.xml
+index 8b624164..c5cb0e85 100644
+--- a/checkstyle.xml
++++ b/checkstyle.xml
+@@ -33,6 +33,10 @@
+ 
+         <!-- See http://checkstyle.sourceforge.net/config_filters.html -->
+         <module name="SuppressionCommentFilter"/>
++        <module name="SuppressionCommentFilter">
++            <property name="offCommentFormat" value="Spigot start"/>
++            <property name="onCommentFormat" value="Spigot end"/>
++        </module>
+ 
+         <!-- See http://checkstyle.sourceforge.net/config_imports.html -->
+         <module name="AvoidStarImport">
 diff --git a/pom.xml b/pom.xml
-index a577eb92..10436f10 100644
+index 3b7ea000..01473609 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -3,14 +3,14 @@
