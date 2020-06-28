@@ -1,4 +1,4 @@
-From dbb8250edcb869b57d83c966233579d9d1f58842 Mon Sep 17 00:00:00 2001
+From 8669433d38d8e1891faec65432139b64ba2d6fee Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
@@ -81,10 +81,10 @@ index 7f42259e6..d97bc8a3f 100644
  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 new file mode 100644
-index 000000000..be2e31dea
+index 000000000..9cd57c9d5
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-@@ -0,0 +1,45 @@
+@@ -0,0 +1,47 @@
 +package org.spigotmc;
 +
 +import com.google.common.base.Joiner;
@@ -120,6 +120,8 @@ index 000000000..be2e31dea
 +            sb.append( ", " );
 +        }
 +        sender.sendMessage( sb.substring( 0, sb.length() - 2 ) );
++        sender.sendMessage(ChatColor.GOLD + "Current Memory Usage: " + ChatColor.GREEN + ((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / (1024 * 1024)) + "/" + (Runtime.getRuntime().totalMemory() / (1024 * 1024)) + " mb (Max: "
++                + (Runtime.getRuntime().maxMemory() / (1024 * 1024)) + " mb)");
 +
 +        return true;
 +    }
