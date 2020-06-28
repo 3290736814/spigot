@@ -1,11 +1,11 @@
-From 3206eea0b5b78c8fce6459f70c2c8c6a7f123824 Mon Sep 17 00:00:00 2001
+From 27fc40635a5e1e844d09f905664bd4430fba01b6 Mon Sep 17 00:00:00 2001
 From: Parker Hawke <hawkeboyz2@hotmail.com>
 Date: Sat, 27 Jun 2020 18:43:37 -0400
 Subject: [PATCH] Improve output of plugins command
 
 
 diff --git a/src/main/java/org/bukkit/command/defaults/PluginsCommand.java b/src/main/java/org/bukkit/command/defaults/PluginsCommand.java
-index bcb576a4..23a8a861 100644
+index bcb576a4..e8a7f435 100644
 --- a/src/main/java/org/bukkit/command/defaults/PluginsCommand.java
 +++ b/src/main/java/org/bukkit/command/defaults/PluginsCommand.java
 @@ -8,6 +8,15 @@ import org.bukkit.ChatColor;
@@ -66,7 +66,7 @@ index bcb576a4..23a8a861 100644
 +            }
 +
 +            if (description.getWebsite() != null) {
-+                hoverEventComponents.append("\nWebsite: ").color(net.md_5.bungee.api.ChatColor.WHITE).append(description.getVersion()).color(net.md_5.bungee.api.ChatColor.GREEN);
++                hoverEventComponents.append("\nWebsite: ").color(net.md_5.bungee.api.ChatColor.WHITE).append(description.getWebsite()).color(net.md_5.bungee.api.ChatColor.GREEN);
 +            }
 +
 +            if (!description.getAuthors().isEmpty()) {
