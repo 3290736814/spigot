@@ -1,4 +1,4 @@
-From 96810b6e9ab57e773beea5e8d6f3d86714f4c77f Mon Sep 17 00:00:00 2001
+From 6f15058369845852e5abc8a5bcbddc56e4210718 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 22 Apr 2020 12:04:34 +1000
 Subject: [PATCH] Fix portals generating outside world border
@@ -6,10 +6,10 @@ Subject: [PATCH] Fix portals generating outside world border
 See SPIGOT-5677, MC-11479
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 6bf9d59de..ede38b7b5 100644
+index 3cc61d5c8..4ee11b6fb 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -2417,8 +2417,10 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -2423,8 +2423,10 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
                      d1 *= 8.0D;
                  }
  
@@ -23,10 +23,10 @@ index 6bf9d59de..ede38b7b5 100644
                  double d6 = Math.min(2.9999872E7D, worldserver.getWorldBorder().h() - 16.0D);
  
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 10908cbf4..a356e3258 100644
+index c171c471f..6a38418d4 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -826,9 +826,11 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -823,9 +823,11 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
              // this.setPositionRotation(d0, d1, d2, f1, f); // CraftBukkit - PlayerTeleportEvent handles position changes
              worldserver1.getMethodProfiler().exit();
              worldserver1.getMethodProfiler().enter("placing");

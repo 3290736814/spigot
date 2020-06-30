@@ -1,4 +1,4 @@
-From 7f0f5f257bf485be25f8c1c5a508ad69b26425c7 Mon Sep 17 00:00:00 2001
+From 66b2b7fd11ef07516ad3a8c7e47bd6c9826d5a4c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -116,7 +116,7 @@ index f49d8a741..c78e6c21d 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index b0f8eda1e..3e7976a0a 100644
+index e6ae0c8c9..69d8b3b11 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -29,6 +29,7 @@ import org.bukkit.command.CommandSender;
@@ -227,7 +227,7 @@ index da69271c0..f837685ca 100644
          if (!this.world.isClientSide && this.dN() && this.aC()) {
              this.damageEntity(DamageSource.DROWN, 1.0F);
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 26f1fa378..c6b4c020a 100644
+index a9aab0008..0c8d1b2ae 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -65,6 +65,7 @@ import org.bukkit.craftbukkit.CraftServer;
@@ -336,7 +336,7 @@ index 26f1fa378..c6b4c020a 100644
          this.methodProfiler.exit();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 51ccdb5d4..9522c1051 100644
+index ec314edb7..505a78a74 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -134,6 +134,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
@@ -355,7 +355,7 @@ index 51ccdb5d4..9522c1051 100644
  
      }
  
-@@ -1636,6 +1638,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -1637,6 +1639,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
      // CraftBukkit end
  
      private void handleCommand(String s) {
@@ -363,7 +363,7 @@ index 51ccdb5d4..9522c1051 100644
          // CraftBukkit start - whole method
          this.LOGGER.info(this.player.getName() + " issued server command: " + s);
  
-@@ -1645,6 +1648,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -1646,6 +1649,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
          this.server.getPluginManager().callEvent(event);
  
          if (event.isCancelled()) {
@@ -371,7 +371,7 @@ index 51ccdb5d4..9522c1051 100644
              return;
          }
  
-@@ -1656,6 +1660,8 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -1657,6 +1661,8 @@ public class PlayerConnection implements PacketListenerPlayIn {
              player.sendMessage(org.bukkit.ChatColor.RED + "An internal error occurred while attempting to perform this command");
              java.util.logging.Logger.getLogger(PlayerConnection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
              return;
@@ -499,7 +499,7 @@ index 7e9c22351..72119ba1b 100644
              CrashReport crashreport = CrashReport.a(throwable, "Ticking entity");
              CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Entity being ticked");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 64aca46ca..e7c82df7e 100644
+index d992df3ae..b81824edf 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -39,6 +39,7 @@ import org.apache.logging.log4j.Logger;
@@ -579,7 +579,7 @@ index 64aca46ca..e7c82df7e 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index ee6f48351..e39de2e4b 100644
+index 4b18380d3..04bbb07a9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -2012,6 +2012,11 @@ public final class CraftServer implements Server {
