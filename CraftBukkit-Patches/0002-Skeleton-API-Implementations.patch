@@ -1,4 +1,4 @@
-From 5aaa84b587cfb7baaadf809b9e6356f6dd5bfd76 Mon Sep 17 00:00:00 2001
+From 6cf9502cb4e5ca34f974ad8bfadb7f96d040cf10 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -6,7 +6,7 @@ Subject: [PATCH] Skeleton API Implementations
 This contains the basic, empty implementations for some Spigot-API extensions. They are included early in the patching progress so that compilation will still succeed midway despite the APIs only being provided by subsequent patches.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 8aeec5395..a0497d7a5 100644
+index aa2dd9569..63a06aa8d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -2004,4 +2004,14 @@ public final class CraftServer implements Server {
@@ -25,10 +25,10 @@ index 8aeec5395..a0497d7a5 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 81e132c9f..058cbbc29 100644
+index a0db0cfcb..155f63ebc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2314,4 +2314,15 @@ public class CraftWorld implements World {
+@@ -2323,4 +2323,15 @@ public class CraftWorld implements World {
      public DragonBattle getEnderDragonBattle() {
          return (getHandle().getDragonBattle() == null) ? null : new CraftDragonBattle(getHandle().getDragonBattle());
      }

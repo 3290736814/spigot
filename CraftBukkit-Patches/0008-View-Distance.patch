@@ -1,4 +1,4 @@
-From c8bc9560405a3a46ee744355b8c2cedc9096688c Mon Sep 17 00:00:00 2001
+From 6b822f3db7fcf58127e382c09ba9ad33f43f1da6 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -28,7 +28,7 @@ index 266f8503f..54a407603 100644
          entityplayer1.dead = false;
          entityplayer1.playerConnection.teleport(new Location(worldserver1.getWorld(), entityplayer1.locX(), entityplayer1.locY(), entityplayer1.locZ(), entityplayer1.yaw, entityplayer1.pitch));
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index e24e70ed3..64aca46ca 100644
+index a4dd7619a..d992df3ae 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -110,7 +110,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -41,10 +41,10 @@ index e24e70ed3..64aca46ca 100644
          });
          // CraftBukkit end
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index fc2477fe9..d62159683 100644
+index bc9ddfa94..6f1a5d3eb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2321,6 +2321,13 @@ public class CraftWorld implements World {
+@@ -2330,6 +2330,13 @@ public class CraftWorld implements World {
          return (getHandle().getDragonBattle() == null) ? null : new CraftDragonBattle(getHandle().getDragonBattle());
      }
  
