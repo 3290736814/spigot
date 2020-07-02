@@ -1,4 +1,4 @@
-From 11d6feee72b81adb3d4b5d928196fd386538cfb2 Mon Sep 17 00:00:00 2001
+From 64edc8e91f85896cbfe108de07543cf00dafce58 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -113,10 +113,10 @@ index a88da8054..a4dd7619a 100644
              this.entitiesToAdd.add(entity);
          } else {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 01ecbb92f..4b18380d3 100644
+index f38b3b730..bece2703f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -730,6 +730,7 @@ public final class CraftServer implements Server {
+@@ -732,6 +732,7 @@ public final class CraftServer implements Server {
      public boolean dispatchCommand(CommandSender sender, String commandLine) {
          Validate.notNull(sender, "Sender cannot be null");
          Validate.notNull(commandLine, "CommandLine cannot be null");
@@ -189,10 +189,10 @@ index dc9dbbf88..a48ea7d7c 100644
          List<org.bukkit.entity.Entity> bukkitEntityList = new java.util.ArrayList<org.bukkit.entity.Entity>(notchEntityList.size());
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 68c775b0b..212562d60 100644
+index b5460d7c7..c3e329d8b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -302,6 +302,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -304,6 +304,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
      @Override
      public void kickPlayer(String message) {

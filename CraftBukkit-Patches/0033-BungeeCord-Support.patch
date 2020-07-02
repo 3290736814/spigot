@@ -1,4 +1,4 @@
-From d45501f68ab73ef6dcbedaaee01ecffc8ad8b653 Mon Sep 17 00:00:00 2001
+From 802f1dedd67b982f761b1aaa667aed46e1932ab4 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -6,7 +6,7 @@ Subject: [PATCH] BungeeCord Support
 Provides support for IP forwarding via BungeeCord.
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index c25888b69..bb54632f5 100644
+index 414ba0650..ba4e31771 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -7,6 +7,7 @@ import java.util.HashMap;
@@ -115,7 +115,7 @@ index 6aeea22ae..4f008e472 100644
          this.d = EnumProtocol.a(packetdataserializer.i());
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index fd7c8273a..93dc41f90 100644
+index a02a9a620..49557db47 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -491,7 +491,7 @@ public abstract class PlayerList {
@@ -128,10 +128,10 @@ index fd7c8273a..93dc41f90 100644
          if (getProfileBans().isBanned(gameprofile) && !getProfileBans().get(gameprofile).hasExpired()) {
              GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.k.get(gameprofile);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 5afd4507b..0e8bce923 100644
+index 799c3cd48..8f7023f72 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -653,7 +653,13 @@ public final class CraftServer implements Server {
+@@ -655,7 +655,13 @@ public final class CraftServer implements Server {
  
      @Override
      public long getConnectionThrottle() {
@@ -147,10 +147,10 @@ index 5afd4507b..0e8bce923 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 0c9b88fee..61e4f8a44 100644
+index 28a3560e9..fcdb5de66 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1683,6 +1683,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1704,6 +1704,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      private final Player.Spigot spigot = new Player.Spigot()
      {
  
