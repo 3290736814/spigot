@@ -1,11 +1,11 @@
-From 8c8a1d3b005bdf1b6fcb200ad54cdb4d68a0bd3c Mon Sep 17 00:00:00 2001
+From c854b226072906c059b226c0da5d8b4e6bbdd2c7 Mon Sep 17 00:00:00 2001
 From: David <dmck2b@gmail.com>
 Date: Mon, 21 Apr 2014 12:43:08 +0100
 Subject: [PATCH] Prevent NoClassDefError crash and notify on crash
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index af5292548..7f0fd46ae 100644
+index 038870fb2..ae16d783e 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -78,6 +78,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -20,10 +20,10 @@ index af5292548..7f0fd46ae 100644
                  // CraftBukkit start
                  if (!this.captureBlockStates) { // Don't notify clients or update physics while capturing blockstates
                      // Modularize client and physic updates
--                    notifyAndUpdatePhysics(blockposition, chunk, iblockdata1, iblockdata, iblockdata2, i);
+-                    notifyAndUpdatePhysics(blockposition, chunk, iblockdata1, iblockdata, iblockdata2, i, j);
 +                    // Spigot start
 +                    try {
-+                        notifyAndUpdatePhysics(blockposition, chunk, iblockdata1, iblockdata, iblockdata2, i);
++                        notifyAndUpdatePhysics(blockposition, chunk, iblockdata1, iblockdata, iblockdata2, i, j);
 +                    } catch (StackOverflowError ex) {
 +                        lastPhysicsProblem = new BlockPosition(blockposition);
 +                    }
