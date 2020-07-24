@@ -1,4 +1,4 @@
-From 689860552f52e8e49615d2502bdbfe315fcbb3ec Mon Sep 17 00:00:00 2001
+From b4ab6824487edf200b415bf9ad57b7f545683fb3 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -32,7 +32,7 @@ index 40e0ea5bc..9ae419f9a 100644
          packetdataserializer.a(this.c);
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index ee24dc7ba..d05c57ce6 100644
+index eab073172..99cba4256 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -223,6 +223,8 @@ import org.yaml.snakeyaml.Yaml;
@@ -44,7 +44,7 @@ index ee24dc7ba..d05c57ce6 100644
  public final class CraftServer implements Server {
      private final String serverName = "CraftBukkit";
      private final String serverVersion;
-@@ -2057,6 +2059,20 @@ public final class CraftServer implements Server {
+@@ -2064,6 +2066,20 @@ public final class CraftServer implements Server {
          public void restart() {
              org.spigotmc.RestartCommand.restart();
          }
@@ -157,7 +157,7 @@ index 7a24eca8a..82d302832 100644
  
      public Player.Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index 456ee64ed..38247fe6c 100644
+index 48ae99e14..adc926f25 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 @@ -20,6 +20,9 @@ import org.bukkit.inventory.meta.BookMeta;
@@ -170,10 +170,10 @@ index 456ee64ed..38247fe6c 100644
  // Spigot end
  
  @DelegateDeserialization(SerializableMeta.class)
-@@ -360,6 +363,69 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
- 
+@@ -362,6 +365,69 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
      // Spigot start
-     private final BookMeta.Spigot spigot = new BookMeta.Spigot() {
+     private BookMeta.Spigot spigot = new SpigotMeta();
+     private class SpigotMeta extends BookMeta.Spigot {
 +
 +        @Override
 +        public BaseComponent[] getPage(final int page) {

@@ -1,4 +1,4 @@
-From b1c9ff031a622421de79fa5d33a829ec5b768efc Mon Sep 17 00:00:00 2001
+From efaeba389f842a7de734178f8d38cef5ee7b970a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 3 Mar 2016 19:45:46 +1100
 Subject: [PATCH] Implement SpawnerSpawnEvent.
@@ -28,10 +28,10 @@ index 0bd686ee2..4f7dc23d6 100644
                          this.a(entity);
                          world.triggerEffect(2004, blockposition, 0);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index b7051caa3..f4abad0c0 100644
+index 1e0d333a7..60a7b9abf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -218,6 +218,8 @@ import org.bukkit.inventory.meta.BookMeta;
+@@ -219,6 +219,8 @@ import org.bukkit.inventory.meta.BookMeta;
  import org.bukkit.potion.PotionEffect;
  import org.bukkit.projectiles.ProjectileSource;
  
@@ -40,7 +40,7 @@ index b7051caa3..f4abad0c0 100644
  public class CraftEventFactory {
      public static final DamageSource MELTING = CraftDamageSource.copyOf(DamageSource.BURN);
      public static final DamageSource POISON = CraftDamageSource.copyOf(DamageSource.MAGIC);
-@@ -1430,6 +1432,21 @@ public class CraftEventFactory {
+@@ -1438,6 +1440,21 @@ public class CraftEventFactory {
          return event;
      }
  
