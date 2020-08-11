@@ -1,4 +1,4 @@
-From 96f97ef4390138a304218cf893fc54311b11da00 Mon Sep 17 00:00:00 2001
+From e82adaebba35fd2f572331f2ba57be9f948b81ef Mon Sep 17 00:00:00 2001
 From: Spottedleaf <Spottedleaf@users.noreply.github.com>
 Date: Tue, 9 Jul 2019 02:18:54 -0700
 Subject: [PATCH] Remove DataWatcher Locking
@@ -124,11 +124,11 @@ index 211b8beaf..be8e705fc 100644
  
      public static class Item<T> {
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index dab96e7bf..6bf9d59de 100644
+index 5a03407f5..cca9b1a45 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -220,6 +220,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
-         this.datawatcher.register(Entity.aA, false);
+@@ -216,6 +216,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+         this.datawatcher.register(Entity.at, false);
          this.datawatcher.register(Entity.POSE, EntityPose.STANDING);
          this.initDatawatcher();
 +        this.datawatcher.registrationLocked = true; // Spigot

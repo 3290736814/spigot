@@ -1,14 +1,14 @@
-From 27abbde5ea24d638e0cf2657d1f6b227f8505e2e Mon Sep 17 00:00:00 2001
+From 144f938e0e94a3aab8de7733b5e343dcfa7de532 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
 
 
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index a2fe489bd..f574a28b6 100644
+index a6397a585..1b9b0d98c 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-@@ -271,6 +271,10 @@ public class PacketDataSerializer extends ByteBuf {
+@@ -281,6 +281,10 @@ public class PacketDataSerializer extends ByteBuf {
              NBTTagCompound nbttagcompound = null;
  
              if (item.usesDurability() || item.n()) {
@@ -20,7 +20,7 @@ index a2fe489bd..f574a28b6 100644
              }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index b8f1c64f4..de95625c8 100644
+index d32afdd96..48ae99e14 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 @@ -18,6 +18,10 @@ import org.bukkit.craftbukkit.util.CraftChatMessage;

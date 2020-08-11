@@ -1,11 +1,11 @@
-From c854b226072906c059b226c0da5d8b4e6bbdd2c7 Mon Sep 17 00:00:00 2001
+From e3b1c546b973bb25800325c513acaa71946c9b2b Mon Sep 17 00:00:00 2001
 From: David <dmck2b@gmail.com>
 Date: Mon, 21 Apr 2014 12:43:08 +0100
 Subject: [PATCH] Prevent NoClassDefError crash and notify on crash
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 038870fb2..ae16d783e 100644
+index 86fc9ef61..dd1154f7a 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -78,6 +78,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -16,7 +16,7 @@ index 038870fb2..ae16d783e 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -334,7 +335,13 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -299,7 +300,13 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                  // CraftBukkit start
                  if (!this.captureBlockStates) { // Don't notify clients or update physics while capturing blockstates
                      // Modularize client and physic updates
@@ -31,7 +31,7 @@ index 038870fb2..ae16d783e 100644
                  }
                  // CraftBukkit end
  
-@@ -481,6 +488,10 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -446,6 +453,10 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                  }
                  // CraftBukkit end
                  iblockdata.doPhysics(this, blockposition, block, blockposition1, false);
