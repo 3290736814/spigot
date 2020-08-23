@@ -1,4 +1,4 @@
-From e6bc78d851a2c646ec6690f63356d5c593a6aec6 Mon Sep 17 00:00:00 2001
+From 3630d69a841fa21cd1677d6ea6e6331c20ddc578 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,10 +9,10 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index c05765cfb..a04c7c82b 100644
+index ae222a5da..9ff213b2b 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -161,6 +161,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -163,6 +163,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
      public org.bukkit.projectiles.ProjectileSource projectileSource; // For projectiles only
      public boolean forceExplosionKnockback; // SPIGOT-949
      public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getEntityTimings(this); // Spigot
@@ -25,7 +25,7 @@ index c05765cfb..a04c7c82b 100644
  
      public float getBukkitYaw() {
          return this.yaw;
-@@ -194,6 +200,13 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -196,6 +202,13 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
          this.locBlock = BlockPosition.ZERO;
          this.av = Vec3D.a;
          this.setPosition(0.0D, 0.0D, 0.0D);
@@ -149,7 +149,7 @@ index 28f27819f..b35082514 100644
      protected void initDatawatcher() {
          this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, ItemStack.b);
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 0fbf82b01..7219eba2e 100644
+index 3e9fee8fe..5c88bb23d 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -144,6 +144,28 @@ public class EntityItem extends Entity {
