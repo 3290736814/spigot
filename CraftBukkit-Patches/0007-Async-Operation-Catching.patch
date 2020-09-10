@@ -1,4 +1,4 @@
-From eab7056b59880e8fec4766109d657a3e7c0fecb6 Mon Sep 17 00:00:00 2001
+From 92f5fa6f1f00fac07caffa37bfb28e49fafd0d69 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -6,7 +6,7 @@ Subject: [PATCH] Async Operation Catching
 Catch and throw an exception when a potentially unsafe operation occurs on a thread other than the main server thread.
 
 diff --git a/src/main/java/net/minecraft/server/BlockBase.java b/src/main/java/net/minecraft/server/BlockBase.java
-index 219bdbe56..2bc024b2e 100644
+index a6d5628a6..54de105a7 100644
 --- a/src/main/java/net/minecraft/server/BlockBase.java
 +++ b/src/main/java/net/minecraft/server/BlockBase.java
 @@ -69,10 +69,13 @@ public abstract class BlockBase {
@@ -37,10 +37,10 @@ index f9762de90..fdb7d96cf 100644
  
          if (map.containsKey(irecipe.getKey())) {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index fa45d247d..624616a5d 100644
+index fc6d45092..a14cab226 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -882,6 +882,7 @@ public abstract class EntityLiving extends Entity {
+@@ -883,6 +883,7 @@ public abstract class EntityLiving extends Entity {
      }
  
      public boolean addEffect(MobEffect mobeffect, EntityPotionEffectEvent.Cause cause) {
@@ -85,7 +85,7 @@ index be6d35487..b9e44767e 100644
                  Vec3D vec3d = entityplayer.getPositionVector().d(this.tracker.getPositionVector()); // MC-155077, SPIGOT-5113
                  int i = Math.min(this.b(), (PlayerChunkMap.this.viewDistance - 1) * 16);
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 55bcd4d08..5bd543141 100644
+index 75681dd41..03a1db345 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -882,6 +882,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -113,7 +113,7 @@ index 55bcd4d08..5bd543141 100644
              this.entitiesToAdd.add(entity);
          } else {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 6197cc9d0..c41c1b628 100644
+index 4ba20c5cf..959764681 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -731,6 +731,7 @@ public final class CraftServer implements Server {

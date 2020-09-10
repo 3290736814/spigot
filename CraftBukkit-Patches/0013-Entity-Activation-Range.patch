@@ -1,4 +1,4 @@
-From 3630d69a841fa21cd1677d6ea6e6331c20ddc578 Mon Sep 17 00:00:00 2001
+From d3fe9b818df9fca72c566ec5d8fd7f19214366d6 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index ae222a5da..9ff213b2b 100644
+index dd24fc96d..cee87ec9a 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -163,6 +163,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -27,7 +27,7 @@ index ae222a5da..9ff213b2b 100644
          return this.yaw;
 @@ -196,6 +202,13 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
          this.locBlock = BlockPosition.ZERO;
-         this.av = Vec3D.a;
+         this.av = Vec3D.ORIGIN;
          this.setPosition(0.0D, 0.0D, 0.0D);
 +        // Spigot start
 +        if (world != null) {
@@ -149,7 +149,7 @@ index 28f27819f..b35082514 100644
      protected void initDatawatcher() {
          this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, ItemStack.b);
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 3e9fee8fe..5c88bb23d 100644
+index 3b957cab1..13416bf95 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -144,6 +144,28 @@ public class EntityItem extends Entity {
@@ -182,10 +182,10 @@ index 3e9fee8fe..5c88bb23d 100644
          Vec3D vec3d = this.getMot();
  
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 0dc61c48b..e8f313e2b 100644
+index e56dbad44..fbd863d1b 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -143,6 +143,13 @@ public abstract class EntityLiving extends Entity {
+@@ -144,6 +144,13 @@ public abstract class EntityLiving extends Entity {
          return getHeadRotation();
      }
      // CraftBukkit end
@@ -222,7 +222,7 @@ index 779f2f3f0..57e0671c8 100644
      protected void mobTick() {
          this.world.getMethodProfiler().enter("villagerBrain");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index c84ae7fc6..f04550dcf 100644
+index 8fd21c21a..de206cede 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -358,6 +358,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {

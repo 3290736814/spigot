@@ -1,4 +1,4 @@
-From 9fe6931146893e6683f8df429c70f41966ea012d Mon Sep 17 00:00:00 2001
+From c154e9be7a87aa8bb30f3bab71aabe8722baab9e Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -88,7 +88,7 @@ index 31b05aa63..a9b40a74f 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 5882ab98a..064d43202 100644
+index 4e1fa37df..365cf719e 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -28,6 +28,7 @@ import org.apache.logging.log4j.Level;
@@ -116,7 +116,7 @@ index 5882ab98a..064d43202 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 1660bb91e..ae222a5da 100644
+index e55d76aac..dd24fc96d 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -31,6 +31,7 @@ import org.bukkit.craftbukkit.event.CraftPortalEvent;
@@ -152,10 +152,10 @@ index 1660bb91e..ae222a5da 100644
  
      protected BlockPosition ao() {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 624616a5d..0dc61c48b 100644
+index a14cab226..e56dbad44 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -41,6 +41,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
+@@ -42,6 +42,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
  import org.bukkit.event.player.PlayerItemConsumeEvent;
  // CraftBukkit end
  
@@ -164,7 +164,7 @@ index 624616a5d..0dc61c48b 100644
  public abstract class EntityLiving extends Entity {
  
      private static final UUID b = UUID.fromString("662A6B8D-DA3E-4C1C-8813-96EA6097278D");
-@@ -2324,6 +2326,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2336,6 +2338,7 @@ public abstract class EntityLiving extends Entity {
  
      @Override
      public void tick() {
@@ -172,7 +172,7 @@ index 624616a5d..0dc61c48b 100644
          super.tick();
          this.t();
          this.v();
-@@ -2372,7 +2375,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2384,7 +2387,9 @@ public abstract class EntityLiving extends Entity {
              }
          }
  
@@ -182,7 +182,7 @@ index 624616a5d..0dc61c48b 100644
          double d0 = this.locX() - this.lastX;
          double d1 = this.locZ() - this.lastZ;
          float f = (float) (d0 * d0 + d1 * d1);
-@@ -2453,6 +2458,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2465,6 +2470,7 @@ public abstract class EntityLiving extends Entity {
              this.pitch = 0.0F;
          }
  
@@ -190,7 +190,7 @@ index 624616a5d..0dc61c48b 100644
      }
  
      private void p() {
-@@ -2634,6 +2640,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2646,6 +2652,7 @@ public abstract class EntityLiving extends Entity {
  
          this.setMot(d4, d5, d6);
          this.world.getMethodProfiler().enter("ai");
@@ -198,7 +198,7 @@ index 624616a5d..0dc61c48b 100644
          if (this.isFrozen()) {
              this.jumping = false;
              this.aR = 0.0F;
-@@ -2643,6 +2650,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2655,6 +2662,7 @@ public abstract class EntityLiving extends Entity {
              this.doTick();
              this.world.getMethodProfiler().exit();
          }
@@ -206,7 +206,7 @@ index 624616a5d..0dc61c48b 100644
  
          this.world.getMethodProfiler().exit();
          this.world.getMethodProfiler().enter("jump");
-@@ -2677,7 +2685,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2689,7 +2697,9 @@ public abstract class EntityLiving extends Entity {
          this.r();
          AxisAlignedBB axisalignedbb = this.getBoundingBox();
  
@@ -216,7 +216,7 @@ index 624616a5d..0dc61c48b 100644
          this.world.getMethodProfiler().exit();
          this.world.getMethodProfiler().enter("push");
          if (this.bf > 0) {
-@@ -2685,7 +2695,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2697,7 +2707,9 @@ public abstract class EntityLiving extends Entity {
              this.a(axisalignedbb, this.getBoundingBox());
          }
  
@@ -227,7 +227,7 @@ index 624616a5d..0dc61c48b 100644
          if (!this.world.isClientSide && this.dN() && this.aF()) {
              this.damageEntity(DamageSource.DROWN, 1.0F);
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 2489c0bfb..b113f4ae7 100644
+index f7f7905bb..dab09d3fa 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -65,6 +65,7 @@ import org.bukkit.craftbukkit.CraftServer;
@@ -417,7 +417,7 @@ index a5921474f..f0338a3c0 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
      public CraftPersistentDataContainer persistentDataContainer;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 4b67936b1..caadc3b46 100644
+index 0ee70b468..c764a5c87 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
@@ -499,7 +499,7 @@ index 4b67936b1..caadc3b46 100644
              CrashReport crashreport = CrashReport.a(throwable, "Ticking entity");
              CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Entity being ticked");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 338152c51..c84ae7fc6 100644
+index e467379eb..8fd21c21a 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -39,6 +39,7 @@ import org.apache.logging.log4j.Logger;
@@ -579,7 +579,7 @@ index 338152c51..c84ae7fc6 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index c41c1b628..509b7852d 100644
+index 959764681..8efac9894 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -2017,6 +2017,11 @@ public final class CraftServer implements Server {
