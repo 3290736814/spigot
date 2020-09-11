@@ -1,4 +1,4 @@
-From c154e9be7a87aa8bb30f3bab71aabe8722baab9e Mon Sep 17 00:00:00 2001
+From 4915301b0d424341e7accb47db0853949a72df4f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -88,18 +88,18 @@ index 31b05aa63..a9b40a74f 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 4e1fa37df..365cf719e 100644
+index 9f4f33634..8dc46b095 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -28,6 +28,7 @@ import org.apache.logging.log4j.Level;
- 
+@@ -26,6 +26,7 @@ import org.apache.logging.log4j.Logger;
+ import org.apache.logging.log4j.Level;
+ import org.apache.logging.log4j.io.IoBuilder;
  import org.bukkit.command.CommandSender;
- import org.bukkit.craftbukkit.LoggerOutputStream;
 +import org.bukkit.craftbukkit.SpigotTimings; // Spigot
  import org.bukkit.event.server.ServerCommandEvent;
- import org.bukkit.craftbukkit.util.Waitable;
  import org.bukkit.event.server.RemoteServerCommandEvent;
-@@ -362,6 +363,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+ // CraftBukkit end
+@@ -359,6 +360,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
      }
  
      public void handleCommandQueue() {
@@ -107,7 +107,7 @@ index 4e1fa37df..365cf719e 100644
          while (!this.serverCommandQueue.isEmpty()) {
              ServerCommand servercommand = (ServerCommand) this.serverCommandQueue.remove(0);
  
-@@ -376,6 +378,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -373,6 +375,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              // CraftBukkit end
          }
  
@@ -336,7 +336,7 @@ index f7f7905bb..dab09d3fa 100644
          this.methodProfiler.exit();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 491daeec5..f0f162518 100644
+index f3d9389cf..25c760f67 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -134,6 +134,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
