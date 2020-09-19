@@ -1,4 +1,4 @@
-From d3fe9b818df9fca72c566ec5d8fd7f19214366d6 Mon Sep 17 00:00:00 2001
+From ee469d4d89ce8295a382b40602d62fcb862d7700 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,12 +9,12 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index dd24fc96d..cee87ec9a 100644
+index af4806f56..98fdaf266 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -163,6 +163,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
-     public org.bukkit.projectiles.ProjectileSource projectileSource; // For projectiles only
+@@ -164,6 +164,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
      public boolean forceExplosionKnockback; // SPIGOT-949
+     public boolean persistentInvisibility = false;
      public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getEntityTimings(this); // Spigot
 +    // Spigot start
 +    public final org.spigotmc.ActivationRange.ActivationType activationType = org.spigotmc.ActivationRange.initializeEntityActivationType(this);
@@ -25,7 +25,7 @@ index dd24fc96d..cee87ec9a 100644
  
      public float getBukkitYaw() {
          return this.yaw;
-@@ -196,6 +202,13 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+@@ -197,6 +203,13 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
          this.locBlock = BlockPosition.ZERO;
          this.av = Vec3D.ORIGIN;
          this.setPosition(0.0D, 0.0D, 0.0D);

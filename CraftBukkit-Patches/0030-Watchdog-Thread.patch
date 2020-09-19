@@ -1,4 +1,4 @@
-From f9b4717d339fb2ebdc5c9b7e67dc36e2f33f0e10 Mon Sep 17 00:00:00 2001
+From 4a7ee06cb8acd2c6f9ba480ba70667127b4dbe0b Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
@@ -38,10 +38,10 @@ index d8ed97650..1bf5fa342 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 855e4b89f..3e52e25ac 100644
+index 489090c87..95d629601 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1683,7 +1683,7 @@ public final class CraftServer implements Server {
+@@ -1685,7 +1685,7 @@ public final class CraftServer implements Server {
  
      @Override
      public boolean isPrimaryThread() {
@@ -50,7 +50,7 @@ index 855e4b89f..3e52e25ac 100644
      }
  
      @Override
-@@ -2029,6 +2029,11 @@ public final class CraftServer implements Server {
+@@ -2040,6 +2040,11 @@ public final class CraftServer implements Server {
          {
              return org.spigotmc.SpigotConfig.config;
          }

@@ -1,4 +1,4 @@
-From b3385a868b990dd74a6abec32bef33fcff8d1212 Mon Sep 17 00:00:00 2001
+From be333d5e9d25696652284b039fbed26d85247b07 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -128,10 +128,10 @@ index 7be24946d..b7bde088e 100644
          if (getProfileBans().isBanned(gameprofile) && !getProfileBans().get(gameprofile).hasExpired()) {
              GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.k.get(gameprofile);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 3e52e25ac..f4744d789 100644
+index 95d629601..3230f4ee7 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -654,7 +654,13 @@ public final class CraftServer implements Server {
+@@ -656,7 +656,13 @@ public final class CraftServer implements Server {
  
      @Override
      public long getConnectionThrottle() {
