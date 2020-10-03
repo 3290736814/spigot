@@ -1,4 +1,4 @@
-From 74464374296fba93374593f1eff109519d5e8827 Mon Sep 17 00:00:00 2001
+From cb06ed69ee182f1d54a4c8af92e32eae25ba2193 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 9 Jun 2017 16:29:31 +1000
 Subject: [PATCH] Configurable Advancement Disabling
@@ -18,7 +18,7 @@ index 761bc7b6a..12fc64129 100644
          Iterator iterator = this.data.entrySet().iterator();
  
 diff --git a/src/main/java/net/minecraft/server/AdvancementDataWorld.java b/src/main/java/net/minecraft/server/AdvancementDataWorld.java
-index 3817ebb8b..e546de5e5 100644
+index 3817ebb8b..a46750b52 100644
 --- a/src/main/java/net/minecraft/server/AdvancementDataWorld.java
 +++ b/src/main/java/net/minecraft/server/AdvancementDataWorld.java
 @@ -29,6 +29,12 @@ public class AdvancementDataWorld extends ResourceDataJson {
@@ -26,7 +26,7 @@ index 3817ebb8b..e546de5e5 100644
  
          map.forEach((minecraftkey, jsonelement) -> {
 +            // Spigot start
-+            if (org.spigotmc.SpigotConfig.disabledAdvancements != null && (org.spigotmc.SpigotConfig.disabledAdvancements.contains("*") || org.spigotmc.SpigotConfig.disabledAdvancements.contains(minecraftkey.toString()))) {
++            if (org.spigotmc.SpigotConfig.disabledAdvancements != null && (org.spigotmc.SpigotConfig.disabledAdvancements.contains("*") || org.spigotmc.SpigotConfig.disabledAdvancements.contains(minecraftkey.toString()) || org.spigotmc.SpigotConfig.disabledAdvancements.contains(minecraftkey.getNamespace()))) {
 +                return;
 +            }
 +            // Spigot end
