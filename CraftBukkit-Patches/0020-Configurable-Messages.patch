@@ -1,4 +1,4 @@
-From 489c43a44b5ca50a5d6a0e09845684babb164345 Mon Sep 17 00:00:00 2001
+From f592ac64405f37529f198dddf764adf93bfec2c2 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
@@ -23,10 +23,10 @@ index 52808861d..94bf414b6 100644
                      this.c.close(chatmessage);
                  } else {
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 1ffc9b5f7..bb6902467 100644
+index c142bd3b0..a9e713726 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -505,7 +505,7 @@ public abstract class PlayerList {
+@@ -508,7 +508,7 @@ public abstract class PlayerList {
              event.disallow(PlayerLoginEvent.Result.KICK_BANNED, CraftChatMessage.fromComponent(chatmessage));
          } else if (!this.isWhitelisted(gameprofile)) {
              chatmessage = new ChatMessage("multiplayer.disconnect.not_whitelisted");
@@ -35,7 +35,7 @@ index 1ffc9b5f7..bb6902467 100644
          } else if (getIPBans().isBanned(socketaddress) && !getIPBans().get(socketaddress).hasExpired()) {
              IpBanEntry ipbanentry = this.l.get(socketaddress);
  
-@@ -519,7 +519,7 @@ public abstract class PlayerList {
+@@ -522,7 +522,7 @@ public abstract class PlayerList {
          } else {
              // return this.players.size() >= this.maxPlayers && !this.f(gameprofile) ? new ChatMessage("multiplayer.disconnect.server_full") : null;
              if (this.players.size() >= this.maxPlayers && !this.f(gameprofile)) {

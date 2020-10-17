@@ -1,11 +1,11 @@
-From e788b2f6eac49812d646b74c58ae19861d603d15 Mon Sep 17 00:00:00 2001
+From 2136f8745f00da683e3c79393db0f66b6a1c6c0a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:33:36 +1100
 Subject: [PATCH] Use Standard List for EntitySlices.
 
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 55c593ee1..ea09e7a74 100644
+index f0954d038..22281e509 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -35,7 +35,7 @@ public class Chunk implements IChunkAccess {
@@ -35,7 +35,7 @@ index 55c593ee1..ea09e7a74 100644
          }
  
          this.d = biomestorage;
-@@ -561,8 +561,8 @@ public class Chunk implements IChunkAccess {
+@@ -564,8 +564,8 @@ public class Chunk implements IChunkAccess {
          j = MathHelper.clamp(j, 0, this.entitySlices.length - 1);
  
          for (int k = i; k <= j; ++k) {
@@ -46,7 +46,7 @@ index 55c593ee1..ea09e7a74 100644
              int l = list1.size();
  
              for (int i1 = 0; i1 < l; ++i1) {
-@@ -599,7 +599,7 @@ public class Chunk implements IChunkAccess {
+@@ -602,7 +602,7 @@ public class Chunk implements IChunkAccess {
          j = MathHelper.clamp(j, 0, this.entitySlices.length - 1);
  
          for (int k = i; k <= j; ++k) {
@@ -55,7 +55,7 @@ index 55c593ee1..ea09e7a74 100644
  
              while (iterator.hasNext()) {
                  T entity = (T) iterator.next(); // CraftBukkit - decompile error
-@@ -620,12 +620,12 @@ public class Chunk implements IChunkAccess {
+@@ -623,12 +623,12 @@ public class Chunk implements IChunkAccess {
          j = MathHelper.clamp(j, 0, this.entitySlices.length - 1);
  
          for (int k = i; k <= j; ++k) {
@@ -70,7 +70,7 @@ index 55c593ee1..ea09e7a74 100644
                      list.add(t0);
                  }
              }
-@@ -664,7 +664,7 @@ public class Chunk implements IChunkAccess {
+@@ -667,7 +667,7 @@ public class Chunk implements IChunkAccess {
          return this.tileEntities;
      }
  

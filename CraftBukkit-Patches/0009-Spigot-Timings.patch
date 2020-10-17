@@ -1,4 +1,4 @@
-From 9c29122319fe181dec7bbf51d634036c7181a91f Mon Sep 17 00:00:00 2001
+From 018e56666d86d858e30b0a1fb33ab6dc25d6c898 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -59,10 +59,10 @@ index f868bd5e6..561c7a56d 100644
  
      private void a(long i, Consumer<Chunk> consumer) {
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index 31b05aa63..a9b40a74f 100644
+index fbf0e8789..7d9161b9e 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-@@ -392,6 +392,7 @@ public class ChunkRegionLoader {
+@@ -404,6 +404,7 @@ public class ChunkRegionLoader {
      private static void loadEntities(NBTTagCompound nbttagcompound, Chunk chunk) {
          NBTTagList nbttaglist = nbttagcompound.getList("Entities", 10);
          World world = chunk.getWorld();
@@ -70,7 +70,7 @@ index 31b05aa63..a9b40a74f 100644
  
          for (int i = 0; i < nbttaglist.size(); ++i) {
              NBTTagCompound nbttagcompound1 = nbttaglist.getCompound(i);
-@@ -403,6 +404,8 @@ public class ChunkRegionLoader {
+@@ -415,6 +416,8 @@ public class ChunkRegionLoader {
              chunk.d(true);
          }
  
@@ -79,7 +79,7 @@ index 31b05aa63..a9b40a74f 100644
          NBTTagList nbttaglist1 = nbttagcompound.getList("TileEntities", 10);
  
          for (int j = 0; j < nbttaglist1.size(); ++j) {
-@@ -420,6 +423,7 @@ public class ChunkRegionLoader {
+@@ -432,6 +435,7 @@ public class ChunkRegionLoader {
                  }
              }
          }

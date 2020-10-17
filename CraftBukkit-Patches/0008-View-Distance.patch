@@ -1,4 +1,4 @@
-From 3cf731ea3c2faceac48e7a23f0a842d9003f5f2f Mon Sep 17 00:00:00 2001
+From 3c01f17c8266f3fdb50112e02be6df7835301aec Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,7 +6,7 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances.
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index f9c22dbff..1ffc9b5f7 100644
+index c5ee99f38..c142bd3b0 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -148,7 +148,8 @@ public abstract class PlayerList {
@@ -19,7 +19,7 @@ index f9c22dbff..1ffc9b5f7 100644
          entityplayer.getBukkitEntity().sendSupportedChannels(); // CraftBukkit
          playerconnection.sendPacket(new PacketPlayOutCustomPayload(PacketPlayOutCustomPayload.a, (new PacketDataSerializer(Unpooled.buffer())).a(this.getServer().getServerModName())));
          playerconnection.sendPacket(new PacketPlayOutServerDifficulty(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
-@@ -686,6 +687,7 @@ public abstract class PlayerList {
+@@ -689,6 +690,7 @@ public abstract class PlayerList {
          // CraftBukkit start
          WorldData worlddata = worldserver1.getWorldData();
          entityplayer1.playerConnection.sendPacket(new PacketPlayOutRespawn(worldserver1.getDimensionManager(), worldserver1.getDimensionKey(), BiomeManager.a(worldserver1.getSeed()), entityplayer1.playerInteractManager.getGameMode(), entityplayer1.playerInteractManager.c(), worldserver1.isDebugWorld(), worldserver1.isFlatWorld(), flag));
