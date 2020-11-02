@@ -1,4 +1,4 @@
-From 3c01f17c8266f3fdb50112e02be6df7835301aec Mon Sep 17 00:00:00 2001
+From 9730c8d4d9ae9d8351946a4187f116070dc3396e Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -28,10 +28,10 @@ index c5ee99f38..c142bd3b0 100644
          entityplayer1.dead = false;
          entityplayer1.playerConnection.teleport(new Location(worldserver1.getWorld(), entityplayer1.locX(), entityplayer1.locY(), entityplayer1.locZ(), entityplayer1.yaw, entityplayer1.pitch));
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 03a1db345..e467379eb 100644
+index 3cdb25bc0..d68bf3ad7 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -110,7 +110,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -114,7 +114,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
              chunkgenerator = new org.bukkit.craftbukkit.generator.CustomChunkGenerator(this, chunkgenerator, gen);
          }
  

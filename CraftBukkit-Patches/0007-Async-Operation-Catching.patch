@@ -1,4 +1,4 @@
-From 92f1dd25fdc9d51004033d49b03f0bf0972a6c84 Mon Sep 17 00:00:00 2001
+From 07d509ca67d9ff28e530a3e3512a6be585fb6655 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -6,7 +6,7 @@ Subject: [PATCH] Async Operation Catching
 Catch and throw an exception when a potentially unsafe operation occurs on a thread other than the main server thread.
 
 diff --git a/src/main/java/net/minecraft/server/BlockBase.java b/src/main/java/net/minecraft/server/BlockBase.java
-index a6d5628a6..54de105a7 100644
+index 753bdb7ea..f28b9c093 100644
 --- a/src/main/java/net/minecraft/server/BlockBase.java
 +++ b/src/main/java/net/minecraft/server/BlockBase.java
 @@ -69,10 +69,13 @@ public abstract class BlockBase {
@@ -37,7 +37,7 @@ index f9762de90..fdb7d96cf 100644
  
          if (map.containsKey(irecipe.getKey())) {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index fc6d45092..a14cab226 100644
+index 9be0999f4..7f7ee37b8 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -883,6 +883,7 @@ public abstract class EntityLiving extends Entity {
@@ -85,10 +85,10 @@ index be6d35487..b9e44767e 100644
                  Vec3D vec3d = entityplayer.getPositionVector().d(this.tracker.getPositionVector()); // MC-155077, SPIGOT-5113
                  int i = Math.min(this.b(), (PlayerChunkMap.this.viewDistance - 1) * 16);
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 75681dd41..03a1db345 100644
+index 2b56ff257..3cdb25bc0 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -882,6 +882,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -886,6 +886,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
  
      // CraftBukkit start
      private boolean addEntity0(Entity entity, CreatureSpawnEvent.SpawnReason spawnReason) {
@@ -96,7 +96,7 @@ index 75681dd41..03a1db345 100644
          if (entity.dead) {
              // WorldServer.LOGGER.warn("Tried to add entity {} but it was marked as removed already", EntityTypes.getName(entity.getEntityType())); // CraftBukkit
              return false;
-@@ -988,6 +989,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -992,6 +993,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
      }
  
      public void unregisterEntity(Entity entity) {
@@ -104,7 +104,7 @@ index 75681dd41..03a1db345 100644
          if (entity instanceof EntityEnderDragon) {
              EntityComplexPart[] aentitycomplexpart = ((EntityEnderDragon) entity).eJ();
              int i = aentitycomplexpart.length;
-@@ -1022,6 +1024,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1026,6 +1028,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
      }
  
      private void registerEntity(Entity entity) {
@@ -177,10 +177,10 @@ index 8d01bd05f..154042504 100644
          boolean oldSave = world.savingDisabled;
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 83e07305a..6cc03d951 100644
+index d4c50dbac..4a1390906 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -506,6 +506,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -507,6 +507,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
  
      @Override
      public List<org.bukkit.entity.Entity> getNearbyEntities(double x, double y, double z) {

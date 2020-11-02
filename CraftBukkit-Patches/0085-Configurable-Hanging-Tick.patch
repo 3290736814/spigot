@@ -1,15 +1,15 @@
-From acecbc272f949bc10d332922b3891036ec1cdb77 Mon Sep 17 00:00:00 2001
+From 2e83aa20c133266d991789ecc26f27240108def2 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoung@mit.edu>
 Date: Sat, 9 Aug 2014 13:56:51 -0400
 Subject: [PATCH] Configurable Hanging Tick
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHanging.java b/src/main/java/net/minecraft/server/EntityHanging.java
-index 515b1f0f3..77cee2a41 100644
+index ecff27dd8..2fb7abc36 100644
 --- a/src/main/java/net/minecraft/server/EntityHanging.java
 +++ b/src/main/java/net/minecraft/server/EntityHanging.java
 @@ -98,7 +98,7 @@ public abstract class EntityHanging extends Entity {
-                 this.am();
+                 this.an();
              }
  
 -            if (this.e++ == 100) {

@@ -1,4 +1,4 @@
-From 58cd4a3029ab0533dd65e2b2b7486f40f8cdae03 Mon Sep 17 00:00:00 2001
+From 809d9115808025f5c5e714714d41fe624d71b66a Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -6,7 +6,7 @@ Subject: [PATCH] BungeeCord Support
 Provides support for IP forwarding via BungeeCord.
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 94bf414b6..a79c3a548 100644
+index d9b410afa..69fd0a7b2 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -7,6 +7,7 @@ import java.util.HashMap;
@@ -30,7 +30,7 @@ index 94bf414b6..a79c3a548 100644
 +                            c.spoofedUUID = com.mojang.util.UUIDTypeAdapter.fromString( split[2] );
 +                        } else
 +                        {
-+                            chatmessage = new ChatMessage("If you wish to use IP forwarding, please enable it in your BungeeCord config as well!");
++                            ChatMessage chatmessage = new ChatMessage("If you wish to use IP forwarding, please enable it in your BungeeCord config as well!");
 +                            this.c.sendPacket(new PacketLoginOutDisconnect(chatmessage));
 +                            this.c.close(chatmessage);
 +                            return;
@@ -45,10 +45,10 @@ index 94bf414b6..a79c3a548 100644
                  }
                  break;
 diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
-index 514b8ba9c..87afa6e45 100644
+index f541eedae..291baeb12 100644
 --- a/src/main/java/net/minecraft/server/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/LoginListener.java
-@@ -99,9 +99,24 @@ public class LoginListener implements PacketLoginInListener {
+@@ -100,9 +100,24 @@ public class LoginListener implements PacketLoginInListener {
      // Spigot start
      public void initUUID()
      {
@@ -75,7 +75,7 @@ index 514b8ba9c..87afa6e45 100644
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
-index 62391f244..0cdcc686b 100644
+index ee57efb42..61e927ab7 100644
 --- a/src/main/java/net/minecraft/server/NetworkManager.java
 +++ b/src/main/java/net/minecraft/server/NetworkManager.java
 @@ -45,6 +45,10 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {

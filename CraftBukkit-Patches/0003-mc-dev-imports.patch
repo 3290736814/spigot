@@ -1,4 +1,4 @@
-From a449acc8b817445275d5309b87d6a026a9db6cef Mon Sep 17 00:00:00 2001
+From f2c3bae58fd90598bc56076931c5c1bceb1afc29 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 15:10:48 +1100
 Subject: [PATCH] mc-dev imports
@@ -79,7 +79,7 @@ index 000000000..3817ebb8b
 +}
 diff --git a/src/main/java/net/minecraft/server/BlockBase.java b/src/main/java/net/minecraft/server/BlockBase.java
 new file mode 100644
-index 000000000..a6d5628a6
+index 000000000..753bdb7ea
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/BlockBase.java
 @@ -0,0 +1,928 @@
@@ -260,7 +260,7 @@ index 000000000..a6d5628a6
 +
 +    @Deprecated
 +    public int f(IBlockData iblockdata, IBlockAccess iblockaccess, BlockPosition blockposition) {
-+        return iblockdata.i(iblockaccess, blockposition) ? iblockaccess.J() : (iblockdata.a(iblockaccess, blockposition) ? 0 : 1);
++        return iblockdata.i(iblockaccess, blockposition) ? iblockaccess.K() : (iblockdata.a(iblockaccess, blockposition) ? 0 : 1);
 +    }
 +
 +    @Nullable
@@ -1013,7 +1013,7 @@ index 000000000..a6d5628a6
 +}
 diff --git a/src/main/java/net/minecraft/server/EntitySquid.java b/src/main/java/net/minecraft/server/EntitySquid.java
 new file mode 100644
-index 000000000..fb43b7ec2
+index 000000000..2faf5154e
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/EntitySquid.java
 @@ -0,0 +1,274 @@
@@ -1105,7 +1105,7 @@ index 000000000..fb43b7ec2
 +            }
 +        }
 +
-+        if (this.aG()) {
++        if (this.aH()) {
 +            if (this.bp < 3.1415927F) {
 +                float f = this.bp / 3.1415927F;
 +
@@ -1170,7 +1170,7 @@ index 000000000..fb43b7ec2
 +    }
 +
 +    private void eL() {
-+        this.playSound(SoundEffects.ENTITY_SQUID_SQUIRT, this.getSoundVolume(), this.dG());
++        this.playSound(SoundEffects.ENTITY_SQUID_SQUIRT, this.getSoundVolume(), this.dH());
 +        Vec3D vec3d = this.i(new Vec3D(0.0D, -1.0D, 0.0D)).add(this.locX(), this.locY(), this.locZ());
 +
 +        for (int i = 0; i < 30; ++i) {
@@ -1275,7 +1275,7 @@ index 000000000..fb43b7ec2
 +
 +        @Override
 +        public void e() {
-+            int i = this.b.dc();
++            int i = this.b.dd();
 +
 +            if (i > 100) {
 +                this.b.a(0.0F, 0.0F, 0.0F);
@@ -1384,7 +1384,7 @@ index 000000000..67365b99f
 +}
 diff --git a/src/main/java/net/minecraft/server/ItemDebugStick.java b/src/main/java/net/minecraft/server/ItemDebugStick.java
 new file mode 100644
-index 000000000..bc74453c8
+index 000000000..4fc998052
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ItemDebugStick.java
 @@ -0,0 +1,90 @@
@@ -1446,12 +1446,12 @@ index 000000000..bc74453c8
 +                        iblockstate = (IBlockState) collection.iterator().next();
 +                    }
 +
-+                    IBlockData iblockdata1 = a(iblockdata, iblockstate, entityhuman.ep());
++                    IBlockData iblockdata1 = a(iblockdata, iblockstate, entityhuman.eq());
 +
 +                    generatoraccess.setTypeAndData(blockposition, iblockdata1, 18);
 +                    a(entityhuman, (IChatBaseComponent) (new ChatMessage(this.getName() + ".update", new Object[]{iblockstate.getName(), a(iblockdata1, iblockstate)})));
 +                } else {
-+                    iblockstate = (IBlockState) a((Iterable) collection, (Object) iblockstate, entityhuman.ep());
++                    iblockstate = (IBlockState) a((Iterable) collection, (Object) iblockstate, entityhuman.eq());
 +                    String s2 = iblockstate.getName();
 +
 +                    nbttagcompound.setString(s, s2);
@@ -2790,7 +2790,7 @@ index 000000000..831636803
 +}
 diff --git a/src/main/java/net/minecraft/server/ServerStatisticManager.java b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 new file mode 100644
-index 000000000..00622284b
+index 000000000..697b070f6
 --- /dev/null
 +++ b/src/main/java/net/minecraft/server/ServerStatisticManager.java
 @@ -0,0 +1,234 @@
@@ -3011,7 +3011,7 @@ index 000000000..00622284b
 +    }
 +
 +    public void a(EntityPlayer entityplayer) {
-+        int i = this.c.ah();
++        int i = this.c.ai();
 +        Object2IntMap<Statistic<?>> object2intmap = new Object2IntOpenHashMap();
 +
 +        if (i - this.f > 300) {

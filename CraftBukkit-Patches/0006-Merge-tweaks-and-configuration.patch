@@ -1,4 +1,4 @@
-From acc8b98837f781501237ebe2a6e26c2bc24c3a7d Mon Sep 17 00:00:00 2001
+From 24eb041e0e4f82c361dd0bbd292c4d058fc15901 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:46:33 +1100
 Subject: [PATCH] Merge tweaks and configuration
@@ -6,7 +6,7 @@ Subject: [PATCH] Merge tweaks and configuration
 This allows the merging of Experience orbs, as well as the configuration of the merge radius of items. Additionally it refactors the merge algorithm to be a better experience for players.
 
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 9cb44fe79..59f1ff269 100644
+index e1475356a..244256f3a 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -158,7 +158,10 @@ public class EntityItem extends Entity {
@@ -31,7 +31,7 @@ index 9cb44fe79..59f1ff269 100644
              } else {
                  a(entityitem, itemstack1, this, itemstack);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 1abae0680..15ecea8fb 100644
+index 71b5d0a5b..c7022bca0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -577,6 +577,23 @@ public class CraftEventFactory {

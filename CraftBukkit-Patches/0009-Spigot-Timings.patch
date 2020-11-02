@@ -1,4 +1,4 @@
-From 018e56666d86d858e30b0a1fb33ab6dc25d6c898 Mon Sep 17 00:00:00 2001
+From 9103e3ed89dbfed12f652242510a7cb85d988667 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -6,7 +6,7 @@ Subject: [PATCH] Spigot Timings
 Overhauls the Timings System adding performance tracking all around the Minecraft Server
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index f868bd5e6..561c7a56d 100644
+index 981414374..d3386c108 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -115,9 +115,11 @@ public class ChunkProviderServer extends IChunkProvider {
@@ -59,7 +59,7 @@ index f868bd5e6..561c7a56d 100644
  
      private void a(long i, Consumer<Chunk> consumer) {
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index fbf0e8789..7d9161b9e 100644
+index df31a010a..bd47979e1 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -404,6 +404,7 @@ public class ChunkRegionLoader {
@@ -88,7 +88,7 @@ index fbf0e8789..7d9161b9e 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 9f4f33634..8dc46b095 100644
+index 80bfb9e8f..2a63e517b 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -26,6 +26,7 @@ import org.apache.logging.log4j.Logger;
@@ -99,7 +99,7 @@ index 9f4f33634..8dc46b095 100644
  import org.bukkit.event.server.ServerCommandEvent;
  import org.bukkit.event.server.RemoteServerCommandEvent;
  // CraftBukkit end
-@@ -359,6 +360,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -365,6 +366,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
      }
  
      public void handleCommandQueue() {
@@ -107,7 +107,7 @@ index 9f4f33634..8dc46b095 100644
          while (!this.serverCommandQueue.isEmpty()) {
              ServerCommand servercommand = (ServerCommand) this.serverCommandQueue.remove(0);
  
-@@ -373,6 +375,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -379,6 +381,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              // CraftBukkit end
          }
  
@@ -116,7 +116,7 @@ index 9f4f33634..8dc46b095 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index c9e1b6938..af4806f56 100644
+index 0b00cc4c8..7434b928b 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -31,6 +31,7 @@ import org.bukkit.craftbukkit.event.CraftPortalEvent;
@@ -150,9 +150,9 @@ index c9e1b6938..af4806f56 100644
 +        org.bukkit.craftbukkit.SpigotTimings.entityMoveTimer.stopTiming(); // Spigot
      }
  
-     protected BlockPosition ao() {
+     protected BlockPosition ap() {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index a14cab226..e56dbad44 100644
+index 7f7ee37b8..5405e65c4 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -42,6 +42,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
@@ -224,10 +224,10 @@ index a14cab226..e56dbad44 100644
          this.collideNearby();
 +        SpigotTimings.timerEntityAICollision.stopTiming(); // Spigot
          this.world.getMethodProfiler().exit();
-         if (!this.world.isClientSide && this.dN() && this.aF()) {
+         if (!this.world.isClientSide && this.dO() && this.aG()) {
              this.damageEntity(DamageSource.DROWN, 1.0F);
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index f7f7905bb..dab09d3fa 100644
+index ed5801313..f81507268 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -65,6 +65,7 @@ import org.bukkit.craftbukkit.CraftServer;
@@ -336,10 +336,10 @@ index f7f7905bb..dab09d3fa 100644
          this.methodProfiler.exit();
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index f3d9389cf..25c760f67 100644
+index d0f95e8d3..0b5009e2b 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -134,6 +134,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -145,6 +145,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
      // CraftBukkit end
  
      public void tick() {
@@ -347,7 +347,7 @@ index f3d9389cf..25c760f67 100644
          this.syncPosition();
          this.player.lastX = this.player.locX();
          this.player.lastY = this.player.locY();
-@@ -209,6 +210,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -220,6 +221,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
              this.player.resetIdleTimer(); // CraftBukkit - SPIGOT-854
              this.disconnect(new ChatMessage("multiplayer.disconnect.idling"));
          }
@@ -355,7 +355,7 @@ index f3d9389cf..25c760f67 100644
  
      }
  
-@@ -1631,6 +1633,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -1720,6 +1722,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
      // CraftBukkit end
  
      private void handleCommand(String s) {
@@ -363,7 +363,7 @@ index f3d9389cf..25c760f67 100644
          // CraftBukkit start - whole method
          this.LOGGER.info(this.player.getName() + " issued server command: " + s);
  
-@@ -1640,6 +1643,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -1729,6 +1732,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
          this.server.getPluginManager().callEvent(event);
  
          if (event.isCancelled()) {
@@ -371,7 +371,7 @@ index f3d9389cf..25c760f67 100644
              return;
          }
  
-@@ -1651,6 +1655,8 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -1740,6 +1744,8 @@ public class PlayerConnection implements PacketListenerPlayIn {
              player.sendMessage(org.bukkit.ChatColor.RED + "An internal error occurred while attempting to perform this command");
              java.util.logging.Logger.getLogger(PlayerConnection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
              return;
@@ -401,7 +401,7 @@ index b1f7d2a6d..278e7bcd4 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/TileEntity.java b/src/main/java/net/minecraft/server/TileEntity.java
-index a5921474f..f0338a3c0 100644
+index cabe9e6a4..cbe34f8a8 100644
 --- a/src/main/java/net/minecraft/server/TileEntity.java
 +++ b/src/main/java/net/minecraft/server/TileEntity.java
 @@ -9,9 +9,11 @@ import org.bukkit.craftbukkit.persistence.CraftPersistentDataContainer;
@@ -417,7 +417,7 @@ index a5921474f..f0338a3c0 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
      public CraftPersistentDataContainer persistentDataContainer;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 0ee70b468..c764a5c87 100644
+index 30b817246..073287fa3 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
@@ -499,10 +499,10 @@ index 0ee70b468..c764a5c87 100644
              CrashReport crashreport = CrashReport.a(throwable, "Ticking entity");
              CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Entity being ticked");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index e467379eb..8fd21c21a 100644
+index d68bf3ad7..713535970 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -39,6 +39,7 @@ import org.apache.logging.log4j.Logger;
+@@ -43,6 +43,7 @@ import org.apache.logging.log4j.Logger;
  import java.util.logging.Level;
  import org.bukkit.Bukkit;
  import org.bukkit.WeatherType;
@@ -510,7 +510,7 @@ index e467379eb..8fd21c21a 100644
  import org.bukkit.craftbukkit.event.CraftEventFactory;
  import org.bukkit.craftbukkit.util.WorldUUID;
  import org.bukkit.event.entity.CreatureSpawnEvent;
-@@ -327,15 +328,19 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -331,15 +332,19 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          gameprofilerfiller.exitEnter("chunkSource");
          this.getChunkProvider().tick(booleansupplier);
          gameprofilerfiller.exitEnter("tickPending");
@@ -525,12 +525,12 @@ index e467379eb..8fd21c21a 100644
          this.persistentRaid.a();
          gameprofilerfiller.exitEnter("blockEvents");
 +        timings.doSounds.startTiming(); // Spigot
-         this.aj();
+         this.ak();
 +        timings.doSounds.stopTiming(); // Spigot
          this.ticking = false;
          gameprofilerfiller.exitEnter("entities");
          boolean flag3 = true || !this.players.isEmpty() || !this.getForceLoadedChunks().isEmpty(); // CraftBukkit - this prevents entity cleanup, other issues on servers with no players
-@@ -345,6 +350,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -349,6 +354,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          }
  
          if (flag3 || this.emptyTime++ < 300) {
@@ -538,7 +538,7 @@ index e467379eb..8fd21c21a 100644
              if (this.dragonBattle != null) {
                  this.dragonBattle.b();
              }
-@@ -352,6 +358,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -356,6 +362,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
              this.tickingEntities = true;
              ObjectIterator objectiterator = this.entitiesById.int2ObjectEntrySet().iterator();
  
@@ -546,7 +546,7 @@ index e467379eb..8fd21c21a 100644
              while (objectiterator.hasNext()) {
                  Entry<Entity> entry = (Entry) objectiterator.next();
                  Entity entity = (Entity) entry.getValue();
-@@ -396,6 +403,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -400,6 +407,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
  
                  gameprofilerfiller.exit();
              }
@@ -554,7 +554,7 @@ index e467379eb..8fd21c21a 100644
  
              this.tickingEntities = false;
  
-@@ -405,6 +413,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -409,6 +417,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
                  this.registerEntity(entity2);
              }
  
@@ -562,7 +562,7 @@ index e467379eb..8fd21c21a 100644
              this.tickBlockEntities();
          }
  
-@@ -627,6 +636,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -631,6 +640,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          if (!(entity instanceof EntityHuman) && !this.getChunkProvider().a(entity)) {
              this.chunkCheck(entity);
          } else {
@@ -570,7 +570,7 @@ index e467379eb..8fd21c21a 100644
              entity.g(entity.locX(), entity.locY(), entity.locZ());
              entity.lastYaw = entity.yaw;
              entity.lastPitch = entity.pitch;
-@@ -653,6 +663,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -657,6 +667,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
                      this.a(entity, entity1);
                  }
              }
