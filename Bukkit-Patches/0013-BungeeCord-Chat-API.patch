@@ -1,4 +1,4 @@
-From 258412605b7549c50690d1dd9f2610dc30f03bc5 Mon Sep 17 00:00:00 2001
+From b3ebfbe086f7c3e7130f5badfee718b6982ba5fc Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 02:59:14 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -322,10 +322,10 @@ index f786ce9a..c74493f7 100644
  
      @NotNull
 diff --git a/src/main/java/org/bukkit/command/CommandSender.java b/src/main/java/org/bukkit/command/CommandSender.java
-index 6d9708dc..fe6b162f 100644
+index 6d9708dc..ac772bf3 100644
 --- a/src/main/java/org/bukkit/command/CommandSender.java
 +++ b/src/main/java/org/bukkit/command/CommandSender.java
-@@ -57,6 +57,23 @@ public interface CommandSender extends Permissible {
+@@ -57,6 +57,43 @@ public interface CommandSender extends Permissible {
      // Spigot start
      public class Spigot {
  
@@ -346,14 +346,42 @@ index 6d9708dc..fe6b162f 100644
 +        public void sendMessage(@NotNull net.md_5.bungee.api.chat.BaseComponent... components) {
 +            throw new UnsupportedOperationException("Not supported yet.");
 +        }
++
++        /**
++         * Sends this sender a chat component.
++         *
++         * @param component the components to send
++         * @param sender the sender of the message
++         */
++        public void sendMessage(@Nullable UUID sender, @NotNull net.md_5.bungee.api.chat.BaseComponent component) {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
++
++        /**
++         * Sends an array of components as a single message to the sender.
++         *
++         * @param components the components to send
++         * @param sender the sender of the message
++         */
++        public void sendMessage(@Nullable UUID sender, @NotNull net.md_5.bungee.api.chat.BaseComponent... components) {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
      }
  
      @NotNull
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index a00880dd..0859d2bc 100644
+index a00880dd..40345617 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1339,6 +1339,36 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1,6 +1,7 @@
+ package org.bukkit.entity;
+ 
+ import java.net.InetSocketAddress;
++import java.util.UUID;
+ import org.bukkit.DyeColor;
+ import org.bukkit.Effect;
+ import org.bukkit.GameMode;
+@@ -1339,6 +1340,58 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
          public java.util.Set<Player> getHiddenPlayers() {
              throw new UnsupportedOperationException("Not supported yet.");
          }
@@ -385,6 +413,28 @@ index a00880dd..0859d2bc 100644
 +         * @param components the components to send
 +         */
 +        public void sendMessage(@NotNull net.md_5.bungee.api.ChatMessageType position, @NotNull net.md_5.bungee.api.chat.BaseComponent... components) {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
++
++        /**
++         * Sends the component to the specified screen position of this player
++         *
++         * @param position the screen position
++         * @param sender the sender of the message
++         * @param component the components to send
++         */
++        public void sendMessage(@NotNull net.md_5.bungee.api.ChatMessageType position, @Nullable UUID sender, @NotNull net.md_5.bungee.api.chat.BaseComponent component) {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
++
++        /**
++         * Sends an array of components as a single message to the specified screen position of this player
++         *
++         * @param position the screen position
++         * @param sender the sender of the message
++         * @param components the components to send
++         */
++        public void sendMessage(@NotNull net.md_5.bungee.api.ChatMessageType position, @Nullable UUID sender, @NotNull net.md_5.bungee.api.chat.BaseComponent... components) {
 +            throw new UnsupportedOperationException("Not supported yet.");
 +        }
      }
