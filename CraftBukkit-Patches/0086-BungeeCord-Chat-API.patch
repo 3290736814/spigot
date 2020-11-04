@@ -1,4 +1,4 @@
-From bf3042910480d5cca6a4763c1481a8e3f6980f3e Mon Sep 17 00:00:00 2001
+From f8fed139942ea988455829c1f4ddb5965defa668 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -139,7 +139,7 @@ index 54cb0e39d..8c1a66b92 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index ac82877b8..a225e85c5 100644
+index ac82877b8..ddf385ec2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -122,6 +122,8 @@ import org.bukkit.plugin.Plugin;
@@ -151,7 +151,7 @@ index ac82877b8..a225e85c5 100644
  @DelegateDeserialization(CraftOfflinePlayer.class)
  public class CraftPlayer extends CraftHumanEntity implements Player {
      private long firstPlayed = 0;
-@@ -1767,6 +1769,48 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1767,6 +1769,58 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
              return java.util.Collections.unmodifiableSet( ret );
          }
@@ -168,6 +168,16 @@ index ac82877b8..a225e85c5 100644
 +            PacketPlayOutChat packet = new PacketPlayOutChat(null, net.minecraft.server.ChatMessageType.SYSTEM, SystemUtils.b);
 +            packet.components = components;
 +            getHandle().playerConnection.sendPacket(packet);
++        }
++
++        @Override
++        public void sendMessage(UUID sender, BaseComponent component) {
++            this.sendMessage(net.md_5.bungee.api.ChatMessageType.CHAT, sender, component);
++        }
++
++        @Override
++        public void sendMessage(UUID sender, BaseComponent... components) {
++            this.sendMessage(net.md_5.bungee.api.ChatMessageType.CHAT, sender, components);
 +        }
 +
 +        @Override
