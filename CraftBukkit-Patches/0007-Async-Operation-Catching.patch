@@ -1,4 +1,4 @@
-From 07d509ca67d9ff28e530a3e3512a6be585fb6655 Mon Sep 17 00:00:00 2001
+From 6dd39228a25486482cde20a619cf0bd2cf026641 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -24,6 +24,34 @@ index 753bdb7ea..f28b9c093 100644
          if (this.isTileEntity() && !iblockdata.a(iblockdata1.getBlock())) {
              world.removeTileEntity(blockposition);
          }
+diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
+index f0954d038..07e81d6b6 100644
+--- a/src/main/java/net/minecraft/server/Chunk.java
++++ b/src/main/java/net/minecraft/server/Chunk.java
+@@ -557,6 +557,7 @@ public class Chunk implements IChunkAccess {
+     }
+ 
+     public void a(@Nullable Entity entity, AxisAlignedBB axisalignedbb, List<Entity> list, @Nullable Predicate<? super Entity> predicate) {
++        org.spigotmc.AsyncCatcher.catchOp("Chunk getEntities call"); // Spigot
+         int i = MathHelper.floor((axisalignedbb.minY - 2.0D) / 16.0D);
+         int j = MathHelper.floor((axisalignedbb.maxY + 2.0D) / 16.0D);
+ 
+@@ -595,6 +596,7 @@ public class Chunk implements IChunkAccess {
+     }
+ 
+     public <T extends Entity> void a(@Nullable EntityTypes<?> entitytypes, AxisAlignedBB axisalignedbb, List<? super T> list, Predicate<? super T> predicate) {
++        org.spigotmc.AsyncCatcher.catchOp("Chunk getEntities call"); // Spigot
+         int i = MathHelper.floor((axisalignedbb.minY - 2.0D) / 16.0D);
+         int j = MathHelper.floor((axisalignedbb.maxY + 2.0D) / 16.0D);
+ 
+@@ -616,6 +618,7 @@ public class Chunk implements IChunkAccess {
+     }
+ 
+     public <T extends Entity> void a(Class<? extends T> oclass, AxisAlignedBB axisalignedbb, List<T> list, @Nullable Predicate<? super T> predicate) {
++        org.spigotmc.AsyncCatcher.catchOp("Chunk getEntities call"); // Spigot
+         int i = MathHelper.floor((axisalignedbb.minY - 2.0D) / 16.0D);
+         int j = MathHelper.floor((axisalignedbb.maxY + 2.0D) / 16.0D);
+ 
 diff --git a/src/main/java/net/minecraft/server/CraftingManager.java b/src/main/java/net/minecraft/server/CraftingManager.java
 index f9762de90..fdb7d96cf 100644
 --- a/src/main/java/net/minecraft/server/CraftingManager.java
@@ -85,10 +113,10 @@ index be6d35487..b9e44767e 100644
                  Vec3D vec3d = entityplayer.getPositionVector().d(this.tracker.getPositionVector()); // MC-155077, SPIGOT-5113
                  int i = Math.min(this.b(), (PlayerChunkMap.this.viewDistance - 1) * 16);
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 2b56ff257..3cdb25bc0 100644
+index 81e8a31ac..5c8116851 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -886,6 +886,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -887,6 +887,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
  
      // CraftBukkit start
      private boolean addEntity0(Entity entity, CreatureSpawnEvent.SpawnReason spawnReason) {
@@ -96,7 +124,7 @@ index 2b56ff257..3cdb25bc0 100644
          if (entity.dead) {
              // WorldServer.LOGGER.warn("Tried to add entity {} but it was marked as removed already", EntityTypes.getName(entity.getEntityType())); // CraftBukkit
              return false;
-@@ -992,6 +993,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -994,6 +995,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
      }
  
      public void unregisterEntity(Entity entity) {
@@ -104,7 +132,7 @@ index 2b56ff257..3cdb25bc0 100644
          if (entity instanceof EntityEnderDragon) {
              EntityComplexPart[] aentitycomplexpart = ((EntityEnderDragon) entity).eJ();
              int i = aentitycomplexpart.length;
-@@ -1026,6 +1028,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1028,6 +1030,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
      }
  
      private void registerEntity(Entity entity) {
@@ -113,10 +141,10 @@ index 2b56ff257..3cdb25bc0 100644
              this.entitiesToAdd.add(entity);
          } else {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index d02ba6180..036c0cbb5 100644
+index d91ac62bf..3fe8e176d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -733,6 +733,7 @@ public final class CraftServer implements Server {
+@@ -738,6 +738,7 @@ public final class CraftServer implements Server {
      public boolean dispatchCommand(CommandSender sender, String commandLine) {
          Validate.notNull(sender, "Sender cannot be null");
          Validate.notNull(commandLine, "CommandLine cannot be null");
@@ -125,7 +153,7 @@ index d02ba6180..036c0cbb5 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 8d01bd05f..154042504 100644
+index d75818d17..c36cd4faa 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -388,6 +388,7 @@ public class CraftWorld implements World {
@@ -189,7 +217,7 @@ index d4c50dbac..4a1390906 100644
          List<org.bukkit.entity.Entity> bukkitEntityList = new java.util.ArrayList<org.bukkit.entity.Entity>(notchEntityList.size());
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 265890326..3ae565e84 100644
+index ae3c07413..9c3ec85bd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -327,6 +327,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
