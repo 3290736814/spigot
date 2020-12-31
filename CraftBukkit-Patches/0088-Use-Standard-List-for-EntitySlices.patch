@@ -1,11 +1,11 @@
-From 77f890d09dcaa23dabe3ff29f37491eccbaded9a Mon Sep 17 00:00:00 2001
+From f711e7f7241dacf1a3255b1f7a06ea9ce95fb873 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:33:36 +1100
 Subject: [PATCH] Use Standard List for EntitySlices.
 
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index f0954d038..22281e509 100644
+index 07e81d6b..225e8fef 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -35,7 +35,7 @@ public class Chunk implements IChunkAccess {
@@ -35,7 +35,7 @@ index f0954d038..22281e509 100644
          }
  
          this.d = biomestorage;
-@@ -564,8 +564,8 @@ public class Chunk implements IChunkAccess {
+@@ -565,8 +565,8 @@ public class Chunk implements IChunkAccess {
          j = MathHelper.clamp(j, 0, this.entitySlices.length - 1);
  
          for (int k = i; k <= j; ++k) {
@@ -46,7 +46,7 @@ index f0954d038..22281e509 100644
              int l = list1.size();
  
              for (int i1 = 0; i1 < l; ++i1) {
-@@ -602,7 +602,7 @@ public class Chunk implements IChunkAccess {
+@@ -604,7 +604,7 @@ public class Chunk implements IChunkAccess {
          j = MathHelper.clamp(j, 0, this.entitySlices.length - 1);
  
          for (int k = i; k <= j; ++k) {
@@ -55,7 +55,7 @@ index f0954d038..22281e509 100644
  
              while (iterator.hasNext()) {
                  T entity = (T) iterator.next(); // CraftBukkit - decompile error
-@@ -623,12 +623,12 @@ public class Chunk implements IChunkAccess {
+@@ -626,12 +626,12 @@ public class Chunk implements IChunkAccess {
          j = MathHelper.clamp(j, 0, this.entitySlices.length - 1);
  
          for (int k = i; k <= j; ++k) {
@@ -70,7 +70,7 @@ index f0954d038..22281e509 100644
                      list.add(t0);
                  }
              }
-@@ -667,7 +667,7 @@ public class Chunk implements IChunkAccess {
+@@ -670,7 +670,7 @@ public class Chunk implements IChunkAccess {
          return this.tileEntities;
      }
  
@@ -80,7 +80,7 @@ index f0954d038..22281e509 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index cbd8bb696..cb8feff55 100644
+index cbd8bb69..cb8feff5 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -591,11 +591,11 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -107,10 +107,10 @@ index cbd8bb696..cb8feff55 100644
                  return chunk.getTileEntities().size();
              }).orElse(0));
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 394ffb993..889dd0ca3 100644
+index 5e7ee3d1..c37af6df 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -997,11 +997,11 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -999,11 +999,11 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          }
          // Spigot End
          this.tileEntityListUnload.addAll(chunk.getTileEntities().values());
@@ -125,7 +125,7 @@ index 394ffb993..889dd0ca3 100644
  
              while (iterator.hasNext()) {
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
-index 4abbe516e..d838cd421 100644
+index 4abbe516..d838cd42 100644
 --- a/src/main/java/org/spigotmc/ActivationRange.java
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -1,6 +1,7 @@

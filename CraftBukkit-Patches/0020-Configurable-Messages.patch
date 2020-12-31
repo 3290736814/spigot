@@ -1,11 +1,11 @@
-From 95be9bf79fabe428dcb8af2ca2673080acd2cb5f Mon Sep 17 00:00:00 2001
+From 0174c7b65c3eb09f5d7c27a645e22fb1fcf4065f Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
 
 
 diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
-index 740b0ba2c..d9b410afa 100644
+index 740b0ba2..d9b410af 100644
 --- a/src/main/java/net/minecraft/server/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/HandshakeListener.java
 @@ -63,9 +63,9 @@ public class HandshakeListener implements PacketHandshakingInListener {
@@ -21,7 +21,7 @@ index 740b0ba2c..d9b410afa 100644
  
                      this.c.sendPacket(new PacketLoginOutDisconnect(chatmessage));
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index c142bd3b0..a9e713726 100644
+index ef01156b..8226cac7 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -508,7 +508,7 @@ public abstract class PlayerList {
@@ -43,10 +43,10 @@ index c142bd3b0..a9e713726 100644
          }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index c6653f20d..489090c87 100644
+index 45113ece..b5451f7d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -739,11 +739,11 @@ public final class CraftServer implements Server {
+@@ -744,11 +744,11 @@ public final class CraftServer implements Server {
              return true;
          }
  
@@ -63,7 +63,7 @@ index c6653f20d..489090c87 100644
          return false;
      }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index fed02c9b1..60d14fa25 100644
+index fed02c9b..60d14fa2 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -12,6 +12,7 @@ import java.util.Map;

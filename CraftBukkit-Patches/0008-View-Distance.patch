@@ -1,4 +1,4 @@
-From 9730c8d4d9ae9d8351946a4187f116070dc3396e Mon Sep 17 00:00:00 2001
+From 373b96eca0e1b06784a0183ae1831dff8320d3ca Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,7 +6,7 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances.
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index c5ee99f38..c142bd3b0 100644
+index 2f8afe9f..ef01156b 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -148,7 +148,8 @@ public abstract class PlayerList {
@@ -28,7 +28,7 @@ index c5ee99f38..c142bd3b0 100644
          entityplayer1.dead = false;
          entityplayer1.playerConnection.teleport(new Location(worldserver1.getWorld(), entityplayer1.locX(), entityplayer1.locY(), entityplayer1.locZ(), entityplayer1.yaw, entityplayer1.pitch));
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 3cdb25bc0..d68bf3ad7 100644
+index 5c811685..e5bbdbb8 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -114,7 +114,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -41,10 +41,10 @@ index 3cdb25bc0..d68bf3ad7 100644
          });
          // CraftBukkit end
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 154042504..fb22f0b21 100644
+index c36cd4fa..9738b6f0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2318,6 +2318,13 @@ public class CraftWorld implements World {
+@@ -2335,6 +2335,13 @@ public class CraftWorld implements World {
          return (getHandle().getDragonBattle() == null) ? null : new CraftDragonBattle(getHandle().getDragonBattle());
      }
  
@@ -59,7 +59,7 @@ index 154042504..fb22f0b21 100644
      private final Spigot spigot = new Spigot()
      {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 8c855cf9b..be0540352 100644
+index 8c855cf9..be054035 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -142,4 +142,23 @@ public class SpigotWorldConfig

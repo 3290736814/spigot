@@ -1,11 +1,11 @@
-From f8fed139942ea988455829c1f4ddb5965defa668 Mon Sep 17 00:00:00 2001
+From eb2ae7c5f8695517b01183846f96d43ade3cca8f Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
 
 
 diff --git a/src/main/java/net/minecraft/server/PacketPlayOutChat.java b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
-index 40e0ea5bc..9ae419f9a 100644
+index 40e0ea5b..9ae419f9 100644
 --- a/src/main/java/net/minecraft/server/PacketPlayOutChat.java
 +++ b/src/main/java/net/minecraft/server/PacketPlayOutChat.java
 @@ -6,6 +6,7 @@ import java.util.UUID;
@@ -32,7 +32,7 @@ index 40e0ea5bc..9ae419f9a 100644
          packetdataserializer.a(this.c);
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f3c95cc62..0986d666b 100644
+index 1558c029..3aac98dd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -224,6 +224,8 @@ import org.yaml.snakeyaml.Yaml;
@@ -44,7 +44,7 @@ index f3c95cc62..0986d666b 100644
  public final class CraftServer implements Server {
      private final String serverName = "CraftBukkit";
      private final String serverVersion;
-@@ -2069,6 +2071,20 @@ public final class CraftServer implements Server {
+@@ -2074,6 +2076,20 @@ public final class CraftServer implements Server {
          public void restart() {
              org.spigotmc.RestartCommand.restart();
          }
@@ -66,7 +66,7 @@ index f3c95cc62..0986d666b 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java b/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
-index 06686cd02..7f88b109b 100644
+index 06686cd0..7f88b109 100644
 --- a/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
 +++ b/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
 @@ -103,6 +103,29 @@ public abstract class ServerCommandSender implements CommandSender {
@@ -100,7 +100,7 @@ index 06686cd02..7f88b109b 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 54cb0e39d..8c1a66b92 100644
+index 00ab6ab9..2770441b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
@@ -111,7 +111,7 @@ index 54cb0e39d..8c1a66b92 100644
  import net.minecraft.server.AxisAlignedBB;
  import net.minecraft.server.BlockPosition;
  import net.minecraft.server.DamageSource;
-@@ -1009,6 +1010,26 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -1014,6 +1015,26 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
      // Spigot start
      private final Spigot spigot = new Spigot()
      {
@@ -139,7 +139,7 @@ index 54cb0e39d..8c1a66b92 100644
  
      public Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index ac82877b8..ddf385ec2 100644
+index 5e1aebaf..3551ab3a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -122,6 +122,8 @@ import org.bukkit.plugin.Plugin;
@@ -211,10 +211,10 @@ index ac82877b8..ddf385ec2 100644
  
      public Player.Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index 48ae99e14..adc926f25 100644
+index 79e46795..b609caf5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-@@ -20,6 +20,9 @@ import org.bukkit.inventory.meta.BookMeta;
+@@ -22,6 +22,9 @@ import org.bukkit.inventory.meta.BookMeta;
  
  // Spigot start
  import static org.spigotmc.ValidateUtils.*;
@@ -224,57 +224,74 @@ index 48ae99e14..adc926f25 100644
  // Spigot end
  
  @DelegateDeserialization(SerializableMeta.class)
-@@ -362,6 +365,69 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+@@ -437,6 +440,94 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
      // Spigot start
      private BookMeta.Spigot spigot = new SpigotMeta();
      private class SpigotMeta extends BookMeta.Spigot {
 +
++        private String pageToJSON(String page) {
++            if (CraftMetaBook.this instanceof CraftMetaBookSigned) {
++                // Page data is already in JSON format:
++                return page;
++            } else {
++                // Convert from plain String to JSON (similar to conversion between writable books and written books):
++                IChatBaseComponent component = CraftChatMessage.fromString(page, true, true)[0];
++                return CraftChatMessage.toJSON(component);
++            }
++        }
++
++        private String componentsToPage(BaseComponent[] components) {
++            // asserted: components != null
++            if (CraftMetaBook.this instanceof CraftMetaBookSigned) {
++                // Pages are in JSON format:
++                return ComponentSerializer.toString(components);
++            } else {
++                // Convert component to plain String:
++                return CraftChatMessage.fromJSONComponent(ComponentSerializer.toString(components));
++            }
++        }
++
 +        @Override
 +        public BaseComponent[] getPage(final int page) {
 +            Validate.isTrue(isValidPage(page), "Invalid page number");
-+            return ComponentSerializer.parse(IChatBaseComponent.ChatSerializer.a(pages.get(page - 1)));
++            return ComponentSerializer.parse(pageToJSON(pages.get(page - 1)));
 +        }
 +
 +        @Override
 +        public void setPage(final int page, final BaseComponent... text) {
 +            if (!isValidPage(page)) {
-+                throw new IllegalArgumentException("Invalid page number " + page + "/" + pages.size());
++                throw new IllegalArgumentException("Invalid page number " + page + "/" + getPageCount());
 +            }
 +
 +            BaseComponent[] newText = text == null ? new BaseComponent[0] : text;
-+            CraftMetaBook.this.pages.set(page - 1, IChatBaseComponent.ChatSerializer.a(ComponentSerializer.toString(newText)));
++            CraftMetaBook.this.pages.set(page - 1, componentsToPage(newText));
 +        }
 +
 +        @Override
 +        public void setPages(final BaseComponent[]... pages) {
-+            CraftMetaBook.this.pages.clear();
-+
-+            addPage(pages);
++            setPages(Arrays.asList(pages));
 +        }
 +
 +        @Override
 +        public void addPage(final BaseComponent[]... pages) {
 +            for (BaseComponent[] page : pages) {
-+                if (CraftMetaBook.this.pages.size() >= MAX_PAGES) {
-+                    return;
-+                }
-+
 +                if (page == null) {
 +                    page = new BaseComponent[0];
 +                }
 +
-+                CraftMetaBook.this.pages.add(IChatBaseComponent.ChatSerializer.a(ComponentSerializer.toString(page)));
++                CraftMetaBook.this.internalAddPage(componentsToPage(page));
 +            }
 +        }
 +
 +        @Override
 +        public List<BaseComponent[]> getPages() {
-+            final List<IChatBaseComponent> copy = ImmutableList.copyOf(CraftMetaBook.this.pages);
++            if (CraftMetaBook.this.pages == null) return ImmutableList.of();
++            final List<String> copy = ImmutableList.copyOf(CraftMetaBook.this.pages);
 +            return new AbstractList<BaseComponent[]>() {
 +
 +                @Override
 +                public BaseComponent[] get(int index) {
-+                    return ComponentSerializer.parse(IChatBaseComponent.ChatSerializer.a(copy.get(index)));
++                    return ComponentSerializer.parse(pageToJSON(copy.get(index)));
 +                }
 +
 +                @Override
@@ -286,7 +303,15 @@ index 48ae99e14..adc926f25 100644
 +
 +        @Override
 +        public void setPages(List<BaseComponent[]> pages) {
-+            CraftMetaBook.this.pages.clear();
++            if (pages.isEmpty()) {
++                CraftMetaBook.this.pages = null;
++                return;
++            }
++
++            if (CraftMetaBook.this.pages != null) {
++                CraftMetaBook.this.pages.clear();
++            }
++
 +            for (BaseComponent[] page : pages) {
 +                addPage(page);
 +            }
