@@ -1,4 +1,4 @@
-From 2c34aebbc9bc392126f770a3930672bbccfb45b8 Mon Sep 17 00:00:00 2001
+From 019a1550ab180bcc5367759f7a1a8d02d11664f2 Mon Sep 17 00:00:00 2001
 From: David <dmck2b@gmail.com>
 Date: Mon, 21 Apr 2014 12:43:08 +0100
 Subject: [PATCH] Prevent NoClassDefError crash and notify on crash
@@ -43,10 +43,10 @@ index d41d45f27..7b4a59bce 100644
                  CrashReport crashreport = CrashReport.a(throwable, "Exception while updating neighbours");
                  CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Block being updated");
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
-index 8b3732202..54fa83c12 100644
+index 4734d4ae8..d7adcdcee 100644
 --- a/src/main/java/org/spigotmc/WatchdogThread.java
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
-@@ -70,6 +70,13 @@ public class WatchdogThread extends Thread
+@@ -74,6 +74,13 @@ public class WatchdogThread extends Thread
                  log.log( Level.SEVERE, "Be sure to include ALL relevant console errors and Minecraft crash reports" );
                  log.log( Level.SEVERE, "Spigot version: " + Bukkit.getServer().getVersion() );
                  //

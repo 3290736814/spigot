@@ -1,11 +1,11 @@
-From 875f5a2a4c78e2adc17da75a92172103045953f3 Mon Sep 17 00:00:00 2001
+From bb11344982c034e55e1aaaa5b08059704eb769ea Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 2a63e517..d095266f 100644
+index 2a63e517b..d095266fb 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
 @@ -228,7 +228,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -18,7 +18,7 @@ index 2a63e517..d095266f 100644
  
                  thread1.setUncaughtExceptionHandler(new ThreadNamedUncaughtExceptionHandler(DedicatedServer.LOGGER));
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 9fa36f26..c2903bdf 100644
+index 9fa36f269..c2903bdf4 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -849,6 +849,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
@@ -38,7 +38,7 @@ index 9fa36f26..c2903bdf 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b5451f7d..fb4e7836 100644
+index b5451f7d0..fb4e78361 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1690,7 +1690,7 @@ public final class CraftServer implements Server {
@@ -64,7 +64,7 @@ index b5451f7d..fb4e7836 100644
      public Spigot spigot()
 diff --git a/src/main/java/org/spigotmc/RestartCommand.java b/src/main/java/org/spigotmc/RestartCommand.java
 new file mode 100644
-index 00000000..e7b953ca
+index 000000000..e7b953ca3
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/RestartCommand.java
 @@ -0,0 +1,130 @@
@@ -199,7 +199,7 @@ index 00000000..e7b953ca
 +    }
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 60d14fa2..37bf0cec 100644
+index 60d14fa25..37bf0cec0 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -200,4 +200,18 @@ public class SpigotConfig
@@ -223,10 +223,10 @@ index 60d14fa2..37bf0cec 100644
  }
 diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
 new file mode 100644
-index 00000000..8b373220
+index 000000000..4734d4ae8
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/WatchdogThread.java
-@@ -0,0 +1,127 @@
+@@ -0,0 +1,131 @@
 +package org.spigotmc;
 +
 +import java.lang.management.ManagementFactory;
@@ -241,8 +241,8 @@ index 00000000..8b373220
 +{
 +
 +    private static WatchdogThread instance;
-+    private final long timeoutTime;
-+    private final boolean restart;
++    private long timeoutTime;
++    private boolean restart;
 +    private volatile long lastTick;
 +    private volatile boolean stopping;
 +
@@ -264,6 +264,10 @@ index 00000000..8b373220
 +        {
 +            instance = new WatchdogThread( timeoutTime * 1000L, restart );
 +            instance.start();
++        } else
++        {
++            instance.timeoutTime = timeoutTime * 1000L;
++            instance.restart = restart;
 +        }
 +    }
 +
@@ -286,7 +290,7 @@ index 00000000..8b373220
 +        while ( !stopping )
 +        {
 +            //
-+            if ( lastTick != 0 && monotonicMillis() > lastTick + timeoutTime )
++            if ( lastTick != 0 && timeoutTime > 0 && monotonicMillis() > lastTick + timeoutTime )
 +            {
 +                Logger log = Bukkit.getServer().getLogger();
 +                log.log( Level.SEVERE, "------------------------------" );
