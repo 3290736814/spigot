@@ -29,16 +29,16 @@ savePatches() {
     target=$2
     branch=$3
     cd "$basedir/$target"
-    git format-patch --no-stat -N -o "$basedir/${what}-Patches/" $branch
+    git format-patch --no-stat -N -o "../${what}-Patches/" $branch
     cd "$basedir"
-    git add -A "$basedir/${what}-Patches"
+    git add -A "${what}-Patches"
     if [ "$clean" != "clean" ]; then
-        cleanupPatches "$basedir/${what}-Patches"
+        cleanupPatches "${what}-Patches"
     fi
     echo "  Patches saved for $what to $what-Patches/"
 }
 if [ "$clean" == "clean" ]; then
-	rm -rf *-Patches
+    rm -rf *-Patches
 fi
 savePatches Bukkit Spigot-API origin/spigot
 savePatches CraftBukkit Spigot-Server origin/patched

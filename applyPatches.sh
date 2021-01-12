@@ -24,7 +24,7 @@ applyPatch() {
 
     echo "  Applying patches to $target..."
     git am --abort >/dev/null 2>&1
-    git am --3way "$basedir/${what}-Patches/"*.patch
+    git am --3way "../${what}-Patches/"*.patch
     if [ "$?" != "0" ]; then
         echo "  Something did not apply cleanly to $target."
         echo "  Please review above details and finish the apply then"
