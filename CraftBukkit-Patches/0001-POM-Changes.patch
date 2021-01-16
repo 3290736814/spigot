@@ -1,4 +1,4 @@
-From c3deb7868ba232b349abd0282cb24bb3a72c78d7 Mon Sep 17 00:00:00 2001
+From 2a79df1df50f45b86ad2eafc559014adaf3810c0 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 2 Jul 2013 13:07:39 +1000
 Subject: [PATCH] POM Changes
@@ -6,7 +6,7 @@ Subject: [PATCH] POM Changes
 Basic changes to the build system which mark the artifact as Spigot, and the necessary code changes to ensure proper functionality. Also disables the auto updater provided by CraftBukkit as it is useless to us.
 
 diff --git a/pom.xml b/pom.xml
-index 755be3124..185aa4759 100644
+index 43dc4cab5..a9d4c697f 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,11 +1,11 @@
@@ -18,13 +18,13 @@ index 755be3124..185aa4759 100644
 +    <groupId>org.spigotmc</groupId>
 +    <artifactId>spigot</artifactId>
      <packaging>jar</packaging>
-     <version>1.16.4-R0.1-SNAPSHOT</version>
+     <version>1.16.5-R0.1-SNAPSHOT</version>
 -    <name>CraftBukkit</name>
 +    <name>Spigot</name>
      <url>https://www.spigotmc.org/</url>
  
      <properties>
-@@ -18,10 +18,17 @@
+@@ -19,10 +19,17 @@
          <maven.compiler.target>1.8</maven.compiler.target>
      </properties>
  
@@ -44,18 +44,18 @@ index 755be3124..185aa4759 100644
              <version>${project.version}</version>
              <scope>compile</scope>
          </dependency>
-@@ -110,11 +117,26 @@
+@@ -118,11 +125,26 @@
                  <groupId>net.md-5</groupId>
                  <artifactId>scriptus</artifactId>
                  <version>0.4.1</version>
 -                <configuration>
--                    <format>git-Bukkit-%s</format>
+-                    <format>${bt.name}-Bukkit-%s</format>
 -                </configuration>
                  <executions>
                      <execution>
 +                        <id>ex-spigot</id>
 +                        <configuration>
-+                            <format>git-Spigot-%s</format>
++                            <format>${bt.name}-Spigot-%s</format>
 +                            <scmDirectory>../</scmDirectory>
 +                            <descriptionProperty>spigot.desc</descriptionProperty>
 +                        </configuration>
@@ -74,7 +74,7 @@ index 755be3124..185aa4759 100644
                          <phase>initialize</phase>
                          <goals>
                              <goal>describe</goal>
-@@ -134,7 +156,7 @@
+@@ -142,7 +164,7 @@
                          <manifestEntries>
                              <Main-Class>org.bukkit.craftbukkit.Main</Main-Class>
                              <Implementation-Title>CraftBukkit</Implementation-Title>
