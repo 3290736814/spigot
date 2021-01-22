@@ -1,11 +1,11 @@
-From 790d9532e9cb1ec4284417c91c9db24caf14201c Mon Sep 17 00:00:00 2001
+From f8f28da7cf278318c360eeed8bf6141de1714c2c Mon Sep 17 00:00:00 2001
 From: Suddenly <suddenly@suddenly.coffee>
 Date: Tue, 8 Jul 2014 09:44:18 +1000
 Subject: [PATCH] Safer JSON Loading
 
 
 diff --git a/src/main/java/net/minecraft/server/JsonList.java b/src/main/java/net/minecraft/server/JsonList.java
-index 13b32a9ae..5b01e4edb 100644
+index 13b32a9ae..da21918ce 100644
 --- a/src/main/java/net/minecraft/server/JsonList.java
 +++ b/src/main/java/net/minecraft/server/JsonList.java
 @@ -172,6 +172,14 @@ public abstract class JsonList<K, V extends JsonListEntry<K>> {
@@ -13,7 +13,7 @@ index 13b32a9ae..5b01e4edb 100644
                      }
                  }
 +            // Spigot Start
-+            } catch ( com.google.gson.JsonParseException ex )
++            } catch ( com.google.gson.JsonParseException | NullPointerException ex )
 +            {
 +                org.bukkit.Bukkit.getLogger().log( java.util.logging.Level.WARNING, "Unable to read file " + this.c + ", backing it up to {0}.backup and creating new copy.", ex );
 +                File backup = new File( this.c + ".backup" );
@@ -24,7 +24,7 @@ index 13b32a9ae..5b01e4edb 100644
                  throwable = throwable1;
                  throw throwable1;
 diff --git a/src/main/java/net/minecraft/server/UserCache.java b/src/main/java/net/minecraft/server/UserCache.java
-index 04a6bf30b..ce81aaf3e 100644
+index 04a6bf30b..337ae3f8d 100644
 --- a/src/main/java/net/minecraft/server/UserCache.java
 +++ b/src/main/java/net/minecraft/server/UserCache.java
 @@ -219,6 +219,11 @@ public class UserCache {
@@ -32,7 +32,7 @@ index 04a6bf30b..ce81aaf3e 100644
          } catch (FileNotFoundException filenotfoundexception) {
              ;
 +        // Spigot Start
-+        } catch (com.google.gson.JsonSyntaxException ex) {
++        } catch (com.google.gson.JsonSyntaxException | NullPointerException ex) {
 +            JsonList.LOGGER.warn( "Usercache.json is corrupted or has bad formatting. Deleting it to prevent further issues." );
 +            this.g.delete();
 +        // Spigot End
