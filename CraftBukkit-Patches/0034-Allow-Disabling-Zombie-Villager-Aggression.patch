@@ -1,4 +1,4 @@
-From d427fbcc089a27c257615f8660ca69ad1c4edc51 Mon Sep 17 00:00:00 2001
+From 7965f39dc4112d5e05f06c05294a473b83ea8e9e Mon Sep 17 00:00:00 2001
 From: Dylan Xaldin <Puremin0rez515@gmail.com>
 Date: Thu, 12 Dec 2013 18:05:03 -0600
 Subject: [PATCH] Allow Disabling Zombie Villager Aggression
@@ -6,7 +6,7 @@ Subject: [PATCH] Allow Disabling Zombie Villager Aggression
 Ability to configure if Zombies will be aggressive towards Villagers.
 
 diff --git a/src/main/java/net/minecraft/server/EntityZombie.java b/src/main/java/net/minecraft/server/EntityZombie.java
-index 371ec274d..a3f608e3a 100644
+index 9408b6ced..f4c74db7c 100644
 --- a/src/main/java/net/minecraft/server/EntityZombie.java
 +++ b/src/main/java/net/minecraft/server/EntityZombie.java
 @@ -57,7 +57,7 @@ public class EntityZombie extends EntityMonster {
@@ -19,11 +19,11 @@ index 371ec274d..a3f608e3a 100644
          this.targetSelector.a(5, new PathfinderGoalNearestAttackableTarget<>(this, EntityTurtle.class, 10, true, false, EntityTurtle.bo));
      }
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 3ecd5c3d7..d8678f2c1 100644
+index e1842e6de..d3a4779c2 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -230,4 +230,11 @@ public class SpigotWorldConfig
-         tridentDespawnRate = getInt( "trident-despawn-rate", arrowDespawnRate  );
+         tridentDespawnRate = getInt( "trident-despawn-rate", arrowDespawnRate );
          log( "Arrow Despawn Rate: " + arrowDespawnRate + " Trident Respawn Rate:" + tridentDespawnRate );
      }
 +

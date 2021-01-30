@@ -1,14 +1,14 @@
-From 832ddd99497d2a326887d6411f6efd7408685750 Mon Sep 17 00:00:00 2001
+From 375a26beb2eab34b82a24a3669250622ff9de916 Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 71023264c..8b09f27f8 100644
+index 043aedae3..a85daaef5 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
-@@ -1182,7 +1182,7 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1180,7 +1180,7 @@ public abstract class EntityHuman extends EntityLiving {
                              }
                          }
  
@@ -17,7 +17,7 @@ index 71023264c..8b09f27f8 100644
                      } else {
                          this.world.playSound((EntityHuman) null, this.locX(), this.locY(), this.locZ(), SoundEffects.ENTITY_PLAYER_ATTACK_NODAMAGE, this.getSoundCategory(), 1.0F, 1.0F);
                          if (flag4) {
-@@ -1360,9 +1360,9 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1341,9 +1341,9 @@ public abstract class EntityHuman extends EntityLiving {
          super.jump();
          this.a(StatisticList.JUMP);
          if (this.isSprinting()) {
@@ -29,7 +29,7 @@ index 71023264c..8b09f27f8 100644
          }
  
      }
-@@ -1441,13 +1441,13 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1422,13 +1422,13 @@ public abstract class EntityHuman extends EntityLiving {
                  i = Math.round(MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2) * 100.0F);
                  if (i > 0) {
                      this.a(StatisticList.WALK_UNDER_WATER_ONE_CM, i);
@@ -45,7 +45,7 @@ index 71023264c..8b09f27f8 100644
                  }
              } else if (this.isClimbing()) {
                  if (d1 > 0.0D) {
-@@ -1458,13 +1458,13 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1439,13 +1439,13 @@ public abstract class EntityHuman extends EntityLiving {
                  if (i > 0) {
                      if (this.isSprinting()) {
                          this.a(StatisticList.SPRINT_ONE_CM, i);
@@ -76,12 +76,12 @@ index 9e9abc3eb..2476e48fb 100644
              }
          } else if (this.foodLevel <= 0) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 7b4bdb582..3124a892f 100644
+index 924fea23d..848a06605 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -307,4 +307,30 @@ public class SpigotWorldConfig
-         log( "Custom Map Seeds:  Village: " + villageSeed + " Desert: " + desertSeed + " Igloo: " + iglooSeed + " Jungle: " + jungleSeed + " Swamp: " + swampSeed + " Monument: " + monumentSeed +
-                 " Ocean: " + oceanSeed + " Shipwreck: " + shipwreckSeed + " End City: " + endCitySeed + " Slime: " + slimeSeed + " Bastion: " + bastionSeed + " Fortress: " + fortressSeed + " Mansion: " + mansionSeed + " Fossil: " + fossilSeed + " Portal: " + portalSeed );
+         log( "Custom Map Seeds:  Village: " + villageSeed + " Desert: " + desertSeed + " Igloo: " + iglooSeed + " Jungle: " + jungleSeed + " Swamp: " + swampSeed + " Monument: " + monumentSeed
+                 + " Ocean: " + oceanSeed + " Shipwreck: " + shipwreckSeed + " End City: " + endCitySeed + " Slime: " + slimeSeed + " Bastion: " + bastionSeed + " Fortress: " + fortressSeed + " Mansion: " + mansionSeed + " Fossil: " + fossilSeed + " Portal: " + portalSeed );
      }
 +
 +    public float jumpWalkExhaustion;
@@ -105,7 +105,7 @@ index 7b4bdb582..3124a892f 100644
 +        jumpSprintExhaustion = (float) getDouble( "hunger.jump-sprint-exhaustion", 0.2 );
 +        combatExhaustion = (float) getDouble( "hunger.combat-exhaustion", 0.1 );
 +        regenExhaustion = (float) getDouble( "hunger.regen-exhaustion", 6.0 );
-+        swimMultiplier =  (float) getDouble( "hunger.swim-multiplier", 0.01 );
++        swimMultiplier = (float) getDouble( "hunger.swim-multiplier", 0.01 );
 +        sprintMultiplier = (float) getDouble( "hunger.sprint-multiplier", 0.1 );
 +        otherMultiplier = (float) getDouble( "hunger.other-multiplier", 0.0 );
 +    }

@@ -1,4 +1,4 @@
-From 7cf341e2e3be93bf5733c979cdd4eae252788043 Mon Sep 17 00:00:00 2001
+From 86df25939becc2b90ad1862b7c7e1212a1a6b94d Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -6,14 +6,15 @@ Subject: [PATCH] Skeleton API Implementations
 This contains the basic, empty implementations for some Spigot-API extensions. They are included early in the patching progress so that compilation will still succeed midway despite the APIs only being provided by subsequent patches.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f57afe717..c9f66958e 100644
+index c732c4e8e..51e291bf2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2025,4 +2025,14 @@ public final class CraftServer implements Server {
+@@ -2024,4 +2024,16 @@ public final class CraftServer implements Server {
      public UnsafeValues getUnsafe() {
          return CraftMagicNumbers.INSTANCE;
      }
 +
++    // Spigot start
 +    private final Spigot spigot = new Spigot()
 +    {
 +
@@ -23,9 +24,10 @@ index f57afe717..c9f66958e 100644
 +    {
 +        return spigot;
 +    }
++    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index ec88f571a..d75818d17 100644
+index 39009e61d..c902748cc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -2328,4 +2328,15 @@ public class CraftWorld implements World {
@@ -122,10 +124,10 @@ index 6c05cb414..e7e7d738e 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 561a0610c..ae3c07413 100644
+index b6b9ffc77..e8df8fed7 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1717,4 +1717,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1716,4 +1716,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          getHandle().openBook(org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(book), net.minecraft.server.EnumHand.MAIN_HAND);
          getInventory().setItemInMainHand(hand);
      }
@@ -142,7 +144,7 @@ index 561a0610c..ae3c07413 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index 06fb34731..3009dbf05 100644
+index 2c8590dfb..5e1e747f1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 @@ -355,6 +355,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
@@ -170,5 +172,5 @@ index 06fb34731..3009dbf05 100644
 +    // Spigot end
  }
 -- 
-2.27.0.windows.1
+2.25.1
 

@@ -1,11 +1,11 @@
-From edc0fe0e417bc18f7ded055e7ffc7053f2a6b086 Mon Sep 17 00:00:00 2001
+From 27a67f34b5ddf2023e107a0b060daf3c796b8ee0 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 23a5fbcc3..e87e19490 100644
+index 6ce353313..c26587c3a 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -149,6 +149,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
@@ -81,15 +81,13 @@ index 7f42259e6..d97bc8a3f 100644
  }
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 new file mode 100644
-index 000000000..9cd57c9d5
+index 000000000..f5b6dec1c
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-@@ -0,0 +1,47 @@
+@@ -0,0 +1,45 @@
 +package org.spigotmc;
 +
-+import com.google.common.base.Joiner;
 +import net.minecraft.server.MinecraftServer;
-+import com.google.common.collect.Iterables;
 +import org.bukkit.ChatColor;
 +import org.bukkit.command.Command;
 +import org.bukkit.command.CommandSender;

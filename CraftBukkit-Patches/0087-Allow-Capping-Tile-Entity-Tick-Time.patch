@@ -1,4 +1,4 @@
-From 2c4b67d45417f3b40ffb425ddda1239e4230249e Mon Sep 17 00:00:00 2001
+From 3bb3f184c51b088f5c96dcdb2fe2e678882973d4 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -10,7 +10,7 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 This feature was commisioned by Chunkr.
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 9f0a158e1..169822482 100644
+index b87b7de2e..4c5683bcb 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -79,6 +79,9 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -57,7 +57,7 @@ index 9f0a158e1..169822482 100644
                  continue;
              }
              // Spigot end
-@@ -652,7 +662,10 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -651,7 +661,10 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
              }
  
              if (tileentity.isRemoved()) {
@@ -70,7 +70,7 @@ index 9f0a158e1..169822482 100644
                  if (this.isLoaded(tileentity.getPosition())) {
                      this.getChunkAtWorldCoords(tileentity.getPosition()).removeTileEntity(tileentity.getPosition());
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 9fccf71ec..3ebe4de4a 100644
+index 348656fc8..2af7e9b97 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -350,4 +350,13 @@ public class SpigotWorldConfig

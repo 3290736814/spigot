@@ -1,4 +1,4 @@
-From 1173ea588e0eece7bc8b671ca7e2424cdabbf9e5 Mon Sep 17 00:00:00 2001
+From 085a0acd40b9bcafd36e08f596137804d0e89666 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Feb 2013 11:58:47 -0500
 Subject: [PATCH] Entity Tracking Ranges
@@ -24,7 +24,7 @@ index 4b03402e7..cbd8bb696 100644
  
              if (this.trackedEntities.containsKey(entity.getId())) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index d873b32b9..48bda1ed0 100644
+index af523e5c1..e432ddc50 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -190,4 +190,19 @@ public class SpigotWorldConfig
@@ -49,7 +49,7 @@ index d873b32b9..48bda1ed0 100644
  }
 diff --git a/src/main/java/org/spigotmc/TrackingRange.java b/src/main/java/org/spigotmc/TrackingRange.java
 new file mode 100644
-index 000000000..6f8e6c1d0
+index 000000000..646811932
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/TrackingRange.java
 @@ -0,0 +1,51 @@
@@ -80,7 +80,7 @@ index 000000000..6f8e6c1d0
 +        if ( entity instanceof EntityPlayer )
 +        {
 +            return config.playerTrackingRange;
-+        }  else if ( entity.activationType == ActivationRange.ActivationType.MONSTER || entity.activationType == ActivationRange.ActivationType.RAIDER )
++        } else if ( entity.activationType == ActivationRange.ActivationType.MONSTER || entity.activationType == ActivationRange.ActivationType.RAIDER )
 +        {
 +            return config.monsterTrackingRange;
 +        } else if ( entity instanceof EntityGhast )

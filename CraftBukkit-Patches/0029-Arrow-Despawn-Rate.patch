@@ -1,4 +1,4 @@
-From 6d3a6f0bd9b15c2e5e5e7f3c1b88ba1bf3275601 Mon Sep 17 00:00:00 2001
+From cb66de8c437c53ebbba960bf1f301aaa917dcb04 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Mon, 14 Oct 2013 19:20:10 +1100
 Subject: [PATCH] Arrow Despawn Rate
@@ -18,7 +18,7 @@ index e50bbe929..1bd522f84 100644
          }
  
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 5b5eacb38..3ecd5c3d7 100644
+index 4d50f803b..e1842e6de 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -221,4 +221,13 @@ public class SpigotWorldConfig
@@ -30,8 +30,8 @@ index 5b5eacb38..3ecd5c3d7 100644
 +    public int tridentDespawnRate;
 +    private void arrowDespawnRate()
 +    {
-+        arrowDespawnRate = getInt( "arrow-despawn-rate", 1200  );
-+        tridentDespawnRate = getInt( "trident-despawn-rate", arrowDespawnRate  );
++        arrowDespawnRate = getInt( "arrow-despawn-rate", 1200 );
++        tridentDespawnRate = getInt( "trident-despawn-rate", arrowDespawnRate );
 +        log( "Arrow Despawn Rate: " + arrowDespawnRate + " Trident Respawn Rate:" + tridentDespawnRate );
 +    }
  }

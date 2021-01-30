@@ -1,11 +1,11 @@
-From e0dbe7c25a3b835ea7ea77cb9fa6d0433c268f1a Mon Sep 17 00:00:00 2001
+From fd1e59f4d65ee6b3191351767ede687b33809061 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 3 Mar 2016 19:45:46 +1100
 Subject: [PATCH] Implement SpawnerSpawnEvent.
 
 
 diff --git a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
-index 571a8fa5..90af4393 100644
+index 571a8fa5a..90af43930 100644
 --- a/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 +++ b/src/main/java/net/minecraft/server/MobSpawnerAbstract.java
 @@ -138,6 +138,18 @@ public abstract class MobSpawnerAbstract {
@@ -28,19 +28,19 @@ index 571a8fa5..90af4393 100644
                              if (!worldserver.addAllEntitiesSafely(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER)) { // CraftBukkit
                                  this.i();
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index e931703a..dde25528 100644
+index 7447fd88e..f6688c715 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -222,6 +222,8 @@ import org.bukkit.inventory.meta.BookMeta;
+@@ -216,6 +216,8 @@ import org.bukkit.inventory.InventoryView;
+ import org.bukkit.inventory.meta.BookMeta;
  import org.bukkit.potion.PotionEffect;
- import org.bukkit.projectiles.ProjectileSource;
  
 +import org.bukkit.event.entity.SpawnerSpawnEvent; // Spigot
 +
  public class CraftEventFactory {
      public static final DamageSource MELTING = CraftDamageSource.copyOf(DamageSource.BURN);
      public static final DamageSource POISON = CraftDamageSource.copyOf(DamageSource.MAGIC);
-@@ -1404,6 +1406,21 @@ public class CraftEventFactory {
+@@ -1398,6 +1400,21 @@ public class CraftEventFactory {
          return event;
      }
  
