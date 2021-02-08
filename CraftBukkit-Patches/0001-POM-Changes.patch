@@ -1,4 +1,4 @@
-From ba6e783bd8a682cabba9f6c09540feff1c80d09c Mon Sep 17 00:00:00 2001
+From 61d8632c0e085fe201674c1fe725cd48e63deac6 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 2 Jul 2013 13:07:39 +1000
 Subject: [PATCH] POM Changes
@@ -6,12 +6,12 @@ Subject: [PATCH] POM Changes
 Basic changes to the build system which mark the artifact as Spigot, and the necessary code changes to ensure proper functionality. Also disables the auto updater provided by CraftBukkit as it is useless to us.
 
 diff --git a/checkstyle.xml b/checkstyle.xml
-index ab96b7024..e8c8f86ed 100644
+index 63a6f624f..9c724b548 100644
 --- a/checkstyle.xml
 +++ b/checkstyle.xml
 @@ -25,6 +25,9 @@
          <property name="checks" value="UnusedImports"/>
-         <property name="files" value="net/minecraft/server/"/>
+         <property name="files" value=".*[/\\]net[/\\]minecraft[/\\]server[/\\].*"/>
      </module>
 +    <module name="SuppressionSingleFilter">
 +        <property name="checks" value="LeftCurly|ParenPad"/>
