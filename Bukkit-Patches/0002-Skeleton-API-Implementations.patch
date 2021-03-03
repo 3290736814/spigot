@@ -1,4 +1,4 @@
-From 0619af6461b117aba67946be808bd4a0d107ee9e Mon Sep 17 00:00:00 2001
+From 74f3ae261eb5382294e616bb40c76179bc244c7b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -37,10 +37,10 @@ index d5aafa0e..afe2047b 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 70d6994e..940f0074 100644
+index f36ad196..b115064e 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -2339,6 +2339,15 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -2348,6 +2348,15 @@ public interface World extends PluginMessageRecipient, Metadatable {
      @Nullable
      public Location locateNearestStructure(@NotNull Location origin, @NotNull StructureType structureType, int radius, boolean findUnexplored);
  
@@ -120,10 +120,10 @@ index 76aad05f..4d308c5a 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 1d5bfca2..51475116 100644
+index 41be187d..798aae7b 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1287,4 +1287,14 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1249,4 +1249,14 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       * @param book The book to open for this player
       */
      public void openBook(@NotNull ItemStack book);

@@ -1,77 +1,84 @@
-From 375a26beb2eab34b82a24a3669250622ff9de916 Mon Sep 17 00:00:00 2001
+From bc2bdf1af07fb6b5393565c900dbee02501ff1be Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 043aedae3..a85daaef5 100644
+index c25e1322f..1a4f49a01 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
-@@ -1180,7 +1180,7 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1182,7 +1182,7 @@ public abstract class EntityHuman extends EntityLiving {
                              }
                          }
  
--                        this.applyExhaustion(0.1F);
-+                        this.applyExhaustion(world.spigotConfig.combatExhaustion); // Spigot - Change to use configurable value
+-                        this.applyExhaustion(0.1F, EntityExhaustionEvent.ExhaustionReason.ATTACK); // CraftBukkit - EntityExhaustionEvent
++                        this.applyExhaustion(world.spigotConfig.combatExhaustion, EntityExhaustionEvent.ExhaustionReason.ATTACK); // CraftBukkit - EntityExhaustionEvent // Spigot - Change to use configurable value
                      } else {
                          this.world.playSound((EntityHuman) null, this.locX(), this.locY(), this.locZ(), SoundEffects.ENTITY_PLAYER_ATTACK_NODAMAGE, this.getSoundCategory(), 1.0F, 1.0F);
                          if (flag4) {
-@@ -1341,9 +1341,9 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1343,9 +1343,9 @@ public abstract class EntityHuman extends EntityLiving {
          super.jump();
          this.a(StatisticList.JUMP);
          if (this.isSprinting()) {
--            this.applyExhaustion(0.2F);
-+            this.applyExhaustion(world.spigotConfig.jumpSprintExhaustion); // Spigot - Change to use configurable value
+-            this.applyExhaustion(0.2F, EntityExhaustionEvent.ExhaustionReason.JUMP_SPRINT); // CraftBukkit - EntityExhaustionEvent
++            this.applyExhaustion(world.spigotConfig.jumpSprintExhaustion, EntityExhaustionEvent.ExhaustionReason.JUMP_SPRINT); // CraftBukkit - EntityExhaustionEvent // Spigot - Change to use configurable value
          } else {
--            this.applyExhaustion(0.05F);
-+            this.applyExhaustion(world.spigotConfig.jumpWalkExhaustion); // Spigot - Change to use configurable value
+-            this.applyExhaustion(0.05F, EntityExhaustionEvent.ExhaustionReason.JUMP); // CraftBukkit - EntityExhaustionEvent
++            this.applyExhaustion(world.spigotConfig.jumpWalkExhaustion, EntityExhaustionEvent.ExhaustionReason.JUMP); // CraftBukkit - EntityExhaustionEvent // Spigot - Change to use configurable value
          }
  
      }
-@@ -1422,13 +1422,13 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1418,19 +1418,19 @@ public abstract class EntityHuman extends EntityLiving {
+                 i = Math.round(MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2) * 100.0F);
+                 if (i > 0) {
+                     this.a(StatisticList.SWIM_ONE_CM, i);
+-                    this.applyExhaustion(0.01F * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.SWIM); // CraftBukkit - EntityExhaustionEvent
++                    this.applyExhaustion(world.spigotConfig.swimMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.SWIM); // CraftBukkit - EntityExhaustionEvent // Spigot
+                 }
+             } else if (this.a((Tag) TagsFluid.WATER)) {
                  i = Math.round(MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2) * 100.0F);
                  if (i > 0) {
                      this.a(StatisticList.WALK_UNDER_WATER_ONE_CM, i);
--                    this.applyExhaustion(0.01F * (float) i * 0.01F);
-+                    this.applyExhaustion(world.spigotConfig.swimMultiplier * (float) i * 0.01F); // Spigot
+-                    this.applyExhaustion(0.01F * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.WALK_UNDERWATER); // CraftBukkit - EntityExhaustionEvent
++                    this.applyExhaustion(world.spigotConfig.swimMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.WALK_UNDERWATER); // CraftBukkit - EntityExhaustionEvent // Spigot
                  }
              } else if (this.isInWater()) {
                  i = Math.round(MathHelper.sqrt(d0 * d0 + d2 * d2) * 100.0F);
                  if (i > 0) {
                      this.a(StatisticList.WALK_ON_WATER_ONE_CM, i);
--                    this.applyExhaustion(0.01F * (float) i * 0.01F);
-+                    this.applyExhaustion(world.spigotConfig.swimMultiplier * (float) i * 0.01F); // Spigot
+-                    this.applyExhaustion(0.01F * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.WALK_ON_WATER); // CraftBukkit - EntityExhaustionEvent
++                    this.applyExhaustion(world.spigotConfig.swimMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.WALK_ON_WATER); // CraftBukkit - EntityExhaustionEvent // Spigot
                  }
              } else if (this.isClimbing()) {
                  if (d1 > 0.0D) {
-@@ -1439,13 +1439,13 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1441,13 +1441,13 @@ public abstract class EntityHuman extends EntityLiving {
                  if (i > 0) {
                      if (this.isSprinting()) {
                          this.a(StatisticList.SPRINT_ONE_CM, i);
--                        this.applyExhaustion(0.1F * (float) i * 0.01F);
-+                        this.applyExhaustion(world.spigotConfig.sprintMultiplier * (float) i * 0.01F); // Spigot
+-                        this.applyExhaustion(0.1F * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.SPRINT); // CraftBukkit - EntityExhaustionEvent
++                        this.applyExhaustion(world.spigotConfig.sprintMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.SPRINT); // CraftBukkit - EntityExhaustionEvent // Spigot
                      } else if (this.bz()) {
                          this.a(StatisticList.CROUCH_ONE_CM, i);
--                        this.applyExhaustion(0.0F * (float) i * 0.01F);
-+                        this.applyExhaustion(world.spigotConfig.otherMultiplier * (float) i * 0.01F); // Spigot
+-                        this.applyExhaustion(0.0F * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.CROUCH); // CraftBukkit - EntityExhaustionEvent
++                        this.applyExhaustion(world.spigotConfig.otherMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.CROUCH); // CraftBukkit - EntityExhaustionEvent // Spigot
                      } else {
                          this.a(StatisticList.WALK_ONE_CM, i);
--                        this.applyExhaustion(0.0F * (float) i * 0.01F);
-+                        this.applyExhaustion(world.spigotConfig.otherMultiplier * (float) i * 0.01F); // Spigot
+-                        this.applyExhaustion(0.0F * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.WALK); // CraftBukkit - EntityExhaustionEvent
++                        this.applyExhaustion(world.spigotConfig.otherMultiplier * (float) i * 0.01F, EntityExhaustionEvent.ExhaustionReason.WALK); // CraftBukkit - EntityExhaustionEvent // Spigot
                      }
                  }
              } else if (this.isGliding()) {
 diff --git a/src/main/java/net/minecraft/server/FoodMetaData.java b/src/main/java/net/minecraft/server/FoodMetaData.java
-index 9e9abc3eb..2476e48fb 100644
+index 7ec6e9e82..f40b67c8b 100644
 --- a/src/main/java/net/minecraft/server/FoodMetaData.java
 +++ b/src/main/java/net/minecraft/server/FoodMetaData.java
-@@ -77,7 +77,7 @@ public class FoodMetaData {
-             ++this.foodTickTimer;
-             if (this.foodTickTimer >= 80) {
+@@ -84,7 +84,7 @@ public class FoodMetaData {
+             if (this.foodTickTimer >= this.unsaturatedRegenRate) { // CraftBukkit - add regen rate manipulation
                  entityhuman.heal(1.0F, org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason.SATIATED); // CraftBukkit - added RegainReason
--                this.a(6.0F);
-+                this.a(entityhuman.world.spigotConfig.regenExhaustion); // Spigot - Change to use configurable value
+                 // this.a(6.0F); CraftBukkit - EntityExhaustionEvent
+-                entityhuman.applyExhaustion(6.0f, org.bukkit.event.entity.EntityExhaustionEvent.ExhaustionReason.REGEN); // CraftBukkit - EntityExhaustionEvent
++                entityhuman.applyExhaustion(entityhuman.world.spigotConfig.regenExhaustion, org.bukkit.event.entity.EntityExhaustionEvent.ExhaustionReason.REGEN); // CraftBukkit - EntityExhaustionEvent // Spigot - Change to use configurable value
                  this.foodTickTimer = 0;
              }
          } else if (this.foodLevel <= 0) {

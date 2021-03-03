@@ -1,4 +1,4 @@
-From 6fa504d0af39f5806ae64bdc4c36b07ace291839 Mon Sep 17 00:00:00 2001
+From 8568fc2b9e771d97145d1d8ab20c43332d62c2a9 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -6,10 +6,10 @@ Subject: [PATCH] Spigot Timings
 Overhauls the Timings System adding performance tracking all around the Minecraft Server
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index 981414374..d3386c108 100644
+index 361535428..78b264a13 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -115,9 +115,11 @@ public class ChunkProviderServer extends IChunkProvider {
+@@ -123,9 +123,11 @@ public class ChunkProviderServer extends IChunkProvider {
              }
  
              gameprofilerfiller.c("getChunkCacheMiss");
@@ -21,7 +21,7 @@ index 981414374..d3386c108 100644
              ichunkaccess = (IChunkAccess) ((Either) completablefuture.join()).map((ichunkaccess1) -> {
                  return ichunkaccess1;
              }, (playerchunk_failure) -> {
-@@ -336,12 +338,16 @@ public class ChunkProviderServer extends IChunkProvider {
+@@ -344,12 +346,16 @@ public class ChunkProviderServer extends IChunkProvider {
  
      public void tick(BooleanSupplier booleansupplier) {
          this.world.getMethodProfiler().enter("purge");
@@ -38,7 +38,7 @@ index 981414374..d3386c108 100644
          this.world.getMethodProfiler().exit();
          this.clearCache();
      }
-@@ -388,7 +394,9 @@ public class ChunkProviderServer extends IChunkProvider {
+@@ -396,7 +402,9 @@ public class ChunkProviderServer extends IChunkProvider {
                                  SpawnerCreature.a(this.world, chunk, spawnercreature_d, this.allowAnimals, this.allowMonsters, flag2);
                              }
  
@@ -48,7 +48,7 @@ index 981414374..d3386c108 100644
                          }
                      }
                  }
-@@ -402,7 +410,9 @@ public class ChunkProviderServer extends IChunkProvider {
+@@ -410,7 +418,9 @@ public class ChunkProviderServer extends IChunkProvider {
              this.world.getMethodProfiler().exit();
          }
  
@@ -116,7 +116,7 @@ index 80bfb9e8f..2a63e517b 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 78e69649a..e8b64438b 100644
+index ce250b964..6182670bf 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -31,6 +31,7 @@ import org.bukkit.craftbukkit.event.CraftPortalEvent;
@@ -152,7 +152,7 @@ index 78e69649a..e8b64438b 100644
  
      protected BlockPosition ap() {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 295cbb5e7..cb164698f 100644
+index 4e8e59a2b..7eeeb7dfa 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -42,6 +42,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
@@ -498,7 +498,7 @@ index 30b817246..61351ca6a 100644
              CrashReport crashreport = CrashReport.a(throwable, "Ticking entity");
              CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Entity being ticked");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 9e1065e59..683b76ae3 100644
+index ecff876d7..f30161f51 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -43,6 +43,7 @@ import org.apache.logging.log4j.Logger;

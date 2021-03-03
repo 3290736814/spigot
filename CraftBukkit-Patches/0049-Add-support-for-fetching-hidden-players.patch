@@ -1,14 +1,14 @@
-From 463b4329fc78df6f8bff9723c425fb4618d6182a Mon Sep 17 00:00:00 2001
+From cf15a6e830fa30f8a7f80a3fd5f43419bd14c872 Mon Sep 17 00:00:00 2001
 From: Tux <write@imaginarycode.com>
 Date: Sun, 9 Feb 2014 14:03:03 -0500
 Subject: [PATCH] Add support for fetching hidden players
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 7e0ae0bbb..b5f324631 100644
+index 831afaa20..bde254e04 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1746,6 +1746,18 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1729,6 +1729,18 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
                  server.getServer().getPlayerList().moveToWorld( getHandle(), false );
              }
          }
