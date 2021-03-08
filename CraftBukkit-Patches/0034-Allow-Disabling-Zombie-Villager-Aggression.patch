@@ -1,4 +1,4 @@
-From 7965f39dc4112d5e05f06c05294a473b83ea8e9e Mon Sep 17 00:00:00 2001
+From 9c1927a255e4559df8267e7d4e85d3c192cb4d5d Mon Sep 17 00:00:00 2001
 From: Dylan Xaldin <Puremin0rez515@gmail.com>
 Date: Thu, 12 Dec 2013 18:05:03 -0600
 Subject: [PATCH] Allow Disabling Zombie Villager Aggression
@@ -6,10 +6,10 @@ Subject: [PATCH] Allow Disabling Zombie Villager Aggression
 Ability to configure if Zombies will be aggressive towards Villagers.
 
 diff --git a/src/main/java/net/minecraft/server/EntityZombie.java b/src/main/java/net/minecraft/server/EntityZombie.java
-index 9408b6ced..f4c74db7c 100644
+index 3c90a86ee..3533df35b 100644
 --- a/src/main/java/net/minecraft/server/EntityZombie.java
 +++ b/src/main/java/net/minecraft/server/EntityZombie.java
-@@ -57,7 +57,7 @@ public class EntityZombie extends EntityMonster {
+@@ -56,7 +56,7 @@ public class EntityZombie extends EntityMonster {
          this.goalSelector.a(7, new PathfinderGoalRandomStrollLand(this, 1.0D));
          this.targetSelector.a(1, (new PathfinderGoalHurtByTarget(this, new Class[0])).a(EntityPigZombie.class));
          this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget<>(this, EntityHuman.class, true));

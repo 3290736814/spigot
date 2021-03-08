@@ -1,4 +1,4 @@
-From 8568fc2b9e771d97145d1d8ab20c43332d62c2a9 Mon Sep 17 00:00:00 2001
+From 4e6e11794b14f139126bb92911d5140c9236a184 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -227,18 +227,19 @@ index 4e8e59a2b..7eeeb7dfa 100644
          if (!this.world.isClientSide && this.dO() && this.aG()) {
              this.damageEntity(DamageSource.DROWN, 1.0F);
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 87c51b9c3..5ef5a26ff 100644
+index 780797c64..4ed71a31a 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -65,6 +65,7 @@ import org.bukkit.craftbukkit.CraftServer;
- import org.bukkit.craftbukkit.Main;
+@@ -67,6 +67,8 @@ import org.bukkit.craftbukkit.Main;
  import org.bukkit.event.server.ServerLoadEvent;
  // CraftBukkit end
-+import org.bukkit.craftbukkit.SpigotTimings; // Spigot
  
++import org.bukkit.craftbukkit.SpigotTimings; // Spigot
++
  public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTask> implements IMojangStatistics, ICommandListener, AutoCloseable {
  
-@@ -958,6 +959,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+     public static final Logger LOGGER = LogManager.getLogger();
+@@ -959,6 +961,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      protected void exit() {}
  
      protected void a(BooleanSupplier booleansupplier) {
@@ -246,7 +247,7 @@ index 87c51b9c3..5ef5a26ff 100644
          long i = SystemUtils.getMonotonicNanos();
  
          ++this.ticks;
-@@ -977,12 +979,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -978,12 +981,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          }
  
          if (autosavePeriod > 0 && this.ticks % autosavePeriod == 0) { // CraftBukkit
@@ -261,7 +262,7 @@ index 87c51b9c3..5ef5a26ff 100644
          }
  
          this.methodProfiler.enter("snooper");
-@@ -1003,21 +1007,30 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1004,21 +1009,30 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
          this.circularTimer.a(i1 - i);
          this.methodProfiler.exit();
@@ -292,7 +293,7 @@ index 87c51b9c3..5ef5a26ff 100644
          // Send time updates to everyone, it will get the right time from the world the player is in.
          if (this.ticks % 20 == 0) {
              for (int i = 0; i < this.getPlayerList().players.size(); ++i) {
-@@ -1025,6 +1038,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1026,6 +1040,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                  entityplayer.playerConnection.sendPacket(new PacketPlayOutUpdateTime(entityplayer.world.getTime(), entityplayer.getPlayerTime(), entityplayer.world.getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE))); // Add support for per player time
              }
          }
@@ -300,7 +301,7 @@ index 87c51b9c3..5ef5a26ff 100644
  
          while (iterator.hasNext()) {
              WorldServer worldserver = (WorldServer) iterator.next();
-@@ -1043,7 +1057,9 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1044,7 +1059,9 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
              this.methodProfiler.enter("tick");
  
              try {
@@ -310,7 +311,7 @@ index 87c51b9c3..5ef5a26ff 100644
              } catch (Throwable throwable) {
                  CrashReport crashreport = CrashReport.a(throwable, "Exception ticking world");
  
-@@ -1056,18 +1072,24 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1057,18 +1074,24 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          }
  
          this.methodProfiler.exitEnter("connection");
@@ -401,15 +402,15 @@ index 6d3977326..d787fab2c 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/TileEntity.java b/src/main/java/net/minecraft/server/TileEntity.java
-index cabe9e6a4..cbe34f8a8 100644
+index 7abef75ea..3b42dcffe 100644
 --- a/src/main/java/net/minecraft/server/TileEntity.java
 +++ b/src/main/java/net/minecraft/server/TileEntity.java
-@@ -9,9 +9,11 @@ import org.bukkit.craftbukkit.persistence.CraftPersistentDataContainer;
- import org.bukkit.craftbukkit.persistence.CraftPersistentDataTypeRegistry;
+@@ -11,8 +11,11 @@ import org.bukkit.craftbukkit.persistence.CraftPersistentDataTypeRegistry;
  import org.bukkit.inventory.InventoryHolder;
  // CraftBukkit end
-+import org.spigotmc.CustomTimingsHandler; // Spigot
  
++import org.spigotmc.CustomTimingsHandler; // Spigot
++
  public abstract class TileEntity {
  
 +    public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getTileEntityTimings(this); // Spigot
@@ -578,11 +579,11 @@ index ecff876d7..f30161f51 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 27b4683a2..d802b248b 100644
+index 5dfcc16ab..fcf891c45 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -2033,6 +2033,11 @@ public final class CraftServer implements Server {
-     private final Spigot spigot = new Spigot()
+     private final org.bukkit.Server.Spigot spigot = new org.bukkit.Server.Spigot()
      {
  
 +        @Override
@@ -592,7 +593,7 @@ index 27b4683a2..d802b248b 100644
 +        }
      };
  
-     public Spigot spigot()
+     public org.bukkit.Server.Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java b/src/main/java/org/bukkit/craftbukkit/SpigotTimings.java
 new file mode 100644
 index 000000000..311e451b2
@@ -774,23 +775,22 @@ index ce2e3d282..9ad17c560 100644
                      task.getOwner().getLogger().log(
                              Level.WARNING,
 diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftTask.java b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftTask.java
-index a85fbbb69..a8ce875f8 100644
+index b67f2deb8..3c7066192 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftTask.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftTask.java
-@@ -4,9 +4,11 @@ import java.util.function.Consumer;
- import org.bukkit.Bukkit;
+@@ -5,7 +5,10 @@ import org.bukkit.Bukkit;
  import org.bukkit.plugin.Plugin;
  import org.bukkit.scheduler.BukkitTask;
-+import org.bukkit.craftbukkit.SpigotTimings; // Spigot
-+import org.spigotmc.CustomTimingsHandler; // Spigot
- 
  
 -class CraftTask implements BukkitTask, Runnable {
++import org.bukkit.craftbukkit.SpigotTimings; // Spigot
++import org.spigotmc.CustomTimingsHandler; // Spigot
++
 +public class CraftTask implements BukkitTask, Runnable { // Spigot
  
      private volatile CraftTask next = null;
      public static final int ERROR = 0;
-@@ -29,6 +31,7 @@ class CraftTask implements BukkitTask, Runnable {
+@@ -28,6 +31,7 @@ class CraftTask implements BukkitTask, Runnable {
      private final Plugin plugin;
      private final int id;
  
@@ -798,7 +798,7 @@ index a85fbbb69..a8ce875f8 100644
      CraftTask() {
          this(null, null, CraftTask.NO_REPEATING, CraftTask.NO_REPEATING);
      }
-@@ -54,6 +57,7 @@ class CraftTask implements BukkitTask, Runnable {
+@@ -53,6 +57,7 @@ class CraftTask implements BukkitTask, Runnable {
          }
          this.id = id;
          this.period = period;
@@ -806,7 +806,7 @@ index a85fbbb69..a8ce875f8 100644
      }
  
      @Override
-@@ -127,4 +131,10 @@ class CraftTask implements BukkitTask, Runnable {
+@@ -126,4 +131,10 @@ class CraftTask implements BukkitTask, Runnable {
          setPeriod(CraftTask.CANCEL);
          return true;
      }

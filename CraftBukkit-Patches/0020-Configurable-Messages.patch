@@ -1,4 +1,4 @@
-From c955264cc8117acbd9a40c163d8e311140668cb7 Mon Sep 17 00:00:00 2001
+From 09f798ec0c4649e6a3aa9f60bb5b5bdf504d659d Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
@@ -21,10 +21,10 @@ index 740b0ba2c..d9b410afa 100644
  
                      this.c.sendPacket(new PacketLoginOutDisconnect(chatmessage));
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index ef01156b7..8226cac7d 100644
+index 227312e3c..b448f5c81 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -508,7 +508,7 @@ public abstract class PlayerList {
+@@ -504,7 +504,7 @@ public abstract class PlayerList {
              event.disallow(PlayerLoginEvent.Result.KICK_BANNED, CraftChatMessage.fromComponent(chatmessage));
          } else if (!this.isWhitelisted(gameprofile)) {
              chatmessage = new ChatMessage("multiplayer.disconnect.not_whitelisted");
@@ -33,7 +33,7 @@ index ef01156b7..8226cac7d 100644
          } else if (getIPBans().isBanned(socketaddress) && !getIPBans().get(socketaddress).hasExpired()) {
              IpBanEntry ipbanentry = this.l.get(socketaddress);
  
-@@ -522,7 +522,7 @@ public abstract class PlayerList {
+@@ -518,7 +518,7 @@ public abstract class PlayerList {
          } else {
              // return this.players.size() >= this.maxPlayers && !this.f(gameprofile) ? new ChatMessage("multiplayer.disconnect.server_full") : null;
              if (this.players.size() >= this.maxPlayers && !this.f(gameprofile)) {
@@ -43,7 +43,7 @@ index ef01156b7..8226cac7d 100644
          }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index fcc368aa4..dbfd594d2 100644
+index 9c196700f..4b67529b4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -743,11 +743,11 @@ public final class CraftServer implements Server {

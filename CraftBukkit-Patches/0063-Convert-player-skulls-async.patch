@@ -1,4 +1,4 @@
-From e373af522bbfb187ddb722b3863c74b72fbc6061 Mon Sep 17 00:00:00 2001
+From 07e20a454868859a1772508afb937b7b97fda45e Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Sun, 20 Apr 2014 13:18:55 +0100
 Subject: [PATCH] Convert player skulls async
@@ -202,10 +202,10 @@ index 6cc7519d9..5528df3d0 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
-index 55c86a893..e950b1957 100644
+index 10cbc3240..1a686e603 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
-@@ -89,7 +89,8 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
+@@ -90,7 +90,8 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
  
          if (profile != null) {
              // Fill in textures

@@ -1,4 +1,4 @@
-From 2d40ff1867f920247874f21e11f6cb33f963ad29 Mon Sep 17 00:00:00 2001
+From be31fa9ba17e5c73b15d1c6be95c16d5060bf7e0 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -6,7 +6,7 @@ Subject: [PATCH] Crop Growth Rates
 Allows configuring the growth rates of crops as a percentage of their normal growth rate.
 
 diff --git a/src/main/java/net/minecraft/server/Block.java b/src/main/java/net/minecraft/server/Block.java
-index dd647a5bc..871b79cb2 100644
+index 00c15b9ae..55b9fe1a7 100644
 --- a/src/main/java/net/minecraft/server/Block.java
 +++ b/src/main/java/net/minecraft/server/Block.java
 @@ -348,6 +348,18 @@ public class Block extends BlockBase implements IMaterial {
@@ -172,10 +172,10 @@ index ae961aecf..c6b8c37f0 100644
  
                  if (i < 7) {
 diff --git a/src/main/java/net/minecraft/server/BlockSweetBerryBush.java b/src/main/java/net/minecraft/server/BlockSweetBerryBush.java
-index d9f376729..3aa46479d 100644
+index cd8aff559..85ac75435 100644
 --- a/src/main/java/net/minecraft/server/BlockSweetBerryBush.java
 +++ b/src/main/java/net/minecraft/server/BlockSweetBerryBush.java
-@@ -34,7 +34,7 @@ public class BlockSweetBerryBush extends BlockPlant implements IBlockFragilePlan
+@@ -35,7 +35,7 @@ public class BlockSweetBerryBush extends BlockPlant implements IBlockFragilePlan
      public void tick(IBlockData iblockdata, WorldServer worldserver, BlockPosition blockposition, Random random) {
          int i = (Integer) iblockdata.get(BlockSweetBerryBush.a);
  

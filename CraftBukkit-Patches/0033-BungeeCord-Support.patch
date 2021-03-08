@@ -1,4 +1,4 @@
-From bf6dd62138329f9b89cae75c2fbe395c5b80b2ea Mon Sep 17 00:00:00 2001
+From 6c41c96f1c45a856401271f38887c7e17c466579 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -115,10 +115,10 @@ index 6aeea22ae..4f008e472 100644
          this.d = EnumProtocol.a(packetdataserializer.i());
      }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index ab788d175..7faf56ffd 100644
+index c9f263875..07d85fa02 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -494,7 +494,7 @@ public abstract class PlayerList {
+@@ -490,7 +490,7 @@ public abstract class PlayerList {
  
          EntityPlayer entity = new EntityPlayer(this.server, this.server.getWorldServer(World.OVERWORLD), gameprofile, new PlayerInteractManager(this.server.getWorldServer(World.OVERWORLD)));
          Player player = entity.getBukkitEntity();
@@ -128,7 +128,7 @@ index ab788d175..7faf56ffd 100644
          if (getProfileBans().isBanned(gameprofile) && !getProfileBans().get(gameprofile).hasExpired()) {
              GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.k.get(gameprofile);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e9a4c9b19..11caafded 100644
+index 5ad9bc44a..f651a75e0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -660,7 +660,13 @@ public final class CraftServer implements Server {

@@ -1,29 +1,21 @@
-From f2bd10f0f712cf7740f266c41fedd42340884fa1 Mon Sep 17 00:00:00 2001
+From a862285f9138685c47633a2a783966f57213b288 Mon Sep 17 00:00:00 2001
 From: ninja <xninja@openmailbox.org>
 Date: Tue, 8 Apr 2014 14:05:19 +0200
 Subject: [PATCH] Implement PlayerSpawnLocationEvent.
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 452d4f6b6..eaaf52393 100644
+index c8c4b0438..705cdd7ed 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -40,6 +40,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
- import org.bukkit.event.player.PlayerRespawnEvent;
- import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
- import org.bukkit.util.Vector;
-+import org.spigotmc.event.player.PlayerSpawnLocationEvent;
- // CraftBukkit end
- 
- public abstract class PlayerList {
-@@ -138,6 +139,20 @@ public abstract class PlayerList {
+@@ -134,6 +134,20 @@ public abstract class PlayerList {
              s1 = networkmanager.getSocketAddress().toString();
          }
  
 +        // Spigot start - spawn location event
 +        Player bukkitPlayer = entityplayer.getBukkitEntity();
-+        PlayerSpawnLocationEvent ev = new PlayerSpawnLocationEvent(bukkitPlayer, bukkitPlayer.getLocation());
-+        Bukkit.getPluginManager().callEvent(ev);
++        org.spigotmc.event.player.PlayerSpawnLocationEvent ev = new org.spigotmc.event.player.PlayerSpawnLocationEvent(bukkitPlayer, bukkitPlayer.getLocation());
++        cserver.getPluginManager().callEvent(ev);
 +
 +        Location loc = ev.getSpawnLocation();
 +        worldserver1 = ((CraftWorld) loc.getWorld()).getHandle();

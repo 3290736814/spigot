@@ -1,4 +1,4 @@
-From 3b71262f21b298b718457999f78cc4db28a694c2 Mon Sep 17 00:00:00 2001
+From c6272bc65162e0d80af742d30f22b65d1f0ecf92 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Aug 2014 18:12:32 -0400
 Subject: [PATCH] Limit TNT Detonations per tick
@@ -7,10 +7,10 @@ This gives a per-world control on how much TNT will be processed per-tick,
 preventing a massive TNT detonation from lagging out the server.
 
 diff --git a/src/main/java/net/minecraft/server/EntityTNTPrimed.java b/src/main/java/net/minecraft/server/EntityTNTPrimed.java
-index ff6783cad..b448467a9 100644
+index 5d254dff9..7064fd8e8 100644
 --- a/src/main/java/net/minecraft/server/EntityTNTPrimed.java
 +++ b/src/main/java/net/minecraft/server/EntityTNTPrimed.java
-@@ -48,6 +48,7 @@ public class EntityTNTPrimed extends Entity {
+@@ -49,6 +49,7 @@ public class EntityTNTPrimed extends Entity {
  
      @Override
      public void tick() {

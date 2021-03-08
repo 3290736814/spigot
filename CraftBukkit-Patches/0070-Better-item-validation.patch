@@ -1,11 +1,11 @@
-From 74a2907f570be70959b18a3f76a8d8abfa049635 Mon Sep 17 00:00:00 2001
+From bb4c85f12edbe61015bbe727b8ef027ad785de4d Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
 
 
 diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java b/src/main/java/net/minecraft/server/PacketDataSerializer.java
-index a6397a58..1b9b0d98 100644
+index a6397a585..1b9b0d98c 100644
 --- a/src/main/java/net/minecraft/server/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java
 @@ -281,6 +281,10 @@ public class PacketDataSerializer extends ByteBuf {
@@ -20,12 +20,12 @@ index a6397a58..1b9b0d98 100644
              }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index 3c13a113..79e46795 100644
+index 6c68ac612..4eb1d6efd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-@@ -20,6 +20,10 @@ import org.bukkit.craftbukkit.util.CraftChatMessage;
- import org.bukkit.craftbukkit.util.CraftMagicNumbers;
+@@ -22,6 +22,10 @@ import org.bukkit.craftbukkit.util.CraftMagicNumbers;
  import org.bukkit.inventory.meta.BookMeta;
+ import org.bukkit.inventory.meta.BookMeta.Generation;
  
 +// Spigot start
 +import static org.spigotmc.ValidateUtils.*;
@@ -34,7 +34,7 @@ index 3c13a113..79e46795 100644
  @DelegateDeserialization(SerializableMeta.class)
  public class CraftMetaBook extends CraftMetaItem implements BookMeta {
      static final ItemMetaKey BOOK_TITLE = new ItemMetaKey("title");
-@@ -80,11 +84,11 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+@@ -82,11 +86,11 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
          super(tag);
  
          if (tag.hasKey(BOOK_TITLE.NBT)) {
@@ -48,7 +48,7 @@ index 3c13a113..79e46795 100644
          }
  
          if (tag.hasKey(RESOLVED.NBT)) {
-@@ -112,7 +116,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+@@ -114,7 +118,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
                  } else {
                      page = validatePage(page);
                  }
@@ -58,7 +58,7 @@ index 3c13a113..79e46795 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 5263e258..e0c42edf 100644
+index 5263e258a..e0c42edf6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -77,6 +77,10 @@ import org.bukkit.inventory.meta.Repairable;
@@ -96,7 +96,7 @@ index 5263e258..e0c42edf 100644
              }
 diff --git a/src/main/java/org/spigotmc/ValidateUtils.java b/src/main/java/org/spigotmc/ValidateUtils.java
 new file mode 100644
-index 00000000..58a95348
+index 000000000..58a953481
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ValidateUtils.java
 @@ -0,0 +1,14 @@

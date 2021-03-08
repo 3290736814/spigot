@@ -1,4 +1,4 @@
-From f1455852de9b6eb18d151427884fb6274d777047 Mon Sep 17 00:00:00 2001
+From 8df368091f2f37b3d1da05eab551ccd863c8ae96 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,10 +6,10 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances.
 
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 2f8afe9f9..ef01156b7 100644
+index 865b3f668..227312e3c 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -148,7 +148,8 @@ public abstract class PlayerList {
+@@ -144,7 +144,8 @@ public abstract class PlayerList {
          boolean flag = gamerules.getBoolean(GameRules.DO_IMMEDIATE_RESPAWN);
          boolean flag1 = gamerules.getBoolean(GameRules.REDUCED_DEBUG_INFO);
  
@@ -19,7 +19,7 @@ index 2f8afe9f9..ef01156b7 100644
          entityplayer.getBukkitEntity().sendSupportedChannels(); // CraftBukkit
          playerconnection.sendPacket(new PacketPlayOutCustomPayload(PacketPlayOutCustomPayload.a, (new PacketDataSerializer(Unpooled.buffer())).a(this.getServer().getServerModName())));
          playerconnection.sendPacket(new PacketPlayOutServerDifficulty(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
-@@ -689,6 +690,7 @@ public abstract class PlayerList {
+@@ -685,6 +686,7 @@ public abstract class PlayerList {
          // CraftBukkit start
          WorldData worlddata = worldserver1.getWorldData();
          entityplayer1.playerConnection.sendPacket(new PacketPlayOutRespawn(worldserver1.getDimensionManager(), worldserver1.getDimensionKey(), BiomeManager.a(worldserver1.getSeed()), entityplayer1.playerInteractManager.getGameMode(), entityplayer1.playerInteractManager.c(), worldserver1.isDebugWorld(), worldserver1.isFlatWorld(), flag));
@@ -41,10 +41,10 @@ index 5049bed1a..ecff876d7 100644
          });
          // CraftBukkit end
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 5be3d403f..4407a512c 100644
+index b8c574c12..e2bf6bd8e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2340,6 +2340,13 @@ public class CraftWorld implements World {
+@@ -2341,6 +2341,13 @@ public class CraftWorld implements World {
          return (getHandle().getDragonBattle() == null) ? null : new CraftDragonBattle(getHandle().getDragonBattle());
      }
  
@@ -56,7 +56,7 @@ index 5be3d403f..4407a512c 100644
 +    // Spigot end
 +
      // Spigot start
-     private final Spigot spigot = new Spigot()
+     private final org.bukkit.World.Spigot spigot = new org.bukkit.World.Spigot()
      {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 index 8c855cf9b..8db1bc203 100644

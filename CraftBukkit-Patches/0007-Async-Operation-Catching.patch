@@ -1,4 +1,4 @@
-From 2abaafa7eaf774a3331297cd13bee5dd75b4c081 Mon Sep 17 00:00:00 2001
+From cd7c507c06a70ce4970cb288e6ebcdb64676caca Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -93,10 +93,10 @@ index e30ae3c79..4e8e59a2b 100644
              effectsToProcess.add(new ProcessableEffect(mobeffect, cause));
              return true;
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index be6d35487..b9e44767e 100644
+index 68276dd86..2699f74dd 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -1005,6 +1005,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -1006,6 +1006,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
      }
  
      protected void addEntity(Entity entity) {
@@ -104,7 +104,7 @@ index be6d35487..b9e44767e 100644
          if (!(entity instanceof EntityComplexPart)) {
              EntityTypes<?> entitytypes = entity.getEntityType();
              int i = entitytypes.getChunkRange() * 16;
-@@ -1037,6 +1038,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -1038,6 +1039,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
      }
  
      protected void removeEntity(Entity entity) {
@@ -112,7 +112,7 @@ index be6d35487..b9e44767e 100644
          if (entity instanceof EntityPlayer) {
              EntityPlayer entityplayer = (EntityPlayer) entity;
  
-@@ -1226,6 +1228,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -1227,6 +1229,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
          }
  
          public void clear(EntityPlayer entityplayer) {
@@ -120,7 +120,7 @@ index be6d35487..b9e44767e 100644
              if (this.trackedPlayers.remove(entityplayer)) {
                  this.trackerEntry.a(entityplayer);
              }
-@@ -1233,6 +1236,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -1234,6 +1237,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
          }
  
          public void updatePlayer(EntityPlayer entityplayer) {
@@ -169,10 +169,10 @@ index e3fa6eadd..27b4683a2 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 87011e92d..5be3d403f 100644
+index f43898de8..9aefaaa37 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -388,6 +388,7 @@ public class CraftWorld implements World {
+@@ -389,6 +389,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean unloadChunkRequest(int x, int z) {
@@ -180,7 +180,7 @@ index 87011e92d..5be3d403f 100644
          if (isChunkLoaded(x, z)) {
              world.getChunkProvider().removeTicket(TicketType.PLUGIN, new ChunkCoordIntPair(x, z), 1, Unit.INSTANCE);
          }
-@@ -396,6 +397,7 @@ public class CraftWorld implements World {
+@@ -397,6 +398,7 @@ public class CraftWorld implements World {
      }
  
      private boolean unloadChunk0(int x, int z, boolean save) {
@@ -188,7 +188,7 @@ index 87011e92d..5be3d403f 100644
          if (!isChunkLoaded(x, z)) {
              return true;
          }
-@@ -410,6 +412,7 @@ public class CraftWorld implements World {
+@@ -411,6 +413,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean regenerateChunk(int x, int z) {
@@ -196,7 +196,7 @@ index 87011e92d..5be3d403f 100644
          throw new UnsupportedOperationException("Not supported in this Minecraft version! Unless you can fix it, this is not a bug :)");
          /*
          if (!unloadChunk0(x, z, false)) {
-@@ -461,6 +464,7 @@ public class CraftWorld implements World {
+@@ -462,6 +465,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean loadChunk(int x, int z, boolean generate) {
@@ -204,7 +204,7 @@ index 87011e92d..5be3d403f 100644
          IChunkAccess chunk = world.getChunkProvider().getChunkAt(x, z, generate ? ChunkStatus.FULL : ChunkStatus.EMPTY, true);
  
          // If generate = false, but the chunk already exists, we will get this back.
-@@ -1092,6 +1096,7 @@ public class CraftWorld implements World {
+@@ -1093,6 +1097,7 @@ public class CraftWorld implements World {
  
      @Override
      public Collection<Entity> getNearbyEntities(BoundingBox boundingBox, Predicate<Entity> filter) {
@@ -212,7 +212,7 @@ index 87011e92d..5be3d403f 100644
          Validate.notNull(boundingBox, "Bounding box is null!");
  
          AxisAlignedBB bb = new AxisAlignedBB(boundingBox.getMinX(), boundingBox.getMinY(), boundingBox.getMinZ(), boundingBox.getMaxX(), boundingBox.getMaxY(), boundingBox.getMaxZ());
-@@ -1246,6 +1251,7 @@ public class CraftWorld implements World {
+@@ -1247,6 +1252,7 @@ public class CraftWorld implements World {
  
      @Override
      public void save() {

@@ -1,4 +1,4 @@
-From c9285f5061d1261fe640dfaa94d5d20db63111f6 Mon Sep 17 00:00:00 2001
+From 4613f4335b94caf8fac2e216643e1a831dee9bf5 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index e8b64438b..988103dce 100644
+index 6182670bf..878579c7f 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -164,6 +164,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
@@ -76,10 +76,10 @@ index 84b21d9cb..e56aabd8a 100644
      public GroupDataEntity prepare(WorldAccess worldaccess, DifficultyDamageScaler difficultydamagescaler, EnumMobSpawn enummobspawn, @Nullable GroupDataEntity groupdataentity, @Nullable NBTTagCompound nbttagcompound) {
          if (groupdataentity == null) {
 diff --git a/src/main/java/net/minecraft/server/EntityAreaEffectCloud.java b/src/main/java/net/minecraft/server/EntityAreaEffectCloud.java
-index 5910b404a..f04204b87 100644
+index 74dd9eeec..6955fe7f7 100644
 --- a/src/main/java/net/minecraft/server/EntityAreaEffectCloud.java
 +++ b/src/main/java/net/minecraft/server/EntityAreaEffectCloud.java
-@@ -158,6 +158,18 @@ public class EntityAreaEffectCloud extends Entity {
+@@ -159,6 +159,18 @@ public class EntityAreaEffectCloud extends Entity {
          this.duration = i;
      }
  
@@ -122,10 +122,10 @@ index 71843c352..e50bbe929 100644
          super(entitytypes, world);
          this.fromPlayer = EntityArrow.PickupStatus.DISALLOWED;
 diff --git a/src/main/java/net/minecraft/server/EntityFireworks.java b/src/main/java/net/minecraft/server/EntityFireworks.java
-index b7b39bf01..46b315036 100644
+index 13df8dc70..5306f1d4b 100644
 --- a/src/main/java/net/minecraft/server/EntityFireworks.java
 +++ b/src/main/java/net/minecraft/server/EntityFireworks.java
-@@ -55,6 +55,22 @@ public class EntityFireworks extends IProjectile {
+@@ -56,6 +56,22 @@ public class EntityFireworks extends IProjectile {
          this.setShooter(entity);
      }
  
@@ -149,10 +149,10 @@ index b7b39bf01..46b315036 100644
      protected void initDatawatcher() {
          this.datawatcher.register(EntityFireworks.FIREWORK_ITEM, ItemStack.b);
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 12bea3b6b..b1e953fc5 100644
+index 60dde20b5..bbaba67d2 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
-@@ -144,6 +144,28 @@ public class EntityItem extends Entity {
+@@ -145,6 +145,28 @@ public class EntityItem extends Entity {
          }
      }
  
@@ -182,7 +182,7 @@ index 12bea3b6b..b1e953fc5 100644
          Vec3D vec3d = this.getMot();
  
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index cb164698f..c611a6e71 100644
+index 7eeeb7dfa..9038b2888 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -144,6 +144,13 @@ public abstract class EntityLiving extends Entity {
@@ -200,10 +200,10 @@ index cb164698f..c611a6e71 100644
      protected EntityLiving(EntityTypes<? extends EntityLiving> entitytypes, World world) {
          super(entitytypes, world);
 diff --git a/src/main/java/net/minecraft/server/EntityVillager.java b/src/main/java/net/minecraft/server/EntityVillager.java
-index 6233cfcd4..bdaa953c0 100644
+index 494c17268..f07c81120 100644
 --- a/src/main/java/net/minecraft/server/EntityVillager.java
 +++ b/src/main/java/net/minecraft/server/EntityVillager.java
-@@ -140,6 +140,17 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
+@@ -138,6 +138,17 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
          return this.bF;
      }
  
@@ -222,7 +222,7 @@ index 6233cfcd4..bdaa953c0 100644
      protected void mobTick() {
          this.world.getMethodProfiler().enter("villagerBrain");
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 683b76ae3..a9dc138f0 100644
+index f30161f51..476ffea20 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -362,6 +362,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -262,7 +262,7 @@ index 311e451b2..66523c21c 100644
      public static final HashMap<String, CustomTimingsHandler> tileEntityTypeTimingMap = new HashMap<String, CustomTimingsHandler>();
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index b677f8a7e..00ab6ab9f 100644
+index dae8f9306..0806886dd 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -496,6 +496,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
