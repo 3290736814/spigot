@@ -1,4 +1,4 @@
-From 3bb3f184c51b088f5c96dcdb2fe2e678882973d4 Mon Sep 17 00:00:00 2001
+From ef504acd40edd667f07cb1af6bd75b1d74f4d087 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -9,11 +9,11 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 
 This feature was commisioned by Chunkr.
 
-diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index b87b7de2e..4c5683bcb 100644
---- a/src/main/java/net/minecraft/server/World.java
-+++ b/src/main/java/net/minecraft/server/World.java
-@@ -79,6 +79,9 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
+index 9eb9147fa..344b7f52e 100644
+--- a/src/main/java/net/minecraft/world/level/World.java
++++ b/src/main/java/net/minecraft/world/level/World.java
+@@ -131,6 +131,9 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
  
      public final SpigotTimings.WorldTimingsHandler timings; // Spigot
      public static BlockPosition lastPhysicsProblem; // Spigot
@@ -23,7 +23,7 @@ index b87b7de2e..4c5683bcb 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -159,6 +162,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -211,6 +214,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
          });
          // CraftBukkit end
          timings = new SpigotTimings.WorldTimingsHandler(this); // Spigot - code below can generate new world and access timings
@@ -32,7 +32,7 @@ index b87b7de2e..4c5683bcb 100644
      }
  
      @Override
-@@ -608,14 +613,19 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -660,14 +665,19 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
          }
  
          this.tickingTileEntities = true;
@@ -57,7 +57,7 @@ index b87b7de2e..4c5683bcb 100644
                  continue;
              }
              // Spigot end
-@@ -651,7 +661,10 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -703,7 +713,10 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
              }
  
              if (tileentity.isRemoved()) {

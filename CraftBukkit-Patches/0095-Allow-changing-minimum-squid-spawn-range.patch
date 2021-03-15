@@ -1,14 +1,14 @@
-From 4ec5e7c122fa8326b605d8357756adb9a87adcbf Mon Sep 17 00:00:00 2001
+From 0ae0310acc56786a48b7f30c9430f35b41f415ec Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 11 Jan 2018 08:23:43 +1100
 Subject: [PATCH] Allow changing minimum squid spawn range
 
 
-diff --git a/src/main/java/net/minecraft/server/EntitySquid.java b/src/main/java/net/minecraft/server/EntitySquid.java
-index 2faf5154e..77b48d03c 100644
---- a/src/main/java/net/minecraft/server/EntitySquid.java
-+++ b/src/main/java/net/minecraft/server/EntitySquid.java
-@@ -169,7 +169,7 @@ public class EntitySquid extends EntityWaterAnimal {
+diff --git a/src/main/java/net/minecraft/world/entity/animal/EntitySquid.java b/src/main/java/net/minecraft/world/entity/animal/EntitySquid.java
+index 30c65aa48..f1eb2d7d2 100644
+--- a/src/main/java/net/minecraft/world/entity/animal/EntitySquid.java
++++ b/src/main/java/net/minecraft/world/entity/animal/EntitySquid.java
+@@ -195,7 +195,7 @@ public class EntitySquid extends EntityWaterAnimal {
      }
  
      public static boolean b(EntityTypes<EntitySquid> entitytypes, GeneratorAccess generatoraccess, EnumMobSpawn enummobspawn, BlockPosition blockposition, Random random) {
@@ -18,7 +18,7 @@ index 2faf5154e..77b48d03c 100644
  
      public void a(float f, float f1, float f2) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 3ebe4de4a..0005d4226 100644
+index 2af7e9b97..83d83ff7c 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -359,4 +359,10 @@ public class SpigotWorldConfig

@@ -1,14 +1,14 @@
-From 8493e77e52bfcce11222f3c8a1f31d8063ca099b Mon Sep 17 00:00:00 2001
+From ef635e8357cbcaf84f648e7a42712453db720695 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 12 Apr 2014 21:23:58 +1000
 Subject: [PATCH] Treat Bungee as Online Mode
 
 
-diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index d095266fb..bb06a7e3f 100644
---- a/src/main/java/net/minecraft/server/DedicatedServer.java
-+++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -189,7 +189,14 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
+index 1c6b9f28c..d5628a019 100644
+--- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
++++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
+@@ -228,7 +228,14 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
          if (!this.getOnlineMode()) {
              DedicatedServer.LOGGER.warn("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
              DedicatedServer.LOGGER.warn("The server will make no attempt to authenticate usernames. Beware.");
@@ -24,11 +24,11 @@ index d095266fb..bb06a7e3f 100644
              DedicatedServer.LOGGER.warn("To change this, set \"online-mode\" to \"true\" in the server.properties file.");
          }
  
-diff --git a/src/main/java/net/minecraft/server/NameReferencingFileConverter.java b/src/main/java/net/minecraft/server/NameReferencingFileConverter.java
-index a50055154..bf0ccfb9b 100644
---- a/src/main/java/net/minecraft/server/NameReferencingFileConverter.java
-+++ b/src/main/java/net/minecraft/server/NameReferencingFileConverter.java
-@@ -55,7 +55,7 @@ public class NameReferencingFileConverter {
+diff --git a/src/main/java/net/minecraft/server/players/NameReferencingFileConverter.java b/src/main/java/net/minecraft/server/players/NameReferencingFileConverter.java
+index a8cdb0a30..107979178 100644
+--- a/src/main/java/net/minecraft/server/players/NameReferencingFileConverter.java
++++ b/src/main/java/net/minecraft/server/players/NameReferencingFileConverter.java
+@@ -65,7 +65,7 @@ public class NameReferencingFileConverter {
              return new String[i];
          });
  

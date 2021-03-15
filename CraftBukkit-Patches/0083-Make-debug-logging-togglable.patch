@@ -1,17 +1,17 @@
-From 78ef4d6971c7202c11c5cc94e08a55dfbe3f508b Mon Sep 17 00:00:00 2001
+From ede360f709ca22fedeaa15d5279378471ab76849 Mon Sep 17 00:00:00 2001
 From: Minecrell <dev@minecrell.net>
 Date: Sun, 17 Aug 2014 12:42:53 +0200
 Subject: [PATCH] Make debug logging togglable.
 
 
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index eb975a3c9..bba2b7adb 100644
+index 8aa2a8d86..cee1c7313 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
-@@ -18,6 +18,9 @@ import net.minecraft.server.GenericAttributes;
- import net.minecraft.server.IRegistry;
- import net.minecraft.server.MinecraftKey;
+@@ -18,6 +18,9 @@ import net.minecraft.resources.MinecraftKey;
  import net.minecraft.server.MinecraftServer;
+ import net.minecraft.world.entity.ai.attributes.AttributeRanged;
+ import net.minecraft.world.entity.ai.attributes.GenericAttributes;
 +import org.apache.logging.log4j.LogManager;
 +import org.apache.logging.log4j.core.LoggerContext;
 +import org.apache.logging.log4j.core.config.Configuration;

@@ -1,14 +1,14 @@
-From 07e20a454868859a1772508afb937b7b97fda45e Mon Sep 17 00:00:00 2001
+From d4c4f49d1b223448d324ab2a3dd1275fa5c0941b Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Sun, 20 Apr 2014 13:18:55 +0100
 Subject: [PATCH] Convert player skulls async
 
 
-diff --git a/src/main/java/net/minecraft/server/ItemSkullPlayer.java b/src/main/java/net/minecraft/server/ItemSkullPlayer.java
-index c484b397f..28f1ce903 100644
---- a/src/main/java/net/minecraft/server/ItemSkullPlayer.java
-+++ b/src/main/java/net/minecraft/server/ItemSkullPlayer.java
-@@ -40,8 +40,16 @@ public class ItemSkullPlayer extends ItemBlockWallable {
+diff --git a/src/main/java/net/minecraft/world/item/ItemSkullPlayer.java b/src/main/java/net/minecraft/world/item/ItemSkullPlayer.java
+index b25ed52d0..70207d1ca 100644
+--- a/src/main/java/net/minecraft/world/item/ItemSkullPlayer.java
++++ b/src/main/java/net/minecraft/world/item/ItemSkullPlayer.java
+@@ -46,8 +46,16 @@ public class ItemSkullPlayer extends ItemBlockWallable {
          if (nbttagcompound.hasKeyOfType("SkullOwner", 8) && !StringUtils.isBlank(nbttagcompound.getString("SkullOwner"))) {
              GameProfile gameprofile = new GameProfile((UUID) null, nbttagcompound.getString("SkullOwner"));
  
@@ -27,35 +27,36 @@ index c484b397f..28f1ce903 100644
              return true;
          } else {
              // CraftBukkit start
-diff --git a/src/main/java/net/minecraft/server/TileEntitySkull.java b/src/main/java/net/minecraft/server/TileEntitySkull.java
-index 6cc7519d9..5528df3d0 100644
---- a/src/main/java/net/minecraft/server/TileEntitySkull.java
-+++ b/src/main/java/net/minecraft/server/TileEntitySkull.java
-@@ -7,6 +7,23 @@ import com.mojang.authlib.properties.Property;
- import java.util.UUID;
- import javax.annotation.Nullable;
+diff --git a/src/main/java/net/minecraft/world/level/block/entity/TileEntitySkull.java b/src/main/java/net/minecraft/world/level/block/entity/TileEntitySkull.java
+index 9357434ca..5e778fcc1 100644
+--- a/src/main/java/net/minecraft/world/level/block/entity/TileEntitySkull.java
++++ b/src/main/java/net/minecraft/world/level/block/entity/TileEntitySkull.java
+@@ -14,6 +14,24 @@ import net.minecraft.util.UtilColor;
+ import net.minecraft.world.level.block.Blocks;
+ import net.minecraft.world.level.block.state.IBlockData;
  
 +// Spigot start
 +import com.google.common.base.Predicate;
-+import com.google.common.cache.LoadingCache;
 +import com.google.common.cache.CacheBuilder;
 +import com.google.common.cache.CacheLoader;
++import com.google.common.cache.LoadingCache;
 +import com.google.common.util.concurrent.Futures;
-+import java.util.concurrent.Executors;
-+import java.util.concurrent.ExecutorService;
-+import java.util.concurrent.Future;
-+import java.util.concurrent.TimeUnit;
-+
 +import com.google.common.util.concurrent.ThreadFactoryBuilder;
 +import com.mojang.authlib.Agent;
 +import com.mojang.authlib.ProfileLookupCallback;
 +import java.util.concurrent.Callable;
++import java.util.concurrent.ExecutorService;
++import java.util.concurrent.Executors;
++import java.util.concurrent.Future;
++import java.util.concurrent.TimeUnit;
++import net.minecraft.server.MinecraftServer;
++import net.minecraft.world.entity.player.EntityHuman;
 +// Spigot end
 +
  public class TileEntitySkull extends TileEntity implements ITickable {
  
      @Nullable
-@@ -17,6 +34,58 @@ public class TileEntitySkull extends TileEntity implements ITickable {
+@@ -24,6 +42,58 @@ public class TileEntitySkull extends TileEntity implements ITickable {
      public GameProfile gameProfile;
      private int g;
      private boolean h;
@@ -114,7 +115,7 @@ index 6cc7519d9..5528df3d0 100644
  
      public TileEntitySkull() {
          super(TileEntityTypes.SKULL);
-@@ -90,34 +159,68 @@ public class TileEntitySkull extends TileEntity implements ITickable {
+@@ -97,34 +167,68 @@ public class TileEntitySkull extends TileEntity implements ITickable {
      }
  
      private void f() {
@@ -202,7 +203,7 @@ index 6cc7519d9..5528df3d0 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
-index 10cbc3240..1a686e603 100644
+index d171b8fc3..b8cac55c9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaSkull.java
 @@ -90,7 +90,8 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {

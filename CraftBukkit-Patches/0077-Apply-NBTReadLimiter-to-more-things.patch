@@ -1,14 +1,14 @@
-From 384f6e0f73ec9a098f4ce64c2afeeeb2ee0490ac Mon Sep 17 00:00:00 2001
+From a4cf041fea12a838dc663cafd3b73f5d132e5639 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 27 Jul 2014 20:46:04 +1000
 Subject: [PATCH] Apply NBTReadLimiter to more things.
 
 
-diff --git a/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java b/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java
-index f61a57ca3..641d4a69c 100644
---- a/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java
-+++ b/src/main/java/net/minecraft/server/NBTCompressedStreamTools.java
-@@ -132,6 +132,12 @@ public class NBTCompressedStreamTools {
+diff --git a/src/main/java/net/minecraft/nbt/NBTCompressedStreamTools.java b/src/main/java/net/minecraft/nbt/NBTCompressedStreamTools.java
+index 764a30199..020c04146 100644
+--- a/src/main/java/net/minecraft/nbt/NBTCompressedStreamTools.java
++++ b/src/main/java/net/minecraft/nbt/NBTCompressedStreamTools.java
+@@ -135,6 +135,12 @@ public class NBTCompressedStreamTools {
      }
  
      public static NBTTagCompound a(DataInput datainput, NBTReadLimiter nbtreadlimiter) throws IOException {
@@ -23,7 +23,7 @@ index f61a57ca3..641d4a69c 100644
          if (nbtbase instanceof NBTTagCompound) {
 diff --git a/src/main/java/org/spigotmc/LimitStream.java b/src/main/java/org/spigotmc/LimitStream.java
 new file mode 100644
-index 000000000..8c32e8b62
+index 000000000..db8d07ea0
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/LimitStream.java
 @@ -0,0 +1,39 @@
@@ -32,7 +32,7 @@ index 000000000..8c32e8b62
 +import java.io.FilterInputStream;
 +import java.io.IOException;
 +import java.io.InputStream;
-+import net.minecraft.server.NBTReadLimiter;
++import net.minecraft.nbt.NBTReadLimiter;
 +
 +public class LimitStream extends FilterInputStream
 +{

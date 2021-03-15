@@ -1,4 +1,4 @@
-From 7850f8559424074c62db9800fc3b4e70cbc93a95 Mon Sep 17 00:00:00 2001
+From d9eca6b8a66d4af4a0ce9bb324fd84bf60265e35 Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Fri, 25 Apr 2014 23:46:46 +0200
 Subject: [PATCH] Fix race condition that could kill connections before they
@@ -11,11 +11,11 @@ a 'preparing' variable that is true while the NetworkManager is not
 initialized. The ServerConnection does not remove NetworkManagers with
 this flag.
 
-diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
-index 2fb455a7c..8db23e350 100644
---- a/src/main/java/net/minecraft/server/NetworkManager.java
-+++ b/src/main/java/net/minecraft/server/NetworkManager.java
-@@ -48,6 +48,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
+diff --git a/src/main/java/net/minecraft/network/NetworkManager.java b/src/main/java/net/minecraft/network/NetworkManager.java
+index a08cfd48c..2d73e9f60 100644
+--- a/src/main/java/net/minecraft/network/NetworkManager.java
++++ b/src/main/java/net/minecraft/network/NetworkManager.java
+@@ -58,6 +58,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
      // Spigot Start
      public java.util.UUID spoofedUUID;
      public com.mojang.authlib.properties.Property[] spoofedProfile;
@@ -23,7 +23,7 @@ index 2fb455a7c..8db23e350 100644
      // Spigot End
      private PacketListener packetListener;
      private IChatBaseComponent m;
-@@ -68,6 +69,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
+@@ -78,6 +79,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
          super.channelActive(channelhandlercontext);
          this.channel = channelhandlercontext.channel();
          this.socketAddress = this.channel.remoteAddress();
@@ -33,7 +33,7 @@ index 2fb455a7c..8db23e350 100644
  
          try {
              this.setProtocol(EnumProtocol.HANDSHAKING);
-@@ -241,6 +245,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
+@@ -251,6 +255,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
      }
  
      public void close(IChatBaseComponent ichatbasecomponent) {
@@ -43,11 +43,11 @@ index 2fb455a7c..8db23e350 100644
          if (this.channel.isOpen()) {
              this.channel.close(); // We can't wait as this may be called from an event loop.
              this.m = ichatbasecomponent;
-diff --git a/src/main/java/net/minecraft/server/ServerConnection.java b/src/main/java/net/minecraft/server/ServerConnection.java
-index 3283b479d..399420916 100644
---- a/src/main/java/net/minecraft/server/ServerConnection.java
-+++ b/src/main/java/net/minecraft/server/ServerConnection.java
-@@ -142,6 +142,10 @@ public class ServerConnection {
+diff --git a/src/main/java/net/minecraft/server/network/ServerConnection.java b/src/main/java/net/minecraft/server/network/ServerConnection.java
+index 85ebdd8f1..f66a5ba90 100644
+--- a/src/main/java/net/minecraft/server/network/ServerConnection.java
++++ b/src/main/java/net/minecraft/server/network/ServerConnection.java
+@@ -155,6 +155,10 @@ public class ServerConnection {
                              networkmanager.stopReading();
                          }
                      } else {

@@ -1,14 +1,14 @@
-From 6a28dc5b4815f904892dfc66479c2683b1ef926e Mon Sep 17 00:00:00 2001
+From 7b86ca612365e0c6fce6752e991952c40f62a797 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 3 Feb 2013 09:20:19 +1100
 Subject: [PATCH] Handle Null Tile Entities
 
 
-diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 073287fa3..d41d45f27 100644
---- a/src/main/java/net/minecraft/server/World.java
-+++ b/src/main/java/net/minecraft/server/World.java
-@@ -601,6 +601,13 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
+index 6c4926e0a..44de94398 100644
+--- a/src/main/java/net/minecraft/world/level/World.java
++++ b/src/main/java/net/minecraft/world/level/World.java
+@@ -653,6 +653,13 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
  
          while (iterator.hasNext()) {
              TileEntity tileentity = (TileEntity) iterator.next();

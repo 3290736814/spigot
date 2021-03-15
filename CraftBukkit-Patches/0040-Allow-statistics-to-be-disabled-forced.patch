@@ -1,14 +1,14 @@
-From af588db168e63f845602f18f7991f9fb5b434aee Mon Sep 17 00:00:00 2001
+From 042f326468336d85249cf232af3dd7e88fc3c47e Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Tue, 7 Jan 2014 15:56:26 +0000
 Subject: [PATCH] Allow statistics to be disabled/forced
 
 
-diff --git a/src/main/java/net/minecraft/server/ServerStatisticManager.java b/src/main/java/net/minecraft/server/ServerStatisticManager.java
-index 697b070f6..b9def4d60 100644
---- a/src/main/java/net/minecraft/server/ServerStatisticManager.java
-+++ b/src/main/java/net/minecraft/server/ServerStatisticManager.java
-@@ -34,6 +34,13 @@ public class ServerStatisticManager extends StatisticManager {
+diff --git a/src/main/java/net/minecraft/stats/ServerStatisticManager.java b/src/main/java/net/minecraft/stats/ServerStatisticManager.java
+index 503cfce53..a920e1de0 100644
+--- a/src/main/java/net/minecraft/stats/ServerStatisticManager.java
++++ b/src/main/java/net/minecraft/stats/ServerStatisticManager.java
+@@ -46,6 +46,13 @@ public class ServerStatisticManager extends StatisticManager {
      public ServerStatisticManager(MinecraftServer minecraftserver, File file) {
          this.c = minecraftserver;
          this.d = file;
@@ -21,16 +21,16 @@ index 697b070f6..b9def4d60 100644
 +        // Spigot end
          if (file.isFile()) {
              try {
-                 this.a(minecraftserver.getDataFixer(), org.apache.commons.io.FileUtils.readFileToString(file));
-@@ -47,6 +54,7 @@ public class ServerStatisticManager extends StatisticManager {
+                 this.a(minecraftserver.getDataFixer(), FileUtils.readFileToString(file));
+@@ -59,6 +66,7 @@ public class ServerStatisticManager extends StatisticManager {
      }
  
      public void save() {
 +        if ( org.spigotmc.SpigotConfig.disableStatSaving ) return; // Spigot
          try {
-             org.apache.commons.io.FileUtils.writeStringToFile(this.d, this.b());
+             FileUtils.writeStringToFile(this.d, this.b());
          } catch (IOException ioexception) {
-@@ -57,6 +65,7 @@ public class ServerStatisticManager extends StatisticManager {
+@@ -69,6 +77,7 @@ public class ServerStatisticManager extends StatisticManager {
  
      @Override
      public void setStatistic(EntityHuman entityhuman, Statistic<?> statistic, int i) {
@@ -39,15 +39,15 @@ index 697b070f6..b9def4d60 100644
          this.e.add(statistic);
      }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index a7bf7f860..7f42259e6 100644
+index a7bf7f860..584953b9f 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -10,10 +10,13 @@ import java.util.HashMap;
  import java.util.List;
  import java.util.Map;
  import java.util.logging.Level;
-+import net.minecraft.server.IRegistry;
-+import net.minecraft.server.MinecraftKey;
++import net.minecraft.core.IRegistry;
++import net.minecraft.resources.MinecraftKey;
  import net.minecraft.server.MinecraftServer;
  import org.bukkit.Bukkit;
  import org.bukkit.ChatColor;

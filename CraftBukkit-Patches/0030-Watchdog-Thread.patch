@@ -1,14 +1,34 @@
-From 9faec0aa6db3cfdb640828336c4fd53a5949d74b Mon Sep 17 00:00:00 2001
+From 8bb42804219af599d6e82ad90547e21a4c953203 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
-diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 2a63e517b..d095266fb 100644
---- a/src/main/java/net/minecraft/server/DedicatedServer.java
-+++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -228,7 +228,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index c69945c66..7a3be907e 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -958,6 +958,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+             } catch (Throwable throwable1) {
+                 MinecraftServer.LOGGER.error("Exception stopping the server", throwable1);
+             } finally {
++                org.spigotmc.WatchdogThread.doStop(); // Spigot
+                 // CraftBukkit start - Restore terminal to original settings
+                 try {
+                     reader.getTerminal().restore();
+@@ -1116,6 +1117,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+ 
+         this.circularTimer.a(i1 - i);
+         this.methodProfiler.exit();
++        org.spigotmc.WatchdogThread.tick(); // Spigot
+         SpigotTimings.serverTickTimer.stopTiming(); // Spigot
+         org.spigotmc.CustomTimingsHandler.tick(); // Spigot
+     }
+diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
+index 57b4e1623..1c6b9f28c 100644
+--- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
++++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
+@@ -267,7 +267,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
                  this.remoteConsole = new org.bukkit.craftbukkit.command.CraftRemoteConsoleCommandSender(this.remoteControlCommandListener); // CraftBukkit
              }
  
@@ -17,28 +37,8 @@ index 2a63e517b..d095266fb 100644
                  Thread thread1 = new Thread(new ThreadWatchdog(this));
  
                  thread1.setUncaughtExceptionHandler(new ThreadNamedUncaughtExceptionHandler(DedicatedServer.LOGGER));
-diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 676741fe2..eba3e6dc7 100644
---- a/src/main/java/net/minecraft/server/MinecraftServer.java
-+++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -851,6 +851,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
-             } catch (Throwable throwable1) {
-                 MinecraftServer.LOGGER.error("Exception stopping the server", throwable1);
-             } finally {
-+                org.spigotmc.WatchdogThread.doStop(); // Spigot
-                 // CraftBukkit start - Restore terminal to original settings
-                 try {
-                     reader.getTerminal().restore();
-@@ -1009,6 +1010,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
- 
-         this.circularTimer.a(i1 - i);
-         this.methodProfiler.exit();
-+        org.spigotmc.WatchdogThread.tick(); // Spigot
-         SpigotTimings.serverTickTimer.stopTiming(); // Spigot
-         org.spigotmc.CustomTimingsHandler.tick(); // Spigot
-     }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 4b67529b4..5ad9bc44a 100644
+index d6d0ca659..06d76e0dc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -1689,7 +1689,7 @@ public final class CraftServer implements Server {
@@ -64,7 +64,7 @@ index 4b67529b4..5ad9bc44a 100644
      public org.bukkit.Server.Spigot spigot()
 diff --git a/src/main/java/org/spigotmc/RestartCommand.java b/src/main/java/org/spigotmc/RestartCommand.java
 new file mode 100644
-index 000000000..56445844c
+index 000000000..d76e01d73
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/RestartCommand.java
 @@ -0,0 +1,130 @@
@@ -72,8 +72,8 @@ index 000000000..56445844c
 +
 +import java.io.File;
 +import java.util.List;
-+import net.minecraft.server.EntityPlayer;
 +import net.minecraft.server.MinecraftServer;
++import net.minecraft.server.level.EntityPlayer;
 +import org.bukkit.command.Command;
 +import org.bukkit.command.CommandSender;
 +

@@ -1,4 +1,4 @@
-From 61d8632c0e085fe201674c1fe725cd48e63deac6 Mon Sep 17 00:00:00 2001
+From bc4cf544acaa7e8a4900d342a2f1a99913d790ad Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 2 Jul 2013 13:07:39 +1000
 Subject: [PATCH] POM Changes
@@ -6,7 +6,7 @@ Subject: [PATCH] POM Changes
 Basic changes to the build system which mark the artifact as Spigot, and the necessary code changes to ensure proper functionality. Also disables the auto updater provided by CraftBukkit as it is useless to us.
 
 diff --git a/checkstyle.xml b/checkstyle.xml
-index 63a6f624f..9c724b548 100644
+index 63914723e..01319e4f7 100644
 --- a/checkstyle.xml
 +++ b/checkstyle.xml
 @@ -25,6 +25,9 @@
@@ -34,7 +34,7 @@ index 63a6f624f..9c724b548 100644
          <!-- See http://checkstyle.sourceforge.net/config_imports.html -->
          <module name="AvoidStarImport">
 diff --git a/pom.xml b/pom.xml
-index 43dc4cab5..a9d4c697f 100644
+index 8cee98deb..a31f1513a 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,11 +1,11 @@
@@ -72,7 +72,7 @@ index 43dc4cab5..a9d4c697f 100644
              <version>${project.version}</version>
              <scope>compile</scope>
          </dependency>
-@@ -118,11 +125,26 @@
+@@ -98,11 +105,26 @@
                  <groupId>net.md-5</groupId>
                  <artifactId>scriptus</artifactId>
                  <version>0.4.1</version>
@@ -102,7 +102,7 @@ index 43dc4cab5..a9d4c697f 100644
                          <phase>initialize</phase>
                          <goals>
                              <goal>describe</goal>
-@@ -142,7 +164,7 @@
+@@ -122,7 +144,7 @@
                          <manifestEntries>
                              <Main-Class>org.bukkit.craftbukkit.Main</Main-Class>
                              <Implementation-Title>CraftBukkit</Implementation-Title>

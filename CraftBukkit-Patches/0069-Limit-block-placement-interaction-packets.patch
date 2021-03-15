@@ -1,14 +1,14 @@
-From 5dcc5cc6b1ae24be13659c2af1bdd4f4bffad021 Mon Sep 17 00:00:00 2001
+From 4d203bd47d901939ccf2eb55523c31bbcc3a9a17 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Sun, 29 Jun 2014 21:10:34 +0100
 Subject: [PATCH] Limit block placement/interaction packets
 
 
-diff --git a/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java b/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java
-index bb88f7c1a..194576502 100644
---- a/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java
-+++ b/src/main/java/net/minecraft/server/PacketPlayInBlockPlace.java
-@@ -5,6 +5,7 @@ import java.io.IOException;
+diff --git a/src/main/java/net/minecraft/network/protocol/game/PacketPlayInBlockPlace.java b/src/main/java/net/minecraft/network/protocol/game/PacketPlayInBlockPlace.java
+index 2bdb58ba8..2a7313cf6 100644
+--- a/src/main/java/net/minecraft/network/protocol/game/PacketPlayInBlockPlace.java
++++ b/src/main/java/net/minecraft/network/protocol/game/PacketPlayInBlockPlace.java
+@@ -8,6 +8,7 @@ import net.minecraft.world.EnumHand;
  public class PacketPlayInBlockPlace implements Packet<PacketListenerPlayIn> {
  
      private EnumHand a;
@@ -16,7 +16,7 @@ index bb88f7c1a..194576502 100644
  
      public PacketPlayInBlockPlace() {}
  
-@@ -14,6 +15,7 @@ public class PacketPlayInBlockPlace implements Packet<PacketListenerPlayIn> {
+@@ -17,6 +18,7 @@ public class PacketPlayInBlockPlace implements Packet<PacketListenerPlayIn> {
  
      @Override
      public void a(PacketDataSerializer packetdataserializer) throws IOException {
@@ -24,11 +24,11 @@ index bb88f7c1a..194576502 100644
          this.a = (EnumHand) packetdataserializer.a(EnumHand.class);
      }
  
-diff --git a/src/main/java/net/minecraft/server/PacketPlayInUseItem.java b/src/main/java/net/minecraft/server/PacketPlayInUseItem.java
-index db97aed02..cc2bf8150 100644
---- a/src/main/java/net/minecraft/server/PacketPlayInUseItem.java
-+++ b/src/main/java/net/minecraft/server/PacketPlayInUseItem.java
-@@ -6,11 +6,13 @@ public class PacketPlayInUseItem implements Packet<PacketListenerPlayIn> {
+diff --git a/src/main/java/net/minecraft/network/protocol/game/PacketPlayInUseItem.java b/src/main/java/net/minecraft/network/protocol/game/PacketPlayInUseItem.java
+index 9ea17e334..08a2205ef 100644
+--- a/src/main/java/net/minecraft/network/protocol/game/PacketPlayInUseItem.java
++++ b/src/main/java/net/minecraft/network/protocol/game/PacketPlayInUseItem.java
+@@ -10,11 +10,13 @@ public class PacketPlayInUseItem implements Packet<PacketListenerPlayIn> {
  
      private MovingObjectPositionBlock a;
      private EnumHand b;
@@ -42,11 +42,11 @@ index db97aed02..cc2bf8150 100644
          this.b = (EnumHand) packetdataserializer.a(EnumHand.class);
          this.a = packetdataserializer.r();
      }
-diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 16069e441..b42590438 100644
---- a/src/main/java/net/minecraft/server/PlayerConnection.java
-+++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1311,10 +1311,30 @@ public class PlayerConnection implements PacketListenerPlayIn {
+diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
+index c4e4a2b6a..51ab10912 100644
+--- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
++++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
+@@ -1456,10 +1456,30 @@ public class PlayerConnection implements PacketListenerPlayIn {
          }
      }
  
@@ -77,7 +77,7 @@ index 16069e441..b42590438 100644
          WorldServer worldserver = this.player.getWorldServer();
          EnumHand enumhand = packetplayinuseitem.b();
          ItemStack itemstack = this.player.b(enumhand);
-@@ -1357,6 +1377,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -1502,6 +1522,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
      public void a(PacketPlayInBlockPlace packetplayinblockplace) {
          PlayerConnectionUtils.ensureMainThread(packetplayinblockplace, this, this.player.getWorldServer());
          if (this.player.isFrozen()) return; // CraftBukkit

@@ -1,14 +1,14 @@
-From 2d3f66d7a7f96661115814906cd8afe980db232b Mon Sep 17 00:00:00 2001
+From 4082aa62e5b4853c276c8000cf82481b0882b936 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 20 Jan 2014 13:44:07 +1100
 Subject: [PATCH] Catch stalling on corrupted map data / NBT arrays.
 
 
-diff --git a/src/main/java/net/minecraft/server/NBTTagByteArray.java b/src/main/java/net/minecraft/server/NBTTagByteArray.java
-index de8bd9b3c..d7ba2db63 100644
---- a/src/main/java/net/minecraft/server/NBTTagByteArray.java
-+++ b/src/main/java/net/minecraft/server/NBTTagByteArray.java
-@@ -14,6 +14,7 @@ public class NBTTagByteArray extends NBTList<NBTTagByte> {
+diff --git a/src/main/java/net/minecraft/nbt/NBTTagByteArray.java b/src/main/java/net/minecraft/nbt/NBTTagByteArray.java
+index 7c082c922..04a362534 100644
+--- a/src/main/java/net/minecraft/nbt/NBTTagByteArray.java
++++ b/src/main/java/net/minecraft/nbt/NBTTagByteArray.java
+@@ -17,6 +17,7 @@ public class NBTTagByteArray extends NBTList<NBTTagByte> {
          public NBTTagByteArray b(DataInput datainput, int i, NBTReadLimiter nbtreadlimiter) throws IOException {
              nbtreadlimiter.a(192L);
              int j = datainput.readInt();
@@ -16,11 +16,11 @@ index de8bd9b3c..d7ba2db63 100644
  
              nbtreadlimiter.a(8L * (long) j);
              byte[] abyte = new byte[j];
-diff --git a/src/main/java/net/minecraft/server/NBTTagIntArray.java b/src/main/java/net/minecraft/server/NBTTagIntArray.java
-index 98f589514..eb3fc6db6 100644
---- a/src/main/java/net/minecraft/server/NBTTagIntArray.java
-+++ b/src/main/java/net/minecraft/server/NBTTagIntArray.java
-@@ -14,6 +14,7 @@ public class NBTTagIntArray extends NBTList<NBTTagInt> {
+diff --git a/src/main/java/net/minecraft/nbt/NBTTagIntArray.java b/src/main/java/net/minecraft/nbt/NBTTagIntArray.java
+index 30348aa53..fd713be9c 100644
+--- a/src/main/java/net/minecraft/nbt/NBTTagIntArray.java
++++ b/src/main/java/net/minecraft/nbt/NBTTagIntArray.java
+@@ -17,6 +17,7 @@ public class NBTTagIntArray extends NBTList<NBTTagInt> {
          public NBTTagIntArray b(DataInput datainput, int i, NBTReadLimiter nbtreadlimiter) throws IOException {
              nbtreadlimiter.a(192L);
              int j = datainput.readInt();

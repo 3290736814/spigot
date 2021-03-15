@@ -1,14 +1,14 @@
-From be99cae68824d2aca68696cd475bba946bf9394b Mon Sep 17 00:00:00 2001
+From e468584c43e798d00d51208aae15ebdcc5254a86 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 6 Oct 2013 17:36:28 +1100
 Subject: [PATCH] Don't Special Case X Move Value
 
 
-diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 41df874ae..080bb4ea5 100644
---- a/src/main/java/net/minecraft/server/PlayerConnection.java
-+++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -138,6 +138,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
+index b1025b2b7..df86ccd40 100644
+--- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
++++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
+@@ -283,6 +283,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
      private float lastPitch = Float.MAX_VALUE;
      private float lastYaw = Float.MAX_VALUE;
      private boolean justTeleported = false;
@@ -16,7 +16,7 @@ index 41df874ae..080bb4ea5 100644
  
      public CraftPlayer getPlayer() {
          return (this.player == null) ? null : (CraftPlayer) this.player.getBukkitEntity();
-@@ -410,6 +411,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -555,6 +556,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
                      flag1 = true;
                      PlayerConnection.LOGGER.warn("{} (vehicle of {}) moved wrongly! {}", entity.getDisplayName().getString(), this.player.getDisplayName().getString(), Math.sqrt(d10));
                  }
@@ -24,7 +24,7 @@ index 41df874ae..080bb4ea5 100644
  
                  entity.setLocation(d3, d4, d5, f, f1);
                  player.setLocation(d3, d4, d5, this.player.yaw, this.player.pitch); // CraftBukkit
-@@ -424,6 +426,17 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -569,6 +571,17 @@ public class PlayerConnection implements PacketListenerPlayIn {
  
                  // CraftBukkit start - fire PlayerMoveEvent
                  Player player = this.getPlayer();
@@ -42,7 +42,7 @@ index 41df874ae..080bb4ea5 100644
                  Location from = new Location(player.getWorld(), lastPosX, lastPosY, lastPosZ, lastYaw, lastPitch); // Get the Players previous Event location.
                  Location to = player.getLocation().clone(); // Start off the To location as the Players current location.
  
-@@ -449,7 +462,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -594,7 +607,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
                      this.lastPitch = to.getPitch();
  
                      // Skip the first time we do this

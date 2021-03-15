@@ -1,15 +1,15 @@
-From 09e1a0160a48f2fe56c056fe6cf40d4d8f2d9da8 Mon Sep 17 00:00:00 2001
+From 5f322459642dbd0dbe3ab621db1a83425b4b6e8e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 27 Jan 2014 08:39:26 +1100
 Subject: [PATCH] Add Optional Tick Shuffling
 
 This prevents players from 'gaming' the server, and strategically relogging to increase their position in the tick order.
 
-diff --git a/src/main/java/net/minecraft/server/ServerConnection.java b/src/main/java/net/minecraft/server/ServerConnection.java
-index 79a02ca9a..3283b479d 100644
---- a/src/main/java/net/minecraft/server/ServerConnection.java
-+++ b/src/main/java/net/minecraft/server/ServerConnection.java
-@@ -112,6 +112,13 @@ public class ServerConnection {
+diff --git a/src/main/java/net/minecraft/server/network/ServerConnection.java b/src/main/java/net/minecraft/server/network/ServerConnection.java
+index 830b5d034..85ebdd8f1 100644
+--- a/src/main/java/net/minecraft/server/network/ServerConnection.java
++++ b/src/main/java/net/minecraft/server/network/ServerConnection.java
+@@ -125,6 +125,13 @@ public class ServerConnection {
          List list = this.connectedChannels;
  
          synchronized (this.connectedChannels) {
@@ -24,7 +24,7 @@ index 79a02ca9a..3283b479d 100644
  
              while (iterator.hasNext()) {
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 6925ab591..3ce9fa744 100644
+index 00f929700..9acc8feb7 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -278,4 +278,10 @@ public class SpigotConfig

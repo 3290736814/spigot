@@ -1,15 +1,15 @@
-From 45503c0595918f9e80ac4117c6b442f04defe4ca Mon Sep 17 00:00:00 2001
+From cec42e25cc6a7b23797166d471eafc8d86f48332 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 19 May 2013 18:29:48 +1000
 Subject: [PATCH] Remove -o Option
 
 Serves no purpose other than to confuse users.
 
-diff --git a/src/main/java/net/minecraft/server/PropertyManager.java b/src/main/java/net/minecraft/server/PropertyManager.java
-index 821eac02e..3aa05fd2b 100644
---- a/src/main/java/net/minecraft/server/PropertyManager.java
-+++ b/src/main/java/net/minecraft/server/PropertyManager.java
-@@ -31,7 +31,7 @@ public abstract class PropertyManager<T extends PropertyManager<T>> {
+diff --git a/src/main/java/net/minecraft/server/dedicated/PropertyManager.java b/src/main/java/net/minecraft/server/dedicated/PropertyManager.java
+index 2a7ae828a..cb85d8bc1 100644
+--- a/src/main/java/net/minecraft/server/dedicated/PropertyManager.java
++++ b/src/main/java/net/minecraft/server/dedicated/PropertyManager.java
+@@ -33,7 +33,7 @@ public abstract class PropertyManager<T extends PropertyManager<T>> {
      }
  
      private String getOverride(String name, String value) {

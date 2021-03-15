@@ -1,40 +1,14 @@
-From bb956ef0016ea946c99e1c9e758524888ad6d121 Mon Sep 17 00:00:00 2001
+From be9eda5dd884548089a684f445bab99d941fd78e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 25 Feb 2019 19:26:56 +1100
 Subject: [PATCH] Add creative mode NBT permissions
 
 
-diff --git a/src/main/java/net/minecraft/server/ItemBlock.java b/src/main/java/net/minecraft/server/ItemBlock.java
-index 9691921fe..6fb62f75f 100644
---- a/src/main/java/net/minecraft/server/ItemBlock.java
-+++ b/src/main/java/net/minecraft/server/ItemBlock.java
-@@ -185,7 +185,7 @@ public class ItemBlock extends Item {
-                 TileEntity tileentity = world.getTileEntity(blockposition);
- 
-                 if (tileentity != null) {
--                    if (!world.isClientSide && tileentity.isFilteredNBT() && (entityhuman == null || !entityhuman.isCreativeAndOp())) {
-+                    if (!world.isClientSide && tileentity.isFilteredNBT() && (entityhuman == null || !(entityhuman.isCreativeAndOp() || (entityhuman.abilities.canInstantlyBuild && entityhuman.getBukkitEntity().hasPermission("minecraft.nbt.place"))))) { // Spigot - add permission
-                         return false;
-                     }
- 
-diff --git a/src/main/java/net/minecraft/server/ItemDebugStick.java b/src/main/java/net/minecraft/server/ItemDebugStick.java
-index 4fc998052..54e2bc2ff 100644
---- a/src/main/java/net/minecraft/server/ItemDebugStick.java
-+++ b/src/main/java/net/minecraft/server/ItemDebugStick.java
-@@ -38,7 +38,7 @@ public class ItemDebugStick extends Item {
-     }
- 
-     private void a(EntityHuman entityhuman, IBlockData iblockdata, GeneratorAccess generatoraccess, BlockPosition blockposition, boolean flag, ItemStack itemstack) {
--        if (entityhuman.isCreativeAndOp()) {
-+        if (entityhuman.isCreativeAndOp() || (entityhuman.abilities.canInstantlyBuild && entityhuman.getBukkitEntity().hasPermission("minecraft.debugstick")) || entityhuman.getBukkitEntity().hasPermission("minecraft.debugstick.always")) { // Spigot
-             Block block = iblockdata.getBlock();
-             BlockStateList<Block, IBlockData> blockstatelist = block.getStates();
-             Collection<IBlockState<?>> collection = blockstatelist.d();
-diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 9b6505659..2abd00975 100644
---- a/src/main/java/net/minecraft/server/PlayerConnection.java
-+++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -2398,7 +2398,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
+index 5f8d3e97e..638eb9731 100644
+--- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
++++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
+@@ -2543,7 +2543,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
              ItemStack itemstack = packetplayinsetcreativeslot.getItemStack();
              NBTTagCompound nbttagcompound = itemstack.b("BlockEntityTag");
  
@@ -43,6 +17,32 @@ index 9b6505659..2abd00975 100644
                  BlockPosition blockposition = new BlockPosition(nbttagcompound.getInt("x"), nbttagcompound.getInt("y"), nbttagcompound.getInt("z"));
                  TileEntity tileentity = this.player.world.getTileEntity(blockposition);
  
+diff --git a/src/main/java/net/minecraft/world/item/ItemBlock.java b/src/main/java/net/minecraft/world/item/ItemBlock.java
+index 2197d6df2..ec12bea9d 100644
+--- a/src/main/java/net/minecraft/world/item/ItemBlock.java
++++ b/src/main/java/net/minecraft/world/item/ItemBlock.java
+@@ -207,7 +207,7 @@ public class ItemBlock extends Item {
+                 TileEntity tileentity = world.getTileEntity(blockposition);
+ 
+                 if (tileentity != null) {
+-                    if (!world.isClientSide && tileentity.isFilteredNBT() && (entityhuman == null || !entityhuman.isCreativeAndOp())) {
++                    if (!world.isClientSide && tileentity.isFilteredNBT() && (entityhuman == null || !(entityhuman.isCreativeAndOp() || (entityhuman.abilities.canInstantlyBuild && entityhuman.getBukkitEntity().hasPermission("minecraft.nbt.place"))))) { // Spigot - add permission
+                         return false;
+                     }
+ 
+diff --git a/src/main/java/net/minecraft/world/item/ItemDebugStick.java b/src/main/java/net/minecraft/world/item/ItemDebugStick.java
+index ad2931a52..b71ccb2f3 100644
+--- a/src/main/java/net/minecraft/world/item/ItemDebugStick.java
++++ b/src/main/java/net/minecraft/world/item/ItemDebugStick.java
+@@ -56,7 +56,7 @@ public class ItemDebugStick extends Item {
+     }
+ 
+     private void a(EntityHuman entityhuman, IBlockData iblockdata, GeneratorAccess generatoraccess, BlockPosition blockposition, boolean flag, ItemStack itemstack) {
+-        if (entityhuman.isCreativeAndOp()) {
++        if (entityhuman.isCreativeAndOp() || (entityhuman.abilities.canInstantlyBuild && entityhuman.getBukkitEntity().hasPermission("minecraft.debugstick")) || entityhuman.getBukkitEntity().hasPermission("minecraft.debugstick.always")) { // Spigot
+             Block block = iblockdata.getBlock();
+             BlockStateList<Block, IBlockData> blockstatelist = block.getStates();
+             Collection<IBlockState<?>> collection = blockstatelist.d();
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/permissions/CraftDefaultPermissions.java b/src/main/java/org/bukkit/craftbukkit/util/permissions/CraftDefaultPermissions.java
 index 75f8d47a2..525ebf961 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/permissions/CraftDefaultPermissions.java

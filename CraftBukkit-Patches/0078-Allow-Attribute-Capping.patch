@@ -1,15 +1,15 @@
-From 1a85297251edc9df3ecbae87373aa37bc2ce56db Mon Sep 17 00:00:00 2001
+From c12cd4cbdf22d36a96af2ac7bf7c6df95465c9aa Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 28 Jul 2014 16:55:51 +1000
 Subject: [PATCH] Allow Attribute Capping.
 
 Apply some sensible defaults and allow server owners to customize the maximum values of selected common attributes.
 
-diff --git a/src/main/java/net/minecraft/server/AttributeRanged.java b/src/main/java/net/minecraft/server/AttributeRanged.java
-index 13d9bb19b..b1ffe01b4 100644
---- a/src/main/java/net/minecraft/server/AttributeRanged.java
-+++ b/src/main/java/net/minecraft/server/AttributeRanged.java
-@@ -3,7 +3,7 @@ package net.minecraft.server;
+diff --git a/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeRanged.java b/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeRanged.java
+index a3750478c..8f61584cd 100644
+--- a/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeRanged.java
++++ b/src/main/java/net/minecraft/world/entity/ai/attributes/AttributeRanged.java
+@@ -5,7 +5,7 @@ import net.minecraft.util.MathHelper;
  public class AttributeRanged extends AttributeBase {
  
      private final double a;
@@ -18,11 +18,11 @@ index 13d9bb19b..b1ffe01b4 100644
  
      public AttributeRanged(String s, double d0, double d1, double d2) {
          super(s, d0);
-diff --git a/src/main/java/net/minecraft/server/GenericAttributes.java b/src/main/java/net/minecraft/server/GenericAttributes.java
-index 67365b99f..9913fb4fa 100644
---- a/src/main/java/net/minecraft/server/GenericAttributes.java
-+++ b/src/main/java/net/minecraft/server/GenericAttributes.java
-@@ -2,12 +2,12 @@ package net.minecraft.server;
+diff --git a/src/main/java/net/minecraft/world/entity/ai/attributes/GenericAttributes.java b/src/main/java/net/minecraft/world/entity/ai/attributes/GenericAttributes.java
+index cdf075829..456355ae4 100644
+--- a/src/main/java/net/minecraft/world/entity/ai/attributes/GenericAttributes.java
++++ b/src/main/java/net/minecraft/world/entity/ai/attributes/GenericAttributes.java
+@@ -4,12 +4,12 @@ import net.minecraft.core.IRegistry;
  
  public class GenericAttributes {
  
@@ -39,18 +39,18 @@ index 67365b99f..9913fb4fa 100644
      public static final AttributeBase ATTACK_SPEED = a("generic.attack_speed", (new AttributeRanged("attribute.name.generic.attack_speed", 4.0D, 0.0D, 1024.0D)).a(true));
      public static final AttributeBase ARMOR = a("generic.armor", (new AttributeRanged("attribute.name.generic.armor", 0.0D, 0.0D, 30.0D)).a(true));
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 5d37f976d..eb975a3c9 100644
+index 1c156ab24..8aa2a8d86 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
-@@ -13,6 +13,8 @@ import java.util.List;
- import java.util.Map;
- import java.util.Set;
- import java.util.logging.Level;
-+import net.minecraft.server.AttributeRanged;
-+import net.minecraft.server.GenericAttributes;
- import net.minecraft.server.IRegistry;
- import net.minecraft.server.MinecraftKey;
+@@ -16,6 +16,8 @@ import java.util.logging.Level;
+ import net.minecraft.core.IRegistry;
+ import net.minecraft.resources.MinecraftKey;
  import net.minecraft.server.MinecraftServer;
++import net.minecraft.world.entity.ai.attributes.AttributeRanged;
++import net.minecraft.world.entity.ai.attributes.GenericAttributes;
+ import org.bukkit.Bukkit;
+ import org.bukkit.ChatColor;
+ import org.bukkit.command.Command;
 @@ -338,4 +340,17 @@ public class SpigotConfig
      {
          movedTooQuicklyMultiplier = getDouble( "settings.moved-too-quickly-multiplier", 10.0D );

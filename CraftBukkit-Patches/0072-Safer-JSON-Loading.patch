@@ -1,14 +1,14 @@
-From f8f28da7cf278318c360eeed8bf6141de1714c2c Mon Sep 17 00:00:00 2001
+From 17a2f00613b44ef64fdbd38adb0fe1c4f1af0486 Mon Sep 17 00:00:00 2001
 From: Suddenly <suddenly@suddenly.coffee>
 Date: Tue, 8 Jul 2014 09:44:18 +1000
 Subject: [PATCH] Safer JSON Loading
 
 
-diff --git a/src/main/java/net/minecraft/server/JsonList.java b/src/main/java/net/minecraft/server/JsonList.java
-index 13b32a9ae..da21918ce 100644
---- a/src/main/java/net/minecraft/server/JsonList.java
-+++ b/src/main/java/net/minecraft/server/JsonList.java
-@@ -172,6 +172,14 @@ public abstract class JsonList<K, V extends JsonListEntry<K>> {
+diff --git a/src/main/java/net/minecraft/server/players/JsonList.java b/src/main/java/net/minecraft/server/players/JsonList.java
+index fb6456f51..52256f72b 100644
+--- a/src/main/java/net/minecraft/server/players/JsonList.java
++++ b/src/main/java/net/minecraft/server/players/JsonList.java
+@@ -174,6 +174,14 @@ public abstract class JsonList<K, V extends JsonListEntry<K>> {
                          this.d.put(this.a(jsonlistentry.getKey()), (V) jsonlistentry); // CraftBukkit - fix decompile error
                      }
                  }
@@ -23,11 +23,11 @@ index 13b32a9ae..da21918ce 100644
              } catch (Throwable throwable1) {
                  throwable = throwable1;
                  throw throwable1;
-diff --git a/src/main/java/net/minecraft/server/UserCache.java b/src/main/java/net/minecraft/server/UserCache.java
-index 04a6bf30b..337ae3f8d 100644
---- a/src/main/java/net/minecraft/server/UserCache.java
-+++ b/src/main/java/net/minecraft/server/UserCache.java
-@@ -219,6 +219,11 @@ public class UserCache {
+diff --git a/src/main/java/net/minecraft/server/players/UserCache.java b/src/main/java/net/minecraft/server/players/UserCache.java
+index 486d32dcf..581e036f5 100644
+--- a/src/main/java/net/minecraft/server/players/UserCache.java
++++ b/src/main/java/net/minecraft/server/players/UserCache.java
+@@ -220,6 +220,11 @@ public class UserCache {
              return arraylist1;
          } catch (FileNotFoundException filenotfoundexception) {
              ;

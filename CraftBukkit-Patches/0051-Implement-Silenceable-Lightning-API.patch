@@ -1,14 +1,14 @@
-From 5fec517a9ff06ea061739d0b5d676ab775485e55 Mon Sep 17 00:00:00 2001
+From 8ed59218c9fbf8c6d447f69ca152caddc6180765 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sun, 23 Feb 2014 16:16:59 -0400
 Subject: [PATCH] Implement Silenceable Lightning API
 
 
-diff --git a/src/main/java/net/minecraft/server/EntityLightning.java b/src/main/java/net/minecraft/server/EntityLightning.java
-index 44cdcaba7..7d9e3b636 100644
---- a/src/main/java/net/minecraft/server/EntityLightning.java
-+++ b/src/main/java/net/minecraft/server/EntityLightning.java
-@@ -15,6 +15,7 @@ public class EntityLightning extends Entity {
+diff --git a/src/main/java/net/minecraft/world/entity/EntityLightning.java b/src/main/java/net/minecraft/world/entity/EntityLightning.java
+index 7a12a4666..8946fcd93 100644
+--- a/src/main/java/net/minecraft/world/entity/EntityLightning.java
++++ b/src/main/java/net/minecraft/world/entity/EntityLightning.java
+@@ -35,6 +35,7 @@ public class EntityLightning extends Entity {
      public boolean isEffect;
      @Nullable
      private EntityPlayer f;
@@ -16,7 +16,7 @@ index 44cdcaba7..7d9e3b636 100644
  
      public EntityLightning(EntityTypes<? extends EntityLightning> entitytypes, World world) {
          super(entitytypes, world);
-@@ -40,7 +41,7 @@ public class EntityLightning extends Entity {
+@@ -60,7 +61,7 @@ public class EntityLightning extends Entity {
      @Override
      public void tick() {
          super.tick();
@@ -26,10 +26,10 @@ index 44cdcaba7..7d9e3b636 100644
  
              if (enumdifficulty == EnumDifficulty.NORMAL || enumdifficulty == EnumDifficulty.HARD) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index e2bf6bd8e..fc8638405 100644
+index e5a5ab24e..5c488c8a4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2351,6 +2351,26 @@ public class CraftWorld implements World {
+@@ -2364,6 +2364,26 @@ public class CraftWorld implements World {
      // Spigot start
      private final org.bukkit.World.Spigot spigot = new org.bukkit.World.Spigot()
      {
@@ -57,7 +57,7 @@ index e2bf6bd8e..fc8638405 100644
  
      public org.bukkit.World.Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
-index e7e7d738e..988386a9a 100644
+index bd658b831..3e054592c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
 @@ -33,6 +33,11 @@ public class CraftLightningStrike extends CraftEntity implements LightningStrike

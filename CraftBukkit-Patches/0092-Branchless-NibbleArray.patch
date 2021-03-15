@@ -1,14 +1,14 @@
-From 08d4c7b14b1248b2f52f15f7c6e59ef2fab307b7 Mon Sep 17 00:00:00 2001
+From bafae221ff461561e9bfc720451c8314292c42c6 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 30 Jul 2016 11:29:14 +1000
 Subject: [PATCH] Branchless NibbleArray
 
 
-diff --git a/src/main/java/net/minecraft/server/NibbleArray.java b/src/main/java/net/minecraft/server/NibbleArray.java
-index 99822dde7..9aeb6ed1b 100644
---- a/src/main/java/net/minecraft/server/NibbleArray.java
-+++ b/src/main/java/net/minecraft/server/NibbleArray.java
-@@ -32,29 +32,27 @@ public class NibbleArray {
+diff --git a/src/main/java/net/minecraft/world/level/chunk/NibbleArray.java b/src/main/java/net/minecraft/world/level/chunk/NibbleArray.java
+index 7d6af113e..37d31b49d 100644
+--- a/src/main/java/net/minecraft/world/level/chunk/NibbleArray.java
++++ b/src/main/java/net/minecraft/world/level/chunk/NibbleArray.java
+@@ -33,29 +33,27 @@ public class NibbleArray {
          return j << 8 | k << 4 | i;
      }
  
@@ -47,14 +47,14 @@ index 99822dde7..9aeb6ed1b 100644
      private boolean c(int i) {
 diff --git a/src/test/java/org/bukkit/NibbleArrayTest.java b/src/test/java/org/bukkit/NibbleArrayTest.java
 new file mode 100644
-index 000000000..40ba97fb7
+index 000000000..95f35775e
 --- /dev/null
 +++ b/src/test/java/org/bukkit/NibbleArrayTest.java
 @@ -0,0 +1,29 @@
 +package org.bukkit;
 +
 +import java.util.Random;
-+import net.minecraft.server.NibbleArray;
++import net.minecraft.world.level.chunk.NibbleArray;
 +import org.junit.Assert;
 +import org.junit.Test;
 +

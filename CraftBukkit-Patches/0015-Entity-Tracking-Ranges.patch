@@ -1,4 +1,4 @@
-From 28fb624ae5498e78684f9b1de1cb9146760f539c Mon Sep 17 00:00:00 2001
+From 6b8a45010b69b342979e8b83af12e8c57a120aaa Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Feb 2013 11:58:47 -0500
 Subject: [PATCH] Entity Tracking Ranges
@@ -11,11 +11,11 @@ This has multiple benefits:
 3) Less lag in general - Less work for the server to do
 4) Less client lag - Not trying to render distant item frames and paintings and entities will reduce entity count on the client, which is major for shop/town worlds which may use tons of item frames.
 
-diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 0cbb339b1..492a2d09f 100644
---- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
-+++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -1021,6 +1021,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+diff --git a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
+index 3190bb968..42e0a70bf 100644
+--- a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
++++ b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
+@@ -1065,6 +1065,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
          if (!(entity instanceof EntityComplexPart)) {
              EntityTypes<?> entitytypes = entity.getEntityType();
              int i = entitytypes.getChunkRange() * 16;
@@ -49,19 +49,19 @@ index af523e5c1..e432ddc50 100644
  }
 diff --git a/src/main/java/org/spigotmc/TrackingRange.java b/src/main/java/org/spigotmc/TrackingRange.java
 new file mode 100644
-index 000000000..646811932
+index 000000000..044945114
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/TrackingRange.java
 @@ -0,0 +1,51 @@
 +package org.spigotmc;
 +
-+import net.minecraft.server.Entity;
-+import net.minecraft.server.EntityExperienceOrb;
-+import net.minecraft.server.EntityGhast;
-+import net.minecraft.server.EntityItem;
-+import net.minecraft.server.EntityItemFrame;
-+import net.minecraft.server.EntityPainting;
-+import net.minecraft.server.EntityPlayer;
++import net.minecraft.server.level.EntityPlayer;
++import net.minecraft.world.entity.Entity;
++import net.minecraft.world.entity.EntityExperienceOrb;
++import net.minecraft.world.entity.decoration.EntityItemFrame;
++import net.minecraft.world.entity.decoration.EntityPainting;
++import net.minecraft.world.entity.item.EntityItem;
++import net.minecraft.world.entity.monster.EntityGhast;
 +
 +public class TrackingRange
 +{

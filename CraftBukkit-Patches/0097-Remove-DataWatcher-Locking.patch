@@ -1,4 +1,4 @@
-From 1fce18e8f051abc31da0aaf8296cd7407e5ef89d Mon Sep 17 00:00:00 2001
+From 5ef2a9e343a33b2d4116e4335aaf2dbe6b6312b6 Mon Sep 17 00:00:00 2001
 From: Spottedleaf <Spottedleaf@users.noreply.github.com>
 Date: Tue, 9 Jul 2019 02:18:54 -0700
 Subject: [PATCH] Remove DataWatcher Locking
@@ -16,11 +16,11 @@ the further readlocks are actually useless.
 This patch also changes the entries map to be fastutil
 int2objectopenhashmap for performance.
 
-diff --git a/src/main/java/net/minecraft/server/DataWatcher.java b/src/main/java/net/minecraft/server/DataWatcher.java
-index 211b8beaf..be8e705fc 100644
---- a/src/main/java/net/minecraft/server/DataWatcher.java
-+++ b/src/main/java/net/minecraft/server/DataWatcher.java
-@@ -21,8 +21,8 @@ public class DataWatcher {
+diff --git a/src/main/java/net/minecraft/network/syncher/DataWatcher.java b/src/main/java/net/minecraft/network/syncher/DataWatcher.java
+index 5c9d32137..3cdae5409 100644
+--- a/src/main/java/net/minecraft/network/syncher/DataWatcher.java
++++ b/src/main/java/net/minecraft/network/syncher/DataWatcher.java
+@@ -26,8 +26,8 @@ public class DataWatcher {
      private static final Logger LOGGER = LogManager.getLogger();
      private static final Map<Class<? extends Entity>, Integer> b = Maps.newHashMap();
      private final Entity entity;
@@ -31,17 +31,17 @@ index 211b8beaf..be8e705fc 100644
      private boolean f = true;
      private boolean g;
  
-@@ -70,7 +70,9 @@ public class DataWatcher {
+@@ -75,7 +75,9 @@ public class DataWatcher {
          }
      }
  
-+    boolean registrationLocked; // Spigot
++    public boolean registrationLocked; // Spigot
      public <T> void register(DataWatcherObject<T> datawatcherobject, T t0) {
 +        if (this.registrationLocked) throw new IllegalStateException("Registering datawatcher object after entity initialization"); // Spigot
          int i = datawatcherobject.a();
  
          if (i > 254) {
-@@ -87,13 +89,15 @@ public class DataWatcher {
+@@ -92,13 +94,15 @@ public class DataWatcher {
      private <T> void registerObject(DataWatcherObject<T> datawatcherobject, T t0) {
          DataWatcher.Item<T> datawatcher_item = new DataWatcher.Item<>(datawatcherobject, t0);
  
@@ -59,7 +59,7 @@ index 211b8beaf..be8e705fc 100644
          this.lock.readLock().lock();
  
          DataWatcher.Item datawatcher_item;
-@@ -111,6 +115,9 @@ public class DataWatcher {
+@@ -116,6 +120,9 @@ public class DataWatcher {
          }
  
          return datawatcher_item;
@@ -69,7 +69,7 @@ index 211b8beaf..be8e705fc 100644
      }
  
      public <T> T get(DataWatcherObject<T> datawatcherobject) {
-@@ -157,7 +164,7 @@ public class DataWatcher {
+@@ -162,7 +169,7 @@ public class DataWatcher {
          List<DataWatcher.Item<?>> list = null;
  
          if (this.g) {
@@ -78,7 +78,7 @@ index 211b8beaf..be8e705fc 100644
              Iterator iterator = this.entries.values().iterator();
  
              while (iterator.hasNext()) {
-@@ -173,7 +180,7 @@ public class DataWatcher {
+@@ -178,7 +185,7 @@ public class DataWatcher {
                  }
              }
  
@@ -87,7 +87,7 @@ index 211b8beaf..be8e705fc 100644
          }
  
          this.g = false;
-@@ -184,7 +191,7 @@ public class DataWatcher {
+@@ -189,7 +196,7 @@ public class DataWatcher {
      public List<DataWatcher.Item<?>> c() {
          List<DataWatcher.Item<?>> list = null;
  
@@ -96,7 +96,7 @@ index 211b8beaf..be8e705fc 100644
  
          DataWatcher.Item datawatcher_item;
  
-@@ -195,7 +202,7 @@ public class DataWatcher {
+@@ -200,7 +207,7 @@ public class DataWatcher {
              }
          }
  
@@ -105,7 +105,7 @@ index 211b8beaf..be8e705fc 100644
          return list;
      }
  
-@@ -246,7 +253,7 @@ public class DataWatcher {
+@@ -251,7 +258,7 @@ public class DataWatcher {
  
      public void e() {
          this.g = false;
@@ -114,7 +114,7 @@ index 211b8beaf..be8e705fc 100644
          Iterator iterator = this.entries.values().iterator();
  
          while (iterator.hasNext()) {
-@@ -255,7 +262,7 @@ public class DataWatcher {
+@@ -260,7 +267,7 @@ public class DataWatcher {
              datawatcher_item.a(false);
          }
  
@@ -123,15 +123,15 @@ index 211b8beaf..be8e705fc 100644
      }
  
      public static class Item<T> {
-diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index c56ac6722..54bbd1ca1 100644
---- a/src/main/java/net/minecraft/server/Entity.java
-+++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -219,6 +219,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
+diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
+index 4fbfc4ed2..3c8767d5f 100644
+--- a/src/main/java/net/minecraft/world/entity/Entity.java
++++ b/src/main/java/net/minecraft/world/entity/Entity.java
+@@ -304,6 +304,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener {
          this.datawatcher.register(Entity.at, false);
          this.datawatcher.register(Entity.POSE, EntityPose.STANDING);
          this.initDatawatcher();
-+        this.datawatcher.registrationLocked = true; // Spigot
++        this.getDataWatcher().registrationLocked = true; // Spigot
          this.headHeight = this.getHeadHeight(EntityPose.STANDING, this.size);
      }
  

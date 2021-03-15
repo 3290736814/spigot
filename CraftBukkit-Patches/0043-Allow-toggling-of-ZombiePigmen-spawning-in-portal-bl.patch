@@ -1,14 +1,14 @@
-From 444b711a33e530d38d8995ecf78f067dbf5ebfcc Mon Sep 17 00:00:00 2001
+From aedb610c3705b79b454315316c8f5e559b6f51e0 Mon Sep 17 00:00:00 2001
 From: Dmck2b <dmck2b+github@gmail.com>
 Date: Mon, 20 Jan 2014 20:18:23 +0000
 Subject: [PATCH] Allow toggling of ZombiePigmen spawning in portal blocks
 
 
-diff --git a/src/main/java/net/minecraft/server/BlockPortal.java b/src/main/java/net/minecraft/server/BlockPortal.java
-index 2d3a61361..17e5961e4 100644
---- a/src/main/java/net/minecraft/server/BlockPortal.java
-+++ b/src/main/java/net/minecraft/server/BlockPortal.java
-@@ -30,7 +30,7 @@ public class BlockPortal extends Block {
+diff --git a/src/main/java/net/minecraft/world/level/block/BlockPortal.java b/src/main/java/net/minecraft/world/level/block/BlockPortal.java
+index 6367f6c85..e115ff869 100644
+--- a/src/main/java/net/minecraft/world/level/block/BlockPortal.java
++++ b/src/main/java/net/minecraft/world/level/block/BlockPortal.java
+@@ -51,7 +51,7 @@ public class BlockPortal extends Block {
  
      @Override
      public void tick(IBlockData iblockdata, WorldServer worldserver, BlockPosition blockposition, Random random) {

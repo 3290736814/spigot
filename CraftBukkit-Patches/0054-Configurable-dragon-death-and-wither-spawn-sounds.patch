@@ -1,14 +1,14 @@
-From 6477299c55b409e1875634d35ce0ce0eb816696f Mon Sep 17 00:00:00 2001
+From 43386f7a58a0ef39d6c969778b360cf015d2c72b Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sat, 29 Mar 2014 13:44:25 -0400
 Subject: [PATCH] Configurable dragon death and wither spawn sounds
 
 
-diff --git a/src/main/java/net/minecraft/server/EntityEnderDragon.java b/src/main/java/net/minecraft/server/EntityEnderDragon.java
-index 0246d5c7d..48f369586 100644
---- a/src/main/java/net/minecraft/server/EntityEnderDragon.java
-+++ b/src/main/java/net/minecraft/server/EntityEnderDragon.java
-@@ -568,7 +568,24 @@ public class EntityEnderDragon extends EntityInsentient implements IMonster {
+diff --git a/src/main/java/net/minecraft/world/entity/boss/enderdragon/EntityEnderDragon.java b/src/main/java/net/minecraft/world/entity/boss/enderdragon/EntityEnderDragon.java
+index b7c9ac570..6c58cf9d3 100644
+--- a/src/main/java/net/minecraft/world/entity/boss/enderdragon/EntityEnderDragon.java
++++ b/src/main/java/net/minecraft/world/entity/boss/enderdragon/EntityEnderDragon.java
+@@ -617,7 +617,24 @@ public class EntityEnderDragon extends EntityInsentient implements IMonster {
              }
  
              if (this.deathAnimationTicks == 1 && !this.isSilent()) {
@@ -16,7 +16,7 @@ index 0246d5c7d..48f369586 100644
 +                // CraftBukkit start - Use relative location for far away sounds
 +                // this.world.b(1028, this.getChunkCoordinates(), 0);
 +                int viewDistance = ((WorldServer) this.world).getServer().getViewDistance() * 16;
-+                for (EntityPlayer player : (List<EntityPlayer>) MinecraftServer.getServer().getPlayerList().players) {
++                for (net.minecraft.server.level.EntityPlayer player : this.world.getMinecraftServer().getPlayerList().players) {
 +                    double deltaX = this.locX() - player.locX();
 +                    double deltaZ = this.locZ() - player.locZ();
 +                    double distanceSquared = deltaX * deltaX + deltaZ * deltaZ;
@@ -25,20 +25,20 @@ index 0246d5c7d..48f369586 100644
 +                        double deltaLength = Math.sqrt(distanceSquared);
 +                        double relativeX = player.locX() + (deltaX / deltaLength) * viewDistance;
 +                        double relativeZ = player.locZ() + (deltaZ / deltaLength) * viewDistance;
-+                        player.playerConnection.sendPacket(new PacketPlayOutWorldEvent(1028, new BlockPosition((int) relativeX, (int) this.locY(), (int) relativeZ), 0, true));
++                        player.playerConnection.sendPacket(new net.minecraft.network.protocol.game.PacketPlayOutWorldEvent(1028, new BlockPosition((int) relativeX, (int) this.locY(), (int) relativeZ), 0, true));
 +                    } else {
-+                        player.playerConnection.sendPacket(new PacketPlayOutWorldEvent(1028, new BlockPosition((int) this.locX(), (int) this.locY(), (int) this.locZ()), 0, true));
++                        player.playerConnection.sendPacket(new net.minecraft.network.protocol.game.PacketPlayOutWorldEvent(1028, new BlockPosition((int) this.locX(), (int) this.locY(), (int) this.locZ()), 0, true));
 +                    }
 +                }
 +                // CraftBukkit end
              }
          }
  
-diff --git a/src/main/java/net/minecraft/server/EntityWither.java b/src/main/java/net/minecraft/server/EntityWither.java
-index 3a739ca83..b9501a2f5 100644
---- a/src/main/java/net/minecraft/server/EntityWither.java
-+++ b/src/main/java/net/minecraft/server/EntityWither.java
-@@ -213,6 +213,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
+diff --git a/src/main/java/net/minecraft/world/entity/boss/wither/EntityWither.java b/src/main/java/net/minecraft/world/entity/boss/wither/EntityWither.java
+index bcf1273ca..f74949c85 100644
+--- a/src/main/java/net/minecraft/world/entity/boss/wither/EntityWither.java
++++ b/src/main/java/net/minecraft/world/entity/boss/wither/EntityWither.java
+@@ -263,6 +263,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
                          double deltaX = this.locX() - player.locX();
                          double deltaZ = this.locZ() - player.locZ();
                          double distanceSquared = deltaX * deltaX + deltaZ * deltaZ;
@@ -46,11 +46,11 @@ index 3a739ca83..b9501a2f5 100644
                          if (distanceSquared > viewDistance * viewDistance) {
                              double deltaLength = Math.sqrt(distanceSquared);
                              double relativeX = player.locX() + (deltaX / deltaLength) * viewDistance;
-diff --git a/src/main/java/net/minecraft/server/ItemEnderEye.java b/src/main/java/net/minecraft/server/ItemEnderEye.java
-index 12b640dfc..3296d888a 100644
---- a/src/main/java/net/minecraft/server/ItemEnderEye.java
-+++ b/src/main/java/net/minecraft/server/ItemEnderEye.java
-@@ -34,7 +34,25 @@ public class ItemEnderEye extends Item {
+diff --git a/src/main/java/net/minecraft/world/item/ItemEnderEye.java b/src/main/java/net/minecraft/world/item/ItemEnderEye.java
+index f3d0eac23..f74685a7c 100644
+--- a/src/main/java/net/minecraft/world/item/ItemEnderEye.java
++++ b/src/main/java/net/minecraft/world/item/ItemEnderEye.java
+@@ -58,7 +58,25 @@ public class ItemEnderEye extends Item {
                          }
                      }
  
@@ -68,9 +68,9 @@ index 12b640dfc..3296d888a 100644
 +                            double deltaLength = Math.sqrt(distanceSquared);
 +                            double relativeX = player.locX() + (deltaX / deltaLength) * viewDistance;
 +                            double relativeZ = player.locZ() + (deltaZ / deltaLength) * viewDistance;
-+                            player.playerConnection.sendPacket(new PacketPlayOutWorldEvent(1038, new BlockPosition((int) relativeX, (int) soundPos.getY(), (int) relativeZ), 0, true));
++                            player.playerConnection.sendPacket(new net.minecraft.network.protocol.game.PacketPlayOutWorldEvent(1038, new BlockPosition((int) relativeX, (int) soundPos.getY(), (int) relativeZ), 0, true));
 +                        } else {
-+                            player.playerConnection.sendPacket(new PacketPlayOutWorldEvent(1038, soundPos, 0, true));
++                            player.playerConnection.sendPacket(new net.minecraft.network.protocol.game.PacketPlayOutWorldEvent(1038, soundPos, 0, true));
 +                        }
 +                    }
 +                    // CraftBukkit end
@@ -78,7 +78,7 @@ index 12b640dfc..3296d888a 100644
  
                  return EnumInteractionResult.CONSUME;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 02326721c..35d01cbaf 100644
+index 6226369bd..b99aa36b6 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -251,4 +251,22 @@ public class SpigotWorldConfig

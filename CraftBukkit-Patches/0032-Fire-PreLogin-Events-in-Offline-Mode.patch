@@ -1,14 +1,14 @@
-From de419629d0d560e139f53259b24dab7788e33205 Mon Sep 17 00:00:00 2001
+From 7117fa762c63d215933144ff55e0fa038312a67f Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 18 Dec 2013 13:32:10 +1100
 Subject: [PATCH] Fire PreLogin Events in Offline Mode
 
 
-diff --git a/src/main/java/net/minecraft/server/LoginListener.java b/src/main/java/net/minecraft/server/LoginListener.java
-index c36902683..f541eedae 100644
---- a/src/main/java/net/minecraft/server/LoginListener.java
-+++ b/src/main/java/net/minecraft/server/LoginListener.java
-@@ -97,10 +97,23 @@ public class LoginListener implements PacketLoginInListener {
+diff --git a/src/main/java/net/minecraft/server/network/LoginListener.java b/src/main/java/net/minecraft/server/network/LoginListener.java
+index 90ee14a40..b0928c433 100644
+--- a/src/main/java/net/minecraft/server/network/LoginListener.java
++++ b/src/main/java/net/minecraft/server/network/LoginListener.java
+@@ -115,10 +115,23 @@ public class LoginListener implements PacketLoginInListener {
  
      }
  
@@ -32,7 +32,7 @@ index c36902683..f541eedae 100644
  
          // CraftBukkit start - fire PlayerLoginEvent
          EntityPlayer s = this.server.getPlayerList().attemptLogin(this, this.i, hostname);
-@@ -146,7 +159,21 @@ public class LoginListener implements PacketLoginInListener {
+@@ -164,7 +177,21 @@ public class LoginListener implements PacketLoginInListener {
              this.g = LoginListener.EnumProtocolState.KEY;
              this.networkManager.sendPacket(new PacketLoginOutEncryptionBegin("", this.server.getKeyPair().getPublic().getEncoded(), this.e));
          } else {
@@ -55,7 +55,7 @@ index c36902683..f541eedae 100644
          }
  
      }
-@@ -186,40 +213,7 @@ public class LoginListener implements PacketLoginInListener {
+@@ -204,40 +231,7 @@ public class LoginListener implements PacketLoginInListener {
                              return;
                          }
  
@@ -97,7 +97,7 @@ index c36902683..f541eedae 100644
                      } else if (LoginListener.this.server.isEmbeddedServer()) {
                          LoginListener.LOGGER.warn("Failed to verify username but will let them in anyway!");
                          LoginListener.this.i = LoginListener.this.a(gameprofile);
-@@ -258,7 +252,48 @@ public class LoginListener implements PacketLoginInListener {
+@@ -276,7 +270,48 @@ public class LoginListener implements PacketLoginInListener {
          thread.start();
      }
  

@@ -1,11 +1,11 @@
-From ed9dc6086b88e8fe21954c259ccfa225874f50b7 Mon Sep 17 00:00:00 2001
+From b4d7eeec1c31369dbd82eec1fee7a9ed4a138aae Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Wed, 12 Feb 2014 20:44:14 +0000
 Subject: [PATCH] Allow vanilla commands to be the main version of a command
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 8d15d13e1..680d855c1 100644
+index a020f71e4..5bbe3eb16 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -407,8 +407,11 @@ public final class CraftServer implements Server {
@@ -46,7 +46,7 @@ index 8d15d13e1..680d855c1 100644
      }
  
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index dc7ea3b35..de35b3907 100644
+index f18def5c2..ed9332449 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -8,8 +8,10 @@ import java.lang.reflect.Method;
@@ -58,8 +58,8 @@ index dc7ea3b35..de35b3907 100644
  import java.util.Map;
 +import java.util.Set;
  import java.util.logging.Level;
- import net.minecraft.server.IRegistry;
- import net.minecraft.server.MinecraftKey;
+ import net.minecraft.core.IRegistry;
+ import net.minecraft.resources.MinecraftKey;
 @@ -300,4 +302,16 @@ public class SpigotConfig
      {
          silentCommandBlocks = getBoolean( "commands.silent-commandblock-console", false );

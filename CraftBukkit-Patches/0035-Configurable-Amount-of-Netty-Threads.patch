@@ -1,4 +1,4 @@
-From 95107bbc63c8d95003daa852795c2b1d552c5ded Mon Sep 17 00:00:00 2001
+From 7a1cafb932c1e45ac60158822f995b30b112c15d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 13 Dec 2013 11:58:58 +1100
 Subject: [PATCH] Configurable Amount of Netty Threads
@@ -6,10 +6,10 @@ Subject: [PATCH] Configurable Amount of Netty Threads
 This brings back the option that the Spigot version of netty saw. By default Netty will try and use cores*2 threads, however if running multiple servers on the same machine, this can be too many threads. Additionally some people have 16 core servers. If 32 Netty threads are allowed in this setup, then the lock contention, and thus blocking between threads becomes much greater, leading to decreased performance.
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 61da07418..25fe1a051 100644
+index 7a3be907e..3bc3fd35c 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -192,7 +192,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -299,7 +299,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          this.minecraftSessionService = minecraftsessionservice;
          this.gameProfileRepository = gameprofilerepository;
          this.userCache = usercache;
@@ -18,7 +18,7 @@ index 61da07418..25fe1a051 100644
          this.worldLoadListenerFactory = worldloadlistenerfactory;
          this.convertable = convertable_conversionsession;
          this.worldNBTStorage = convertable_conversionsession.b();
-@@ -1404,7 +1404,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1511,7 +1511,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
      @Nullable
      public ServerConnection getServerConnection() {

@@ -1,15 +1,43 @@
-From 9256e1b2333b04998df6e55fa3171beb38a57558 Mon Sep 17 00:00:00 2001
+From 4795cddd2782b9a6be8b36b6fd00d32cf2c2cf2b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
 
 Allow server admins that really want to to customise the seeds used in world generation even further.
 
-diff --git a/src/main/java/net/minecraft/server/ChunkGenerator.java b/src/main/java/net/minecraft/server/ChunkGenerator.java
-index 290540f81..9a6fef215 100644
---- a/src/main/java/net/minecraft/server/ChunkGenerator.java
-+++ b/src/main/java/net/minecraft/server/ChunkGenerator.java
-@@ -150,6 +150,7 @@ public abstract class ChunkGenerator {
+diff --git a/src/main/java/net/minecraft/world/entity/monster/EntitySlime.java b/src/main/java/net/minecraft/world/entity/monster/EntitySlime.java
+index fc9dff3a6..292789d76 100644
+--- a/src/main/java/net/minecraft/world/entity/monster/EntitySlime.java
++++ b/src/main/java/net/minecraft/world/entity/monster/EntitySlime.java
+@@ -325,7 +325,7 @@ public class EntitySlime extends EntityInsentient implements IMonster {
+             }
+ 
+             ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(blockposition);
+-            boolean flag = SeededRandom.a(chunkcoordintpair.x, chunkcoordintpair.z, ((GeneratorAccessSeed) generatoraccess).getSeed(), 987234911L).nextInt(10) == 0;
++            boolean flag = SeededRandom.a(chunkcoordintpair.x, chunkcoordintpair.z, ((GeneratorAccessSeed) generatoraccess).getSeed(), generatoraccess.getMinecraftWorld().spigotConfig.slimeSeed).nextInt(10) == 0; // Spigot
+ 
+             if (random.nextInt(10) == 0 && flag && blockposition.getY() < 40) {
+                 return a(entitytypes, generatoraccess, enummobspawn, blockposition, random);
+diff --git a/src/main/java/net/minecraft/world/level/StructureManager.java b/src/main/java/net/minecraft/world/level/StructureManager.java
+index 6881404ab..a6a3bd3d6 100644
+--- a/src/main/java/net/minecraft/world/level/StructureManager.java
++++ b/src/main/java/net/minecraft/world/level/StructureManager.java
+@@ -67,4 +67,10 @@ public class StructureManager {
+             });
+         }).findFirst(), StructureStart.a);
+     }
++
++    // Spigot start
++    public World getWorld() {
++        return this.a.getMinecraftWorld();
++    }
++    // Spigot end
+ }
+diff --git a/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java b/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java
+index 9551fdf43..b1f2c424e 100644
+--- a/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java
++++ b/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java
+@@ -186,6 +186,7 @@ public abstract class ChunkGenerator {
  
              return blockposition1;
          } else {
@@ -17,7 +45,7 @@ index 290540f81..9a6fef215 100644
              StructureSettingsFeature structuresettingsfeature = this.structureSettings.a(structuregenerator);
  
              return structuresettingsfeature == null ? null : structuregenerator.getNearestGeneratedFeature(worldserver, worldserver.getStructureManager(), blockposition, i, flag, worldserver.getSeed(), structuresettingsfeature);
-@@ -227,6 +228,7 @@ public abstract class ChunkGenerator {
+@@ -263,6 +264,7 @@ public abstract class ChunkGenerator {
      private void a(StructureFeature<?, ?> structurefeature, IRegistryCustom iregistrycustom, StructureManager structuremanager, IChunkAccess ichunkaccess, DefinedStructureManager definedstructuremanager, long i, ChunkCoordIntPair chunkcoordintpair, BiomeBase biomebase) {
          StructureStart<?> structurestart = structuremanager.a(SectionPosition.a(ichunkaccess.getPos(), 0), structurefeature.d, ichunkaccess);
          int j = structurestart != null ? structurestart.j() : 0;
@@ -25,13 +53,13 @@ index 290540f81..9a6fef215 100644
          StructureSettingsFeature structuresettingsfeature = this.structureSettings.a(structurefeature.d);
  
          if (structuresettingsfeature != null) {
-@@ -237,6 +239,83 @@ public abstract class ChunkGenerator {
+@@ -273,6 +275,83 @@ public abstract class ChunkGenerator {
  
      }
  
 +    // Spigot start
 +    private volatile boolean injected;
-+    private void updateStructureSettings(World world, StructureSettings settings) {
++    private void updateStructureSettings(net.minecraft.world.level.World world, StructureSettings settings) {
 +        if (injected) {
 +            return;
 +        }
@@ -109,39 +137,11 @@ index 290540f81..9a6fef215 100644
      public void storeStructures(GeneratorAccessSeed generatoraccessseed, StructureManager structuremanager, IChunkAccess ichunkaccess) {
          boolean flag = true;
          int i = ichunkaccess.getPos().x;
-diff --git a/src/main/java/net/minecraft/server/EntitySlime.java b/src/main/java/net/minecraft/server/EntitySlime.java
-index b5fa84008..d6ecdbfce 100644
---- a/src/main/java/net/minecraft/server/EntitySlime.java
-+++ b/src/main/java/net/minecraft/server/EntitySlime.java
-@@ -286,7 +286,7 @@ public class EntitySlime extends EntityInsentient implements IMonster {
-             }
- 
-             ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(blockposition);
--            boolean flag = SeededRandom.a(chunkcoordintpair.x, chunkcoordintpair.z, ((GeneratorAccessSeed) generatoraccess).getSeed(), 987234911L).nextInt(10) == 0;
-+            boolean flag = SeededRandom.a(chunkcoordintpair.x, chunkcoordintpair.z, ((GeneratorAccessSeed) generatoraccess).getSeed(), generatoraccess.getMinecraftWorld().spigotConfig.slimeSeed).nextInt(10) == 0; // Spigot
- 
-             if (random.nextInt(10) == 0 && flag && blockposition.getY() < 40) {
-                 return a(entitytypes, generatoraccess, enummobspawn, blockposition, random);
-diff --git a/src/main/java/net/minecraft/server/StructureManager.java b/src/main/java/net/minecraft/server/StructureManager.java
-index f5c5597b9..c434427ce 100644
---- a/src/main/java/net/minecraft/server/StructureManager.java
-+++ b/src/main/java/net/minecraft/server/StructureManager.java
-@@ -58,4 +58,10 @@ public class StructureManager {
-             });
-         }).findFirst(), StructureStart.a);
-     }
-+
-+    // Spigot start
-+    public World getWorld() {
-+        return this.a.getMinecraftWorld();
-+    }
-+    // Spigot end
- }
-diff --git a/src/main/java/net/minecraft/server/StructureSettings.java b/src/main/java/net/minecraft/server/StructureSettings.java
-index 31176a5b5..212e606fb 100644
---- a/src/main/java/net/minecraft/server/StructureSettings.java
-+++ b/src/main/java/net/minecraft/server/StructureSettings.java
-@@ -26,7 +26,7 @@ public class StructureSettings {
+diff --git a/src/main/java/net/minecraft/world/level/levelgen/StructureSettings.java b/src/main/java/net/minecraft/world/level/levelgen/StructureSettings.java
+index be4b11f78..ca28e0310 100644
+--- a/src/main/java/net/minecraft/world/level/levelgen/StructureSettings.java
++++ b/src/main/java/net/minecraft/world/level/levelgen/StructureSettings.java
+@@ -30,7 +30,7 @@ public class StructureSettings {
  
      public StructureSettings(Optional<StructureSettingsStronghold> optional, Map<StructureGenerator<?>, StructureSettingsFeature> map) {
          this.e = (StructureSettingsStronghold) optional.orElse(null);
@@ -151,7 +151,7 @@ index 31176a5b5..212e606fb 100644
  
      public StructureSettings(boolean flag) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index 929e47391..1a312a868 100644
+index 7c3148490..32e4e5976 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 @@ -173,7 +173,7 @@ public class CraftChunk implements Chunk {

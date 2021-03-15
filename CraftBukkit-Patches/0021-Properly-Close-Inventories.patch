@@ -1,22 +1,22 @@
-From c864ecbae6eccdb7d6ab390ad724480dc3c74144 Mon Sep 17 00:00:00 2001
+From 2761755dda136fd3a5f2015ecc7f9e159249301e Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Thu, 27 Jun 2013 17:26:09 +1000
 Subject: [PATCH] Properly Close Inventories
 
 Properly close inventories when unloading and switching worlds.
 
-diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 91ee82ae..a70a4df4 100644
---- a/src/main/java/net/minecraft/server/WorldServer.java
-+++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -989,6 +989,15 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
+index 03cbe1ca8..18cdf4581 100644
+--- a/src/main/java/net/minecraft/server/level/WorldServer.java
++++ b/src/main/java/net/minecraft/server/level/WorldServer.java
+@@ -1098,6 +1098,15 @@ public class WorldServer extends World implements GeneratorAccessSeed {
      }
  
      public void unloadChunk(Chunk chunk) {
 +        // Spigot Start
 +        for (TileEntity tileentity : chunk.getTileEntities().values()) {
-+            if (tileentity instanceof IInventory) {
-+                for (org.bukkit.entity.HumanEntity h : Lists.newArrayList(((IInventory) tileentity).getViewers())) {
++            if (tileentity instanceof net.minecraft.world.IInventory) {
++                for (org.bukkit.entity.HumanEntity h : Lists.newArrayList(((net.minecraft.world.IInventory) tileentity).getViewers())) {
 +                    h.closeInventory();
 +                }
 +            }
@@ -25,7 +25,7 @@ index 91ee82ae..a70a4df4 100644
          this.tileEntityListUnload.addAll(chunk.getTileEntities().values());
          EntitySlice[] aentityslice = chunk.getEntitySlices();
          int i = aentityslice.length;
-@@ -1015,6 +1024,13 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1124,6 +1133,13 @@ public class WorldServer extends World implements GeneratorAccessSeed {
  
      public void unregisterEntity(Entity entity) {
          org.spigotmc.AsyncCatcher.catchOp("entity unregister"); // Spigot
