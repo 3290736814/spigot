@@ -1,4 +1,4 @@
-From ce55f797c576c607edd06a4e6bc6541d5b23607f Mon Sep 17 00:00:00 2001
+From b026944385ea09e62d73ab3cb7c19318cf26f061 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -358,7 +358,7 @@ index 5e12a79b2..d31497d7a 100644
  
      protected BlockPosition ap() {
 diff --git a/src/main/java/net/minecraft/world/entity/EntityLiving.java b/src/main/java/net/minecraft/world/entity/EntityLiving.java
-index 7dfaec9dd..3fe059ead 100644
+index 5d97c425e..68983080c 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityLiving.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityLiving.java
 @@ -135,6 +135,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
@@ -395,7 +395,7 @@ index 7dfaec9dd..3fe059ead 100644
 +        SpigotTimings.timerEntityTickRest.stopTiming(); // Spigot
      }
  
-     public void updateEquipment() { // PAIL private->public; updateEquipment
+     public void updateEquipment() {
 @@ -2758,6 +2764,7 @@ public abstract class EntityLiving extends Entity {
  
          this.setMot(d4, d5, d6);

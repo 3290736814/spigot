@@ -1,4 +1,4 @@
-From 5136d5908a6ee0c2bb22df90a94e7e5ce173bb02 Mon Sep 17 00:00:00 2001
+From b40709b2926ce034e64db9ad1dde3286eaf6db85 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -27,10 +27,10 @@ index 985b7115f..dcd99a51d 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 97fcafb57..dd6378d4c 100644
+index bb244f9f5..1d555e7e5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2347,4 +2347,15 @@ public class CraftWorld implements World {
+@@ -2352,4 +2352,15 @@ public class CraftWorld implements World {
      public DragonBattle getEnderDragonBattle() {
          return (getHandle().getDragonBattle() == null) ? null : new CraftDragonBattle(getHandle().getDragonBattle());
      }

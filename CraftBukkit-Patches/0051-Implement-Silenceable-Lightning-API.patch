@@ -1,4 +1,4 @@
-From 8ed59218c9fbf8c6d447f69ca152caddc6180765 Mon Sep 17 00:00:00 2001
+From a337b5b1e55da26416012ccd00f84ebc7c667394 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sun, 23 Feb 2014 16:16:59 -0400
 Subject: [PATCH] Implement Silenceable Lightning API
@@ -26,10 +26,10 @@ index 7a12a4666..8946fcd93 100644
  
              if (enumdifficulty == EnumDifficulty.NORMAL || enumdifficulty == EnumDifficulty.HARD) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index e5a5ab24e..5c488c8a4 100644
+index 73c657cdd..15b59891d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2364,6 +2364,26 @@ public class CraftWorld implements World {
+@@ -2369,6 +2369,26 @@ public class CraftWorld implements World {
      // Spigot start
      private final org.bukkit.World.Spigot spigot = new org.bukkit.World.Spigot()
      {
