@@ -1,0 +1,26 @@
+From 980e87d3ae60577b265724e4c3c15dfe5823cb46 Mon Sep 17 00:00:00 2001
+From: md_5 <git@md-5.net>
+Date: Wed, 18 Dec 2013 13:39:14 +1100
+Subject: [PATCH] Log Cause of Unexpected Exceptions
+
+
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index 3bc3fd35c..ed506791a 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -934,6 +934,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+             }
+         } catch (Throwable throwable) {
+             MinecraftServer.LOGGER.error("Encountered an unexpected exception", throwable);
++            // Spigot Start
++            if ( throwable.getCause() != null )
++            {
++                MinecraftServer.LOGGER.error( "\tCause of unexpected exception was", throwable.getCause() );
++            }
++            // Spigot End
+             CrashReport crashreport;
+ 
+             if (throwable instanceof ReportedException) {
+-- 
+2.25.1
+
