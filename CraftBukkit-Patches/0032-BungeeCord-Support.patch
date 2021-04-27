@@ -1,4 +1,4 @@
-From 413c59d8ff2ec1d0d33c7e528bdb3a4771b4deea Mon Sep 17 00:00:00 2001
+From b236df85ec1c95f43a21d6a3cee10d74b3e5a6df Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -46,25 +46,29 @@ index 6e18dfd40..b290ddfbc 100644
          this.d = EnumProtocol.a(packetdataserializer.i());
      }
 diff --git a/src/main/java/net/minecraft/server/network/HandshakeListener.java b/src/main/java/net/minecraft/server/network/HandshakeListener.java
-index b5d564c57..b17147505 100644
+index b5d564c57..9b24afa4f 100644
 --- a/src/main/java/net/minecraft/server/network/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/network/HandshakeListener.java
-@@ -18,6 +18,7 @@ import java.util.HashMap;
+@@ -18,6 +18,11 @@ import java.util.HashMap;
  
  public class HandshakeListener implements PacketHandshakingInListener {
  
-+    private static final com.google.gson.Gson gson = new com.google.gson.Gson(); // Spigot
++    // Spigot start
++    private static final com.google.gson.Gson gson = new com.google.gson.Gson();
++    static final java.util.regex.Pattern HOST_PATTERN = java.util.regex.Pattern.compile("[0-9a-f\\.:]{0,45}");
++    static final java.util.regex.Pattern PROP_PATTERN = java.util.regex.Pattern.compile("\\w{0,16}");
++    // Spigot end
      // CraftBukkit start - add fields
      private static final HashMap<InetAddress, Long> throttleTracker = new HashMap<InetAddress, Long>();
      private static int throttleCounter = 0;
-@@ -83,6 +84,26 @@ public class HandshakeListener implements PacketHandshakingInListener {
+@@ -83,6 +88,26 @@ public class HandshakeListener implements PacketHandshakingInListener {
                      this.c.close(chatmessage);
                  } else {
                      this.c.setPacketListener(new LoginListener(this.b, this.c));
 +                    // Spigot Start
 +                    if (org.spigotmc.SpigotConfig.bungee) {
 +                        String[] split = packethandshakinginsetprotocol.hostname.split("\00");
-+                        if ( split.length == 3 || split.length == 4 ) {
++                        if ( ( split.length == 3 || split.length == 4 ) && ( HOST_PATTERN.matcher( split[1] ).matches() ) ) {
 +                            packethandshakinginsetprotocol.hostname = split[0];
 +                            c.socketAddress = new java.net.InetSocketAddress(split[1], ((java.net.InetSocketAddress) c.getSocketAddress()).getPort());
 +                            c.spoofedUUID = com.mojang.util.UUIDTypeAdapter.fromString( split[2] );
@@ -85,10 +89,10 @@ index b5d564c57..b17147505 100644
                  }
                  break;
 diff --git a/src/main/java/net/minecraft/server/network/LoginListener.java b/src/main/java/net/minecraft/server/network/LoginListener.java
-index b0928c433..49f6b20ce 100644
+index b0928c433..162752089 100644
 --- a/src/main/java/net/minecraft/server/network/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/network/LoginListener.java
-@@ -118,9 +118,24 @@ public class LoginListener implements PacketLoginInListener {
+@@ -118,9 +118,25 @@ public class LoginListener implements PacketLoginInListener {
      // Spigot start
      public void initUUID()
      {
@@ -108,6 +112,7 @@ index b0928c433..49f6b20ce 100644
 +        {
 +            for ( com.mojang.authlib.properties.Property property : networkManager.spoofedProfile )
 +            {
++                if ( !HandshakeListener.PROP_PATTERN.matcher( property.getName() ).matches() ) continue;
 +                this.i.getProperties().put( property.getName(), property );
 +            }
 +        }

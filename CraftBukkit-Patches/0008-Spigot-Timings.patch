@@ -1,4 +1,4 @@
-From af8bed0abd2be7dee024c969653fe59353d9a1e6 Mon Sep 17 00:00:00 2001
+From 72db393f289dd754f97b8a80a1686078f4dcda27 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -6,7 +6,7 @@ Subject: [PATCH] Spigot Timings
 Overhauls the Timings System adding performance tracking all around the Minecraft Server
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 59daecef0..b3b03e519 100644
+index a2087552d..eebb80dae 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -174,6 +174,8 @@ import org.bukkit.craftbukkit.Main;
@@ -18,7 +18,7 @@ index 59daecef0..b3b03e519 100644
  public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTask> implements IMojangStatistics, ICommandListener, AutoCloseable {
  
      public static final Logger LOGGER = LogManager.getLogger();
-@@ -1066,6 +1068,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1076,6 +1078,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      protected void exit() {}
  
      protected void a(BooleanSupplier booleansupplier) {
@@ -26,7 +26,7 @@ index 59daecef0..b3b03e519 100644
          long i = SystemUtils.getMonotonicNanos();
  
          ++this.ticks;
-@@ -1085,12 +1088,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1095,12 +1098,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          }
  
          if (autosavePeriod > 0 && this.ticks % autosavePeriod == 0) { // CraftBukkit
@@ -41,7 +41,7 @@ index 59daecef0..b3b03e519 100644
          }
  
          this.methodProfiler.enter("snooper");
-@@ -1111,21 +1116,30 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1121,21 +1126,30 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
          this.circularTimer.a(i1 - i);
          this.methodProfiler.exit();
@@ -72,7 +72,7 @@ index 59daecef0..b3b03e519 100644
          // Send time updates to everyone, it will get the right time from the world the player is in.
          if (this.ticks % 20 == 0) {
              for (int i = 0; i < this.getPlayerList().players.size(); ++i) {
-@@ -1133,6 +1147,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1143,6 +1157,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                  entityplayer.playerConnection.sendPacket(new PacketPlayOutUpdateTime(entityplayer.world.getTime(), entityplayer.getPlayerTime(), entityplayer.world.getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE))); // Add support for per player time
              }
          }
@@ -80,7 +80,7 @@ index 59daecef0..b3b03e519 100644
  
          while (iterator.hasNext()) {
              WorldServer worldserver = (WorldServer) iterator.next();
-@@ -1151,7 +1166,9 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1161,7 +1176,9 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
              this.methodProfiler.enter("tick");
  
              try {
@@ -90,7 +90,7 @@ index 59daecef0..b3b03e519 100644
              } catch (Throwable throwable) {
                  CrashReport crashreport = CrashReport.a(throwable, "Exception ticking world");
  
-@@ -1164,18 +1181,24 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1174,18 +1191,24 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          }
  
          this.methodProfiler.exitEnter("connection");
@@ -277,10 +277,10 @@ index 84fe4b249..6f7b8dfdb 100644
          }
      }
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index 5a2522723..88cec584a 100644
+index bc5aae5f5..a3d4c46c0 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-@@ -290,6 +290,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -292,6 +292,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
      // CraftBukkit end
  
      public void tick() {
@@ -288,7 +288,7 @@ index 5a2522723..88cec584a 100644
          this.syncPosition();
          this.player.lastX = this.player.locX();
          this.player.lastY = this.player.locY();
-@@ -365,6 +366,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -367,6 +368,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
              this.player.resetIdleTimer(); // CraftBukkit - SPIGOT-854
              this.disconnect(new ChatMessage("multiplayer.disconnect.idling"));
          }
@@ -296,7 +296,7 @@ index 5a2522723..88cec584a 100644
  
      }
  
-@@ -1867,6 +1869,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -1869,6 +1871,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
      // CraftBukkit end
  
      private void handleCommand(String s) {
@@ -304,7 +304,7 @@ index 5a2522723..88cec584a 100644
          // CraftBukkit start - whole method
          this.LOGGER.info(this.player.getName() + " issued server command: " + s);
  
-@@ -1876,6 +1879,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -1878,6 +1881,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
          this.server.getPluginManager().callEvent(event);
  
          if (event.isCancelled()) {
@@ -312,7 +312,7 @@ index 5a2522723..88cec584a 100644
              return;
          }
  
-@@ -1887,6 +1891,8 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -1889,6 +1893,8 @@ public class PlayerConnection implements PacketListenerPlayIn {
              player.sendMessage(org.bukkit.ChatColor.RED + "An internal error occurred while attempting to perform this command");
              java.util.logging.Logger.getLogger(PlayerConnection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
              return;

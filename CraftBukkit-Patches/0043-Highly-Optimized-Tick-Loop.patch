@@ -1,11 +1,11 @@
-From b2908a403ad32fc7c66fb9c4fa1f37dadee23660 Mon Sep 17 00:00:00 2001
+From dbfe9a7c13f20e04705cff9864ab29fb3e3e07e8 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index dda5b8e42..c04e9408b 100644
+index cf3a033dc..4f0ae31f4 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -258,6 +258,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
@@ -21,7 +21,7 @@ index dda5b8e42..c04e9408b 100644
  
      public static <S extends MinecraftServer> S a(Function<Thread, S> function) {
          AtomicReference<S> atomicreference = new AtomicReference();
-@@ -892,6 +898,13 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -902,6 +908,13 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
      }
  
@@ -35,7 +35,7 @@ index dda5b8e42..c04e9408b 100644
      protected void w() {
          try {
              if (this.init()) {
-@@ -900,8 +913,11 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -910,8 +923,11 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                  this.serverPing.setServerInfo(new ServerPing.ServerData(SharedConstants.getGameVersion().getName(), SharedConstants.getGameVersion().getProtocolVersion()));
                  this.a(this.serverPing);
  
@@ -48,7 +48,7 @@ index dda5b8e42..c04e9408b 100644
  
                      if (i > 5000L && this.nextTick - this.lastOverloadTime >= 30000L) { // CraftBukkit
                          long j = i / 50L;
-@@ -912,6 +928,16 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -922,6 +938,16 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                          this.lastOverloadTime = this.nextTick;
                      }
  

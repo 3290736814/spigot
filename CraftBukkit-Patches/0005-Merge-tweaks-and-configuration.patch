@@ -1,4 +1,4 @@
-From 9f7750856d95b268b9ed3722905d6a110cfd69d6 Mon Sep 17 00:00:00 2001
+From 35c30bb30940c14fef646b7219a0837325a10410 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:46:33 +1100
 Subject: [PATCH] Merge tweaks and configuration
@@ -31,10 +31,10 @@ index d35ee5024..91a0754cf 100644
              } else {
                  a(entityitem, itemstack1, this, itemstack);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 3cacae430..cab99a4e4 100644
+index 51e35dd37..bb2f4a28e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -570,6 +570,23 @@ public class CraftEventFactory {
+@@ -584,6 +584,23 @@ public class CraftEventFactory {
              event = CraftEventFactory.callProjectileLaunchEvent(entity);
          } else if (entity.getBukkitEntity() instanceof org.bukkit.entity.Vehicle) {
              event = CraftEventFactory.callVehicleCreateEvent(entity);

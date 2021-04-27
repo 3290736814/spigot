@@ -1,14 +1,14 @@
-From e8707745c7deec924d3250ba5f99d6a5d22a41df Mon Sep 17 00:00:00 2001
+From 39193bb7d2742fa39b8d4bdd5c260e7d0ab556a3 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index c69945c66..7a3be907e 100644
+index 2c43e1de0..f75477e85 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -958,6 +958,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -968,6 +968,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
              } catch (Throwable throwable1) {
                  MinecraftServer.LOGGER.error("Exception stopping the server", throwable1);
              } finally {
@@ -16,7 +16,7 @@ index c69945c66..7a3be907e 100644
                  // CraftBukkit start - Restore terminal to original settings
                  try {
                      reader.getTerminal().restore();
-@@ -1116,6 +1117,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1126,6 +1127,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
          this.circularTimer.a(i1 - i);
          this.methodProfiler.exit();

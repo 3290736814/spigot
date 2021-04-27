@@ -1,14 +1,14 @@
-From 9b3d1f1dca50045dd3a81b0a723c500372094598 Mon Sep 17 00:00:00 2001
+From 7790b87e1c6cabd09026fa665f2b90eef9b0398a Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 6 Oct 2013 17:36:28 +1100
 Subject: [PATCH] Don't Special Case X Move Value
 
 
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index 81f10b71b..19fd7e911 100644
+index ed8f16276..de3bcc8e5 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-@@ -283,6 +283,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -285,6 +285,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
      private float lastPitch = Float.MAX_VALUE;
      private float lastYaw = Float.MAX_VALUE;
      private boolean justTeleported = false;
@@ -16,7 +16,7 @@ index 81f10b71b..19fd7e911 100644
  
      public CraftPlayer getPlayer() {
          return (this.player == null) ? null : (CraftPlayer) this.player.getBukkitEntity();
-@@ -555,6 +556,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -557,6 +558,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
                      flag1 = true;
                      PlayerConnection.LOGGER.warn("{} (vehicle of {}) moved wrongly! {}", entity.getDisplayName().getString(), this.player.getDisplayName().getString(), Math.sqrt(d10));
                  }
@@ -24,7 +24,7 @@ index 81f10b71b..19fd7e911 100644
  
                  entity.setLocation(d3, d4, d5, f, f1);
                  player.setLocation(d3, d4, d5, this.player.yaw, this.player.pitch); // CraftBukkit
-@@ -569,6 +571,17 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -571,6 +573,17 @@ public class PlayerConnection implements PacketListenerPlayIn {
  
                  // CraftBukkit start - fire PlayerMoveEvent
                  Player player = this.getPlayer();
@@ -42,7 +42,7 @@ index 81f10b71b..19fd7e911 100644
                  Location from = new Location(player.getWorld(), lastPosX, lastPosY, lastPosZ, lastYaw, lastPitch); // Get the Players previous Event location.
                  Location to = player.getLocation().clone(); // Start off the To location as the Players current location.
  
-@@ -594,7 +607,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -596,7 +609,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
                      this.lastPitch = to.getPitch();
  
                      // Skip the first time we do this
