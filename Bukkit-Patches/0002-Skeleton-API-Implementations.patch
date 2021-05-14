@@ -1,4 +1,4 @@
-From 7d091dccaec84164fe4f509ff30d568e523a641f Mon Sep 17 00:00:00 2001
+From 0fd28f328c1201f14816c89c812643c7ff8d939b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -37,7 +37,7 @@ index d5aafa0e..afe2047b 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index b6eccdf8..068ab07c 100644
+index e3968d5f..da775a6a 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
 @@ -2381,6 +2381,15 @@ public interface World extends PluginMessageRecipient, Metadatable {
@@ -75,7 +75,7 @@ index b76cf67b..6d9708dc 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 40a4b943..344c14a5 100644
+index 28e2ef43..b71530e9 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
 @@ -592,4 +592,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
@@ -120,10 +120,10 @@ index 76aad05f..4d308c5a 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 41be187d..798aae7b 100644
+index 0574d407..e04b4e0a 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1249,4 +1249,14 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1264,4 +1264,14 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       * @param book The book to open for this player
       */
      public void openBook(@NotNull ItemStack book);

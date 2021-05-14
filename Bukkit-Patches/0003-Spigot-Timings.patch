@@ -1,4 +1,4 @@
-From 1610904bfa049000edefb75e4e675969a1973070 Mon Sep 17 00:00:00 2001
+From a3aa4b28c7c253326a9473c8f32535ccddcb0d4b Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 2 Jun 2013 10:42:57 +1000
 Subject: [PATCH] Spigot Timings
@@ -257,10 +257,10 @@ index 7f606a2f..62d00173 100644
      }
  
 diff --git a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
-index 765e8805..7b9ad383 100644
+index 390abd51..a09c3f71 100644
 --- a/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
 +++ b/src/main/java/org/bukkit/plugin/java/JavaPluginLoader.java
-@@ -42,6 +42,7 @@ import org.bukkit.plugin.TimedRegisteredListener;
+@@ -43,6 +43,7 @@ import org.bukkit.plugin.TimedRegisteredListener;
  import org.bukkit.plugin.UnknownDependencyException;
  import org.jetbrains.annotations.NotNull;
  import org.jetbrains.annotations.Nullable;
@@ -268,15 +268,15 @@ index 765e8805..7b9ad383 100644
  import org.yaml.snakeyaml.error.YAMLException;
  
  /**
-@@ -52,6 +53,7 @@ public final class JavaPluginLoader implements PluginLoader {
+@@ -53,6 +54,7 @@ public final class JavaPluginLoader implements PluginLoader {
      private final Pattern[] fileFilters = new Pattern[]{Pattern.compile("\\.jar$")};
-     private final Map<String, Class<?>> classes = new ConcurrentHashMap<String, Class<?>>();
      private final List<PluginClassLoader> loaders = new CopyOnWriteArrayList<PluginClassLoader>();
+     private final LibraryLoader libraryLoader;
 +    public static final CustomTimingsHandler pluginParentTimer = new CustomTimingsHandler("** Plugins"); // Spigot
  
      /**
       * This class was not meant to be constructed explicitly
-@@ -299,6 +301,7 @@ public final class JavaPluginLoader implements PluginLoader {
+@@ -290,6 +292,7 @@ public final class JavaPluginLoader implements PluginLoader {
                  }
              }
  
@@ -284,7 +284,7 @@ index 765e8805..7b9ad383 100644
              EventExecutor executor = new EventExecutor() {
                  @Override
                  public void execute(@NotNull Listener listener, @NotNull Event event) throws EventException {
-@@ -306,7 +309,12 @@ public final class JavaPluginLoader implements PluginLoader {
+@@ -297,7 +300,12 @@ public final class JavaPluginLoader implements PluginLoader {
                          if (!eventClass.isAssignableFrom(event.getClass())) {
                              return;
                          }
@@ -297,7 +297,7 @@ index 765e8805..7b9ad383 100644
                      } catch (InvocationTargetException ex) {
                          throw new EventException(ex.getCause());
                      } catch (Throwable t) {
-@@ -314,7 +322,7 @@ public final class JavaPluginLoader implements PluginLoader {
+@@ -305,7 +313,7 @@ public final class JavaPluginLoader implements PluginLoader {
                      }
                  }
              };
