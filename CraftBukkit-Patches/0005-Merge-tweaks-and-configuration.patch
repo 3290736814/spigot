@@ -1,28 +1,12 @@
-From accffd8b9c52629594bbedafe3e2308596005920 Mon Sep 17 00:00:00 2001
+From 38dbcc226bbabe2e7d089dfaef18eed2e9121bb7 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:46:33 +1100
 Subject: [PATCH] Merge tweaks and configuration
 
 This allows the merging of Experience orbs, as well as the configuration of the merge radius of items. Additionally it refactors the merge algorithm to be a better experience for players.
 
-diff --git a/src/main/java/net/minecraft/world/entity/EntityExperienceOrb.java b/src/main/java/net/minecraft/world/entity/EntityExperienceOrb.java
-index a4248a168..b16ff216e 100644
---- a/src/main/java/net/minecraft/world/entity/EntityExperienceOrb.java
-+++ b/src/main/java/net/minecraft/world/entity/EntityExperienceOrb.java
-@@ -167,7 +167,10 @@ public class EntityExperienceOrb extends Entity {
-     }
- 
-     private static boolean b(WorldServer worldserver, Vec3D vec3d, int i) {
--        AxisAlignedBB axisalignedbb = AxisAlignedBB.a(vec3d, 1.0D, 1.0D, 1.0D);
-+        // Spigot start
-+        double radius = worldserver.spigotConfig.expMerge;
-+        AxisAlignedBB axisalignedbb = AxisAlignedBB.a(vec3d, radius, radius, radius);
-+        // Spigot end
-         int j = worldserver.getRandom().nextInt(40);
-         List<EntityExperienceOrb> list = worldserver.a(EntityTypeTest.a(EntityExperienceOrb.class), axisalignedbb, (entityexperienceorb) -> {
-             return a(entityexperienceorb, j, i);
 diff --git a/src/main/java/net/minecraft/world/entity/item/EntityItem.java b/src/main/java/net/minecraft/world/entity/item/EntityItem.java
-index ff3cf5bee..bb9f81eeb 100644
+index ff3cf5be..bb9f81ee 100644
 --- a/src/main/java/net/minecraft/world/entity/item/EntityItem.java
 +++ b/src/main/java/net/minecraft/world/entity/item/EntityItem.java
 @@ -200,7 +200,10 @@ public class EntityItem extends Entity {
@@ -46,8 +30,36 @@ index ff3cf5bee..bb9f81eeb 100644
                  a(this, itemstack, entityitem, itemstack1);
              } else {
                  a(entityitem, itemstack1, this, itemstack);
+diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+index 4e54c05d..99b588e1 100644
+--- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
++++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
+@@ -596,6 +596,23 @@ public class CraftEventFactory {
+         } else if (entity.getBukkitEntity() instanceof org.bukkit.entity.LightningStrike) {
+             LightningStrikeEvent.Cause cause = (spawnReason == SpawnReason.COMMAND ? LightningStrikeEvent.Cause.COMMAND : LightningStrikeEvent.Cause.UNKNOWN);
+             event = CraftEventFactory.callLightningStrikeEvent((LightningStrike) entity.getBukkitEntity(), cause);
++        // Spigot start
++        } else if (entity instanceof EntityExperienceOrb) {
++            EntityExperienceOrb xp = (EntityExperienceOrb) entity;
++            double radius = world.spigotConfig.expMerge;
++            if (radius > 0) {
++                List<Entity> entities = world.getEntities(entity, entity.getBoundingBox().grow(radius, radius, radius));
++                for (Entity e : entities) {
++                    if (e instanceof EntityExperienceOrb) {
++                        EntityExperienceOrb loopItem = (EntityExperienceOrb) e;
++                        if (!loopItem.isRemoved()) {
++                            xp.value += loopItem.value;
++                            loopItem.die();
++                        }
++                    }
++                }
++            }
++        // Spigot end
+         } else if (!(entity instanceof EntityPlayer)) {
+             event = CraftEventFactory.callEntitySpawnEvent(entity);
+         }
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index fb9c4fc78..8c855cf9b 100644
+index fb9c4fc7..8c855cf9 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -128,4 +128,18 @@ public class SpigotWorldConfig
