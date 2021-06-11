@@ -1,4 +1,4 @@
-From 73ec5aa005f9a4decffd39343d0ba20e736b91be Mon Sep 17 00:00:00 2001
+From e410d7a36df813f516225d4b60f8f1d37819822e Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Fri, 11 Apr 2014 11:16:34 +0100
 Subject: [PATCH] Display 'Spigot' in client crashes, server lists and Mojang
@@ -6,18 +6,18 @@ Subject: [PATCH] Display 'Spigot' in client crashes, server lists and Mojang
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 4f0ae31f4..60de664d8 100644
+index 16541724d..40224c9f9 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1304,7 +1304,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
-     }
+@@ -1381,7 +1381,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
+     @DontObfuscate
      public String getServerModName() {
 -        return server.getName(); // CraftBukkit - cb > vanilla!
 +        return "Spigot"; // Spigot - Spigot > // CraftBukkit - cb > vanilla!
      }
  
-     public CrashReport b(CrashReport crashreport) {
+     public SystemReport b(SystemReport systemreport) {
 -- 
 2.25.1
 

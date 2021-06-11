@@ -1,14 +1,14 @@
-From dbfe9a7c13f20e04705cff9864ab29fb3e3e07e8 Mon Sep 17 00:00:00 2001
+From c82d9a096d36d5cb7859b5cb0e2b357a74da720e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index cf3a033dc..4f0ae31f4 100644
+index 3040b0506..16541724d 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -258,6 +258,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -292,6 +292,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      public CommandDispatcher vanillaCommandDispatcher;
      private boolean forceTicks;
      // CraftBukkit end
@@ -21,7 +21,7 @@ index cf3a033dc..4f0ae31f4 100644
  
      public static <S extends MinecraftServer> S a(Function<Thread, S> function) {
          AtomicReference<S> atomicreference = new AtomicReference();
-@@ -902,6 +908,13 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -960,6 +966,13 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
      }
  
@@ -32,24 +32,24 @@ index cf3a033dc..4f0ae31f4 100644
 +    }
 +    // Spigot End
 +
-     protected void w() {
+     protected void x() {
          try {
              if (this.init()) {
-@@ -910,8 +923,11 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
-                 this.serverPing.setServerInfo(new ServerPing.ServerData(SharedConstants.getGameVersion().getName(), SharedConstants.getGameVersion().getProtocolVersion()));
-                 this.a(this.serverPing);
+@@ -968,8 +981,11 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+                 this.status.setServerInfo(new ServerPing.ServerData(SharedConstants.getGameVersion().getName(), SharedConstants.getGameVersion().getProtocolVersion()));
+                 this.a(this.status);
  
 +                // Spigot start
 +                Arrays.fill( recentTps, 20 );
 +                long curTime, tickSection = SystemUtils.getMonotonicMillis(), tickCount = 1;
-                 while (this.isRunning) {
--                    long i = SystemUtils.getMonotonicMillis() - this.nextTick;
-+                    long i = (curTime = SystemUtils.getMonotonicMillis()) - this.nextTick;
+                 while (this.running) {
+-                    long i = SystemUtils.getMonotonicMillis() - this.nextTickTime;
++                    long i = (curTime = SystemUtils.getMonotonicMillis()) - this.nextTickTime;
  
-                     if (i > 5000L && this.nextTick - this.lastOverloadTime >= 30000L) { // CraftBukkit
+                     if (i > 5000L && this.nextTickTime - this.lastOverloadWarning >= 30000L) { // CraftBukkit
                          long j = i / 50L;
-@@ -922,6 +938,16 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
-                         this.lastOverloadTime = this.nextTick;
+@@ -980,6 +996,16 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+                         this.lastOverloadWarning = this.nextTickTime;
                      }
  
 +                    if ( tickCount++ % SAMPLE_INTERVAL == 0 )
@@ -62,9 +62,9 @@ index cf3a033dc..4f0ae31f4 100644
 +                    }
 +                    // Spigot end
 +
-                     MinecraftServer.currentTick = (int) (System.currentTimeMillis() / 50); // CraftBukkit
-                     this.nextTick += 50L;
-                     GameProfilerTick gameprofilertick = GameProfilerTick.a("Server");
+                     if (this.debugCommandProfilerDelayStart) {
+                         this.debugCommandProfilerDelayStart = false;
+                         this.debugCommandProfiler = new MinecraftServer.a(SystemUtils.getMonotonicNanos(), this.tickCount);
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
 index 584953b9f..2e80766f8 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java

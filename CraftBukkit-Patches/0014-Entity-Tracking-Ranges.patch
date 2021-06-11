@@ -1,4 +1,4 @@
-From 9d0b682303bca37b1f3597697d9722eca1eb67b6 Mon Sep 17 00:00:00 2001
+From 86da6aee486b56c388d2d27c227cb3328c003524 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Wed, 20 Feb 2013 11:58:47 -0500
 Subject: [PATCH] Entity Tracking Ranges
@@ -12,17 +12,17 @@ This has multiple benefits:
 4) Less client lag - Not trying to render distant item frames and paintings and entities will reduce entity count on the client, which is major for shop/town worlds which may use tons of item frames.
 
 diff --git a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-index 7ca5068fb..83a0240c4 100644
+index fc7e26802..09260793a 100644
 --- a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-@@ -1073,6 +1073,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -1081,6 +1081,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
          if (!(entity instanceof EntityComplexPart)) {
              EntityTypes<?> entitytypes = entity.getEntityType();
              int i = entitytypes.getChunkRange() * 16;
 +            i = org.spigotmc.TrackingRange.getEntityTrackingRange(entity, i); // Spigot
-             int j = entitytypes.getUpdateInterval();
  
-             if (this.trackedEntities.containsKey(entity.getId())) {
+             if (i != 0) {
+                 int j = entitytypes.getUpdateInterval();
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 index af523e5c1..e432ddc50 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
@@ -49,10 +49,10 @@ index af523e5c1..e432ddc50 100644
  }
 diff --git a/src/main/java/org/spigotmc/TrackingRange.java b/src/main/java/org/spigotmc/TrackingRange.java
 new file mode 100644
-index 000000000..044945114
+index 000000000..f1b220acd
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/TrackingRange.java
-@@ -0,0 +1,51 @@
+@@ -0,0 +1,55 @@
 +package org.spigotmc;
 +
 +import net.minecraft.server.level.EntityPlayer;
@@ -76,7 +76,11 @@ index 000000000..044945114
 +     */
 +    public static int getEntityTrackingRange(Entity entity, int defaultRange)
 +    {
-+        SpigotWorldConfig config = entity.world.spigotConfig;
++        if ( defaultRange == 0 )
++        {
++            return defaultRange;
++        }
++        SpigotWorldConfig config = entity.level.spigotConfig;
 +        if ( entity instanceof EntityPlayer )
 +        {
 +            return config.playerTrackingRange;

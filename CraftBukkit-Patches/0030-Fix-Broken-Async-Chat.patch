@@ -1,15 +1,15 @@
-From 83ea7b1b28cd7dd8f217e6df7165c1b9e91bbb32 Mon Sep 17 00:00:00 2001
+From 7580f488d1d4c626174447f8eca6e144696cccca Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Thu, 5 Dec 2013 13:55:53 +1100
 Subject: [PATCH] Fix Broken Async Chat
 
 
 diff --git a/src/main/java/net/minecraft/network/protocol/game/PacketPlayInChat.java b/src/main/java/net/minecraft/network/protocol/game/PacketPlayInChat.java
-index eec7e266b..a76dd78cf 100644
+index 7e63ce9e7..1a03b59a1 100644
 --- a/src/main/java/net/minecraft/network/protocol/game/PacketPlayInChat.java
 +++ b/src/main/java/net/minecraft/network/protocol/game/PacketPlayInChat.java
-@@ -29,7 +29,24 @@ public class PacketPlayInChat implements Packet<PacketListenerPlayIn> {
-         packetdataserializer.a(this.a);
+@@ -25,7 +25,24 @@ public class PacketPlayInChat implements Packet<PacketListenerPlayIn> {
+         packetdataserializer.a(this.message);
      }
  
 -    public void a(PacketListenerPlayIn packetlistenerplayin) {
@@ -17,7 +17,7 @@ index eec7e266b..a76dd78cf 100644
 +    private static final java.util.concurrent.ExecutorService executors = java.util.concurrent.Executors.newCachedThreadPool(
 +            new com.google.common.util.concurrent.ThreadFactoryBuilder().setDaemon( true ).setNameFormat( "Async Chat Thread - #%d" ).build() );
 +    public void a(final PacketListenerPlayIn packetlistenerplayin) {
-+        if ( !a.startsWith("/") )
++        if ( !message.startsWith("/") )
 +        {
 +            executors.submit( new Runnable()
 +            {

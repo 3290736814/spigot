@@ -1,22 +1,22 @@
-From a074e74c817d52f3fd5585c42a1f70fcd1b1d0fd Mon Sep 17 00:00:00 2001
+From cbd2edc199bc8ad882962614f26e15c4f6682604 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Tue, 7 Jan 2014 15:56:26 +0000
 Subject: [PATCH] Allow statistics to be disabled/forced
 
 
 diff --git a/src/main/java/net/minecraft/stats/ServerStatisticManager.java b/src/main/java/net/minecraft/stats/ServerStatisticManager.java
-index 342dae196..322a4b584 100644
+index c144691eb..6360518aa 100644
 --- a/src/main/java/net/minecraft/stats/ServerStatisticManager.java
 +++ b/src/main/java/net/minecraft/stats/ServerStatisticManager.java
 @@ -47,6 +47,13 @@ public class ServerStatisticManager extends StatisticManager {
      public ServerStatisticManager(MinecraftServer minecraftserver, File file) {
-         this.c = minecraftserver;
-         this.d = file;
+         this.server = minecraftserver;
+         this.file = file;
 +        // Spigot start
 +        for ( Map.Entry<MinecraftKey, Integer> entry : org.spigotmc.SpigotConfig.forcedStats.entrySet() )
 +        {
 +            Statistic<MinecraftKey> wrapper = StatisticList.CUSTOM.b( entry.getKey() );
-+            this.a.put( wrapper, entry.getValue().intValue() );
++            this.stats.put( wrapper, entry.getValue().intValue() );
 +        }
 +        // Spigot end
          if (file.isFile()) {
@@ -28,7 +28,7 @@ index 342dae196..322a4b584 100644
      public void save() {
 +        if ( org.spigotmc.SpigotConfig.disableStatSaving ) return; // Spigot
          try {
-             FileUtils.writeStringToFile(this.d, this.b());
+             FileUtils.writeStringToFile(this.file, this.b());
          } catch (IOException ioexception) {
 @@ -70,6 +78,7 @@ public class ServerStatisticManager extends StatisticManager {
  
@@ -36,7 +36,7 @@ index 342dae196..322a4b584 100644
      public void setStatistic(EntityHuman entityhuman, Statistic<?> statistic, int i) {
 +        if ( org.spigotmc.SpigotConfig.disableStatSaving ) return; // Spigot
          super.setStatistic(entityhuman, statistic, i);
-         this.e.add(statistic);
+         this.dirty.add(statistic);
      }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
 index a7bf7f860..584953b9f 100644

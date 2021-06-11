@@ -1,14 +1,14 @@
-From 7c03903b5afb23554036de80c3cdd2695f3e0673 Mon Sep 17 00:00:00 2001
+From 5ffdc188d944ebfc0907eff47879513a1a3c2ca8 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 20:56:41 +1100
 Subject: [PATCH] Try and Debug Crash Reports Crashing
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 0f86f5837..cf3a033dc 100644
+index 18b1ae8df..3040b0506 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1188,7 +1188,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1260,7 +1260,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                  worldserver.doTick(booleansupplier);
                  worldserver.timings.doTick.stopTiming(); // Spigot
              } catch (Throwable throwable) {

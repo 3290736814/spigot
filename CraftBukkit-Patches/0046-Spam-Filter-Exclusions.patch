@@ -1,15 +1,15 @@
-From f4cb4d2e787d35d484348274d1853454aa5fba71 Mon Sep 17 00:00:00 2001
+From 1e6deb32665c284413eb656718f51b048c7b31a2 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 8 Feb 2014 08:13:40 +0000
 Subject: [PATCH] Spam Filter Exclusions
 
 
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index de3bcc8e5..9ab5c6bed 100644
+index 5c7abcbc8..e0da8fd2d 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-@@ -1779,9 +1779,20 @@ public class PlayerConnection implements PacketListenerPlayIn {
-                 this.minecraftServer.getPlayerList().sendMessage(chatmessage, ChatMessageType.CHAT, this.player.getUniqueID());
+@@ -1787,9 +1787,20 @@ public class PlayerConnection implements ServerPlayerConnection, PacketListenerP
+                 }, ChatMessageType.CHAT, this.player.getUniqueID());
              }
  
 +            // Spigot start - spam exclusions
@@ -25,8 +25,8 @@ index de3bcc8e5..9ab5c6bed 100644
 +            // Spigot end
              // CraftBukkit start - replaced with thread safe throttle
              // this.chatThrottle += 20;
--            if (chatSpamField.addAndGet(this, 20) > 200 && !this.minecraftServer.getPlayerList().isOp(this.player.getProfile())) {
-+            if (counted && chatSpamField.addAndGet(this, 20) > 200 && !this.minecraftServer.getPlayerList().isOp(this.player.getProfile())) { // Spigot
+-            if (chatSpamTickCount.addAndGet(20) > 200 && !this.server.getPlayerList().isOp(this.player.getProfile())) {
++            if (counted && chatSpamTickCount.addAndGet(20) > 200 && !this.server.getPlayerList().isOp(this.player.getProfile())) { // Spigot
                  if (!isSync) {
                      Waitable waitable = new Waitable() {
                          @Override

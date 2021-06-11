@@ -1,19 +1,19 @@
-From 5fb3bf244b77255b2a40fbe750b8a22cea9e3468 Mon Sep 17 00:00:00 2001
+From 9aa766038ec94bf86c3ca1b465977c5801f62519 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Mon, 14 Oct 2013 19:20:10 +1100
 Subject: [PATCH] Arrow Despawn Rate
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java b/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java
-index fce4ea680..a05ee898b 100644
+index 4cdf34ce1..af3847a86 100644
 --- a/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java
 +++ b/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java
-@@ -283,7 +283,7 @@ public abstract class EntityArrow extends IProjectile {
+@@ -312,7 +312,7 @@ public abstract class EntityArrow extends IProjectile {
  
      protected void h() {
-         ++this.despawnCounter;
--        if (this.despawnCounter >= 1200) {
-+        if (this.despawnCounter >= ((this instanceof EntityThrownTrident) ? world.spigotConfig.tridentDespawnRate : world.spigotConfig.arrowDespawnRate)) { // Spigot
+         ++this.life;
+-        if (this.life >= 1200) {
++        if (this.life >= ((this instanceof EntityThrownTrident) ? level.spigotConfig.tridentDespawnRate : level.spigotConfig.arrowDespawnRate)) { // Spigot
              this.die();
          }
  

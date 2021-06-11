@@ -1,31 +1,31 @@
-From 9937ede4daa084c327bee5347018dc624f6fe9fa Mon Sep 17 00:00:00 2001
+From c295b0415e344dedf6eb7e1613c2ec18ea1ce443 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 22 Sep 2013 19:10:53 +1000
 Subject: [PATCH] Item Despawn Rate
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/item/EntityItem.java b/src/main/java/net/minecraft/world/entity/item/EntityItem.java
-index 91a0754cf..40bb52ce6 100644
+index bb9f81eeb..e9a609e72 100644
 --- a/src/main/java/net/minecraft/world/entity/item/EntityItem.java
 +++ b/src/main/java/net/minecraft/world/entity/item/EntityItem.java
-@@ -158,7 +158,7 @@ public class EntityItem extends Entity {
+@@ -173,7 +173,7 @@ public class EntityItem extends Entity {
                  }
              }
  
--            if (!this.world.isClientSide && this.age >= 6000) {
-+            if (!this.world.isClientSide && this.age >= world.spigotConfig.itemDespawnRate) { // Spigot
+-            if (!this.level.isClientSide && this.age >= 6000) {
++            if (!this.level.isClientSide && this.age >= level.spigotConfig.itemDespawnRate) { // Spigot
                  // CraftBukkit start - fire ItemDespawnEvent
                  if (org.bukkit.craftbukkit.event.CraftEventFactory.callItemDespawnEvent(this).isCancelled()) {
                      this.age = 0;
-@@ -478,7 +478,7 @@ public class EntityItem extends Entity {
+@@ -503,7 +503,7 @@ public class EntityItem extends Entity {
  
-     public void s() {
-         this.o();
+     public void t() {
+         this.p();
 -        this.age = 5999;
-+        this.age = world.spigotConfig.itemDespawnRate - 1; // Spigot
++        this.age = level.spigotConfig.itemDespawnRate - 1; // Spigot
      }
  
-     @Override
+     public float a(float f) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 index e780cc473..0c669efaa 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java

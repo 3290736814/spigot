@@ -1,4 +1,4 @@
-From 50343eb87a3dbd88dc49482a38d69757994efe85 Mon Sep 17 00:00:00 2001
+From 5e40bc5a3a3c8ae96f401170440d1f4398f1ae44 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,45 +6,45 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index e143e87b8..84fe4b249 100644
+index 760ac9596..648fd484c 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
-@@ -223,7 +223,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
-             chunkgenerator = new org.bukkit.craftbukkit.generator.CustomChunkGenerator(this, chunkgenerator, gen);
-         }
+@@ -248,7 +248,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
  
--        this.chunkProvider = new ChunkProviderServer(this, convertable_conversionsession, minecraftserver.getDataFixer(), minecraftserver.getDefinedStructureManager(), executor, chunkgenerator, minecraftserver.getPlayerList().getViewDistance(), minecraftserver.isSyncChunkWrites(), worldloadlistener, () -> {
-+        this.chunkProvider = new ChunkProviderServer(this, convertable_conversionsession, minecraftserver.getDataFixer(), minecraftserver.getDefinedStructureManager(), executor, chunkgenerator, this.spigotConfig.viewDistance, minecraftserver.isSyncChunkWrites(), worldloadlistener, () -> { // Spigot
-             return minecraftserver.E().getWorldPersistentData();
-         });
-         // CraftBukkit end
+         this.entityManager = new PersistentEntitySectionManager<>(Entity.class, new WorldServer.a(), entitypersistentstorage);
+         DefinedStructureManager definedstructuremanager = minecraftserver.getDefinedStructureManager();
+-        int j = minecraftserver.getPlayerList().getViewDistance();
++        int j = this.spigotConfig.viewDistance; // Spigot
+         PersistentEntitySectionManager persistententitysectionmanager = this.entityManager;
+ 
+         Objects.requireNonNull(this.entityManager);
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 09c5dddb8..ab572c1a5 100644
+index 5578db8e7..ad1836ae3 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -217,7 +217,8 @@ public abstract class PlayerList {
-         boolean flag = gamerules.getBoolean(GameRules.DO_IMMEDIATE_RESPAWN);
-         boolean flag1 = gamerules.getBoolean(GameRules.REDUCED_DEBUG_INFO);
+@@ -218,7 +218,8 @@ public abstract class PlayerList {
+         boolean flag = gamerules.getBoolean(GameRules.RULE_DO_IMMEDIATE_RESPAWN);
+         boolean flag1 = gamerules.getBoolean(GameRules.RULE_REDUCEDDEBUGINFO);
  
--        playerconnection.sendPacket(new PacketPlayOutLogin(entityplayer.getId(), entityplayer.playerInteractManager.getGameMode(), entityplayer.playerInteractManager.c(), BiomeManager.a(worldserver1.getSeed()), worlddata.isHardcore(), this.server.F(), this.s, worldserver1.getDimensionManager(), worldserver1.getDimensionKey(), this.getMaxPlayers(), this.viewDistance, flag1, !flag, worldserver1.isDebugWorld(), worldserver1.isFlatWorld()));
+-        playerconnection.sendPacket(new PacketPlayOutLogin(entityplayer.getId(), entityplayer.gameMode.getGameMode(), entityplayer.gameMode.c(), BiomeManager.a(worldserver1.getSeed()), worlddata.isHardcore(), this.server.G(), this.registryHolder, worldserver1.getDimensionManager(), worldserver1.getDimensionKey(), this.getMaxPlayers(), this.viewDistance, flag1, !flag, worldserver1.isDebugWorld(), worldserver1.isFlatWorld()));
 +        // Spigot - view distance
-+        playerconnection.sendPacket(new PacketPlayOutLogin(entityplayer.getId(), entityplayer.playerInteractManager.getGameMode(), entityplayer.playerInteractManager.c(), BiomeManager.a(worldserver1.getSeed()), worlddata.isHardcore(), this.server.F(), this.s, worldserver1.getDimensionManager(), worldserver1.getDimensionKey(), this.getMaxPlayers(), worldserver1.spigotConfig.viewDistance, flag1, !flag, worldserver1.isDebugWorld(), worldserver1.isFlatWorld()));
++        playerconnection.sendPacket(new PacketPlayOutLogin(entityplayer.getId(), entityplayer.gameMode.getGameMode(), entityplayer.gameMode.c(), BiomeManager.a(worldserver1.getSeed()), worlddata.isHardcore(), this.server.G(), this.registryHolder, worldserver1.getDimensionManager(), worldserver1.getDimensionKey(), this.getMaxPlayers(), worldserver1.spigotConfig.viewDistance, flag1, !flag, worldserver1.isDebugWorld(), worldserver1.isFlatWorld()));
          entityplayer.getBukkitEntity().sendSupportedChannels(); // CraftBukkit
-         playerconnection.sendPacket(new PacketPlayOutCustomPayload(PacketPlayOutCustomPayload.a, (new PacketDataSerializer(Unpooled.buffer())).a(this.getServer().getServerModName())));
+         playerconnection.sendPacket(new PacketPlayOutCustomPayload(PacketPlayOutCustomPayload.BRAND, (new PacketDataSerializer(Unpooled.buffer())).a(this.getServer().getServerModName())));
          playerconnection.sendPacket(new PacketPlayOutServerDifficulty(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
-@@ -758,6 +759,7 @@ public abstract class PlayerList {
+@@ -733,6 +734,7 @@ public abstract class PlayerList {
          // CraftBukkit start
          WorldData worlddata = worldserver1.getWorldData();
-         entityplayer1.playerConnection.sendPacket(new PacketPlayOutRespawn(worldserver1.getDimensionManager(), worldserver1.getDimensionKey(), BiomeManager.a(worldserver1.getSeed()), entityplayer1.playerInteractManager.getGameMode(), entityplayer1.playerInteractManager.c(), worldserver1.isDebugWorld(), worldserver1.isFlatWorld(), flag));
-+        entityplayer1.playerConnection.sendPacket(new PacketPlayOutViewDistance(worldserver1.spigotConfig.viewDistance)); // Spigot
+         entityplayer1.connection.sendPacket(new PacketPlayOutRespawn(worldserver1.getDimensionManager(), worldserver1.getDimensionKey(), BiomeManager.a(worldserver1.getSeed()), entityplayer1.gameMode.getGameMode(), entityplayer1.gameMode.c(), worldserver1.isDebugWorld(), worldserver1.isFlatWorld(), flag));
++        entityplayer1.connection.sendPacket(new PacketPlayOutViewDistance(worldserver1.spigotConfig.viewDistance)); // Spigot
          entityplayer1.spawnIn(worldserver1);
-         entityplayer1.dead = false;
-         entityplayer1.playerConnection.teleport(new Location(worldserver1.getWorld(), entityplayer1.locX(), entityplayer1.locY(), entityplayer1.locZ(), entityplayer1.yaw, entityplayer1.pitch));
+         entityplayer1.unsetRemoved();
+         entityplayer1.connection.teleport(new Location(worldserver1.getWorld(), entityplayer1.locX(), entityplayer1.locY(), entityplayer1.locZ(), entityplayer1.getYRot(), entityplayer1.getXRot()));
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index baa89d681..c5e284300 100644
+index 43f4d9168..335d25b8d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2353,6 +2353,13 @@ public class CraftWorld implements World {
+@@ -2365,6 +2365,13 @@ public class CraftWorld implements World {
          return (getHandle().getDragonBattle() == null) ? null : new CraftDragonBattle(getHandle().getDragonBattle());
      }
  
