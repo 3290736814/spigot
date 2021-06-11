@@ -1,11 +1,11 @@
-From d313d3832f1017a38d4a062481974aad42c2f612 Mon Sep 17 00:00:00 2001
+From d3da2e6b212d040b9981c57b6a40ef97a0295163 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sat, 29 Mar 2014 13:44:25 -0400
 Subject: [PATCH] Configurable dragon death and wither spawn sounds
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/boss/enderdragon/EntityEnderDragon.java b/src/main/java/net/minecraft/world/entity/boss/enderdragon/EntityEnderDragon.java
-index efeae33cc..0a503c878 100644
+index 2d6631c20..d8f4d0e1a 100644
 --- a/src/main/java/net/minecraft/world/entity/boss/enderdragon/EntityEnderDragon.java
 +++ b/src/main/java/net/minecraft/world/entity/boss/enderdragon/EntityEnderDragon.java
 @@ -638,7 +638,24 @@ public class EntityEnderDragon extends EntityInsentient implements IMonster {
@@ -15,7 +15,7 @@ index efeae33cc..0a503c878 100644
 -                this.level.b(1028, this.getChunkCoordinates(), 0);
 +                // CraftBukkit start - Use relative location for far away sounds
 +                // this.world.b(1028, this.getChunkCoordinates(), 0);
-+                int viewDistance = ((WorldServer) this.level).getServer().getViewDistance() * 16;
++                int viewDistance = ((WorldServer) this.level).getCraftServer().getViewDistance() * 16;
 +                for (net.minecraft.server.level.EntityPlayer player : this.level.getMinecraftServer().getPlayerList().players) {
 +                    double deltaX = this.locX() - player.locX();
 +                    double deltaZ = this.locZ() - player.locZ();
@@ -35,7 +35,7 @@ index efeae33cc..0a503c878 100644
          }
  
 diff --git a/src/main/java/net/minecraft/world/entity/boss/wither/EntityWither.java b/src/main/java/net/minecraft/world/entity/boss/wither/EntityWither.java
-index a4429ce85..11609922f 100644
+index 0e48b3840..c9957df5e 100644
 --- a/src/main/java/net/minecraft/world/entity/boss/wither/EntityWither.java
 +++ b/src/main/java/net/minecraft/world/entity/boss/wither/EntityWither.java
 @@ -267,6 +267,7 @@ public class EntityWither extends EntityMonster implements PowerableMob, IRanged
@@ -47,7 +47,7 @@ index a4429ce85..11609922f 100644
                              double deltaLength = Math.sqrt(distanceSquared);
                              double relativeX = player.locX() + (deltaX / deltaLength) * viewDistance;
 diff --git a/src/main/java/net/minecraft/world/item/ItemEnderEye.java b/src/main/java/net/minecraft/world/item/ItemEnderEye.java
-index 9ac3882d6..60cc2683c 100644
+index 9ac3882d6..e3b4c29f6 100644
 --- a/src/main/java/net/minecraft/world/item/ItemEnderEye.java
 +++ b/src/main/java/net/minecraft/world/item/ItemEnderEye.java
 @@ -58,7 +58,25 @@ public class ItemEnderEye extends Item {
@@ -57,9 +57,9 @@ index 9ac3882d6..60cc2683c 100644
 -                    world.b(1038, blockposition1.c(1, 0, 1), 0);
 +                    // CraftBukkit start - Use relative location for far away sounds
 +                    // world.b(1038, blockposition1.c(1, 0, 1), 0);
-+                    int viewDistance = world.getServer().getViewDistance() * 16;
++                    int viewDistance = world.getCraftServer().getViewDistance() * 16;
 +                    BlockPosition soundPos = blockposition1.c(1, 0, 1);
-+                    for (EntityPlayer player : world.getServer().getServer().getPlayerList().players) {
++                    for (EntityPlayer player : world.getMinecraftServer().getPlayerList().players) {
 +                        double deltaX = soundPos.getX() - player.locX();
 +                        double deltaZ = soundPos.getZ() - player.locZ();
 +                        double distanceSquared = deltaX * deltaX + deltaZ * deltaZ;

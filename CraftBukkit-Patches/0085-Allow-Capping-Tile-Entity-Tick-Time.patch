@@ -1,4 +1,4 @@
-From 2b8cfc0b8cb280df9be8a805d0b438deaf87eb2e Mon Sep 17 00:00:00 2001
+From a762387c35834bc552a84bc6e040134b69b78e50 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -10,7 +10,7 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 This feature was commisioned by Chunkr.
 
 diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
-index eddc34e2f..826dde044 100644
+index 024bf170e..7e74195cc 100644
 --- a/src/main/java/net/minecraft/world/level/World.java
 +++ b/src/main/java/net/minecraft/world/level/World.java
 @@ -148,6 +148,9 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -50,7 +50,7 @@ index eddc34e2f..826dde044 100644
 +            TickingBlockEntity tickingblockentity = (TickingBlockEntity) this.blockEntityTickers.get(tileTickPosition);
              // Spigot start
              if (tickingblockentity == null) {
-                 getServer().getLogger().severe("Spigot has detected a null entity and has removed it, preventing a crash");
+                 getCraftServer().getLogger().severe("Spigot has detected a null entity and has removed it, preventing a crash");
 -                iterator.remove();
 +                tilesThisCycle--;
 +                this.blockEntityTickers.remove(tileTickPosition--);

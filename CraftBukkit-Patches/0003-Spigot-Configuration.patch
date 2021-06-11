@@ -1,4 +1,4 @@
-From 1425d8da8dbf2180f00a1bbaefa01f462c6a7788 Mon Sep 17 00:00:00 2001
+From ff700655a8c87a76d33064b7699e9f514f756e82 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -31,7 +31,7 @@ index c55d8b009..4efae0d31 100644
          server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.STARTUP);
          // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
-index 757f4a392..71928c23e 100644
+index 288db9225..6e52e8289 100644
 --- a/src/main/java/net/minecraft/world/level/World.java
 +++ b/src/main/java/net/minecraft/world/level/World.java
 @@ -143,6 +143,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -49,7 +49,7 @@ index 757f4a392..71928c23e 100644
 +        this.spigotConfig = new org.spigotmc.SpigotWorldConfig(((net.minecraft.world.level.storage.WorldDataServer) worlddatamutable).getName()); // Spigot
          this.generator = gen;
          this.world = new CraftWorld((WorldServer) this, gen, env);
-         this.ticksPerAnimalSpawns = this.getServer().getTicksPerAnimalSpawns(); // CraftBukkit
+         this.ticksPerAnimalSpawns = this.getCraftServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 index 53cbd06ed..9bf2a9efa 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java

@@ -1,11 +1,11 @@
-From 5f12f952facad2f505f45e0d14d966481e931131 Mon Sep 17 00:00:00 2001
+From 34869275643947bfed3b0b7d382ed2d53cb4d8b6 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 3 Mar 2016 19:45:46 +1100
 Subject: [PATCH] Implement SpawnerSpawnEvent.
 
 
 diff --git a/src/main/java/net/minecraft/world/level/MobSpawnerAbstract.java b/src/main/java/net/minecraft/world/level/MobSpawnerAbstract.java
-index 0b744b2d..e330ff64 100644
+index 0b744b2d7..e330ff646 100644
 --- a/src/main/java/net/minecraft/world/level/MobSpawnerAbstract.java
 +++ b/src/main/java/net/minecraft/world/level/MobSpawnerAbstract.java
 @@ -162,6 +162,18 @@ public abstract class MobSpawnerAbstract {
@@ -28,7 +28,7 @@ index 0b744b2d..e330ff64 100644
                          if (!worldserver.addAllEntitiesSafely(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER)) { // CraftBukkit
                              this.d(worldserver, blockposition);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 99b588e1..c76759a9 100644
+index 10902480d..95f3abaad 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -225,6 +225,8 @@ import org.bukkit.inventory.InventoryView;
@@ -61,7 +61,7 @@ index 99b588e1..c76759a9 100644
 +
      public static EntityToggleGlideEvent callToggleGlideEvent(EntityLiving entity, boolean gliding) {
          EntityToggleGlideEvent event = new EntityToggleGlideEvent((LivingEntity) entity.getBukkitEntity(), gliding);
-         entity.level.getServer().getPluginManager().callEvent(event);
+         entity.level.getCraftServer().getPluginManager().callEvent(event);
 -- 
 2.25.1
 
