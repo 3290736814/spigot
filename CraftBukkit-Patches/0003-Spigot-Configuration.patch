@@ -1,4 +1,4 @@
-From ff700655a8c87a76d33064b7699e9f514f756e82 Mon Sep 17 00:00:00 2001
+From e19324bf33a9b525aabc85ffef5a05a057b1a6fd Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -51,7 +51,7 @@ index 288db9225..6e52e8289 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getCraftServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 53cbd06ed..9bf2a9efa 100644
+index 78bea6e0c..ee5492256 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -788,6 +788,7 @@ public final class CraftServer implements Server {
@@ -62,7 +62,7 @@ index 53cbd06ed..9bf2a9efa 100644
          for (WorldServer world : console.getWorlds()) {
              world.serverLevelData.setDifficulty(config.difficulty);
              world.setSpawnFlags(config.spawnMonsters, config.spawnAnimals);
-@@ -820,12 +821,14 @@ public final class CraftServer implements Server {
+@@ -820,11 +821,13 @@ public final class CraftServer implements Server {
              } else {
                  world.ticksPerAmbientSpawns = this.getTicksPerAmbientSpawns();
              }
@@ -71,7 +71,6 @@ index 53cbd06ed..9bf2a9efa 100644
  
          pluginManager.clearPlugins();
          commandMap.clearCommands();
-         resetRecipes();
          reloadData();
 +        org.spigotmc.SpigotConfig.registerCommands(); // Spigot
          overrideAllCommandBlockCommands = commandsConfiguration.getStringList("command-block-overrides").contains("*");

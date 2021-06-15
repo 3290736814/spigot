@@ -1,11 +1,11 @@
-From c82d9a096d36d5cb7859b5cb0e2b357a74da720e Mon Sep 17 00:00:00 2001
+From d2df6a8fb7d3b4c356a6dd23a0b804f9b00a2029 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 3040b0506..16541724d 100644
+index 1f99eab8b..94dc4d598 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -292,6 +292,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
@@ -21,7 +21,7 @@ index 3040b0506..16541724d 100644
  
      public static <S extends MinecraftServer> S a(Function<Thread, S> function) {
          AtomicReference<S> atomicreference = new AtomicReference();
-@@ -960,6 +966,13 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -961,6 +967,13 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
      }
  
@@ -35,7 +35,7 @@ index 3040b0506..16541724d 100644
      protected void x() {
          try {
              if (this.init()) {
-@@ -968,8 +981,11 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -969,8 +982,11 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                  this.status.setServerInfo(new ServerPing.ServerData(SharedConstants.getGameVersion().getName(), SharedConstants.getGameVersion().getProtocolVersion()));
                  this.a(this.status);
  
@@ -48,7 +48,7 @@ index 3040b0506..16541724d 100644
  
                      if (i > 5000L && this.nextTickTime - this.lastOverloadWarning >= 30000L) { // CraftBukkit
                          long j = i / 50L;
-@@ -980,6 +996,16 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -981,6 +997,16 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                          this.lastOverloadWarning = this.nextTickTime;
                      }
  

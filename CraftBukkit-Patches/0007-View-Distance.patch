@@ -1,4 +1,4 @@
-From a5977108e8df719bc06e1c2ee2dd6c314cfa16fd Mon Sep 17 00:00:00 2001
+From e1f8afe537717fc8c8e9faf415ba014d0c619fbc Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,7 +6,7 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 760ac959..648fd484 100644
+index 68388f12d..be7dced63 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -248,7 +248,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -19,7 +19,7 @@ index 760ac959..648fd484 100644
  
          Objects.requireNonNull(this.entityManager);
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 5578db8e..ad1836ae 100644
+index 5578db8e7..ad1836ae3 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -218,7 +218,8 @@ public abstract class PlayerList {
@@ -41,10 +41,10 @@ index 5578db8e..ad1836ae 100644
          entityplayer1.unsetRemoved();
          entityplayer1.connection.teleport(new Location(worldserver1.getWorld(), entityplayer1.locX(), entityplayer1.locY(), entityplayer1.locZ(), entityplayer1.getYRot(), entityplayer1.getXRot()));
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 927fb0a3..baa0c162 100644
+index 73301e796..10b11bb86 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2366,6 +2366,13 @@ public class CraftWorld implements World {
+@@ -2368,6 +2368,13 @@ public class CraftWorld implements World {
          return (getHandle().getDragonBattle() == null) ? null : new CraftDragonBattle(getHandle().getDragonBattle());
      }
  
@@ -59,7 +59,7 @@ index 927fb0a3..baa0c162 100644
      private final org.bukkit.World.Spigot spigot = new org.bukkit.World.Spigot()
      {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 8c855cf9..8db1bc20 100644
+index 8c855cf9b..8db1bc203 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -142,4 +142,23 @@ public class SpigotWorldConfig

@@ -1,14 +1,14 @@
-From 8283c3393b26683b70d983504f7a8b74e4477bc7 Mon Sep 17 00:00:00 2001
+From 3c3e2dcb2b92a7c38afd806da9f1104d0cb28c0a Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Fri, 23 May 2014 18:05:10 -0400
 Subject: [PATCH] Configurable save-on-stop-only for UserCache
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 40224c9f9..6dacb8c98 100644
+index 048f18183..6a274124c 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -939,6 +939,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -940,6 +940,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          } catch (IOException ioexception1) {
              MinecraftServer.LOGGER.error("Failed to unlock level {}", this.storageSource.getLevelName(), ioexception1);
          }

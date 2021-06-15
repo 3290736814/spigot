@@ -1,14 +1,14 @@
-From 7b0c7b0ade23745d1a442ba121a58818bf358b3d Mon Sep 17 00:00:00 2001
+From eb43470ae95c9359c529691596e758407e7225e9 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 3 Aug 2013 19:20:50 +1000
 Subject: [PATCH] Player Collision API
 
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 278754c9..aca68096 100644
+index 55d684a8..610a97c9 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1278,6 +1278,29 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1305,6 +1305,29 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
          public InetSocketAddress getRawAddress() {
              throw new UnsupportedOperationException("Not supported yet.");
          }
