@@ -1,4 +1,4 @@
-From 3497f990b5313c4c682a98eedd644243c8ccdf53 Mon Sep 17 00:00:00 2001
+From d0e26682b495e688b4204f828b405f5085292116 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 661a84c63..317519ea6 100644
+index b12c01d44..3c6e5aa1e 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -503,6 +503,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -32,10 +32,10 @@ index 661a84c63..317519ea6 100644
 +        }
 +        // Spigot end
          entity.tickTimer.startTiming(); // Spigot
-         entity.aX();
+         entity.aZ();
          GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index e5065f93f..21b88877b 100644
+index 023d1ea43..4f6afc721 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -282,6 +282,12 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
@@ -125,7 +125,7 @@ index 0b3cf60ed..d8ee94020 100644
      public void tick() {
          super.tick();
 diff --git a/src/main/java/net/minecraft/world/entity/EntityLiving.java b/src/main/java/net/minecraft/world/entity/EntityLiving.java
-index e7a925478..b6654a2f7 100644
+index 9960e5b58..d7702701b 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityLiving.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityLiving.java
 @@ -268,6 +268,13 @@ public abstract class EntityLiving extends Entity {
@@ -143,7 +143,7 @@ index e7a925478..b6654a2f7 100644
      protected EntityLiving(EntityTypes<? extends EntityLiving> entitytypes, World world) {
          super(entitytypes, world);
 diff --git a/src/main/java/net/minecraft/world/entity/item/EntityItem.java b/src/main/java/net/minecraft/world/entity/item/EntityItem.java
-index e9a609e72..3e16be500 100644
+index 4cdb901e7..d7317e3a4 100644
 --- a/src/main/java/net/minecraft/world/entity/item/EntityItem.java
 +++ b/src/main/java/net/minecraft/world/entity/item/EntityItem.java
 @@ -186,6 +186,28 @@ public class EntityItem extends Entity {
@@ -176,7 +176,7 @@ index e9a609e72..3e16be500 100644
          Vec3D vec3d = this.getMot();
  
 diff --git a/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java b/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java
-index 20a567edd..730aa9c71 100644
+index 6ac0b63b0..9e671e3b7 100644
 --- a/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java
 +++ b/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java
 @@ -224,6 +224,17 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
@@ -198,7 +198,7 @@ index 20a567edd..730aa9c71 100644
      protected void mobTick() {
          this.level.getMethodProfiler().enter("villagerBrain");
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java b/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java
-index 2b3370633..4cdf34ce1 100644
+index 3d4c1171d..00d20ec47 100644
 --- a/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java
 +++ b/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java
 @@ -73,6 +73,18 @@ public abstract class EntityArrow extends IProjectile {

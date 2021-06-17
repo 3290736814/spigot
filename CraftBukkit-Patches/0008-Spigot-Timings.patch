@@ -1,4 +1,4 @@
-From be1d2e9a069168ab307c575617fbfd9ac90119c5 Mon Sep 17 00:00:00 2001
+From b78614a25aad597c5084de8bd12d3faaa363eb74 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -199,7 +199,7 @@ index b8c0bb005..d57a6b197 100644
  
      private void a(long i, Consumer<Chunk> consumer) {
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index be7dced63..6de67120a 100644
+index be7dced63..b12c01d44 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -160,6 +160,7 @@ import net.minecraft.world.level.block.entity.TileEntity;
@@ -254,16 +254,14 @@ index be7dced63..6de67120a 100644
              gameprofilerfiller.exit();
              this.tickBlockEntities();
          }
-@@ -786,7 +795,8 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -786,6 +795,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
      }
  
      public void entityJoinedWorld(Entity entity) {
--        entity.aZ();
 +        entity.tickTimer.startTiming(); // Spigot
-+        entity.aX();
+         entity.aZ();
          GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
  
-         ++entity.tickCount;
 @@ -804,6 +814,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
  
              this.a(entity, entity1);
