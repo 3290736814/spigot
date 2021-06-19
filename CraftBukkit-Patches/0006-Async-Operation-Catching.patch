@@ -1,4 +1,4 @@
-From 2c63e8547e23ee5e0a9291086c0688202ced5f7d Mon Sep 17 00:00:00 2001
+From 0078c4af2b89fe2b24088e5553b0c651696225a3 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -121,10 +121,10 @@ index a8c5013a3..61767a794 100644
              world.removeTileEntity(blockposition);
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index ee5492256..408629d67 100644
+index c3c5a9b26..877946c38 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -739,6 +739,7 @@ public final class CraftServer implements Server {
+@@ -735,6 +735,7 @@ public final class CraftServer implements Server {
      public boolean dispatchCommand(CommandSender sender, String commandLine) {
          Validate.notNull(sender, "Sender cannot be null");
          Validate.notNull(commandLine, "CommandLine cannot be null");

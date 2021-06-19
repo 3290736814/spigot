@@ -1,4 +1,4 @@
-From e1f8afe537717fc8c8e9faf415ba014d0c619fbc Mon Sep 17 00:00:00 2001
+From 58fc933f748b408567ef91b3e21783bddc99e197 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -19,10 +19,10 @@ index 68388f12d..be7dced63 100644
  
          Objects.requireNonNull(this.entityManager);
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 5578db8e7..ad1836ae3 100644
+index 342f5fdba..c0776bcf1 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -218,7 +218,8 @@ public abstract class PlayerList {
+@@ -219,7 +219,8 @@ public abstract class PlayerList {
          boolean flag = gamerules.getBoolean(GameRules.RULE_DO_IMMEDIATE_RESPAWN);
          boolean flag1 = gamerules.getBoolean(GameRules.RULE_REDUCEDDEBUGINFO);
  
@@ -32,7 +32,7 @@ index 5578db8e7..ad1836ae3 100644
          entityplayer.getBukkitEntity().sendSupportedChannels(); // CraftBukkit
          playerconnection.sendPacket(new PacketPlayOutCustomPayload(PacketPlayOutCustomPayload.BRAND, (new PacketDataSerializer(Unpooled.buffer())).a(this.getServer().getServerModName())));
          playerconnection.sendPacket(new PacketPlayOutServerDifficulty(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
-@@ -733,6 +734,7 @@ public abstract class PlayerList {
+@@ -739,6 +740,7 @@ public abstract class PlayerList {
          // CraftBukkit start
          WorldData worlddata = worldserver1.getWorldData();
          entityplayer1.connection.sendPacket(new PacketPlayOutRespawn(worldserver1.getDimensionManager(), worldserver1.getDimensionKey(), BiomeManager.a(worldserver1.getSeed()), entityplayer1.gameMode.getGameMode(), entityplayer1.gameMode.c(), worldserver1.isDebugWorld(), worldserver1.isFlatWorld(), flag));
