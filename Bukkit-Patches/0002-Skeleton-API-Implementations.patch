@@ -1,14 +1,14 @@
-From 001ee00b48c2ce12704bd224cdc5f1ce0cb9b689 Mon Sep 17 00:00:00 2001
+From d0de40c21c6c1ee205391a0ec33a07cafd95c33c Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index ec51df8d..7c715fdc 100644
+index 9a8eabc4..05595fea 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -1583,4 +1583,9 @@ public final class Bukkit {
+@@ -1607,4 +1607,9 @@ public final class Bukkit {
      public static UnsafeValues getUnsafe() {
          return server.getUnsafe();
      }
@@ -19,10 +19,10 @@ index ec51df8d..7c715fdc 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index d5aafa0e..afe2047b 100644
+index 40e4036a..8e627f70 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1335,4 +1335,13 @@ public interface Server extends PluginMessageRecipient {
+@@ -1355,4 +1355,13 @@ public interface Server extends PluginMessageRecipient {
      @Deprecated
      @NotNull
      UnsafeValues getUnsafe();

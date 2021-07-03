@@ -1,11 +1,11 @@
-From e2323d648d6f13a0d416d09e8125a2fa1feea5f8 Mon Sep 17 00:00:00 2001
+From 79bf0204e2fe0c4b5e63be499c2dc23911ef8fbf Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 02:59:14 +0100
 Subject: [PATCH] BungeeCord Chat API
 
 
 diff --git a/pom.xml b/pom.xml
-index ee3ab142..10eeaef6 100644
+index b9313314..01f31f51 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -51,6 +51,13 @@
@@ -24,8 +24,8 @@ index ee3ab142..10eeaef6 100644
              <artifactId>snakeyaml</artifactId>
 @@ -189,6 +196,7 @@
                          <link>https://guava.dev/releases/21.0/api/docs/</link>
-                         <link>https://javadoc.io/doc/org.yaml/snakeyaml/1.27/</link>
-                         <link>https://javadoc.io/doc/org.jetbrains/annotations-java5/20.1.0/</link>
+                         <link>https://javadoc.io/doc/org.yaml/snakeyaml/1.28/</link>
+                         <link>https://javadoc.io/doc/org.jetbrains/annotations-java5/21.0.1/</link>
 +                        <link>https://javadoc.io/doc/net.md-5/bungeecord-chat/1.16-R0.4/</link>
                      </links>
                  </configuration>
@@ -293,10 +293,10 @@ index 427368a7..44d597d7 100644
       * Gets the char value associated with this color
       *
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 6a461792..bde7c164 100644
+index 16040a57..4fe0997b 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1343,6 +1343,24 @@ public interface Server extends PluginMessageRecipient {
+@@ -1363,6 +1363,24 @@ public interface Server extends PluginMessageRecipient {
          public org.bukkit.configuration.file.YamlConfiguration getConfig() {
              throw new UnsupportedOperationException("Not supported yet.");
          }

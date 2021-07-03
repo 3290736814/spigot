@@ -1,4 +1,4 @@
-From 21f02f8c66b546b8ce714bfe4ae7844a7f01ec54 Mon Sep 17 00:00:00 2001
+From c3d91bf3b96ce76ad28b733976e7a605488c1204 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 2 Jun 2013 10:42:57 +1000
 Subject: [PATCH] Spigot Timings
@@ -8,10 +8,10 @@ Adds performance tracking timings all around the Minecraft Server, and improves 
 Plugins can track their own timings with CustomTimingsHandler
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 7c715fdc..7168dd08 100644
+index 05595fea..94089c0a 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -649,6 +649,7 @@ public final class Bukkit {
+@@ -673,6 +673,7 @@ public final class Bukkit {
       */
      public static void reload() {
          server.reload();
@@ -20,10 +20,10 @@ index 7c715fdc..7168dd08 100644
  
      /**
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index afe2047b..6a461792 100644
+index 8e627f70..16040a57 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1339,6 +1339,10 @@ public interface Server extends PluginMessageRecipient {
+@@ -1359,6 +1359,10 @@ public interface Server extends PluginMessageRecipient {
      // Spigot start
      public class Spigot {
  
