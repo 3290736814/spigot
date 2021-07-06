@@ -1,4 +1,4 @@
-From a01879588f12bfca78816ee0783124a3836b5c6a Mon Sep 17 00:00:00 2001
+From cf96818c9e73afc9435cb4d75240b9f42fa5ea03 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Thu, 27 Jun 2013 17:26:09 +1000
 Subject: [PATCH] Properly Close Inventories
@@ -6,7 +6,7 @@ Subject: [PATCH] Properly Close Inventories
 Properly close inventories when unloading and switching worlds.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 317519ea6..70d0d321d 100644
+index 69b8fff07..97e94d673 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -1033,6 +1033,15 @@ public class WorldServer extends World implements GeneratorAccessSeed {

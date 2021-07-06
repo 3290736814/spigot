@@ -1,21 +1,21 @@
-From 078697f31a02ef2dab26a530170e8e79da7d948a Mon Sep 17 00:00:00 2001
+From 61123b99643cbef09d1baec376e45cbd2591c6da Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 14 Apr 2014 09:46:20 +1000
 Subject: [PATCH] Use Provided Case for Non Existent Offline Players
 
 
 diff --git a/src/main/java/net/minecraft/server/players/UserCache.java b/src/main/java/net/minecraft/server/players/UserCache.java
-index 8c7034b94..1455de86d 100644
+index 2f993a534..8ebf2f742 100644
 --- a/src/main/java/net/minecraft/server/players/UserCache.java
 +++ b/src/main/java/net/minecraft/server/players/UserCache.java
 @@ -152,7 +152,7 @@ public class UserCache {
              usercache_usercacheentry.a(this.d());
-             gameprofile = usercache_usercacheentry.a();
+             optional = Optional.of(usercache_usercacheentry.a());
          } else {
--            gameprofile = a(this.profileRepository, s1);
-+            gameprofile = a(this.profileRepository, s); // Spigot - use correct case for offline players
-             if (gameprofile != null) {
-                 this.a(gameprofile);
+-            optional = a(this.profileRepository, s1);
++            optional = a(this.profileRepository, s); // Spigot - use correct case for offline players
+             if (optional.isPresent()) {
+                 this.a((GameProfile) optional.get());
                  flag = false;
 -- 
 2.25.1

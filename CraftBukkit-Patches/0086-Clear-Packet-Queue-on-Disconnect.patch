@@ -1,11 +1,11 @@
-From e5b9fccf1a5fdb39c259e12fdd1ad9511ef72f93 Mon Sep 17 00:00:00 2001
+From cf808e61800109c083d205e6e4ad54d28d76922e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 22 Jul 2015 19:04:37 +1000
 Subject: [PATCH] Clear Packet Queue on Disconnect
 
 
 diff --git a/src/main/java/net/minecraft/network/NetworkManager.java b/src/main/java/net/minecraft/network/NetworkManager.java
-index 671c235e8..f94bb9340 100644
+index 589a67447..6dc90ef07 100644
 --- a/src/main/java/net/minecraft/network/NetworkManager.java
 +++ b/src/main/java/net/minecraft/network/NetworkManager.java
 @@ -403,6 +403,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
@@ -17,10 +17,10 @@ index 671c235e8..f94bb9340 100644
  
          }
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index 270c31f4d..cbc2b03a2 100644
+index bce5ea923..0895c60df 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-@@ -1696,7 +1696,7 @@ public class PlayerConnection implements ServerPlayerConnection, PacketListenerP
+@@ -1683,7 +1683,7 @@ public class PlayerConnection implements ServerPlayerConnection, PacketListenerP
  
      public void a(Packet<?> packet, @Nullable GenericFutureListener<? extends Future<? super Void>> genericfuturelistener) {
          // CraftBukkit start

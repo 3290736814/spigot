@@ -1,4 +1,4 @@
-From 0078c4af2b89fe2b24088e5553b0c651696225a3 Mon Sep 17 00:00:00 2001
+From d19acb3ae5813563ea0b69c22c016791db25a170 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -6,10 +6,10 @@ Subject: [PATCH] Async Operation Catching
 Catch and throw an exception when a potentially unsafe operation occurs on a thread other than the main server thread.
 
 diff --git a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-index 8d6207f6d..3d6d44547 100644
+index 83dbdb987..87aa223a3 100644
 --- a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-@@ -1066,6 +1066,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+@@ -1067,6 +1067,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
      }
  
      protected void addEntity(Entity entity) {
@@ -17,7 +17,7 @@ index 8d6207f6d..3d6d44547 100644
          if (!(entity instanceof EntityComplexPart)) {
              EntityTypes<?> entitytypes = entity.getEntityType();
              int i = entitytypes.getChunkRange() * 16;
-@@ -1101,6 +1102,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+@@ -1102,6 +1103,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
      }
  
      protected void removeEntity(Entity entity) {
@@ -25,7 +25,7 @@ index 8d6207f6d..3d6d44547 100644
          if (entity instanceof EntityPlayer) {
              EntityPlayer entityplayer = (EntityPlayer) entity;
  
-@@ -1318,6 +1320,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+@@ -1323,6 +1325,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
          }
  
          public void clear(EntityPlayer entityplayer) {
@@ -33,7 +33,7 @@ index 8d6207f6d..3d6d44547 100644
              if (this.seenBy.remove(entityplayer.connection)) {
                  this.serverEntity.a(entityplayer);
              }
-@@ -1325,6 +1328,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+@@ -1330,6 +1333,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
          }
  
          public void updatePlayer(EntityPlayer entityplayer) {
@@ -42,7 +42,7 @@ index 8d6207f6d..3d6d44547 100644
                  Vec3D vec3d = entityplayer.getPositionVector().d(this.entity.getPositionVector()); // MC-155077, SPIGOT-5113
                  int i = Math.min(this.b(), (PlayerChunkMap.this.viewDistance - 1) * 16);
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 1da6da83c..68388f12d 100644
+index 78a0e7968..2cfa19942 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -980,6 +980,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -78,7 +78,7 @@ index 1da6da83c..68388f12d 100644
              if (entity instanceof EntityPlayer) {
                  EntityPlayer entityplayer = (EntityPlayer) entity;
 diff --git a/src/main/java/net/minecraft/world/entity/EntityLiving.java b/src/main/java/net/minecraft/world/entity/EntityLiving.java
-index a61a477ae..d78d30746 100644
+index d259e5b95..9ba350597 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityLiving.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityLiving.java
 @@ -1072,6 +1072,7 @@ public abstract class EntityLiving extends Entity {
@@ -121,7 +121,7 @@ index a8c5013a3..61767a794 100644
              world.removeTileEntity(blockposition);
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index c3c5a9b26..877946c38 100644
+index db424a6e1..51a8f7967 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -735,6 +735,7 @@ public final class CraftServer implements Server {

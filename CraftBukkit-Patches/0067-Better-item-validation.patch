@@ -1,14 +1,14 @@
-From 85ce5de394231f102b057a8a022d1a95fe95f94c Mon Sep 17 00:00:00 2001
+From be38d1466f5bae08e76923fd3fc2640fcd09a629 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
 
 
 diff --git a/src/main/java/net/minecraft/network/PacketDataSerializer.java b/src/main/java/net/minecraft/network/PacketDataSerializer.java
-index 3995b3788..0dad02448 100644
+index e356ab5b6..3be7dd189 100644
 --- a/src/main/java/net/minecraft/network/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/network/PacketDataSerializer.java
-@@ -457,6 +457,10 @@ public class PacketDataSerializer extends ByteBuf {
+@@ -482,6 +482,10 @@ public class PacketDataSerializer extends ByteBuf {
              NBTTagCompound nbttagcompound = null;
  
              if (item.usesDurability() || item.q()) {
@@ -58,7 +58,7 @@ index 6bd05ea36..2d403ad21 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index f5172e113..43fd580c8 100644
+index 59973554c..795d4ff86 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -77,6 +77,10 @@ import org.bukkit.inventory.meta.Repairable;
@@ -72,7 +72,7 @@ index f5172e113..43fd580c8 100644
  /**
   * Children must include the following:
   *
-@@ -327,18 +331,18 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -328,18 +332,18 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
              NBTTagCompound display = tag.getCompound(DISPLAY.NBT);
  
              if (display.hasKey(NAME.NBT)) {

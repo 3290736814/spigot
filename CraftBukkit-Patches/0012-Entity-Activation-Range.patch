@@ -1,4 +1,4 @@
-From d0e26682b495e688b4204f828b405f5085292116 Mon Sep 17 00:00:00 2001
+From 0f12b01115859000c43bef1a44047247451e4d93 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index b12c01d44..3c6e5aa1e 100644
+index b9da94b30..69b8fff07 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -503,6 +503,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -35,7 +35,7 @@ index b12c01d44..3c6e5aa1e 100644
          entity.aZ();
          GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 023d1ea43..4f6afc721 100644
+index 3673d8418..3f7e91c16 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -282,6 +282,12 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
@@ -102,7 +102,7 @@ index e776a27c1..145cf44a7 100644
      public GroupDataEntity prepare(WorldAccess worldaccess, DifficultyDamageScaler difficultydamagescaler, EnumMobSpawn enummobspawn, @Nullable GroupDataEntity groupdataentity, @Nullable NBTTagCompound nbttagcompound) {
          if (groupdataentity == null) {
 diff --git a/src/main/java/net/minecraft/world/entity/EntityAreaEffectCloud.java b/src/main/java/net/minecraft/world/entity/EntityAreaEffectCloud.java
-index 0b3cf60ed..d8ee94020 100644
+index 4dad6ef23..4705bbd27 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityAreaEffectCloud.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityAreaEffectCloud.java
 @@ -182,6 +182,18 @@ public class EntityAreaEffectCloud extends Entity {
@@ -125,7 +125,7 @@ index 0b3cf60ed..d8ee94020 100644
      public void tick() {
          super.tick();
 diff --git a/src/main/java/net/minecraft/world/entity/EntityLiving.java b/src/main/java/net/minecraft/world/entity/EntityLiving.java
-index 9960e5b58..d7702701b 100644
+index 6b8c1ba2f..121c7239e 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityLiving.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityLiving.java
 @@ -268,6 +268,13 @@ public abstract class EntityLiving extends Entity {
@@ -176,7 +176,7 @@ index 4cdb901e7..d7317e3a4 100644
          Vec3D vec3d = this.getMot();
  
 diff --git a/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java b/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java
-index 6ac0b63b0..9e671e3b7 100644
+index 57a70d9fc..12a45e73e 100644
 --- a/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java
 +++ b/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java
 @@ -224,6 +224,17 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
@@ -198,7 +198,7 @@ index 6ac0b63b0..9e671e3b7 100644
      protected void mobTick() {
          this.level.getMethodProfiler().enter("villagerBrain");
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java b/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java
-index 3d4c1171d..00d20ec47 100644
+index 131feaa3c..0438c0749 100644
 --- a/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java
 +++ b/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java
 @@ -73,6 +73,18 @@ public abstract class EntityArrow extends IProjectile {

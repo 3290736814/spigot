@@ -1,14 +1,14 @@
-From d2df6a8fb7d3b4c356a6dd23a0b804f9b00a2029 Mon Sep 17 00:00:00 2001
+From 743f9db049a31020f67ed6ad942431a5b3d92de7 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 1f99eab8b..94dc4d598 100644
+index de8da6de0..91f274832 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -292,6 +292,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -288,6 +288,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      public CommandDispatcher vanillaCommandDispatcher;
      private boolean forceTicks;
      // CraftBukkit end
@@ -21,7 +21,7 @@ index 1f99eab8b..94dc4d598 100644
  
      public static <S extends MinecraftServer> S a(Function<Thread, S> function) {
          AtomicReference<S> atomicreference = new AtomicReference();
-@@ -961,6 +967,13 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -969,6 +975,13 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
      }
  
@@ -35,7 +35,7 @@ index 1f99eab8b..94dc4d598 100644
      protected void x() {
          try {
              if (this.init()) {
-@@ -969,8 +982,11 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -977,8 +990,11 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                  this.status.setServerInfo(new ServerPing.ServerData(SharedConstants.getGameVersion().getName(), SharedConstants.getGameVersion().getProtocolVersion()));
                  this.a(this.status);
  
@@ -48,7 +48,7 @@ index 1f99eab8b..94dc4d598 100644
  
                      if (i > 5000L && this.nextTickTime - this.lastOverloadWarning >= 30000L) { // CraftBukkit
                          long j = i / 50L;
-@@ -981,6 +997,16 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -989,6 +1005,16 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                          this.lastOverloadWarning = this.nextTickTime;
                      }
  

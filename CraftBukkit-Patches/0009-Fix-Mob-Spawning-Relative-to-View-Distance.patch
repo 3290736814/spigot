@@ -1,4 +1,4 @@
-From 986b7bd53aee1a28617c4df059648da3b822ffc8 Mon Sep 17 00:00:00 2001
+From d1b37ea8c6311a440dd07946df88762e3d7d5579 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,10 +8,10 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/level/ChunkProviderServer.java b/src/main/java/net/minecraft/server/level/ChunkProviderServer.java
-index d57a6b197..6e0d5e95e 100644
+index 99e5bd084..a2c6f56a0 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkProviderServer.java
-@@ -435,7 +435,7 @@ public class ChunkProviderServer extends IChunkProvider {
+@@ -431,7 +431,7 @@ public class ChunkProviderServer extends IChunkProvider {
  
                      if (this.level.a(chunkcoordintpair) && !this.chunkMap.isOutsideOfRange(chunkcoordintpair)) {
                          chunk.setInhabitedTime(chunk.getInhabitedTime() + j);
@@ -21,10 +21,10 @@ index d57a6b197..6e0d5e95e 100644
                          }
  
 diff --git a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-index 68333dcac..fc7e26802 100644
+index 87aa223a3..b8f605a4b 100644
 --- a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-@@ -914,10 +914,21 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+@@ -915,10 +915,21 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
      }
  
      boolean isOutsideOfRange(ChunkCoordIntPair chunkcoordintpair) {

@@ -1,11 +1,11 @@
-From a92d41772d52bff942d7b4edddb0d924ca1ec182 Mon Sep 17 00:00:00 2001
+From 4cad31ed3d9390674cb1b80b33ecee4f3aabc23b Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
 
 
 diff --git a/src/main/java/net/minecraft/server/network/HandshakeListener.java b/src/main/java/net/minecraft/server/network/HandshakeListener.java
-index a627eae2b..4a5aa900b 100644
+index 7e39e66be..1990dc0a3 100644
 --- a/src/main/java/net/minecraft/server/network/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/network/HandshakeListener.java
 @@ -74,9 +74,9 @@ public class HandshakeListener implements PacketHandshakingInListener {
@@ -21,10 +21,10 @@ index a627eae2b..4a5aa900b 100644
  
                      this.connection.sendPacket(new PacketLoginOutDisconnect(chatmessage));
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index c0776bcf1..ee01760cb 100644
+index c83afc3d0..d199fde5b 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -576,7 +576,7 @@ public abstract class PlayerList {
+@@ -578,7 +578,7 @@ public abstract class PlayerList {
              event.disallow(PlayerLoginEvent.Result.KICK_BANNED, CraftChatMessage.fromComponent(chatmessage));
          } else if (!this.isWhitelisted(gameprofile)) {
              chatmessage = new ChatMessage("multiplayer.disconnect.not_whitelisted");
@@ -33,7 +33,7 @@ index c0776bcf1..ee01760cb 100644
          } else if (getIPBans().isBanned(socketaddress) && !getIPBans().get(socketaddress).hasExpired()) {
              IpBanEntry ipbanentry = this.ipBans.get(socketaddress);
  
-@@ -590,7 +590,7 @@ public abstract class PlayerList {
+@@ -592,7 +592,7 @@ public abstract class PlayerList {
          } else {
              // return this.players.size() >= this.maxPlayers && !this.d(gameprofile) ? new ChatMessage("multiplayer.disconnect.server_full") : null;
              if (this.players.size() >= this.maxPlayers && !this.d(gameprofile)) {
@@ -43,7 +43,7 @@ index c0776bcf1..ee01760cb 100644
          }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 8ea3387e0..8acc5c56d 100644
+index 049362300..af25dad34 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -741,11 +741,11 @@ public final class CraftServer implements Server {

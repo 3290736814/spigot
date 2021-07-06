@@ -1,14 +1,14 @@
-From c579bea1b348931f76286aca00e07b6f7b257a3a Mon Sep 17 00:00:00 2001
+From 687ee606f833e810fcf1a57ad59665f9d159dcb5 Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/player/EntityHuman.java b/src/main/java/net/minecraft/world/entity/player/EntityHuman.java
-index 9ab7f19d3..c631ca187 100644
+index 8c1fb2994..9b960ea91 100644
 --- a/src/main/java/net/minecraft/world/entity/player/EntityHuman.java
 +++ b/src/main/java/net/minecraft/world/entity/player/EntityHuman.java
-@@ -1336,7 +1336,7 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1332,7 +1332,7 @@ public abstract class EntityHuman extends EntityLiving {
                              }
                          }
  
@@ -17,7 +17,7 @@ index 9ab7f19d3..c631ca187 100644
                      } else {
                          this.level.playSound((EntityHuman) null, this.locX(), this.locY(), this.locZ(), SoundEffects.PLAYER_ATTACK_NODAMAGE, this.getSoundCategory(), 1.0F, 1.0F);
                          if (flag4) {
-@@ -1509,9 +1509,9 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1505,9 +1505,9 @@ public abstract class EntityHuman extends EntityLiving {
          super.jump();
          this.a(StatisticList.JUMP);
          if (this.isSprinting()) {
@@ -29,7 +29,7 @@ index 9ab7f19d3..c631ca187 100644
          }
  
      }
-@@ -1584,19 +1584,19 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1580,19 +1580,19 @@ public abstract class EntityHuman extends EntityLiving {
                  i = Math.round((float) Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2) * 100.0F);
                  if (i > 0) {
                      this.a(StatisticList.SWIM_ONE_CM, i);
@@ -52,7 +52,7 @@ index 9ab7f19d3..c631ca187 100644
                  }
              } else if (this.isClimbing()) {
                  if (d1 > 0.0D) {
-@@ -1607,13 +1607,13 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1603,13 +1603,13 @@ public abstract class EntityHuman extends EntityLiving {
                  if (i > 0) {
                      if (this.isSprinting()) {
                          this.a(StatisticList.SPRINT_ONE_CM, i);
@@ -70,7 +70,7 @@ index 9ab7f19d3..c631ca187 100644
                  }
              } else if (this.isGliding()) {
 diff --git a/src/main/java/net/minecraft/world/food/FoodMetaData.java b/src/main/java/net/minecraft/world/food/FoodMetaData.java
-index d2c32def8..96579d4e3 100644
+index fc6137085..1e2601d6c 100644
 --- a/src/main/java/net/minecraft/world/food/FoodMetaData.java
 +++ b/src/main/java/net/minecraft/world/food/FoodMetaData.java
 @@ -97,7 +97,7 @@ public class FoodMetaData {

@@ -1,14 +1,14 @@
-From 16eb0913844905f28e20d1367f85fc2e256c4669 Mon Sep 17 00:00:00 2001
+From 0ee24aae4de785b596a1b68f5c6a0a96c4a8b78e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 12 Apr 2014 21:23:58 +1000
 Subject: [PATCH] Treat Bungee as Online Mode
 
 
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 3e600b911..055201793 100644
+index e6e54bd0e..ebb639fa0 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -236,7 +236,14 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -237,7 +237,14 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
          if (!this.getOnlineMode()) {
              DedicatedServer.LOGGER.warn("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
              DedicatedServer.LOGGER.warn("The server will make no attempt to authenticate usernames. Beware.");
@@ -25,10 +25,10 @@ index 3e600b911..055201793 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/players/NameReferencingFileConverter.java b/src/main/java/net/minecraft/server/players/NameReferencingFileConverter.java
-index 6fb726685..68c89968c 100644
+index 8a0a90d4c..4837b59f3 100644
 --- a/src/main/java/net/minecraft/server/players/NameReferencingFileConverter.java
 +++ b/src/main/java/net/minecraft/server/players/NameReferencingFileConverter.java
-@@ -67,7 +67,7 @@ public class NameReferencingFileConverter {
+@@ -68,7 +68,7 @@ public class NameReferencingFileConverter {
              return new String[i];
          });
  

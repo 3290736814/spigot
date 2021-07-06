@@ -1,4 +1,4 @@
-From 339fea87212083f6fb0d75522aaac73648caa6f0 Mon Sep 17 00:00:00 2001
+From f0a11f9b418b16a373b57a4c169a1df87982176a Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Thu, 26 Jan 2017 20:54:55 +0000
 Subject: [PATCH] Replace chunk loading / unloading rate throttling.
@@ -7,10 +7,10 @@ Uses a scheme based on estimated tick slack time.
 See https://hub.spigotmc.org/stash/projects/SPIGOT/repos/spigot/pull-requests/71/overview
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 6a274124c..8e361d05e 100644
+index c96775266..98d1f0fcc 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -186,6 +186,7 @@ import org.bukkit.event.server.ServerLoadEvent;
+@@ -183,6 +183,7 @@ import org.bukkit.event.server.ServerLoadEvent;
  // CraftBukkit end
  
  import org.bukkit.craftbukkit.SpigotTimings; // Spigot
@@ -18,7 +18,7 @@ index 6a274124c..8e361d05e 100644
  
  public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTask> implements IMojangStatistics, ICommandListener, AutoCloseable {
  
-@@ -297,6 +298,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -293,6 +294,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      public static final int TICK_TIME = 1000000000 / TPS;
      private static final int SAMPLE_INTERVAL = 100;
      public final double[] recentTps = new double[ 3 ];
@@ -26,7 +26,7 @@ index 6a274124c..8e361d05e 100644
      // Spigot end
  
      public static <S extends MinecraftServer> S a(Function<Thread, S> function) {
-@@ -1191,6 +1193,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1193,6 +1195,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
      public void a(BooleanSupplier booleansupplier) {
          SpigotTimings.serverTickTimer.startTiming(); // Spigot
@@ -34,7 +34,7 @@ index 6a274124c..8e361d05e 100644
          long i = SystemUtils.getMonotonicNanos();
  
          ++this.tickCount;
-@@ -1239,6 +1242,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1241,6 +1244,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          this.frameTimer.a(i1 - i);
          this.profiler.exit();
          org.spigotmc.WatchdogThread.tick(); // Spigot
@@ -43,10 +43,10 @@ index 6a274124c..8e361d05e 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-index ed0069217..047daae25 100644
+index d62dfd54f..bf599a89a 100644
 --- a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-@@ -426,6 +426,9 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+@@ -427,6 +427,9 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
          }
  
      }
@@ -56,7 +56,7 @@ index ed0069217..047daae25 100644
      protected void unloadChunks(BooleanSupplier booleansupplier) {
          GameProfilerFiller gameprofilerfiller = this.level.getMethodProfiler();
  
-@@ -441,18 +444,28 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+@@ -442,18 +445,28 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
  
      private void b(BooleanSupplier booleansupplier) {
          LongIterator longiterator = this.toDrop.iterator();

@@ -1,4 +1,4 @@
-From f9549354be0bfe24b8f808b365edbc2053d4b35f Mon Sep 17 00:00:00 2001
+From ea019f10daab41d98e630a7f70e971046c8381e6 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 3 Mar 2016 19:45:46 +1100
 Subject: [PATCH] Implement SpawnerSpawnEvent.
@@ -28,7 +28,7 @@ index 0b744b2d7..e330ff646 100644
                          if (!worldserver.addAllEntitiesSafely(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER)) { // CraftBukkit
                              this.d(worldserver, blockposition);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 6e4846a2e..0d3daae04 100644
+index 0826750b7..1494d409d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 @@ -225,6 +225,8 @@ import org.bukkit.inventory.InventoryView;

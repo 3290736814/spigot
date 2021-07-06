@@ -1,4 +1,4 @@
-From 9b8e0735ac34a1822d5148e41c79726517429668 Mon Sep 17 00:00:00 2001
+From 84cabb53af9b154972f175ad7c109a3add57665f Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -6,10 +6,10 @@ Subject: [PATCH] Spigot Configuration
 Provides the basic infrastructure to load and save the Spigot configuration file, spigot.yml
 
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index c55d8b009..4efae0d31 100644
+index b730cde94..3dfd678cc 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -190,6 +190,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -191,6 +191,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              this.e(dedicatedserverproperties.preventProxyConnections);
              this.a_(dedicatedserverproperties.serverIp);
          }
@@ -21,7 +21,7 @@ index c55d8b009..4efae0d31 100644
  
          this.setPVP(dedicatedserverproperties.pvp);
          this.setAllowFlight(dedicatedserverproperties.allowFlight);
-@@ -222,7 +227,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -223,7 +228,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
          }
  
          // CraftBukkit start
@@ -31,10 +31,10 @@ index c55d8b009..4efae0d31 100644
          server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.STARTUP);
          // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
-index 288db9225..6e52e8289 100644
+index 861ae9226..4aee8ca68 100644
 --- a/src/main/java/net/minecraft/world/level/World.java
 +++ b/src/main/java/net/minecraft/world/level/World.java
-@@ -143,6 +143,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -144,6 +144,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      public long ticksPerWaterAmbientSpawns;
      public long ticksPerAmbientSpawns;
      public boolean populating;
@@ -42,7 +42,7 @@ index 288db9225..6e52e8289 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -157,6 +158,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -158,6 +159,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      }
  
      protected World(WorldDataMutable worlddatamutable, ResourceKey<World> resourcekey, final DimensionManager dimensionmanager, Supplier<GameProfilerFiller> supplier, boolean flag, boolean flag1, long i, org.bukkit.generator.ChunkGenerator gen, org.bukkit.World.Environment env) {
@@ -51,7 +51,7 @@ index 288db9225..6e52e8289 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getCraftServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 387ad16a0..c3c5a9b26 100644
+index 6e115dac9..db424a6e1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -784,6 +784,7 @@ public final class CraftServer implements Server {
