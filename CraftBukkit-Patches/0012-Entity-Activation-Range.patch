@@ -1,4 +1,4 @@
-From 0f12b01115859000c43bef1a44047247451e4d93 Mon Sep 17 00:00:00 2001
+From f8608502a38bf27e4fb9ecb5a90ae5cc07e52d70 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,10 +9,10 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index b9da94b30..69b8fff07 100644
+index ccdeaab96..998f619a1 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
-@@ -503,6 +503,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -465,6 +465,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
                  gameprofilerfiller.exit();
              }
  
@@ -20,7 +20,7 @@ index b9da94b30..69b8fff07 100644
              timings.entityTick.startTiming(); // Spigot
              this.entityTickList.a((entity) -> {
                  if (!entity.isRemoved()) {
-@@ -795,6 +796,13 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -757,6 +758,13 @@ public class WorldServer extends World implements GeneratorAccessSeed {
      }
  
      public void entityJoinedWorld(Entity entity) {

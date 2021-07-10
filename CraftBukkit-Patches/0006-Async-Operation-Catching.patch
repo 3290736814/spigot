@@ -1,4 +1,4 @@
-From d19acb3ae5813563ea0b69c22c016791db25a170 Mon Sep 17 00:00:00 2001
+From e09dbd2723c23b0e3fe15637cf1482b80ce9185d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -42,10 +42,10 @@ index 83dbdb987..87aa223a3 100644
                  Vec3D vec3d = entityplayer.getPositionVector().d(this.entity.getPositionVector()); // MC-155077, SPIGOT-5113
                  int i = Math.min(this.b(), (PlayerChunkMap.this.viewDistance - 1) * 16);
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 78a0e7968..2cfa19942 100644
+index f299cbf90..3216150bf 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
-@@ -980,6 +980,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -942,6 +942,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
  
      // CraftBukkit start
      private boolean addEntity0(Entity entity, CreatureSpawnEvent.SpawnReason spawnReason) {
@@ -53,7 +53,7 @@ index 78a0e7968..2cfa19942 100644
          if (entity.isRemoved()) {
              // WorldServer.LOGGER.warn("Tried to add entity {} but it was marked as removed already", EntityTypes.getName(entity.getEntityType())); // CraftBukkit
              return false;
-@@ -1763,6 +1764,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1725,6 +1726,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
  
      @Override
      public LevelEntityGetter<Entity> getEntities() {
@@ -61,7 +61,7 @@ index 78a0e7968..2cfa19942 100644
          return this.entityManager.d();
      }
  
-@@ -1824,6 +1826,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1786,6 +1788,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          }
  
          public void b(Entity entity) {
@@ -69,7 +69,7 @@ index 78a0e7968..2cfa19942 100644
              WorldServer.this.getChunkProvider().addEntity(entity);
              if (entity instanceof EntityPlayer) {
                  WorldServer.this.players.add((EntityPlayer) entity);
-@@ -1849,6 +1852,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1811,6 +1814,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          }
  
          public void a(Entity entity) {

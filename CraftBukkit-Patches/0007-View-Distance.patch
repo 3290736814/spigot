@@ -1,4 +1,4 @@
-From ba1248ed3426d033f70c07a5c7252f1f991d8301 Mon Sep 17 00:00:00 2001
+From 0c5f647caa91bc166e84dd5caa089e9cdaa36148 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,10 +6,10 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 2cfa19942..07bdfd5c8 100644
+index 3216150bf..591093ba2 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
-@@ -248,7 +248,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -245,7 +245,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
  
          this.entityManager = new PersistentEntitySectionManager<>(Entity.class, new WorldServer.a(), entitypersistentstorage);
          DefinedStructureManager definedstructuremanager = minecraftserver.getDefinedStructureManager();

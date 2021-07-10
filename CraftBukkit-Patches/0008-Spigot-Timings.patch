@@ -1,4 +1,4 @@
-From 93371691761cfc7b8a896707ca072170e1932472 Mon Sep 17 00:00:00 2001
+From 6a77f70720d34f11dab0411833ac8cec07966f73 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -199,10 +199,10 @@ index ff52bc504..99e5bd084 100644
  
      private void a(long i, Consumer<Chunk> consumer) {
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 07bdfd5c8..b9da94b30 100644
+index 591093ba2..ccdeaab96 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
-@@ -160,6 +160,7 @@ import net.minecraft.world.level.block.entity.TileEntity;
+@@ -157,6 +157,7 @@ import net.minecraft.world.entity.monster.EntityDrowned;
  import net.minecraft.world.level.storage.WorldDataServer;
  import org.bukkit.Bukkit;
  import org.bukkit.WeatherType;
@@ -210,7 +210,7 @@ index 07bdfd5c8..b9da94b30 100644
  import org.bukkit.craftbukkit.event.CraftEventFactory;
  import org.bukkit.craftbukkit.util.WorldUUID;
  import org.bukkit.event.entity.CreatureSpawnEvent;
-@@ -470,17 +471,21 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -432,17 +433,21 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          this.S();
          this.b();
          gameprofilerfiller.exitEnter("tickPending");
@@ -232,7 +232,7 @@ index 07bdfd5c8..b9da94b30 100644
          this.handlingTick = false;
          gameprofilerfiller.exit();
          boolean flag3 = true || !this.players.isEmpty() || !this.getForceLoadedChunks().isEmpty(); // CraftBukkit - this prevents entity cleanup, other issues on servers with no players
-@@ -491,12 +496,14 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -453,12 +458,14 @@ public class WorldServer extends World implements GeneratorAccessSeed {
  
          if (flag3 || this.emptyTime++ < 300) {
              gameprofilerfiller.enter("entities");
@@ -247,7 +247,7 @@ index 07bdfd5c8..b9da94b30 100644
              this.entityTickList.a((entity) -> {
                  if (!entity.isRemoved()) {
                      if (false && this.i(entity)) { // CraftBukkit - We prevent spawning in general, so this butchering is not needed
-@@ -521,6 +528,8 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -483,6 +490,8 @@ public class WorldServer extends World implements GeneratorAccessSeed {
                      }
                  }
              });
@@ -256,7 +256,7 @@ index 07bdfd5c8..b9da94b30 100644
              gameprofilerfiller.exit();
              this.tickBlockEntities();
          }
-@@ -786,6 +795,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -748,6 +757,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
      }
  
      public void entityJoinedWorld(Entity entity) {
@@ -264,7 +264,7 @@ index 07bdfd5c8..b9da94b30 100644
          entity.aZ();
          GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
  
-@@ -804,6 +814,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -766,6 +776,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
  
              this.a(entity, entity1);
          }
