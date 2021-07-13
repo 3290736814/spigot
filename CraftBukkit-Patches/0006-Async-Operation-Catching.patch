@@ -1,4 +1,4 @@
-From e09dbd2723c23b0e3fe15637cf1482b80ce9185d Mon Sep 17 00:00:00 2001
+From 7fb143e4edf53f66474157e5056894de1d68c399 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -133,10 +133,10 @@ index db424a6e1..51a8f7967 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index bcb0f18b3..73301e796 100644
+index 05d8a187e..fad5223a2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -397,6 +397,7 @@ public class CraftWorld implements World {
+@@ -398,6 +398,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean unloadChunkRequest(int x, int z) {
@@ -144,7 +144,7 @@ index bcb0f18b3..73301e796 100644
          if (isChunkLoaded(x, z)) {
              world.getChunkProvider().removeTicket(TicketType.PLUGIN, new ChunkCoordIntPair(x, z), 1, Unit.INSTANCE);
          }
-@@ -405,6 +406,7 @@ public class CraftWorld implements World {
+@@ -406,6 +407,7 @@ public class CraftWorld implements World {
      }
  
      private boolean unloadChunk0(int x, int z, boolean save) {
@@ -152,7 +152,7 @@ index bcb0f18b3..73301e796 100644
          if (!isChunkLoaded(x, z)) {
              return true;
          }
-@@ -419,6 +421,7 @@ public class CraftWorld implements World {
+@@ -420,6 +422,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean regenerateChunk(int x, int z) {
@@ -160,7 +160,7 @@ index bcb0f18b3..73301e796 100644
          throw new UnsupportedOperationException("Not supported in this Minecraft version! Unless you can fix it, this is not a bug :)");
          /*
          if (!unloadChunk0(x, z, false)) {
-@@ -470,6 +473,7 @@ public class CraftWorld implements World {
+@@ -471,6 +474,7 @@ public class CraftWorld implements World {
  
      @Override
      public boolean loadChunk(int x, int z, boolean generate) {
@@ -168,7 +168,7 @@ index bcb0f18b3..73301e796 100644
          IChunkAccess chunk = world.getChunkProvider().getChunkAt(x, z, generate ? ChunkStatus.FULL : ChunkStatus.EMPTY, true);
  
          // If generate = false, but the chunk already exists, we will get this back.
-@@ -1101,6 +1105,7 @@ public class CraftWorld implements World {
+@@ -1102,6 +1106,7 @@ public class CraftWorld implements World {
  
      @Override
      public Collection<Entity> getNearbyEntities(BoundingBox boundingBox, Predicate<Entity> filter) {
@@ -176,7 +176,7 @@ index bcb0f18b3..73301e796 100644
          Validate.notNull(boundingBox, "Bounding box is null!");
  
          AxisAlignedBB bb = new AxisAlignedBB(boundingBox.getMinX(), boundingBox.getMinY(), boundingBox.getMinZ(), boundingBox.getMaxX(), boundingBox.getMaxY(), boundingBox.getMaxZ());
-@@ -1255,6 +1260,7 @@ public class CraftWorld implements World {
+@@ -1256,6 +1261,7 @@ public class CraftWorld implements World {
  
      @Override
      public void save() {
@@ -185,10 +185,10 @@ index bcb0f18b3..73301e796 100644
          boolean oldSave = world.noSave;
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 64d8dba52..d99451f27 100644
+index 3f3729517..dbd2dcad0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -528,6 +528,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -530,6 +530,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
  
      @Override
      public List<org.bukkit.entity.Entity> getNearbyEntities(double x, double y, double z) {

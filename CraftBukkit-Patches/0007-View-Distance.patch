@@ -1,4 +1,4 @@
-From 0c5f647caa91bc166e84dd5caa089e9cdaa36148 Mon Sep 17 00:00:00 2001
+From a32fc5cd7c080bf296d2f2902f0f92a320939b9f Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -41,10 +41,10 @@ index 38dd1ca4d..c83afc3d0 100644
          entityplayer1.unsetRemoved();
          entityplayer1.connection.teleport(new Location(worldserver1.getWorld(), entityplayer1.locX(), entityplayer1.locY(), entityplayer1.locZ(), entityplayer1.getYRot(), entityplayer1.getXRot()));
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 73301e796..10b11bb86 100644
+index fad5223a2..088babd9d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2368,6 +2368,13 @@ public class CraftWorld implements World {
+@@ -2369,6 +2369,13 @@ public class CraftWorld implements World {
          return (getHandle().getDragonBattle() == null) ? null : new CraftDragonBattle(getHandle().getDragonBattle());
      }
  

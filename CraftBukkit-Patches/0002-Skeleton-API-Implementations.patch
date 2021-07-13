@@ -1,4 +1,4 @@
-From 3911c1f09d87f7836942580239c3de01a3195051 Mon Sep 17 00:00:00 2001
+From 34a4c9b8b8b6bad4049702ebd8e500d3f760046c Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -27,10 +27,10 @@ index 73bb34b63..6e115dac9 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index dfaffdc67..bcb0f18b3 100644
+index c0225ec9c..05d8a187e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2361,4 +2361,15 @@ public class CraftWorld implements World {
+@@ -2362,4 +2362,15 @@ public class CraftWorld implements World {
      public DragonBattle getEnderDragonBattle() {
          return (getHandle().getDragonBattle() == null) ? null : new CraftDragonBattle(getHandle().getDragonBattle());
      }
@@ -84,10 +84,10 @@ index d97716027..ad39408ef 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 1f990cbfa..64d8dba52 100644
+index 7c1a22d63..3f3729517 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -1052,4 +1052,15 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -1070,4 +1070,15 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          }
          return perm;
      }
