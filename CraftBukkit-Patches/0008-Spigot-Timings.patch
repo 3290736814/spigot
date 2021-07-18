@@ -1,4 +1,4 @@
-From 6a77f70720d34f11dab0411833ac8cec07966f73 Mon Sep 17 00:00:00 2001
+From 80913006f4d94c55287c59dfc88ad48d58f06ae7 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -527,10 +527,10 @@ index 04d8d9baa..d5a1fbb1d 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
      public CraftPersistentDataContainer persistentDataContainer;
 diff --git a/src/main/java/net/minecraft/world/level/chunk/Chunk.java b/src/main/java/net/minecraft/world/level/chunk/Chunk.java
-index 4d4b3ab5e..b9013fa23 100644
+index b7668a1a7..5b37d74d8 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/Chunk.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/Chunk.java
-@@ -1071,6 +1071,7 @@ public class Chunk implements IChunkAccess {
+@@ -1077,6 +1077,7 @@ public class Chunk implements IChunkAccess {
                          GameProfilerFiller gameprofilerfiller = Chunk.this.level.getMethodProfiler();
  
                          gameprofilerfiller.a(this::d);
@@ -538,7 +538,7 @@ index 4d4b3ab5e..b9013fa23 100644
                          IBlockData iblockdata = Chunk.this.getType(blockposition);
  
                          if (this.blockEntity.getTileType().isValidBlock(iblockdata)) {
-@@ -1090,6 +1091,10 @@ public class Chunk implements IChunkAccess {
+@@ -1096,6 +1097,10 @@ public class Chunk implements IChunkAccess {
  
                          this.blockEntity.a(crashreportsystemdetails);
                          throw new ReportedException(crashreport);
@@ -761,10 +761,10 @@ index 000000000..5387cd830
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
-index ce2e3d282..9ad17c560 100644
+index cd43b4551..4f8a30657 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
-@@ -396,7 +396,9 @@ public class CraftScheduler implements BukkitScheduler {
+@@ -411,7 +411,9 @@ public class CraftScheduler implements BukkitScheduler {
              if (task.isSync()) {
                  currentTask = task;
                  try {
@@ -775,7 +775,7 @@ index ce2e3d282..9ad17c560 100644
                      task.getOwner().getLogger().log(
                              Level.WARNING,
 diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftTask.java b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftTask.java
-index b67f2deb8..3c7066192 100644
+index c885bc744..70794669f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftTask.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftTask.java
 @@ -5,7 +5,10 @@ import org.bukkit.Bukkit;
@@ -790,15 +790,15 @@ index b67f2deb8..3c7066192 100644
  
      private volatile CraftTask next = null;
      public static final int ERROR = 0;
-@@ -28,6 +31,7 @@ class CraftTask implements BukkitTask, Runnable {
-     private final Plugin plugin;
+@@ -29,6 +32,7 @@ class CraftTask implements BukkitTask, Runnable {
      private final int id;
+     private final long createdAt = System.nanoTime();
  
 +    final CustomTimingsHandler timings; // Spigot
      CraftTask() {
          this(null, null, CraftTask.NO_REPEATING, CraftTask.NO_REPEATING);
      }
-@@ -53,6 +57,7 @@ class CraftTask implements BukkitTask, Runnable {
+@@ -54,6 +58,7 @@ class CraftTask implements BukkitTask, Runnable {
          }
          this.id = id;
          this.period = period;
@@ -806,7 +806,7 @@ index b67f2deb8..3c7066192 100644
      }
  
      @Override
-@@ -126,4 +131,10 @@ class CraftTask implements BukkitTask, Runnable {
+@@ -131,4 +136,10 @@ class CraftTask implements BukkitTask, Runnable {
          setPeriod(CraftTask.CANCEL);
          return true;
      }

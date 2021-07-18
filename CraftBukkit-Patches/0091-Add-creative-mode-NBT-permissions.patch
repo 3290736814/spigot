@@ -1,4 +1,4 @@
-From ca079f3dd499025dd755062fbf55eaeb53ed0972 Mon Sep 17 00:00:00 2001
+From 2294d2a1c3caf4f499dca382fc191a9ae705c342 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 25 Feb 2019 19:26:56 +1100
 Subject: [PATCH] Add creative mode NBT permissions
@@ -18,10 +18,10 @@ index 0895c60df..c5433a253 100644
                  TileEntity tileentity = this.player.level.getTileEntity(blockposition);
  
 diff --git a/src/main/java/net/minecraft/world/item/ItemBlock.java b/src/main/java/net/minecraft/world/item/ItemBlock.java
-index aa150e48f..ad7e47939 100644
+index e96bea479..bbccc09bc 100644
 --- a/src/main/java/net/minecraft/world/item/ItemBlock.java
 +++ b/src/main/java/net/minecraft/world/item/ItemBlock.java
-@@ -224,7 +224,7 @@ public class ItemBlock extends Item {
+@@ -228,7 +228,7 @@ public class ItemBlock extends Item {
                  TileEntity tileentity = world.getTileEntity(blockposition);
  
                  if (tileentity != null) {
