@@ -1,4 +1,4 @@
-From 7fb143e4edf53f66474157e5056894de1d68c399 Mon Sep 17 00:00:00 2001
+From a828f7dda11e5f186ed3b7e2bc7f012742da9f35 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -121,10 +121,10 @@ index a8c5013a3..61767a794 100644
              world.removeTileEntity(blockposition);
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index db424a6e1..51a8f7967 100644
+index bd4ec775e..1803614a0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -735,6 +735,7 @@ public final class CraftServer implements Server {
+@@ -745,6 +745,7 @@ public final class CraftServer implements Server {
      public boolean dispatchCommand(CommandSender sender, String commandLine) {
          Validate.notNull(sender, "Sender cannot be null");
          Validate.notNull(commandLine, "CommandLine cannot be null");
@@ -185,7 +185,7 @@ index 05d8a187e..fad5223a2 100644
          boolean oldSave = world.noSave;
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 3f3729517..dbd2dcad0 100644
+index 9e4967004..7c8b30fd2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -530,6 +530,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
@@ -197,7 +197,7 @@ index 3f3729517..dbd2dcad0 100644
          List<org.bukkit.entity.Entity> bukkitEntityList = new java.util.ArrayList<org.bukkit.entity.Entity>(notchEntityList.size());
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 89c49b6d8..e3b2cf7b3 100644
+index 748823e95..7ab4d4f32 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -331,6 +331,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {

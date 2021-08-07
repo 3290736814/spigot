@@ -1,4 +1,4 @@
-From 84cabb53af9b154972f175ad7c109a3add57665f Mon Sep 17 00:00:00 2001
+From a1c4bf1f7791edf776c2faeb8ae631d301c920a8 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -51,10 +51,10 @@ index 861ae9226..4aee8ca68 100644
          this.world = new CraftWorld((WorldServer) this, gen, env);
          this.ticksPerAnimalSpawns = this.getCraftServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 6e115dac9..db424a6e1 100644
+index 8f76b81b1..bd4ec775e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -784,6 +784,7 @@ public final class CraftServer implements Server {
+@@ -794,6 +794,7 @@ public final class CraftServer implements Server {
              logger.log(Level.WARNING, "Failed to load banned-players.json, " + ex.getMessage());
          }
  
@@ -62,7 +62,7 @@ index 6e115dac9..db424a6e1 100644
          for (WorldServer world : console.getWorlds()) {
              world.serverLevelData.setDifficulty(config.difficulty);
              world.setSpawnFlags(config.spawnMonsters, config.spawnAnimals);
-@@ -816,11 +817,13 @@ public final class CraftServer implements Server {
+@@ -826,11 +827,13 @@ public final class CraftServer implements Server {
              } else {
                  world.ticksPerAmbientSpawns = this.getTicksPerAmbientSpawns();
              }
@@ -77,7 +77,7 @@ index 6e115dac9..db424a6e1 100644
          ignoreVanillaPermissions = commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index e14685a8d..0b61b4594 100644
+index ccda7c6a4..83c908cf1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -121,6 +121,14 @@ public class Main {

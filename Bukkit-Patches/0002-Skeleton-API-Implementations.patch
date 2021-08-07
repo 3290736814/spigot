@@ -1,14 +1,14 @@
-From d427ac39b59c15d948c5d1adff90cb63d91cea73 Mon Sep 17 00:00:00 2001
+From 6473f3030cef12e202803f086bc7dd02d50c9027 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 9a8eabc4..05595fea 100644
+index 9708d79c..1d54b482 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -1607,4 +1607,9 @@ public final class Bukkit {
+@@ -1662,4 +1662,9 @@ public final class Bukkit {
      public static UnsafeValues getUnsafe() {
          return server.getUnsafe();
      }
@@ -19,10 +19,10 @@ index 9a8eabc4..05595fea 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 40e4036a..8e627f70 100644
+index 3eeaa571..ba0bdf1e 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1355,4 +1355,13 @@ public interface Server extends PluginMessageRecipient {
+@@ -1406,4 +1406,13 @@ public interface Server extends PluginMessageRecipient {
      @Deprecated
      @NotNull
      UnsafeValues getUnsafe();
@@ -57,7 +57,7 @@ index e3968d5f..da775a6a 100644
       * Finds the nearest raid close to the given location.
       *
 diff --git a/src/main/java/org/bukkit/command/CommandSender.java b/src/main/java/org/bukkit/command/CommandSender.java
-index b76cf67b..6d9708dc 100644
+index a7a2587b..4b6b9540 100644
 --- a/src/main/java/org/bukkit/command/CommandSender.java
 +++ b/src/main/java/org/bukkit/command/CommandSender.java
 @@ -53,4 +53,13 @@ public interface CommandSender extends Permissible {
@@ -120,10 +120,10 @@ index 76aad05f..4d308c5a 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index cc46c370..f6b77a2d 100644
+index e886e970..89dd126e 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1291,4 +1291,14 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1310,4 +1310,14 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       * @param book The book to open for this player
       */
      public void openBook(@NotNull ItemStack book);
