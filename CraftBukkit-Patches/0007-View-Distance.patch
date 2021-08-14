@@ -1,4 +1,4 @@
-From a32fc5cd7c080bf296d2f2902f0f92a320939b9f Mon Sep 17 00:00:00 2001
+From cb0b1c2534a61c90eee127e1f2f6e5336fbe8d5a Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,7 +6,7 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 3216150bf..591093ba2 100644
+index 54f8187a4..56bc1f239 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -245,7 +245,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -41,10 +41,10 @@ index 38dd1ca4d..c83afc3d0 100644
          entityplayer1.unsetRemoved();
          entityplayer1.connection.teleport(new Location(worldserver1.getWorld(), entityplayer1.locX(), entityplayer1.locY(), entityplayer1.locZ(), entityplayer1.getYRot(), entityplayer1.getXRot()));
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index fad5223a2..088babd9d 100644
+index 93388d276..0c032de95 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2369,6 +2369,13 @@ public class CraftWorld implements World {
+@@ -1710,6 +1710,13 @@ public class CraftWorld extends CraftRegionAccessor implements World {
          return (getHandle().getDragonBattle() == null) ? null : new CraftDragonBattle(getHandle().getDragonBattle());
      }
  

@@ -1,4 +1,4 @@
-From 6f44c14a796203a2939994aebed438941b1f24b5 Mon Sep 17 00:00:00 2001
+From 3773bd28b65dd9492e371642f127da463273a46b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -34,7 +34,7 @@ index 961b9e17d..7ffe8eae6 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java b/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java
-index 11145a549..f9acbe5af 100644
+index 53075620a..427908207 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java
 @@ -211,6 +211,7 @@ public abstract class ChunkGenerator {
@@ -45,7 +45,7 @@ index 11145a549..f9acbe5af 100644
              StructureSettingsFeature structuresettingsfeature = this.settings.a(structuregenerator);
  
              return structuresettingsfeature == null ? null : structuregenerator.getNearestGeneratedFeature(worldserver, worldserver.getStructureManager(), blockposition, i, flag, worldserver.getSeed(), structuresettingsfeature);
-@@ -288,6 +289,7 @@ public abstract class ChunkGenerator {
+@@ -325,6 +326,7 @@ public abstract class ChunkGenerator {
          SectionPosition sectionposition = SectionPosition.a(ichunkaccess);
          StructureStart<?> structurestart = structuremanager.a(sectionposition, structurefeature.feature, ichunkaccess);
          int j = structurestart != null ? structurestart.i() : 0;
@@ -53,7 +53,7 @@ index 11145a549..f9acbe5af 100644
          StructureSettingsFeature structuresettingsfeature = this.settings.a(structurefeature.feature);
  
          if (structuresettingsfeature != null) {
-@@ -298,6 +300,83 @@ public abstract class ChunkGenerator {
+@@ -335,6 +337,83 @@ public abstract class ChunkGenerator {
  
      }
  
@@ -151,7 +151,7 @@ index c7c2f3d22..8804ec67c 100644
  
      public StructureSettings(boolean flag) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index 19a8d2ef9..b0793d4a1 100644
+index b3098a425..6c46dbf4e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 @@ -161,7 +161,7 @@ public class CraftChunk implements Chunk {

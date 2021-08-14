@@ -1,4 +1,4 @@
-From 6473f3030cef12e202803f086bc7dd02d50c9027 Mon Sep 17 00:00:00 2001
+From 791eac3175d798bb3269585f432a49d169411bf3 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -37,10 +37,10 @@ index 3eeaa571..ba0bdf1e 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index e3968d5f..da775a6a 100644
+index 1deb7c09..6f2be5d3 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -2381,6 +2381,15 @@ public interface World extends PluginMessageRecipient, Metadatable {
+@@ -2359,6 +2359,15 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
      @Nullable
      public Location locateNearestStructure(@NotNull Location origin, @NotNull StructureType structureType, int radius, boolean findUnexplored);
  
