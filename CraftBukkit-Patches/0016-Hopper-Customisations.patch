@@ -1,4 +1,4 @@
-From 5689f19ce9aefa54f8554332f72bb85c0e2a84af Mon Sep 17 00:00:00 2001
+From 05f3ebcb3b6a62f56ab420402e604a222de4a790 Mon Sep 17 00:00:00 2001
 From: erocs <github@erocs.org>
 Date: Sun, 8 Sep 2013 12:06:15 -0700
 Subject: [PATCH] Hopper Customisations
@@ -6,7 +6,7 @@ Subject: [PATCH] Hopper Customisations
 Allows editing hopper cooldowns and amount transferred per tick.
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java b/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java
-index d2e67cfa4..7855259f1 100644
+index d2e67cfa4..4c29bf524 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java
 @@ -142,9 +142,14 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper {
@@ -114,7 +114,19 @@ index d2e67cfa4..7855259f1 100644
              iinventory.setItem(i, itemstack1);
          }
  
-@@ -415,7 +423,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper {
+@@ -388,6 +396,11 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper {
+             boolean flag1 = iinventory1.isEmpty();
+ 
+             if (itemstack1.isEmpty()) {
++                // Spigot start - SPIGOT-6693, InventorySubcontainer#setItem
++                if (!itemstack.isEmpty() && itemstack.getCount() > iinventory1.getMaxStackSize()) {
++                    itemstack = itemstack.cloneAndSubtract(iinventory1.getMaxStackSize());
++                }
++                // Spigot end
+                 iinventory1.setItem(i, itemstack);
+                 itemstack = ItemStack.EMPTY;
+                 flag = true;
+@@ -415,7 +428,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper {
                              }
                          }
  

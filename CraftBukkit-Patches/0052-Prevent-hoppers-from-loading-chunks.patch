@@ -1,14 +1,14 @@
-From dd514e3368af200dda2da6c09817e2a0839d55a0 Mon Sep 17 00:00:00 2001
+From 14a495a2c666343741510192e915605f9906dd47 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Wed, 5 Mar 2014 20:27:27 +0000
 Subject: [PATCH] Prevent hoppers from loading chunks
 
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java b/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java
-index 7855259f1..f5673ce91 100644
+index 4c29bf524..622e30d06 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java
-@@ -461,6 +461,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper {
+@@ -466,6 +466,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper {
      private static IInventory a(World world, double d0, double d1, double d2) {
          Object object = null;
          BlockPosition blockposition = new BlockPosition(d0, d1, d2);
