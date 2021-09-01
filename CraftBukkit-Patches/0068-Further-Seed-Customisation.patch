@@ -1,4 +1,4 @@
-From 3773bd28b65dd9492e371642f127da463273a46b Mon Sep 17 00:00:00 2001
+From 68b02ac55c9c9fed0f6fde24ea6110bb41404079 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -6,10 +6,10 @@ Subject: [PATCH] Further Seed Customisation
 Allow server admins that really want to to customise the seeds used in world generation even further.
 
 diff --git a/src/main/java/net/minecraft/world/entity/monster/EntitySlime.java b/src/main/java/net/minecraft/world/entity/monster/EntitySlime.java
-index 9116f1719..ce6026880 100644
+index 609a3389e..7c5b6d414 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/EntitySlime.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/EntitySlime.java
-@@ -323,7 +323,7 @@ public class EntitySlime extends EntityInsentient implements IMonster {
+@@ -324,7 +324,7 @@ public class EntitySlime extends EntityInsentient implements IMonster {
              }
  
              ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(blockposition);
@@ -151,10 +151,10 @@ index c7c2f3d22..8804ec67c 100644
  
      public StructureSettings(boolean flag) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index b3098a425..6c46dbf4e 100644
+index 58385b22b..9f14858ec 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-@@ -161,7 +161,7 @@ public class CraftChunk implements Chunk {
+@@ -193,7 +193,7 @@ public class CraftChunk implements Chunk {
      @Override
      public boolean isSlimeChunk() {
          // 987234911L is deterimined in EntitySlime when seeing if a slime can spawn in a chunk
