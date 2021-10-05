@@ -1,11 +1,11 @@
-From 255c70a6a0dbfc39927bea977aa9048c8869a08c Mon Sep 17 00:00:00 2001
+From c5be867af1ea07f14aec4707ea27717703d2e222 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 02:59:14 +0100
 Subject: [PATCH] BungeeCord Chat API
 
 
 diff --git a/pom.xml b/pom.xml
-index b430ccc1..6f6a8603 100644
+index 3cffb4a3..538a424d 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -51,6 +51,13 @@
@@ -293,10 +293,10 @@ index 427368a7..44d597d7 100644
       * Gets the char value associated with this color
       *
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 436b436f..98af6276 100644
+index b0fa11db..1baa9256 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1414,6 +1414,24 @@ public interface Server extends PluginMessageRecipient {
+@@ -1450,6 +1450,24 @@ public interface Server extends PluginMessageRecipient {
          public org.bukkit.configuration.file.YamlConfiguration getConfig() {
              throw new UnsupportedOperationException("Not supported yet.");
          }

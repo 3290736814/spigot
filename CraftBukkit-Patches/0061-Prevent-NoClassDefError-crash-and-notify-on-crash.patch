@@ -1,14 +1,14 @@
-From c7b459d045c0bcdfa7198966f481ac396a04e53b Mon Sep 17 00:00:00 2001
+From b04bcfde763f0e84f9de2dcf5922c1ccf0ebcbd0 Mon Sep 17 00:00:00 2001
 From: David <dmck2b@gmail.com>
 Date: Mon, 21 Apr 2014 12:43:08 +0100
 Subject: [PATCH] Prevent NoClassDefError crash and notify on crash
 
 
 diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
-index 6027e4d97..bd458b747 100644
+index b0dbbab9a..a560b7065 100644
 --- a/src/main/java/net/minecraft/world/level/World.java
 +++ b/src/main/java/net/minecraft/world/level/World.java
-@@ -148,6 +148,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -149,6 +149,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      public final org.spigotmc.SpigotWorldConfig spigotConfig; // Spigot
  
      public final SpigotTimings.WorldTimingsHandler timings; // Spigot
@@ -16,7 +16,7 @@ index 6027e4d97..bd458b747 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -363,7 +364,13 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -365,7 +366,13 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                  // CraftBukkit start
                  if (!this.captureBlockStates) { // Don't notify clients or update physics while capturing blockstates
                      // Modularize client and physic updates
@@ -31,7 +31,7 @@ index 6027e4d97..bd458b747 100644
                  }
                  // CraftBukkit end
  
-@@ -522,6 +529,10 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -524,6 +531,10 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                  }
                  // CraftBukkit end
                  iblockdata.doPhysics(this, blockposition, block, blockposition1, false);

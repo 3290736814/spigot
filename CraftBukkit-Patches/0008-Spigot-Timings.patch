@@ -1,4 +1,4 @@
-From 427b824c8e300bf9d6719de87ea63ed31c220fa9 Mon Sep 17 00:00:00 2001
+From ad4c3dcf04d9e2bd3d16d4a3d67df532be03afdd Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -354,7 +354,7 @@ index 06da921f4..a55d8b1fd 100644
  
      protected void as() {
 diff --git a/src/main/java/net/minecraft/world/entity/EntityLiving.java b/src/main/java/net/minecraft/world/entity/EntityLiving.java
-index 9ba350597..6b8c1ba2f 100644
+index f5006fa2a..4cd72140c 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityLiving.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityLiving.java
 @@ -143,6 +143,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
@@ -366,7 +366,7 @@ index 9ba350597..6b8c1ba2f 100644
  public abstract class EntityLiving extends Entity {
  
      private static final UUID SPEED_MODIFIER_SPRINTING_UUID = UUID.fromString("662A6B8D-DA3E-4C1C-8813-96EA6097278D");
-@@ -2754,6 +2756,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2755,6 +2757,7 @@ public abstract class EntityLiving extends Entity {
  
      @Override
      public void tick() {
@@ -374,7 +374,7 @@ index 9ba350597..6b8c1ba2f 100644
          super.tick();
          this.B();
          this.F();
-@@ -2794,7 +2797,9 @@ public abstract class EntityLiving extends Entity {
+@@ -2795,7 +2798,9 @@ public abstract class EntityLiving extends Entity {
              }
          }
  
@@ -384,7 +384,7 @@ index 9ba350597..6b8c1ba2f 100644
          double d0 = this.locX() - this.xo;
          double d1 = this.locZ() - this.zo;
          float f = (float) (d0 * d0 + d1 * d1);
-@@ -2875,6 +2880,7 @@ public abstract class EntityLiving extends Entity {
+@@ -2876,6 +2881,7 @@ public abstract class EntityLiving extends Entity {
              this.setXRot(0.0F);
          }
  
@@ -392,7 +392,7 @@ index 9ba350597..6b8c1ba2f 100644
      }
  
      public void updateEquipment() {
-@@ -3056,6 +3062,7 @@ public abstract class EntityLiving extends Entity {
+@@ -3057,6 +3063,7 @@ public abstract class EntityLiving extends Entity {
  
          this.setMot(d4, d5, d6);
          this.level.getMethodProfiler().enter("ai");
@@ -400,7 +400,7 @@ index 9ba350597..6b8c1ba2f 100644
          if (this.isFrozen()) {
              this.jumping = false;
              this.xxa = 0.0F;
-@@ -3065,6 +3072,7 @@ public abstract class EntityLiving extends Entity {
+@@ -3066,6 +3073,7 @@ public abstract class EntityLiving extends Entity {
              this.doTick();
              this.level.getMethodProfiler().exit();
          }
@@ -408,7 +408,7 @@ index 9ba350597..6b8c1ba2f 100644
  
          this.level.getMethodProfiler().exit();
          this.level.getMethodProfiler().enter("jump");
-@@ -3099,7 +3107,9 @@ public abstract class EntityLiving extends Entity {
+@@ -3100,7 +3108,9 @@ public abstract class EntityLiving extends Entity {
          this.A();
          AxisAlignedBB axisalignedbb = this.getBoundingBox();
  
@@ -418,7 +418,7 @@ index 9ba350597..6b8c1ba2f 100644
          this.level.getMethodProfiler().exit();
          this.level.getMethodProfiler().enter("freezing");
          boolean flag1 = this.getEntityType().a((Tag) TagsEntity.FREEZE_HURTS_EXTRA_TYPES);
-@@ -3128,7 +3138,9 @@ public abstract class EntityLiving extends Entity {
+@@ -3129,7 +3139,9 @@ public abstract class EntityLiving extends Entity {
              this.a(axisalignedbb, this.getBoundingBox());
          }
  
@@ -429,7 +429,7 @@ index 9ba350597..6b8c1ba2f 100644
          if (!this.level.isClientSide && this.ex() && this.aN()) {
              this.damageEntity(DamageSource.DROWN, 1.0F);
 diff --git a/src/main/java/net/minecraft/world/level/SpawnerCreature.java b/src/main/java/net/minecraft/world/level/SpawnerCreature.java
-index 97676812c..f7c01d8a2 100644
+index f1368b128..26f0247c6 100644
 --- a/src/main/java/net/minecraft/world/level/SpawnerCreature.java
 +++ b/src/main/java/net/minecraft/world/level/SpawnerCreature.java
 @@ -111,6 +111,7 @@ public final class SpawnerCreature {
@@ -440,7 +440,7 @@ index 97676812c..f7c01d8a2 100644
          EnumCreatureType[] aenumcreaturetype = SpawnerCreature.SPAWNING_CATEGORIES;
          int i = aenumcreaturetype.length;
  
-@@ -165,6 +166,7 @@ public final class SpawnerCreature {
+@@ -170,6 +171,7 @@ public final class SpawnerCreature {
              }
          }
  
@@ -449,7 +449,7 @@ index 97676812c..f7c01d8a2 100644
      }
  
 diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
-index fda4c82bd..d63228b3e 100644
+index 695133d45..7a05fc304 100644
 --- a/src/main/java/net/minecraft/world/level/World.java
 +++ b/src/main/java/net/minecraft/world/level/World.java
 @@ -82,6 +82,7 @@ import org.bukkit.Bukkit;
@@ -460,7 +460,7 @@ index fda4c82bd..d63228b3e 100644
  import org.bukkit.craftbukkit.block.CapturedBlockState;
  import org.bukkit.craftbukkit.block.data.CraftBlockData;
  import org.bukkit.craftbukkit.util.CraftNamespacedKey;
-@@ -146,6 +147,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -147,6 +148,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      public boolean populating;
      public final org.spigotmc.SpigotWorldConfig spigotConfig; // Spigot
  
@@ -469,7 +469,7 @@ index fda4c82bd..d63228b3e 100644
      public CraftWorld getWorld() {
          return this.world;
      }
-@@ -224,6 +227,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -226,6 +229,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
              public void c(WorldBorder worldborder, double d0) {}
          });
          // CraftBukkit end
@@ -477,7 +477,7 @@ index fda4c82bd..d63228b3e 100644
      }
  
      @Override
-@@ -629,12 +633,15 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -631,12 +635,15 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
          GameProfilerFiller gameprofilerfiller = this.getMethodProfiler();
  
          gameprofilerfiller.enter("blockEntities");
@@ -493,7 +493,7 @@ index fda4c82bd..d63228b3e 100644
          Iterator iterator = this.blockEntityTickers.iterator();
  
          while (iterator.hasNext()) {
-@@ -647,13 +654,16 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -649,13 +656,16 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
              }
          }
  
@@ -579,10 +579,10 @@ index 43eaab115..df5c31646 100644
      }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 2b7e762b1..55cb8e1e2 100644
+index 636eded4d..e0aa4a2f0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2186,6 +2186,11 @@ public final class CraftServer implements Server {
+@@ -2222,6 +2222,11 @@ public final class CraftServer implements Server {
      private final org.bukkit.Server.Spigot spigot = new org.bukkit.Server.Spigot()
      {
  
