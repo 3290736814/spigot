@@ -1,0 +1,91 @@
+From 91a7141377b383a6041b33309f182caa5e9dbd9f Mon Sep 17 00:00:00 2001
+From: Thinkofdeath <thinkofdeath@spigotmc.org>
+Date: Sun, 29 Jun 2014 21:10:34 +0100
+Subject: [PATCH] Limit block placement/interaction packets
+
+
+diff --git a/src/main/java/net/minecraft/network/protocol/game/PacketPlayInBlockPlace.java b/src/main/java/net/minecraft/network/protocol/game/PacketPlayInBlockPlace.java
+index 74d017780..744acec92 100644
+--- a/src/main/java/net/minecraft/network/protocol/game/PacketPlayInBlockPlace.java
++++ b/src/main/java/net/minecraft/network/protocol/game/PacketPlayInBlockPlace.java
+@@ -8,12 +8,14 @@ import net.minecraft.world.EnumHand;
+ public class PacketPlayInBlockPlace implements Packet<PacketListenerPlayIn> {
+ 
+     private final EnumHand hand;
++    public long timestamp; // Spigot
+ 
+     public PacketPlayInBlockPlace(EnumHand enumhand) {
+         this.hand = enumhand;
+     }
+ 
+     public PacketPlayInBlockPlace(PacketDataSerializer packetdataserializer) {
++        this.timestamp = System.currentTimeMillis(); // Spigot
+         this.hand = (EnumHand) packetdataserializer.a(EnumHand.class);
+     }
+ 
+diff --git a/src/main/java/net/minecraft/network/protocol/game/PacketPlayInUseItem.java b/src/main/java/net/minecraft/network/protocol/game/PacketPlayInUseItem.java
+index 4f066103b..591bf4878 100644
+--- a/src/main/java/net/minecraft/network/protocol/game/PacketPlayInUseItem.java
++++ b/src/main/java/net/minecraft/network/protocol/game/PacketPlayInUseItem.java
+@@ -10,6 +10,7 @@ public class PacketPlayInUseItem implements Packet<PacketListenerPlayIn> {
+ 
+     private final MovingObjectPositionBlock blockHit;
+     private final EnumHand hand;
++    public long timestamp; // Spigot
+ 
+     public PacketPlayInUseItem(EnumHand enumhand, MovingObjectPositionBlock movingobjectpositionblock) {
+         this.hand = enumhand;
+@@ -17,6 +18,7 @@ public class PacketPlayInUseItem implements Packet<PacketListenerPlayIn> {
+     }
+ 
+     public PacketPlayInUseItem(PacketDataSerializer packetdataserializer) {
++        this.timestamp = System.currentTimeMillis(); // Spigot
+         this.hand = (EnumHand) packetdataserializer.a(EnumHand.class);
+         this.blockHit = packetdataserializer.s();
+     }
+diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
+index 66b38c00a..92ea0a044 100644
+--- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
++++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
+@@ -1480,10 +1480,30 @@ public class PlayerConnection implements ServerPlayerConnection, PacketListenerP
+         }
+     }
+ 
++    // Spigot start - limit place/interactions
++    private int limitedPackets;
++    private long lastLimitedPacket = -1;
++
++    private boolean checkLimit(long timestamp) {
++        if (lastLimitedPacket != -1 && timestamp - lastLimitedPacket < 30 && limitedPackets++ >= 4) {
++            return false;
++        }
++
++        if (lastLimitedPacket == -1 || timestamp - lastLimitedPacket >= 30) {
++            lastLimitedPacket = timestamp;
++            limitedPackets = 0;
++            return true;
++        }
++
++        return true;
++    }
++    // Spigot end
++
+     @Override
+     public void a(PacketPlayInUseItem packetplayinuseitem) {
+         PlayerConnectionUtils.ensureMainThread(packetplayinuseitem, this, this.player.getWorldServer());
+         if (this.player.isFrozen()) return; // CraftBukkit
++        if (!checkLimit(packetplayinuseitem.timestamp)) return; // Spigot - check limit
+         WorldServer worldserver = this.player.getWorldServer();
+         EnumHand enumhand = packetplayinuseitem.b();
+         ItemStack itemstack = this.player.b(enumhand);
+@@ -1528,6 +1548,7 @@ public class PlayerConnection implements ServerPlayerConnection, PacketListenerP
+     public void a(PacketPlayInBlockPlace packetplayinblockplace) {
+         PlayerConnectionUtils.ensureMainThread(packetplayinblockplace, this, this.player.getWorldServer());
+         if (this.player.isFrozen()) return; // CraftBukkit
++        if (!checkLimit(packetplayinblockplace.timestamp)) return; // Spigot - check limit
+         WorldServer worldserver = this.player.getWorldServer();
+         EnumHand enumhand = packetplayinblockplace.b();
+         ItemStack itemstack = this.player.b(enumhand);
+-- 
+2.25.1
+
