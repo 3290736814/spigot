@@ -1,4 +1,4 @@
-From d1b37ea8c6311a440dd07946df88762e3d7d5579 Mon Sep 17 00:00:00 2001
+From fa8f985d3581185ba5c3dfabf058f52682882fcb Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,52 +8,81 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/level/ChunkProviderServer.java b/src/main/java/net/minecraft/server/level/ChunkProviderServer.java
-index 99e5bd084..a2c6f56a0 100644
+index 33f2ca3b4..51a3bc9ab 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkProviderServer.java
-@@ -431,7 +431,7 @@ public class ChunkProviderServer extends IChunkProvider {
+@@ -445,7 +445,7 @@ public class ChunkProviderServer extends IChunkProvider {
  
-                     if (this.level.a(chunkcoordintpair) && !this.chunkMap.isOutsideOfRange(chunkcoordintpair)) {
-                         chunk.setInhabitedTime(chunk.getInhabitedTime() + j);
--                        if (flag1 && (this.spawnEnemies || this.spawnFriendlies) && this.level.getWorldBorder().isInBounds(chunkcoordintpair)) {
-+                        if (flag1 && (this.spawnEnemies || this.spawnFriendlies) && this.level.getWorldBorder().isInBounds(chunk.getPos()) && !this.chunkMap.isOutsideOfRange(chunkcoordintpair, true)) { // Spigot
-                             SpawnerCreature.a(this.level, chunk, spawnercreature_d, this.spawnFriendlies, this.spawnEnemies, flag2);
-                         }
+                 if (this.level.isPositionEntityTicking(chunkcoordintpair) && this.chunkMap.anyPlayerCloseEnoughForSpawning(chunkcoordintpair)) {
+                     chunk1.incrementInhabitedTime(j);
+-                    if (flag2 && (this.spawnEnemies || this.spawnFriendlies) && this.level.getWorldBorder().isWithinBounds(chunkcoordintpair)) {
++                    if (flag2 && (this.spawnEnemies || this.spawnFriendlies) && this.level.getWorldBorder().isWithinBounds(chunkcoordintpair) && !this.chunkMap.anyPlayerCloseEnoughForSpawning(chunkcoordintpair, true)) { // Spigot
+                         SpawnerCreature.spawnForChunk(this.level, chunk1, spawnercreature_d, this.spawnFriendlies, this.spawnEnemies, flag1);
+                     }
  
 diff --git a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-index 87aa223a3..b8f605a4b 100644
+index 9f3b3b100..1c954b950 100644
 --- a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-@@ -915,10 +915,21 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+@@ -970,6 +970,17 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
      }
  
-     boolean isOutsideOfRange(ChunkCoordIntPair chunkcoordintpair) {
+     boolean anyPlayerCloseEnoughForSpawning(ChunkCoordIntPair chunkcoordintpair) {
 +        // Spigot start
-+        return isOutsideOfRange(chunkcoordintpair, false);
++        return anyPlayerCloseEnoughForSpawning(chunkcoordintpair, false);
 +    }
 +
-+    boolean isOutsideOfRange(ChunkCoordIntPair chunkcoordintpair, boolean reducedRange) {
++    boolean anyPlayerCloseEnoughForSpawning(ChunkCoordIntPair chunkcoordintpair, boolean reducedRange) {
 +        int chunkRange = level.spigotConfig.mobSpawnRange;
 +        chunkRange = (chunkRange > level.spigotConfig.viewDistance) ? (byte) level.spigotConfig.viewDistance : chunkRange;
 +        chunkRange = (chunkRange > 8) ? 8 : chunkRange;
 +
 +        double blockRange = (reducedRange) ? Math.pow(chunkRange << 4, 2) : 16384.0D;
 +        // Spigot end
-         long i = chunkcoordintpair.pair();
+         long i = chunkcoordintpair.toLong();
  
-         return !this.distanceManager.d(i) ? true : this.playerMap.a(i).noneMatch((entityplayer) -> {
--            return !entityplayer.isSpectator() && a(chunkcoordintpair, (Entity) entityplayer) < 16384.0D;
-+            return !entityplayer.isSpectator() && a(chunkcoordintpair, (Entity) entityplayer) < blockRange; // Spigot
-         });
+         if (!this.distanceManager.hasPlayersNearby(i)) {
+@@ -985,7 +996,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+                 }
+ 
+                 entityplayer = (EntityPlayer) iterator.next();
+-            } while (!this.playerIsCloseEnoughForSpawning(entityplayer, chunkcoordintpair));
++            } while (!this.playerIsCloseEnoughForSpawning(entityplayer, chunkcoordintpair, blockRange)); // Spigot
+ 
+             return true;
+         }
+@@ -1003,7 +1014,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+             while (iterator.hasNext()) {
+                 EntityPlayer entityplayer = (EntityPlayer) iterator.next();
+ 
+-                if (this.playerIsCloseEnoughForSpawning(entityplayer, chunkcoordintpair)) {
++                if (this.playerIsCloseEnoughForSpawning(entityplayer, chunkcoordintpair, 16384.0D)) { // Spigot
+                     builder.add(entityplayer);
+                 }
+             }
+@@ -1012,13 +1023,13 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+         }
+     }
+ 
+-    private boolean playerIsCloseEnoughForSpawning(EntityPlayer entityplayer, ChunkCoordIntPair chunkcoordintpair) {
++    private boolean playerIsCloseEnoughForSpawning(EntityPlayer entityplayer, ChunkCoordIntPair chunkcoordintpair, double range) { // Spigot
+         if (entityplayer.isSpectator()) {
+             return false;
+         } else {
+             double d0 = euclideanDistanceSquared(chunkcoordintpair, entityplayer);
+ 
+-            return d0 < 16384.0D;
++            return d0 < range; // Spigot
+         }
      }
  
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 8db1bc203..e780cc473 100644
+index e5df553a9..55af2f874 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -161,4 +161,11 @@ public class SpigotWorldConfig
-         viewDistance = Math.max( Math.min( viewDistance, 32 ), 3 );
-         log( "View Distance: " + viewDistance );
+@@ -174,4 +174,11 @@ public class SpigotWorldConfig
+ 
+         log( "Simulation Distance: " + simulationDistance );
      }
 +
 +    public byte mobSpawnRange;

@@ -1,4 +1,4 @@
-From c08cde787d4da977cf47760a7ede8fb655cac5da Mon Sep 17 00:00:00 2001
+From dc1b45cbe2d692019c086b43f25348d8e992b3d0 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Thu, 27 Jun 2013 17:26:09 +1000
 Subject: [PATCH] Properly Close Inventories
@@ -6,15 +6,15 @@ Subject: [PATCH] Properly Close Inventories
 Properly close inventories when unloading and switching worlds.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 998f619a1..c50c00623 100644
+index 827603c4b..dd65eb4a3 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
-@@ -995,6 +995,15 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1010,6 +1010,15 @@ public class WorldServer extends World implements GeneratorAccessSeed {
      }
  
-     public void unloadChunk(Chunk chunk) {
+     public void unload(Chunk chunk) {
 +        // Spigot Start
-+        for (net.minecraft.world.level.block.entity.TileEntity tileentity : chunk.getTileEntities().values()) {
++        for (net.minecraft.world.level.block.entity.TileEntity tileentity : chunk.getBlockEntities().values()) {
 +            if (tileentity instanceof net.minecraft.world.IInventory) {
 +                for (org.bukkit.entity.HumanEntity h : Lists.newArrayList(((net.minecraft.world.IInventory) tileentity).getViewers())) {
 +                    h.closeInventory();
@@ -22,12 +22,12 @@ index 998f619a1..c50c00623 100644
 +            }
 +        }
 +        // Spigot End
-         chunk.C();
+         chunk.clearAllBlockEntities();
+         chunk.unregisterTickContainerFromLevel(this);
      }
+@@ -1862,6 +1871,13 @@ public class WorldServer extends World implements GeneratorAccessSeed {
  
-@@ -1834,6 +1843,13 @@ public class WorldServer extends World implements GeneratorAccessSeed {
- 
-         public void a(Entity entity) {
+         public void onTrackingEnd(Entity entity) {
              org.spigotmc.AsyncCatcher.catchOp("entity unregister"); // Spigot
 +            // Spigot Start
 +            if (entity.getBukkitEntity() instanceof org.bukkit.inventory.InventoryHolder) {
@@ -36,7 +36,7 @@ index 998f619a1..c50c00623 100644
 +                }
 +            }
 +            // Spigot End
-             WorldServer.this.getChunkProvider().removeEntity(entity);
+             WorldServer.this.getChunkSource().removeEntity(entity);
              if (entity instanceof EntityPlayer) {
                  EntityPlayer entityplayer = (EntityPlayer) entity;
 -- 

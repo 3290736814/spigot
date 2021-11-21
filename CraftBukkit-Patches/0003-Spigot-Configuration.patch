@@ -1,4 +1,4 @@
-From 14cfbb1b5b8fd81bc1fe9b1bf9e38db61bda91e2 Mon Sep 17 00:00:00 2001
+From a386818526376e60c87f82d9a673de294a74dacf Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -6,35 +6,35 @@ Subject: [PATCH] Spigot Configuration
 Provides the basic infrastructure to load and save the Spigot configuration file, spigot.yml
 
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index b730cde94..3dfd678cc 100644
+index a04d6c440..ef3802c47 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -191,6 +191,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
-             this.e(dedicatedserverproperties.preventProxyConnections);
-             this.a_(dedicatedserverproperties.serverIp);
+@@ -189,6 +189,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+             this.setPreventProxyConnections(dedicatedserverproperties.preventProxyConnections);
+             this.setLocalIp(dedicatedserverproperties.serverIp);
          }
 +        // Spigot start
-+        this.a((PlayerList) (new DedicatedPlayerList(this, this.registryHolder, this.playerDataStorage)));
++        this.setPlayerList(new DedicatedPlayerList(this, this.registryHolder, this.playerDataStorage));
 +        org.spigotmc.SpigotConfig.init((java.io.File) options.valueOf("spigot-settings"));
 +        org.spigotmc.SpigotConfig.registerCommands();
 +        // Spigot end
  
-         this.setPVP(dedicatedserverproperties.pvp);
-         this.setAllowFlight(dedicatedserverproperties.allowFlight);
-@@ -223,7 +228,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+         this.setPvpAllowed(dedicatedserverproperties.pvp);
+         this.setFlightAllowed(dedicatedserverproperties.allowFlight);
+@@ -221,7 +226,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
          }
  
          // CraftBukkit start
--        this.a((PlayerList) (new DedicatedPlayerList(this, this.registryHolder, this.playerDataStorage)));
-+        // this.a((PlayerList) (new DedicatedPlayerList(this, this.customRegistry, this.worldNBTStorage))); // Spigot - moved up
+-        this.setPlayerList(new DedicatedPlayerList(this, this.registryHolder, this.playerDataStorage));
++        // this.setPlayerList(new DedicatedPlayerList(this, this.registryHolder, this.playerDataStorage)); // Spigot - moved up
          server.loadPlugins();
          server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.STARTUP);
          // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
-index 7210007e8..695133d45 100644
+index 2690b2a53..a5a5e0649 100644
 --- a/src/main/java/net/minecraft/world/level/World.java
 +++ b/src/main/java/net/minecraft/world/level/World.java
-@@ -145,6 +145,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -146,6 +146,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      public long ticksPerWaterUndergroundCreatureSpawns;
      public long ticksPerAmbientSpawns;
      public boolean populating;
@@ -42,27 +42,27 @@ index 7210007e8..695133d45 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -159,6 +160,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -160,6 +161,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      }
  
      protected World(WorldDataMutable worlddatamutable, ResourceKey<World> resourcekey, final DimensionManager dimensionmanager, Supplier<GameProfilerFiller> supplier, boolean flag, boolean flag1, long i, org.bukkit.generator.ChunkGenerator gen, org.bukkit.generator.BiomeProvider biomeProvider, org.bukkit.World.Environment env) {
-+        this.spigotConfig = new org.spigotmc.SpigotWorldConfig(((net.minecraft.world.level.storage.WorldDataServer) worlddatamutable).getName()); // Spigot
++        this.spigotConfig = new org.spigotmc.SpigotWorldConfig(((net.minecraft.world.level.storage.WorldDataServer) worlddatamutable).getLevelName()); // Spigot
          this.generator = gen;
          this.world = new CraftWorld((WorldServer) this, gen, biomeProvider, env);
          this.ticksPerAnimalSpawns = this.getCraftServer().getTicksPerAnimalSpawns(); // CraftBukkit
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index fc67281ec..89d88f574 100644
+index 6c8b7f5cb..6ac309e0c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -815,6 +815,7 @@ public final class CraftServer implements Server {
+@@ -825,6 +825,7 @@ public final class CraftServer implements Server {
              logger.log(Level.WARNING, "Failed to load banned-players.json, " + ex.getMessage());
          }
  
 +        org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings")); // Spigot
-         for (WorldServer world : console.getWorlds()) {
+         for (WorldServer world : console.getAllLevels()) {
              world.serverLevelData.setDifficulty(config.difficulty);
-             world.setSpawnFlags(config.spawnMonsters, config.spawnAnimals);
-@@ -853,11 +854,13 @@ public final class CraftServer implements Server {
+             world.setSpawnSettings(config.spawnMonsters, config.spawnAnimals);
+@@ -863,11 +864,13 @@ public final class CraftServer implements Server {
              } else {
                  world.ticksPerAmbientSpawns = this.getTicksPerAmbientSpawns();
              }
@@ -77,7 +77,7 @@ index fc67281ec..89d88f574 100644
          ignoreVanillaPermissions = commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 455127f08..058de8c27 100644
+index 468ac806e..ccd8dbb50 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -121,6 +121,14 @@ public class Main {
@@ -97,7 +97,7 @@ index 455127f08..058de8c27 100644
  
 diff --git a/src/main/java/org/spigotmc/SpigotCommand.java b/src/main/java/org/spigotmc/SpigotCommand.java
 new file mode 100644
-index 000000000..150dc240f
+index 000000000..7443e7334
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SpigotCommand.java
 @@ -0,0 +1,44 @@
@@ -134,7 +134,7 @@ index 000000000..150dc240f
 +
 +            MinecraftServer console = MinecraftServer.getServer();
 +            org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings"));
-+            for (WorldServer world : console.getWorlds()) {
++            for (WorldServer world : console.getAllLevels()) {
 +                world.spigotConfig.init();
 +            }
 +            console.server.reloadCount++;

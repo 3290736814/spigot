@@ -1,17 +1,17 @@
-From 6521767fc72ac5ad4b5d3b8218e4e26efbed0bcb Mon Sep 17 00:00:00 2001
+From 2403969851bc1dff12c5b87c98846d15783b552d Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 28 Jun 2013 19:52:54 +1000
 Subject: [PATCH] Disallow Interaction With Self
 
 
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index 9d4a204e3..6b98e086e 100644
+index df108da7b..f88dbee45 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-@@ -2019,6 +2019,13 @@ public class PlayerConnection implements ServerPlayerConnection, PacketListenerP
-         if (this.player.isFrozen()) return; // CraftBukkit
-         WorldServer worldserver = this.player.getWorldServer();
-         final Entity entity = packetplayinuseentity.a(worldserver);
+@@ -2025,6 +2025,13 @@ public class PlayerConnection implements ServerPlayerConnection, PacketListenerP
+         if (this.player.isImmobile()) return; // CraftBukkit
+         WorldServer worldserver = this.player.getLevel();
+         final Entity entity = packetplayinuseentity.getTarget(worldserver);
 +        // Spigot Start
 +        if ( entity == player && !player.isSpectator() )
 +        {
@@ -20,8 +20,8 @@ index 9d4a204e3..6b98e086e 100644
 +        }
 +        // Spigot End
  
-         this.player.resetIdleTimer();
-         this.player.setSneaking(packetplayinuseentity.b());
+         this.player.resetLastActionTime();
+         this.player.setShiftKeyDown(packetplayinuseentity.isUsingSecondaryAction());
 -- 
 2.25.1
 

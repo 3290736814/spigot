@@ -1,15 +1,15 @@
-From c5be867af1ea07f14aec4707ea27717703d2e222 Mon Sep 17 00:00:00 2001
+From 17c47fe21db97b2fe8b9e5798552263947d8c7df Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 02:59:14 +0100
 Subject: [PATCH] BungeeCord Chat API
 
 
 diff --git a/pom.xml b/pom.xml
-index 3cffb4a3..538a424d 100644
+index 6565754d..f8a35c20 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -51,6 +51,13 @@
-             <version>2.8.0</version>
+             <version>2.8.8</version>
              <scope>compile</scope>
          </dependency>
 +        <dependency>
@@ -23,7 +23,7 @@ index 3cffb4a3..538a424d 100644
              <groupId>org.yaml</groupId>
              <artifactId>snakeyaml</artifactId>
 @@ -189,6 +196,7 @@
-                         <link>https://guava.dev/releases/21.0/api/docs/</link>
+                         <link>https://guava.dev/releases/31.0.1-jre/api/docs/</link>
                          <link>https://javadoc.io/doc/org.yaml/snakeyaml/1.28/</link>
                          <link>https://javadoc.io/doc/org.jetbrains/annotations-java5/21.0.1/</link>
 +                        <link>https://javadoc.io/doc/net.md-5/bungeecord-chat/1.16-R0.4/</link>
@@ -293,10 +293,10 @@ index 427368a7..44d597d7 100644
       * Gets the char value associated with this color
       *
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index b0fa11db..1baa9256 100644
+index 00d34b5e..574fbf08 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1450,6 +1450,24 @@ public interface Server extends PluginMessageRecipient {
+@@ -1457,6 +1457,24 @@ public interface Server extends PluginMessageRecipient {
          public org.bukkit.configuration.file.YamlConfiguration getConfig() {
              throw new UnsupportedOperationException("Not supported yet.");
          }
@@ -370,7 +370,7 @@ index 4b6b9540..284be63a 100644
  
      @NotNull
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index f8f8af9c..7d5236e3 100644
+index a46cbdb8..f7e92c45 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -1,6 +1,7 @@
@@ -381,7 +381,7 @@ index f8f8af9c..7d5236e3 100644
  import org.bukkit.DyeColor;
  import org.bukkit.Effect;
  import org.bukkit.GameMode;
-@@ -1362,6 +1363,58 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1367,6 +1368,58 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
          public java.util.Set<Player> getHiddenPlayers() {
              throw new UnsupportedOperationException("Not supported yet.");
          }

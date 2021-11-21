@@ -1,14 +1,14 @@
-From 650762c0c1b40587457546ae2db55735a8088435 Mon Sep 17 00:00:00 2001
+From 8bc03bd0e345f4ffb450c9d2d3b83624ba44180a Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 3 Feb 2013 09:20:19 +1100
 Subject: [PATCH] Handle Null Tile Entities
 
 
 diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
-index 7a05fc304..b0dbbab9a 100644
+index 8b139344b..c6e8b0607 100644
 --- a/src/main/java/net/minecraft/world/level/World.java
 +++ b/src/main/java/net/minecraft/world/level/World.java
-@@ -648,6 +648,13 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -656,6 +656,13 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
  
          while (iterator.hasNext()) {
              TickingBlockEntity tickingblockentity = (TickingBlockEntity) iterator.next();
@@ -20,7 +20,7 @@ index 7a05fc304..b0dbbab9a 100644
 +            }
 +            // Spigot end
  
-             if (tickingblockentity.b()) {
+             if (tickingblockentity.isRemoved()) {
                  iterator.remove();
 -- 
 2.25.1
