@@ -1,4 +1,4 @@
-From 8a857fe66736df0ee74391f08b9ba4faa2803800 Mon Sep 17 00:00:00 2001
+From a9057568c66f76bff3428985ee6150971dae0230 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -197,10 +197,10 @@ index 6353807bc..733c00c20 100644
          List<Entity> notchEntityList = entity.level.getEntities(entity, entity.getBoundingBox().inflate(x, y, z), Predicates.alwaysTrue());
          List<org.bukkit.entity.Entity> bukkitEntityList = new java.util.ArrayList<org.bukkit.entity.Entity>(notchEntityList.size());
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index e25b2106d..1f2cf658c 100644
+index 2c1308234..749d6d480 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -331,6 +331,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -339,6 +339,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
      @Override
      public void kickPlayer(String message) {

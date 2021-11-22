@@ -1,4 +1,4 @@
-From 913ed98b192911349322bee6169bb327bf2cd6b5 Mon Sep 17 00:00:00 2001
+From 12114dd2e515ebf5f619bdf9b77917994e72bec5 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -120,13 +120,13 @@ index 76aad05f..4d308c5a 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index cd4599b0..24f04564 100644
+index 7f1d1d9a..958c6b02 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1315,4 +1315,14 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
-      * @param book The book to open for this player
+@@ -1314,4 +1314,14 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+      * @return whether the player allows server listings
       */
-     public void openBook(@NotNull ItemStack book);
+     public boolean isAllowingServerListings();
 +
 +    // Spigot start
 +    public class Spigot extends Entity.Spigot {

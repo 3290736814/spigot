@@ -1,11 +1,11 @@
-From 17c47fe21db97b2fe8b9e5798552263947d8c7df Mon Sep 17 00:00:00 2001
+From 8d08642311c7eb7864276bdb839bf135baf1faf5 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 02:59:14 +0100
 Subject: [PATCH] BungeeCord Chat API
 
 
 diff --git a/pom.xml b/pom.xml
-index 6565754d..f8a35c20 100644
+index f3829487..8bc4d620 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -51,6 +51,13 @@
@@ -370,7 +370,7 @@ index 4b6b9540..284be63a 100644
  
      @NotNull
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index a46cbdb8..f7e92c45 100644
+index 45805ef4..2be44826 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -1,6 +1,7 @@
@@ -381,7 +381,7 @@ index a46cbdb8..f7e92c45 100644
  import org.bukkit.DyeColor;
  import org.bukkit.Effect;
  import org.bukkit.GameMode;
-@@ -1367,6 +1368,58 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1366,6 +1367,58 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
          public java.util.Set<Player> getHiddenPlayers() {
              throw new UnsupportedOperationException("Not supported yet.");
          }
