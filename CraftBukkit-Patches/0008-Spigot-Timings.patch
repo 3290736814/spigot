@@ -1,4 +1,4 @@
-From 6f8905a75699e69748bb152a0390932d681d13a0 Mon Sep 17 00:00:00 2001
+From aef385acb8db71e9d7396ecaffd623afd6c82afb Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -6,7 +6,7 @@ Subject: [PATCH] Spigot Timings
 Overhauls the Timings System adding performance tracking all around the Minecraft Server
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 6119ab231..f24a681d1 100644
+index ffeda7572..57945c8d3 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -181,6 +181,8 @@ import org.bukkit.craftbukkit.generator.CustomWorldChunkManager;
@@ -198,10 +198,10 @@ index 8681d781d..33f2ca3b4 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index ab01ac991..99b9ca1e7 100644
+index cee23f04d..0a5bf25a7 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
-@@ -152,6 +152,7 @@ import net.minecraft.world.entity.monster.EntityDrowned;
+@@ -153,6 +153,7 @@ import net.minecraft.world.level.dimension.WorldDimension;
  import net.minecraft.world.level.storage.WorldDataServer;
  import org.bukkit.Bukkit;
  import org.bukkit.WeatherType;
@@ -209,7 +209,7 @@ index ab01ac991..99b9ca1e7 100644
  import org.bukkit.craftbukkit.event.CraftEventFactory;
  import org.bukkit.craftbukkit.util.WorldUUID;
  import org.bukkit.event.entity.CreatureSpawnEvent;
-@@ -327,6 +328,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -333,6 +334,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          this.updateSkyBrightness();
          this.tickTime();
          gameprofilerfiller.popPush("tickPending");
@@ -217,7 +217,7 @@ index ab01ac991..99b9ca1e7 100644
          if (!this.isDebug()) {
              j = this.getGameTime();
              gameprofilerfiller.push("blockTicks");
-@@ -335,13 +337,16 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -341,13 +343,16 @@ public class WorldServer extends World implements GeneratorAccessSeed {
              this.fluidTicks.tick(j, 65536, this::tickFluid);
              gameprofilerfiller.pop();
          }
@@ -234,7 +234,7 @@ index ab01ac991..99b9ca1e7 100644
          this.handlingTick = false;
          gameprofilerfiller.pop();
          boolean flag = true || !this.players.isEmpty() || !this.getForcedChunks().isEmpty(); // CraftBukkit - this prevents entity cleanup, other issues on servers with no players
-@@ -352,12 +357,14 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -358,12 +363,14 @@ public class WorldServer extends World implements GeneratorAccessSeed {
  
          if (flag || this.emptyTime++ < 300) {
              gameprofilerfiller.push("entities");
@@ -249,7 +249,7 @@ index ab01ac991..99b9ca1e7 100644
              this.entityTickList.forEach((entity) -> {
                  if (!entity.isRemoved()) {
                      if (false && this.shouldDiscardEntity(entity)) { // CraftBukkit - We prevent spawning in general, so this butchering is not needed
-@@ -384,6 +391,8 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -390,6 +397,8 @@ public class WorldServer extends World implements GeneratorAccessSeed {
                      }
                  }
              });
@@ -258,7 +258,7 @@ index ab01ac991..99b9ca1e7 100644
              gameprofilerfiller.pop();
              this.tickBlockEntities();
          }
-@@ -763,6 +772,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -769,6 +778,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
      }
  
      public void tickNonPassenger(Entity entity) {
@@ -266,7 +266,7 @@ index ab01ac991..99b9ca1e7 100644
          entity.setOldPosAndRot();
          GameProfilerFiller gameprofilerfiller = this.getProfiler();
  
-@@ -781,6 +791,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -787,6 +797,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
  
              this.tickPassenger(entity, entity1);
          }
@@ -320,10 +320,10 @@ index d00946218..ca0f6cb3d 100644
          // this.server.getCommands().performCommand(this.player.createCommandSourceStack(), s);
          // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 9b526f559..fb7c7f647 100644
+index fbc3476fa..efccf3f27 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -127,6 +127,7 @@ import org.bukkit.craftbukkit.event.CraftPortalEvent;
+@@ -128,6 +128,7 @@ import org.bukkit.craftbukkit.event.CraftPortalEvent;
  import org.bukkit.entity.Hanging;
  import org.bukkit.entity.LivingEntity;
  import org.bukkit.entity.Vehicle;
@@ -331,7 +331,7 @@ index 9b526f559..fb7c7f647 100644
  import org.bukkit.event.entity.EntityCombustByEntityEvent;
  import org.bukkit.event.hanging.HangingBreakByEntityEvent;
  import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
-@@ -286,6 +287,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -287,6 +288,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
      public org.bukkit.projectiles.ProjectileSource projectileSource; // For projectiles only
      public boolean forceExplosionKnockback; // SPIGOT-949
      public boolean persistentInvisibility = false;
@@ -339,7 +339,7 @@ index 9b526f559..fb7c7f647 100644
  
      public float getBukkitYaw() {
          return this.yRot;
-@@ -708,6 +710,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -709,6 +711,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
      }
  
      public void move(EnumMoveType enummovetype, Vec3D vec3d) {
@@ -347,7 +347,7 @@ index 9b526f559..fb7c7f647 100644
          if (this.noPhysics) {
              this.setPos(this.getX() + vec3d.x, this.getY() + vec3d.y, this.getZ() + vec3d.z);
          } else {
-@@ -860,6 +863,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -861,6 +864,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
                  this.level.getProfiler().pop();
              }
          }
@@ -451,10 +451,10 @@ index 7fd76a59f..dbc67d220 100644
      }
  
 diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
-index a5a5e0649..8b139344b 100644
+index 00db827ed..225a278a0 100644
 --- a/src/main/java/net/minecraft/world/level/World.java
 +++ b/src/main/java/net/minecraft/world/level/World.java
-@@ -82,6 +82,7 @@ import org.bukkit.Bukkit;
+@@ -83,6 +83,7 @@ import org.bukkit.Bukkit;
  import org.bukkit.Location;
  import org.bukkit.craftbukkit.CraftServer;
  import org.bukkit.craftbukkit.CraftWorld;
@@ -471,7 +471,7 @@ index a5a5e0649..8b139344b 100644
      public CraftWorld getWorld() {
          return this.world;
      }
-@@ -234,6 +237,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -229,6 +232,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
              public void onBorderSetDamageSafeZOne(WorldBorder worldborder, double d0) {}
          });
          // CraftBukkit end
@@ -479,7 +479,7 @@ index a5a5e0649..8b139344b 100644
      }
  
      @Override
-@@ -639,12 +643,15 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -634,12 +638,15 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
          GameProfilerFiller gameprofilerfiller = this.getProfiler();
  
          gameprofilerfiller.push("blockEntities");
@@ -495,7 +495,7 @@ index a5a5e0649..8b139344b 100644
          Iterator iterator = this.blockEntityTickers.iterator();
  
          while (iterator.hasNext()) {
-@@ -657,13 +664,16 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -652,13 +659,16 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
              }
          }
  
@@ -578,10 +578,10 @@ index 3deee9b09..1201b5cd2 100644
              // CraftBukkit start - load chunk persistent data from nbt
              net.minecraft.nbt.NBTBase persistentBase = nbttagcompound.get("ChunkBukkitValues");
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 518a9e0de..85d3555d4 100644
+index 7e0d9a9f8..9043e8ff6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2230,6 +2230,11 @@ public final class CraftServer implements Server {
+@@ -2235,6 +2235,11 @@ public final class CraftServer implements Server {
      private final org.bukkit.Server.Spigot spigot = new org.bukkit.Server.Spigot()
      {
  

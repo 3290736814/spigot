@@ -1,4 +1,4 @@
-From b84a3baee4f13df43591e6ccd9ec1be20cdbf415 Mon Sep 17 00:00:00 2001
+From 1cec61fe4b4eb40c4150b5b781e3be0c19ce92e5 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,10 +9,10 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 99b9ca1e7..827603c4b 100644
+index 0a5bf25a7..39754c724 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
-@@ -364,6 +364,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -370,6 +370,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
                  gameprofilerfiller.pop();
              }
  
@@ -20,7 +20,7 @@ index 99b9ca1e7..827603c4b 100644
              timings.entityTick.startTiming(); // Spigot
              this.entityTickList.forEach((entity) -> {
                  if (!entity.isRemoved()) {
-@@ -772,6 +773,13 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -778,6 +779,13 @@ public class WorldServer extends World implements GeneratorAccessSeed {
      }
  
      public void tickNonPassenger(Entity entity) {
@@ -35,10 +35,10 @@ index 99b9ca1e7..827603c4b 100644
          entity.setOldPosAndRot();
          GameProfilerFiller gameprofilerfiller = this.getProfiler();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index fb7c7f647..92e2603da 100644
+index efccf3f27..c980c6326 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -288,6 +288,12 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -289,6 +289,12 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
      public boolean forceExplosionKnockback; // SPIGOT-949
      public boolean persistentInvisibility = false;
      public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getEntityTimings(this); // Spigot
@@ -51,7 +51,7 @@ index fb7c7f647..92e2603da 100644
  
      public float getBukkitYaw() {
          return this.yRot;
-@@ -322,6 +328,13 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -323,6 +329,13 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
          this.blockPosition = BlockPosition.ZERO;
          this.chunkPosition = ChunkCoordIntPair.ZERO;
          this.packetCoordinates = Vec3D.ZERO;
