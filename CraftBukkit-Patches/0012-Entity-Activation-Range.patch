@@ -1,4 +1,4 @@
-From 1cec61fe4b4eb40c4150b5b781e3be0c19ce92e5 Mon Sep 17 00:00:00 2001
+From ebf5bbc06365e256b68f41e46a169b514e8bd8f0 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 0a5bf25a7..39754c724 100644
+index 59bfd325f..687701e3e 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -370,6 +370,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -35,10 +35,10 @@ index 0a5bf25a7..39754c724 100644
          entity.setOldPosAndRot();
          GameProfilerFiller gameprofilerfiller = this.getProfiler();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index efccf3f27..c980c6326 100644
+index e01cbf640..21228643d 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -289,6 +289,12 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -288,6 +288,12 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
      public boolean forceExplosionKnockback; // SPIGOT-949
      public boolean persistentInvisibility = false;
      public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getEntityTimings(this); // Spigot
@@ -51,7 +51,7 @@ index efccf3f27..c980c6326 100644
  
      public float getBukkitYaw() {
          return this.yRot;
-@@ -323,6 +329,13 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -322,6 +328,13 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
          this.blockPosition = BlockPosition.ZERO;
          this.chunkPosition = ChunkCoordIntPair.ZERO;
          this.packetCoordinates = Vec3D.ZERO;
@@ -125,7 +125,7 @@ index fb29c994c..af7c159d9 100644
      public void tick() {
          super.tick();
 diff --git a/src/main/java/net/minecraft/world/entity/EntityLiving.java b/src/main/java/net/minecraft/world/entity/EntityLiving.java
-index ee8522808..fa1d854ae 100644
+index 69b035f9f..8e6670abf 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityLiving.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityLiving.java
 @@ -265,6 +265,13 @@ public abstract class EntityLiving extends Entity {

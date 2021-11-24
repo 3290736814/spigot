@@ -1,4 +1,4 @@
-From cc92e1dd7e9535436f879593f7471deb66ebc380 Mon Sep 17 00:00:00 2001
+From d904144aea06189ad7445aa02a21322b2b62a9f1 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -6,10 +6,10 @@ Subject: [PATCH] Async Operation Catching
 Catch and throw an exception when a potentially unsafe operation occurs on a thread other than the main server thread.
 
 diff --git a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-index b189b6a53..39e29f32a 100644
+index 792a1c49b..cad9fa44b 100644
 --- a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-@@ -1184,6 +1184,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+@@ -1212,6 +1212,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
      }
  
      protected void addEntity(Entity entity) {
@@ -17,7 +17,7 @@ index b189b6a53..39e29f32a 100644
          if (!(entity instanceof EntityComplexPart)) {
              EntityTypes<?> entitytypes = entity.getType();
              int i = entitytypes.clientTrackingRange() * 16;
-@@ -1219,6 +1220,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+@@ -1247,6 +1248,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
      }
  
      protected void removeEntity(Entity entity) {
@@ -25,7 +25,7 @@ index b189b6a53..39e29f32a 100644
          if (entity instanceof EntityPlayer) {
              EntityPlayer entityplayer = (EntityPlayer) entity;
  
-@@ -1438,6 +1440,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+@@ -1466,6 +1468,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
          }
  
          public void removePlayer(EntityPlayer entityplayer) {
@@ -33,7 +33,7 @@ index b189b6a53..39e29f32a 100644
              if (this.seenBy.remove(entityplayer.connection)) {
                  this.serverEntity.removePairing(entityplayer);
              }
-@@ -1445,6 +1448,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+@@ -1473,6 +1476,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
          }
  
          public void updatePlayer(EntityPlayer entityplayer) {
@@ -42,7 +42,7 @@ index b189b6a53..39e29f32a 100644
                  Vec3D vec3d = entityplayer.position().subtract(this.entity.position()); // MC-155077, SPIGOT-5113
                  double d0 = (double) Math.min(this.getEffectiveRange(), (PlayerChunkMap.this.viewDistance - 1) * 16);
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 16980752c..498948ab9 100644
+index bf4409b26..5b689372a 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -963,6 +963,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -53,7 +53,7 @@ index 16980752c..498948ab9 100644
          if (entity.isRemoved()) {
              // WorldServer.LOGGER.warn("Tried to add entity {} but it was marked as removed already", EntityTypes.getKey(entity.getType())); // CraftBukkit
              return false;
-@@ -1753,6 +1754,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1754,6 +1755,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
  
      @Override
      public LevelEntityGetter<Entity> getEntities() {
@@ -61,7 +61,7 @@ index 16980752c..498948ab9 100644
          return this.entityManager.getEntityGetter();
      }
  
-@@ -1820,6 +1822,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1823,6 +1825,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          }
  
          public void onTrackingStart(Entity entity) {
@@ -69,7 +69,7 @@ index 16980752c..498948ab9 100644
              WorldServer.this.getChunkSource().addEntity(entity);
              if (entity instanceof EntityPlayer) {
                  WorldServer.this.players.add((EntityPlayer) entity);
-@@ -1845,6 +1848,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -1848,6 +1851,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          }
  
          public void onTrackingEnd(Entity entity) {
@@ -78,7 +78,7 @@ index 16980752c..498948ab9 100644
              if (entity instanceof EntityPlayer) {
                  EntityPlayer entityplayer = (EntityPlayer) entity;
 diff --git a/src/main/java/net/minecraft/world/entity/EntityLiving.java b/src/main/java/net/minecraft/world/entity/EntityLiving.java
-index 652366e01..a4cb09aba 100644
+index c4be136fe..a9ecec938 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityLiving.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityLiving.java
 @@ -1067,6 +1067,7 @@ public abstract class EntityLiving extends Entity {
@@ -90,30 +90,31 @@ index 652366e01..a4cb09aba 100644
              effectsToProcess.add(new ProcessableEffect(mobeffect, cause));
              return true;
 diff --git a/src/main/java/net/minecraft/world/item/crafting/CraftingManager.java b/src/main/java/net/minecraft/world/item/crafting/CraftingManager.java
-index a2bd1756b..171c1a172 100644
+index 018180253..6a3ce096d 100644
 --- a/src/main/java/net/minecraft/world/item/crafting/CraftingManager.java
 +++ b/src/main/java/net/minecraft/world/item/crafting/CraftingManager.java
-@@ -82,6 +82,7 @@ public class CraftingManager extends ResourceDataJson {
+@@ -85,6 +85,7 @@ public class CraftingManager extends ResourceDataJson {
  
      // CraftBukkit start
      public void addRecipe(IRecipe<?> irecipe) {
 +        org.spigotmc.AsyncCatcher.catchOp("Recipe Add"); // Spigot
          Object2ObjectLinkedOpenHashMap<MinecraftKey, IRecipe<?>> map = this.recipes.get(irecipe.getType()); // CraftBukkit
  
-         if (map.containsKey(irecipe.getId())) {
+         if (byName.containsKey(irecipe.getId()) || map.containsKey(irecipe.getId())) {
 diff --git a/src/main/java/net/minecraft/world/level/block/state/BlockBase.java b/src/main/java/net/minecraft/world/level/block/state/BlockBase.java
-index 08713e5d1..894ad25ee 100644
+index 053df6c4d..7f15e7bd6 100644
 --- a/src/main/java/net/minecraft/world/level/block/state/BlockBase.java
 +++ b/src/main/java/net/minecraft/world/level/block/state/BlockBase.java
-@@ -128,10 +128,13 @@ public abstract class BlockBase {
-     }
+@@ -134,11 +134,14 @@ public abstract class BlockBase {
  
+     /** @deprecated */
      @Deprecated
 -    public void onPlace(IBlockData iblockdata, World world, BlockPosition blockposition, IBlockData iblockdata1, boolean flag) {}
 +    public void onPlace(IBlockData iblockdata, World world, BlockPosition blockposition, IBlockData iblockdata1, boolean flag) {
 +        org.spigotmc.AsyncCatcher.catchOp("block onPlace"); // Spigot
 +    }
  
+     /** @deprecated */
      @Deprecated
      public void onRemove(IBlockData iblockdata, World world, BlockPosition blockposition, IBlockData iblockdata1, boolean flag) {
 +        org.spigotmc.AsyncCatcher.catchOp("block remove"); // Spigot

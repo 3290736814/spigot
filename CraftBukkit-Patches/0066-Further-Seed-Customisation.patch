@@ -1,4 +1,4 @@
-From 81ffa5bfea6bc1374adca60913060f19ea09c6e9 Mon Sep 17 00:00:00 2001
+From bdb9b853bc76a421741b42de928dd93224df83a6 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -34,7 +34,7 @@ index 06a92066e..c2639decf 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java b/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java
-index f927fd349..c8d244676 100644
+index e9b4c0460..efbc51137 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java
 @@ -207,6 +207,7 @@ public abstract class ChunkGenerator implements BiomeManager.Provider {
@@ -45,7 +45,7 @@ index f927fd349..c8d244676 100644
              StructureSettingsFeature structuresettingsfeature = this.settings.getConfig(structuregenerator);
              ImmutableMultimap<StructureFeature<?, ?>, ResourceKey<BiomeBase>> immutablemultimap = this.settings.structures(structuregenerator);
  
-@@ -427,6 +428,7 @@ public abstract class ChunkGenerator implements BiomeManager.Provider {
+@@ -426,6 +427,7 @@ public abstract class ChunkGenerator implements BiomeManager.Provider {
      public void createStructures(IRegistryCustom iregistrycustom, StructureManager structuremanager, IChunkAccess ichunkaccess, DefinedStructureManager definedstructuremanager, long i) {
          ChunkCoordIntPair chunkcoordintpair = ichunkaccess.getPos();
          SectionPosition sectionposition = SectionPosition.bottomOf(ichunkaccess);
@@ -53,7 +53,7 @@ index f927fd349..c8d244676 100644
          StructureSettingsFeature structuresettingsfeature = this.settings.getConfig(StructureGenerator.STRONGHOLD);
  
          if (structuresettingsfeature != null) {
-@@ -492,6 +494,83 @@ public abstract class ChunkGenerator implements BiomeManager.Provider {
+@@ -491,6 +493,83 @@ public abstract class ChunkGenerator implements BiomeManager.Provider {
          return iregistry.getResourceKey(biomebase).filter(predicate).isPresent();
      }
  
