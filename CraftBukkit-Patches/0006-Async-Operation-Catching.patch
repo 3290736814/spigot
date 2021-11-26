@@ -1,4 +1,4 @@
-From d904144aea06189ad7445aa02a21322b2b62a9f1 Mon Sep 17 00:00:00 2001
+From 3c8ddbe164b1c01a0e17b9dc423ab13f37b7c916 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -6,10 +6,10 @@ Subject: [PATCH] Async Operation Catching
 Catch and throw an exception when a potentially unsafe operation occurs on a thread other than the main server thread.
 
 diff --git a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-index 792a1c49b..cad9fa44b 100644
+index 2c649cfd5..b6237f3ab 100644
 --- a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-@@ -1212,6 +1212,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+@@ -1217,6 +1217,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
      }
  
      protected void addEntity(Entity entity) {
@@ -17,7 +17,7 @@ index 792a1c49b..cad9fa44b 100644
          if (!(entity instanceof EntityComplexPart)) {
              EntityTypes<?> entitytypes = entity.getType();
              int i = entitytypes.clientTrackingRange() * 16;
-@@ -1247,6 +1248,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+@@ -1252,6 +1253,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
      }
  
      protected void removeEntity(Entity entity) {
@@ -25,7 +25,7 @@ index 792a1c49b..cad9fa44b 100644
          if (entity instanceof EntityPlayer) {
              EntityPlayer entityplayer = (EntityPlayer) entity;
  
-@@ -1466,6 +1468,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+@@ -1471,6 +1473,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
          }
  
          public void removePlayer(EntityPlayer entityplayer) {
@@ -33,7 +33,7 @@ index 792a1c49b..cad9fa44b 100644
              if (this.seenBy.remove(entityplayer.connection)) {
                  this.serverEntity.removePairing(entityplayer);
              }
-@@ -1473,6 +1476,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+@@ -1478,6 +1481,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
          }
  
          public void updatePlayer(EntityPlayer entityplayer) {
@@ -90,7 +90,7 @@ index c4be136fe..a9ecec938 100644
              effectsToProcess.add(new ProcessableEffect(mobeffect, cause));
              return true;
 diff --git a/src/main/java/net/minecraft/world/item/crafting/CraftingManager.java b/src/main/java/net/minecraft/world/item/crafting/CraftingManager.java
-index 018180253..6a3ce096d 100644
+index c10a30205..8f93126cf 100644
 --- a/src/main/java/net/minecraft/world/item/crafting/CraftingManager.java
 +++ b/src/main/java/net/minecraft/world/item/crafting/CraftingManager.java
 @@ -85,6 +85,7 @@ public class CraftingManager extends ResourceDataJson {
@@ -198,10 +198,10 @@ index 6353807bc..733c00c20 100644
          List<Entity> notchEntityList = entity.level.getEntities(entity, entity.getBoundingBox().inflate(x, y, z), Predicates.alwaysTrue());
          List<org.bukkit.entity.Entity> bukkitEntityList = new java.util.ArrayList<org.bukkit.entity.Entity>(notchEntityList.size());
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 2c1308234..749d6d480 100644
+index 9c847bb45..2f15d4130 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -339,6 +339,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -340,6 +340,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
      @Override
      public void kickPlayer(String message) {
