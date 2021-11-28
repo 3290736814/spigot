@@ -1,4 +1,4 @@
-From 7957fdfd78cfb3ab5d023ce565ca82ce04cf13cf Mon Sep 17 00:00:00 2001
+From 99cb3d089215beb0ab33bf7a47030249a20e28ee Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -198,7 +198,7 @@ index d56cd2b33..c90cede56 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index e8a38b028..59bfd325f 100644
+index d6c37ece4..7be815d8d 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -153,6 +153,7 @@ import net.minecraft.world.level.dimension.WorldDimension;
@@ -529,10 +529,10 @@ index 7c9a0b30c..6ec0d0df7 100644
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
      public CraftPersistentDataContainer persistentDataContainer;
 diff --git a/src/main/java/net/minecraft/world/level/chunk/Chunk.java b/src/main/java/net/minecraft/world/level/chunk/Chunk.java
-index 7997d745c..8c36ed0cd 100644
+index 107396d30..bdb310d5b 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/Chunk.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/Chunk.java
-@@ -856,6 +856,7 @@ public class Chunk extends IChunkAccess {
+@@ -858,6 +858,7 @@ public class Chunk extends IChunkAccess {
                          GameProfilerFiller gameprofilerfiller = Chunk.this.level.getProfiler();
  
                          gameprofilerfiller.push(this::getType);
@@ -540,7 +540,7 @@ index 7997d745c..8c36ed0cd 100644
                          IBlockData iblockdata = Chunk.this.getBlockState(blockposition);
  
                          if (this.blockEntity.getType().isValid(iblockdata)) {
-@@ -875,6 +876,10 @@ public class Chunk extends IChunkAccess {
+@@ -877,6 +878,10 @@ public class Chunk extends IChunkAccess {
  
                          this.blockEntity.fillCrashReportCategory(crashreportsystemdetails);
                          throw new ReportedException(crashreport);
@@ -552,10 +552,10 @@ index 7997d745c..8c36ed0cd 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/world/level/chunk/storage/ChunkRegionLoader.java b/src/main/java/net/minecraft/world/level/chunk/storage/ChunkRegionLoader.java
-index 3deee9b09..1201b5cd2 100644
+index 173f07ebc..438f65c50 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/storage/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/storage/ChunkRegionLoader.java
-@@ -481,10 +481,13 @@ public class ChunkRegionLoader {
+@@ -488,10 +488,13 @@ public class ChunkRegionLoader {
          NBTTagList nbttaglist1 = getListOfCompoundsOrNull(nbttagcompound, "block_entities");
  
          return nbttaglist == null && nbttaglist1 == null ? null : (chunk) -> {
@@ -569,14 +569,14 @@ index 3deee9b09..1201b5cd2 100644
              if (nbttaglist1 != null) {
                  for (int i = 0; i < nbttaglist1.size(); ++i) {
                      NBTTagCompound nbttagcompound1 = nbttaglist1.getCompound(i);
-@@ -502,6 +505,7 @@ public class ChunkRegionLoader {
+@@ -509,6 +512,7 @@ public class ChunkRegionLoader {
                      }
                  }
              }
 +            worldserver.timings.syncChunkLoadTileEntitiesTimer.stopTiming(); // Spigot
  
-             // CraftBukkit start - load chunk persistent data from nbt
-             net.minecraft.nbt.NBTBase persistentBase = nbttagcompound.get("ChunkBukkitValues");
+         };
+     }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 index 7e0d9a9f8..9043e8ff6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
