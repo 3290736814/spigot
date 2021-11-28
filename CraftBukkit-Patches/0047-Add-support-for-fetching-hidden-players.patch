@@ -1,14 +1,14 @@
-From bce4ac6ee71e30870e2d8d7dd6e4600aa288582b Mon Sep 17 00:00:00 2001
+From 4ebce68a64c0857aeaf0bf2a0dffb954cdc2243c Mon Sep 17 00:00:00 2001
 From: Tux <write@imaginarycode.com>
 Date: Sun, 9 Feb 2014 14:03:03 -0500
 Subject: [PATCH] Add support for fetching hidden players
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index b6941bb65..6d5c5b442 100644
+index 62b878481..a47a7edaf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1763,6 +1763,18 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1784,6 +1784,22 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
                  server.getServer().getPlayerList().respawn( getHandle(), false );
              }
          }
@@ -17,9 +17,13 @@ index b6941bb65..6d5c5b442 100644
 +        public Set<Player> getHiddenPlayers()
 +        {
 +            Set<Player> ret = new HashSet<Player>();
-+            for ( UUID u : hiddenPlayers.keySet() )
++            for ( UUID u : hiddenEntities.keySet() )
 +            {
-+                ret.add( getServer().getPlayer( u ) );
++                Player p = getServer().getPlayer( u );
++                if ( p != null )
++                {
++                    ret.add( p );
++                }
 +            }
 +
 +            return java.util.Collections.unmodifiableSet( ret );

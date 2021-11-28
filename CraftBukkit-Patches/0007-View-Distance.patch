@@ -1,4 +1,4 @@
-From e1e1288dd12fff80eabb7f13257ddb024411d5eb Mon Sep 17 00:00:00 2001
+From e72a3ea81e0432b4abaf9b774b02c99c0a306111 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,7 +6,7 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 498948ab9..cee23f04d 100644
+index c655f2c41..d6c37ece4 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -247,8 +247,8 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -21,7 +21,7 @@ index 498948ab9..cee23f04d 100644
  
          Objects.requireNonNull(this.entityManager);
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 29f7ba113..368dbe1c6 100644
+index 5dd057e07..7cf42a3c6 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -222,7 +222,8 @@ public abstract class PlayerList {
@@ -44,10 +44,10 @@ index 29f7ba113..368dbe1c6 100644
          entityplayer1.unsetRemoved();
          entityplayer1.connection.teleport(new Location(worldserver1.getWorld(), entityplayer1.getX(), entityplayer1.getY(), entityplayer1.getZ(), entityplayer1.getYRot(), entityplayer1.getXRot()));
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 098a51121..89bc5804b 100644
+index 0b85d33f7..6d078d347 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1744,6 +1744,18 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -1747,6 +1747,18 @@ public class CraftWorld extends CraftRegionAccessor implements World {
          return (getHandle().dragonFight() == null) ? null : new CraftDragonBattle(getHandle().dragonFight());
      }
  
