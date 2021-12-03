@@ -1,4 +1,4 @@
-From ebf5bbc06365e256b68f41e46a169b514e8bd8f0 Mon Sep 17 00:00:00 2001
+From b619e51fd37bbc57f5eaab09745cb4a318806533 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,7 +9,7 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 59bfd325f..687701e3e 100644
+index 7be815d8d..ecee44c05 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -370,6 +370,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -35,12 +35,12 @@ index 59bfd325f..687701e3e 100644
          entity.setOldPosAndRot();
          GameProfilerFiller gameprofilerfiller = this.getProfiler();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index e01cbf640..21228643d 100644
+index bacc9f852..c3e77dd7f 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -288,6 +288,12 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
-     public boolean forceExplosionKnockback; // SPIGOT-949
+@@ -289,6 +289,12 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
      public boolean persistentInvisibility = false;
+     public BlockPosition lastLavaContact;
      public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getEntityTimings(this); // Spigot
 +    // Spigot start
 +    public final org.spigotmc.ActivationRange.ActivationType activationType = org.spigotmc.ActivationRange.initializeEntityActivationType(this);
@@ -51,7 +51,7 @@ index e01cbf640..21228643d 100644
  
      public float getBukkitYaw() {
          return this.yRot;
-@@ -322,6 +328,13 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -323,6 +329,13 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
          this.blockPosition = BlockPosition.ZERO;
          this.chunkPosition = ChunkCoordIntPair.ZERO;
          this.packetCoordinates = Vec3D.ZERO;
@@ -176,7 +176,7 @@ index 4d76a2946..a5ca65eab 100644
          Vec3D vec3d = this.getDeltaMovement();
  
 diff --git a/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java b/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java
-index 150ea7dcd..5fffd7ea0 100644
+index c248334f6..522ff127a 100644
 --- a/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java
 +++ b/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java
 @@ -220,6 +220,17 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
@@ -263,7 +263,7 @@ index aff7b6b43..d3328a695 100644
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
 new file mode 100644
-index 000000000..7e3ec868f
+index 000000000..572897eab
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -0,0 +1,256 @@

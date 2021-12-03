@@ -1,14 +1,14 @@
-From c6b9d1ac406667496f5d8eca9b28f89380604afd Mon Sep 17 00:00:00 2001
+From 5a03c54a6d3a75b3acb7f6d2a6bfcc121aae10c6 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 57945c8d3..fa7c2578c 100644
+index 322942c9e..6d64408e8 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1043,6 +1043,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1044,6 +1044,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                      this.profileCache.clearExecutor();
                  }
  
@@ -16,7 +16,7 @@ index 57945c8d3..fa7c2578c 100644
                  // CraftBukkit start - Restore terminal to original settings
                  try {
                      reader.getTerminal().restore();
-@@ -1201,6 +1202,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1202,6 +1203,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
          this.frameTimer.logFrameDuration(i1 - i);
          this.profiler.pop();
@@ -38,10 +38,10 @@ index 1a2b1ee86..12889533b 100644
  
                  thread1.setUncaughtExceptionHandler(new ThreadNamedUncaughtExceptionHandler(DedicatedServer.LOGGER));
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 816970111..87d775b49 100644
+index 63bc2637d..df9a1812e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1876,7 +1876,7 @@ public final class CraftServer implements Server {
+@@ -1875,7 +1875,7 @@ public final class CraftServer implements Server {
  
      @Override
      public boolean isPrimaryThread() {
@@ -50,7 +50,7 @@ index 816970111..87d775b49 100644
      }
  
      @Override
-@@ -2247,6 +2247,11 @@ public final class CraftServer implements Server {
+@@ -2246,6 +2246,11 @@ public final class CraftServer implements Server {
          {
              return org.spigotmc.SpigotConfig.config;
          }

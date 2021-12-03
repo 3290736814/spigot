@@ -1,14 +1,14 @@
-From d56cbdb4ff0f725d5dc676d9599965ff1bda2859 Mon Sep 17 00:00:00 2001
+From a0516138060066fcd58c2a811884929b9e8c7955 Mon Sep 17 00:00:00 2001
 From: DerFlash <bte@freenet.de>
 Date: Tue, 9 Jul 2013 00:11:12 +0200
 Subject: [PATCH] Save ticks lived to nbttag
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 152278454..4849a4227 100644
+index 4bedef668..528ad6682 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -1726,6 +1726,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -1732,6 +1732,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
              if (this.persistentInvisibility) {
                  nbttagcompound.putBoolean("Bukkit.invisible", this.persistentInvisibility);
              }
@@ -16,7 +16,7 @@ index 152278454..4849a4227 100644
              // CraftBukkit end
              IChatBaseComponent ichatbasecomponent = this.getCustomName();
  
-@@ -1885,6 +1886,8 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -1891,6 +1892,8 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
              if (this instanceof EntityLiving) {
                  EntityLiving entity = (EntityLiving) this;
  
