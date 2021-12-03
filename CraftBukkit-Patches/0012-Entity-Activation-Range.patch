@@ -387,7 +387,7 @@ index 000000000..7e3ec868f
 +        int maxRange = Math.max( monsterActivationRange, animalActivationRange );
 +        maxRange = Math.max( maxRange, raiderActivationRange );
 +        maxRange = Math.max( maxRange, miscActivationRange );
-+        maxRange = Math.min( ( world.spigotConfig.viewDistance << 4 ) - 8, maxRange );
++        maxRange = Math.min( ( world.spigotConfig.simulationDistance << 4 ) - 8, maxRange );
 +
 +        for ( EntityHuman player : world.players() )
 +        {
