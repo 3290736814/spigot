@@ -1,4 +1,4 @@
-From b37c7236190887b51b72e2f4a95a930e2c7221ae Mon Sep 17 00:00:00 2001
+From bf843a82c16b3fe8a0518e9bdc9abba3da29a841 Mon Sep 17 00:00:00 2001
 From: Geoff Crossland <gcrossland+bukkit@gmail.com>
 Date: Thu, 26 Jan 2017 20:54:55 +0000
 Subject: [PATCH] Replace chunk loading / unloading rate throttling.
@@ -43,10 +43,10 @@ index c26039792..67c17e357 100644
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-index d82032d49..6a489ebca 100644
+index a47a8bf8c..44af84e89 100644
 --- a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-@@ -493,20 +493,32 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
+@@ -455,20 +455,32 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
          gameprofilerfiller.pop();
      }
  

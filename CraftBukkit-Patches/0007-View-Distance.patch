@@ -1,4 +1,4 @@
-From e72a3ea81e0432b4abaf9b774b02c99c0a306111 Mon Sep 17 00:00:00 2001
+From a31e3cdf3ca12aff2b86279edb0f71adcc29e247 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,10 +6,10 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index c655f2c41..d6c37ece4 100644
+index 417353908..4c8da0281 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
-@@ -247,8 +247,8 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -250,8 +250,8 @@ public class WorldServer extends World implements GeneratorAccessSeed {
  
          this.entityManager = new PersistentEntitySectionManager<>(Entity.class, new WorldServer.a(), entitypersistentstorage);
          DefinedStructureManager definedstructuremanager = minecraftserver.getStructureManager();
@@ -21,7 +21,7 @@ index c655f2c41..d6c37ece4 100644
  
          Objects.requireNonNull(this.entityManager);
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 5dd057e07..7cf42a3c6 100644
+index ddf7d5e39..d5f7290ac 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -222,7 +222,8 @@ public abstract class PlayerList {

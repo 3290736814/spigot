@@ -1,4 +1,4 @@
-From 4cd2d9de033722203945362061dc7240ad063610 Mon Sep 17 00:00:00 2001
+From 1b90ec3e403ebeed94720b0ce207aafd7c2468b6 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -125,7 +125,7 @@ index eb38aecee..85291b4fd 100644
      // Spigot end
  
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index e6946a812..c38ed5680 100644
+index a9f11a9c1..49a3becb5 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -565,7 +565,7 @@ public abstract class PlayerList {
@@ -138,7 +138,7 @@ index e6946a812..c38ed5680 100644
          if (getBans().isBanned(gameprofile) && !getBans().get(gameprofile).hasExpired()) {
              GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.bans.get(gameprofile);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 87d775b49..cd63d0d24 100644
+index df9a1812e..95cb9b51f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -693,7 +693,13 @@ public final class CraftServer implements Server {
@@ -157,10 +157,10 @@ index 87d775b49..cd63d0d24 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 484b4d6ca..2f029fbd6 100644
+index 0db3f74fc..7c27ff28b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -1760,6 +1760,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1766,6 +1766,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      private final Player.Spigot spigot = new Player.Spigot()
      {
  
