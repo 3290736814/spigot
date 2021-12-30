@@ -1,4 +1,4 @@
-From 55a877caea599acd138921f69ed1c6fd347b92c6 Mon Sep 17 00:00:00 2001
+From de19059c4689a696113c8a38eb492a8482313cc6 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -176,7 +176,7 @@ index 4d76a2946..a5ca65eab 100644
          Vec3D vec3d = this.getDeltaMovement();
  
 diff --git a/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java b/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java
-index c248334f6..522ff127a 100644
+index 77261a522..87452bd5b 100644
 --- a/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java
 +++ b/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java
 @@ -220,6 +220,17 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
@@ -263,10 +263,10 @@ index aff7b6b43..d3328a695 100644
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
 new file mode 100644
-index 000000000..572897eab
+index 000000000..4bf7d4781
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
-@@ -0,0 +1,256 @@
+@@ -0,0 +1,261 @@
 +package org.spigotmc;
 +
 +import java.util.Collection;
@@ -274,6 +274,7 @@ index 000000000..572897eab
 +import net.minecraft.util.MathHelper;
 +import net.minecraft.world.entity.Entity;
 +import net.minecraft.world.entity.EntityCreature;
++import net.minecraft.world.entity.EntityExperienceOrb;
 +import net.minecraft.world.entity.EntityLightning;
 +import net.minecraft.world.entity.EntityLiving;
 +import net.minecraft.world.entity.ambient.EntityAmbient;
@@ -480,6 +481,10 @@ index 000000000..572897eab
 +            if (entity instanceof EntityCreeper && ((EntityCreeper) entity).isIgnited()) { // isExplosive
 +                return true;
 +            }
++        }
++        // SPIGOT-6644: Otherwise the target refresh tick will be missed
++        if (entity instanceof EntityExperienceOrb) {
++            return true;
 +        }
 +        return false;
 +    }

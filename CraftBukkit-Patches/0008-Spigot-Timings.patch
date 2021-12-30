@@ -1,4 +1,4 @@
-From c522dac697501a36da78bf0dc9d50abec03f8845 Mon Sep 17 00:00:00 2001
+From 441d8b3655751722a341ac8b9121db1b6a4f4fcb Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -275,10 +275,10 @@ index 4c8da0281..1b68ca2fe 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index 972cdce01..ea0a89812 100644
+index 30df74afd..a6297a8cd 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-@@ -289,6 +289,7 @@ public class PlayerConnection implements ServerPlayerConnection, PacketListenerP
+@@ -290,6 +290,7 @@ public class PlayerConnection implements ServerPlayerConnection, PacketListenerP
      // CraftBukkit end
  
      public void tick() {
@@ -286,7 +286,7 @@ index 972cdce01..ea0a89812 100644
          this.resetPosition();
          this.player.xo = this.player.getX();
          this.player.yo = this.player.getY();
-@@ -364,6 +365,7 @@ public class PlayerConnection implements ServerPlayerConnection, PacketListenerP
+@@ -365,6 +366,7 @@ public class PlayerConnection implements ServerPlayerConnection, PacketListenerP
              this.player.resetLastActionTime(); // CraftBukkit - SPIGOT-854
              this.disconnect(new ChatMessage("multiplayer.disconnect.idling"));
          }
@@ -294,7 +294,7 @@ index 972cdce01..ea0a89812 100644
  
      }
  
-@@ -1872,6 +1874,7 @@ public class PlayerConnection implements ServerPlayerConnection, PacketListenerP
+@@ -1873,6 +1875,7 @@ public class PlayerConnection implements ServerPlayerConnection, PacketListenerP
      // CraftBukkit end
  
      private void handleCommand(String s) {
@@ -302,7 +302,7 @@ index 972cdce01..ea0a89812 100644
          // CraftBukkit start - whole method
          this.LOGGER.info(this.player.getScoreboardName() + " issued server command: " + s);
  
-@@ -1881,6 +1884,7 @@ public class PlayerConnection implements ServerPlayerConnection, PacketListenerP
+@@ -1882,6 +1885,7 @@ public class PlayerConnection implements ServerPlayerConnection, PacketListenerP
          this.cserver.getPluginManager().callEvent(event);
  
          if (event.isCancelled()) {
@@ -310,7 +310,7 @@ index 972cdce01..ea0a89812 100644
              return;
          }
  
-@@ -1892,6 +1896,8 @@ public class PlayerConnection implements ServerPlayerConnection, PacketListenerP
+@@ -1893,6 +1897,8 @@ public class PlayerConnection implements ServerPlayerConnection, PacketListenerP
              player.sendMessage(org.bukkit.ChatColor.RED + "An internal error occurred while attempting to perform this command");
              java.util.logging.Logger.getLogger(PlayerConnection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
              return;
