@@ -1,4 +1,4 @@
-From 67387132b5a0096742d3648765084411a7bef678 Mon Sep 17 00:00:00 2001
+From fbd97a2c32dec85a2a65753566dd240582071e48 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -10,7 +10,7 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 This feature was commisioned by Chunkr.
 
 diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
-index d8ed48c9c..951dbaba7 100644
+index 78e81d890..733b4d9e4 100644
 --- a/src/main/java/net/minecraft/world/level/World.java
 +++ b/src/main/java/net/minecraft/world/level/World.java
 @@ -151,6 +151,9 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -68,10 +68,10 @@ index d8ed48c9c..951dbaba7 100644
                  tickingblockentity.tick();
              }
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 8de2b1fec..8dd45fc9b 100644
+index 8e265b5f6..682408c1f 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -363,4 +363,13 @@ public class SpigotWorldConfig
+@@ -365,4 +365,13 @@ public class SpigotWorldConfig
      {
          hangingTickFrequency = getInt( "hanging-tick-frequency", 100 );
      }

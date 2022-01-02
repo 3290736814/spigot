@@ -1,4 +1,4 @@
-From de19059c4689a696113c8a38eb492a8482313cc6 Mon Sep 17 00:00:00 2001
+From 55c6d7ca8524c22466a088fc13d45e36b478ae82 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -263,15 +263,13 @@ index aff7b6b43..d3328a695 100644
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
 new file mode 100644
-index 000000000..4bf7d4781
+index 000000000..1939b9856
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
-@@ -0,0 +1,261 @@
+@@ -0,0 +1,262 @@
 +package org.spigotmc;
 +
-+import java.util.Collection;
 +import net.minecraft.server.MinecraftServer;
-+import net.minecraft.util.MathHelper;
 +import net.minecraft.world.entity.Entity;
 +import net.minecraft.world.entity.EntityCreature;
 +import net.minecraft.world.entity.EntityExperienceOrb;
@@ -297,7 +295,6 @@ index 000000000..4bf7d4781
 +import net.minecraft.world.entity.projectile.EntityThrownTrident;
 +import net.minecraft.world.entity.raid.EntityRaider;
 +import net.minecraft.world.level.World;
-+import net.minecraft.world.level.chunk.Chunk;
 +import net.minecraft.world.phys.AxisAlignedBB;
 +import org.bukkit.craftbukkit.SpigotTimings;
 +
@@ -392,8 +389,12 @@ index 000000000..4bf7d4781
 +
 +        for ( EntityHuman player : world.players() )
 +        {
-+
 +            player.activatedTick = MinecraftServer.currentTick;
++            if ( world.spigotConfig.ignoreSpectatorActivation && player.isSpectator() )
++            {
++                continue;
++            }
++
 +            maxBB = player.getBoundingBox().inflate( maxRange, 256, maxRange );
 +            ActivationType.MISC.boundingBox = player.getBoundingBox().inflate( miscActivationRange, 256, miscActivationRange );
 +            ActivationType.RAIDER.boundingBox = player.getBoundingBox().inflate( raiderActivationRange, 256, raiderActivationRange );
@@ -529,10 +530,10 @@ index 000000000..4bf7d4781
 +    }
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 9fc17f219..90b765bdf 100644
+index 9fc17f219..8daa6784a 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -188,4 +188,19 @@ public class SpigotWorldConfig
+@@ -188,4 +188,21 @@ public class SpigotWorldConfig
          itemDespawnRate = getInt( "item-despawn-rate", 6000 );
          log( "Item Despawn Rate: " + itemDespawnRate );
      }
@@ -542,6 +543,7 @@ index 9fc17f219..90b765bdf 100644
 +    public int raiderActivationRange = 48;
 +    public int miscActivationRange = 16;
 +    public boolean tickInactiveVillagers = true;
++    public boolean ignoreSpectatorActivation = false;
 +    private void activationRange()
 +    {
 +        animalActivationRange = getInt( "entity-activation-range.animals", animalActivationRange );
@@ -549,7 +551,8 @@ index 9fc17f219..90b765bdf 100644
 +        raiderActivationRange = getInt( "entity-activation-range.raiders", raiderActivationRange );
 +        miscActivationRange = getInt( "entity-activation-range.misc", miscActivationRange );
 +        tickInactiveVillagers = getBoolean( "entity-activation-range.tick-inactive-villagers", tickInactiveVillagers );
-+        log( "Entity Activation Range: An " + animalActivationRange + " / Mo " + monsterActivationRange + " / Ra " + raiderActivationRange + " / Mi " + miscActivationRange + " / Tiv " + tickInactiveVillagers );
++        ignoreSpectatorActivation = getBoolean( "entity-activation-range.ignore-spectators", ignoreSpectatorActivation );
++        log( "Entity Activation Range: An " + animalActivationRange + " / Mo " + monsterActivationRange + " / Ra " + raiderActivationRange + " / Mi " + miscActivationRange + " / Tiv " + tickInactiveVillagers + " / Isa " + ignoreSpectatorActivation );
 +    }
  }
 -- 
