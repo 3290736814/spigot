@@ -1,4 +1,4 @@
-From d7496d32154f5c261e8903efb6bd8eddffb586bc Mon Sep 17 00:00:00 2001
+From 7a33054418b741f57b4c7a5f282d8374aa767c94 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Thu, 27 Jun 2013 17:26:09 +1000
 Subject: [PATCH] Properly Close Inventories
@@ -6,7 +6,7 @@ Subject: [PATCH] Properly Close Inventories
 Properly close inventories when unloading and switching worlds.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 889e9a488..cf302328e 100644
+index 889e9a488..427c9fdbd 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -1019,6 +1019,15 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -30,7 +30,7 @@ index 889e9a488..cf302328e 100644
          public void onTrackingEnd(Entity entity) {
              org.spigotmc.AsyncCatcher.catchOp("entity unregister"); // Spigot
 +            // Spigot Start
-+            if (entity.getBukkitEntity() instanceof org.bukkit.inventory.InventoryHolder) {
++            if (entity.getBukkitEntity() instanceof org.bukkit.inventory.InventoryHolder && (!(entity instanceof EntityPlayer) || entity.getRemovalReason() != Entity.RemovalReason.KILLED)) { // SPIGOT-6876: closeInventory clears death message
 +                for (org.bukkit.entity.HumanEntity h : Lists.newArrayList(((org.bukkit.inventory.InventoryHolder) entity.getBukkitEntity()).getInventory().getViewers())) {
 +                    h.closeInventory();
 +                }

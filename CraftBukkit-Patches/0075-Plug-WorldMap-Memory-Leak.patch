@@ -1,11 +1,11 @@
-From 03b43cc4b269093a789088e6bc6bc4b2d8413a64 Mon Sep 17 00:00:00 2001
+From 3914da0eab70360953f11744d03b3390e98f48c1 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 8 Aug 2014 19:57:03 +1000
 Subject: [PATCH] Plug WorldMap Memory Leak
 
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index cf302328e..d86e64f5b 100644
+index 427c9fdbd..8501bfee1 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -1914,6 +1914,29 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -36,7 +36,7 @@ index cf302328e..d86e64f5b 100644
 +            }
 +            // Spigot end
              // Spigot Start
-             if (entity.getBukkitEntity() instanceof org.bukkit.inventory.InventoryHolder) {
+             if (entity.getBukkitEntity() instanceof org.bukkit.inventory.InventoryHolder && (!(entity instanceof EntityPlayer) || entity.getRemovalReason() != Entity.RemovalReason.KILLED)) { // SPIGOT-6876: closeInventory clears death message
                  for (org.bukkit.entity.HumanEntity h : Lists.newArrayList(((org.bukkit.inventory.InventoryHolder) entity.getBukkitEntity()).getInventory().getViewers())) {
 -- 
 2.25.1
