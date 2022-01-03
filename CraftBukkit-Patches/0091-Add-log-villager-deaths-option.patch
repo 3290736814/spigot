@@ -1,14 +1,14 @@
-From 931e1f73f3370a5dedc52d23befb2490ef715f01 Mon Sep 17 00:00:00 2001
+From 2c15008d435ffb9720b267736b3eecd87a986dac Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 14 Dec 2019 10:26:52 +1100
 Subject: [PATCH] Add log-villager-deaths option
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/EntityLiving.java b/src/main/java/net/minecraft/world/entity/EntityLiving.java
-index 8e6670abf..7a762f902 100644
+index 6e69da933..64cebda62 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityLiving.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityLiving.java
-@@ -1587,7 +1587,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1586,7 +1586,7 @@ public abstract class EntityLiving extends Entity {
              }
  
              if (!this.level.isClientSide && this.hasCustomName()) {
@@ -31,7 +31,7 @@ index 87452bd5b..e346944c4 100644
  
          if (entity != null) {
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index aec02e2dd..bb2a93900 100644
+index c44267305..4abcb9ec0 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -386,4 +386,11 @@ public class SpigotConfig
